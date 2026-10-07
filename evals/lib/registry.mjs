@@ -49,7 +49,7 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
  * @returns {Registry}
  */
 export function normalizeRegistry(raw) {
-	return { components: { ...(raw.components ?? {}) } };
+	return { components: { ...raw.components } };
 }
 
 /**

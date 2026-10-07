@@ -105,9 +105,11 @@ const arrowButton = (side: 'previous' | 'next', icon: 'left' | 'right', enabled:
 	`<button data-button="" class="pagination-button" type="button" aria-label="go to ${side} page"${enabled ? '' : ' disabled=""'}><div data-container="" class="pagination-${side} OSInline"><i class="icon ph ph-caret-${icon}" aria-hidden="true" data-icon=""></i></div></button>`;
 
 /** The numbered page buttons with their ellipses: first, leading …, the sliding window, trailing …, last. */
-const pageNavigation = (p: ReturnType<typeof paginate>): string => `
+const pageNavigation = (p: ReturnType<typeof paginate>): string => {
+	const firstLabel = p.selected > 1 ? 'go to page 1' : 'page 1';
+	return `
 			<div data-container="" class="display-flex">
-				${p.showFirst ? pageButton(1, p.selected, p.selected > 1 ? 'go to page 1' : 'page 1') : ''}
+				${p.showFirst ? pageButton(1, p.selected, firstLabel) : ''}
 				${p.showLeadingEllipsis ? ellipsis() : ''}
 				<div data-list="" data-virtualization-disabled="" data-animation-disabled="" class="list list-group" disable-virtualization="True" role="group">${p.middle
 					.map((page) =>
@@ -117,6 +119,7 @@ const pageNavigation = (p: ReturnType<typeof paginate>): string => `
 				${p.showTrailingEllipsis ? ellipsis('hide-on-service-studio') : ''}
 				${p.showLast ? pageButton(p.lastPage, p.selected, `page ${p.lastPage}, is last page`) : ''}
 			</div>`;
+};
 
 const meta: Meta<PaginationArgs> = {
 	title: 'Patterns/Navigation/Pagination',
@@ -154,7 +157,7 @@ const meta: Meta<PaginationArgs> = {
 	render: ({ startIndex, maxRecords, totalCount, showGoToPage, extendedClass }) => {
 		const max = Math.max(1, maxRecords);
 		const p = paginate(Math.max(0, startIndex), max, Math.max(0, totalCount));
-		const rangeEnd = max + startIndex >= totalCount ? totalCount : max + startIndex;
+		const rangeEnd = Math.min(max + startIndex, totalCount);
 
 		const counter = `
 			<div data-container="" class="pagination-counter OSInline" role="status" aria-live="polite" aria-atomic="true">
@@ -173,6 +176,7 @@ const meta: Meta<PaginationArgs> = {
 				<div data-container="" class="pagination-counter OSInline"><span data-trans="b207f5ee-aead-4d0c-bbbd-2bc9a6361e2c" data-testid="Pagination.Of.Pages">of </span><span data-expression="" data-testid="Pagination.Counter">${p.totalPages + 1}</span><span data-trans="04fc28b2-d8a4-409b-847f-ebf28e962f60" data-testid="Pagination.Pages"> pages</span></div>
 			</div>`;
 
+		const nav = showGoToPage ? goToPage : pageNav;
 		// TotalCount = 0 hides the whole wrapper (IsVisible = False).
 		const body =
 			totalCount > 0
@@ -180,7 +184,7 @@ const meta: Meta<PaginationArgs> = {
 						${counter}
 						<nav data-advancedhtml="" class="pagination-container" aria-label="Pagination">
 							${prev}
-							${showGoToPage ? goToPage : pageNav}
+							${nav}
 							${next}
 						</nav>
 					</div>`

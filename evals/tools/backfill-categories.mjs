@@ -51,7 +51,7 @@ export function backfillCategories(history, readRun, universe, options = {}) {
 		/** @type {Record<string, any>} */
 		const suites = {};
 		for (const [id, s] of Object.entries(entry.suites)) {
-			const { tiers, ...rest } = /** @type {any} */ (s);
+			const rest = withoutTiersField(/** @type {any} */ (s));
 			const suite = SUITES.find((x) => x.id === id);
 			const runSuite = run.suites[id];
 			if (!suite || !runSuite?.results) {
@@ -63,8 +63,7 @@ export function backfillCategories(history, readRun, universe, options = {}) {
 			if (unknown.length) dropped.push({ label: entry.label, suite: id, names: unknown });
 			const categories = categorySummary(results, universe, suite.metrics);
 			suites[id] = { ...rest, categories };
-			const { tiers: runTiers, ...runRest } = runSuite;
-			run.suites[id] = { ...runRest, categories };
+			run.suites[id] = { ...withoutTiersField(runSuite), categories };
 		}
 		runs[entry.label] = run;
 		return { ...entry, suites };
@@ -73,16 +72,21 @@ export function backfillCategories(history, readRun, universe, options = {}) {
 }
 
 /**
+ * A suite record without the old `tiers` field.
+ * @param {Record<string, any>} suite
+ */
+function withoutTiersField(suite) {
+	const copy = { ...suite };
+	delete copy.tiers;
+	return copy;
+}
+
+/**
  * The suites of a history entry without the old `tiers` field.
  * @param {Record<string, any>} suites
  */
 function withoutTiers(suites) {
-	return Object.fromEntries(
-		Object.entries(suites).map(([id, s]) => {
-			const { tiers, ...rest } = s;
-			return [id, rest];
-		})
-	);
+	return Object.fromEntries(Object.entries(suites).map(([id, s]) => [id, withoutTiersField(s)]));
 }
 
 /**

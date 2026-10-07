@@ -83,7 +83,7 @@ export function normalizedName(s) {
 	for (let i = 0; i < s.length; i++) {
 		const c = s[i];
 		const upper = c !== c.toLowerCase();
-		if (upper && i > 0 && out[out.length - 1] !== '-') out += '-';
+		if (upper && i > 0 && !out.endsWith('-')) out += '-';
 		out += c.toLowerCase();
 	}
 	return out;

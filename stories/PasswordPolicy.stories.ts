@@ -47,9 +47,15 @@ const icon = (valid: boolean): string =>
 
 const label = (content: string): string => `<div data-container="" class="margin-left-s OSInline">${content}</div>`;
 
+/** The class attribute of a rule row: green once the rule is met; the length row carries none. */
+const rowClass = (valid: boolean, colour: boolean): string => {
+	if (!colour) return '';
+	return valid ? ' class="text-green-darker"' : ' class=""';
+};
+
 /** A rule row; `colour` is false for the length row, which the block leaves uncoloured. */
 const row = (valid: boolean, content: string, colour = true): string =>
-	`<div data-container=""${colour ? ` class="${valid ? 'text-green-darker' : ''}"` : ''}>${icon(valid)}${label(content)}</div>`;
+	`<div data-container=""${rowClass(valid, colour)}>${icon(valid)}${label(content)}</div>`;
 
 /** The block's content for a given password — what goes inside its OSBlockWidget wrapper. */
 const policyContent = (password: string, policy: Policy): string => {

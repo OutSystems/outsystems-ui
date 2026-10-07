@@ -286,10 +286,9 @@ test('the heatmap keys rows by id and labels the first column Row, so two platfo
 	assert.ok(!doc.querySelector('#heat thead').innerHTML.includes('>Component<'));
 });
 
-test('the refresh merges the row documents the main database document announces', async () => {
-	const { createDocumentStub } = await import('../tools/dashboard-page.mjs');
-	const { mount } = await import('../dashboard/dashboard.mjs');
-	const base = {
+/** The embedded data set of the row-document tests: one suite, one eval, no rows. */
+function embeddedBase() {
+	return {
 		v: 5,
 		generated: '2026-10-02T00:00:00.000Z',
 		latest: { label: 'old', sha: 'aaa', date: '2026-10-02T00:00:00.000Z' },
@@ -337,6 +336,12 @@ test('the refresh merges the row documents the main database document announces'
 		kindTexts: { pattern: 'p', component: 'c', layout: 'l', utility: 'u', block: 'b' },
 		categoryLabels: { component: 'components (OML blocks)', platform: 'platform & layout styles' },
 	};
+}
+
+test('the refresh merges the row documents the main database document announces', async () => {
+	const { createDocumentStub } = await import('../tools/dashboard-page.mjs');
+	const { mount } = await import('../dashboard/dashboard.mjs');
+	const base = embeddedBase();
 	const row = (id) => ({
 		n: id,
 		id,
@@ -365,6 +370,26 @@ test('the refresh merges the row documents the main database document announces'
 	await new Promise((resolve) => setTimeout(resolve, 20));
 	assert.match(document.getElementById('heat-count').textContent, /^3 of 3 rows shown/);
 	assert.match(document.getElementById('status').textContent, /new @ bbb/);
+});
+
+test('a published document that announces no row documents and carries no rows leaves the embedded data set in place', async () => {
+	const { createDocumentStub } = await import('../tools/dashboard-page.mjs');
+	const { mount } = await import('../dashboard/dashboard.mjs');
+	const base = embeddedBase();
+	const published = {
+		...base,
+		generated: '2026-10-03T00:00:00.000Z',
+		latest: { label: 'new', sha: 'bbb', date: '2026-10-03T00:00:00.000Z' },
+	};
+	delete published.components;
+	const docs = { 'evals/dashboard': published };
+	const db = { doc: (path) => ({ get: async () => ({ exists: path in docs, data: () => docs[path] }) }) };
+	const window = { claude: { use: async () => db } };
+	const document = createDocumentStub();
+	mount(document, window, { getItem: () => null, setItem() {} }, base);
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	assert.doesNotMatch(document.getElementById('status').textContent, /new @ bbb/);
+	assert.match(document.getElementById('heat-count').textContent, /^0 of 0 rows shown/);
 });
 
 test('the trend axis shows short run labels without commits, and a block table where every row is at 100 collapses to one line', async () => {
