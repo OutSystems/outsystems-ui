@@ -958,11 +958,9 @@ export function synonymLines(groups) {
 function synonymOf(name, key) {
 	if (key.startsWith('suffix:')) return `${name}-${key.slice('suffix:'.length)}`;
 	const [from, to] = key.slice('swap:'.length).split('>');
-	return name
-		.split(`-${from}-`)
-		.join(`-${to}-`)
-		.replace(new RegExp(`^${from}-`), `${to}-`)
-		.replace(new RegExp(`-${from}$`), `-${to}`);
+	// the swapped segment sits at the start, in the middle or at the end of the name: plain string checks, no regex
+	const segments = name.split('-').map((s) => (s === from ? to : s));
+	return segments.join('-');
 }
 
 /**
