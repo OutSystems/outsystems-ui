@@ -22,7 +22,8 @@ import {
 } from '../lib/signals.mjs';
 import { checksCell, list } from '../../lib/present.mjs';
 
-const ARIA_NEEDLES = ['A11Y.', 'aria-', "'role'", '"role"'];
+/** The A11Y helper, literal attributes, and the ARIA reflection properties (`el.ariaChecked = …`). */
+const ARIA_NEEDLES = ['A11Y.', 'aria-', '.aria', "'role'", '"role"'];
 const LIVE_NEEDLES = [
 	'Role.Progressbar',
 	'aria-valuenow',
@@ -70,6 +71,16 @@ export function checksFor(c, ts, css, guards = {}) {
 		features: { applicable: true, pass: css.includes('has-accessible-features') || Boolean(guards.focusRing) },
 		contrast: { applicable: true, pass: css.includes('os-high-contrast') },
 	};
+}
+
+/**
+ * The patterns that render DOM and set no ARIA; a pattern the check does not apply to (no DOM) is not a gap.
+ * @param {{ name: string, kind: string, checks: { aria: { applicable: boolean, pass: boolean } } }[]} rows
+ */
+export function patternsWithoutAria(rows) {
+	return rows
+		.filter((r) => r.kind === 'pattern' && r.checks.aria.applicable && !r.checks.aria.pass)
+		.map((r) => r.name);
 }
 
 /** The kinds this eval measures (lib/kinds.mjs). */
@@ -136,7 +147,7 @@ export default {
 			});
 		}
 		const patterns = perComponent.filter((r) => r.kind === 'pattern');
-		const noAria = patterns.filter((r) => !r.checks.aria.pass).map((r) => r.name);
+		const noAria = patternsWithoutAria(patterns);
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
 			summary: `${patterns.length - noAria.length}/${patterns.length} patterns set ARIA; ${perComponent.filter((r) => r.checks.features.pass).length}/${perComponent.length} components style .has-accessible-features, ${perComponent.filter((r) => r.checks.contrast.pass).length} .os-high-contrast`,

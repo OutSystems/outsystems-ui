@@ -208,3 +208,21 @@ test('R03 and R06 report components with nothing to check as not applicable, wit
 		'helper classes are outside R06'
 	);
 });
+
+test('R02: ARIA set through reflection properties counts, and only applicable patterns are listed as without ARIA', async () => {
+	const { patternsWithoutAria } = await import('../metrics/R02-accessibility-contract.mjs');
+	const reflection = 'ratingItems[newValue].ariaChecked = Constants.A11YAttributes.States.True;';
+	assert.equal(a11y({ kind: 'pattern', name: 'Rating' }, reflection, '').aria.pass, true, 'ariaChecked is ARIA');
+	assert.equal(
+		a11y({ kind: 'pattern', name: 'Rating' }, 'const variable = 1;', '').aria.pass,
+		false,
+		'no false match'
+	);
+	const rows = [
+		{ name: 'Rating', kind: 'pattern', checks: { aria: { applicable: true, pass: false } } },
+		{ name: 'SwipeEvents', kind: 'pattern', checks: { aria: { applicable: false, pass: false } } },
+		{ name: 'badge', kind: 'css', checks: { aria: { applicable: false, pass: false } } },
+		{ name: 'Tabs', kind: 'pattern', checks: { aria: { applicable: true, pass: true } } },
+	];
+	assert.deepEqual(patternsWithoutAria(rows), ['Rating'], 'gesture helpers render no DOM and are not listed');
+});
