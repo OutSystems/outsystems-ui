@@ -829,54 +829,69 @@ const byCode = (a, b) => (a < b ? -1 : Number(a > b));
  * @param {string[]} names
  */
 function compactNames(names) {
+	const { runAt, taken } = numberRuns(names);
+	const tails = tailGroups(names.filter((x) => !taken.has(x)));
 	/** @type {string[]} */
 	const out = [];
-	const left = [...names];
-	// number runs: the same name around a numeric segment
-	/** @type {Map<string, number[]>} */
-	const runs = new Map();
-	for (const n of left) {
-		const m = n.match(/^(.*-)(\d+)(-.*|)$/);
-		if (m) runs.set(`${m[1]}\u0000${m[3]}`, [...(runs.get(`${m[1]}\u0000${m[3]}`) ?? []), Number(m[2])]);
-	}
-	const taken = new Set();
-	/** @type {Map<string, string>} the run text, at the first name of the run */
-	const runAt = new Map();
-	for (const [key, nums] of runs) {
-		if (nums.length < 2) continue;
-		nums.sort((a, b) => a - b);
-		if (nums.some((v, i) => i > 0 && v !== nums[i - 1] + 1)) continue;
-		const [pre, post] = key.split('\u0000');
-		const members = nums.map((v) => `${pre}${v}${post}`);
-		const first = left.find((n) => members.includes(n)) ?? members[0];
-		runAt.set(first, `${pre}{${nums[0]}..${nums[nums.length - 1]}}${post}`);
-		for (const m of members) taken.add(m);
-	}
-	// shared leading segments (at least two) with one varying tail
-	/** @type {Map<string, string[]>} */
-	const tails = new Map();
-	for (const n of left.filter((x) => !taken.has(x))) {
-		const i = n.lastIndexOf('-');
-		const head = i > 0 && n.slice(0, i).includes('-') ? n.slice(0, i + 1) : '';
-		tails.set(head, [...(tails.get(head) ?? []), n]);
-	}
 	const done = new Set();
-	for (const n of left) {
+	for (const n of names) {
 		const run = runAt.get(n);
 		if (run) out.push(run);
 		if (taken.has(n) || done.has(n)) continue;
-		const i = n.lastIndexOf('-');
-		const head = i > 0 && n.slice(0, i).includes('-') ? n.slice(0, i + 1) : '';
+		const head = tailHead(n);
 		const group = head ? (tails.get(head) ?? [n]) : [n];
-		if (group.length > 1) {
-			out.push(`${head}{${group.map((g) => g.slice(head.length)).join(',')}}`);
-			for (const g of group) done.add(g);
-		} else {
-			out.push(n);
-			done.add(n);
-		}
+		if (group.length > 1) out.push(`${head}{${group.map((g) => g.slice(head.length)).join(',')}}`);
+		else out.push(n);
+		for (const g of group) done.add(g);
 	}
 	return out;
+}
+
+/**
+ * Runs of consecutive numbers in one slot of otherwise equal names: the run text keyed by the first member in
+ * `names`, and every member the runs cover.
+ * @param {string[]} names
+ */
+function numberRuns(names) {
+	/** @type {Map<string, number[]>} */
+	const slots = new Map();
+	for (const n of names) {
+		const m = n.match(/^(.*-)(\d+)(-.*|)$/);
+		if (m) slots.set(`${m[1]}\u0000${m[3]}`, [...(slots.get(`${m[1]}\u0000${m[3]}`) ?? []), Number(m[2])]);
+	}
+	const taken = new Set();
+	/** @type {Map<string, string>} */
+	const runAt = new Map();
+	for (const [key, nums] of slots) {
+		nums.sort((a, b) => a - b);
+		const consecutive = nums.every((v, i) => i === 0 || v === nums[i - 1] + 1);
+		if (nums.length < 2 || !consecutive) continue;
+		const [pre, post] = key.split('\u0000');
+		const members = nums.map((v) => `${pre}${v}${post}`);
+		runAt.set(
+			names.find((n) => members.includes(n)) ?? members[0],
+			`${pre}{${nums[0]}..${nums[nums.length - 1]}}${post}`
+		);
+		for (const m of members) taken.add(m);
+	}
+	return { runAt, taken };
+}
+
+/** The leading segments of a name when there are at least two (`background-teal-`), else ''. @param {string} n */
+function tailHead(n) {
+	const i = n.lastIndexOf('-');
+	return i > 0 && n.slice(0, i).includes('-') ? n.slice(0, i + 1) : '';
+}
+
+/** Names grouped by their leading segments. @param {string[]} names */
+function tailGroups(names) {
+	/** @type {Map<string, string[]>} */
+	const tails = new Map();
+	for (const n of names) {
+		const head = tailHead(n);
+		if (head) tails.set(head, [...(tails.get(head) ?? []), n]);
+	}
+	return tails;
 }
 
 /** The segments two names share at the start and at the end. @param {string} a @param {string} b */

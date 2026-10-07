@@ -11,6 +11,33 @@ import { signatureOf, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
 
+/**
+ * The classes grouped by declaration signature, and for every class with a twin, the other names of its group.
+ * @param {{ classes: { name: string, declarations: { prop: string, value: string }[] }[] }[]} families
+ */
+function twins(families) {
+	/** @type {Map<string, string[]>} */
+	const bySignature = new Map();
+	for (const f of families) {
+		for (const c of f.classes) {
+			const sig = signatureOf(c);
+			if (sig === null) continue;
+			bySignature.set(sig, [...(bySignature.get(sig) ?? []), c.name]);
+		}
+	}
+	/** @type {Map<string, string[]>} */
+	const twinsOf = new Map();
+	for (const names of bySignature.values()) {
+		if (names.length < 2) continue;
+		for (const n of names)
+			twinsOf.set(
+				n,
+				names.filter((x) => x !== n)
+			);
+	}
+	return { bySignature, twinsOf };
+}
+
 export default {
 	id: 'U05',
 	name: 'Synonym Pressure',
@@ -48,25 +75,7 @@ export default {
 		const unmeasured = families
 			.filter((f) => f.error)
 			.map((f) => ({ name: f.name, reason: `compile error: ${String(f.error).split('\n')[0]}` }));
-		/** @type {Map<string, string[]>} */
-		const bySignature = new Map();
-		for (const f of families) {
-			for (const c of f.classes) {
-				const sig = signatureOf(c);
-				if (sig === null) continue;
-				bySignature.set(sig, [...(bySignature.get(sig) ?? []), c.name]);
-			}
-		}
-		/** @type {Map<string, string[]>} */
-		const twinsOf = new Map();
-		for (const names of bySignature.values()) {
-			if (names.length < 2) continue;
-			for (const n of names)
-				twinsOf.set(
-					n,
-					names.filter((x) => x !== n)
-				);
-		}
+		const { bySignature, twinsOf } = twins(families);
 		let total = 0;
 		let duplicated = 0;
 		/** @type {any[]} */
