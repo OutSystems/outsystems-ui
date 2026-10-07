@@ -258,13 +258,89 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 
 ## Dark theme
 
-The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`). Toggle it via the `SetDarkTheme` client action.
+The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~447 `--token-*` values. Toggle it via the `SetDarkTheme` client action.
 
-Custom CSS with hardcoded hex/rgb values will not follow the theme switch. To improve compatibility:
+### If your app has its own dark-mode class — add `.os-dark-theme` too
+
+This is the single most impactful dark-mode fix. Without `.os-dark-theme` on `<html>`, every `--token-*` value used inside framework components stays at its light-mode default. Symptoms include:
+
+- White feedback messages / toast notifications
+- Light input backgrounds on dark forms
+- Light active-nav pills with invisible text
+- Light dropdown popups
+- Wrong shadow and surface colors
+
+**Fix:** toggle `.os-dark-theme` on `<html>` alongside your custom class. The framework's token overrides compose cleanly with your own `--color-*` and `--osui-*` overrides.
+
+### Neutral ramp flip — roles no longer cascade
+
+If your dark mode flips `--color-neutral-0` through `--color-neutral-10` (swapping light ↔ dark), this **no longer works** for framework-owned text, surfaces, and borders. In the old theme, roles like `--color-text` were defined as `var(--color-neutral-9)` — flipping neutral-9 cascaded automatically. In the new theme, roles resolve through `--token-*` variables that don't reference neutrals.
+
+**Result:** dark backgrounds with dark text, invisible buttons, invisible borders.
+
+**Fix:** add explicit role overrides in your dark block:
+
+```css
+:root.dark-mode,
+:root.os-dark-theme {
+    /* your existing neutral ramp overrides */
+
+    /* Role overrides — required in the new theme */
+    --color-text:                var(--color-neutral-10);
+    --color-text-subtle:         var(--color-neutral-8);
+    --color-text-subtlest:       var(--color-neutral-7);
+    --color-background-header:   var(--header-color); /* or hex */
+    --color-background-surface:  var(--color-neutral-1);
+    --color-border:              var(--color-neutral-3);
+    --color-border-subtle:       var(--color-neutral-2);
+    --token-semantics-primary-base: var(--color-neutral-10); /* links + primary */
+    --token-semantics-primary-900:  var(--color-neutral-9);  /* link/primary hover */
+}
+```
+
+### Button labels disappear in dark mode
+
+Primary button text uses `--osui-btn-primary-color: var(--color-text-light)`. `--color-text-light` stays white even in `.os-dark-theme`. If your dark mode makes `--color-primary` light/white, the label is invisible.
+
+**Critical:** set `--osui-btn-primary-color` on `.btn-primary`, **not** on `:root`. The framework re-declares it on `.btn`, so a `:root`-level override is inherited but loses to the element-level declaration.
+
+```css
+/* WRONG — inherited, loses to .btn's own declaration */
+:root.dark-mode { --osui-btn-primary-color: var(--color-neutral-0); }
+
+/* RIGHT — targets the element directly */
+.dark-mode .btn-primary { --osui-btn-primary-color: var(--color-neutral-0); }
+```
+
+Do **not** set `--osui-btn-color: var(--color-text-dark)` on all `.btn` — that makes default/secondary button labels invisible on their dark backgrounds. Only target buttons with explicitly light backgrounds:
+
+```css
+.dark-mode .btn.background-white {
+    --osui-btn-color: var(--color-text-dark);
+}
+```
+
+### Link color is not `--color-primary`
+
+Links are hardcoded to `--token-semantics-primary-base` in the new theme, not `--color-primary`. Overriding `--color-primary` does **not** change link color. Override the token instead, or style links directly:
+
+```css
+/* Option 1: override the shared token (changes links AND primary) */
+:root.dark-mode {
+    --token-semantics-primary-base: #your-link-color;
+    --token-semantics-primary-900: #your-link-hover-color;
+}
+
+/* Option 2: style links directly */
+a[data-link] { color: var(--color-text); }
+a[data-link]:hover { color: var(--color-text-subtle); }
+```
+
+### General dark-mode hygiene
 
 - Replace hardcoded colour literals with `--color-*` roles or `--token-*` values where a match exists.
 - Prefer `--color-text` over `--color-neutral-9` for body text — the role flips in dark mode, the neutral step does not.
-- If your app has its own dark-mode class, consider adding `.os-dark-theme` as a second selector to benefit from the framework's token overrides.
+- Blank-slate icons changed from primary to grey (`--color-text-disabled`). Override with `.blank-slate-icon { color: var(--color-primary); }` if needed.
 
 ---
 
@@ -349,7 +425,7 @@ Check the CSS API Reference for the component's `--osui-*` knobs — there usual
 
 ### "I hand-built a dark mode"
 
-Consider adopting the built-in `.os-dark-theme` — it's implemented purely as variable overrides and composes with your custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via `SetDarkTheme`.
+Add `.os-dark-theme` on `<html>` alongside your custom class — it's implemented purely as ~447 token overrides and composes with your custom `--osui-*` and `--color-*` overrides. Toggle both classes via `SetDarkTheme` or your own logic. Without `.os-dark-theme`, feedback messages, input backgrounds, active nav pills, and many component internals stay at light-mode values. See the [Dark theme](#dark-theme) section above for the full list of symptoms.
 
 ### "I changed all the shadows / all the spacing / all the type"
 

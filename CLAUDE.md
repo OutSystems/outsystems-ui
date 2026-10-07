@@ -7,6 +7,7 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — layering (`OutSystems → OSFramework → Providers`), the six tenets (provider isolation, public-API envelope, ID registry, symmetric build/dispose, build-time platform resolution, factories), the External Integrations table, and the Compilation Boundary section.
 - [CSS-ARCHITECTURE.md](./CSS-ARCHITECTURE.md) — the styling architecture: design tokens → framework theme layer → component CSS API, and the read chain between them. Summarized under "Styling & Theming Architecture" below.
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — setup, dev-server behavior, ESLint/Prettier/Stylelint rules, PR title/label gates, E2E pipeline, release workflows.
+- [THEME-MIGRATION-GUIDE.md](./THEME-MIGRATION-GUIDE.md) — customer-facing guide for migrating custom CSS from the classic theme (pre-token) to the new token-based theme. Covers retired variables, replacement mappings, dark-mode fixes (neutral ramp flip, button contrast, `.os-dark-theme` recommendation), and recipes. Feed this to any LLM alongside a customer's CSS to migrate it.
 - [docs-internal/adr/](./docs-internal/adr/Readme.md) — Architecture Decision Records for cross-cutting decisions, each with its rejected alternatives.
 - `.claude/rules/typescript.md` and `.claude/rules/scss.md` — the evergreen conventions for each tree, in more detail than this file.
 - `src/README.md` for the directory breakdown, `gulp/README.md` for the build system.
