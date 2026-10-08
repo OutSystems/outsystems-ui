@@ -47,7 +47,7 @@ Section Index:
     3.9. Menu - App Menu Link
     3.10. Menu - App Login Info
     3.11. Content
-    3.12. ThemeGrid_Container
+    3.12. Page Gutters
     3.13. Section
     3.14. Login
     3.15. iOS Scroll Bounce
@@ -234,8 +234,8 @@ Section Index:
 @use '02-layout/menu-app-login-info' as *;
 /*! 3.11. Content */
 @use '02-layout/content' as *;
-/*! 3.12. ThemeGrid_Container */
-@use '02-layout/themegrid-container' as *;
+/*! 3.12. Page Gutters */
+@use '02-layout/page-gutters' as *;
 /*! 3.13. Section */
 @use '02-layout/section' as *;
 /*! 3.14. Login */

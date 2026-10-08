@@ -141,14 +141,6 @@
 	}
 }
 
-///
-[data-radio-button]:not(.OSFillParent):not([class*='ThemeGrid_Width']) {
-	// Service Studio Preview
-	& {
-		-servicestudio-display: flex;
-	}
-}
-
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
