@@ -84,6 +84,7 @@
 		"remark-gfm": "^4.0.1",
 		"sass": "^1.77.4",
 		"storybook": "10.5.9",
+		"storybook-addon-pseudo-states": "^10.5.9",
 		"stylelint": "^14.16.1",
 		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-order": "^6.0.4",
