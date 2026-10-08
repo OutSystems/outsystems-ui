@@ -195,6 +195,31 @@ grep -n 'app-menu-content\|app-login-info\|main-content' classic-theme/ODC.OutSy
 
 A ported rule targeting a class the old theme never emits is dead CSS; say so rather than shipping it silently.
 
+### That Theme toggle is the only gate on a port
+
+Everything else in this repository is covered by CI. **A port is not.** Nothing automated will catch
+a mistake here:
+
+| | Covers a port? |
+| :-- | :-- |
+| Functional tests | **No** — their tags are derived from changed folders under `src/scripts/**` and `src/scss/04-patterns`, so a classic-only change runs none |
+| Chromatic | **No** — it photographs the new-theme bundle; no story loads `classic-theme/` CSS |
+| `npm run build` | **No** — compiles `src/` → `dist/` |
+| `npm run lint` | **No** — covers `.ts`; these are CSS |
+| A compiler | **No** — there is no SCSS behind `classic-theme/` to validate |
+
+So if you skip the visual check, a broken port ships and **nothing reports it**. Do not treat §8 as
+a formality — it is the whole safety net. (Recorded as a decision in
+`docs-internal/adr/ADR-0011-functional-test-and-chromatic-ownership-split.md`, §D2.)
+
+Two limits of the toggle, so it is not trusted further than it goes:
+
+- **It loads the ODC bundle only.** `classic-theme/O11.OutSystemsUI.css` is served but never linked,
+  so the toggle validates **half** of a port. Verify the O11 edit by reading the diff.
+- **It is a hybrid, not the classic theme.** `classic-theme/` has no JavaScript and
+  `preview-head.html` always loads the new theme's JS, so "Classic theme" is new-theme *runtime*
+  plus old-theme *CSS*. Sound as a CSS-regression check; it is not "the classic theme under test".
+
 ## 9. What not to do
 
 - Don't hand-edit `src/scss/O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` (regenerated every build) — unrelated files, easy to confuse by name with the `classic-theme/` ones.
