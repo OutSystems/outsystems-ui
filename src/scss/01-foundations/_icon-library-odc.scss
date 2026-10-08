@@ -636,8 +636,10 @@ body.iconLibrary-phosphor {
 
 // Password Policy
 .password-policy_icon {
+	display: inline-block;
 	min-width: 11px;
 	position: relative;
+	vertical-align: top;
 
 	&::after {
 		position: absolute;
@@ -650,5 +652,9 @@ body.iconLibrary-phosphor {
 	&.is-valid::after {
 		content: var(--osui-icon-circle-check);
 		color: #267d36;
+	}
+
+	& + * {
+		display: inline-block;
 	}
 }
