@@ -39,23 +39,16 @@ body,
 		}
 
 		&-side {
+			// ─── Component CSS API ─────────────────────────────────────────────
+			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
+			// ───────────────────────────────────────────────────────────────────
+
 			.main {
 				margin-inline-start: var(--side-menu-size);
 			}
 
 			&.aside-overlay .main {
 				margin-inline-start: 0;
-			}
-		}
-
-		&-side-no-header {
-			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-layout-main-padding: #{variables.$token-space-1000};
-			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
-			// ───────────────────────────────────────────────────────────────────
-
-			.main-content {
-				padding: var(--osui-layout-main-padding);
 			}
 
 			.app-menu-content {
@@ -69,7 +62,9 @@ body,
 			.app-login-info {
 				border-block-start: var(--osui-layout-aside-lines);
 			}
+		}
 
+		&-side-no-header {
 			.menu-icon {
 				margin-block: variables.$token-space-400;
 				margin-inline: variables.$token-space-600;
@@ -206,19 +201,13 @@ body,
 	.layout-side .main {
 		margin-inline-start: 0;
 	}
-
-	.layout-side-no-header {
-		--osui-layout-main-padding: 0 #{variables.$token-space-600} #{variables.$token-space-600};
-	}
 }
 
+// Follows the 16px page gutter.
 ///
-.phone {
-	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
-		margin-block: variables.$token-scale-0 variables.$token-scale-400;
-		margin-inline: variables.$token-scale-0;
-		width: 100%;
-	}
+.tablet .layout-side-no-header .menu-icon,
+.phone .layout-side-no-header .menu-icon {
+	margin-inline: variables.$token-space-400;
 }
 
 // Nested layout SS preview

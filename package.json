@@ -47,7 +47,7 @@
 	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.2.1",
-		"@floating-ui/dom": "^1.6.5",
+		"@floating-ui/dom": "1.8.0",
 		"@phosphor-icons/web": "^2.1.2",
 		"@splidejs/splide": "4.1.4",
 		"@storybook/addon-docs": "10.5.9",
@@ -60,7 +60,7 @@
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.5",
-		"flatpickr": "^4.6.13",
+		"flatpickr": "4.6.13",
 		"font-awesome": "^4.7.0",
 		"gulp": "^5.0.1",
 		"gulp-autoprefixer": "^10.0.0",
@@ -71,9 +71,9 @@
 		"gulp-sass": "^6.0.1",
 		"gulp-sourcemaps": "^3.0.0",
 		"json-fixer": "^1.6.15",
-		"nouislider": "^15.8.1",
+		"nouislider": "15.8.1",
 		"outsystems-design-tokens": "2.5.0",
-		"photoswipe": "^4.1.0",
+		"photoswipe": "4.1.0",
 		"postcss": "^8.5.28",
 		"postcss-discard-comments": "^9.0.3",
 		"postcss-discard-duplicates": "^9.0.3",
@@ -84,6 +84,7 @@
 		"remark-gfm": "^4.0.1",
 		"sass": "^1.77.4",
 		"storybook": "10.5.9",
+		"storybook-addon-pseudo-states": "10.5.9",
 		"stylelint": "^14.16.1",
 		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-order": "^6.0.4",
@@ -91,8 +92,8 @@
 		"typedoc-plugin-merge-modules": "^7.0.0",
 		"typedoc-umlclass": "^0.10.2",
 		"typescript": "~5.9.3",
-		"virtual-select-plugin": "^1.1.0",
+		"virtual-select-plugin": "1.1.0",
 		"vite": "^6.4.3",
-		"wnumb": "^1.2.0"
+		"wnumb": "1.2.0"
 	}
 }
