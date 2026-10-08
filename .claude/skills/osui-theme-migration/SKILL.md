@@ -42,8 +42,9 @@ Before diving in, search the customer's CSS for these patterns to identify which
 
 | If the CSS contains… | Verdict | Category |
 |---|---|---|
-| `var(--space-*)`, `var(--font-size-*)`, `var(--shadow-*)`, `var(--border-size-*)` | Retired — resolves to nothing | A (Section 2) |
-| `var(--background-color-*)`, `var(--text-color-*)`, `var(--border-color-*)` | Retired — resolves to nothing | A (Section 2) |
+| `var(--font-size-*)`, `var(--shadow-*)`, `var(--border-size-*)`, `var(--font-*)` weights | Retired — resolves to nothing | A (Section 2) |
+| `var(--background-color-*)`, `var(--text-color-*)`, `var(--border-color-*)` | **Not** retired — never declared in either theme. The framework stopped *reading* them, so the customer's own declaration is now ignored rather than broken | A (Section 2, removed read hooks) |
+| `var(--space-*)` | **Still works.** Declared at `:root` with classic values — do not rewrite | Section 2, spacing |
 | `--color-red`, `--color-indigo-light`, any extended-palette shade | Retired + hex changed | A (Section 2, extended palette) |
 | `--color-primary`, `--color-error`, `--color-background-body` | Still works but resolves to a different colour | F (Section 8) |
 | `--color-neutral-0` … `-10` | Still works but scale re-based — `neutral-0` is no longer white | F (Section 8, neutral trap) |
@@ -53,7 +54,7 @@ Before diving in, search the customer's CSS for these patterns to identify which
 | `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 1) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
 | Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
-| Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
+| Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~879 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
 | Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | Section 10 recipe |
 | A widget looks different from the classic app, and the custom CSS never mentioned it | The new theme changed a framework default — these do not show up in any search of the customer's CSS | Section 11 catalog, applied in Phase 2g |
 
@@ -65,31 +66,43 @@ Every migration issue falls into one of these. Scan for all of them.
 
 ### Category A — Retired CSS variables
 
-The largest source of breakage. These variable families **no longer exist** at `:root`:
+The largest source of breakage — but it contains **two different failure modes**, and they need different diagnoses. Do not merge them.
+
+**A1 — variables that were declared and are now gone.** These were real `:root` declarations in the classic bundle and are absent from the new one, so a `var()` reading them resolves to nothing and the whole declaration is dropped.
 
 | Retired family | Example | What to use instead |
 |---|---|---|
-| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (Section 3 mapping) |
-| `--text-color-*` | `--text-color-neutral-0` | The matching `--color-text-*` role (Section 3 mapping) |
-| `--border-color-*` | `--border-color-primary` | The matching `--color-*` or `--color-border-*` role |
 | `--shadow-*` | `--shadow-s`, `--shadow-l` | `--token-elevation-*` (Section 3 mapping) |
 | `--font-size-*` | `--font-size-h1`, `--font-size-base` | `--token-font-size-*` (Section 3 mapping) |
 | `--border-size-*` | `--border-size-s` | `--token-border-size-*` (Section 3 mapping) |
+| `--font-*` weights | `--font-regular`, `--font-semi-bold` | `--token-font-weight-*` (Section 3 mapping) |
 | `--color-{family}-{shade}` | `--color-red-dark`, `--color-indigo-lightest` | Section 3 extended palette — `lightest` and the bare family are often `--token-bg-extended-*` or a status role, not a primitive |
 | `--color-{status}-light` | `--color-error-light` | `--token-semantics-{role}-100` (Section 3 semantic shades) |
 | `--border-radius-circle` | `border-radius: var(--border-radius-circle)` | Use `border-radius: 50%` or `--border-radius-rounded` |
 
-A `var(--background-color-primary, var(--color-primary))` still works because of the inner fallback — but `var(--background-color-primary)` without a fallback resolves to nothing and the declaration is silently dropped.
+**A2 — read hooks the framework stopped honouring.** `--background-color-*`, `--text-color-*`, and `--border-color-*` were **never declared** in either theme. They existed only as the inner half of `var(--text-color-primary, var(--color-primary))` chains *inside framework rules* — an opt-in override surface. Classic read them in several hundred places; the new bundle reads `--text-color-*` and `--border-color-*` in **none**, and `--background-color-*` in a handful.
+
+So a customer who set `--text-color-primary` at `:root` is not hitting a dead `var()`. Their declaration is still valid CSS and still resolves — the framework simply no longer asks for it. **The symptom is a setting that stopped having any effect, with nothing broken-looking in the stylesheet to point at.** The fix is to set the `--color-*` role the framework does read (Section 3 mapping), not to repair anything.
+
+| Removed hook | Example | Set this instead |
+|---|---|---|
+| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (Section 3 mapping) |
+| `--text-color-*` | `--text-color-neutral-0` | The matching `--color-text-*` role (Section 3 mapping) |
+| `--border-color-*` | `--border-color-primary` | The matching `--color-*` or `--color-border-*` role |
+
+Note the asymmetry this creates in the customer's own CSS: a rule reading `var(--background-color-primary, var(--color-primary))` still works, because of the inner fallback. A rule reading `var(--background-color-primary)` bare was always broken — in both themes — since nothing ever declared it.
 
 #### Repairing a dead declaration can itself be the regression
 
-A retired variable anywhere in a **shorthand** invalidates the whole declaration, not just that one value. `padding: var(--space-none) 5px` does not become `padding: <nothing> 5px` — it is dropped entirely, and the element falls back to the framework's padding on every side.
+An A1 variable anywhere in a **shorthand** invalidates the whole declaration, not just that one value. `border: var(--border-size-s) solid red` does not become `border: <nothing> solid red` — it is dropped entirely, and the element falls back to the framework's border on every side.
 
 That matters because it means the rule has already been inert since the upgrade, and the element has been rendering on the framework default. Substituting the literal is the obvious repair and is sometimes wrong: it re-activates a rule that has been absent, re-asserting values the app never cared about against a framework that now supplies them differently. **Restoring the declaration faithfully can break something that currently looks correct.**
 
-The shape to watch is a shorthand where only one value was ever the point. A row styled `padding: var(--space-none) 5px` wanted narrow inline padding; the leading zero was free because the framework set an explicit `height` on that element. Drop the height in the new theme and rebuild the row out of `padding-block` instead — same rendered size — and the restored `padding: 0 5px` now flattens it to a bare line of text. Nothing in the customer's CSS changed; the zero simply started meaning something.
+The shape to watch is a shorthand where only one value was ever the point — the others were written to be harmless against a framework default that has since changed. A row styled `padding: var(--font-size-label) 5px` wants narrow inline padding; the block value was tuned against a framework that set an explicit `height` on that element, so it never did much. Drop the height in the new theme and rebuild the row out of `padding-block` instead, and the faithfully restored shorthand now overrides the padding the row's height depends on. Nothing in the customer's CSS changed; the value simply started mattering.
 
 So before substituting a literal into a dead declaration, ask what the element currently renders as without it. If the framework default already produces the classic result, **write the longhand the rule actually intended** (`padding-inline: 5px`) and leave the rest to the framework. Reach for the full shorthand only when the app genuinely needs every side pinned.
+
+This applies to A1 only. An A2 hook never invalidated anything — the declaration was always valid — and `--space-*` is not retired at all, so neither is a candidate here.
 
 #### Audit light/dark declaration symmetry
 
@@ -268,9 +281,34 @@ Do NOT use a blanket `.dark-mode .btn { --osui-btn-color: var(--color-text-dark)
 | 14px | 21.00px | 24.00px | +3.00 |
 | 40px | 60.00px | 68.57px | +8.57 |
 
-**Nothing becomes a fixed height and nothing overlaps** — the whole scale loosens uniformly. The "24px" figure that circulates for this change is the computed value at the *base* font size only (14 × 1.714286 = 24.00); it is not an absolute, and hunting for 24px line boxes at other sizes finds nothing. Verify with `rg -N -A10 '^body \{' dist/O11.OutSystemsUI.css` before reasoning about it.
+**Inherited text does not overlap** — the whole scale loosens uniformly, because a ratio still scales with each element's own `font-size`. The "24px" figure that circulates for this change is the computed value at the *base* font size only (14 × 1.714286 = 24.00); it is not an absolute at `body`, and hunting for 24px line boxes under inherited text finds nothing. Verify before reasoning about it:
 
-**Detection pattern:** any custom rule that sets `font-size` without a corresponding `line-height`. Recommend pairing with the matching `--token-font-line-height-*` token or a unitless number.
+```bash
+rg -N -A10 '^body \{' dist/ODC.OutSystemsUI.css
+```
+
+#### The absolute half — pattern rules, not `body`
+
+`body` is the ratio. **Framework pattern rules are absolute**, and that is where text genuinely clips. Roughly 26 rules in the bundle set `line-height` from the token scale, which resolves to a fixed `rem`:
+
+```css
+.osui-accordion-item__title {
+  font-size: var(--token-font-size-400, 1rem);
+  line-height: var(--token-font-line-height-600, 1.5rem);   /* 24px, fixed */
+}
+```
+
+Classic's equivalent was `line-height: 1` — a ratio. So a customer who raises `font-size` on one of these gets a line box that **does not grow with it**, and the text clips or collides with the row below. The same rule in classic would have scaled.
+
+The affected selectors are worth knowing by name, because the customer's CSS will target them without mentioning line-height: `.osui-accordion-item__title`, `[data-label]`, `.input-helper`, `.btn-small`, `.btn-large`, `.alert .alert-message`, `.list-item-content-title`, plus the `--osui-*-line-height` knobs on chat message and list item. List the current set with:
+
+```bash
+rg -N -B30 'line-height: var\(--token-font-line-height' dist/ODC.OutSystemsUI.css
+```
+
+**Whenever a fix raises `font-size` on a framework pattern, set `line-height` in the same rule.** Use a unitless ratio, or the next token step up — never leave the absolute default in place under larger text.
+
+**Detection pattern:** any custom rule that sets `font-size` without a corresponding `line-height`. For inherited text that is a proportional loosening and often fine; on one of the selectors above it is a clip. Recommend pairing with the matching `--token-font-line-height-*` token or a unitless number.
 
 **The default pairing value is `1.5`, because that is what classic's `body` declared** (`line-height: 1.5`, unitless, so every element resolved it against its own `font-size`). Writing `1.5` reproduces the old computed value exactly, at any font size. Never substitute a tighter number because the text is large — `1.2` on a 40px heading looks like a reasonable choice and silently shrinks the line box by 12px.
 
@@ -383,6 +421,104 @@ The breakage is reported in dark mode, so the instinct is to fix it there. Resis
 
 **Verify with the symmetry audit** (Section 2). Any property left in the dark block that reads `var(--color-neutral-N)` rather than a literal is almost certainly a light-mode gap.
 
+#### Some classes were renamed, and rules targeting them fail silently
+
+Most of this guide is about declarations whose *value* moved. A quieter class of breakage is a selector that still looks perfectly valid but no longer matches anything, because the framework moved the class under the `osui-` prefix. Nothing in the customer's CSS looks wrong, no variable is retired, and a diff of the two bundles' selector lists is the only way to see it.
+
+Build that list once:
+
+```bash
+rg -No '^[^@{ ][^{]*\{' classic-theme/ODC.OutSystemsUI.css | sed 's/ *{$//' | sort -u > /tmp/old.txt
+rg -No '^[^@{ ][^{]*\{' dist/ODC.OutSystemsUI.css          | sed 's/ *{$//' | sort -u > /tmp/new.txt
+comm -23 /tmp/old.txt /tmp/new.txt | rg '^\.[a-z][a-z0-9-]*$'
+```
+
+Then intersect that list with the customer's stylesheet — **match on a word boundary, not a substring**, or `.btn` will appear to be dropped because `.btn-primary` was restructured:
+
+```bash
+comm -23 /tmp/old.txt /tmp/new.txt | rg '^\.[a-z][a-z0-9-]*$' | while read s; do
+  rg -q "\\$s([^a-z0-9-]|$)" customer.css && echo "$s"
+done
+```
+
+Most of what survives is a provider swap with no consequence for the customer — `.pika-*`, `.choices`, `.carousel` were replaced wholesale when the underlying library changed, and an app that never styled them does not care. The two that matter are a class the customer's markup still produces with no rule behind it (the menu icon above) and a **rename**.
+
+A rename is the quieter failure of the two. A real case:
+
+```css
+/* customer CSS — still valid, still parsed, matches nothing */
+.progress-wizard .wizard-item-icon { background-color: var(--wizard-bg-color) !important; }
+```
+
+`.wizard-item-icon` became `.osui-wizard-item-icon`. The rule references no retired variable, has no syntax error, and carries `!important` — which is exactly what makes it hard to doubt. It reads as a rule that must be winning. It never ran.
+
+**Rewrite against the CSS API rather than the new class name** where a knob exists (`--osui-wizard-icon-background`, `--osui-wizard-connector-color`). It is less brittle than chasing prefixes, and it usually lets the `!important` go, since a knob is consumed by the framework's own declaration rather than fighting it.
+
+#### Do not convert a direct declaration into a CSS API variable
+
+Replacing `background-color: transparent` with `--osui-dropdown-background: transparent` looks like the modern, correct form of the same instruction. It is not the same instruction, and the rewrite is one of the easiest ways to break an app during this migration.
+
+A `--osui-*` variable decides what the **framework's own** declaration resolves to:
+
+```css
+/* framework */
+.dropdown-container > div.dropdown-display { background-color: var(--osui-dropdown-background); }
+```
+
+It has no effect if some other rule sets `background-color` outright, because that rule wins the cascade before the variable is ever consulted. Customer stylesheets are full of such rules. A real case:
+
+```css
+/* app theme — sets the property directly, specificity (0,2,0) */
+.dropdown-container > div.dropdown-display { background-color: var(--color-neutral-2); }
+
+/* widget module — original, (0,3,0), beats it */
+.dropdown-container.locale-dropdown .dropdown-display { background-color: transparent; }
+
+/* widget module — "migrated" to the CSS API, (0,2,0) on a different property entirely */
+.dropdown-container.locale-dropdown { --osui-dropdown-background: transparent; }   /* no-op */
+```
+
+The original won a specificity contest. The variable does not enter that contest at all, so the override silently disappears and the app theme's grey comes back. The symptom was that a wrapper element "vanished" — the dropdown painted its own background over the 36px circle that contained it — with nothing in either stylesheet obviously wrong.
+
+**The rule:** when the original sets a property directly, keep it as a direct declaration at the same selector. Reach for the `--osui-*` variable only when the original was *already* relying on the framework's default — typically a property the customer never wrote, like `--osui-dropdown-list-max-height`. In the same block above, the `max-height` and popup-radius knobs are correct precisely because nothing else sets those properties.
+
+**Sweep for it before handing off.** Any `--osui-*` line you introduced that replaced a direct declaration is suspect; check whether any other stylesheet in the app sets that property on the same element.
+
+#### There are two primary blues, and fixing one does not fix the other
+
+`--token-semantics-primary-base` and `--token-text-primary` are separate tokens with separate defaults (`#105cef` and `#0f54da`). Re-pointing the first at `--color-primary` fixes links, the active nav item, the dropdown checkmark and the range slider's connect — which is most of what a customer reports — so it is easy to call the problem solved. `--token-text-primary` is read a further 14 times and stays blue, most visibly as the Upload pattern's "select file" label.
+
+After any primary re-point, sweep for the other one before declaring done:
+
+```bash
+rg -n 'var\(--token-text-primary[,)]' dist/ODC.OutSystemsUI.css
+```
+
+Prefer the component knob where one exists (`--osui-upload-color: var(--color-text)`) over re-pointing `--token-text-primary` globally — classic coloured the upload label with body text, not with primary, so the two tokens genuinely do mean different things.
+
+#### A role override is global — never copy a local rule up into one
+
+Every role you declare at `:root` reaches every framework rule that reads it, which is far more than the widget that prompted you to declare it. The failure is seductive: you find a customer rule that styles one widget, notice a role that looks like it means the same thing, and promote the rule's values into the role. The widget you were looking at is already handled by the customer's own rule, so nothing there changes and the edit looks free — while dozens of widgets you never looked at quietly change.
+
+The input roles are where this happens most, because customers very often restyle text inputs and the role names read as if they are about text inputs:
+
+```css
+--color-background-input   /* read 17× */
+--color-border-input       /* read 46× */
+```
+
+Those reads include **checkbox, radio, switch, wizard step icon, datepicker and the dropdown popup**, not just `.form-control[data-input]`. A customer rule like `background: var(--color-neutral-2); border: none;` is a normal thing to want on a text field and a disaster as a role: promoted, it strips the ring off every checkbox and radio in the app, and the customer reports "checkboxes disappeared" with nothing in their own CSS to explain it.
+
+Map each role to **what classic gave the widgets that read it**, not to what the customer's narrowest rule says. Then leave the customer's rule where it is — it keeps winning on its own selectors, which is exactly the scope they wanted.
+
+Before declaring any role, count its reads and look at what they are:
+
+```bash
+rg -n 'var\(--color-border-input[,)]' dist/ODC.OutSystemsUI.css
+```
+
+If the list contains a widget the customer's CSS never mentions, the role is the wrong place for that value.
+
 **Icons.** Framework icons moved from `--color-neutral-6` to `--token-icon-subtlest`. App icons with class `.icon` do not read that token; set `color: var(--color-neutral-N)` on `.icon`, and `color: inherit` on icons inside buttons, colored cards, and other blocks that set their own text color. When the icon color follows the flipped ramp, use the same `--color-neutral-N` in both modes. Use a different step in dark only when the hex must stay the same, because a flip moves that hex onto another step. Do not paste the hex.
 
 **A color that must not flip.** The same rule applies to text or a fill on a custom block. Set `color` and, when descendants read it, `--color-text` to the `--color-neutral-N` that holds that hex in that mode. A single `var(--color-neutral-N)` on `:root` changes after the dark ramp flip.
@@ -458,22 +594,34 @@ The exact neutral step for each role depends on the customer's palette. Map the 
 
 > **Warning:** h1–h3 are **smaller** in the new scale. A one-to-one swap changes the rendered size. Flag this for the customer to decide whether the new size is acceptable or whether they want to pick a different token step to preserve the old size.
 
-### Spacing (retired `--space-*` scale)
+### Spacing (`--space-*` is **not** retired — leave it alone)
 
-The entire family is retired. Expect high usage counts — a single customer stylesheet routinely has 50+ references, and every one is a dropped declaration. The names read like layout fundamentals rather than theme variables, which is why they get skipped; grep for `var(--space-` explicitly rather than trusting a visual scan.
+**`var(--space-m)` still resolves, to the same 24px it always did.** The scale is declared at `:root` in the shipped bundle with values identical to classic, in a deliberate `Theme layer · space scale` block in `src/scss/01-foundations/_root.scss` alongside the radius knobs. Customer CSS written against it renders unchanged.
 
-| Classic (retired) | New replacement | Value |
-|---|---|---|
-| `--space-none` | `--token-scale-0`, or emit plain `0` | 0 |
-| `--space-xs` | `--token-scale-100` | 4px |
-| `--space-s` | `--token-scale-200` | 8px |
-| `--space-base` | `--token-scale-400` | 16px |
-| `--space-m` | `--token-scale-600` | 24px |
-| `--space-l` | `--token-scale-800` | 32px |
-| `--space-xl` | `--token-scale-1000` | 40px |
-| `--space-xxl` | `--token-scale-1200` | 48px |
+This is the opposite of what the internal token-migration notes say, so verify rather than trusting either source:
 
-`--token-scale-*` runs in 4px steps with `025`/`050`/`075` for 1/2/3px, up to `9000` (360px).
+```bash
+rg -N '^\s*--space-' dist/ODC.OutSystemsUI.css
+```
+
+| Variable | Classic | New | Now resolves through |
+|---|---|---|---|
+| `--space-none` | 0 | 0px | `--token-scale-0` |
+| `--space-xs` | 4px | 4px | `--token-scale-100` |
+| `--space-s` | 8px | 8px | `--token-scale-200` |
+| `--space-base` | 16px | 16px | `--token-scale-400` |
+| `--space-m` | 24px | 24px | `--token-scale-600` |
+| `--space-l` | 32px | 32px | `--token-scale-800` |
+| `--space-xl` | 40px | 40px | `--token-scale-1000` |
+| `--space-xxl` | 48px | 48px | `--token-scale-1200` |
+
+**Do not rewrite these.** A `var(--space-*)` → `var(--token-scale-*, …)` sweep is a **Preference** row in Section 0 terms: it changes no rendered pixel, it touches more lines than anything else in a typical migration — 50+ references in a single stylesheet is normal — and every shorthand it touches is an opportunity to introduce the regression described under Category A. Propose it only if the customer has asked for one spacing vocabulary, and never as part of a breakage fix.
+
+**Why the two sources disagree.** The framework's own migration rules list `--space-*` as "retired, never reintroduce". That governs **framework SCSS authoring** — new component code must use `$token-scale-*`, and the shipped bundle contains zero `var(--space-` reads of its own as a result. It says nothing about whether the variable still resolves for a consumer, and it does. Keep the two audiences apart: retired *for the framework* is not retired *for the customer*.
+
+**One real consequence of that zero-read count.** Overriding `--space-base` at `:root` no longer reskins anything in the framework, because no framework rule reads it any more. It still drives the customer's own rules. See Section 9 for the same effect on utility classes.
+
+`--token-scale-*`, for the cases where you do need a token, runs in 4px steps with `025`/`050`/`075` for 1/2/3px, up to `9000` (360px).
 
 ### Border sizes
 
@@ -571,7 +719,22 @@ The radius names survived as theme roles, but values changed and one was dropped
 | `--border-radius-rounded` | `100px` | **`999px`** — visually equivalent |
 | `--border-radius-circle` | `100%` | **Retired** — use `border-radius: 50%` or `--border-radius-rounded` |
 
-New additions: `--border-radius-default` (global override — set once to re-radius everything), `--border-radius-2xs` through `--border-radius-2xl` (shape tier slots).
+New additions: `--border-radius-default` (global override) and the `--border-radius-2xs` through `--border-radius-2xl` shape tier slots.
+
+**`--border-radius-default` does not re-radius everything, despite how it is usually described.** Only the seven tier slots resolve `var(--border-radius-default, <own-default>)`. The three legacy roles resolve straight to their tokens and ignore it:
+
+```css
+--border-radius-lg: var(--border-radius-default, var(--token-shape-soft-lg, 8px));  /* follows */
+--border-radius-soft: var(--token-shape-soft-xs, 8px);                              /* does not */
+--border-radius-rounded: var(--token-border-radius-full, 999px);                    /* does not */
+--border-radius-none: var(--token-border-radius-0, var(--token-scale-0, 0px));      /* does not */
+```
+
+That exception is the one that matters, because `--border-radius-soft` is the role customer CSS actually reads. Setting `--border-radius-default` will not bring a corner reading `soft` back to its classic radius — only an explicit value will. Confirm the current split before promising a one-line fix:
+
+```bash
+rg -N '^\s*--border-radius-[a-z0-9]+:' dist/ODC.OutSystemsUI.css
+```
 
 > **Warning:** `--border-radius-soft` doubling from 4px to 8px is a visual change even though the name survived. If the customer relied on 4px corners, they'll need `border-radius: 4px` explicitly.
 
@@ -622,7 +785,7 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 
 ## 6. Dark theme considerations
 
-The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~447 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
+The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~879 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
 
 - Any hardcoded colour literal (`#abc123`, `rgb(...)`, `rgba(...)`, `hsl(...)`) that has a token or role equivalent.
 - Overrides pinned to a specific neutral step (e.g. `--color-neutral-9`) for text — these won't flip in dark mode. Prefer `--color-text` and its variants.
@@ -664,6 +827,10 @@ A file with no match on that pattern and no `.osui-` or `[data-` selector is alm
 
 If they can only provide some, proceed — but name the ones still outstanding in the Phase 3 handoff, and do not describe the migration as complete.
 
+**A dependency's stylesheet breaks the app, not the dependency.** The sharpest version of this is a shared widget module — a locale switcher, an icon library, a header block. Its CSS is not in the customer's module and may not even be theirs to edit, but its failures render inside *their* screens. Check the DOM before concluding a widget is unstyled: `data-block="SomeModule.SomeWidget"` on an ancestor means the rule you are looking for lives in `SomeModule`, and the right repair is to migrate that module rather than to pile a local override on top of it. Write the override if the customer needs the screen to look right today, but label it as a stopgap and name the module.
+
+**Watch for "the framework rule did not change, the rule containing it stopped applying."** The dependency case usually presents this way: measure the widget in both bundles, find the box metrics identical, and conclude nothing broke — when what actually broke is a *different* stylesheet's rule that was holding it in place. A flex item is the common shape, because `min-width: auto` stops it shrinking below its min-content width, so the moment a `min-width: 0` or a `padding: 0` from elsewhere stops applying, the item bursts out of its container and paints over it. The symptom reads as "the wrapper disappeared" when the wrapper is still there and merely covered.
+
 **Diagnosing one from the browser.** Walk the ancestor chain in the old app and the new one and compare the computed property at every level:
 
 ```js
@@ -679,7 +846,7 @@ If they can only provide some, proceed — but name the ones still outstanding i
 
 If the two chains are identical except that one element lost its value and now matches its parent, the declaration was **dropped at that element** — a dead variable in whatever stylesheet owns it. That is a different problem from a cascade you need to out-specify, and the fix belongs in the owning stylesheet, not in a more specific rule in the theme. Identify the owner from the class: if the theme stylesheet has no rule for that class at all, it is a block or screen stylesheet that was never migrated.
 
-The resolved value usually names the culprit. A size that reverted to an inherited one, where the expected value matches a retired variable exactly (18px is `--font-size-h6`, 8px is `--space-s`, and so on), identifies the dead reference without needing to see the stylesheet.
+The resolved value usually names the culprit. A size that reverted to an inherited one, where the expected value matches an A1 variable exactly (18px is `--font-size-h6`, 1px is `--border-size-s`, and so on), identifies the dead reference without needing to see the stylesheet. Spacing values are **not** a tell here — `--space-*` still resolves, so a wrong 8px or 24px has some other cause.
 
 ### Working files — one per source stylesheet
 
@@ -745,7 +912,7 @@ A file that comes back all-zero is worth a sentence of its own — it means that
 
 These are mechanical, safe, one-to-one replacements with no ambiguity:
 
-- **Retired variable swaps (Category A):** every `var(--border-size-s)` → `var(--token-border-size-025, 1px)`, every `var(--font-size-xs)` → `var(--token-font-size-300, 0.75rem)`, every `var(--font-regular)` → `var(--token-font-weight-regular, 400)`, every `var(--space-base)` → `var(--token-scale-400, 16px)`, etc. Use the full mapping table in Section 2, keep the literal fallback, and confirm each token name exists.
+- **Retired variable swaps (Category A1):** every `var(--border-size-s)` → `var(--token-border-size-025, 1px)`, every `var(--font-size-xs)` → `var(--token-font-size-300, 0.75rem)`, every `var(--font-regular)` → `var(--token-font-weight-regular, 400)`, etc. Use the full mapping table in Section 2, keep the literal fallback, and confirm each token name exists. **`var(--space-*)` is not on this list** — it still resolves, and sweeping it is the single largest source of pointless churn in a migration.
 - **Missing `--color-primary-active` (Category C):** if `:root` overrides `--color-primary` and `--color-primary-hover` but not `--color-primary-active`, add `--color-primary-active` with the same value as `--color-primary-hover` (safe default — pressed state matches hover).
 
 **Output:** write the migrated CSS back to each working file with `/* MIGRATED: ... */` comments on each changed line. Show a summary of what was changed (not the full CSS — that's in the file). Example of a migrated line:
@@ -814,7 +981,7 @@ If the CSS uses a dark-mode selector other than `.os-dark-theme`, present the op
 - **Option A:** Keep the custom selector as-is (app manages its own dark mode).
 - **Option B (recommended):** Add `.os-dark-theme` alongside the custom selector to benefit from the framework's dark token overrides.
 
-**Why Option B matters.** The framework ships ~447 dark-mode `--token-*` overrides scoped under `.os-dark-theme`. These cover feedback messages (`--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, …), input backgrounds, surface colors, shadow colors, state overlays, and many component internals. Without `.os-dark-theme`, all of these stay at their light-mode values — producing white feedback messages, light inputs, and other light-on-dark glitches. Adding `.os-dark-theme` alongside the customer's class (e.g. toggling both `.dark-mode` and `.os-dark-theme` on `<html>`) fixes these automatically without needing individual token overrides.
+**Why Option B matters.** The framework ships ~879 dark-mode `--token-*` overrides scoped under `.os-dark-theme`. These cover feedback messages (`--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, …), input backgrounds, surface colors, shadow colors, state overlays, and many component internals. Without `.os-dark-theme`, all of these stay at their light-mode values — producing white feedback messages, light inputs, and other light-on-dark glitches. Adding `.os-dark-theme` alongside the customer's class (e.g. toggling both `.dark-mode` and `.os-dark-theme` on `<html>`) fixes these automatically without needing individual token overrides.
 
 If the customer chooses Option A, flag that they will need to manually override every `--token-*` that their dark mode exposes (feedback messages, dropdowns, inputs, etc.). This is significantly more work than adding the class.
 
@@ -1006,7 +1173,9 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 .shadow-m { box-shadow: var(--token-elevation-2, ...); }
 ```
 
-> **Overriding the old variable no longer reskins the class.** Setting `--shadow-m` at `:root` used to change every `.shadow-m` element. It does nothing now — override `--token-elevation-2` instead. Same for `--space-*` → `--token-scale-*` and `--font-size-*` → `--token-font-size-*`.
+> **Overriding the old variable no longer reskins the class.** Setting `--shadow-m` at `:root` used to change every `.shadow-m` element. It does nothing now — override `--token-elevation-2` instead. Same for `--font-size-*` → `--token-font-size-*`.
+>
+> **`--space-*` is the subtle one.** It still resolves, so the customer's own rules reading it are fine — but no framework rule reads it any more, so setting `--space-base` at `:root` no longer moves `.margin-base` or anything else the framework ships. The variable works; it just stopped being a theming lever. Override `--token-scale-400` to move the utilities.
 
 ---
 
@@ -1206,7 +1375,7 @@ The new theme changed `--osui-blank-slate-icon-color` from a primary-adjacent co
 
 ### "I hand-built a dark mode"
 
-Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~447 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
+Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~879 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
 
 ### "I built dark mode by flipping the neutral ramp"
 
@@ -1310,6 +1479,7 @@ Four deltas repeat across the library. Recognise the shape and the fix follows:
 | Bottom bar | Item `neutral-8`, active `--color-primary`; icon inherits the item color | Active color unchanged, but the icon has its own `--osui-bottom-bar-item-icon-color` from `$token-icon-subtlest` | **Preference** | `--osui-bottom-bar-item-icon-color` |
 | Badge | 32px tall, 32px min-width, no inline padding | 20px tall and wide, plus `$token-scale-150` (6px) inline padding | **Preference** | `height`, `min-width`, `padding-inline` — there are no `--osui-*` knobs for the box, only `--osui-badge-color` |
 | Icon badge (notification count) | 18px bubble, 12px semi-bold text, anchored `left: 45%` with `translateY(-40%)`, no ring | 16px bubble, 10px bold text, anchored `right: 0; left: auto` with `translate(50%, -50%)`, and a new `box-shadow: 0 0 0 1px $token-border-subtlest` ring | **Mixed** | `box-shadow: none` plus the classic size, weight and anchor. **Restore the anchor whenever the app overrides `top`/`left` on the badge** — those offsets were tuned against the classic anchor and silently compound with the new transform **Split:** the re-anchoring is the breaking half, and only when the app sets its own offsets; the 18px→16px bubble, the smaller bolder text and the ring are preference. |
+| App menu (top nav) | `.app-menu-links a` is `--color-neutral-9`; hover and `.active` are `var(--color-primary)`; the active item is underlined with `border-bottom: --border-size-m solid var(--color-primary)`. **No hover background anywhere** | `a` is `--color-text`; hover and `.active` are `--token-semantics-primary-base`, which does *not* follow `--color-primary`; the active underline is `border-block-end: 2px solid transparent` — the space is reserved but nothing is drawn; and `.desktop .header-navigation .app-menu-links > a:hover` gained `background-color: --token-bg-neutral-subtlest-hover` | **Mixed** | The colour half is fixed by the `--token-semantics-primary-base` role override — do not restyle the nav. The other two need rules: `.layout:not(.layout-side) .app-menu-links a.active { border-block-end-color: var(--color-primary); }` restores the underline, and `.desktop .header-navigation .app-menu-links > a:hover { background-color: transparent; }` removes the hover fill. **Easy to miss in review** because an app with a custom header usually has no nav CSS at all, so there is nothing in the customer's sheet to flag — yet the nav is the most-looked-at element on every screen |
 | Icons | `.icon` inherits text color | Framework icons read `--token-icon-subtlest`; a plain `.icon` ignores it | **Breaks** | Category H icon row, plus `.icon { color: var(--color-neutral-N) }` and `color: inherit` on icons inside buttons, colored cards, and other blocks that set their own text color. **Confirm the class from the DOM before writing a rule** — many apps ship their own icon font under their own class (`.app-icon`, `.brand-icon`, …) and `.icon` never matches it. If the custom icon is nested inside an element that does carry `.icon`, it already inherits and needs no rule of its own |
 | Outlined transparent button | Border and label follow the text color | Dark label guidance sets `--color-text-dark`, invisible on a dark surface; the border token stays too dark | **Breaks** | The Category C outline rule |
 | Accordion item | `border` / `:after` `border-width`. Title is `--font-size-h6` (18px), `line-height: 1`, `--space-m` padding all round, no hover | Divider is `border-block-end` reading a knob. Title is `$token-font-size-400` (16px), `$token-font-line-height-600`, `padding-block: $token-scale-300` / `padding-inline: $token-scale-600`, plus `gap` and `justify-content: space-between`, and a hover fill | **Preference** | `--osui-accordion-item-border-width` and `--osui-accordion-item-title-hover-background`. **There is no knob for the title's font-size or padding** — override those properties directly on `.osui-accordion-item__title` |
@@ -1318,8 +1488,8 @@ Four deltas repeat across the library. Recognise the shape and the fix follows:
 | Button (disabled) | `.btn[disabled]` only recoloured background, border, and text. **No overlay** | Keeps that, then paints a `::after` wash over the whole button: `--osui-btn-disabled-overlay` is `rgba(255,255,255,.6)` in light and **`rgba(0,0,0,.6)` in dark**, inset past the border so it covers the ring too | **Collides** | `--osui-btn-disabled-overlay: transparent` on `.btn[disabled]`. The customer's own `--disabled-bg` / `--disabled-text` are applying correctly underneath — the wash sits on top, so the symptom is "my disabled button got murkier", not "my disabled colours stopped working". Easy to misdiagnose as a colour problem and chase the wrong variable. The borderless variant already sets `content: none`, so only the filled ones are affected |
 | Checkbox | `background: var(--color-neutral-0)`, `border: … solid var(--color-neutral-5)` — both on the neutral ramp, so it flipped with the theme | `--osui-checkbox-background: var(--color-background-input)`, `--osui-checkbox-border-color: var(--color-border-input)`. Dark re-maps the backing token to `--token-primitives-base-black` (**`#131518`**), which is not the customer's dark surface | **Breaks** | `[data-checkbox] { --osui-checkbox-background: var(--color-neutral-0); --osui-checkbox-border-color: var(--color-neutral-5); }`. Category H. In a flipped dark palette the box renders near-black against a navy or charcoal card and reads as a hole punched in the surface. **The selector is `[data-checkbox]`, not a class** |
 | Upload | `color: var(--color-neutral-9)` — body text, on the ramp | `--osui-upload-color: $token-text-primary`, a link blue (`#6f8bf4` under `.os-dark-theme`) | **Preference** | `--osui-upload-color: var(--color-text)`. The label turning blue is the tell; the border and radius knobs are separate (`--osui-upload-border-color`, `--osui-upload-border-radius`) |
-| Dropdown | Focus is a border only. Selected popup row is a `--color-neutral-2` fill | Focus adds a 2px `box-shadow` ring. Selected row is `background: none` with a primary `::after` checkmark that reads `--osui-icon-check` and `--osui-icon-font-family` | **Mixed** | `--osui-dropdown-focus-border-color` and `--osui-dropdown-focus-ring-color` (set the ring to `transparent` to drop it). To restore the selected fill, set the background on `.dropdown-popup-row-selected` and `content: none` on its `::after`. The checkmark is blank unless an icon library is loaded **Split:** the focus ring is breaking only where it overflows a tight layout; the selected-row fill is preference. The popup row also lost its fixed `height: 40px` and is now built from `padding-block: $token-scale-200` around a 24px line box — the same 40px, but sourced from padding. Any app rule setting `padding` on that row as a **shorthand** now zeroes the block value and flattens the row to a bare line of text; rewrite it as `padding-inline` alone. The popup also shrank and got rounder: `max-height` went from a hard `300px` to `--osui-dropdown-list-max-height: 240px`, and the radius from `--border-radius-soft` (4px in classic) to `--border-radius-lg` (8px). A list that fit without scrolling can now scroll — restore with `--osui-dropdown-list-max-height` and `--osui-dropdown-popup-border-radius`, using a **literal** for the radius, since `--border-radius-soft` itself is no longer 4px. |
-| Range slider | Handle is 24px, `neutral-0` fill, 1px `neutral-7` border, with the vendor grip marks drawn through `:before` / `:after`. The filled connect reads `var(--color-primary)`. Track is `--color-neutral-5` at `--border-radius-soft` (4px) | Handle is **16px** with a 2px `--color-primary` border; both pseudos are `display: none` **and lost their base geometry**. The connect is hardcoded to `$token-semantics-primary-base` — it **no longer follows `--color-primary`**. Track is `--color-border`, fully pill-shaped | **Mixed** | `--osui-range-slider-handle-background`, `--osui-range-slider-handle-border-color`, `--osui-range-slider-track-color`, `--osui-range-slider-track-radius`. **Three things have no knob:** handle size (set `--range-slider-handle-size`), connect colour, and the pseudo marks. For the connect, pick by intent: if the customer re-branded `--color-primary` app-wide, re-point `--token-semantics-primary-base` at `:root` so every primary-driven component follows — classic read `--color-primary` for all of them, so this restores the old behaviour in one line. Only if they wanted the slider alone recoloured should you set `background` on `.noUi-connect`. If the customer repurposed `:before` as a visible feature — a centre dot, a custom grip — restate it **in full** (`display`, `content`, `position`, `top`, `transform`, `height`, `width`, `left`), because the new theme dropped the geometry along with the `display`. The `--has-ticks` margin only moved from `margin` to `margin-block` / `margin-inline` — same 24px / 40px, nothing to restore **Split:** the lost pseudo-element geometry and the connect no longer following `--color-primary` are the breaking halves; the 24px→16px handle, the track colour and the pill radius are preference. |
+| Dropdown | Focus is a border only. Selected popup row is a `--color-neutral-2` fill | Focus adds a 2px `box-shadow` ring. Selected row is `background: none` with a primary `::after` checkmark that reads `--osui-icon-check` and `--osui-icon-font-family` | **Mixed** | `--osui-dropdown-focus-border-color` and `--osui-dropdown-focus-ring-color` (set the ring to `transparent` to drop it). To restore the selected fill, set the background on `.dropdown-popup-row-selected` and `content: none` on its `::after`. The checkmark is blank unless an icon library is loaded — **and it is not purely cosmetic**: it is `flex-shrink: 0` with an 8px inline margin, so it takes roughly 24px of fixed width out of the row. The label carries `text-overflow: ellipsis` in both themes and absorbs the loss silently, so a narrow dropdown truncates its own selected option (`EN` renders as `E…`). Classic's fill cost zero width, which is why this only appears now. That is a Breaks, not a Preference, wherever the control is narrow **Split:** the focus ring is breaking only where it overflows a tight layout; the selected-row fill is preference. The popup row also lost its fixed `height: 40px` and is now built from `padding-block: $token-scale-200` around a 24px line box — the same 40px, but sourced from padding. Any app rule setting `padding` on that row as a **shorthand** now zeroes the block value and flattens the row to a bare line of text; rewrite it as `padding-inline` alone. The popup also shrank and got rounder: `max-height` went from a hard `300px` to `--osui-dropdown-list-max-height: 240px`, and the radius from `--border-radius-soft` (4px in classic) to `--border-radius-lg` (8px). A list that fit without scrolling can now scroll — restore with `--osui-dropdown-list-max-height` and `--osui-dropdown-popup-border-radius`, using a **literal** for the radius, since `--border-radius-soft` itself is no longer 4px. |
+| Range slider | Handle is 24px, `neutral-0` fill, 1px `neutral-7` border, with the vendor grip marks drawn through `:before` / `:after`. The filled connect reads `var(--color-primary)`. Track is `--color-neutral-5` at `--border-radius-soft` (4px) | Handle is **16px** with a 2px `--color-primary` border; both pseudos are `display: none`. The connect is hardcoded to `$token-semantics-primary-base` — it **no longer follows `--color-primary`**. Track is `--color-border`, fully pill-shaped | **Mixed** | `--osui-range-slider-handle-background`, `--osui-range-slider-handle-border-color`, `--osui-range-slider-track-color`, `--osui-range-slider-track-radius`. **Three things have no knob:** handle size (set `--range-slider-handle-size`), connect colour, and the pseudo marks. For the connect, pick by intent: if the customer re-branded `--color-primary` app-wide, re-point `--token-semantics-primary-base` at `:root` so every primary-driven component follows — classic read `--color-primary` for all of them, so this restores the old behaviour in one line. Only if they wanted the slider alone recoloured should you set `background` on `.noUi-connect`. If the customer repurposed `:before` as a visible feature — a centre dot, a custom grip — **`display: block` is the entire repair, and you must not restate the geometry**. noUiSlider's own `.noUi-handle:before` rule (`content`, `position: absolute`, `height: 14px`, `width: 1px`, `left: 14px`, `top: 6px`) is byte-identical in both bundles; the new theme only layers a `display: none` over it. Writing your own `top` / `transform` / `height` overrides a vendor rule that was never broken and moves the mark somewhere classic never put it — verify with `rg -A 10 'noUi-handle:before' classic-theme/ODC.OutSystemsUI.css dist/ODC.OutSystemsUI.css` before writing a line. **`--range-slider-handle-size` is also a trap:** it is *not* retired, so a `calc()` written against it still resolves — but it went from a flat `24px` to `var(--token-scale-400, 16px)`, so any rule sizing or positioning something off it silently shrank by a third without the rule changing. Set it back on `.osui-range-slider` rather than rewriting the `calc()`. The `--has-ticks` margin only moved from `margin` to `margin-block` / `margin-inline` — same 24px / 40px, nothing to restore **Split:** the hidden pseudo-element and the connect no longer following `--color-primary` are the breaking halves; the 24px→16px handle, the track colour and the pill radius are preference. |
 | Feedback message, alert, notification, tag, badge, user avatar | Status and family colors from `--color-{family}-{shade}` | Status roles and `--token-bg-extended-*`; the four `--token-bg-*-subtle-default` stay light without `.os-dark-theme` | **Breaks** | Category A extended-palette rows; Step 2f feedback tokens |
 | Switch, checkbox, radio button, input, upload | Sized and colored by direct properties | Each has its own `--osui-*` size, fill, border, and checked knobs | **Collides** | The widget's knobs — a direct property loses to them |
 | Carousel | Card content sized by the customer's own `min-height` on the wrapper | The card gained padding and a taller minimum, so a classic `min-height` now clips the content | **Collides** | Re-measure the rendered card and raise the wrapper's `min-height`. A hand-set height anywhere around a carousel, list, or card grid is worth re-checking for the same reason |
@@ -1329,7 +1499,7 @@ Four deltas repeat across the library. Recognise the shape and the fix follows:
 
 ## 12. What NOT to flag
 
-- Variables that are still **declared** (Section 3) — but "still declared" is not "unchanged". `--color-primary`, `--color-neutral-*`, and `--border-radius-soft` all survive under the same name carrying a **different value**, and those belong in Section 8 (Category F), not here. `--border-radius-soft` went 4px → 8px, so a rule reading it renders at twice the radius with nothing in the CSS to show for it. What genuinely needs no action is `--border-radius-none`, and roles whose value did not move. Note that `var(--space-*)` is **not** in this group at all — the whole spacing scale is retired.
+- Variables that are still **declared** (Section 3) — but "still declared" is not "unchanged". `--color-primary`, `--color-neutral-*`, and `--border-radius-soft` all survive under the same name carrying a **different value**, and those belong in Section 8 (Category F), not here. `--border-radius-soft` went 4px → 8px, so a rule reading it renders at twice the radius with nothing in the CSS to show for it. What genuinely needs no action is `--border-radius-none`, roles whose value did not move, and **the entire `--space-*` scale**, which is declared with its classic values and should be left exactly as the customer wrote it.
 - Inline styles set by the OutSystems platform runtime — only flag CSS the customer authored.
 - Variables inside `env()` or `calc()` wrappers that are structurally correct.
 - Provider/vendor CSS (`.flatpickr-*`, `.vscomp-*`, `.splide-*`) — these are framework-owned.
