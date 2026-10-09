@@ -1,0 +1,1167 @@
+{
+	"$comment": "Component registry read by scripts/ai-docs (npm run docs:ai). The inventory discovers every component from the tree and derives its kind from the directory (02-layout → layout, 05-useful and 06-utilities → utility, else component; a *API.ts is a pattern); an entry is needed only for what cannot be derived. kind: overrides the derived kind; title: display name of a utility family; host {host, reason}: the partial styles markup something else emits, so it has no markup contract of its own; story: story name when it differs from the component name; block: the OML block(s) the entry drives (flow, name, paramMap, platformOnly, eventMap) — a block is linked from one entry at most.",
+	"components": {
+		"a11y": {
+			"title": "Accessibility"
+		},
+		"Accordion": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Accordion",
+					"paramMap": {
+						"MultipleItems": "MultipleItems",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"AccordionItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "AccordionItem",
+					"paramMap": {
+						"StartsExpanded": "StartsExpanded",
+						"Icon": "Icon",
+						"IconPosition": "IconPosition",
+						"IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"action-sheet": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ActionSheet"
+				}
+			]
+		},
+		"alert": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Alert"
+				}
+			]
+		},
+		"animate": {
+			"kind": "utility"
+		},
+		"AnimatedLabel": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "AnimatedLabel",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"badge": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Badge"
+				}
+			]
+		},
+		"balloon": {
+			"host": {
+				"host": "OutSystems UI patterns (OverflowMenu and others)",
+				"reason": "a floating layer created and positioned by the patterns that use it; measured through their stories"
+			}
+		},
+		"blank-slate": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "BlankSlate"
+				}
+			]
+		},
+		"border-radius": {
+			"title": "Border radius & shape"
+		},
+		"border-size": {
+			"title": "Border size"
+		},
+		"bottom-bar-item": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "BottomBarItem"
+				}
+			]
+		},
+		"BottomSheet": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "BottomSheet",
+					"paramMap": {
+						"Shape": "Shape",
+						"ShowHandler": "ShowHandler",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"box-height": {
+			"title": "Box height"
+		},
+		"box-width": {
+			"title": "Box width"
+		},
+		"breadcrumbs": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Breadcrumbs"
+				},
+				{
+					"flow": "Navigation",
+					"name": "BreadcrumbsItem"
+				}
+			]
+		},
+		"btn": {
+			"story": "button"
+		},
+		"ButtonLoading": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "ButtonLoading",
+					"paramMap": {
+						"IsLoading": "IsLoading",
+						"ShowLabelOnLoading": "ShowLoadingAndLabel",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"card": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Card"
+				}
+			]
+		},
+		"card-background": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardBackground"
+				}
+			]
+		},
+		"card-item": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardItem"
+				}
+			]
+		},
+		"card-sectioned": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardSectioned"
+				}
+			]
+		},
+		"Carousel": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Carousel",
+					"paramMap": {
+						"Navigation": "Navigation",
+						"Height": "Height",
+						"ItemsPerSlide.Desktop": "ItemsDesktop",
+						"ItemsPerSlide.Tablet": "ItemsTablet",
+						"ItemsPerSlide.Phone": "ItemsPhone",
+						"OptionalConfigs.AutoPlay": "AutoPlay",
+						"OptionalConfigs.Loop": "Loop",
+						"OptionalConfigs.Padding": "Padding",
+						"OptionalConfigs.ItemsGap": "ItemsGap",
+						"OptionalConfigs.StartingPosition": "StartingPosition",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"chat-message": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ChatMessage"
+				}
+			]
+		},
+		"colors-brand": {
+			"title": "Colours · brand"
+		},
+		"colors-neutral": {
+			"title": "Colours · neutral"
+		},
+		"colors-others": {
+			"title": "Colours · other"
+		},
+		"colors-palette": {
+			"title": "Colours · palette"
+		},
+		"colors-semantic": {
+			"title": "Colours · semantic"
+		},
+		"columns": {
+			"kind": "utility"
+		},
+		"content": {
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the .content region and its title/actions rows are placeholders of the Layout block"
+			}
+		},
+		"counter": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Counter"
+				}
+			]
+		},
+		"DatePicker": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "DatePicker",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"ShowTodayButton": "ShowTodayButton",
+						"TimeFormat": "TimeFormat",
+						"OptionalConfigs.InitialDate": "InitialDate",
+						"OptionalConfigs.MinDate": "MinDate",
+						"OptionalConfigs.MaxDate": "MaxDate",
+						"OptionalConfigs.FirstWeekDay": "FirstWeekDay",
+						"OptionalConfigs.ShowWeekNumbers": "ShowWeekNumbers",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DatePickerRange",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"ShowTodayButton": "ShowTodayButton",
+						"OptionalConfigs.InitialStartDate": "InitialStartDate",
+						"OptionalConfigs.InitialEndDate": "InitialEndDate",
+						"OptionalConfigs.MinDate": "MinDate",
+						"OptionalConfigs.MaxDate": "MaxDate",
+						"OptionalConfigs.FirstWeekDay": "FirstWeekDay",
+						"OptionalConfigs.ShowWeekNumbers": "ShowWeekNumbers",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"display": {
+			"title": "Display"
+		},
+		"display-align": {
+			"title": "Display · alignment"
+		},
+		"display-flex": {
+			"title": "Display · flex"
+		},
+		"Dropdown": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Advanced",
+					"name": "DropdownServerSide",
+					"paramMap": {
+						"AllowMultipleSelection": "AllowMultipleSelection",
+						"IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DropdownSearch",
+					"paramMap": {
+						"OptionsList": "OptionsList",
+						"StartingSelection": "StartingSelection",
+						"Prompt": "Prompt",
+						"OptionalConfigs.AllowMultipleSelection": "AllowMultipleSelection",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"OptionalConfigs.NoResultsText": "NoResultsText",
+						"OptionalConfigs.SearchPrompt": "SearchPrompt",
+						"OptionalConfigs.NoOptionsText": "NoOptionsText",
+						"OptionalConfigs.SanitizeDropdownValues": "SanitizeDropdownValues",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnChanged": "OnSelected"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DropdownTags",
+					"paramMap": {
+						"OptionsList": "OptionsList",
+						"StartingSelection": "StartingSelection",
+						"Prompt": "Prompt",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"OptionalConfigs.NoResultsText": "NoResultsText",
+						"OptionalConfigs.SearchPrompt": "SearchPrompt",
+						"OptionalConfigs.NoOptionsText": "NoOptionsText",
+						"OptionalConfigs.SanitizeDropdownValues": "SanitizeDropdownValues",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnChanged": "OnSelected"
+					}
+				}
+			]
+		},
+		"DropdownServerSideItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Advanced",
+					"name": "DropdownServerSideItem",
+					"paramMap": {
+						"ItemId": "ItemId",
+						"IsSelected": "IsSelected",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelected": "OnSelected"
+					}
+				}
+			]
+		},
+		"FlipContent": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "FlipContent",
+					"paramMap": {
+						"StartsFlipped": "IsFlipped",
+						"FlipOnClick": "FlipSelf",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnFlip": "OnToggle"
+					}
+				}
+			]
+		},
+		"floating-actions": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "FloatingActions"
+				},
+				{
+					"flow": "Interaction",
+					"name": "FloatingActionsItem"
+				}
+			]
+		},
+		"floating-content": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "FloatingContent"
+				}
+			]
+		},
+		"Gallery": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Adaptive",
+					"name": "Gallery",
+					"paramMap": {
+						"RowItemsDesktop": "RowItemsDesktop",
+						"RowItemsTablet": "RowItemsTablet",
+						"RowItemsPhone": "RowItemsPhone",
+						"ItemsGap": "ItemsGap",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"header": {
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the header is a placeholder group of the Layout block"
+			}
+		},
+		"header-layout-native": {
+			"host": {
+				"host": "app template Layout blocks (native)",
+				"reason": "header variant of the native layout"
+			}
+		},
+		"header-layout-side": {
+			"host": {
+				"host": "app template Layout blocks (side menu)",
+				"reason": "header variant of the side-menu layout"
+			}
+		},
+		"icon-badge": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "IconBadge"
+				}
+			]
+		},
+		"images": {
+			"title": "Images"
+		},
+		"InlineSvg": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "InlineSVG",
+					"paramMap": {
+						"SVGCode": "SVGCode",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"input-with-icon": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "InputWithIcon"
+				}
+			]
+		},
+		"ios-bounce": {
+			"host": {
+				"host": "platform runtime (iOS)",
+				"reason": "a fix applied to the native layout by the runtime; no markup of its own"
+			}
+		},
+		"layout": {
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the screen layout skeleton (.screen-container > .layout) comes from the template's Layout block"
+			}
+		},
+		"lightbox-image": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "LightboxImage"
+				}
+			]
+		},
+		"list-item-content": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ListItemContent"
+				}
+			]
+		},
+		"list-updating": {
+			"kind": "component"
+		},
+		"login": {
+			"host": {
+				"host": "app template Login common screen",
+				"reason": "the login screen and its form come from the template's common screen"
+			}
+		},
+		"master-detail": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Adaptive",
+					"name": "MasterDetail"
+				}
+			]
+		},
+		"menu": {
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the application menu container and overlay come from the Menu block"
+			}
+		},
+		"menu-app-login-info": {
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the signed-in user block is part of the Menu block"
+			}
+		},
+		"menu-app-menu-links": {
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the navigation links are generated by the Menu block from the app's screens"
+			}
+		},
+		"menu-header-logo": {
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the logo slot is part of the Menu block"
+			}
+		},
+		"menu-layout-native": {
+			"host": {
+				"host": "app template Menu block (native)",
+				"reason": "menu variant of the native layout"
+			}
+		},
+		"menu-layout-side": {
+			"host": {
+				"host": "app template Menu block (side menu)",
+				"reason": "menu variant of the side-menu layout"
+			}
+		},
+		"miscellaneous": {
+			"title": "Miscellaneous"
+		},
+		"MonthPicker": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "MonthPicker",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"InitialMonth": "InitialMonth",
+						"MinMonth": "MinMonth",
+						"MaxMonth": "MaxMonth",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelected": "OnSelected"
+					}
+				}
+			]
+		},
+		"Notification": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Notification",
+					"paramMap": {
+						"StartsOpen": "StartsOpen",
+						"Width": "Width",
+						"Position": "Position",
+						"OptionalConfigs.InteractToClose": "InteractToClose",
+						"OptionalConfigs.CloseAfterTime": "CloseAfterTime",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"overflow": {
+			"title": "Overflow"
+		},
+		"OverflowMenu": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "OverflowMenu",
+					"paramMap": {
+						"BalloonShape": "Shape",
+						"BalloonPosition": "Position",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnMenuToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"pagination": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Pagination"
+				}
+			]
+		},
+		"positioning": {
+			"title": "Positioning"
+		},
+		"positioning-absolute": {
+			"title": "Positioning · absolute"
+		},
+		"Progress": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "ProgressBar",
+					"paramMap": {},
+					"platformOnly": [
+						"Progress",
+						"ProgressColor",
+						"TrailColor",
+						"Thickness",
+						"OptionalConfigs",
+						"ExtendedClass"
+					],
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Numbers",
+					"name": "ProgressCircle",
+					"paramMap": {},
+					"platformOnly": [
+						"Progress",
+						"ProgressColor",
+						"Size",
+						"TrailColor",
+						"Thickness",
+						"OptionalConfigs",
+						"ExtendedClass"
+					],
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"provider-login-button": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "ProviderLoginButton"
+				}
+			]
+		},
+		"pull-to-refresh": {
+			"kind": "layout",
+			"host": {
+				"host": "platform runtime (native)",
+				"reason": "the pull indicator is injected by the platform runtime"
+			},
+			"block": [
+				{
+					"flow": "Private",
+					"name": "PullToRefresh"
+				}
+			]
+		},
+		"radio-button": {
+			"story": "radiogroup"
+		},
+		"RangeSlider": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "RangeSlider",
+					"paramMap": {
+						"MinValue": "MinValue",
+						"MaxValue": "MaxValue",
+						"Orientation": "Orientation",
+						"Size": "Size",
+						"StartingValue": "StartingValueFrom",
+						"OptionalConfigs.ShowFloatingLabel": "ShowFloatingLabel",
+						"OptionalConfigs.Step": "Step",
+						"OptionalConfigs.ShowTickMarks": "ShowTickMarks",
+						"OptionalConfigs.TickMarksInterval": "TickMarksInterval",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "RangeSliderInterval",
+					"paramMap": {
+						"MinValue": "MinValue",
+						"MaxValue": "MaxValue",
+						"StartingValueFrom": "StartingValueFrom",
+						"StartingValueTo": "StartingValueTo",
+						"Orientation": "Orientation",
+						"Size": "Size",
+						"OptionalConfigs.ShowFloatingLabel": "ShowFloatingLabel",
+						"OptionalConfigs.Step": "Step",
+						"OptionalConfigs.ShowTickMarks": "ShowTickMarks",
+						"OptionalConfigs.TickMarksInterval": "TickMarksInterval",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"Rating": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Rating",
+					"paramMap": {
+						"RatingValue": "RatingValue",
+						"RatingScale": "RatingScale",
+						"IsEdit": "IsEdit",
+						"Size": "Size",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelect": "OnSelected"
+					}
+				}
+			]
+		},
+		"scrollable-area": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ScrollableArea"
+				}
+			]
+		},
+		"Search": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Search",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"section": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Section"
+				},
+				{
+					"flow": "Content",
+					"name": "SectionGroup"
+				}
+			]
+		},
+		"SectionIndex": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "SectionIndex",
+					"paramMap": {
+						"SmoothScrolling": "SmoothScrolling",
+						"IsFixed": "IsFixed",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"SectionIndexItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "SectionIndexItem",
+					"paramMap": {
+						"ScrollToWidgetId": "ScrollToWidgetId",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"shadow": {
+			"title": "Shadow"
+		},
+		"Sidebar": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Sidebar",
+					"paramMap": {
+						"StartsOpen": "StartsOpen",
+						"Direction": "Direction",
+						"HasOverlay": "HasOverlay",
+						"Width": "Width",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"space-margin": {
+			"title": "Spacing · margin"
+		},
+		"space-padding": {
+			"title": "Spacing · padding"
+		},
+		"stacked-cards": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "StackedCards"
+				}
+			]
+		},
+		"Submenu": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Submenu",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"SwipeEvents": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "SwipeEvents",
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"eventMap": {
+						"SwipeUp": "SwipeUp",
+						"SwipeDown": "SwipeDown",
+						"SwipeRight": "SwipeRight",
+						"SwipeLeft": "SwipeLeft"
+					}
+				}
+			]
+		},
+		"Tabs": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Tabs",
+					"paramMap": {
+						"TabsOrientation": "TabsOrientation",
+						"StartingTab": "StartingTab",
+						"Height": "Height",
+						"TabsVerticalPosition": "TabsVerticalPosition",
+						"OptionalConfigs.ContentAutoHeight": "ContentAutoHeight",
+						"OptionalConfigs.JustifyHeaders": "JustifyHeaders",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnTabChange": "OnChange"
+					}
+				}
+			]
+		},
+		"TabsContentItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TabsContentItem",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"TabsHeaderItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TabsHeaderItem",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"tag": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Tag"
+				}
+			]
+		},
+		"text": {
+			"title": "Text"
+		},
+		"themegrid-container": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the grid container wraps header, content and footer placeholders of the Layout block"
+			}
+		},
+		"timeline": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TimelineItem"
+				}
+			]
+		},
+		"TimePicker": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "TimePicker",
+					"paramMap": {
+						"TimeFormat": "TimeFormat",
+						"Is24Hours": "Is24Hours",
+						"InitialTime": "InitialTime",
+						"OptionalConfigs.MinTime": "MinTime",
+						"OptionalConfigs.MaxTime": "MaxTime",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"Tooltip": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Tooltip",
+					"paramMap": {
+						"Position": "Position",
+						"StartsOpen": "StartVisible",
+						"Trigger": "IsHover",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"TouchEvents": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "TouchEvents",
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"platformOnly": [
+						"PreventDefaults"
+					],
+					"eventMap": {
+						"End": "End",
+						"Move": "Move",
+						"Start": "Start"
+					}
+				}
+			]
+		},
+		"typography": {
+			"title": "Typography"
+		},
+		"user-avatar": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "UserAvatar"
+				}
+			]
+		},
+		"Video": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Video",
+					"paramMap": {
+						"URL": "URL",
+						"Controls": "Controls",
+						"Width": "Width",
+						"Height": "Height",
+						"Captions": "Captions",
+						"OptionalConfigs.Autoplay": "Autoplay",
+						"OptionalConfigs.Loop": "Loop",
+						"OptionalConfigs.Muted": "Muted",
+						"OptionalConfigs.PosterURL": "PosterURL",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"StateChanged": "StateChanged"
+					}
+				}
+			]
+		},
+		"visibility": {
+			"title": "Visibility"
+		},
+		"Wizard": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Wizard",
+					"paramMap": {
+						"IsVertical": "IsVertical",
+						"StepsBehaviour": "StepBehavior",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"WizardItem": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "WizardItem",
+					"paramMap": {
+						"Status": "Status",
+						"ReverseLabelPosition": "ReverseLabelPosition",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnClick": "OnClick"
+					}
+				}
+			]
+		}
+	}
+}

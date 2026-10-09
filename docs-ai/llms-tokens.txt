@@ -1,0 +1,156 @@
+# OutSystems UI — theming surface
+
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
+Read chain: property → var(--osui-{component}-{prop}) → var(--{role}) → $token-* → var(--token-*, fallback).
+Override variables only. App/theme: set roles or --token-* at :root (dark: class os-dark-theme on <html>). Instance: set an --osui-* knob inline or in a class.
+
+## Framework theme roles (src/scss/01-foundations/_root.scss)
+- --color-background-body
+- --color-background-surface
+- --color-background-header
+- --color-background-sidemenu
+- --color-background-footer
+- --color-background-login
+- --color-background-input
+- --color-background-input-disabled
+- --color-text
+- --color-text-subtle
+- --color-text-subtlest
+- --color-text-disabled
+- --color-text-inverse
+- --color-text-light
+- --color-text-dark
+- --color-border
+- --color-border-subtle
+- --color-border-subtlest
+- --color-border-input
+- --color-border-input-hover
+- --color-border-input-press
+- --color-border-primary
+- --color-focus-outer
+- --color-focus-inner
+- --color-primary
+- --color-primary-hover
+- --color-primary-selected
+- --color-primary-active
+- --color-secondary
+- --color-neutral — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-0 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-1 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-2 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-3 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-4 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-5 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-6 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-7 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-8 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-9 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-10 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-error
+- --color-warning
+- --color-success
+- --color-info
+- --border-radius-2xs
+- --border-radius-xs
+- --border-radius-sm
+- --border-radius-md
+- --border-radius-lg
+- --border-radius-xl
+- --border-radius-2xl
+- --border-radius-none — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --border-radius-soft — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --border-radius-rounded — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --header-size
+- --header-size-content
+- --side-menu-size
+- --bottom-bar-size
+- --footer-height
+- --os-safe-area-top
+- --os-safe-area-right
+- --os-safe-area-bottom
+- --os-safe-area-left
+- --layer-system-scale
+- --layer-above
+- --layer-below
+- --layer-global-screen
+- --layer-global-elevated
+- --layer-global-navigation
+- --layer-global-off-canvas
+- --layer-global-instant-interaction
+- --layer-global-negative
+- --layer-global-auto
+- --layer-local-tier-1
+- --layer-local-tier-2
+- --layer-local-tier-3
+- --layer-local-tier-4
+- --layer-local-tier-5
+- --osui-bottom-sheet-layer
+- --osui-notification-layer
+- --osui-popup-layer
+- --osui-sidebar-layer
+- --osui-menu-layer
+- --color-<color> (generated per family) — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --space-<type> (generated per family) — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+
+## Component CSS API knobs (--osui-*)
+- Accordion: --osui-accordion-border-radius
+- AccordionItem: --osui-accordion-item-background --osui-accordion-item-border-color --osui-accordion-item-border-width --osui-accordion-item-border-radius --osui-accordion-item-color --osui-accordion-item-active-indicator-color --osui-accordion-item-icon-color --osui-accordion-item-title-hover-background --osui-accordion-item-title-hover-border-color --osui-accordion-item-plus-minus-size
+- AnimatedLabel: --osui-animated-label-color --osui-animated-label-border-color --osui-animated-label-hover-border-color --osui-animated-label-focus-border-color --osui-animated-label-focus-ring-color --osui-animated-label-focus-shadow --osui-animated-label-error-color --osui-animated-label-disabled-background --osui-animated-label-disabled-color
+- BottomSheet: --osui-bottom-sheet-background --osui-bottom-sheet-shadow --osui-bottom-sheet-padding --osui-bottom-sheet-handler-background --osui-bottom-sheet-handler-width --osui-bottom-sheet-draggable-area --osui-bottom-sheet-transition-function
+- Carousel: --osui-carousel-arrow-background --osui-carousel-arrow-border-radius --osui-carousel-arrow-shadow --osui-carousel-arrow-icon-color --osui-carousel-arrow-disabled-overlay --osui-carousel-pagination-color --osui-carousel-pagination-active-color --osui-carousel-track-width --osui-carousel-pagination-margin
+- DatePicker: --osui-flatpickr-layer --osui-flatpickr-shadow --osui-datepicker-border-radius --osui-datepicker-time-background --osui-datepicker-time-border-color --osui-datepicker-time-border-radius --osui-datepicker-time-color --osui-datepicker-time-focus-color --osui-datepicker-time-height --osui-datepicker-time-segment-width --osui-flatpickr-calendar-elems-layer --osui-datepicker-disabled-background --osui-datepicker-disabled-border-color --osui-datepicker-disabled-color --osui-datepicker-input-border-radius --osui-input-border-radius
+- Dropdown: --osui-dropdown-popup-border-radius --osui-dropdown-disabled-background --osui-dropdown-disabled-border-color --osui-dropdown-disabled-color --osui-dropdown-border-radius --osui-dropdown-background --osui-dropdown-border-color --osui-dropdown-hover-border-color --osui-dropdown-focus-border-color --osui-dropdown-focus-ring-color --osui-dropdown-list-background --osui-dropdown-arrow-color --osui-dropdown-arrow-size --osui-dropdown-tag-color
+- DropdownServerSideItem: --osui-dropdown-item-background --osui-dropdown-item-color --osui-dropdown-item-hover-bg
+- MonthPicker: --osui-monthpicker-popup-border-radius --osui-monthpicker-disabled-background --osui-monthpicker-disabled-border-color --osui-monthpicker-disabled-color --osui-monthpicker-input-border-radius --osui-input-border-radius
+- Notification: --osui-notification-background --osui-notification-border-radius --osui-notification-shadow --osui-notification-color --osui-notification-gap --osui-notification-padding --osui-notification-margin
+- OverflowMenu: --osui-overflow-menu-background --osui-overflow-menu-shadow --osui-overflow-menu-color --osui-overflow-menu-trigger-active-bg --osui-overflow-menu-min-width --osui-overflow-menu-border-radius --osui-btn-background --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-floating-offset --osui-balloon-background --osui-balloon-border-radius --osui-balloon-shadow
+- RangeSlider: --osui-range-slider-track-color --osui-range-slider-track-radius --osui-range-slider-handle-background --osui-range-slider-handle-border-color --osui-range-slider-handle-shadow --osui-range-slider-disabled-track-color --osui-range-slider-disabled-connect-color --osui-range-slider-disabled-color
+- Rating: --osui-rating-filled-color --osui-rating-empty-color --osui-rating-disabled-color --osui-rating-disabled-empty-color
+- SectionIndex: --osui-section-index-border-color --osui-section-index-border-width --osui-section-index-item-color --osui-section-index-item-color-hover --osui-section-index-item-active-color --osui-section-index-item-border-radius --osui-section-index-item-hover-background --osui-section-index-item-press-background --osui-section-index-active-indicator-color --osui-section-index-active-indicator-width --osui-section-index-active-indicator-offset
+- Sidebar: --osui-sidebar-background --osui-sidebar-color --osui-sidebar-shadow --osui-sidebar-padding-inline --osui-sidebar-padding-block
+- Submenu: --osui-submenu-items-background --osui-submenu-items-border-color --osui-submenu-items-border-radius --osui-submenu-items-shadow --osui-submenu-item-color --osui-submenu-item-font-size --osui-submenu-item-line-height --osui-submenu-item-border-radius --osui-submenu-item-selected-background --osui-submenu-item-pressed-background --osui-submenu-item-color-disabled --osui-submenu-header-color --osui-submenu-active-border-color --osui-submenu-hover-border-color --osui-submenu-max-height
+- Tabs: --osui-tabs-border-color --osui-tabs-header-gap --osui-tabs-header-item-color --osui-tabs-header-item-font-size --osui-tabs-header-item-border-radius --osui-tabs-header-item-line-height --osui-tabs-header-item-color-active --osui-tabs-header-item-color-active-hover --osui-tabs-header-item-color-hover --osui-tabs-header-item-color-disabled --osui-tabs-header-item-hover-background --osui-tabs-indicator-color
+- TimePicker: --osui-timepicker-popup-border-radius --osui-timepicker-disabled-background --osui-timepicker-disabled-border-color --osui-timepicker-disabled-color --osui-timepicker-input-border-radius --osui-input-border-radius
+- Tooltip: --osui-tooltip-background --osui-tooltip-color --osui-tooltip-border-radius --osui-tooltip-padding --osui-tooltip-font-size --osui-tooltip-shadow --osui-tooltip-min-height --osui-tooltip-max-width --osui-tooltip-background-color --osui-tooltip-arrow-size --osui-floating-offset
+- WizardItem: --osui-wizard-font-size --osui-wizard-icon-background --osui-wizard-icon-border-color --osui-wizard-icon-border-width --osui-wizard-icon-color --osui-wizard-icon-font-weight --osui-wizard-icon-glyph-size --osui-wizard-icon-padding --osui-wizard-icon-size --osui-wizard-item-spacing --osui-wizard-label-color --osui-wizard-label-line-height --osui-wizard-active-color --osui-wizard-active-icon-color --osui-wizard-next-icon-color --osui-wizard-past-background --osui-wizard-past-color --osui-wizard-connector-color --osui-wizard-connector-radius --osui-wizard-connector-size --osui-wizard-focus-halo-color --osui-wizard-focus-halo-width
+- action-sheet: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-action-sheet-actions-layer
+- alert: --osui-alert-background --osui-alert-color --osui-alert-accent-color --osui-alert-icon-color --osui-alert-border-radius --osui-alert-padding
+- badge: --osui-badge-color --osui-badge-on-light-color
+- balloon: --osui-balloon-background --osui-balloon-border-radius --osui-floating-position-x --osui-floating-position-y --osui-balloon-shadow --osui-balloon-width --osui-balloon-position
+- blank-slate: --osui-blank-slate-description-color --osui-blank-slate-icon-color
+- bottom-bar-item: --osui-bottom-bar-background --osui-bottom-bar-border-color --osui-bottom-bar-item-color --osui-bottom-bar-item-active-color --osui-bottom-bar-item-icon-color --osui-bottom-bar-item-icon-active-color
+- breadcrumbs: --osui-breadcrumbs-item-color --osui-breadcrumbs-separator-color
+- btn: --osui-btn-min-height --osui-btn-background --osui-btn-color --osui-btn-border-color --osui-btn-hover-background --osui-btn-active-background --osui-btn-border-width --osui-btn-border-radius --osui-btn-disabled-overlay --osui-btn-primary-background --osui-btn-primary-border-color --osui-btn-primary-color --osui-btn-success-background --osui-btn-success-border-color --osui-btn-success-color --osui-btn-error-background --osui-btn-error-border-color --osui-btn-error-color --osui-btn-focus-shadow-width --osui-btn-focus-shadow-gap --osui-btn-focus-shadow-color
+- bulk-actions: --osui-checkbox-size
+- button-group: --osui-button-group-container-background --osui-button-group-container-padding --osui-button-group-container-gap --osui-button-group-container-border-radius --osui-button-group-background --osui-button-group-border-color --osui-button-group-border-width --osui-button-group-color --osui-button-group-border-radius --osui-button-group-font-size --osui-button-group-height --osui-button-group-min-width --osui-button-group-padding-inline --osui-button-group-selected-background --osui-button-group-selected-border-color --osui-button-group-selected-color --osui-button-group-hover-background --osui-button-group-disabled-color --osui-button-group-disabled-overlay
+- card: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-padding --osui-card-shadow
+- card-background: --osui-card-background-color-rgb --osui-card-background-border-color --osui-card-background-border-width --osui-card-background-border-radius
+- card-item: --osui-card-detail-title-color --osui-card-detail-text-color
+- chat-message: --osui-chat-message-background --osui-chat-message-border-radius --osui-chat-message-sent-background --osui-chat-message-sent-color --osui-chat-message-status-color --osui-chat-message-status-line-height
+- checkbox: --osui-checkbox-size --osui-checkbox-background --osui-checkbox-border-color --osui-checkbox-hover-border-color --osui-checkbox-border-radius --osui-checkbox-checked-color
+- dropdown: --osui-dropdown-background --osui-dropdown-border-color --osui-dropdown-border-width --osui-dropdown-color --osui-dropdown-border-radius --osui-dropdown-popup-border-radius --osui-dropdown-hover-border-color --osui-dropdown-prompt-color --osui-dropdown-list-background --osui-dropdown-list-border-color --osui-dropdown-list-max-height --osui-dropdown-list-shadow --osui-dropdown-focus-border-color --osui-dropdown-focus-ring-color --osui-dropdown-arrow-color --osui-dropdown-arrow-size
+- dropdown-serverside: --osui-dropdown-ss-arrow-color --osui-dropdown-ss-arrow-size --osui-dropdown-ss-background --osui-dropdown-ss-balloon-max-height --osui-dropdown-ss-border-color --osui-dropdown-ss-border-radius --osui-dropdown-ss-color --osui-dropdown-ss-disabled-background --osui-dropdown-ss-disabled-color --osui-dropdown-ss-focus-border-color --osui-dropdown-ss-focus-ring-color --osui-dropdown-ss-hover-border-color --osui-dropdown-ss-min-width --osui-dropdown-ss-prompt-color --osui-dropdown-ss-scroll-bar-width --osui-floating-offset --osui-balloon-shadow --osui-dropdown-ss-popup-border-radius --osui-balloon-border-radius --osui-outline-size
+- feedback-message: --osui-feedback-message-background --osui-feedback-message-color --osui-feedback-message-icon-color --osui-feedback-message-border-radius --osui-feedback-message-box-shadow --osui-feedback-message-max-width --osui-feedback-message-min-width --osui-feedback-message-border-color
+- floating-actions: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-shadow
+- icon-badge: --osui-icon-badge-ring-color --osui-icon-badge-shadow
+- input-with-icon: --osui-input-with-icon-icon-color --osui-input-with-icon-icon-hover-color
+- inputs-and-textareas: --osui-input-background --osui-input-border-color --osui-input-hover-border-color --osui-input-color --osui-input-border-radius --osui-textarea-border-radius --osui-input-focus-border-color --osui-input-focus-ring-color --osui-input-error-border-color
+- layout: --osui-layout-aside-lines
+- list-item: --osui-list-item-border-color --osui-list-item-background --osui-list-item-hover-background --osui-list-item-active-background --osui-list-item-selected-background --osui-list-item-selected-icon-color
+- list-item-content: --osui-list-item-content-title-color --osui-list-item-content-text-color --osui-list-item-content-text-line-height --osui-list-item-content-icon-size --osui-list-item-content-icon-color
+- master-detail: --osui-master-detail-background --osui-master-detail-border-color --osui-master-detail-border-radius
+- page-gutters: --osui-layout-max-width --osui-layout-gutter --osui-layout-header-padding-right --osui-layout-header-padding-left --osui-layout-content-padding-block-start --osui-layout-content-padding-block-end --osui-layout-content-padding-right --osui-layout-content-padding-left --osui-layout-footer-padding-block --osui-layout-footer-padding-right --osui-layout-footer-padding-left
+- pagination: --osui-pagination-button-background --osui-pagination-button-border-color --osui-pagination-button-border-width --osui-pagination-button-font-weight --osui-pagination-button-hover-background --osui-pagination-button-padding --osui-pagination-button-size --osui-pagination-button-text-color --osui-pagination-active-background --osui-pagination-active-border-color --osui-pagination-active-color --osui-pagination-counter-color --osui-pagination-button-border-radius
+- popover: --osui-popover-background --osui-popover-color --osui-popover-border-radius --osui-popover-shadow --osui-popover-max-width
+- popup: --osui-popup-background --osui-popup-border-color --osui-popup-border-width --osui-popup-border-radius --osui-popup-shadow --osui-popup-padding --osui-popup-max-width
+- provider-login-button: --osui-provider-login-button-background --osui-provider-login-button-border-color --osui-provider-login-button-color
+- radio-button: --osui-radio-size --osui-radio-background --osui-radio-border-color --osui-radio-hover-border-color --osui-radio-checked-color --osui-radio-indicator-border --osui-radio-error-border-color --osui-radio-disabled-border-color
+- section: --osui-section-title-color --osui-section-title-border-color --osui-section-content-color --osui-section-title-line-height --osui-section-content-line-height --osui-section-group-gap
+- stacked-cards: --osui-stacked-cards-background --osui-stacked-cards-overlay-color --osui-stacked-cards-overlay-top-background --osui-stacked-cards-overlay-right-background --osui-stacked-cards-overlay-left-background
+- switch: --osui-switch-height --osui-switch-width --osui-switch-thumb-size --osui-switch-thumb-offset-start --osui-switch-thumb-offset-end --osui-switch-track-color --osui-switch-checked-track-color --osui-switch-disabled-overlay --osui-switch-thumb-color --osui-switch-thumb-shadow
+- table: --osui-table-border-color --osui-table-border-radius --osui-table-header-background --osui-table-header-color --osui-table-cell-background --osui-table-row-hover-background --osui-table-row-stripe-background --osui-table-sorted-color --osui-table-row-selected-background
+- tag: --osui-tag-color --osui-tag-on-light-color --osui-tag-soft-border-radius --osui-tag-medium-soft-border-radius
+- timeline: --osui-timeline-content-gap --osui-timeline-content-spacing --osui-timeline-font-size --osui-timeline-gap --osui-timeline-gutter --osui-timeline-icon-color --osui-timeline-icon-size --osui-timeline-icon-background-color --osui-timeline-line-color --osui-timeline-line-height --osui-timeline-text-color --osui-timeline-title-color --osui-timeline-title-font-weight
+- upload: --osui-upload-background --osui-upload-border-color --osui-upload-border-width --osui-upload-color --osui-upload-border-radius --osui-upload-padding --osui-upload-icon-color --osui-upload-image-border-radius
+- user-avatar: --osui-avatar-color --osui-avatar-on-light-color --osui-avatar-soft-border-radius
