@@ -29,7 +29,7 @@
 	&-primary {
 		&,
 		&-darker {
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 		}
 	}
 

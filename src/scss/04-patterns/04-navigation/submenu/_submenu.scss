@@ -509,7 +509,7 @@
 // Top menu: header navigation direct link
 .desktop .header-navigation .app-menu-links > a.active:hover {
 	background-color: variables.$token-bg-neutral-subtlest-hover;
-	color: variables.$token-semantics-primary-base;
+	color: var(--color-primary);
 }
 
 // Top menu: submenu items — `:not(:active)` lets the pressed background through
@@ -520,7 +520,7 @@
 // Side menu desktop: direct link
 .desktop .layout-side .app-menu-links > a.active:hover {
 	background-color: variables.$token-bg-neutral-subtlest-hover;
-	color: variables.$token-semantics-primary-base;
+	color: var(--color-primary);
 }
 
 // Side menu desktop: submenu header
@@ -532,11 +532,11 @@
 // Side menu desktop: submenu items — `:not(:active)` lets the pressed background through
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:not(:active):hover {
 	background-color: variables.$token-bg-neutral-subtlest-hover;
-	color: variables.$token-semantics-primary-base;
+	color: var(--color-primary);
 }
 
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
-	color: variables.$token-semantics-primary-base;
+	color: var(--color-primary);
 }
 
 ///
@@ -603,7 +603,7 @@
 				}
 
 				&.active {
-					color: variables.$token-semantics-primary-base;
+					color: var(--color-primary);
 				}
 
 				&:not(:active):hover {
@@ -632,17 +632,17 @@
 	// Mobile/tablet: submenu items active hover — `:not(:active)` lets the pressed background through
 	.osui-submenu__items a.active:not(:active):hover {
 		background-color: variables.$token-bg-neutral-subtlest-hover;
-		color: variables.$token-semantics-primary-base;
+		color: var(--color-primary);
 	}
 
 	.osui-submenu__items a.active:hover {
-		color: variables.$token-semantics-primary-base;
+		color: var(--color-primary);
 	}
 
 	// Mobile/tablet: direct link active hover
 	.app-menu-links > a.active:hover {
 		background-color: variables.$token-bg-neutral-subtlest-hover;
-		color: variables.$token-semantics-primary-base;
+		color: var(--color-primary);
 	}
 }
 

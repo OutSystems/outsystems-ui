@@ -351,14 +351,14 @@
 
 			&:focus-visible {
 				box-shadow: inset 0 0 0 variables.$token-border-size-075
-					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+					color-mix(in srgb, var(--color-primary) 22%, transparent);
 				color: var(--color-text);
 			}
 		}
 
 		&__content-item {
 			&:focus-visible {
-				box-shadow: 0 0 0 variables.$token-border-size-025 variables.$token-semantics-primary-base inset;
+				box-shadow: 0 0 0 variables.$token-border-size-025 var(--color-primary) inset;
 			}
 		}
 	}
@@ -384,7 +384,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		border: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
+		border: variables.$token-border-size-050 solid var(--color-primary);
 		bottom: 0;
 		content: '';
 		display: block;

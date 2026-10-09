@@ -24,6 +24,9 @@
 		--osui-dropdown-focus-ring-color: #{variables.$token-border-focus-default};
 		--osui-dropdown-arrow-color: #{variables.$token-icon-subtlest};
 		--osui-dropdown-arrow-size: #{variables.$token-scale-400};
+		--osui-dropdown-selected-background: transparent;
+		--osui-dropdown-selected-indicator: var(--osui-icon-check);
+		--osui-dropdown-selected-indicator-color: var(--color-primary);
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;
@@ -123,13 +126,13 @@
 			}
 
 			&-selected {
-				background: none;
+				background: var(--osui-dropdown-selected-background);
 				color: var(--color-text);
 
 				// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 				&::after {
-					color: variables.$token-semantics-primary-base;
-					content: var(--osui-icon-check);
+					color: var(--osui-dropdown-selected-indicator-color);
+					content: var(--osui-dropdown-selected-indicator);
 					flex-shrink: 0;
 					font-family: var(--osui-icon-font-family);
 					font-size: variables.$token-font-size-400;

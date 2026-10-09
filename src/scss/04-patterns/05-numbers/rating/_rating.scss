@@ -157,7 +157,7 @@
 			+ .rating-item {
 				background: transparent;
 				box-shadow: 0 0 0 variables.$token-border-size-075
-					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+					color-mix(in srgb, var(--color-primary) 22%, transparent);
 				height: 100%;
 				left: 0; // physical: full-width overlay on the scaleX(-1)-flipped item
 				opacity: 0;
@@ -316,7 +316,7 @@
 			&,
 			* {
 				box-shadow: 0 0 0 variables.$token-border-size-075
-					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+					color-mix(in srgb, var(--color-primary) 22%, transparent);
 			}
 		}
 	}

@@ -20,7 +20,7 @@
 		}
 
 		.flatpickr-time-separator {
-			color: variables.$token-primitives-neutral-700;
+			color: var(--color-neutral-6);
 			line-height: variables.$token-scale-1000;
 		}
 	}

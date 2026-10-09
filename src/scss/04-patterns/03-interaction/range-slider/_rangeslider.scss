@@ -12,7 +12,9 @@
 	--osui-range-slider-track-radius: var(--border-radius-rounded);
 	--osui-range-slider-handle-background: var(--color-background-surface);
 	--osui-range-slider-handle-border-color: var(--color-primary);
+	--osui-range-slider-handle-border-width: #{variables.$token-border-size-050};
 	--osui-range-slider-handle-shadow: #{variables.$token-elevation-1};
+	--osui-range-slider-connect-color: var(--color-primary);
 	// Disabled: the track lightens from the enabled `--color-border` (#cecece), and the
 	// filled connect lightens further still so it recedes rather than standing out.
 	--osui-range-slider-disabled-track-color: var(--osui-range-slider-track-color);
@@ -75,7 +77,7 @@
 		&-vertical {
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
-				border: variables.$token-border-size-050 solid var(--osui-range-slider-handle-border-color);
+				border: var(--osui-range-slider-handle-border-width) solid var(--osui-range-slider-handle-border-color);
 				border-radius: var(--border-radius-rounded);
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
@@ -106,20 +108,20 @@
 
 			.noUi-handle.noUi-active,
 			.noUi-handle:hover {
-				border: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
+				border: var(--osui-range-slider-handle-border-width) solid var(--color-primary);
 			}
 
 			.noUi-handle.noUi-active {
 				box-shadow:
 					var(--osui-range-slider-handle-shadow),
-					0 0 0 #{variables.$token-scale-150} color-mix(in srgb, #{variables.$token-semantics-primary-base} 15%, transparent);
+					0 0 0 #{variables.$token-scale-150} color-mix(in srgb, var(--color-primary) 15%, transparent);
 			}
 
 			.noUi-handle.noUi-active:before,
 			.noUi-handle.noUi-active:after,
 			.noUi-handle:hover:before,
 			.noUi-handle:hover:after {
-				border-color: variables.$token-semantics-primary-base;
+				border-color: var(--color-primary);
 			}
 		}
 
@@ -165,7 +167,7 @@
 		}
 
 		&-connect {
-			background: variables.$token-semantics-primary-base;
+			background: var(--osui-range-slider-connect-color);
 		}
 
 		&-background {

@@ -79,7 +79,7 @@
 				z-index: var(--layer-local-tier-1);
 
 				& {
-					-servicestudio-background: var(--progress-color, variables.$token-semantics-primary-base);
+					-servicestudio-background: var(--progress-color, var(--color-primary));
 					-servicestudio-width: var(--progress-value, 50%);
 				}
 			}
