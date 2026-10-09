@@ -61,8 +61,9 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 
 1. `npm run build` succeeds (production build for all targets, then `lintfix` + `lint`).
 2. `npm run lint` reports zero errors and zero warnings.
-3. Public APIs carry JSDoc comments.
+3. Public APIs and public config props carry TSDoc comments (`.claude/rules/typescript.md` §7); the jsdoc lint rules are part of the zero-warnings gate.
 4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
+5. `npm run types:generate && npm run docs:ai` re-run and the result committed whenever a pattern's configs, API, story or SCSS changed; `npm test` passes.
 
 ## Building and Testing
 
@@ -74,7 +75,12 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 | `npm run lint`             | ESLint over all `.ts` files                                          |
 | `npm run lintfix`          | ESLint with `--fix`                                                  |
 | `npm run prettier`         | Format all `js`, `ts`, and `css` files                               |
-| `npm run docs`             | Generate TypeDoc output into `docs/`                                 |
+| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root) |
+| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source  |
+| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                          |
+| `npm run types:generate`   | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`) |
+| `npm run blocks:export`    | Re-export the OML block snapshot from the local `.oml` (see `scripts/ai-docs/README.md`) |
+| `npm test`                 | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
 | `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
 | `npm run update-version`   | Interactive version bump across project files                         |
 
@@ -150,7 +156,8 @@ on every build — register new partials in `gulp/ProjectSpecs/ScssStructure/*.j
 
 ### Documentation
 
-- JSDoc with `@param` and `@returns` on every public API. The Document This extension (`/**` above a declaration) generates the scaffold.
+- TSDoc on every public API and public config prop: a description, `@param name text` per argument and `@returns text` when a value is returned; types stay in the signature (no `{type}` braces, no `@export` / `@memberof`). The docs generator reads these comments (`.claude/rules/typescript.md` §7).
+- Agent documentation (`docs-ai/`) and the generated pattern types are regenerated, never edited: `npm run types:generate && npm run docs:ai`, then commit the result. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/ai-docs/snapshot/local/` and run `npm run blocks:export` (see `scripts/ai-docs/README.md`).
 - Significant design decisions are recorded as ADRs in `docs-internal/adr/` — copy `ADR-0000-Title-of-ADR.md`, number it sequentially, and update the ADR log table in `docs-internal/adr/Readme.md`.
 
 ## Pull Request Process

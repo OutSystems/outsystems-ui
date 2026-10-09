@@ -181,23 +181,29 @@ namespace OSFramework.OSUI.GlobalEnum {
 - Reference as `ErrorCodes.Accordion.FailChangeProperty`, `GlobalEnum.PatternName.Accordion`, `Constants.A11YAttributes.Aria.Atomic`.
 - When adding a new pattern: add an ErrorCodes block and a GlobalEnum entry at the same time.
 
-## 7. JSDoc — required on every public API
+## 7. TSDoc — required on every public API
 
 ```ts
 /**
- * Function that will create the pattern instance
+ * Creates the pattern instance and registers it under its id.
  *
- * @export
- * @param {string} accordionId The id of the accordion element
- * @param {string} configs The configuration options as JSON string
- * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
+ * @param accordionId The id of the accordion element
+ * @param configs The configuration options as a JSON string
+ * @returns the Accordion instance
  */
 export function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion { ... }
 ```
 
-- Every exported function in `OutSystems/OSUI/Patterns/**` must have JSDoc with `@export`, `@param` for each arg, and `@return`.
-- Protected/internal methods get JSDoc with `@protected` and `@memberof OSFramework.Patterns.<Name>.<Class>`.
-- Field comments use single-line `//` above the declaration (provider files especially).
+- Every exported function in `OutSystems/OSUI/Patterns/**` has a `/** */` comment with a description, `@param name text`
+  for each argument and `@returns text` when it returns a value. Types live in the signature: no `{type}` braces.
+- No Closure-style tags: `@export`, `@memberof`, `@class`, `@extends`, `@implements`, `@static`, `@type`, `@interface`,
+  `@enum` say nothing TypeScript does not. Modifier tags that carry meaning stay: `@protected`, `@private`, `@public`,
+  `@readonly`, `@abstract`, `@deprecated` (with what to use instead).
+- Public config props carry a `/** */` comment: the description, and `@defaultValue` when the code does not make the
+  default explicit. The agent docs generator reads these comments (TypeDoc ignores `//` lines).
+- ESLint (`eslint-plugin-jsdoc`, TypeScript mode) warns on types in tags, unknown tags, parameters or return values
+  without a description, and on an API function without a comment. Warnings on this branch; errors once the migration
+  is complete.
 
 ## 8. Platform exclusions (O11 vs ODC)
 
