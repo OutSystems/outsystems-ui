@@ -120,20 +120,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 						OSFramework.OSUI.GlobalEnum.CssClassElements.IsTouch
 					);
 				}
-			} else {
-				// Detect IpadPro to add desktop class
-				if (
-					OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-						body,
-						OSFramework.OSUI.GlobalEnum.DeviceType.phone
-					) === false &&
-					OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-						body,
-						OSFramework.OSUI.GlobalEnum.DeviceType.tablet
-					) === false
-				) {
-					body.classList.add(OSFramework.OSUI.GlobalEnum.DeviceType.desktop);
-				}
 			}
 
 			/* To fix an issue when: 
