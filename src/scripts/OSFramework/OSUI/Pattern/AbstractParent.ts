@@ -5,11 +5,7 @@ namespace OSFramework.OSUI.Patterns {
 	/**
 	 * Defines the Default props and methods for Patterns that will have other Patterns as its childs
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractParent
-	 * @implements {Interface.IParent}
-	 * @template {C extends AbstractConfiguration, CT extends Interface.IChild}
 	 */
 	export abstract class AbstractParent<C extends AbstractConfiguration, CT extends Interface.IChild>
 		extends AbstractPattern<C>
@@ -27,7 +23,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * @protected
 		 * @param childId Child Id of the element to be found
 		 * @returns Child Reference
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChild(childId: string): CT {
 			// Get ChildType
@@ -48,7 +43,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param index Index of the item to be returned
 		 * @param childType To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns Child Reference
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChildByIndex(index: number, childType?: string): CT {
 			// If childType undefined, get the first key object name!
@@ -67,7 +61,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * @protected
 		 * @param childId Child id where index will be found
 		 * @returns Index value
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChildIndex(childId: string): number {
 			// Get ChildType
@@ -82,7 +75,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method used to notify all children about a given notification type
 		 *
 		 * @param notificationType Notification type
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected notifyChildren(notificationType: string): void {
 			const children = this.getChildItems();
@@ -95,9 +87,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that is used to set a given child as a Parent child.
 		 *
 		 * @protected
-		 * @param childId Id that should be added
 		 * @param childItem Reference to be added
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected setChild(childItem: CT): void {
 			const childType = childItem.constructor.name;
@@ -129,7 +119,6 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @protected
 		 * @param childId Id of the item that will be removed
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected unsetChild(childId: string): void {
 			// Get ChildType
@@ -193,8 +182,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * otherwise a type must be passed in order to return all child of the given type!
 		 *
 		 * @param type To be based on childType childs collection, otherwise will assume parent only contains one child type!
-		 * @returns
-		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		public getChildItems(type?: string): Array<CT> {
 			// If type undefined, get the first key object name!
@@ -211,9 +198,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
 		 * @abstract
-		 * @param {string} childItem Child Item
-		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @param childItem Child Item
+		 * @param notifiedTo Notification name (Should be based on an Enum)
 		 */
 		public abstract beNotifiedByChild(childItem: CT, notifiedTo: string): void;
 	}

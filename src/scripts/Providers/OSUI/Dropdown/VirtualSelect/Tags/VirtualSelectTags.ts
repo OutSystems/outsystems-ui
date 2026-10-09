@@ -10,8 +10,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 		 * Get the selected values options that will be used to pass into platform as a JSON string
 		 *
 		 * @protected
-		 * @return {*}  {DropDownOption[]}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags
 		 */
 		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected

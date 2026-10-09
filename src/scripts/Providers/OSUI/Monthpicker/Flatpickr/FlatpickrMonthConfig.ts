@@ -2,10 +2,6 @@
 namespace Providers.OSUI.MonthPicker.Flatpickr {
 	/**
 	 * Class that represents the custom configurations received by the Monthpicker.
-	 *
-	 * @export
-	 * @class FlatpickrMonthConfig
-	 * @extends {AbstractFlatpickrConfig}
 	 */
 	export class FlatpickrMonthConfig extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig {
 		// Store the language that will be assigned as a locale to the MonthPicker
@@ -14,18 +10,18 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _providerOptions: FlatpickrOptions;
 		// Store configs set using extensibility
 		protected providerExtendedOptions: FlatpickrOptions;
-		// Stores the ability to allow inputs to be editable or not
+		/** Stores the ability to allow inputs to be editable or not */
 		public AllowInput = false;
-		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+		/** Stores the ability to disable the mobile flatpickr behavior. False is the default provider option */
 		public DisableMobile = true;
-		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
+		/** Set the OnChange Event that will be defined in the specific context for each Flatpickr mode */
 		public OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-		// Store the OnClose callback to be defined to the Flatpicker config instance
+		/** Store the OnClose callback to be defined to the Flatpicker config instance */
 		public OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-		// Store the OnOpen callback to be defined to the Flatpicker config instance
+		/** Store the OnOpen callback to be defined to the Flatpicker config instance */
 		public OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
-		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
+		/** Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr */
 		public ServerDateFormat: string;
 
 		constructor(config: JSON) {
@@ -118,8 +114,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		/**
 		 * Method used to set all the config properties for the Month mode type
 		 *
-		 * @returns {FlatpickrOptions} FlatpickrOptions
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
+		 * @returns FlatpickrOptions
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			this._checkServerDateFormat();
@@ -162,8 +157,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		/**
 		 * Method to set and save the extensibility provider configs
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
+		 * @param newConfigs Provider options to merge into the current configuration
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
 			this.providerExtendedOptions = newConfigs;
@@ -173,8 +167,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Getter that allows to obtain the MonthPicker Locale language
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
 		 */
 		public get Lang(): string {
 			return this._dynamicLang !== undefined ? this._dynamicLang : OSFramework.OSUI.Helper.Language.ShortLang;
@@ -182,8 +174,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Set MonthPicker Locale
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"

@@ -367,7 +367,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -377,7 +376,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method to set the events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setCallbacks(): void {
 			this._eventOnRatingClick = this._ratingOnClick.bind(this);
@@ -388,7 +386,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method to set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setHtmlElements(): void {
 			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.IconStates);
@@ -399,7 +396,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnRatingClick = undefined;
@@ -410,7 +406,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method to unset the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected unsetHtmlElements(): void {
 			// Remove html from the fieldset
@@ -422,8 +417,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 		/**
 		 * Method to build the Rating
-		 *
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public build(): void {
 			super.build();
@@ -450,9 +443,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		/**
 		 * Method to update value when a parameters changed occurs
 		 *
-		 * @param {string} propertyName
-		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current Size, before possibly changing this property.
@@ -484,8 +476,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 		/**
 		 * Method to set the Rating as disabled
-		 *
-		 * @memberof Rating
 		 */
 		public disable(): void {
 			this._setIsDisabled(true);
@@ -493,8 +483,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 		/**
 		 * Method to destroy the Rating pattern
-		 *
-		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public dispose(): void {
 			this._unsetEvents();
@@ -507,8 +495,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 		/**
 		 * Method to set the Rating as enabled
-		 *
-		 * @memberof Rating
 		 */
 		public enable(): void {
 			this._setIsDisabled(false);
@@ -517,9 +503,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		/**
 		 * Method to register a given callback event handler.
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {

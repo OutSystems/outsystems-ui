@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Tabs {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
-	 *
-	 * @export
-	 * @class Tabs
-	 * @extends {AbstractPattern<TabsConfig>}
-	 * @implements {ITabs}
 	 */
 	export class Tabs
 		extends AbstractParent<TabsConfig, TabsContentItem.ITabsContentItem | TabsHeaderItem.ITabsHeaderItem>
@@ -775,7 +770,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method that adds the necessary attributes and listeners to the Tabs header
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setA11YProperties(): void {
 			if (this.isBuilt) {
@@ -790,7 +784,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setCallbacks(): void {
 			if (this.isBuilt) {
@@ -804,7 +797,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to assign the html elements to the header and content wrappers
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setHtmlElements(): void {
 			this._tabsHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsHeader);
@@ -816,7 +808,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
 			// Remove event listeners on tabs header element
@@ -835,7 +826,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to unset the html elements references
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
@@ -846,9 +836,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
-		 * @param childId Child Item Id to be stored/managed
+		 * @param childItem Child Item Id to be stored/managed
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof SectionIndex
 		 */
 		public beNotifiedByChild(
 			childItem: Patterns.TabsHeaderItem.TabsHeaderItem | Patterns.TabsContentItem.TabsContentItem,
@@ -893,8 +882,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		/**
 		 * Method to build the Tabs
-		 *
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public build(): void {
 			super.build();
@@ -917,9 +904,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -953,12 +939,10 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method to change between tabs
 		 *
-		 * @param {*} [tabIndex=this.configs.StartingTab]
-		 * @param {Patterns.TabsHeaderItem.ITabsHeaderItem} [tabsHeaderItem]
-		 * @param {boolean} [triggerEvent=false]
-		 * @param {boolean} [triggeredByObserver=false]
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @param [tabIndex=this.configs.StartingTab] Zero-based index of the tab to activate
+		 * @param [tabsHeaderItem] Header item of the tab to activate
+		 * @param [triggerEvent=false] True to trigger the OnTabsChange event
+		 * @param [triggeredByObserver=false] True when the change comes from the drag observer
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
@@ -1014,8 +998,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		/**
 		 * Method to remove event listener and destroy Tabs instance
-		 *
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -1028,9 +1010,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Register a given callback event handler.
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -1047,8 +1028,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method to set the drag gestures necessary configurations
 		 *
-		 * @param {boolean} addDragGestures
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @param addDragGestures True to enable the drag gestures, false to remove them
 		 */
 		public toggleDragGestures(addDragGestures: boolean): void {
 			// If running on native shell

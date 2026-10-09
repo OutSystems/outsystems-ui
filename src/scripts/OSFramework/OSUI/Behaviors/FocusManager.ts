@@ -2,9 +2,6 @@
 namespace OSFramework.OSUI.Behaviors {
 	/**
 	 * Class to manage focus of overlay components
-	 *
-	 * @export
-	 * @class FocusManager
 	 */
 	export class FocusManager {
 		// Store the last focused element
@@ -16,9 +13,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		/**
 		 * Method to return the focus to the previous focused element
-		 *
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Behaviors.FocusManager
 		 */
 		public setFocusToStoredElement(): void {
 			// If no element was set as the last focused element or it is not focusable anymore,
@@ -39,9 +33,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		/**
 		 * Method to store the last focused element if any
-		 *
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Behaviors.FocusManager
 		 */
 		public storeLastFocusedElement(): void {
 			// In case there is an element focused, i.e., the activeElement is not the body, null or undefined,

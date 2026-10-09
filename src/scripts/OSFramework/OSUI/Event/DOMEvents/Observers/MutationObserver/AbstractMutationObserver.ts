@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 	/**
 	 * Abstract MutionObserver Class, to hadle all code common for all types of Mutation Observers
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractMutationObserver
-	 * @extends {AbstractObserver<MutationObserverInit>}
-	 * @implements {IObserver<MutationObserverInit, string>}
 	 */
 	export abstract class AbstractMutationObserver
 		extends AbstractObserver<MutationObserverInit>
@@ -21,8 +17,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 
 		/**
 		 * Method to add a new MutationObserver
-		 *
-		 * @memberof AbstractMutationObserver
 		 */
 		public addEvent(): void {
 			this.observer = new MutationObserver(this.observerHandler.bind(this));
@@ -33,8 +27,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 		 *
 		 * @protected
 		 * @abstract
-		 * @param {MutationRecord[]} mutationList
-		 * @memberof AbstractMutationObserver
+		 * @param mutationList
 		 */
 		protected abstract observerHandler(mutationList: MutationRecord[]): void;
 	}

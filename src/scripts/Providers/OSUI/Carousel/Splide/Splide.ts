@@ -430,7 +430,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Method that encapsulates all methods needed to create a new Carousel
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected prepareConfigs(): void {
 			this._prepareCarouselItems();
@@ -445,7 +444,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Invoked after Splide mount/refresh and whenever slide state changes.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setA11YProperties(): void {
 			this._setA11yStatusElem();
@@ -461,7 +459,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Sets the callbacks to be used.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setCallbacks(): void {
 			this._eventOnResize = this._redefineCarouselWidth.bind(this);
@@ -477,7 +474,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setHtmlElements(): void {
 			this._carouselPlaceholderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(
@@ -494,7 +490,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setInitialCssClasses(): void {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
@@ -516,7 +511,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
@@ -534,7 +528,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected unsetHtmlElements(): void {
 			this._carouselPlaceholderElem = undefined;
@@ -543,8 +536,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Build the pattern.
-		 *
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public build(): void {
 			super.build();
@@ -565,9 +556,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -608,8 +598,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Method to remove and destroy Carousel Splide instance
-		 *
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public dispose(): void {
 			// Cancel any pending list-roles poll to prevent it firing after disposal
@@ -637,8 +625,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method to call the go API from the provider
 		 *
-		 * @param {number} index
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param index Zero-based index of the slide to go to
 		 */
 		public goTo(index: number): void {
 			this.provider.go(index);
@@ -646,8 +633,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Method to call the go API from the provider. With '>' it will go to the next page
-		 *
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public next(): void {
 			this.provider.go(Enum.Go.Next);
@@ -655,8 +640,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Method to call the go API from the provider. With '<' it will go to the previous page
-		 *
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public previous(): void {
 			this.provider.go(Enum.Go.Previous);
@@ -665,9 +648,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Set callbacks for the onChange event
 		 *
-		 * @param {string} eventName
-		 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -701,8 +683,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method used to set all the extended Splide properties across the different types of instances
 		 *
-		 * @param {SplideOpts} newConfigs
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param newConfigs Provider options to merge into the current configuration
 		 */
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -713,8 +694,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *
-		 * @param {boolean} hasDrag
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param hasDrag True to enable drag, false to disable it
 		 */
 		public toggleDrag(hasDrag: boolean): void {
 			this.provider.options = { drag: hasDrag };
@@ -723,8 +703,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method to toggle the _blockOnRender that enables/disables the OnRender update
 		 *
-		 * @param {boolean} blockOnRender
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
+		 * @param blockOnRender True to block the provider update on render
 		 */
 		public toggleOnRender(blockOnRender: boolean): void {
 			this._blockOnRender = blockOnRender;
@@ -732,8 +711,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Method to run when there's a platform onRender
-		 *
-		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public updateOnRender(): void {
 			if (this._blockOnRender === false) {

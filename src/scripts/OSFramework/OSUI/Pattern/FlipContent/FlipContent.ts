@@ -87,7 +87,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to set the A11Y attributes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
@@ -104,7 +103,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to set the events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setCallbacks(): void {
 			this._eventKeydown = this._keydownCallback.bind(this);
@@ -117,7 +115,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to set the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setHtmlElements(): void {
 			this._flipWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContainer);
@@ -127,7 +124,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -140,7 +136,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to set the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetHtmlElements(): void {
 			this._flipWrapperElement = undefined;
@@ -148,8 +143,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		/**
 		 * Method to build the Flip Content
-		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public build(): void {
 			super.build();
@@ -170,9 +163,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Method to update value when a parameters changed occurs
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -192,8 +184,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		/**
 		 * Method to destroy FlipContent
-		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -205,9 +195,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Method to register a given callback event handler.
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -223,8 +212,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		/**
 		 * Method to show the back content
-		 *
-		 * @memberof FlipContent
 		 */
 		public showBackContent(): void {
 			if (this.configs.IsFlipped === false) {
@@ -234,8 +221,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		/**
 		 * Method to show the front content
-		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public showFrontContent(): void {
 			if (this.configs.IsFlipped) {
@@ -245,8 +230,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		/**
 		 * Method to trigger the flipping of the pattern and the event on the platform's side
-		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;

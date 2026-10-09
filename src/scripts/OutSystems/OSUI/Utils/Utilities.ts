@@ -3,7 +3,7 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Add a favicon to your web application by providing the icon's URL. If the tag already exists, only the URL will be updated.
 	 * This action should be used in the Layout OnReady event or on an OnApplicationStart event.
-	 * @param URL
+	 * @param URL URL of the favicon image
 	 */
 	export function AddFavicon(URL: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -30,7 +30,6 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Function that exposes if RTL is applied.
-	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function GetIsRTL(): boolean {
@@ -42,10 +41,10 @@ namespace OutSystems.OSUI.Utils {
 	 * Action to hint users that the list item has swipe actions available to use, either on the left or right side.
 	 * In case of both left and right actions, the default animation is on the left.
 	 * This animation will be active when there are left and/or right actions available, based on the animation time parameter.
-	 * @param ListId
-	 * @param HasLeftAction
-	 * @param HasRightAction
-	 * @param AnimationTime
+	 * @param ListId Id of the list
+	 * @param HasLeftAction True when the list items have a left action
+	 * @param HasRightAction True when the list items have a right action
+	 * @param AnimationTime Duration of the animation, in milliseconds
 	 */
 	export function ListItemAnimate(
 		ListId: string,
@@ -160,8 +159,8 @@ namespace OutSystems.OSUI.Utils {
 	 * Action that moves elements on the DOM tree.
 	 * Define the WidgetID of the element to be moved and the Target selector that will receive the element.
 	 * Example: $actions.MoveElement($parameters.WidgetId, ".active-screen .screen");
-	 * @param ElementId
-	 * @param TargetSelector
+	 * @param ElementId Id of the element
+	 * @param TargetSelector CSS selector of the element the moved element is appended to
 	 * @param TimeoutVal {TimeoutVal=200}
 	 */
 	export function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal = 200): string {
@@ -188,9 +187,8 @@ namespace OutSystems.OSUI.Utils {
 	 * Enables or disables the dark theme at runtime by applying or removing the dark theme class on the document root.
 	 * Use this for scenarios such as a dark/light theme toggle. The change takes effect immediately, without a page reload.
 	 *
-	 * @export
-	 * @param {boolean} IsDark True to enable the dark theme, False to disable it.
-	 * @return {*}  {string} JSON string with Success and ErrorMessage, consistent with the other client actions.
+	 * @param IsDark True to enable the dark theme, False to disable it.
+	 * @returns JSON string with Success and ErrorMessage, consistent with the other client actions.
 	 */
 	export function SetDarkTheme(IsDark: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -218,8 +216,8 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Allows to change the selected state of Cards and List Items.
 	 * Set a Widget Id and the Active state to change an element on the screen.
-	 * @param ElementId
-	 * @param IsActive
+	 * @param ElementId Id of the element
+	 * @param IsActive True to set the element as active
 	 */
 	export function SetActiveElement(ElementId: string, IsActive: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -241,9 +239,9 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * To be used to complement Bulk Actions logic. Drag this action to your checkbox OnChange action.
 	 * This will afftect the styles of the checkbox used, and the selected table rows, containing a checked checkbox.
-	 * @param TableId
-	 * @param RowNumber
-	 * @param IsSelected
+	 * @param TableId Id of the table
+	 * @param RowNumber Zero-based index of the row
+	 * @param IsSelected True to select the row, false to deselect it
 	 */
 	export function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -267,9 +265,6 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Method that will return the platformType in use.
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function GetPlatformType(): string {
 		return OSFramework.OSUI.Constants.OSPlatform;
@@ -279,9 +274,7 @@ namespace OutSystems.OSUI.Utils {
 	 * Shows and hides the value of an Input of type password, allowing users to view their entered password temporarily for verification or editing purposes.
 	 * If WidgetId does not exist or is left empty, the action affects the first password Input on the screen.
 	 *
-	 * @export
-	 * @param {string} [WidgetId] Identifier of the Input widget.
-	 * @return {*}  {string}
+	 * @param [WidgetId] Identifier of the Input widget.
 	 */
 	export function ShowPassword(WidgetId?: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
