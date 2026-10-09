@@ -891,7 +891,7 @@ Once applied and verified, the polarity flips and a surviving file becomes a lia
 - The customer pastes a **stale version** over newer work. The file still looks like valid migrated CSS, so nothing signals that it predates the last few fixes.
 - An agent resuming the session reads it as current and **re-proposes work already applied**.
 
-So delete each working file at the point its artefact is published and verified — not before, not at the end of a conversation. Delete any `.bak` or intermediate copy as soon as it is superseded; nothing references it and it carries the staleness risk with none of the value.
+So delete each working file at the point its artefact is published and verified by the Phase 4 pass — not before, not at the end of a conversation. Delete any `.bak` or intermediate copy as soon as it is superseded; nothing references it and it carries the staleness risk with none of the value.
 
 **Two things to do before deleting.** Ask first — the file may be the only record of *what the migration changed*, which is often wanted for a ticket or a review. And if it is wanted, move it somewhere durable rather than leaving it: **the system temp directory is sized for a single sitting.** macOS purges items from `$TMPDIR` after a few days without access, and a migration that spans a weekend can come back to missing working files. For anything expected to run longer than a day, say so up front and write the files into the repo or a project folder instead.
 
@@ -1096,7 +1096,7 @@ After the user has responded to **all** review groups:
 5. List the **`Preference` findings not applied**, separately from the migration itself — what now looks different, and the revert for each. This is the part of the new theme the customer is actually adopting, so it is a deliverable, not a leftover. Keeping it out of the stylesheet and in the handover is what stops a migration from quietly becoming a re-skin back to classic.
 6. Print the **manual steps** below — the work that cannot be done by editing CSS. Collect these as they come up during Phase 2 and list only the ones that actually apply.
 
-**Do not delete the working files here.** Phase 3 hands over CSS; it does not mean the app has it. Keep them until each artefact is published and verified, then clean up per *When to delete them* above.
+**Do not delete the working files here.** Phase 3 hands over CSS; it does not mean the app has it. Keep them until each artefact is published and verified — that is Phase 4 — then clean up per *When to delete them* above.
 
 #### Manual steps outside the stylesheet
 
@@ -1127,6 +1127,28 @@ Warn them what to expect: areas that looked stuck in light mode all flip the fir
 **Load an icon library** — when Step 2g restored a widget whose new default renders a glyph the classic one did not, such as the dropdown's selected-row checkmark. These read `--osui-icon-check` and `--osui-icon-font-family`, and render as an empty box if no library is configured.
 
 **Anything else surfaced during Phase 2** that is a module change rather than a CSS change — a renamed asset path, a widget that must be swapped in the screen, a theme setting. Add it here rather than leaving it in the middle of a review step where it will be lost.
+
+### Phase 4 — Verify in the running app
+
+Phase 3 hands over CSS. This phase is what turns *handed over* into *verified*, and it is the trigger for deleting the working files — until it completes for an artefact, that artefact's working file still outranks the OML.
+
+Run it **per artefact**, as each one is pasted in and published, not once at the end. A customer who publishes four stylesheets and then looks at the app cannot tell which one caused what.
+
+**1. Ask for screenshots.** This pass cannot be run by reasoning about CSS. Request the same screen from the migrated app and the classic app in **both** modes, and ask for the interaction states separately — hover, selected, and disabled are where framework-default changes concentrate, and a resting screenshot shows none of them.
+
+**2. Walk the Step 2g inventory, not the screen.** You already built the list of framework widgets this app places; go through it. A widget that looked right during review can still be wrong now, because Phase 2 verified each proposed fix in isolation and this is the first time all of them are applied together.
+
+**3. Check geometry, not just colour.** Colour differences announce themselves. Geometry ones survive a side-by-side glance, and three questions find most of them:
+
+- **Is it the right shape?** A circle that became an oval, a square that became a rectangle. Suspect this wherever the customer's CSS sets one dimension as a **percentage** and inherits the other in pixels — the two stop tracking each other the moment the framework resizes the box they resolve against, and the new theme resized many of those boxes.
+- **Is it centred?** A mark positioned by a vendor or framework rule is centred against *that* rule's box. Change the element's size or its border width and the mark stays where it was while the box moves out from under it. Border width counts: with `box-sizing: border-box` it sets the padding box that percentages and absolute positioning resolve against.
+- **Is it sized consistently with its neighbours?** An item whose padding you removed is now shorter than the ones you left alone.
+
+**4. Apply the false-positive check before writing anything.** Everything in *Not every difference from the classic app is the theme* applies here and matters more, because the customer is now looking at a live app where every difference feels like a regression.
+
+**5. Say what you could not verify.** Screens the customer did not send, modes they did not toggle, and states they did not exercise are unverified — not passed. List them. The pass is complete when the inventory is covered, not when nothing was reported.
+
+Once an artefact's widgets are covered in both modes, that artefact is verified: delete its working file per *When to delete them* above.
 
 ---
 
