@@ -4,7 +4,6 @@ namespace OSFramework.OSUI.Helper {
 	 * Method used to sanitize a given value text
 	 *
 	 * @param value Text to be sanitized
-	 * @returns
 	 */
 	export function Sanitize(value: string): string {
 		if (typeof value === 'string') {

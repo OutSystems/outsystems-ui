@@ -7,38 +7,31 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		/**
 		 * Method to add a new accordionItem
 		 *
-		 * @param {AccordionItem.IAccordionItem} accordionItem
-		 * @memberof IAccordion
+		 * @param accordionItem
 		 */
 		addAccordionItem(accordionItem: AccordionItem.IAccordionItem): void;
 
 		/**
 		 * Method to close all accordionItems
-		 *
-		 * @memberof IAccordion
 		 */
 		collapseAllItems(): void;
 
 		/**
 		 * Method to open all accordionItems
-		 *
-		 * @memberof IAccordion
 		 */
 		expandAllItems(): void;
 
 		/**
 		 * Method to remove an accordionItem
 		 *
-		 * @param {string} uniqueId
-		 * @memberof IAccordion
+		 * @param uniqueId
 		 */
 		removeAccordionItem(uniqueId: string): void;
 
 		/**
 		 * Method to close all accordionItems
 		 *
-		 * @param {string} accordionItemId
-		 * @memberof IAccordion
+		 * @param accordionItemId
 		 */
 		triggerAccordionItemClose(accordionItemId: string): void;
 	}

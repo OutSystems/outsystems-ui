@@ -21,8 +21,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 	/**
 	 * Class to hold the drag information
-	 *
-	 * @class DragParams
 	 */
 	class DragParams {
 		public DragOrientation = GlobalEnum.Orientation.None;
@@ -42,9 +40,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 	/**
 	 * Class to manage an element's transform animation on drag
-	 *
-	 * @export
-	 * @class AnimateOnDrag
 	 */
 	export class AnimateOnDrag {
 		// Store the transition information
@@ -101,8 +96,6 @@ namespace OSFramework.OSUI.Behaviors {
 		 * Get dragParams object
 		 *
 		 * @readonly
-		 * @type {unknown}
-		 * @memberof OSFramework.Behaviors.AnimateOnDrag
 		 */
 		public get dragParams(): DragParams {
 			return this._dragParams;
@@ -111,13 +104,11 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Method to handle the gesture end callback
 		 *
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
-		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {SpringAnimationConfigs} [springProperties]
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Behaviors.AnimateOnDrag
+		 * @param offsetX Horizontal distance travelled by the gesture, in pixels
+		 * @param offsetY Vertical distance travelled by the gesture, in pixels
+		 * @param timeTaken Duration of the gesture, in milliseconds
+		 * @param callback Function invoked when the drag ends
+		 * @param [springProperties] Spring animation properties applied when the drag ends
 		 */
 		public onDragEnd(
 			offsetX: number,
@@ -174,13 +165,11 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Method to handle the gesture move callback
 		 *
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} currentX
-		 * @param {number} currentY
-		 * @param {TouchEvent} event
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Behaviors.AnimateOnDrag
+		 * @param offsetX Horizontal distance travelled by the gesture, in pixels
+		 * @param offsetY Vertical distance travelled by the gesture, in pixels
+		 * @param currentX Current horizontal pointer position, in pixels
+		 * @param currentY Current vertical pointer position, in pixels
+		 * @param event Touch event of the current drag move
 		 */
 		public onDragMove(
 			offsetX: number,
@@ -252,13 +241,12 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Method to handle the gesture start callback
 		 *
-		 * @param {boolean} verticalDrag
-		 * @param {GlobalEnum.Direction} expectedDirection
-		 * @param {number} currentX
-		 * @param {number} currentY
-		 * @param {boolean} isOpen
-		 * @param {string} size
-		 * @memberof OSFramework.Behaviors.AnimateOnDrag
+		 * @param verticalDrag True when the drag is vertical, false when horizontal
+		 * @param expectedDirection Direction the drag is expected to move in
+		 * @param currentX Current horizontal pointer position, in pixels
+		 * @param currentY Current vertical pointer position, in pixels
+		 * @param isOpen True when the dragged element is currently open
+		 * @param size Size of the dragged element, in pixels
 		 */
 		public onDragStart(
 			verticalDrag: boolean,
@@ -300,20 +288,16 @@ namespace OSFramework.OSUI.Behaviors {
 	/**
 	 * Class to manage the overlay opacity on a drag transition
 	 *
-	 * @export
 	 * @abstract
-	 * @class OverlayTransition
 	 */
 	export abstract class OverlayTransitionOnDrag {
 		/**
 		 * Set overlay opacity
 		 *
-		 * @static
-		 * @param {HTMLElement} target
-		 * @param {number} currentDragValue
-		 * @param {GlobalEnum.Direction} direction
-		 * @param {string} size
-		 * @memberof OverlayTransition
+		 * @param target Element that receives the drag animation
+		 * @param currentDragValue Current drag offset, in pixels
+		 * @param direction Direction of the drag
+		 * @param size Size of the dragged element, in pixels
 		 */
 		public static Set(
 			target: HTMLElement,
@@ -337,9 +321,7 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Unset overlay opacity
 		 *
-		 * @static
-		 * @param {HTMLElement} target
-		 * @memberof OverlayTransition
+		 * @param target Element that receives the drag animation
 		 */
 		public static UnSet(target: HTMLElement): void {
 			Helper.Dom.Styles.SetStyleAttribute(target, GlobalEnum.CSSVariables.OverlayOpacity, 0);
@@ -349,9 +331,7 @@ namespace OSFramework.OSUI.Behaviors {
 	/**
 	 * Class to manage the creation of a SpringAnimation
 	 *
-	 * @export
 	 * @abstract
-	 * @class SpringAnimation
 	 */
 	export abstract class SpringAnimation {
 		// Method to add a spring effect on dragEnd, when the callback expected is not triggered
@@ -433,14 +413,11 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Method to create a Spring Animation
 		 *
-		 * @static
-		 * @param {HTMLElement} target
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {GlobalEnum.Orientation} orientation
-		 * @param {SpringAnimationProperties} springProperties
-		 * @return {*}  {Animation}
-		 * @memberof SpringAnimation
+		 * @param target Element that receives the drag animation
+		 * @param offsetX Horizontal distance travelled by the gesture, in pixels
+		 * @param offsetY Vertical distance travelled by the gesture, in pixels
+		 * @param orientation Orientation of the spring animation (horizontal or vertical)
+		 * @param springProperties Spring animation properties applied when the drag ends
 		 */
 		public static CreateSpringAnimation(
 			target: HTMLElement,

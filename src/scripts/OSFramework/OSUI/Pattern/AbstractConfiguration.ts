@@ -3,9 +3,7 @@ namespace OSFramework.OSUI.Patterns {
 	/**
 	 * Contains the configurations shared with all patterns.
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractConfiguration
 	 */
 	export abstract class AbstractConfiguration {
 		public ExtendedClass: string;
@@ -22,10 +20,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a boolean is not undefined
 		 *
 		 * @protected
-		 * @param {(boolean | undefined)} value
-		 * @param {boolean} defaultValue
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
 		 */
 		protected validateBoolean(value: boolean | undefined, defaultValue: boolean): boolean {
 			return value !== undefined ? value : defaultValue;
@@ -35,10 +31,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a given value is a valid date
 		 *
 		 * @protected
-		 * @param {string} value
-		 * @param {string} defaultValue
-		 * @return {*}  {(string | Date)}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
 		 */
 		protected validateDate(value: string | Date, defaultValue: string): string | Date {
 			return Helper.Dates.IsNull(value) === false ? value : defaultValue;
@@ -48,11 +42,9 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a given value is within a range of values.
 		 *
 		 * @protected
-		 * @param {unknown} value
-		 * @param {unknown} defaultValue
-		 * @param {...unknown[]} args
-		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
+		 * @param args Allowed values
 		 */
 		protected validateInRange(value: unknown, defaultValue: unknown, ...args: unknown[]): unknown {
 			if (value) {
@@ -71,10 +63,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a number is not empty or undefined.
 		 *
 		 * @protected
-		 * @param {number} value
-		 * @param {number} defaultValue
-		 * @return {*}  {number}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
 		 */
 		protected validateNumber(value: number, defaultValue: number): number {
 			return typeof value === 'number' ? value : defaultValue;
@@ -84,10 +74,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a string is not empty or undefined.
 		 *
 		 * @protected
-		 * @param {(string | undefined)} value
-		 * @param {string} defaultValue
-		 * @return {*}  {string}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
 		 */
 		protected validateString(value: string | undefined, defaultValue: string): string {
 			return value && value.trim() ? value : defaultValue;
@@ -97,10 +85,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that helps to validate if a given value is a valid time
 		 *
 		 * @protected
-		 * @param {string} value
-		 * @param {string} defaultValue
-		 * @return {*}  {(string)}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param value Value received in the configs
+		 * @param defaultValue Value used when the given one is missing or invalid
 		 */
 		protected validateTime(value: string, defaultValue: string): string {
 			return Helper.Times.IsNull(value) === false ? value : defaultValue;
@@ -109,10 +95,8 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method that validates if a given property can be changed.
 		 *
-		 * @param {boolean} _isBuilt
-		 * @param {string} _key
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param _isBuilt True when the pattern has already been built
+		 * @param _key Name of the configuration property
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateCanChange(_isBuilt: boolean, _key: string): boolean {
@@ -122,10 +106,8 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method that assures that the values being set as configurations respect the defaults.
 		 *
-		 * @param {string} _key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @param _key Name of the configuration property
+		 * @param value Value received in the configs
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateDefault(_key: string, value: unknown): unknown {

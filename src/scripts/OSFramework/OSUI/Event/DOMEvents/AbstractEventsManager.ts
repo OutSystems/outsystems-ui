@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
 	 * This class is a Manager of events (listeners, observers, etc.)
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractEventsManager
-	 * @template ET EventType
-	 * @template D Event object
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
 		// Store all events
@@ -20,9 +16,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * This method is used to add assign a new callback to a given EventType
 		 *
-		 * @param eventType
-		 * @param handler
-		 * @memberof OSFramework.Event.AbstractEventsManager
+		 * @param eventType Type of the event
+		 * @param handler Function to run when the event is triggered
 		 */
 		public addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events && this._events.has(eventType)) {
@@ -39,10 +34,9 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Method to check if a given EventType has a given handler
 		 *
-		 * @param eventType
-		 * @param handler
+		 * @param eventType Type of the event
+		 * @param handler Function to run when the event is triggered
 		 * @returns boolean
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public hasHandler(eventType: ET, handler: GlobalCallbacks.Generic): boolean {
 			let returnValue = false;
@@ -56,9 +50,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * This method will check if a given EventType has assigned callbacks
 		 *
-		 * @param eventType
+		 * @param eventType Type of the event
 		 * @returns boolean
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public hasHandlers(eventType: ET): boolean {
 			let returnValue = false;
@@ -72,9 +65,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Remove the given event type
 		 *
-		 * @param eventType
-		 * @param handler
-		 * @memberof OSFramework.Event.AbstractEventsManager
+		 * @param eventType Type of the event
+		 * @param handler Function to run when the event is triggered
 		 */
 		public removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events.has(eventType)) {
@@ -91,10 +83,9 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * This method will trigger the callback assigned to the given eventType
 		 *
-		 * @param eventType
-		 * @param data
-		 * @param args
-		 * @memberof OSFramework.Event.AbstractEventsManager
+		 * @param eventType Type of the event
+		 * @param data Data passed to the handlers
+		 * @param args Extra arguments passed to the handlers
 		 */
 		public trigger(eventType: ET, data?: D, ...args: unknown[]): void {
 			if (this._events.has(eventType)) {
@@ -106,8 +97,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Getter that allows to obtain the list of events
 		 *
 		 * @readonly
-		 * @type {Map<ET, IEvent<D>>}
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public get events(): Map<ET, IEvent<D>> {
 			return this._events;
@@ -119,9 +108,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @protected
 		 * @abstract
-		 * @param {ET} eventType Type of the event that will we need an instance of.
-		 * @returns {*}  {IEvent<D>} Instance of the event.
-		 * @memberof OSFramework.Event.AbstractEventsManager
+		 * @param eventType Type of the event that will we need an instance of.
+		 * @returns Instance of the event.
 		 */
 		protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
 	}

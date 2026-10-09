@@ -461,9 +461,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 
 	/**
 	 * Events available for all provider based patterns.
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum ProviderEvents {
 		Initialized = 'Initialized',

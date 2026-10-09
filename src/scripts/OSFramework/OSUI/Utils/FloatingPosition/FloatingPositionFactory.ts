@@ -3,10 +3,8 @@ namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
 	/**
 	 * FloatingPosition Factory
 	 *
-	 * @export
-	 * @param {FloatingPositionConfig} configs
-	 * @param {string} provider
-	 * @return {*}  {void}
+	 * @param configs Positioning configuration of the floating element
+	 * @param provider Positioning library that implements the behaviour
 	 */
 	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void {
 		let _floatingPositionItem = null;

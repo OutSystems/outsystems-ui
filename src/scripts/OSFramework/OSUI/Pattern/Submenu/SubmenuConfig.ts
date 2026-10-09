@@ -11,8 +11,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Submenu.SubmenuConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

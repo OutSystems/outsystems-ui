@@ -10,9 +10,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Overload the open method.
 		 *
-		 * @param {boolean} [isOpenedByApi]
-		 * @param {boolean} [arrowKeyPressed]
-		 * @memberof IOverflowMenu
+		 * @param [isOpenedByApi]
+		 * @param [arrowKeyPressed]
 		 */
 		open(
 			isOpenedByApi?: boolean,

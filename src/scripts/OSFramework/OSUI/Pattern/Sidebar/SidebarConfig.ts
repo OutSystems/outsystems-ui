@@ -2,16 +2,15 @@
 namespace OSFramework.OSUI.Patterns.Sidebar {
 	/**
 	 * Class that represents the custom configurations received by the Sidebar.
-	 *
-	 * @export
-	 * @class SidebarConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class SidebarConfig extends AbstractConfiguration {
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
+		/** Dims the page behind the sidebar with an overlay while it is open (and closes on click outside). */
 		public HasOverlay: boolean;
+		/** Renders the sidebar open when it is built. */
 		public StartsOpen: boolean;
+		/** Width of the sidebar (CSS length); 500px by default. */
 		public Width: string;
 
 		constructor(config: JSON) {
@@ -23,8 +22,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
-		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Sidebar.SidebarConfig
+		 * @returns boolean
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -38,8 +36,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Sidebar.SidebarConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

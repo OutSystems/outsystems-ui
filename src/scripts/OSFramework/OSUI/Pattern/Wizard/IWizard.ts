@@ -12,16 +12,14 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		/**
 		 * Method to add a new wizardItem
 		 *
-		 * @param {WizardItem.IWizardItem} wizardItem
-		 * @memberof IWizard
+		 * @param wizardItem
 		 */
 		addWizardItem(wizardItem: WizardItem.IWizardItem): void;
 
 		/**
 		 * Method to remove a wizardItem
 		 *
-		 * @param {string} uniqueId
-		 * @memberof IWizard
+		 * @param uniqueId
 		 */
 		removeWizardItem(uniqueId: string): void;
 	}

@@ -2,13 +2,11 @@
 namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 	/**
 	 * Class that represents the custom configurations received by the DropdownServerSideItem.
-	 *
-	 * @export
-	 * @class DropdownServerSideItemConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class DropdownServerSideItemConfig extends AbstractConfiguration {
+		/** Marks the item as selected when it is built. */
 		public IsSelected: boolean;
+		/** Identifier of the item reported to the parent dropdown when it is selected. */
 		public ItemId: string;
 
 		constructor(config: JSON) {
@@ -20,8 +18,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItemConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -2,20 +2,16 @@
 namespace OSFramework.OSUI.Patterns.Tabs {
 	/**
 	 * Defines the interface for OutSystemsUI Tabs Pattern
-	 *
-	 * @export
-	 * @interface ITabs
-	 * @extends {Interface.IParent}
 	 */
 	export interface ITabs extends Interface.IParent {
 		/**
 		 * Function that will trigger the change tab method
 		 *
-		 * @param {number} tabIndex
-		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
-		 * @param {boolean} [blockObserver]
-		 * @param {boolean} [triggerEvent]
-		 * @param {boolean} [triggeredByObserver]
+		 * @param tabIndex
+		 * @param tabsHeaderItem
+		 * @param [blockObserver]
+		 * @param [triggerEvent]
+		 * @param [triggeredByObserver]
 		 */
 		changeTab(
 			tabIndex: number,
@@ -28,7 +24,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Function that will toggle the gestures on Tabs
 		 *
-		 * @param {boolean} addDragGestures
+		 * @param addDragGestures
 		 */
 		toggleDragGestures(addDragGestures: boolean): void;
 	}

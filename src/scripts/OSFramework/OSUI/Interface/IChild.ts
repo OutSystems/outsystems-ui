@@ -2,16 +2,12 @@
 namespace OSFramework.OSUI.Interface {
 	/**
 	 * Defines the interface for a Pattern that will be a child of other Pattern
-	 *
-	 * @export
-	 * @interface IChild
 	 */
 	export interface IChild extends IPattern {
 		/**
 		 * Method used to be notified by the parent
 		 *
 		 * @param notificationType Notification type
-		 * @memberof OSFramework.Interface.IChild
 		 */
 		beNotifiedByParent?(notificationType: string): void;
 
@@ -22,29 +18,21 @@ namespace OSFramework.OSUI.Interface {
 
 		/**
 		 * Method used to set item as focus state
-		 *
-		 * @memberof OSFramework.Interface.IChild
 		 */
 		setBlur?(): void;
 
 		/**
 		 * Method used to set item as blur state
-		 *
-		 * @memberof OSFramework.Interface.IChild
 		 */
 		setFocus?(): void;
 
 		/**
 		 * Method used to set the tabindex attribute
-		 *
-		 * @memberof OSFramework.Interface.IChild
 		 */
 		setTabindex?(): void;
 
 		/**
 		 * Method used to unset the tabindex attribute
-		 *
-		 * @memberof OSFramework.Interface.IChild
 		 */
 		unsetTabindex?(): void;
 	}

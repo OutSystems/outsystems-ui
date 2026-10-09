@@ -2,19 +2,13 @@
 namespace OSFramework.OSUI.Feature.Balloon {
 	/**
 	 * Defines the interface for OutSystemsUI Balloon Pattern
-	 *
-	 * @export
-	 * @interface IBalloon
-	 * @extends {Feature.IFeature}
-	 * @extends {Interface.IOpenable}
 	 */
 	export interface IBalloon extends Feature.IFeature, Interface.IOpenable {
 		/**
 		 * Overload the open method.
 		 *
-		 * @param {boolean} [isOpenedByApi]
-		 * @param {boolean} [arrowKeyPressed]
-		 * @memberof IBalloon
+		 * @param [isOpenedByApi]
+		 * @param [arrowKeyPressed]
 		 */
 		open(
 			isOpenedByApi?: boolean,
@@ -24,16 +18,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to set the Balloon border shape
 		 *
-		 * @param {GlobalEnum.ShapeTypes} [shape]
-		 * @memberof IBalloon
+		 * @param [shape]
 		 */
 		setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
 
 		/**
 		 * Method to update the Balloon position
 		 *
-		 * @param {GlobalEnum.FloatingPosition} position
-		 * @memberof IBalloon
+		 * @param position
 		 */
 		updatePositionOption(position: GlobalEnum.FloatingPosition): void;
 	}

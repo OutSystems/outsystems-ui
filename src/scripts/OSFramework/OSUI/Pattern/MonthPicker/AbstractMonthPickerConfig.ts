@@ -2,15 +2,15 @@
 namespace OSFramework.OSUI.Patterns.MonthPicker {
 	/**
 	 * Class that represents the custom configurations received by the MonthPicker.
-	 *
-	 * @export
-	 * @class MonthPickerConfig
-	 * @extends {AbstractProviderConfiguration}
 	 */
 	export abstract class AbstractMonthPickerConfig extends Patterns.AbstractProviderConfiguration {
+		/** Display format of the selected month (e.g. MM/YYYY). */
 		public DateFormat: string;
+		/** Month selected when the picker is built ({ Month, Year }). */
 		public InitialMonth: MonthYear;
+		/** Latest selectable month ({ Month, Year }). */
 		public MaxMonth: MonthYear;
+		/** Earliest selectable month ({ Month, Year }). */
 		public MinMonth: MonthYear;
 
 		constructor(config: JSON) {
@@ -22,8 +22,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof OSFramework.Patterns.MonthPicker.AbstractMonthPickerConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
