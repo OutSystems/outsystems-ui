@@ -2,14 +2,13 @@
 namespace OSFramework.OSUI.Patterns.Tooltip {
 	/**
 	 * Class that represents the custom configurations received by the Tooltip.
-	 *
-	 * @export
-	 * @class TooltipConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class TooltipConfig extends AbstractConfiguration {
+		/** Opens on hover/focus; when false it opens on click. */
 		public IsHover: boolean;
+		/** Placement of the balloon relative to the trigger (GlobalEnum.Position). */
 		public Position: GlobalEnum.Position;
+		/** Shows the tooltip as soon as it is built. */
 		public StartVisible: boolean;
 
 		constructor(config: JSON) {
@@ -21,8 +20,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
-		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Tooltip.TooltipConfig
+		 * @returns boolean
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -36,8 +34,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Tooltip.TooltipConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -4,7 +4,6 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 	 * Responsible for handling the Preview In Device behavior.
 	 *
 	 * @abstract
-	 * @class OnPostMessage
 	 */
 	abstract class OnPostMessage {
 		// Holds the knowledge if the app is running within the Preview In Devices in ODC.
@@ -102,9 +101,6 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 		 * Indicates if the APP is running within the Preview In Devices frame.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OnPostMessage
 		 */
 		public static get IsInPreviewInDevices(): boolean {
 			return OnPostMessage._isInPreviewInDevices;
@@ -112,9 +108,6 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 
 		/**
 		 * Method used to set the message event
-		 *
-		 * @static
-		 * @memberof OnPostMessage
 		 */
 		public static Set(): void {
 			if (window.self !== window.top) {
@@ -127,9 +120,6 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 
 		/**
 		 * Method used to unset the message event
-		 *
-		 * @static
-		 * @memberof OnPostMessage
 		 */
 		public static Unset(): void {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(

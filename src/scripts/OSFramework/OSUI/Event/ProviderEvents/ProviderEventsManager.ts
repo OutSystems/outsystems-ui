@@ -9,10 +9,9 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 		/**
 		 * Method to add a pending event
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {string} eventUniqueId
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
+		 * @param eventName Name of the provider event
+		 * @param callback Platform callback to run when the provider event fires
+		 * @param eventUniqueId Unique id of the provider event
 		 */
 		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, eventUniqueId: string): void {
 			// Check if we've everything needed to store the event
@@ -29,8 +28,7 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 		/**
 		 * Method to remove a pending event
 		 *
-		 * @param {string} eventUniqueId
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
+		 * @param eventUniqueId Unique id of the provider event
 		 */
 		public removePendingEvent(eventUniqueId: string): void {
 			const event = this._pendingEventsMap.has(eventUniqueId);
@@ -47,8 +45,7 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 		/**
 		 * Method to remove a saved event
 		 *
-		 * @param {string} eventUniqueId
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
+		 * @param eventUniqueId Unique id of the provider event
 		 */
 		public removeSavedEvent(eventUniqueId: string): void {
 			const event = this._eventsMap.has(eventUniqueId);
@@ -65,10 +62,9 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 		/**
 		 * Method to save an event
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {string} eventUniqueId
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
+		 * @param eventName Name of the provider event
+		 * @param callback Platform callback to run when the provider event fires
+		 * @param eventUniqueId Unique id of the provider event
 		 */
 		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, eventUniqueId: string): void {
 			// Check if we've everything needed to store the event
@@ -92,9 +88,6 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 
 		/**
 		 * Get all the existing events
-		 *
-		 * @type {Map<string, IProviderEvent>}
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
 		 */
 		public get events(): Map<string, IProviderEvent> {
 			return this._eventsMap;
@@ -104,8 +97,6 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 		 * Get all the existing pending events
 		 *
 		 * @readonly
-		 * @type {Map<string, IProviderEvent>}
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
 		 */
 		public get pendingEvents(): Map<string, IProviderEvent> {
 			return this._pendingEventsMap;
@@ -113,9 +104,6 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 
 		/**
 		 * Check if there're saved events
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
 		 */
 		public get hasEvents(): boolean {
 			return this._eventsMap.size > 0;
@@ -123,9 +111,6 @@ namespace OSFramework.OSUI.Event.ProviderEvents {
 
 		/**
 		 * Check if there're pending events
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Event.ProviderEvents.ProviderEventsManager
 		 */
 		public get hasPendingEvents(): boolean {
 			return this._pendingEventsMap.size > 0;

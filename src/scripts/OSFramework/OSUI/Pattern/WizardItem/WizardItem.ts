@@ -87,7 +87,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		protected setA11YProperties(): void {
 			// Clean up aria-* attributes
@@ -133,7 +132,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._clickHandler.bind(this);
@@ -143,7 +141,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		protected setHtmlElements(): void {
 			this._dataBlockParent = this.selfElement.parentElement;
@@ -159,7 +156,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
@@ -169,7 +165,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -178,8 +173,7 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		/**
 		 * Method to be notified by the parent that a new property value has been set
 		 *
-		 * @param {Enum.ParentNotifyActionType} notificationType Notification type
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
+		 * @param notificationType Notification type
 		 */
 		public beNotifiedByParent(notificationType: Enum.ParentNotifyActionType): void {
 			if (notificationType === Enum.ParentNotifyActionType.HasNewProps) {
@@ -191,8 +185,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 
 		/**
 		 * Method to build the WizardItem
-		 *
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		public build(): void {
 			super.build();
@@ -213,9 +205,8 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -229,8 +220,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 
 		/**
 		 * Method to destroy WizardItem instance
-		 *
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItem
 		 */
 		public dispose(): void {
 			if (this.parentObject) {

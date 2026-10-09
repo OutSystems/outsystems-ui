@@ -140,7 +140,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -150,7 +149,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected setCallbacks(): void {
 			this._endEvent = this._eventTouchEnd.bind(this);
@@ -164,7 +162,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected setHtmlElements(): void {
 			this._trackableElement = document.getElementById(this.configs.WidgetId);
@@ -174,7 +171,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		 * Removes event listeners and callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEventListeners();
@@ -188,7 +184,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected unsetHtmlElements(): void {
 			this._trackableElement = undefined;
@@ -196,8 +191,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 
 		/**
 		 * Method to build the TouchEvents
-		 *
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		public build(): void {
 			super.build();
@@ -208,8 +201,6 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 
 		/**
 		 * Destroy TouchEvents
-		 *
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -220,9 +211,8 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName Event name that will be assigned
-		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
+		 * @param eventName Event name that will be assigned
+		 * @param callback Function name that will be passed as a callback function to the event above
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {

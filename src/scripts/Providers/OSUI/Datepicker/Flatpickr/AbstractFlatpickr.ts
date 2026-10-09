@@ -190,7 +190,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method used to add the TodayButton at calendar
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected addTodayBtn(): void {
 			// Create the wrapper container
@@ -234,7 +233,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
 			// Init provider
@@ -300,7 +298,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Trigger the jumToDate to now
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected jumpIntoToday(): void {
 			const currentDatetime = new Date();
@@ -312,7 +309,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * to add the custom callback to the OnClose event and remove the tabindex from the today button
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
 		 */
 		protected onDatePickerClose(): void {
 			// Clear the provider selected date if the input is empty
@@ -339,7 +335,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method used to add the custom callback to the OnOpen event and add the tabindex for the today button
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
 		 */
 		protected onDatePickerOpen(): void {
 			// Add the tabindex for the link inside the today button if it exists
@@ -354,7 +349,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * The method used to prepare the pattern before being redrawn in order to prevent possible flickering.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -368,7 +362,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method used to prepare pattern before being redrawed in order to prevent possible flickerings!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected prepareToAndRedraw(): void {
 			this._setParentMinHeight();
@@ -379,7 +372,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
 			// Since native behaviour could be enabled, check if the calendar container exist!
@@ -450,7 +442,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -460,7 +451,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
@@ -483,7 +473,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
@@ -496,7 +485,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected unsetHtmlElements(): void {
 			this._a11yInfoContainerElem = undefined;
@@ -505,8 +493,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Build the Pattern
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public build(): void {
 			super.build();
@@ -517,9 +503,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to change given propertyName at OnParametersChange platform event
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -551,8 +536,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to clear the selected date
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public clear(): void {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
@@ -563,8 +546,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to close DatePicker
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public close(): void {
 			if (this.provider.isOpen) {
@@ -578,8 +559,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable days on DatePicker
 		 *
-		 * @param {string[]} disableDays
-		 * @memberof Flatpickr.DisableDays
+		 * @param disableDays Dates to disable, as strings in the configured format
 		 */
 		public disableDays(disableDays: string[]): void {
 			this.configs.DisabledDays = disableDays;
@@ -589,8 +569,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable weekdays on DatePicker
 		 *
-		 * @param {number[]} disableWeekDays
-		 * @memberof AbstractFlatpickr
+		 * @param disableWeekDays Week days to disable (0 is Sunday)
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
@@ -600,8 +579,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method to remove and destroy DatePicker instance
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -622,8 +599,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to update certain properties at OnRender
-		 *
-		 * @memberof AbstractFlatpickr
 		 */
 		public onRender(): void {
 			// Get the current status of the platform input
@@ -638,8 +613,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to open DatePicker
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public open(): void {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
@@ -659,8 +632,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to regist callback events
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -676,8 +647,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to set the DatePicker as editable on its input
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
@@ -689,8 +658,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to set the DatePicker language
 		 *
-		 * @param {string} value
-		 * @memberof AbstractFlatpickr
+		 * @param value Locale code of the language to apply
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -705,8 +673,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 * @param newConfigs Provider options to merge into the current configuration
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -718,7 +685,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Method used to update the prompt message
 		 *
 		 * @param promptMessage The new prompt message value
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public updatePrompt(promptMessage: string): void {
 			this.flatpickrInputElem.placeholder = promptMessage;

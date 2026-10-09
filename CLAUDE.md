@@ -23,9 +23,28 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run create-osui-scss` | Regenerate the per-platform SCSS entry files |
 | `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload |
 | `npm run update-version` | Interactive version bump across project files |
-| `npm run docs` / `docs:css-api` / `docs:tokens` | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages |
+| `npm run docs` / `docs:css-api` / `docs:tokens` | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages |
+| `npm run docs:ai` / `docs:ai:check` | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
+| `npm run types:generate` | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`) |
+| `npm run blocks:export` | Re-export the OML block snapshot (`scripts/ai-docs/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored, never committed) |
+| `npm test` | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale |
 
-There is no test runner in this repository — nothing to run locally beyond build and lint.
+There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
+
+## Agent documentation
+
+`docs-ai/` is generated from the source by `npm run docs:ai` and is the first thing an agent should read:
+`llms.txt` (index and gotchas), `llms-components.txt` (one card per pattern), `llms-patterns.txt` (CSS-only
+components, layout partials, helper classes), `llms-utilities.txt` (the utility grammar and every family),
+`llms-tokens.txt` (theme roles and `--osui-*` knobs), plus `osui.components.json`, `osui.utilities.json` and
+the config schemas under `schema/configs/`. For OML producers (the Model bridge, Service Studio): `llms-blocks.txt`
+(one card per OutSystems UI block, from the snapshot `scripts/ai-docs/snapshot/osui.blocks.json` exported from the
+module OML), `osui.blocks.json`, `osui.enums.json` and `osui.icons.json`; lines marked `[runtime-only]` concern the
+browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc (see
+`.claude/rules/typescript.md` §7): the generator reads them, so a new function or prop needs its comment before
+`docs-ai/` regenerates. A change to a pattern's configs, API, story or SCSS is followed by
+`npm run types:generate && npm run docs:ai`; `npm test` fails while the generated files are stale. See
+`scripts/ai-docs/README.md` for the generators and the snapshot refresh procedure.
 
 ## Domain Terminology
 

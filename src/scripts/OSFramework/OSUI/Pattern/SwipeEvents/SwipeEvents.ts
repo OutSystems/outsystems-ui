@@ -77,7 +77,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -87,7 +86,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setCallbacks(): void {
 			this._gestureStartEvent = this.EventGestureEnd.bind(this);
@@ -100,7 +98,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setHtmlElements(): void {
 			this._swipableElement = document.getElementById(this.configs.WidgetId);
@@ -110,7 +107,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Removes event listeners and callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEventListeners();
@@ -123,7 +119,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetHtmlElements(): void {
 			this._swipableElement = undefined;
@@ -131,10 +126,9 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 
 		/**
 		 * Based on the offset, this method triggers the methods on the platform
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @param offsetX Horizontal distance travelled by the gesture, in pixels
+		 * @param offsetY Vertical distance travelled by the gesture, in pixels
+		 * @param timeTaken Duration of the gesture, in milliseconds
 		 */
 		public EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			if (
@@ -161,8 +155,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		/**
 		 * Block the default behaviour of the GestureMove
 		 *
-		 * @param {TouchEvent} event
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @param event Touch event forwarded from the platform gesture handler
 		 */
 		public EventGestureMove(event: TouchEvent): void {
 			if (event) {
@@ -172,8 +165,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 
 		/**
 		 * Method to build the SwipeEvents
-		 *
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public build(): void {
 			super.build();
@@ -184,8 +175,6 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 
 		/**
 		 * Destroy SwipeEvents
-		 *
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -196,9 +185,8 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName Event name that will be assigned
-		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @param eventName Event name that will be assigned
+		 * @param callback Function name that will be passed as a callback function to the event above
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {

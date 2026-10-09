@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function that will change the property of a given SectionIndex Id.
 	 *
-	 * @export
-	 * @param {string} sectionIndexId ID of the SectionIndex where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param sectionIndexId ID of the SectionIndex where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,14 +26,13 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Create the new SectionIndexItem instance and add it to the sectionIndexItemsMap
 	 *
-	 * @export
-	 * @param {string} sectionIndexId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex}
+	 * @param sectionIndexId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the SectionIndex instance
 	 */
 	export function Create(
 		sectionIndexId: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		if (_sectionIndexItemsMap.has(sectionIndexId)) {
 			throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
@@ -41,7 +40,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 
 		const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndex.SectionIndex(
 			sectionIndexId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_sectionIndexItemsMap.set(sectionIndexId, _sectionIndexItem);
@@ -52,8 +51,8 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function that will dispose the instance of the given SectionIndexItem Id
 	 *
-	 * @export
-	 * @param {string} sectionIndexId
+	 * @param sectionIndexId The id of the SectionIndex element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(sectionIndexId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -73,8 +72,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Fucntion that will return the Map with all the SectionIndex instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllSectionIndexItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_sectionIndexItemsMap);
@@ -83,9 +81,8 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function that gets the instance of SectionIndex, by a given ID.
 	 *
-	 * @export
-	 * @param {string} sectionIndexId ID of the SectionIndex that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;}
+	 * @param sectionIndexId ID of the SectionIndex that will be looked for.
+	 * @returns the SectionIndex instance
 	 */
 	export function GetSectionIndexById(sectionIndexId: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -98,9 +95,8 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} sectionIndexId ID of the SectionIndexItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex}
+	 * @param sectionIndexId ID of the SectionIndexItem that will be initialized.
+	 * @returns the SectionIndex instance
 	 */
 	export function Initialize(sectionIndexId: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
@@ -113,15 +109,14 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} sectionIndexId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param sectionIndexId The id of the SectionIndex element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		sectionIndexId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

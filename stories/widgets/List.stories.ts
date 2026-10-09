@@ -10,7 +10,7 @@ import { renderStatic } from '../_helpers/osui';
  *
  * CSS-only render — the widget DOM + classes are the styling contract from
  * src/scss/03-widgets/_list.scss and src/scss/03-widgets/_list-item.scss:
- *   `.list.list-group` > `[data-list-item].list-item(.list-item-selected)`
+ *   `[data-list].list.list-group` > `[data-list-item].list-item(.list-item-selected)`
  *   > `.list-item-content` > `-left | -center(-title/-text) | -right`.
  *
  * Each row composes the full Figma layout: a UserAvatar in the left region, the
@@ -60,7 +60,7 @@ const item = (selected: boolean, title: string, text: string): string => `
 export const Default: Story = {
 	render: () =>
 		renderStatic(`
-			<div class="list list-group" style="max-width:420px;">
+			<div data-list="" class="list list-group" style="max-width:420px;">
 				${item(false, 'First item', 'A tappable row with a title and supporting text.')}
 				${item(true, 'Selected item', 'This row is selected.')}
 				${item(false, 'Third item', 'Another row.')}

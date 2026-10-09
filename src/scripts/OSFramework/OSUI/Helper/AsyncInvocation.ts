@@ -3,10 +3,8 @@ namespace OSFramework.OSUI.Helper {
 	/**
 	 * Method that should be used in order to grant given callbacks will be async
 	 *
-	 * @export
-	 * @param {GlobalCallbacks.Generic} callback
-	 * @param {...unknown[]} args
-	 * @return {*}  {(number)}
+	 * @param callback Function to invoke asynchronously
+	 * @param args Arguments passed to the callback
 	 */
 	export function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): number {
 		if (callback) {
@@ -18,11 +16,9 @@ namespace OSFramework.OSUI.Helper {
 	/**
 	 * Method to be used when a setTimeout is needed
 	 *
-	 * @export
-	 * @param {GlobalCallbacks.Generic} callback
-	 * @param {number} time
-	 * @param {...unknown[]} args
-	 * @return {*}  {(number)}
+	 * @param callback Function to invoke asynchronously
+	 * @param time Delay before the invocation, in milliseconds
+	 * @param args Arguments passed to the callback
 	 */
 	export function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): number {
 		if (callback) {

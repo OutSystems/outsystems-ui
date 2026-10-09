@@ -2,9 +2,6 @@
 namespace OSFramework.OSUI.Patterns.ButtonLoading.Enum {
 	/**
 	 * ButtonLoading Enum properties
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum Properties {
 		IsLoading = 'IsLoading',
@@ -14,9 +11,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading.Enum {
 
 	/**
 	 * ButtonLoading Enum Css Classes
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum CssClass {
 		Button = 'btn',

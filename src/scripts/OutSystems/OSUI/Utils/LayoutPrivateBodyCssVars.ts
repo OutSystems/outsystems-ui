@@ -115,9 +115,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 		/**
 		 * Method that will trigger the setCss functionality
-		 *
-		 * @static
-		 * @memberof CssBodyVariables
 		 */
 		public static Set(): void {
 			this._setCssVars();

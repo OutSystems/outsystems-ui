@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
-	 *
-	 * @export
-	 * @class TabsHeaderItem
-	 * @extends {AbstractPattern<TabsHeaderItemConfig>}
-	 * @implements {ITabsHeaderItem}
 	 */
 	export class TabsHeaderItem extends AbstractChild<TabsHeaderItemConfig, Tabs.ITabs> implements ITabsHeaderItem {
 		// Store the data-tab attribute
@@ -41,8 +36,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * Method to set the Accessibility attributes
 		 *
 		 * @protected
-		 * @param {boolean} [isUpdate=true]
-		 * @memberof TabsHeaderItem
+		 * @param [isUpdate=true] True when the properties are being updated after the pattern was built
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
@@ -82,7 +76,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
@@ -92,7 +85,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -102,7 +94,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnTabsClick = undefined;
@@ -112,7 +103,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -120,8 +110,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to build the TabsHeaderItem
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public build(): void {
 			super.build();
@@ -145,8 +133,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to disable TabHeaderItem
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public disable(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.DisabledHeaderItem);
@@ -154,8 +140,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to remove event listener and destroy TabsHeaderItem instance
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public dispose(): void {
 			// Notify parent about this instance will be destroyed
@@ -170,8 +154,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to enable TabHeaderItem
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public enable(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.EnabledHeaderItem);
@@ -179,9 +161,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to get the current data-tab value, called by the Tabs
-		 *
-		 * @return {*}  {number}
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public getDataTab(): number {
 			return this._dataTab;
@@ -190,8 +169,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		/**
 		 * Method to set the aria-controls attribute, called by the Tabs
 		 *
-		 * @param {string} contentItemId Element that will receive the aria-controls
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 * @param contentItemId Element that will receive the aria-controls
 		 */
 		public setAriaControlsAttribute(contentItemId: string): void {
 			Helper.A11Y.AriaControls(this.selfElement, contentItemId);
@@ -200,8 +178,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		/**
 		 * Method to set the data-tab attribute, called by the Tabs
 		 *
-		 * @param {number} dataTab Tab that will be the active
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 * @param dataTab Tab that will be the active
 		 */
 		public setDataTab(dataTab: number): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
@@ -210,8 +187,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to set the focus on this item, called by the Tabs
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setFocus(): void {
 			this.selfElement.focus();
@@ -219,8 +194,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to set this element as active
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setIsActive(): void {
 			if (this.selfElement) {
@@ -232,8 +205,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to remove this element as active
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public unsetIsActive(): void {
 			if (this.selfElement) {
@@ -245,8 +216,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 		/**
 		 * Method to update tabs indicator size on HeaderItem onRender
-		 *
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public updateOnRender(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.UpdateIndicator);
@@ -256,8 +225,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * Readable property to get the active state of the element
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public get IsActive(): boolean {
 			return this._isActive;

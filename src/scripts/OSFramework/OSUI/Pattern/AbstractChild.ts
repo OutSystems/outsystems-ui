@@ -5,11 +5,7 @@ namespace OSFramework.OSUI.Patterns {
 	/**
 	 * Defines the Default props and methods for Patterns that will be added into other Patterns as its childs
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractChild
-	 * @implements {Interface.IChild}
-	 * @template {C extends AbstractConfiguration, PT extends Interface.IParent}
 	 */
 	export abstract class AbstractChild<C extends AbstractConfiguration, PT extends Interface.IParent>
 		extends AbstractPattern<C>
@@ -31,7 +27,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method used to notify parent about the action that was performed
 		 *
 		 * @param actionType Action Type name (Should be based on an Enum)
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		protected notifyParent(actionType: string): void {
 			this._parentObject.beNotifiedByChild(this, actionType);
@@ -41,10 +36,9 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that will Get and Set parent element info.
 		 *
 		 * @protected
-		 * @param {string} parentSelector Selector to find for parent Element
-		 * @param {(patternId: string) => PT} getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
-		 * @param {boolean} [canBeOrphan] option for patterns that can work without a parent
-		 * @memberof OSFramework.Patterns.AbstractChild
+		 * @param parentSelector Selector to find for parent Element
+		 * @param getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
+		 * @param [canBeOrphan] option for patterns that can work without a parent
 		 */
 		protected setParentInfo(
 			parentSelector: string,
@@ -74,8 +68,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Getter that allows to check if it's the first child.
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get isFirstChild(): boolean {
 			return this._isFirstChild;
@@ -85,8 +77,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Setter that allows to define it's the first child.
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public set isFirstChild(value: boolean) {
 			this._isFirstChild = value;
@@ -94,8 +84,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Getter that allows to check if it's the last child.
-		 *
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get isLastChild(): boolean {
 			return this._isLastChild;
@@ -103,8 +91,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Setter that allows to define it's the last child.
-		 *
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public set isLastChild(value: boolean) {
 			this._isLastChild = value;
@@ -114,8 +100,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Getter that allows to obtain the parentId.
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get parentId(): string {
 			return this._parentId;
@@ -125,8 +109,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Getter that allows to obtain the parent reference.
 		 *
 		 * @readonly
-		 * @type {PT}
-		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get parentObject(): PT {
 			return this._parentObject;

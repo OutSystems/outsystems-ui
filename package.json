@@ -13,6 +13,7 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
+		"postdocs": "node scripts/ai-docs/publish-ai-docs.mjs",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
@@ -24,7 +25,12 @@
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
 		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
-		"docs:tokens": "node scripts/generate-token-data.mjs"
+		"docs:tokens": "node scripts/generate-token-data.mjs",
+		"docs:ai": "node scripts/ai-docs/generate-ai-docs.mjs",
+		"docs:ai:check": "node scripts/ai-docs/check-ai-docs-fresh.mjs",
+		"types:generate": "node scripts/ai-docs/generate-pattern-types.mjs",
+		"blocks:export": "node scripts/ai-docs/export-snapshot.mjs",
+		"test": "node --test \"tests/*.test.mjs\""
 	},
 	"repository": {
 		"type": "git",
@@ -59,9 +65,11 @@
 		"chromatic": "^17.0.0",
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-jsdoc": "64.5.4",
 		"eslint-plugin-prettier": "^5.2.5",
 		"flatpickr": "4.6.13",
 		"font-awesome": "^4.7.0",
+		"gpt-tokenizer": "4.0.0",
 		"gulp": "^5.0.1",
 		"gulp-autoprefixer": "^10.0.0",
 		"gulp-clean": "^0.4.0",

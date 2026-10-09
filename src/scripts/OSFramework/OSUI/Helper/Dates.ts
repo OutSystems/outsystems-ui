@@ -7,10 +7,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function to be used in order to get the Json Date from a given Date
 		 *
-		 * @static
-		 * @param {Date} _date
-		 * @return {*}  {string}
-		 * @memberof OSFramework.Helper.Dates
+		 * @param _date Date to convert
 		 */
 		public static GetJsonDateFromDate(_date: Date): string | undefined {
 			if (_date !== undefined) {
@@ -31,10 +28,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function to be used in order to get the Time from a given Date
 		 *
-		 * @static
-		 * @param {Date} _date
-		 * @return {*}  {string}
-		 * @memberof OSFramework.Helper.Dates
+		 * @param _date Date to convert
 		 */
 		public static GetTimeFromDate(_date: Date): string {
 			// Get the Hour at the selected DateTime
@@ -51,11 +45,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to check if the given date1 is minor than given date2
 		 *
-		 * @static
-		 * @param {string} date1 Date to be checked if minor
-		 * @param {string} date2 Date to be checked if it's greater than date1
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.Dates
+		 * @param date1 Date to be checked if minor
+		 * @param date2 Date to be checked if it's greater than date1
 		 */
 		public static IsBeforeThan(date1: string, date2: string): boolean {
 			return Date.parse(date1) <= Date.parse(date2);
@@ -64,9 +55,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to check if a given date is an OutSystems nullDate
 		 *
-		 * @export
-		 * @param {string} date
-		 * @memberof OSFramework.Helper.Dates
+		 * @param date Date to check or convert
 		 */
 		public static IsNull(date: string | Date): boolean {
 			let _date: Date;
@@ -97,9 +86,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to check if a date is valid
 		 *
-		 * @param {string} date
-		 * @return {*}  {boolean}
-		 * @memberof Dates
+		 * @param date Date to check or convert
 		 */
 		public static IsValid(date: string): boolean {
 			return !Number.isNaN(Number(this.NormalizeDate(date)));
@@ -108,10 +95,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to normalize the OutSystems Dates
 		 *
-		 * @static
-		 * @param {string} date
-		 * @return {*}  {Date}
-		 * @memberof Dates
+		 * @param date Date to check or convert
 		 */
 		public static NormalizeDate(date: string): Date {
 			// Store the current date
@@ -131,11 +115,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to normalize the OutSystems DateTimes, used on scopes expecting a Date
 		 *
-		 * @static
-		 * @param {(string | Date)} date
-		 * @param {boolean} [normalizeToMax=true]
-		 * @return {*}  {Date}
-		 * @memberof Dates
+		 * @param date Date to check or convert
+		 * @param [normalizeToMax=true] True to normalize to the end of the day, false to the start
 		 */
 		public static NormalizeDateTime(date: string | Date, normalizeToMax): Date {
 			let _newDate = date;
@@ -158,9 +139,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function responsible for setting up the the server date format.
 		 *
-		 * @export
-		 * @param {string} date example of date.
-		 * @memberof OSFramework.Helper.Dates
+		 * @param date example of date.
 		 */
 		public static SetServerDateFormat(date: string): void {
 			Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
@@ -170,9 +149,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that allows to obtain the Server DateFormat
 		 *
 		 * @readonly
-		 * @static
-		 * @type {string}
-		 * @memberof OSFramework.Helper.Dates
 		 */
 		public static get ServerFormat(): string {
 			return Dates._serverFormat;

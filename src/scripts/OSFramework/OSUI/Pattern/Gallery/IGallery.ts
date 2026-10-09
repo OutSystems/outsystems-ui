@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Gallery {
 	/**
 	 * Defines the interface for OutSystemsUI Gallery Pattern
-	 *
-	 * @export
-	 * @interface IGallery
-	 * @extends {Interface.IPattern}
 	 */
 	export type IGallery = Interface.IPattern;
 }

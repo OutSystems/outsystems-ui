@@ -2,17 +2,13 @@
 namespace Providers.OSUI.Utils {
 	/**
 	 * Floating UI Class to handle the Floating UI provider utils
-	 *
-	 * @export
-	 * @class FloatingUI
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
 		private _currentPlacement: OSFramework.OSUI.GlobalEnum.FloatingPosition;
 		/**
 		 * Creates an instance of FloatingUI.
-		 * @param {FloatingUIConfig} options
-		 * @memberof FloatingUI
+		 * @param options Positioning configuration of the floating element
 		 */
 		constructor(options: FloatingUIConfig) {
 			super(options);
@@ -20,8 +16,6 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to destroy the FloatingUI
-		 *
-		 * @memberof FloatingUI
 		 */
 		public dispose(): void {
 			if (this.floatingConfigs.UpdatePosition) {
@@ -33,8 +27,6 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to call the FloatingUI provider
-		 *
-		 * @memberof FloatingUI
 		 */
 		public setFloatingPosition(): void {
 			// Store the middleware to be added on the FloatingUI
@@ -159,8 +151,6 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to run when the target closes. This will clean listeners on the provider side and stop observing the target
-		 *
-		 * @memberof FloatingUI
 		 */
 		public unsetFloatingPosition(): void {
 			this.eventOnUpdateCallback();

@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Class that represents the device orientation change
-	 *
-	 * @export
-	 * @class OrientationChange
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class OrientationChange extends AbstractListener<string> {
 		constructor() {
