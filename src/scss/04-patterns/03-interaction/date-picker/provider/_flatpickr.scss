@@ -69,7 +69,7 @@
 			margin-right: variables.$token-scale-100;
 
 			.flatpickr-day {
-				color: variables.$token-primitives-neutral-500;
+				color: var(--color-neutral-4);
 			}
 		}
 
@@ -272,7 +272,7 @@ span.flatpickr-weekday {
 
 		&:hover,
 		&:focus {
-			color: variables.$token-primitives-neutral-700;
+			color: var(--color-neutral-6);
 		}
 	}
 

@@ -85,7 +85,7 @@
 .dropdown {
 	&-container {
 		&:after {
-			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
+			border: variables.$token-border-size-050 solid var(--color-neutral-6);
 			// physical sides: these borders draw the chevron glyph under a physical
 			// rotate transform, and its position is deliberately physical (right: 16px)
 			border-right: variables.$token-border-size-0 !important;
@@ -117,7 +117,7 @@
 	&.dropdown-expanded {
 		&.dropdown-container {
 			&:after {
-				border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
+				border: variables.$token-border-size-050 solid var(--color-neutral-6);
 				// physical sides: chevron glyph under a physical rotate (see above)
 				border-right: variables.$token-border-size-0 !important;
 				border-top: variables.$token-border-size-0 !important;
@@ -234,7 +234,7 @@
 		-servicestudio-width: 100%;
 
 		.icon {
-			-servicestudio-color: variables.$token-primitives-neutral-700;
+			-servicestudio-color: var(--color-neutral-6);
 			-servicestudio-font-size: variables.$token-font-size-550;
 			-servicestudio-position: absolute;
 			-servicestudio-right: 16px;
@@ -259,7 +259,7 @@
 		-servicestudio-width: 100%;
 
 		& > .icon {
-			-servicestudio-color: variables.$token-primitives-neutral-700;
+			-servicestudio-color: var(--color-neutral-6);
 			-servicestudio-font-size: variables.$token-font-size-550;
 			-servicestudio-position: absolute;
 			-servicestudio-right: 16px;

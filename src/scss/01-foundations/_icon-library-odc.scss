@@ -360,7 +360,7 @@ body.iconLibrary-phosphor {
 	border: none;
 	content: var(--osui-icon-checkbox-checked);
 	font-family: var(--osui-icon-font-family);
-	color: variables.$token-primitives-base-white;
+	color: var(--color-text-inverse);
 	transform: none !important; // !important required to override the element from provider
 	position: absolute;
 	width: 100%;
@@ -495,7 +495,7 @@ body.iconLibrary-phosphor {
 	font-family: var(--osui-icon-font-family);
 	position: absolute;
 	font-size: variables.$token-font-size-600;
-	color: variables.$token-primitives-neutral-1000;
+	color: var(--color-text-subtle);
 }
 
 // Splide swaps the arrow BUTTONS when it runs RTL (`.splide__arrows--rtl`), but the glyph

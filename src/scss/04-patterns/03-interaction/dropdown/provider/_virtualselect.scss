@@ -70,14 +70,14 @@
 			&::after,
 			&::before {
 				background-color: transparent;
-				color: variables.$token-primitives-neutral-700;
+				color: var(--color-neutral-6);
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
 		background-color: transparent;
-		color: variables.$token-primitives-neutral-700;
+		color: var(--color-neutral-6);
 	}
 }
 
@@ -457,7 +457,7 @@
 
 	.vscomp-search-clear {
 		border-radius: 50%;
-		color: variables.$token-primitives-neutral-700;
+		color: var(--color-neutral-6);
 		display: table;
 		font-size: 0;
 		font-weight: variables.$token-font-weight-semi-bold;
@@ -565,7 +565,7 @@
 			// Style group title in single select dropdown
 			// this selector is necessary so that the style is not applied when the option has a checkbox
 			&:only-child {
-				color: variables.$token-primitives-neutral-700;
+				color: var(--color-neutral-6);
 				font-size: variables.$token-font-size-275;
 				font-weight: variables.$token-font-weight-semi-bold;
 				text-transform: uppercase;
@@ -581,7 +581,7 @@
 
 // Option Item description
 .vscomp-option-description {
-	color: variables.$token-primitives-neutral-700;
+	color: var(--color-neutral-6);
 	font-size: variables.$token-font-size-275;
 	margin-block-start: 1px;
 }
@@ -666,11 +666,11 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			border: variables.$token-border-size-075 solid variables.$token-primitives-neutral-400;
+			border: variables.$token-border-size-075 solid var(--color-neutral-3);
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-400;
+			border: variables.$token-border-size-025 solid var(--color-neutral-3);
 		}
 	}
 }
