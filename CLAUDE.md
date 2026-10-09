@@ -25,6 +25,7 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload |
 | `npm run update-version` | Interactive version bump across project files |
 | `npm run docs` / `docs:css-api` / `docs:tokens` | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages |
+| `npm run docs:migration` | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift |
 
 There is no test runner in this repository — nothing to run locally beyond build and lint.
 
