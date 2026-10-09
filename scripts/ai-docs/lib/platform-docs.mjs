@@ -179,18 +179,18 @@ export const CONCEPT_PAGES = [
  * @param {Set<string>} knownRuntime names present in the manifests (unknown ones are shown without a link)
  */
 export function renderPlatformSection(knownRuntime) {
-	const lines = ['# OutSystems UI — platform context (ODC documentation)', ''];
-	lines.push(
+	const lines = [
+		'# OutSystems UI — platform context (ODC documentation)',
+		'',
 		'Human documentation for the concepts this library does not define. Load a page only when a card is not enough; each is 1–3k tokens. Pattern pages: ' +
-			`${DOCS_BASE}/patterns/<category>/<slug>/ — the \`Docs:\` line of a card gives the slug.`
-	);
-	lines.push('', '## Concept pages');
-	for (const c of CONCEPT_PAGES) lines.push(`- ${c.title} — ${c.url}\n  ${c.summary}`);
-	lines.push('');
-	lines.push('## Pattern catalogue (documentation name → runtime card)');
-	lines.push(
-		'The ODC toolbox groups patterns in six categories; a documented pattern maps to a TypeScript pattern (a card in llms-components.txt) or a CSS-only component (llms-patterns.txt). Format: Name (slug) → runtime card(s).'
-	);
+			`${DOCS_BASE}/patterns/<category>/<slug>/ — the \`Docs:\` line of a card gives the slug.`,
+		'',
+		'## Concept pages',
+		...CONCEPT_PAGES.map((c) => `- ${c.title} — ${c.url}\n  ${c.summary}`),
+		'',
+		'## Pattern catalogue (documentation name → runtime card)',
+		'The ODC toolbox groups patterns in six categories; a documented pattern maps to a TypeScript pattern (a card in llms-components.txt) or a CSS-only component (llms-patterns.txt). Format: Name (slug) → runtime card(s).',
+	];
 	for (const [category, patterns] of Object.entries(PATTERN_PAGES)) {
 		const items = Object.entries(patterns).map(([title, { slug, runtime }]) => {
 			const targets = runtime.length

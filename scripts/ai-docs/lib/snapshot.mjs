@@ -23,7 +23,7 @@ const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
  * @typedef {{ name: string, mandatory: boolean, description: string, parameters: EventParam[] }} BlockEvent
  * @typedef {{ flow: string, name: string, public: boolean, description: string, inputParameters: Param[], placeholders: { name: string, description: string }[], events: BlockEvent[], requiredScripts: string[], patternHints: { apiCalls: string[] } }} Block
  * @typedef {{ identifier: string, label: string, attributes: Record<string, string|null> }} StaticRecord
- * @typedef {{ file?: string, version: number, source: { module: string, platform: string, [k: string]: unknown }, staticEntities: Record<string, { description: string, records: StaticRecord[] }>, structures: Record<string, { description: string, attributes: Param[] }>, blocks: Record<string, Block> }} Snapshot
+ * @typedef {{ file?: string, version: number, source: { module: string, platform: string, moduleVersion?: string, [k: string]: unknown }, staticEntities: Record<string, { description: string, records: StaticRecord[] }>, structures: Record<string, { description: string, attributes: Param[] }>, blocks: Record<string, Block> }} Snapshot
  * @typedef {Block & { key: string, label: string, platform: string }} BlockRow
  */
 
