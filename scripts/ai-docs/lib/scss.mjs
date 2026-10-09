@@ -6,7 +6,6 @@
  * component CSS-API read stays `var(--osui-…)`.
  */
 import postcss from 'postcss';
-import selectorParser from 'postcss-selector-parser';
 import * as sass from 'sass';
 
 /**
