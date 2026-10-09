@@ -15,28 +15,24 @@
 	background: var(--osui-provider-login-button-background);
 	border-color: var(--osui-provider-login-button-border-color);
 	border-radius: 0;
-	&-logo {
-		&-only {
-			padding: 10px;
-			.btn-provider-login-text {
-				display: none;
-				-servicestudio-display: none !important;
-			}
-		}
-		svg {
-			height: 100%;
-			width: 100%;
+	
+	&-logo-only {
+		padding: 10px;
+		.btn-provider-login-text {
+			display: none;
+			-servicestudio-display: none !important;
 		}
 	}
-	&.btn- {
-		&small {
+	
+	&.btn {
+		&-small {
 			padding-block: 0;
 			padding-inline: 16px;
 			&.btn-provider-login-logo-only {
 				padding: 5px;
 			}
 		}
-		&large {
+		&-large {
 			padding-block: 10px;
 			padding-inline: 15px;
 		}
@@ -52,11 +48,19 @@
 			border-radius: 50%;
 			height: variables.$token-scale-500;
 			width: variables.$token-scale-500;
+
+			svg {
+				height: 100%;
+				width: 100%;
+			}
 		}
 		&-text {
 			color: var(--osui-provider-login-button-color);
 			margin-inline-start: 10px;
 			white-space: nowrap;
+		}
+		&-text-name {
+			display: inline-block;
 		}
 	}
 }
@@ -65,11 +69,11 @@
 	.btn.btn-provider-login {
 		&.btn-provider-login-logo-only {
 			width: 50px;
-			&.btn- {
-				&small {
+			&.btn{
+				&-small {
 					width: variables.$token-scale-1000;
 				}
-				&large {
+				&-large {
 					width: 55px;
 				}
 			}
