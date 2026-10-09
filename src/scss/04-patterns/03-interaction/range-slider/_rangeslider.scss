@@ -12,6 +12,7 @@
 	--osui-range-slider-track-radius: var(--border-radius-rounded);
 	--osui-range-slider-handle-background: var(--color-background-surface);
 	--osui-range-slider-handle-border-color: var(--color-primary);
+	--osui-range-slider-handle-border-width: #{variables.$token-border-size-050};
 	--osui-range-slider-handle-shadow: #{variables.$token-elevation-1};
 	--osui-range-slider-connect-color: var(--color-primary);
 	// Disabled: the track lightens from the enabled `--color-border` (#cecece), and the
@@ -76,7 +77,7 @@
 		&-vertical {
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
-				border: variables.$token-border-size-050 solid var(--osui-range-slider-handle-border-color);
+				border: var(--osui-range-slider-handle-border-width) solid var(--osui-range-slider-handle-border-color);
 				border-radius: var(--border-radius-rounded);
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
@@ -107,7 +108,7 @@
 
 			.noUi-handle.noUi-active,
 			.noUi-handle:hover {
-				border: variables.$token-border-size-050 solid var(--color-primary);
+				border: var(--osui-range-slider-handle-border-width) solid var(--color-primary);
 			}
 
 			.noUi-handle.noUi-active {
