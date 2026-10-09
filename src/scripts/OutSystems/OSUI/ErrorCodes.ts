@@ -351,6 +351,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-33003',
 	};
 
+	export const SwipeEvents = {
+		FailChangeProperty: 'OSUI-API-34001',
+	};
+
+	export const TouchEvents = {
+		FailChangeProperty: 'OSUI-API-35001',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',

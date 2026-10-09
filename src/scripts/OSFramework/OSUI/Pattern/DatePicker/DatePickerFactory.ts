@@ -3,14 +3,14 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Factory {
 	/**
 	 * Create the new DatePicker instance object according given provider
 	 *
-	 * @export
-	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {Patterns.Progress.IDatePicker}
+	 * @param datePickerId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @param mode Date picker mode (single or range)
+	 * @param provider Provider library that implements the date picker
 	 */
 	export function NewDatePicker(
 		datePickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		mode: Enum.Mode,
 		provider: string
 	): Patterns.DatePicker.IDatePicker {
