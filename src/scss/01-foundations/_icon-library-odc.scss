@@ -531,7 +531,7 @@ body.iconLibrary-phosphor {
 
 .flatpickr-months .flatpickr-prev-month:before,
 .flatpickr-months .flatpickr-next-month:before {
-	color: variables.$token-semantics-primary-base;
+	color: var(--color-primary);
 	font-family: var(--osui-icon-font-family);
 }
 

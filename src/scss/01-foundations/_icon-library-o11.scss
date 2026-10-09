@@ -107,7 +107,7 @@
 
 	&-expanded {
 		&.dropdown-container:after {
-			border: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
+			border: variables.$token-border-size-050 solid var(--color-primary);
 			transform: rotate(135deg) translateY(-3px) translateX(3px);
 		}
 	}

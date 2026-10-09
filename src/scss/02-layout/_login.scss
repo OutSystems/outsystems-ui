@@ -10,7 +10,7 @@
 .login {
 	&-screen {
 		align-items: center;
-		background-color: variables.$token-semantics-primary-base;
+		background-color: var(--color-primary);
 		display: flex;
 		height: 100%;
 		justify-content: center;

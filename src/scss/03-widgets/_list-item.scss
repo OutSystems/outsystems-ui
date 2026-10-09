@@ -109,7 +109,7 @@
 				position: relative;
 
 				&:before {
-					border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+					border: variables.$token-border-size-025 solid var(--color-primary);
 					border-inline-end-width: variables.$token-border-size-0;
 					border-inline-start-width: variables.$token-border-size-075;
 					bottom: 0;

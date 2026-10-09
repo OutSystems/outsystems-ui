@@ -18,7 +18,7 @@
 		&.pop-comp-active {
 			// The extra `.vscomp-wrapper` is required to outrank the focus elevation reset below
 			.vscomp-wrapper .vscomp-toggle-button {
-				border-color: var(--osui-dropdown-focus-border-color, #{variables.$token-semantics-primary-base});
+				border-color: var(--osui-dropdown-focus-border-color, var(--color-primary));
 				box-shadow: 0 0 0 variables.$token-border-size-050
 					var(--osui-dropdown-focus-ring-color, #{variables.$token-border-focus-default});
 
@@ -121,8 +121,8 @@
 		.vscomp-option {
 			&.selected {
 				.checkbox-icon {
-					background-color: variables.$token-semantics-primary-base;
-					border-color: variables.$token-semantics-primary-base;
+					background-color: var(--color-primary);
+					border-color: var(--color-primary);
 
 					&:after {
 						border-color: var(--color-text-inverse);
@@ -323,8 +323,8 @@
 		}
 
 		&.checked {
-			background-color: variables.$token-semantics-primary-base;
-			border-color: variables.$token-semantics-primary-base;
+			background-color: var(--color-primary);
+			border-color: var(--color-primary);
 
 			&:after {
 				border-color: var(--color-text-inverse);
@@ -549,7 +549,7 @@
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 		&::after {
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 			content: var(--osui-icon-check);
 			flex-shrink: 0;
 			font-family: var(--osui-icon-font-family);
@@ -589,7 +589,7 @@
 // When using the extensibility property allowNewOption
 .vscomp-new-option-icon {
 	&::before {
-		border: 15px solid variables.$token-semantics-primary-base;
+		border: 15px solid var(--color-primary);
 		border-block-end-color: rgba(0, 0, 0, 0);
 		border-inline-start-color: rgba(0, 0, 0, 0);
 	}

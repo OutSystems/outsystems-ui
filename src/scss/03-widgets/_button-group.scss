@@ -147,7 +147,7 @@
 .os-high-contrast {
 	.button-group-item {
 		&.button-group-selected-item:before {
-			border: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
+			border: variables.$token-border-size-075 solid var(--color-primary);
 			border-radius: var(--osui-button-group-border-radius);
 			bottom: 0;
 			content: '';

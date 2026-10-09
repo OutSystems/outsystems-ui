@@ -128,7 +128,7 @@
 
 				// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 				&::after {
-					color: variables.$token-semantics-primary-base;
+					color: var(--color-primary);
 					content: var(--osui-icon-check);
 					flex-shrink: 0;
 					font-family: var(--osui-icon-font-family);
