@@ -344,7 +344,7 @@ Four changes repeat across the library. Once you recognise the shape, the fix fo
 | **Breaks** — Checkbox | The box now reads `--color-background-input`, which dark mode re-maps to a near-black `#131518` instead of following your neutral ramp. Classic used `--color-neutral-0` with a `--color-neutral-5` border | `[data-checkbox] { --osui-checkbox-background: var(--color-neutral-0); --osui-checkbox-border-color: var(--color-neutral-5); }`. If you flipped your ramp for dark mode, the box renders near-black on your dark card and looks like a hole in the surface. Note the selector is `[data-checkbox]`, not a class |
 | Upload | The "select file" label is now `--token-text-primary`, a link blue (`#6f8bf4` in dark). Classic coloured it with body text | `--osui-upload-color: var(--color-text)`. Border and radius are separate knobs: `--osui-upload-border-color`, `--osui-upload-border-radius` |
 | **Collides** — Dropdown | Focus gained a 2px `box-shadow` ring. The selected row in the popup lost its background fill and gained a primary checkmark on the right | `--osui-dropdown-focus-ring-color: transparent` to drop the ring. The selected row also lost its fill and gained a primary checkmark on the right. That mark doesn't shrink and carries an 8px margin, so it takes about 24px of fixed width out of the row; the label ellipsis-truncates to absorb it, and a narrow dropdown now cuts off its own selected option, so "EN" renders as "E…". The old fill cost no width at all, which is why this is new. Set a background on `.dropdown-popup-row-selected` and `content: none` on its `::after` **The popup row lost its fixed height.** Classic set `height: 40px` on `.dropdown-popup-row`; the new theme removes it and builds the same 40px from `padding-block: 8px` around a 24px line box. If your CSS sets `padding` on that row as a shorthand — `padding: 0 5px`, say — the leading `0` used to be free because the height was fixed, and now it removes the row's only source of height, collapsing every option to a bare line of text. Rewrite it as `padding-inline: 5px` and let the framework supply the vertical padding. **The popup also shrank and got rounder.** Its `max-height` went from a hard `300px` to `240px`, so a list that used to fit now scrolls — set `--osui-dropdown-list-max-height: 300px`. Its radius went from `--border-radius-soft` (4px back then) to `--border-radius-lg` (8px); set `--osui-dropdown-popup-border-radius` to a literal `4px` rather than naming `--border-radius-soft`, because that variable is itself now 8px. |
-| **Collides** — Range slider | The handle shrank from 24px to 16px and gained a 2px `--color-primary` border. Its `:before` / `:after` are now `display: none`, so styling them does nothing. The filled portion is hardcoded to a token and **no longer follows `--color-primary`**. The track moved from `--color-neutral-5` at 4px radius to `--color-border`, fully pill-shaped | `--osui-range-slider-handle-background`, `--osui-range-slider-handle-border-color`, `--osui-range-slider-track-color`, `--osui-range-slider-track-radius`. Three things have no knob. **Size:** `--range-slider-handle-size` still works, but its value went from a flat `24px` to 16px — so if any of your own rules size or position something with a `calc()` against it, that rule shrank by a third without you touching it. Set it back to `24px` on `.osui-range-slider` rather than rewriting your `calc()`. **Filled colour:** re-point `--token-semantics-primary-base` at `:root` if you re-branded `--color-primary` app-wide (classic drove every primary-coloured component from it, so this restores them all at once), or set `background` on `.noUi-connect` if you only want the slider changed. **A `:before` you used as a visible mark:** add `display: block` and stop there. noUiSlider still supplies the `content`, `position`, `height` and `top` exactly as it always did — only the `display` was taken away — so adding your own positioning moves the mark somewhere it never was |
+| **Collides** — Range slider | The handle shrank from 24px to 16px and gained a 2px `--color-primary` border. Its `:before` / `:after` are now `display: none`, so styling them does nothing. The filled portion is hardcoded to a token and **no longer follows `--color-primary`**. The track moved from `--color-neutral-5` at 4px radius to `--color-border`, fully pill-shaped | `--osui-range-slider-handle-background`, `--osui-range-slider-handle-border-color`, `--osui-range-slider-track-color`, `--osui-range-slider-track-radius`. Three things have no knob. **Size:** `--range-slider-handle-size` still works, but its value went from a flat `24px` to 16px — so if any of your own rules size or position something with a `calc()` against it, that rule shrank by a third without you touching it. Set it back to `24px` on `.osui-range-slider` rather than rewriting your `calc()`. **Filled colour:** re-point `--token-semantics-primary-base` at `:root` if you re-branded `--color-primary` app-wide (classic drove every primary-coloured component from it, so this restores them all at once), or set `background` on `.noUi-connect` if you only want the slider changed. **A `:before` you used as a visible mark:** start with `display: block` — only the `display` was taken away, and noUiSlider still supplies the `content`, `position`, `height` and `top` exactly as it always did. Whether that's the whole fix depends on what you used the pseudo-element for. If it was a thin grip line, as noUiSlider intended, stop there; adding your own positioning moves the mark somewhere it never was. If you repurposed it as a **shape** — a centre dot, a pill — you do need to restate the geometry, because the vendor's fixed `height: 14px` / `top: 6px` were sized for its own 34x28 handle and never centred anything in a small round one. The tell is that your rule sets `width` as a percentage while the height stays a fixed pixel value: the two no longer track each other once the handle's box changes, and it changed twice here (24px to 16px, border 1px to 2px). Drive both from the same percentage and centre on both axes — `width: 57%; height: 57%; top: 50%; left: 50%; transform: translate(-50%, -50%);` — and it stays a circle whatever the handle does |
 | **Collides** — Carousel | The card gained padding and a taller minimum, so a hand-set `min-height` on the wrapper can clip its content | Re-measure the rendered card and raise the `min-height`. Worth re-checking any hand-set height around a carousel, list, or card grid |
 | **Breaks** — Feedback message, alert, notification, tag, badge, avatar | Status colours moved to semantic roles and `--token-bg-extended-*` | The [extended palette](#extended-palette) mapping, plus the feedback tokens in [Neutral ramp flip](#neutral-ramp-flip--roles-no-longer-cascade) |
 | **Collides** — Switch, checkbox, radio, input, upload | Each now has its own size, fill, border, and checked knobs — a direct property override loses to them | The widget's own `--osui-*` knobs |
@@ -454,6 +454,43 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 ```
 
 > **Overriding the old variable no longer reskins the class.** Setting `--shadow-m` at `:root` used to change every `.shadow-m` element. It does nothing now — override `--token-elevation-2` instead. Same for `--space-*` → `--token-scale-*` and `--font-size-*` → `--token-font-size-*`.
+
+---
+
+## Renamed classes
+
+Utility classes kept their names. Many component classes did not — most moved under the `osui-` prefix, and several were re-expressed in BEM at the same time.
+
+**This is the quietest break in the whole migration.** A rule targeting an old class is still perfectly valid CSS. No variable is retired, nothing errors, and the rule often carries `!important` — so it reads like a rule that *must* be taking effect, when in fact it matches nothing at all. There is no deprecated alias and nothing in the stylesheet to flag it.
+
+Around 158 class names exist in the old bundle and not the new one, out of roughly 1,500:
+
+| Group | Roughly | Example |
+| --- | --- | --- |
+| Straight prefix renames | 15 | `notification` → `osui-notification` |
+| State classes folded into BEM | 6 | `is-open` → `osui-accordion-item--is-open` |
+| Third-party widget classes | 39 | `pika-*`, `choices`, `flatpickr` |
+| Component sub-elements | ~98 | `progress-circle-text` → `osui-progress-circle__text` |
+
+The third group is a library swap and only matters if you styled those widgets directly. The fourth is the same rename one level down, which is why a simple "add `osui-`" search-and-replace won't find them all.
+
+**Generate the list rather than working from the table.** Diff the class names in your old and new `ODC.OutSystemsUI.css`:
+
+```bash
+rg -No '\.[a-zA-Z][a-zA-Z0-9_-]*' old/ODC.OutSystemsUI.css | sed 's/^\.//' | sort -u > /tmp/old.txt
+rg -No '\.[a-zA-Z][a-zA-Z0-9_-]*' new/ODC.OutSystemsUI.css | sed 's/^\.//' | sort -u > /tmp/new.txt
+comm -23 /tmp/old.txt /tmp/new.txt
+```
+
+Then intersect that against your own stylesheet to see which ones you actually use. **Match on a word boundary, not a substring** — otherwise `.btn` looks dropped because `.btn-primary` was restructured:
+
+```bash
+comm -23 /tmp/old.txt /tmp/new.txt | while read c; do
+  rg -q "\\.$c([^a-zA-Z0-9_-]|$)" your-stylesheet.css && echo "$c"
+done
+```
+
+For each hit, find the replacement by searching the new bundle for the component name — `rg 'osui-.*wizard' new/ODC.OutSystemsUI.css` — rather than assuming the prefix is the only change.
 
 ---
 
@@ -656,7 +693,7 @@ Worth a scan even if nothing in your CSS broke — several of these replace work
 
 | Variable | What it gives you |
 |---|---|
-| `--border-radius-default` | Re-radius the entire library with one declaration |
+| `--border-radius-default` | Re-radius the seven shape tier slots with one declaration (the three legacy roles ignore it) |
 | `--color-text-subtle` / `-subtlest` / `-disabled` / `-inverse` | Named text tiers instead of picking neutrals by number |
 | `--color-border-subtle` / `-subtlest` / `-input` / `-input-hover` | Border tiers, including input states |
 | `--color-background-surface` / `-footer` / `-input` / `-input-disabled` | Surfaces the old set didn't name |
@@ -693,12 +730,14 @@ Or go one level deeper for a full re-brand (focus halos recolour automatically):
 
 ### "I rounded (or squared) every corner by hand"
 
-One switch now:
+One switch covers most of it:
 
 ```css
-:root { --border-radius-default: 0; }    /* everything square */
-:root { --border-radius-default: 12px; } /* everything softer */
+:root { --border-radius-default: 0; }    /* every tier slot square */
+:root { --border-radius-default: 12px; } /* every tier slot softer */
 ```
+
+That reaches the seven tier slots, not the three legacy roles — `--border-radius-soft` in particular ignores it, and it's the one custom CSS reads most often. Set that one explicitly too.
 
 ### "I restyled one component with `!important`"
 
