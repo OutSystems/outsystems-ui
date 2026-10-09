@@ -108,6 +108,8 @@ Watch the token names, too: weights are word-named (`--token-font-weight-regular
 
 ### Semantic colour helpers
 
+Every `--text-color-*` and `--border-color-*` name is gone, and so is every `--background-color-*` in the table below. **Three are the exception and still work:** `--background-color-body`, `--background-color-header`, and `--background-color-login` are read as override hooks in front of their roles — `background-color: var(--background-color-body, var(--color-background-body))` — so if you set one of those, leave it as it is.
+
 | Classic (retired) | Replacement | Notes |
 |---|---|---|
 | `--background-color-primary` | `--color-primary` | |
@@ -122,7 +124,7 @@ Watch the token names, too: weights are word-named (`--token-font-weight-regular
 | `--text-color-neutral-9` | `--color-text` | Default body text |
 | `--text-color-neutral-10` | `--color-text` | Default body text |
 | `--text-color-neutral-N` | `--color-neutral-N` | Consider `--color-text-subtle` or `--color-text-subtlest` |
-| `--border-color-primary` | `--color-border-primary` | Or `--color-primary` for general use |
+| `--border-color-primary` | `--color-border-primary` | The border role. Use `--color-primary` only where the value is not a border |
 | `--border-color-neutral-N` | `--color-neutral-N` | Or `--color-border` / `--color-border-subtle` |
 
 ### Shadows
@@ -177,7 +179,9 @@ getComputedStyle(document.documentElement).getPropertyValue('--space-m')  // "24
 
 Rewriting these as `--token-scale-*` is optional tidying, not a fix. It changes no rendered pixel, it's usually the largest edit in the whole migration — dozens of references in a single stylesheet is normal — and each shorthand you touch is a chance to introduce the problem described under [shorthands](#careful-with-shorthands--repairing-one-can-be-the-regression). Do it only if you want one spacing vocabulary across your CSS.
 
-**One thing did change.** No framework rule reads `--space-*` any more. Setting `--space-base` at `:root` used to retune the library's own spacing and the `.margin-base`-style utilities; now it only affects your own rules. Override `--token-scale-400` if you want to move the framework.
+**One thing did change.** No framework CSS rule reads `--space-*` any more. Setting `--space-base` at `:root` used to retune the library's own spacing and the `.margin-base`-style utilities; now it only affects your own rules. Override `--token-scale-400` if you want to move the framework.
+
+The one exception isn't in the CSS at all: the Gallery pattern writes `var(--space-<ItemsGap>)` as an inline style when it renders, so re-pointing a `--space-*` value still moves Gallery's item gap. Searching the stylesheet won't show that.
 
 If you do need a token — for a step the old scale never had — the scale runs in 4px increments (`--token-scale-150` is 6px, `--token-scale-250` is 10px, up to `--token-scale-9000` at 360px).
 
@@ -259,10 +263,10 @@ These variables still exist — your overrides still apply — but without an ov
 | `--color-primary` | `#1068eb` | `#105cef` |
 | `--color-primary-hover` | `#295fd6` | `#0f54da` |
 | `--color-primary-selected` | `rgba(20,110,245,0.12)` | `#0d4bc3` — **now solid, not translucent** |
-| `--color-secondary` | `#303d60` | `#3b3b3b` |
-| `--color-error` | `#dc2020` | `#d82424` |
+| `--color-secondary` | `#303d60` | `#383e45` |
+| `--color-error` | `#dc2020` | `#e0243a` |
 | `--color-warning` | `#e9a100` | `#ffd600` |
-| `--color-success` | `#29823b` | `#1ba433` |
+| `--color-success` | `#29823b` | `#4aae83` |
 | `--color-info` | `#017aad` | `#105cef` — info is now blue-primary |
 | `--color-background-body` | `#f3f6f8` | `#ffffff` |
 | `--border-radius-soft` | `4px` | `8px` — doubled |
@@ -271,9 +275,11 @@ These variables still exist — your overrides still apply — but without an ov
 
 ### The neutral trap
 
-`--color-neutral-0` through `-10` survived, but the scale was re-based and **`--color-neutral-0` is no longer white** (`#f9f9f9` instead of `#ffffff`). The `.text-neutral-0` / `.background-neutral-0` utility classes still resolve to pure white, but the *variable* does not — the two diverged.
+`--color-neutral-0` through `-10` survived, but the scale was re-based and **`--color-neutral-0` is no longer white** — it resolves to `#f6f7fa` via `--token-primitives-neutral-100`, not `#ffffff`.
 
-If you used `var(--color-neutral-0)` for text on a coloured background, switch to `--color-text-inverse` or `--token-primitives-base-white`.
+The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable, so they moved with it. Everything that named neutral-0 shifted together.
+
+If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
 
 **The root text colour moved off the ramp entirely.** `html` used to be `color: var(--text-color-neutral-9, var(--color-neutral-9))`; it is now `color: var(--color-text)`, which resolves through tokens that never reference a neutral. That one line is why re-pointing `--color-neutral-9` no longer moves body text, and it's the mechanism behind [Neutral ramp flip](#neutral-ramp-flip--roles-no-longer-cascade) below. Set `--color-text` when you want to move body text.
 

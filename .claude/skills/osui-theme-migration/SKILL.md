@@ -86,9 +86,9 @@ So a customer who set `--text-color-primary` at `:root` is not hitting a dead `v
 
 | Removed hook | Example | Set this instead |
 |---|---|---|
-| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (Section 3 mapping) |
+| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (Section 3 mapping). **Except `-body`, `-header`, `-login`** — those three are still read and should be left alone |
 | `--text-color-*` | `--text-color-neutral-0` | The matching `--color-text-*` role (Section 3 mapping) |
-| `--border-color-*` | `--border-color-primary` | The matching `--color-*` or `--color-border-*` role |
+| `--border-color-*` | `--border-color-primary` | The matching `--color-border-*` role; `--color-*` only where the value is not a border |
 
 Note the asymmetry this creates in the customer's own CSS: a rule reading `var(--background-color-primary, var(--color-primary))` still works, because of the inner fallback. A rule reading `var(--background-color-primary)` bare was always broken — in both themes — since nothing ever declared it.
 
@@ -160,11 +160,13 @@ border: var(--token-border-size-025, 1px) solid var(--color-neutral-10);
 
 #### Verify every `--token-*` name before emitting it
 
-The token namespace is generated, and its naming is not guessable. Weights are word-named (`--token-font-weight-regular`, not `-400`); sizes and scales are numeric (`--token-font-size-450`, `--token-scale-200`). Mixing the two conventions produces a name that looks plausible and does not exist. Check each one against `src/scss/tokens/_root.scss` before writing it, and list any that fail:
+The token namespace is generated, and its naming is not guessable. Weights are word-named (`--token-font-weight-regular`, not `-400`); sizes and scales are numeric (`--token-font-size-450`, `--token-scale-200`). Mixing the two conventions produces a name that looks plausible and does not exist. Check each one against `src/scss/tokens/_variables.scss` before writing it, and list any that fail:
 
 ```
-rg -uoNI -- "^\s*--token-NAME\s*:" src/scss/tokens/_root.scss
+rg -uoNI -- "^\s*\\\$token-NAME\s*:" src/scss/tokens/_variables.scss
 ```
+
+That file declares each token as `$token-name: var(--token-name, <fallback>);`, so matching the SCSS variable confirms the CSS custom property too. Do **not** grep `src/scss/tokens/_root.scss` — `npm run build:tokens` runs with `--root false`, so that file is not generated and a fresh clone will not have it. A stale copy left over from an older build is worse than no file, because the grep appears to work while checking names against a snapshot.
 
 This is worth a final sweep over the finished stylesheet: extract every `--token-*` and `--space-*`/`--color-*`/`--border-*` reference, confirm each is declared somewhere in the new theme, and treat any miss as a migration bug rather than a customer bug.
 
@@ -548,6 +550,14 @@ The exact neutral step for each role depends on the customer's palette. Map the 
 
 ### Semantic color helpers → role variables
 
+Every `--text-color-*` and `--border-color-*` name is gone — zero reads in the shipped bundle — and so is every `--background-color-*` below. **Three `--background-color-*` names are the exception and are not retired:** `--background-color-body`, `--background-color-header`, and `--background-color-login` are still read, as override hooks in front of their roles:
+
+```css
+background-color: var(--background-color-body, var(--color-background-body));
+```
+
+A customer setting one of those three still gets the result they always did. Leave them alone; do not rewrite them to the `--color-background-*` role.
+
 | Classic (retired) | New replacement | Notes |
 |---|---|---|
 | `--background-color-primary` | `--color-primary` | |
@@ -562,7 +572,7 @@ The exact neutral step for each role depends on the customer's palette. Map the 
 | `--text-color-neutral-9` | `--color-text` | Default body text |
 | `--text-color-neutral-10` | `--color-text` | Default body text |
 | `--text-color-neutral-N` | `--color-neutral-N` | N = other steps; consider `--color-text-subtle` or `--color-text-subtlest` |
-| `--border-color-primary` | `--color-primary` | Or `--color-border-primary` for border-specific contexts |
+| `--border-color-primary` | `--color-border-primary` | The border role. Use `--color-primary` only where the value is not a border |
 | `--border-color-neutral-N` | `--color-neutral-N` | Or `--color-border` / `--color-border-subtle` for generic borders |
 
 ### Shadows
@@ -598,7 +608,7 @@ The exact neutral step for each role depends on the customer's palette. Map the 
 
 **`var(--space-m)` still resolves, to the same 24px it always did.** The scale is declared at `:root` in the shipped bundle with values identical to classic, in a deliberate `Theme layer · space scale` block in `src/scss/01-foundations/_root.scss` alongside the radius knobs. Customer CSS written against it renders unchanged.
 
-This is the opposite of what the internal token-migration notes say, so verify rather than trusting either source:
+Verify it rather than taking it on trust:
 
 ```bash
 rg -N '^\s*--space-' dist/ODC.OutSystemsUI.css
@@ -617,9 +627,11 @@ rg -N '^\s*--space-' dist/ODC.OutSystemsUI.css
 
 **Do not rewrite these.** A `var(--space-*)` → `var(--token-scale-*, …)` sweep is a **Preference** row in Section 0 terms: it changes no rendered pixel, it touches more lines than anything else in a typical migration — 50+ references in a single stylesheet is normal — and every shorthand it touches is an opportunity to introduce the regression described under Category A. Propose it only if the customer has asked for one spacing vocabulary, and never as part of a breakage fix.
 
-**Why the two sources disagree.** The framework's own migration rules list `--space-*` as "retired, never reintroduce". That governs **framework SCSS authoring** — new component code must use `$token-scale-*`, and the shipped bundle contains zero `var(--space-` reads of its own as a result. It says nothing about whether the variable still resolves for a consumer, and it does. Keep the two audiences apart: retired *for the framework* is not retired *for the customer*.
+**One framework consumer still reads it, and not from CSS.** The shipped bundle contains zero `var(--space-` reads of its own, which makes it tempting to conclude nothing in the framework depends on the scale. The Gallery pattern does: `Gallery.ts:21` writes `var(--space-${ItemsGap})` as an inline style when the widget renders, so a customer who re-points `--space-m` still moves Gallery's item gap. A grep of the CSS will not show this.
 
-**One real consequence of that zero-read count.** Overriding `--space-base` at `:root` no longer reskins anything in the framework, because no framework rule reads it any more. It still drives the customer's own rules. See Section 9 for the same effect on utility classes.
+`.claude/rules/scss.md` records the same position — `--space-*` is the public spacing vocabulary, restored by ROU-12975 and kept precisely so apps and Gallery's runtime have a stable override surface. Preferring `$token-scale-*` in new framework SCSS is an authoring convention, not a statement that the variable is dead.
+
+**One real consequence of that zero-read count.** Overriding `--space-base` at `:root` no longer reskins the framework's own CSS, because no framework rule reads it any more — Gallery's runtime write above is the only thing left that responds. It still drives the customer's own rules. See Section 9 for the same effect on utility classes.
 
 `--token-scale-*`, for the cases where you do need a token, runs in 4px steps with `025`/`050`/`075` for 1/2/3px, up to `9000` (360px).
 
@@ -1163,10 +1175,10 @@ Key changes:
 | `--color-primary` | `#1068eb` | `#105cef` |
 | `--color-primary-hover` | `#295fd6` | `#0f54da` |
 | `--color-primary-selected` | `rgba(20,110,245,0.12)` | `#0d4bc3` — **now solid, not translucent** |
-| `--color-secondary` | `#303d60` | `#3b3b3b` |
-| `--color-error` | `#dc2020` | `#d82424` |
+| `--color-secondary` | `#303d60` | `#383e45` |
+| `--color-error` | `#dc2020` | `#e0243a` |
 | `--color-warning` | `#e9a100` | `#ffd600` |
-| `--color-success` | `#29823b` | `#1ba433` |
+| `--color-success` | `#29823b` | `#4aae83` |
 | `--color-info` | `#017aad` | `#105cef` — info is now blue-primary |
 | `--color-background-body` | `#f3f6f8` | `#ffffff` |
 | `--border-radius-soft` | `4px` | `8px` — doubled |
@@ -1175,9 +1187,11 @@ Key changes:
 
 ### The neutral trap
 
-`--color-neutral-0` through `-10` survived, but the scale was re-based and **`--color-neutral-0` is no longer white** (`#f9f9f9` instead of `#ffffff`). The `.text-neutral-0` / `.background-neutral-0` utility classes still resolve to pure white, but the *variable* does not — the two diverged.
+`--color-neutral-0` through `-10` survived, but the scale was re-based and **`--color-neutral-0` is no longer white** — it resolves to `#f6f7fa` via `--token-primitives-neutral-100`, not `#ffffff`.
 
-If the customer used `var(--color-neutral-0)` for text on a coloured background, switch to `--color-text-inverse` or `--token-primitives-base-white`.
+The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable (`color: var(--color-neutral-0)` and `background-color: var(--color-neutral-0)` in the shipped bundle), so they moved with it. There is no divergence between the variable and the classes to work around — everything that named neutral-0 shifted together.
+
+If the customer used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
 
 **The root text color moved off the ramp.** `html` was `color: var(--text-color-neutral-9, var(--color-neutral-9))` and is now `color: var(--color-text)`, which resolves through tokens that never reference a neutral. That single line is why re-pointing `--color-neutral-9` no longer moves body text, and it is the mechanism behind Category H. When the customer wants body text to move, set `--color-text`.
 
@@ -1197,7 +1211,7 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 
 > **Overriding the old variable no longer reskins the class.** Setting `--shadow-m` at `:root` used to change every `.shadow-m` element. It does nothing now — override `--token-elevation-2` instead. Same for `--font-size-*` → `--token-font-size-*`.
 >
-> **`--space-*` is the subtle one.** It still resolves, so the customer's own rules reading it are fine — but no framework rule reads it any more, so setting `--space-base` at `:root` no longer moves `.margin-base` or anything else the framework ships. The variable works; it just stopped being a theming lever. Override `--token-scale-400` to move the utilities.
+> **`--space-*` is the subtle one.** It still resolves, so the customer's own rules reading it are fine — but no framework CSS rule reads it any more, so setting `--space-base` at `:root` no longer moves `.margin-base` or anything else the framework ships. The one exception is Gallery, which writes `var(--space-<ItemsGap>)` inline at runtime (Section 3). The variable works; it just stopped being a theming lever for everything except that. Override `--token-scale-400` to move the utilities.
 
 ---
 
