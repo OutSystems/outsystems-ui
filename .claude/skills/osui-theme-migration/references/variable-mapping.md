@@ -97,13 +97,13 @@ grep -E '^[[:space:]]*--space-' dist/ODC.OutSystemsUI.css
 
 <!-- /table:spacing -->
 
-**Do not rewrite these.** A `var(--space-*)` → `var(--token-scale-*, …)` sweep is a **Preference** row in Section 0 terms: it changes no rendered pixel, it touches more lines than anything else in a typical migration — 50+ references in a single stylesheet is normal — and every shorthand it touches is an opportunity to introduce the regression described under Category A. Propose it only if the customer has asked for one spacing vocabulary, and never as part of a breakage fix.
+**Do not rewrite these.** A `var(--space-*)` → `var(--token-scale-*, …)` sweep is a **Preference** row in `SKILL.md` § 0 terms: it changes no rendered pixel, it touches more lines than anything else in a typical migration — 50+ references in a single stylesheet is normal — and every shorthand it touches is an opportunity to introduce the regression described under Category A. Propose it only if the customer has asked for one spacing vocabulary, and never as part of a breakage fix.
 
 **One framework consumer still reads it, and not from CSS.** The shipped bundle contains zero `var(--space-` reads of its own, which makes it tempting to conclude nothing in the framework depends on the scale. The Gallery pattern does: `Gallery.ts:21` writes `var(--space-${ItemsGap})` as an inline style when the widget renders, so a customer who re-points `--space-m` still moves Gallery's item gap. A grep of the CSS will not show this.
 
 `.claude/rules/scss.md` records the same position — `--space-*` is the public spacing vocabulary, restored by ROU-12975 and kept precisely so apps and Gallery's runtime have a stable override surface. Preferring `$token-scale-*` in new framework SCSS is an authoring convention, not a statement that the variable is dead.
 
-**One real consequence of that zero-read count.** Overriding `--space-base` at `:root` no longer reskins the framework's own CSS, because no framework rule reads it any more — Gallery's runtime write above is the only thing left that responds. It still drives the customer's own rules. See Section 9 for the same effect on utility classes. **To move the framework's own spacing, override the `--token-scale-*` step instead** — `--token-scale-400` is what `--space-base` now resolves through, and the framework reads the token directly.
+**One real consequence of that zero-read count.** Overriding `--space-base` at `:root` no longer reskins the framework's own CSS, because no framework rule reads it any more — Gallery's runtime write above is the only thing left that responds. It still drives the customer's own rules. See `SKILL.md` § 9 for the same effect on utility classes. **To move the framework's own spacing, override the `--token-scale-*` step instead** — `--token-scale-400` is what `--space-base` now resolves through, and the framework reads the token directly.
 
 `--token-scale-*`, for the cases where you do need a token, runs in 4px steps with `025`/`050`/`075` for 1/2/3px, up to `9000` (360px).
 
@@ -139,7 +139,7 @@ The full set is `thin` (100), `extra-light` (200), `light` (300), `regular` (400
 
 ### Extended palette (12 families x 7 shades)
 
-All `--color-{family}-{shade}` variables are **retired** (e.g. `--color-red-dark`, `--color-indigo-light`). The palette itself was also recoloured, so even the base hex values changed.
+The 72 `--color-{family}-{shade}` variables are **retired** (e.g. `--color-red-dark`, `--color-indigo-light`). The 12 bare family names (`--color-red`, `--color-pink`, …) are **not** — they are still declared at `:root` and the framework still reads them in the shipped `.background-{family}` and `.text-{family}` utilities. The palette was also recoloured, so even the surviving base hex values changed.
 
 Replacement by shade. Intermediate shades are primitives. `lightest` and the bare family name are not — they bind to a status role or a `--token-bg-extended-*` token:
 
@@ -150,7 +150,7 @@ Replacement by shade. Intermediate shades are primitives. `lightest` and the bar
 | `lightest` | Status role, or `--token-bg-extended-{family}-subtle-default`. See the family table below |
 | `lighter`  | `--token-primitives-{family}-300`                                                         |
 | `light`    | `--token-primitives-{family}-500`                                                         |
-| _(base)_   | Status role, or `--token-bg-extended-{family}-base-default`. See the family table below   |
+| _(base)_   | _Not retired — still live._ Resolves through a status role or `--token-bg-extended-{family}-base-default`. See the family table below |
 | `dark`     | `--token-primitives-{family}-800`                                                         |
 | `darker`   | `--token-primitives-{family}-900`                                                         |
 | `darkest`  | `--token-primitives-{family}-1000`                                                        |
@@ -177,7 +177,7 @@ Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqu
 
 > **Prefer the semantic role over the family.** `--color-red` was a literal colour. Its replacement is usually `--color-error` (theme role) or `--token-bg-danger-base-default` (token). Route through the role and the CSS follows any future theme; hardcode a family primitive and it won't.
 
-**Customer-redeclared family colors are not dead.** If the sheet sets `--color-red` or `--color-green` (or another retired family base) and reads it back, the custom property still works for those rules. The framework no longer reads the name. Keep their hex, alias the role, and point the matching button variant at it. Do this in every block that defines the color, including dark mode:
+**Customer-redeclared family colors are not dead.** If the sheet sets `--color-red` or `--color-green` and reads it back, the custom property still works for those rules. The framework also still reads these names in its `.background-{family}` and `.text-{family}` utilities, so redeclaring one restyles those utilities everywhere they appear. Keep their hex, alias the role, and point the matching button variant at it. Do this in every block that defines the color, including dark mode:
 
 ```css
 --color-error: #c92a2a;

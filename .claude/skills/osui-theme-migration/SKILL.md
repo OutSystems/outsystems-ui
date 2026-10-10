@@ -1,6 +1,6 @@
 ---
 name: osui-theme-migration
-description: Migrate custom CSS from the classic OutSystems UI theme to the new token-based theme. Use this skill when a customer, app developer, or QE asks to "migrate CSS to the new theme", "fix my CSS for the new OSUI", "update my styles for the new OutSystems UI", "what changed in the new theme", "my app looks broken after the OSUI update", "adapt custom CSS", "theme migration", "new theme impact", "CSS broke after update", or any time someone's custom CSS needs updating because it targeted the old (pre-token-migration) OSUI vocabulary. Covers the five breakage categories, the retired → replacement mapping, detection patterns, and fix guidance.
+description: Migrate custom CSS from the classic OutSystems UI theme to the new token-based theme. Use this skill when a customer, app developer, or QE asks to "migrate CSS to the new theme", "fix my CSS for the new OSUI", "update my styles for the new OutSystems UI", "what changed in the new theme", "my app looks broken after the OSUI update", "adapt custom CSS", "theme migration", "new theme impact", "CSS broke after update", or any time someone's custom CSS needs updating because it targeted the old (pre-token-migration) OSUI vocabulary. Covers the eight breakage categories, the retired → replacement mapping, detection patterns, and fix guidance.
 ---
 
 # Migrating custom CSS to the new OutSystems UI theme
@@ -55,14 +55,14 @@ Before diving in, search the customer's CSS for these patterns to identify which
 |---|---|---|
 | `var(--font-size-*)`, `var(--shadow-*)`, `var(--border-size-*)`, `var(--font-*)` weights | Retired — resolves to nothing | A (Section 2) |
 | `var(--background-color-*)`, `var(--text-color-*)`, `var(--border-color-*)` | **Not** retired — never declared in either theme. The framework stopped *reading* them, so the customer's own declaration is now ignored rather than broken | A (Section 2, removed read hooks) |
-| `var(--space-*)` | **Still works.** Declared at `:root` with classic values — do not rewrite | Section 2, spacing |
-| `--color-red`, `--color-indigo-light`, any extended-palette shade | Retired + hex changed | A (Section 2, extended palette) |
+| `var(--space-*)` | **Still works.** Declared at `:root` with classic values — do not rewrite | `references/variable-mapping.md`, spacing |
+| `--color-red-dark`, `--color-indigo-light`, any extended-palette shade | Retired + hex changed | A (`references/variable-mapping.md`, extended palette) |
 | `--color-primary`, `--color-error`, `--color-background-body` | Still works but resolves to a different colour | F (Section 8) |
 | `--color-neutral-0` … `-10` | Still works but scale re-based — `neutral-0` is no longer white | F (Section 8, neutral trap) |
 | A rule against `.osui-*`, or a legacy widget class (`.dropdown-container`, `.wizard-item-icon`, `[data-popup]`, `.form-control`), with `!important` or direct property overrides | Probably replaceable with an `--osui-*` variable on the current selector | B (Section 2) |
 | Dark mode inverts `--color-neutral-*` while `--color-primary` points at a neutral step | Primary button label stays white (`--color-text-light` is not remapped) | C (Section 2, button contrast) |
-| `font-size` without `line-height` | May look wrong due to line-height model change | D (Section 1) |
-| `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 1) |
+| `font-size` without `line-height` | May look wrong due to line-height model change | D (Section 2) |
+| `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 2) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
 | Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
 | Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
@@ -73,7 +73,7 @@ Before diving in, search the customer's CSS for these patterns to identify which
 
 ## 2. The breakage categories
 
-Every migration issue falls into one of these. Scan for all of them.
+Every migration issue falls into one of these eight. Categories A–E and H are documented below; F and G are large enough to have their own sections (8 and 9). Scan for all of them.
 
 ### Category A — Retired CSS variables
 
@@ -122,7 +122,7 @@ Category H fixes get written into the dark block, because that is where the brea
 List the custom properties declared in each block, then take the set difference. Anything declared in the dark block but not at `:root` is a candidate. Extract the two name lists, splitting the file at the dark selector:
 
 ```sh
-grep -oE '^[[:space:]]*--[a-z0-9-]+:' theme.css | sed 's/[[:space:]]//g; s/:$//' | sort -u
+grep -oE '(^|[{;])[[:space:]]*--[A-Za-z0-9_-]+[[:space:]]*:' theme.css | grep -oE '\-\-[A-Za-z0-9_-]+' | sort -u
 ```
 
 Run it once over the lines above the dark selector and once over the lines below it, and compare. Any reader works — the check is a set difference on declaration names, not a parse. Do it by eye on a short stylesheet.
@@ -302,7 +302,7 @@ grep -A 10 '^body {' dist/ODC.OutSystemsUI.css
 
 #### The absolute half — pattern rules, not `body`
 
-`body` is the ratio. **Framework pattern rules are absolute**, and that is where text genuinely clips. Roughly 26 rules in the bundle set `line-height` from the token scale, which resolves to a fixed `rem`:
+`body` is the ratio. **Framework pattern rules are absolute**, and that is where text genuinely clips. Nine framework rules set `line-height` directly from the token scale, which resolves to a fixed `rem`:
 
 ```css
 .osui-accordion-item__title {
@@ -313,10 +313,15 @@ grep -A 10 '^body {' dist/ODC.OutSystemsUI.css
 
 Classic's equivalent was `line-height: 1` — a ratio. So a customer who raises `font-size` on one of these gets a line box that **does not grow with it**, and the text clips or collides with the row below. The same rule in classic would have scaled.
 
-The affected selectors are worth knowing by name, because the customer's CSS will target them without mentioning line-height: `.osui-accordion-item__title`, `[data-label]`, `.input-helper`, `.btn-small`, `.btn-large`, `.alert .alert-message`, `.list-item-content-title`, plus the `--osui-*-line-height` knobs on chat message and list item. List the current set with:
+The affected selectors are worth knowing by name, because the customer's CSS will target them without mentioning line-height: `.btn`, `.btn-small`, `.btn-large`, `.button-group-item`, `.osui-accordion-item__title`, `.form label, [data-label]`, `.help-block, .input-helper`, `.alert .alert-message`, `.list-item-content-title`.
+
+`.btn` is the one to watch — raising button font-size is among the most common customisations in a stylesheet, and the line box will not follow it. A further eight components expose the same fixed line-height as an `--osui-*-line-height` knob (chat message status, list item content, section title, section content, submenu item, tabs header item, timeline, wizard label); those are override points rather than breakages. List the current set with:
 
 ```bash
-grep -B 30 'line-height: var(--token-font-line-height' dist/ODC.OutSystemsUI.css
+awk '/\{[[:space:]]*$/ {sel=buf $0; sub(/[[:space:]]*\{[[:space:]]*$/,"",sel); buf=""; next}
+     /,[[:space:]]*$/ {buf=buf $0 " "; next}
+     /line-height:[[:space:]]*var\(--token-font-line-height/ {print sel}
+     {buf=""}' dist/ODC.OutSystemsUI.css | sed 's/^[[:space:]]*//' | sort -u
 ```
 
 **Whenever a fix raises `font-size` on a framework pattern, set `line-height` in the same rule.** Use a unitless ratio, or the next token step up — never leave the absolute default in place under larger text.
@@ -753,7 +758,7 @@ A file that comes back all-zero is worth a sentence of its own — it means that
 
 These are mechanical, safe, one-to-one replacements with no ambiguity:
 
-- **Retired variable swaps (Category A1):** every `var(--border-size-s)` → `var(--token-border-size-025, 1px)`, every `var(--font-size-xs)` → `var(--token-font-size-300, 0.75rem)`, every `var(--font-regular)` → `var(--token-font-weight-regular, 400)`, etc. Use the full mapping table in Section 2, keep the literal fallback, and confirm each token name exists. **`var(--space-*)` is not on this list** — it still resolves, and sweeping it is the single largest source of pointless churn in a migration.
+- **Retired variable swaps (Category A1):** every `var(--border-size-s)` → `var(--token-border-size-025, 1px)`, every `var(--font-size-xs)` → `var(--token-font-size-300, 0.75rem)`, every `var(--font-regular)` → `var(--token-font-weight-regular, 400)`, etc. Use the full mapping table in `references/variable-mapping.md`, keep the literal fallback, and confirm each token name exists. **`var(--space-*)` is not on this list** — it still resolves, and sweeping it is the single largest source of pointless churn in a migration.
 - **Missing `--color-primary-active` (Category C):** if `:root` overrides `--color-primary` and `--color-primary-hover` but not `--color-primary-active`, add `--color-primary-active` with the same value as `--color-primary-hover` (safe default — pressed state matches hover).
 
 **Output:** write the migrated CSS back to each working file with `/* MIGRATED: ... */` comments on each changed line. Show a summary of what was changed (not the full CSS — that's in the file). Example of a migrated line:
@@ -770,7 +775,7 @@ These are mechanical, safe, one-to-one replacements with no ambiguity:
 #### What qualifies as auto-fixable
 
 A replacement is auto-fixable **only** when:
-1. The mapping is a single, unambiguous entry in Section 2 (one old var → one new var).
+1. The mapping is a single, unambiguous entry in `references/variable-mapping.md` (one old var → one new var).
 2. The replacement produces the **same rendered value** (same px/color/weight). Font-size swaps where the new token renders a **different size** (h1–h3) are NOT auto-fixable.
 3. The replacement does not change the selector, property name, or specificity — only the value.
 
@@ -1071,7 +1076,7 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 
 > **Overriding the old variable no longer reskins the class.** Setting `--shadow-m` at `:root` used to change every `.shadow-m` element. It does nothing now — override `--token-elevation-2` instead. Same for `--font-size-*` → `--token-font-size-*`.
 >
-> **`--space-*` is the subtle one.** It still resolves, so the customer's own rules reading it are fine — but no framework CSS rule reads it any more, so setting `--space-base` at `:root` no longer moves `.margin-base` or anything else the framework ships. The one exception is Gallery, which writes `var(--space-<ItemsGap>)` inline at runtime (Section 2). The variable works; it just stopped being a theming lever for everything except that. Override `--token-scale-400` to move the utilities.
+> **`--space-*` is the subtle one.** It still resolves, so the customer's own rules reading it are fine — but no framework CSS rule reads it any more, so setting `--space-base` at `:root` no longer moves `.margin-base` or anything else the framework ships. The one exception is Gallery, which writes `var(--space-<ItemsGap>)` inline at runtime (`references/variable-mapping.md`). The variable works; it just stopped being a theming lever for everything except that. Override `--token-scale-400` to move the utilities.
 
 ---
 
