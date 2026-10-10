@@ -9,14 +9,16 @@ This skill helps analyse and fix custom CSS written against the **classic** (pre
 
 The new theme ships design tokens (`--token-*`), a framework theme layer (`--color-*`, `--border-radius-*`, `--space-*`, …), and a per-component CSS API (`--osui-*`). Most of the old public vocabulary survived, but several variable families were retired, components gained an override surface, and the box model moved to logical properties. Custom CSS that relied on retired variables or overrode component internals directly will break.
 
-**This file is the procedure. The two lookup tables live alongside it and are loaded on demand:**
+**This file is the procedure. The detail lives in four references alongside it, loaded on demand:**
 
 | Reference | Load it when |
 |---|---|
 | [`references/variable-mapping.md`](references/variable-mapping.md) | Rewriting a retired variable name — the full classic → new mapping |
-| [`references/widget-catalog.md`](references/widget-catalog.md) | Running Phase 2g — one row per widget whose defaults changed, with its bucket and knob |
+| [`references/widget-catalog.md`](references/widget-catalog.md) | Running Phase 2g — one entry per widget whose defaults changed, grouped by bucket, with its knob |
+| [`references/grey-shades.md`](references/grey-shades.md) | Fixing a Category H grey-shade flip — role overrides, the two primary blues, and why a role is global |
+| [`references/recipes.md`](references/recipes.md) | Matching a symptom the customer described in their own words — one recipe per complaint |
 
-Both are **writable**: a migration that discovers a new fact is expected to add it. See Phase 5.
+All four are **writable**: a migration that discovers a new fact is expected to add it. See Phase 5.
 
 Read a reference when the step says to, not up front. The catalog in particular should be consulted for the inventoried widgets only.
 
@@ -30,7 +32,7 @@ Plenty of it is not taste, though. Sort every finding into one of three buckets,
 
 | Bucket | What it means | What to do |
 |---|---|---|
-| **Breaks** | The customer's CSS no longer does what they wrote it to do — a retired variable resolves to nothing, a role stopped cascading from their neutral ramp, text or a control went invisible | Fix it. Not a judgement call |
+| **Breaks** | The customer's CSS no longer does what they wrote it to do — a retired variable resolves to nothing, a role stopped cascading from their grey shades, text or a control went invisible | Fix it. Not a judgement call |
 | **Collides** | The framework change is defensible on its own, but it invalidates a rule the customer already had | Fix it. They cannot diagnose this themselves — their rule is still in the file and still looks correct |
 | **Preference** | A framework default just looks different. Nothing of theirs is overridden and nothing is unreadable | **Leave it.** Report it with the one-line revert and let the customer decide |
 
@@ -41,7 +43,7 @@ Plenty of it is not taste, though. Sort every finding into one of three buckets,
 - A new overlay or ring paints over colours the app set correctly underneath, so the symptom reads as "my colour is wrong" and sends you after the wrong variable.
 - A size or padding increase overflows a height the app hand-set around the widget.
 
-Many catalog rows are **mixed** — part of the change breaks something and part is preference. Split them in the report rather than applying the whole row. The top menu link is the canonical example: the new hover fill washing out the label on a custom dark header is a contrast break, while the link becoming a pill and losing its active underline is purely preference.
+Many catalog entries are **mixed** — part of the change breaks something and part is preference. Split them in the report rather than applying the whole entry. The top menu link is the canonical example: the new hover fill washing out the label on a custom dark header is a contrast break, while the link becoming a pill and losing its active underline is purely preference.
 
 **One exception.** When the job is to *validate* the migration rather than ship it — proving nothing is silently lost, or producing an exhaustive impact list — restoring parity across all three buckets is the right call, because parity is the test. Say which mode you are in; do not hand a customer a parity patch and call it a migration.
 
@@ -60,20 +62,20 @@ Before diving in, search the customer's CSS for these patterns to identify which
 | `--color-primary`, `--color-error`, `--color-background-body` | Still works but resolves to a different colour | F (Section 8) |
 | `--color-neutral-0` … `-10` | Still works but scale re-based — `neutral-0` is no longer white | F (Section 8, neutral trap) |
 | A rule against `.osui-*`, or a legacy widget class (`.dropdown-container`, `.wizard-item-icon`, `[data-popup]`, `.form-control`), with `!important` or direct property overrides | Probably replaceable with an `--osui-*` variable on the current selector | B (Section 2) |
-| Dark mode inverts `--color-neutral-*` while `--color-primary` points at a neutral step | Primary button label stays white (`--color-text-light` is not remapped) | C (Section 2, button contrast) |
+| Dark mode inverts `--color-neutral-*` while `--color-primary` points at a grey shade | Primary button label stays white (`--color-text-light` is not remapped) | C (Section 2, button contrast) |
 | `font-size` without `line-height` | May look wrong due to line-height model change | D (Section 2) |
 | `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 2) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
-| Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
+| Dark block overrides 3+ `--color-neutral-*` steps (scale flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2 → `references/grey-shades.md`) |
 | Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
-| Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | Section 10 recipe |
+| Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | `references/recipes.md` |
 | A widget looks different from the classic app, and the custom CSS never mentioned it | The new theme changed a framework default — these do not show up in any search of the customer's CSS | `references/widget-catalog.md`, applied in Phase 2g |
 
 ---
 
 ## 2. The breakage categories
 
-Every migration issue falls into one of these eight. Categories A–E and H are documented below; F and G are large enough to have their own sections (8 and 9). Scan for all of them.
+Every migration issue falls into one of these eight. Categories A–E and H are documented below; F and G are large enough to have their own sections (8 and 9). Scan for all of them. Two cross-cutting hazards close this section — renamed classes, and the CSS-API rewrite trap — which are not categories of their own but break apps the same way.
 
 ### Category A — Retired CSS variables
 
@@ -117,7 +119,7 @@ This applies to A1 only. An A2 hook never invalidated anything — the declarati
 
 #### Audit light/dark declaration symmetry
 
-Category H fixes get written into the dark block, because that is where the breakage was reported. But most of them are role overrides expressed through the neutral ramp, and the ramp flips on its own — so the same override usually belongs at `:root`, where it serves both modes. Left dark-only, light mode silently keeps the framework's neutral greys while dark follows the customer's brand.
+Category H fixes get written into the dark block, because that is where the breakage was reported. But most of them are role overrides expressed through the grey shades, and the scale flips on its own — so the same override usually belongs at `:root`, where it serves both modes. Left dark-only, light mode silently keeps the framework's neutral greys while dark follows the customer's brand.
 
 List the custom properties declared in each block, then take the set difference. Anything declared in the dark block but not at `:root` is a candidate. Extract the two name lists, splitting the file at the dark selector:
 
@@ -130,9 +132,9 @@ Run it once over the lines above the dark selector and once over the lines below
 Two outcomes, and the value tells you which:
 
 - **A literal that only makes sense in dark** — `#3d1a2a`, `rgba(255,255,255,0.15)` — is correctly dark-only. Leave it.
-- **A `var(--color-neutral-N)` reference** is almost always a light-mode gap. The ramp already flips, so the same declaration at `:root` covers both modes, and the dark block only needs to keep it if it deliberately picks a *different* step.
+- **A `var(--color-neutral-N)` reference** is almost always a light-mode gap. The grey shades already flips, so the same declaration at `:root` covers both modes, and the dark block only needs to keep it if it deliberately picks a *different* step.
 
-The roles most often caught this way are `--color-text`, `--color-text-subtle`, `--color-text-subtlest`, `--color-border`, and `--color-border-subtle`. None of them existed in classic — classic drove text directly off the ramp (`html` was `--color-neutral-9`) — so a customer who never declared them is not "keeping the default", they are inheriting a grey the old theme never showed them.
+The roles most often caught this way are `--color-text`, `--color-text-subtle`, `--color-text-subtlest`, `--color-border`, and `--color-border-subtle`. None of them existed in classic — classic drove text directly off the grey shades (`html` was `--color-neutral-9`) — so a customer who never declared them is not "keeping the default", they are inheriting a grey the old theme never showed them.
 
 #### `--token-*` is NOT declared at `:root` — never emit a bare one
 
@@ -362,84 +364,25 @@ Framework rules now use `padding-block` / `padding-inline` / `margin-inline-star
 }
 ```
 
-### Category H — Neutral ramp flip (roles no longer cascade)
+### Category H — Grey shades flipped (roles no longer cascade)
 
-The highest-impact dark-mode breakage. In the **old theme**, role variables were defined directly in terms of neutral steps:
+**The grey shades** are the eleven greys the whole UI is built from — `--color-neutral-0` (lightest) through `--color-neutral-10` (darkest). Page backgrounds, card surfaces, borders, body text and muted labels each take one of them. **Flipping** them means redefining shade 0 as the darkest and shade 10 as the lightest, which before `.os-dark-theme` existed was the cheapest way to build a dark mode: one block of eleven declarations and every grey in the app inverts at once.
 
-```css
-/* Old theme internals — roles read neutrals directly */
---color-text: var(--color-neutral-9);
---color-background-header: var(--color-neutral-0);
---color-background-surface: var(--color-neutral-0);
---color-border: var(--color-neutral-3);
-```
+The highest-impact dark-mode breakage. In the old theme, role variables were defined directly in terms of grey shades (`--color-text: var(--color-neutral-9)`), so a customer who built dark mode by flipping all eleven grey shades got dark text, surfaces, and borders for free. In the new theme, roles resolve through `$token-*` variables that do **not** reference `--color-neutral-*`. The flip still moves anything reading a neutral directly, but the framework's own text, surfaces, headers, and borders keep their light-mode values on a now-dark background — invisible body text, invisible button labels, missing header and surface contrast.
 
-Customers who built dark mode by flipping the entire neutral ramp (swapping `--color-neutral-0` ↔ `--color-neutral-10`, `--color-neutral-1` ↔ `--color-neutral-9`, etc.) got dark text, surfaces, and borders "for free" because every role cascaded through the ramp.
-
-In the **new theme**, roles resolve through `$token-*` variables that do **not** reference `--color-neutral-*`. Flipping the neutral ramp still changes elements that read neutrals directly (custom backgrounds, custom borders), but the framework's own text, surfaces, headers, and borders are unaffected — they keep their light-mode token values on a now-dark background, producing:
-
-- **Invisible / faded body text** — `--color-text` still resolves to dark text
-- **Invisible button labels** — `--osui-btn-color` still reads the light-mode token
-- **Invisible outline / secondary button text** — transparent-background buttons get white text on white fill
-- **Blue links instead of themed links** — link color is hardcoded to `$token-semantics-primary-base` (not `--color-primary`), so the customer's `--color-primary` override has no effect on links
-- **Link hover invisible** — `a:hover` uses `--token-semantics-primary-900` which stays at its light value; when links are overridden to match body text, hover must be overridden too (e.g. to `--color-text-subtle`)
-- **Missing header background** — `--color-background-header` still resolves to the light default
-- **Missing surface contrast** — `--color-background-surface` unchanged
-- **Invisible borders** — `--color-border` still resolves to its light value
-- **White feedback messages** — `--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, `--token-bg-success-subtle-default`, and `--token-bg-warning-subtle-default` stay at light values. `.os-dark-theme` flips them to the generated dark palette, which is a different theme from a custom ramp. Set the four tokens in the customer's dark block so the banners match the brand with or without that class.
-- **Selected nav item lost its underline** — the classic current page is `border-block-end` in `--color-primary`. The new theme clears that border and a hover fill (`--token-bg-neutral-subtlest-hover`) can cover the active item. On a dark custom header that fill stays a light grey, so the label washes out. Restore the underline on `.active` and `.active:hover`; keep the fill for non-active hover only.
-- **Grey blank-slate icons** — `--osui-blank-slate-icon-color` defaults to `--color-text-disabled` (grey) in the new theme; was closer to primary in the old theme
-
-**Detection pattern:** a dark-mode block (`:root.dark-mode`, `:root.os-dark-theme`, `body.dark`, etc.) that overrides **3 or more** `--color-neutral-*` steps. This is the signature of a ramp-flip strategy.
+**Detection pattern:** a dark-mode block (`:root.dark-mode`, `:root.os-dark-theme`, `body.dark`, …) that overrides **3 or more** `--color-neutral-*` steps. That is the signature of a scale-flip strategy.
 
 ```
 :root\.(dark-mode|os-dark-theme)[^{]*\{[^}]*--color-neutral-[0-9]+:.*--color-neutral-[0-9]+:.*--color-neutral-[0-9]+:
 ```
 
-**The fix:** add explicit role overrides, mapping each role to the customer's intended neutral step — and write them at **`:root`**, not in the dark block.
+**The one rule to carry without opening the reference:** the fix is explicit role overrides written at **`:root`**, never in the dark block. The breakage is reported in dark mode, so the instinct is to fix it there — resist that. These roles are expressed through the grey shades and the scale flips on its own, so one declaration at `:root` serves both modes. Dark-only overrides fix the reported symptom and leave light mode sitting on framework neutral greys the customer never chose and has never seen.
 
-The breakage is reported in dark mode, so the instinct is to fix it there. Resist that. These roles are expressed through the ramp and the ramp flips on its own, so one declaration at `:root` serves both modes. Dark-only overrides fix the reported symptom and leave light mode sitting on the framework's neutral greys — a palette the customer never chose and has never seen, because none of these roles existed in the classic theme.
+**Full remediation: [`references/grey-shades.md`](references/grey-shades.md)** — the complete symptom list, the role-to-neutral mapping, the two primary blues, and why a role override is global.
 
-```css
-:root {
-    /* ... the light ramp ... */
+---
 
-    /* ─── Role overrides (required in the new theme) ─── */
-    --color-text:                var(--color-neutral-9);   /* what classic's html used */
-    --color-text-subtle:         var(--color-neutral-8);
-    --color-text-subtlest:       var(--color-neutral-7);
-    --color-background-surface:  var(--color-neutral-1);
-    --color-border:              var(--color-neutral-3);
-    --color-border-subtle:       var(--color-neutral-2);
-    --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary */
-    --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover */
-    --token-icon-subtlest:       var(--color-neutral-N);
-
-    /* Wire the customer's own surface variables to their framework roles here.
-       Use whatever they named it; the old framework read it by convention. */
-    --color-background-header:   var(--their-header-var);
-}
-
-:root.dark-mode,
-:root.os-dark-theme {
-    /* ... the ramp flip — every role above follows it automatically ... */
-
-    /* Only what the ramp cannot express belongs here: a role that deliberately
-       picks a different step than light, and dark-only literals. */
-    --color-text: var(--color-neutral-10);  /* pure white rather than neutral-9 */
-
-    /* Feedback banners. Point at a ramp step or an existing custom var.
-       A hex is only for a tint that is not already declared in this block. */
-    --token-bg-danger-subtle-default:  var(--existing-var); /* or a hex if no variable already holds that color */
-    --token-bg-success-subtle-default: var(--color-neutral-N);
-    --token-bg-warning-subtle-default: var(--color-neutral-N);
-    --token-bg-neutral-subtlest-hover: rgba(255, 255, 255, 0.15);
-}
-```
-
-**Verify with the symmetry audit** (Section 2). Any property left in the dark block that reads `var(--color-neutral-N)` rather than a literal is almost certainly a light-mode gap.
-
-#### Some classes were renamed, and rules targeting them fail silently
+### Some classes were renamed, and rules targeting them fail silently
 
 Most of this guide is about declarations whose *value* moved. A quieter class of breakage is a selector that still looks perfectly valid but no longer matches anything, because the framework moved the class under the `osui-` prefix. Nothing in the customer's CSS looks wrong, no variable is retired, and a diff of the two bundles' selector lists is the only way to see it.
 
@@ -487,7 +430,7 @@ A rename is the quieter failure of the two. A real case:
 
 **Rewrite against the CSS API rather than the new class name** where a knob exists (`--osui-wizard-icon-background`, `--osui-wizard-connector-color`). It is less brittle than chasing prefixes, and it usually lets the `!important` go, since a knob is consumed by the framework's own declaration rather than fighting it.
 
-#### Do not convert a direct declaration into a CSS API variable
+### Do not convert a direct declaration into a CSS API variable
 
 Replacing `background-color: transparent` with `--osui-dropdown-background: transparent` looks like the modern, correct form of the same instruction. It is not the same instruction, and the rewrite is one of the easiest ways to break an app during this migration.
 
@@ -517,64 +460,6 @@ The original won a specificity contest. The variable does not enter that contest
 
 **Sweep for it before handing off.** Any `--osui-*` line you introduced that replaced a direct declaration is suspect; check whether any other stylesheet in the app sets that property on the same element.
 
-#### There are two primary blues, and fixing one does not fix the other
-
-`--token-semantics-primary-base` and `--token-text-primary` are separate tokens with separate defaults (`#105cef` and `#0f54da`). Re-pointing the first at `--color-primary` fixes links, the active nav item, the dropdown checkmark and the range slider's connect — which is most of what a customer reports — so it is easy to call the problem solved. `--token-text-primary` is read a further 14 times and stays blue, most visibly as the Upload pattern's "select file" label.
-
-After any primary re-point, sweep for the other one before declaring done:
-
-```bash
-grep -nE 'var\(--token-text-primary[,)]' dist/ODC.OutSystemsUI.css
-```
-
-Prefer the component knob where one exists (`--osui-upload-color: var(--color-text)`) over re-pointing `--token-text-primary` globally — classic coloured the upload label with body text, not with primary, so the two tokens genuinely do mean different things.
-
-#### A role override is global — never copy a local rule up into one
-
-Every role you declare at `:root` reaches every framework rule that reads it, which is far more than the widget that prompted you to declare it. The failure is seductive: you find a customer rule that styles one widget, notice a role that looks like it means the same thing, and promote the rule's values into the role. The widget you were looking at is already handled by the customer's own rule, so nothing there changes and the edit looks free — while dozens of widgets you never looked at quietly change.
-
-The input roles are where this happens most, because customers very often restyle text inputs and the role names read as if they are about text inputs:
-
-```css
---color-background-input   /* read 17× */
---color-border-input       /* read 46× */
-```
-
-Those reads include **checkbox, radio, switch, wizard step icon, datepicker and the dropdown popup**, not just `.form-control[data-input]`. A customer rule like `background: var(--color-neutral-2); border: none;` is a normal thing to want on a text field and a disaster as a role: promoted, it strips the ring off every checkbox and radio in the app, and the customer reports "checkboxes disappeared" with nothing in their own CSS to explain it.
-
-Map each role to **what classic gave the widgets that read it**, not to what the customer's narrowest rule says. Then leave the customer's rule where it is — it keeps winning on its own selectors, which is exactly the scope they wanted.
-
-Before declaring any role, count its reads and look at what they are:
-
-```bash
-grep -nE 'var\(--color-border-input[,)]' dist/ODC.OutSystemsUI.css
-```
-
-If the list contains a widget the customer's CSS never mentions, the role is the wrong place for that value.
-
-**Icons.** Framework icons moved from `--color-neutral-6` to `--token-icon-subtlest`. App icons with class `.icon` do not read that token; set `color: var(--color-neutral-N)` on `.icon`, and `color: inherit` on icons inside buttons, colored cards, and other blocks that set their own text color. When the icon color follows the flipped ramp, use the same `--color-neutral-N` in both modes. Use a different step in dark only when the hex must stay the same, because a flip moves that hex onto another step. Do not paste the hex.
-
-**A color that must not flip.** The same rule applies to text or a fill on a custom block. Set `color` and, when descendants read it, `--color-text` to the `--color-neutral-N` that holds that hex in that mode. A single `var(--color-neutral-N)` on `:root` changes after the dark ramp flip.
-
-The exact neutral step for each role depends on the customer's palette. Map the four `--token-bg-*-subtle-default` feedback tokens to that palette too — the generated `.os-dark-theme` values are a different dark theme, so adding the class does not reproduce a custom brand. Use the highest-contrast readable step for text (usually the one that flipped to near-white) and the closest-to-background step for surfaces/borders. A feedback tint that is not a ramp step and not an existing custom variable keeps one hex; that hex is the definition.
-
-**`--token-semantics-primary-base` is a shared root.** Overriding it changes both link color AND `--color-primary` (buttons, focus rings, etc.) because they all resolve through the same token. This is usually what ramp-flip customers want — their `--color-primary` already points at a neutral step that flipped. But if a customer needs links and primary to diverge in dark mode, skip the token override and add a direct rule instead:
-
-```css
-.dark-mode a,
-.os-dark-theme a {
-    color: var(--color-neutral-10);
-}
-```
-
-**Custom surface variables need wiring too.** If the customer declares custom variables like `--header-color` or `--sidebar-bg` that the old framework read by convention, these must now be wired to the framework's role variables explicitly. The new framework reads `--color-background-header`, not `--header-color`:
-
-```css
-:root {
-    --color-background-header: var(--header-color);
-}
-```
-
 ---
 
 ## 3. Retired-variable replacement mapping
@@ -591,7 +476,7 @@ Two rules that apply to every row and are worth carrying without opening the fil
 These variable families are **not retired** and work identically in the new theme (though some resolve to different values — see Section 8):
 
 - **Brand/status colors:** `--color-primary`, `--color-secondary`, `--color-error`, `--color-warning`, `--color-success`, `--color-info`
-- **Neutral ramp:** `--color-neutral-0` through `--color-neutral-10` (values changed — see Section 8 neutral trap)
+- **Grey shades:** `--color-neutral-0` through `--color-neutral-10` (values changed — see Section 8 neutral trap)
 - **Border radius:** `--border-radius-none`, `--border-radius-soft` (now 8px, was 4px), `--border-radius-rounded`
 - **Layout sizes:** `--header-size`, `--header-size-content`, `--side-menu-size`, `--bottom-bar-size`, `--footer-height`
 - **Z-index layers:** `--layer-global-*`, `--layer-local-tier-*`, `--layer-above`, `--layer-below`
@@ -634,7 +519,7 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~447 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
 
 - Any hardcoded colour literal (`#abc123`, `rgb(...)`, `rgba(...)`, `hsl(...)`) that has a token or role equivalent.
-- Overrides pinned to a specific neutral step (e.g. `--color-neutral-9`) for text — these won't flip in dark mode. Prefer `--color-text` and its variants.
+- Overrides pinned to a specific grey shade (e.g. `--color-neutral-9`) for text — these won't flip in dark mode. Prefer `--color-text` and its variants.
 
 **If the customer uses a custom dark-mode class (e.g. `.dark-mode`) instead of `.os-dark-theme`, strongly recommend adding `.os-dark-theme` alongside it.** Without `.os-dark-theme`, framework component internals that read `--token-*` values (feedback messages, input backgrounds, dropdown popups, surface colors, shadows, state overlays) stay at their light-mode defaults — producing white feedback banners, light inputs, and other light-on-dark artefacts. Each must be overridden manually. Adding `.os-dark-theme` to `<html>` whenever the custom class is toggled fixes all of these automatically and composes cleanly with the customer's own `--color-*` and `--osui-*` overrides.
 
@@ -833,7 +718,7 @@ If the customer chooses Option A, flag that they will need to manually override 
 
 **Option B is not a CSS change.** Nothing in the stylesheet can add the class — it has to be toggled at runtime, in whatever action already toggles the customer's own dark class. Do not try to solve it here and do not block on it. Record it as a **manual step** and carry it to the Phase 3 handoff, which has the client action, the code, and the traps.
 
-In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose setting `--osui-btn-primary-color` **on `.btn-primary`** (not on `:root` — see Category C note). Propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` and other buttons whose fill stays light. A transparent outlined button on a dark surface instead gets `--osui-btn-background: transparent`, `--osui-btn-color`, and `--osui-btn-border-color` set to the light text step.
+In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a grey shade that flips light), propose setting `--osui-btn-primary-color` **on `.btn-primary`** (not on `:root` — see Category C note). Propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` and other buttons whose fill stays light. A transparent outlined button on a dark surface instead gets `--osui-btn-background: transparent`, `--osui-btn-color`, and `--osui-btn-border-color` set to the light text step.
 
 Ask: "Which dark-mode approach do you want, and should I apply the button-label fix?" If they pick Option B, note it for the Phase 3 handoff and move on — do not stop to work through the wiring now.
 
@@ -847,9 +732,9 @@ Ask: "Should I alias these palette colors? (yes/no/pick which ones)"
 
 **Wait for the user's response. Apply their choices to the relevant working files. Then proceed to Step 2f.**
 
-#### Step 2f — Neutral ramp flip role overrides (Category H, if applicable)
+#### Step 2f — Grey shades flipped role overrides (Category H, if applicable)
 
-If the dark block overrides 3 or more `--color-neutral-*` steps (the ramp-flip pattern), the framework's role variables no longer cascade from the neutrals. Present the customer with the list of role overrides needed, mapped to their specific neutral steps:
+If the dark block overrides 3 or more `--color-neutral-*` steps (the scale-flip pattern), the framework's role variables no longer cascade from the neutrals. **Open [`references/grey-shades.md`](references/grey-shades.md) now** — it carries the full symptom list and the role mapping. Present the customer with the list of role overrides needed, mapped to their specific grey shades:
 
 1. **Identify the customer's text step** — whichever `--color-neutral-*` flipped to near-white (usually `--color-neutral-10` or `--color-neutral-9`).
 2. **Identify the customer's surface step** — the step closest to the dark background (usually `--color-neutral-1` or `--color-neutral-0`).
@@ -891,7 +776,7 @@ A scan of the customer's CSS only finds rules they wrote. These are changes to f
 2. **From the module**, when an OML or the running app is available — every widget the app places and never restyled. With the OutSystems CLI: `oml query <file> -` with `Root { MobileFlows { Name Nodes { Name } } }` for the screen list, then read a screen's widgets. A widget that is placed but unstyled still renders with the new defaults.
 3. If neither is available, ask which patterns the app uses, and offer the catalog list.
 
-Then take the `references/widget-catalog.md` rows for the inventoried widgets only. **Lead with each row's Bucket.** `Breaks` and `Collides` rows are proposed as fixes; `Preference` rows are presented as "this looks different on purpose — here is the revert if you want it", with no recommendation to apply. For a `Mixed` row, propose only the breaking half and list the rest as optional. Group the `Preference` rows into a single message at the end rather than asking about each one — they are the bulk of the catalog, and walking them individually turns a migration into a redesign review.
+Then take the `references/widget-catalog.md` entries for the inventoried widgets only. **Lead with each entry's bucket.** `Breaks` and `Collides` entries are proposed as fixes; `Preference` rows are presented as "this looks different on purpose — here is the revert if you want it", with no recommendation to apply. For a `Mixed` row, propose only the breaking half and list the rest as optional. Group the `Preference` rows into a single message at the end rather than asking about each one — they are the bulk of the catalog, and walking them individually turns a migration into a redesign review.
 
 Propose one widget at a time, wait, apply, move on. After each apply, tell the customer to reload the affected stylesheets and compare that widget with the classic app in **both** modes.
 
@@ -899,7 +784,7 @@ Ask, per widget: "The classic app shows X. The new theme shows Y. Should I resto
 
 **Color resolution — apply to every value written in this step and Step 2f.**
 
-1. Find the hex in the light ramp and in the dark ramp.
+1. Find the hex in the light grey shades and in the dark grey shades.
 2. If one `--color-neutral-N` holds it in that mode, use `var(--color-neutral-N)`. Do not paste the hex.
 3. If the color should follow the flip, it is the same step in both modes.
 4. If the hex must stay the same, light and dark name different steps, because the flip moved it.
@@ -923,7 +808,7 @@ The computed values identify which ancestor the element inherits from, `font-fam
 
 **Wait for the user's response. Apply their choice to the relevant working file.**
 
-**If a widget turns out to differ in a way the catalog does not list, add a row to `references/widget-catalog.md`.** Do not leave the fix only in the customer's stylesheet — the next migration will miss it. Phase 5 covers where the finding goes and how it reaches the public guide.
+**If a widget turns out to differ in a way the catalog does not list, add an entry to `references/widget-catalog.md` under the right bucket.** Do not leave the fix only in the customer's stylesheet — the next migration will miss it. Phase 5 covers where the finding goes and how it reaches the public guide.
 
 ### Phase 3 — Final output
 
@@ -1058,7 +943,7 @@ The `.text-neutral-0` and `.background-neutral-0` utility classes read that same
 
 If the customer used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
 
-**The root text color moved off the ramp.** `html` was `color: var(--text-color-neutral-9, var(--color-neutral-9))` and is now `color: var(--color-text)`, which resolves through tokens that never reference a neutral. That single line is why re-pointing `--color-neutral-9` no longer moves body text, and it is the mechanism behind Category H. When the customer wants body text to move, set `--color-text`.
+**The root text color moved off the grey shades.** `html` was `color: var(--text-color-neutral-9, var(--color-neutral-9))` and is now `color: var(--color-text)`, which resolves through tokens that never reference a neutral. That single line is why re-pointing `--color-neutral-9` no longer moves body text, and it is the mechanism behind Category H. When the customer wants body text to move, set `--color-text`.
 
 ---
 
@@ -1082,279 +967,25 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 
 ## 10. Recipes — "I used to do X"
 
-Common migration patterns:
+**Full recipes: [`references/recipes.md`](references/recipes.md).** Each is a symptom the customer describes in their own words, with the fix. Open the one that matches what was reported — not the file.
 
-### "My dark primary button lost its label"
+The symptoms covered, so you can recognise one in conversation without loading the file:
 
-`--color-text-light` stays white. If dark mode turns `--color-primary` white, the label disappears. Set `--osui-btn-primary-color` **on `.btn-primary`**, not on `:root` (the framework re-declares it on `.btn`, so a `:root` override is inherited but loses):
-
-```css
-.dark-mode .btn-primary,
-.os-dark-theme .btn-primary {
-  --osui-btn-primary-color: var(--color-neutral-0);
-}
-.dark-mode .btn.background-white,
-.os-dark-theme .btn.background-white {
-  --osui-btn-color: var(--color-text-dark);
-}
-```
-
-### "I re-branded the app by overriding `--color-primary`"
-
-Still works, but add the interaction tiers and border:
-
-```css
-:root {
-  --color-primary: #7c20f2;
-  --color-primary-hover: #651ac5;
-  --color-primary-active: #5817ab;
-  --color-border-primary: #7c20f2;
-}
-```
-
-Or go one level deeper for a full re-brand (focus halos recolour automatically):
-
-```css
-:root {
-  --token-semantics-primary-base: #7c20f2;
-  --token-semantics-primary-800: #651ac5;
-  --token-semantics-primary-900: #5817ab;
-}
-```
-
-### "I rounded (or squared) every corner by hand"
-
-One switch covers most of it:
-
-```css
-:root { --border-radius-default: 0; }    /* every tier slot square */
-:root { --border-radius-default: 12px; } /* every tier slot softer */
-```
-
-This reaches the seven `--border-radius-{2xs…2xl}` tier slots only. The three legacy roles — `--border-radius-none`, `-soft`, `-rounded` — resolve straight to their tokens and ignore it, and `soft` is the one customer CSS reads most. Set those explicitly as well; see the border-radius section above.
-
-### "I restyled one component with `!important`"
-
-Check the CSS API Reference for the component's `--osui-*` knobs first — there usually is one now:
-
-```css
-/* before */
-.my-page .osui-sidebar { background: #1a1a2e !important; }
-
-/* now */
-.my-page .osui-sidebar {
-  --osui-sidebar-background: #1a1a2e;
-  --osui-sidebar-color: #ffffff;
-}
-```
-
-### "I set my own body / header / menu backgrounds"
-
-Use the surface roles:
-
-```css
-:root {
-  --color-background-body: #f6f7fb;
-  --color-background-surface: #ffffff;
-  --color-background-header: #101828;
-  --color-background-sidemenu: #101828;
-  --color-background-footer: #101828;
-  --color-background-login: #ffffff;
-  --color-background-input: #ffffff;
-}
-```
-
-### "My links are blue / invisible in dark mode"
-
-The framework hardcodes link color to `$token-semantics-primary-base`, not `--color-primary`. Overriding `--color-primary` does not change links. Override the token in the dark block, or style links directly. When overriding link color, always override hover/focus too — `a:hover` reads `--token-semantics-primary-900` which also stays at its light value:
-
-```css
-/* Option 1: override the token (changes links AND primary) */
-:root.dark-mode {
-    --token-semantics-primary-base: var(--color-neutral-10);
-    --token-semantics-primary-900: var(--color-neutral-9);
-}
-
-/* Option 2: style links directly (independent of primary) */
-a[data-link] {
-    color: var(--color-text);
-}
-a[data-link]:hover,
-a[data-link]:focus {
-    color: var(--color-text-subtle);
-}
-```
-
-### "My active nav link is invisible in dark mode"
-
-The classic top menu marks the current page with an underline, `border-block-end: var(--token-border-size-050) solid var(--color-primary)`, not a filled pill. The new theme clears that border (`border-block-end: transparent` on `.layout:not(.layout-side) .app-menu-links a.active`, and `border-block-end: none` under `.header-navigation`) and paints a hover fill. On a dark custom header that fill stays a light grey, so the label washes out.
-
-**Do not add a hover fill.** Classic hover was `color: var(--color-primary); text-decoration: none;` and nothing else — no background. In many customer palettes `--color-primary` also equals the menu's resting text colour, so classic hover was a visual no-op. Painting a fill to "restore" it invents a state the app never had. Clear the background on hover, and mark only the current page.
-
-**Restoring the border is not enough — the link's box changed too.** The new theme turns each header link into a centred pill:
-
-```scss
-.header-navigation .app-menu-links > a {
-    align-self: center;                 // classic stretched to full header height
-    border-block-end: none;             // classic: 2px, transparent until .active
-    border-block-start: none;           // classic: 2px transparent, for balance
-    border-radius: $token-border-radius-200;
-    padding-block: $token-scale-200;    // 8px  — classic had none
-    padding-inline: $token-scale-300;   // 12px — classic had none
-}
-```
-
-So an underline put back on that box renders **under the label instead of on the header's bottom edge**, and **24px wider than the word**. Customers describe this as "the highlight is in the wrong place and too long", which sounds like a styling preference and is really a geometry change. Undo the box on *all* the links, not just the active one, or the active link ends up a different size from its neighbours:
-
-```css
-.desktop .header-navigation .app-menu-links > a {
-    align-self: stretch;
-    border-block-start: var(--token-border-size-050, 2px) solid transparent;
-    border-radius: 0;
-    margin-inline: 0 var(--token-scale-400, 16px);
-    padding-block: 0;
-    padding-inline: 0;
-}
-```
-
-Keep the transparent top border: classic carried one so active and inactive links stayed the same height and the labels did not shift.
-
-**The `margin-inline` is not optional, and this is the trap.** The same framework rule sets `margin-inline: $token-scale-025` (1px) at specificity 0-3-0, which outranks any `margin-*` utility class the app puts on the link — `.margin-right-base` is 0-1-0. So in the new theme those utilities are already dead and the entire visible gap between items is the `padding-inline` you just removed. Take the padding away without putting a margin back and the links collide. Classic set no margin on the link at all, which is why the app's utilities worked there and why nobody noticed they had stopped.
-
-**Restate the utilities per class, not as one flat value.** Links in the same menu routinely carry different utilities, and the gap between two of them is the sum of the left link's end margin and the right link's start margin — commonly from two different classes. Collapsing that to a single `margin-inline` on every link both undershoots the gap and leaves a stray margin outside the first and last item, which a flat value cannot avoid. Scope each utility at the framework's specificity instead:
-
-```css
-.desktop .header-navigation .app-menu-links > a { margin-inline: 0; }
-.desktop .header-navigation .app-menu-links > a.margin-right-base { margin-inline-end: var(--token-scale-400, 16px); }
-.desktop .header-navigation .app-menu-links > a.<grid-gutter-class> { margin-inline-start: <declared value>; }
-```
-
-Take the **declared** value for any platform grid class, not the computed pixel figure — grid gutters are usually percentages and often have media-query variants, so a measured px will drift at other viewport widths. Expect the declared rule to come as a *pair*: a physical `margin-left` plus an `.is-rtl` override flipping it to `margin-right`. Restate it as the single logical `margin-inline-start`, which covers both directions — the same conversion the framework applied to its own utilities, where classic's `margin-right` on `.margin-right-base` is now `margin-inline-end`. Read the rules out of the live stylesheets:
-
-```js
-[...document.styleSheets]
-  .flatMap(s => { try { return [...s.cssRules] } catch { return [] } })
-  .filter(r => r.selectorText && /<grid-gutter-class>/.test(r.selectorText))
-  .forEach(r => console.log(r.selectorText, '=>', r.style.cssText));
-```
-
-Measure the classic gap rather than assuming — different links often carry different utilities, so one value may not fit all of them:
-
-```js
-console.table([...document.querySelectorAll('.app-menu-links > a')].map(a => {
-    const c = getComputedStyle(a);
-    return { text: a.textContent.trim().slice(0, 14), cls: a.className,
-             padInline: c.paddingInline, marInline: c.marginInline };
-}));
-```
-
-Then, on `.active` and `.active:hover`, clear the background and restore the underline. `.desktop .header-navigation .app-menu-links > a.active:hover` beats a plain `.active` rule, so include `:hover`.
-
-```css
-.app-menu-links > a:hover,
-.desktop .header-navigation .app-menu-links > a:hover {
-    background-color: transparent;
-}
-
-.layout:not(.layout-side) .app-menu-links a.active,
-.desktop .header-navigation .app-menu-links > a.active,
-.desktop .header-navigation .app-menu-links > a.active:hover {
-    background-color: transparent;
-    border-block-end: var(--token-border-size-050, 2px) solid var(--color-primary);
-    border-radius: 0;
-    color: var(--color-primary);
-}
-```
-
-### "My blank-slate icons turned grey"
-
-The new theme changed `--osui-blank-slate-icon-color` from a primary-adjacent colour to `--color-text-disabled` (grey). Override on the component:
-
-```css
-.blank-slate-icon {
-    color: var(--color-primary);
-}
-```
-
-### "I hand-built a dark mode"
-
-Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~447 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
-
-### "I built dark mode by flipping the neutral ramp"
-
-A common pattern: override `--color-neutral-0` through `--color-neutral-10` in a dark block so that 0 becomes the darkest and 10 becomes the lightest. This worked in the old theme because role variables like `--color-text` were defined as `var(--color-neutral-9)` — flipping neutral-9 to a light color automatically made text light.
-
-In the new theme, roles go through tokens and **no longer cascade from neutrals**. The ramp flip still affects elements that read `var(--color-neutral-*)` directly (custom backgrounds, custom borders), but the framework's own text, headers, surfaces, and borders stay in light mode. Result: dark backgrounds with dark text — invisible UI.
-
-**Fix:** add explicit role overrides — and put them in `:root`, **not** in the dark block.
-
-This is the step most often got wrong. The roles are written in terms of the ramp, and the ramp already flips, so a single declaration at `:root` serves both modes. Writing them into the dark block alone fixes dark and leaves light silently sitting on the framework's neutral greys — and since none of these roles existed in the classic theme, that grey is something the customer has never seen before and will not recognise as a default.
-
-```css
-:root {
-    /* Light ramp */
-    --color-neutral-0: #ffffff;
-    --color-neutral-10: #101828;
-    /* ... rest of ramp ... */
-
-    /* Role overrides — required in the new theme. They belong HERE so both modes
-       get them; the flip below carries them into dark at no extra cost. */
-    --color-text:                   var(--color-neutral-9);
-    --color-text-subtle:            var(--color-neutral-8);
-    --color-text-subtlest:          var(--color-neutral-7);
-    --color-background-surface:     var(--color-neutral-1);
-    --color-border:                 var(--color-neutral-3);
-    --color-border-subtle:          var(--color-neutral-2);
-    --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary */
-    --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover */
-    --token-icon-subtlest:          var(--color-neutral-6);
-}
-
-:root.dark-mode,
-:root.os-dark-theme {
-    /* The flip. Every role above follows it automatically. */
-    --color-neutral-0: #101828;
-    --color-neutral-10: #ffffff;
-    /* ... rest of ramp ... */
-
-    /* Only what cannot be expressed through the ramp belongs here: dark-only
-       literals, and roles that deliberately pick a different step than light. */
-    --color-text: var(--color-neutral-10);   /* pure white rather than neutral-9 */
-
-    --token-bg-danger-subtle-default:  #3d1a2a;
-    --token-bg-success-subtle-default: #1a3d2a;
-    --token-bg-warning-subtle-default: #3d3a1a;
-    --token-bg-neutral-subtlest-hover: rgba(255, 255, 255, 0.15);
-}
-```
-
-Wire any app-specific surface variable to its framework role at `:root` as well, using whatever the app named it:
-
-```css
-:root {
-    --color-background-header: var(--app-header-color);
-}
-```
-
-Then run the light/dark symmetry audit from Section 2. Anything still declared only in the dark block that reads `var(--color-neutral-N)` is a light-mode gap, not a dark-mode fix.
-
-### "I changed all the shadows / all the spacing / all the type"
-
-Override the tokens directly:
-
-```css
-:root {
-  --token-elevation-2: 0 2px 8px rgba(0, 0, 0, 0.12);
-  --token-scale-400: 20px;     /* every 16px gap becomes 20px */
-  --token-font-size-400: 15px;
-}
-```
-
----
+- ["My dark primary button lost its label"](references/recipes.md#my-dark-primary-button-lost-its-label)
+- ["I re-branded the app by overriding `--color-primary`"](references/recipes.md#i-re-branded-the-app-by-overriding---color-primary)
+- ["I rounded (or squared) every corner by hand"](references/recipes.md#i-rounded-or-squared-every-corner-by-hand)
+- ["I restyled one component with `!important`"](references/recipes.md#i-restyled-one-component-with-important)
+- ["I set my own body / header / menu backgrounds"](references/recipes.md#i-set-my-own-body--header--menu-backgrounds)
+- ["My links are blue / invisible in dark mode"](references/recipes.md#my-links-are-blue--invisible-in-dark-mode)
+- ["My active nav link is invisible in dark mode"](references/recipes.md#my-active-nav-link-is-invisible-in-dark-mode)
+- ["My blank-slate icons turned grey"](references/recipes.md#my-blank-slate-icons-turned-grey)
+- ["I hand-built a dark mode"](references/recipes.md#i-hand-built-a-dark-mode)
+- ["I built dark mode by flipping the grey shades"](references/recipes.md#i-built-dark-mode-by-flipping-the-grey-shades)
+- ["I changed all the shadows / all the spacing / all the type"](references/recipes.md#i-changed-all-the-shadows--all-the-spacing--all-the-type)
 
 ## 11. Widget catalog — classic vs new defaults
 
-**Full catalog: [`references/widget-catalog.md`](references/widget-catalog.md).** One row per framework widget whose defaults changed, each with its bucket and the knob that restores classic behaviour.
+**Full catalog: [`references/widget-catalog.md`](references/widget-catalog.md).** One entry per framework widget whose defaults changed, grouped by bucket, each with the knob that restores classic behaviour.
 
 Load it during **Phase 2g**, and only for the widgets in the inventory you built there. Walking the whole catalog turns a migration into a redesign review — the `Preference` rows are the bulk of it, and they are presented as optional reverts rather than fixes.
 
