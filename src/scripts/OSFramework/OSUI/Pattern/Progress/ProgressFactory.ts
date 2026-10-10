@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Factory {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the Pattern that a new instance will be created.
+	 * @param {string} type Progress type: Bar, Circle or SemiCircle.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Progress.IProgress}
 	 */
@@ -14,6 +15,11 @@ namespace OSFramework.OSUI.Patterns.Progress.Factory {
 		switch (type) {
 			case ProgressEnum.ProgressTypes.Circle:
 				_progressItem = new Patterns.Progress.Circle.Circle(progressId, JSON.parse(configs));
+
+				break;
+
+			case ProgressEnum.ProgressTypes.SemiCircle:
+				_progressItem = new Patterns.Progress.SemiCircle.SemiCircle(progressId, JSON.parse(configs));
 
 				break;
 

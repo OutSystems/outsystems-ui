@@ -22,6 +22,18 @@ namespace OSFramework.OSUI.Patterns.Progress {
 			Helper.Dom.Styles.RemoveClass(this.progressElem, ProgressEnum.CssClass.AnimateProgressChange);
 		}
 
+		// Resolve the user-facing pattern name from the progress type
+		private _getPatternName(): string {
+			switch (this.progressType) {
+				case ProgressEnum.ProgressTypes.Bar:
+					return GlobalEnum.PatternName.ProgressBar;
+				case ProgressEnum.ProgressTypes.SemiCircle:
+					return GlobalEnum.PatternName.ProgressSemiCircle;
+				default:
+					return GlobalEnum.PatternName.ProgressCircle;
+			}
+		}
+
 		// Set default Accessibility properties
 		private _setAccessibilityProps(): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.TabIndex, '0');
@@ -119,11 +131,9 @@ namespace OSFramework.OSUI.Patterns.Progress {
 				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${
-						this.progressType === ProgressEnum.ProgressTypes.Bar
-							? GlobalEnum.PatternName.ProgressBar
-							: GlobalEnum.PatternName.ProgressCircle
-					} can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
+					`The value of the Progress property on the '${this.widgetId}' ${this._getPatternName()} can't be smaller than '${
+						ProgressEnum.Properties.MinProgressValue
+					}'.`
 				);
 			}
 
@@ -132,11 +142,9 @@ namespace OSFramework.OSUI.Patterns.Progress {
 				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${
-						this.progressType === ProgressEnum.ProgressTypes.Bar
-							? GlobalEnum.PatternName.ProgressBar
-							: GlobalEnum.PatternName.ProgressCircle
-					} is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
+					`The value of the Progress property on the '${this.widgetId}' ${this._getPatternName()} is higher than supported (${
+						ProgressEnum.Properties.MaxProgressValue
+					}).`
 				);
 			}
 

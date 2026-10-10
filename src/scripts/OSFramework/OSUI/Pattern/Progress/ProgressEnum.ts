@@ -15,6 +15,7 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 		Container = 'osui-progress-bar__container',
 		ProgressBarContent = 'osui-progress-bar__content',
 		ProgressCircleContent = 'osui-progress-circle__content',
+		ProgressSemiCircleContent = 'osui-progress-semi-circle__content',
 	}
 
 	/**
@@ -60,6 +61,7 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 	export enum ProgressTypes {
 		Bar = 'Bar',
 		Circle = 'Circle',
+		SemiCircle = 'SemiCircle',
 	}
 
 	/**

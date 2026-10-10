@@ -356,6 +356,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		OverflowMenu = 'OverflowMenu',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
+		ProgressSemiCircle = 'Progress Semi Circle',
 		RangeSlider = 'Range Slider',
 		RangeSliderInterval = 'Range Slider Interval',
 		Rating = 'Rating',
