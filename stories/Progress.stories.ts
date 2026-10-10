@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
- * Progress — `Create(id, type, configs)` where type ∈ {'Bar','Circle'}.
+ * Progress — `Create(id, type, configs)` where type ∈ {'Bar','Circle','SemiCircle'}.
  * Bar needs `.osui-progress-bar__container > .osui-progress-bar__value`.
  * Circle needs an SVG with trail-path + progress-path circles inside
  * `.osui-progress-circle__container > .svg-wrapper`.
+ * SemiCircle uses the same SVG circles inside `.osui-progress-semi-circle__container`.
  */
 interface ProgressArgs {
 	progress: number;
@@ -87,6 +88,47 @@ export const Circle: Story = {
 					AnimateInitialProgress: true,
 					InitialProgress: 0,
 					ProgressCircleSize: 'auto',
+				})
+			);
+			P.ProgressAPI.Initialize(id);
+			register(() => P.ProgressAPI.Dispose?.(id));
+		});
+	},
+};
+
+export const SemiCircle: Story = {
+	render: (args) => {
+		const id = uid('progress-semi-circle');
+		// Explicit Size: 'auto' fills the parent width, and in Storybook that is the
+		// whole canvas. The wrapper carries the runtime's osui-inline-svg class - it
+		// is what sizes the SVG to the gauge box.
+		const template = `
+			<div ${osuiRoot(id)} class="osui-progress-semi-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+				<div class="osui-progress-semi-circle__container">
+					<div class="osui-inline-svg svg-wrapper" style="height: 100%;">
+						<svg>
+							<defs></defs>
+							<circle class="osui-progress-semi-circle__container__trail-path"></circle>
+							<circle class="osui-progress-semi-circle__container__progress-path"></circle>
+						</svg>
+					</div>
+				</div>
+				<div class="osui-progress-semi-circle__content" id="${id}-label">${args.progress}</div>
+			</div>`;
+		return renderPattern(template, (_root, register) => {
+			const P = Patterns();
+			P.ProgressAPI.Create(
+				id,
+				'SemiCircle',
+				cfg({
+					Progress: args.progress,
+					Thickness: args.thickness,
+					Shape: args.shape,
+					ProgressColor: 'primary',
+					TrailColor: 'neutral-2',
+					AnimateInitialProgress: true,
+					InitialProgress: 0,
+					ProgressCircleSize: '200px',
 				})
 			);
 			P.ProgressAPI.Initialize(id);
