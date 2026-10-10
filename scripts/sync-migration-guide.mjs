@@ -56,17 +56,19 @@ const ID = '[a-z0-9-]+';
 
 const markedBlock = (kind, id) =>
 	new RegExp(
-		`(?<open>^[ \\t]*<!-- ${kind}:${id} -->\\n)(?<body>[\\s\\S]*?)(?<close>^[ \\t]*<!-- /${kind}:${id} -->)`,
+		String.raw`(?<open>^[ \t]*<!-- ${kind}:${id} -->\n)(?<body>[\s\S]*?)(?<close>^[ \t]*<!-- /${kind}:${id} -->)`,
 		'm'
 	);
 
 const markerIds = (text, kind) =>
-	[...text.matchAll(new RegExp(`^[ \\t]*<!-- ${kind}:(${ID}) -->[ \\t]*$`, 'gm'))].map(([, id]) => id);
+	[...text.matchAll(new RegExp(String.raw`^[ \t]*<!-- ${kind}:(${ID}) -->[ \t]*$`, 'gm'))].map(([, id]) => id);
 
 function fail(message) {
 	console.error(message);
 	process.exit(1);
 }
+
+const failMissingMarker = (id, file) => fail(`"${id}" is missing its opening or closing marker in ${file}.`);
 
 const duplicatesIn = (ids) => [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
 
@@ -96,10 +98,8 @@ function syncTables(source, guide) {
 	for (const id of guideIds) {
 		const sourceBlock = source.match(markedBlock('table', id));
 		const guideBlock = text.match(markedBlock('generated', id));
-		const missing = !sourceBlock ? rel(SOURCE_FILE) : !guideBlock ? path.basename(GUIDE_FILE) : null;
-		if (missing) {
-			return fail(`"${id}" is missing its opening or closing marker in ${missing}.`);
-		}
+		if (!sourceBlock) return failMissingMarker(id, rel(SOURCE_FILE));
+		if (!guideBlock) return failMissingMarker(id, path.basename(GUIDE_FILE));
 
 		const { body: sourceBody } = sourceBlock.groups;
 		if (sourceBody === guideBlock.groups.body) continue;
