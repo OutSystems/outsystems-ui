@@ -1,0 +1,111 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Numbers - ProgressSemiCircle */
+////
+/// @group Patterns-ProgressSemiCircle
+/// Patterns - Numbers - ProgressSemiCircle
+
+[data-block*='ProgressSemiCircle'] {
+	display: inline-block;
+}
+
+///
+.osui-progress-semi-circle {
+	height: calc(var(--progress-circle-size) / 2);
+	// The square SVG hangs below this box. Clip it so only the upper arc remains.
+	overflow: hidden;
+	position: relative;
+	width: var(--progress-circle-size);
+
+	&__container {
+		// Full square, anchored to the top. Its center is the bottom edge of the half-height box.
+		height: 200%;
+		inset-inline-start: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+
+		> div {
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
+
+		&__progress-path,
+		&__trail-path {
+			cx: 50%;
+			cy: 50%;
+			fill: transparent;
+			inset-inline-start: 0;
+			position: absolute;
+			r: var(--radius);
+			stroke-width: var(--thickness);
+			top: 0;
+			transform: rotate(180deg);
+			transform-origin: center;
+		}
+
+		&__progress-path {
+			-servicestudio-stroke: var(--progress-color, #{variables.$token-semantics-primary-base});
+			stroke: var(--progress-circle-gradient-url, var(--progress-color));
+			stroke-dasharray: var(--stroke-dasharray);
+			stroke-dashoffset: var(--stroke-dashoffset);
+			stroke-linecap: var(--shape);
+			// 0s (with unit): a unitless 0 is invalid, the declaration is dropped,
+			// and transition-property falls back to all - size changes then animate the radius.
+			transition: stroke-dashoffset 0s;
+
+			&.animate {
+				&-entrance,
+				&-progress-change {
+					transition-duration: var(--progress-speed, 0.35s);
+				}
+
+				&-entrance {
+					transition-delay: var(--progress-initial-speed, 0.5s);
+				}
+			}
+		}
+
+		&__trail-path {
+			stroke: var(--trail-color, #{variables.$token-primitives-neutral-300});
+			stroke-dasharray: var(--stroke-dasharray);
+			stroke-dashoffset: 0;
+		}
+	}
+
+	&__content {
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		// Sits in the opening, above the diameter, so the clip does not cut the label.
+		top: 62%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		z-index: var(--layer-local-tier-1);
+	}
+
+	.osui-inline-svg {
+		display: block;
+		// the !important is used to override the inline style height: 100% from InlineSVG
+		height: 100% !important;
+		position: relative;
+		width: 100%;
+
+		svg {
+			display: block;
+			height: 100%;
+			overflow: visible;
+			width: 100%;
+		}
+	}
+}
+
+// IsRTL
+.is-rtl {
+	.osui-progress-semi-circle {
+		.svg-wrapper {
+			transform: scaleX(-1);
+		}
+	}
+}

@@ -136,6 +136,7 @@ Section Index:
         6.5.4. Progress
             6.5.4.1 Progress Bar
             6.5.4.2 Progress Circle
+            6.5.4.3 Progress Semi Circle
         6.5.5. Rating
     6.6. Utilities
         6.6.1. Align Center
@@ -416,6 +417,8 @@ Section Index:
 @use '../scss/04-patterns/05-numbers/progress/progressbar' as *;
 /*! 6.5.4.2 Progress Circle */
 @use '../scss/04-patterns/05-numbers/progress/progresscircle' as *;
+/*! 6.5.4.3 Progress Semi Circle */
+@use '../scss/04-patterns/05-numbers/progress/progresssemicircle' as *;
 /*! 6.5.5. Rating */
 @use '../scss/04-patterns/05-numbers/rating/rating' as *;
 

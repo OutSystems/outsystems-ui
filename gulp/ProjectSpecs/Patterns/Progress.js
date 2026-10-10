@@ -18,6 +18,13 @@ const patternInfo = {
             "inDevelopment": false,
             "name": "Progress Circle",
             "scss": "../scss/04-patterns/05-numbers/progress/progresscircle"
+        },
+
+        {
+            "codeName": "SemiCircle",
+            "inDevelopment": false,
+            "name": "Progress Semi Circle",
+            "scss": "../scss/04-patterns/05-numbers/progress/progresssemicircle"
         }
     ]
 };
