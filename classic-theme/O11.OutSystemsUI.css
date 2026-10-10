@@ -12374,6 +12374,94 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
       -ms-transform:scaleX(-1);
           transform:scaleX(-1);
 }
+/*! 6.5.4.3 Progress Semi Circle */
+[data-block*=ProgressSemiCircle]{
+  display:inline-block;
+}
+.osui-progress-semi-circle{
+  height:calc(var(--progress-circle-size) / 2);
+  overflow:hidden;
+  position:relative;
+  width:var(--progress-circle-size);
+}
+.osui-progress-semi-circle__container{
+  height:200%;
+  left:0;
+  position:absolute;
+  top:0;
+  width:100%;
+}
+.osui-progress-semi-circle__container > div{
+  display:block;
+  height:100%;
+  width:100%;
+}
+.osui-progress-semi-circle__container__progress-path, .osui-progress-semi-circle__container__trail-path{
+  cx:50%;
+  cy:50%;
+  fill:transparent;
+  left:0;
+  position:absolute;
+  r:var(--radius);
+  stroke-width:var(--thickness);
+  top:0;
+  -webkit-transform:rotate(180deg);
+      -ms-transform:rotate(180deg);
+          transform:rotate(180deg);
+  -webkit-transform-origin:center;
+      -ms-transform-origin:center;
+          transform-origin:center;
+}
+.osui-progress-semi-circle__container__progress-path{
+  -servicestudio-stroke:var(--progress-color, var(--color-primary));
+  stroke:var(--progress-circle-gradient-url, var(--progress-color));
+  stroke-dasharray:var(--stroke-dasharray);
+  stroke-dashoffset:var(--stroke-dashoffset);
+  stroke-linecap:var(--shape);
+  -webkit-transition:stroke-dashoffset 0s;
+  transition:stroke-dashoffset 0s;
+}
+.osui-progress-semi-circle__container__progress-path.animate-entrance, .osui-progress-semi-circle__container__progress-path.animate-progress-change{
+  -webkit-transition-duration:var(--progress-speed, 0.35s);
+          transition-duration:var(--progress-speed, 0.35s);
+}
+.osui-progress-semi-circle__container__progress-path.animate-entrance{
+  -webkit-transition-delay:var(--progress-initial-speed, 0.5s);
+          transition-delay:var(--progress-initial-speed, 0.5s);
+}
+.osui-progress-semi-circle__container__trail-path{
+  stroke:var(--trail-color, var(--color-neutral-3));
+  stroke-dasharray:var(--stroke-dasharray);
+  stroke-dashoffset:0;
+}
+.osui-progress-semi-circle__content{
+  left:50%;
+  position:absolute;
+  text-align:center;
+  top:62%;
+  -webkit-transform:translate(-50%, -50%);
+      -ms-transform:translate(-50%, -50%);
+          transform:translate(-50%, -50%);
+  width:80%;
+  z-index:var(--layer-local-tier-1);
+}
+.osui-progress-semi-circle .osui-inline-svg{
+  display:block;
+  height:100% !important;
+  position:relative;
+  width:100%;
+}
+.osui-progress-semi-circle .osui-inline-svg svg{
+  display:block;
+  height:100%;
+  overflow:visible;
+  width:100%;
+}
+.is-rtl .osui-progress-semi-circle .svg-wrapper{
+  -webkit-transform:scaleX(-1);
+      -ms-transform:scaleX(-1);
+          transform:scaleX(-1);
+}
 /*! 6.5.5. Rating */
 .rating{
   position:relative;
@@ -19148,6 +19236,6 @@ noUi-connects, noUi-draggable, noUi-handle, noUi-horizontal, noUi-marker, noUi-m
 noUi-pips-vertical, noUi-rtl, noUi-state-drag, noUi-state-tap, noUi-target, noUi-tooltip, noUi-touch-area, noUi-txt-dir-rtl, noUi-value, noUi-value-horizontal, noUi-value-vertical, noUi-vertical, osui-range-slider,
 osui-range-slider__provider, osui-range-slider--is-vertical, osui-sidebar, osui-sidebar__content, osui-sidebar__header, osui-sidebar--has-overlay, osui-sidebar--is-left, osui-sidebar--is-open, osui-sidebar--is-right,
 osui-submenu, osui-submenu__header, osui-submenu__header__icon, osui-submenu__header__item, osui-submenu__items, osui-submenu--is-open, osui-progress-bar, osui-progress-bar__container, osui-progress-bar__content,
-osui-progress-bar__value, osui-progress-circle, osui-progress-circle__container, osui-progress-circle__container__progress-path, osui-progress-circle__container__trail-path, osui-progress-circle__content, osui-btn-loading,
+osui-progress-bar__value, osui-progress-circle, osui-progress-circle__container, osui-progress-circle__container__progress-path, osui-progress-circle__container__trail-path, osui-progress-circle__content, osui-progress-semi-circle, osui-progress-semi-circle__container, osui-progress-semi-circle__container__progress-path, osui-progress-semi-circle__container__trail-path, osui-progress-semi-circle__content, osui-btn-loading,
 osui-btn-loading__spinner-animation, osui-btn-loading--is-loading, osui-btn-loading-show-spinner, osui-deprecated, osui-bottom-sheet--has-handler, osui-bottom-sheet--has-scroll, osui-bottom-sheet--is-open, osui-bottom-sheet__content, 
 osui-bottom-sheet__header, osui-bottom-sheet-overlay, osui-bottom-sheet__header__top-bar, osui-bottom-sheet, focus-trap-top, focus-trap-bottom, osui-timepicker, osui-timepicker-dropdown-ss-preview, osui-monthpicker, osui-monthpicker__dropdown*/

@@ -48,6 +48,29 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `.phone/.tablet .app-menu-links a` SS-preview rule (same relative position as the new theme).
   Mapping: none needed — the rule is a single `-servicestudio-*` declaration with no token
   values, so it is byte-identical in both themes. Approximations: none.
+- **2026-10-10 — Progress Semi Circle (working tree, gm-test-semicircle)** — added
+  `[data-block*=ProgressSemiCircle]`, `.osui-progress-semi-circle` and its container,
+  path, content, inline-svg, and RTL rules, in both bundles, immediately before
+  `/*! 6.5.5. Rating */`.   Geometry differs from Progress Circle: the root is half of
+  `--progress-circle-size` tall and `overflow:hidden`. The container is a full
+  square (`height:200%`) anchored to the top, so the circle center lies on the
+  bottom edge and the lower half cannot paint over following content. Both paths
+  rotate `180deg`, and the trail uses the same dash array with offset `0`.
+  Content sits at `top:62%`, inside the opening.
+  The style-class excluder list in both bundles also hides
+  `osui-progress-semi-circle` and its container, path, and content classes, same
+  place as the Progress Circle classes.
+  Mapping: `$token-semantics-primary-base` → `var(--color-primary)` on
+  `-servicestudio-stroke` only, as `var(--progress-color, var(--color-primary))`.
+  Progress stroke stays `var(--progress-circle-gradient-url, var(--progress-color))`
+  with no token fallback. Trail fallback `$token-primitives-neutral-300`
+  (`#e6eaee`) → `var(--color-neutral-3)` (`#e9ecef`), the nearest old ramp step
+  and the same step Progress Circle uses for its trail. `margin` is the classic
+  `0 auto` form and `left:0` replaces `inset-inline-start`. The deprecated
+  `--border-color-*` override chain is not reproduced. The progress-path
+  transition is `stroke-dashoffset 0s` (with the unit): the unitless `0` the
+  Progress Circle rules carry is invalid and falls back to `all`, which makes
+  size changes animate the radius.
 
 ### Refresh log
 
