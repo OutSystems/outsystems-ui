@@ -11,6 +11,9 @@
 
 ///
 .osui-progress-semi-circle {
+	--progress-initial-speed: 0.5s;
+	--progress-speed: 0.35s;
+
 	height: calc(var(--progress-circle-size) / 2);
 	// The square SVG hangs below this box. Clip it so only the upper arc remains.
 	overflow: hidden;

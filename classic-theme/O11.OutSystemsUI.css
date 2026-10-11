@@ -12379,6 +12379,8 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   display:inline-block;
 }
 .osui-progress-semi-circle{
+  --progress-initial-speed:0.5s;
+  --progress-speed:0.35s;
   height:calc(var(--progress-circle-size) / 2);
   overflow:hidden;
   position:relative;
