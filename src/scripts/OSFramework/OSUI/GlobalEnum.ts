@@ -363,6 +363,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		SectionIndex = 'Section Index',
 		SectionIndexItem = 'Section Index Item',
 		Sidebar = 'Sidebar',
+		Spinner = 'Spinner',
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
 		Tabs = 'Tabs',

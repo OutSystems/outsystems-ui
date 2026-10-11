@@ -37,6 +37,7 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   ├── SectionIndex
     |   |   |   |   ├── SectionIndexItem
     |   |   |   |   ├── Sidebar
+    |   |   |   |   ├── Spinner
     |   |   |   |   ├── SubMenu
     |   |   |   |   ├── SwipeEvents
     |   |   |   |   ├── Tabs

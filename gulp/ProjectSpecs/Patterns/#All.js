@@ -21,6 +21,7 @@ const rating = require('./Rating');
 const sectionIndex = require('./SectionIndex');
 const sectionIndexItem = require('./SectionIndexItem');
 const sidebar = require('./Sidebar');
+const spinner = require('./Spinner');
 const search = require('./Search');
 const submenu = require('./Submenu');
 const swipeEvents = require('./SwipeEvents');
@@ -67,6 +68,7 @@ const patterns = {
 	"section-index-item": sectionIndexItem.info,
 	"section-index": sectionIndex.info,
 	"sidebar": sidebar.info,
+	"spinner": spinner.info,
 	"search": search.info,
 	"submenu": submenu.info,
 	"swipe-events": swipeEvents.info,

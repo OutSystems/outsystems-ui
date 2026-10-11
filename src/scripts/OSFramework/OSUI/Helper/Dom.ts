@@ -187,6 +187,20 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method used to get the CSS value to assign for a given color: a theme color name (color entity) becomes
+		 * `var(--color-<name>)`, so the element keeps following the theme (e.g. dark theme) at runtime; any other
+		 * value provided from user (HEX, RGB, CSS keyword) is returned as-is.
+		 *
+		 * @param colorName
+		 * @returns
+		 */
+		public static GetColorCssValueFromColorType(colorName: string): string {
+			return StyleManipulation.GetColorValueFromColorType(colorName) !== colorName
+				? `var(--color-${colorName})`
+				: colorName;
+		}
+
+		/**
 		 * Method used to get the color value based on color entity given color name or on a value provided from user (HEX or RGB)
 		 *
 		 * @param colorName

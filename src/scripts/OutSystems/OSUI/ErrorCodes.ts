@@ -351,6 +351,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-33003',
 	};
 
+	export const Spinner = {
+		FailChangeProperty: 'OSUI-API-34001',
+		FailDispose: 'OSUI-API-34002',
+		FailRegisterCallback: 'OSUI-API-34003',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
