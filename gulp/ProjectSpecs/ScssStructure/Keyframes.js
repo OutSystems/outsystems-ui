@@ -15,6 +15,10 @@ const sectionInfo = {
             "path": "07-keyframes/btn-loading"
         },
         {
+            "name": "Spinner",
+            "path": "07-keyframes/spinner"
+        },
+        {
             "name": "List Item",
             "path": "07-keyframes/list-item"
         },

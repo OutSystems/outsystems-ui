@@ -142,12 +142,13 @@ Section Index:
     6.6. Utilities
         6.6.1. Align Center
         6.6.2. Button Loading
-        6.6.3. Center Content
-        6.6.4. Margin Container
-        6.6.5. Separator
-        6.6.6. Pull to Refresh
-        6.6.7. List Updating
-        6.6.8. Provider Login Button
+        6.6.3. Spinner
+        6.6.4. Center Content
+        6.6.5. Margin Container
+        6.6.6. Separator
+        6.6.7. Pull to Refresh
+        6.6.8. List Updating
+        6.6.9. Provider Login Button
     6.7. Advanced
         6.7.1. Dropdown ServerSide
         6.7.2. Dropdown ServerSide Item
@@ -181,10 +182,11 @@ Section Index:
 9. Keyframes - Animations
     9.1. Animate
     9.2. Button Loading
-    9.3. List Item
-    9.4. Feedback Message
-    9.5. Pull To Refresh
-    9.6. Miscellaneous
+    9.3. Spinner
+    9.4. List Item
+    9.5. Feedback Message
+    9.6. Pull To Refresh
+    9.7. Miscellaneous
 10. Service Studio Preview
 */
 
@@ -431,17 +433,19 @@ Section Index:
 @use '04-patterns/06-utilities/align-center' as *;
 /*! 6.6.2. Button Loading */
 @use '../scss/04-patterns/03-interaction/button-loading/button-loading' as *;
-/*! 6.6.3. Center Content */
+/*! 6.6.3. Spinner */
+@use '../scss/04-patterns/06-utilities/spinner/spinner' as *;
+/*! 6.6.4. Center Content */
 @use '04-patterns/06-utilities/center-content' as *;
-/*! 6.6.4. Margin Container */
+/*! 6.6.5. Margin Container */
 @use '04-patterns/06-utilities/margin-container' as *;
-/*! 6.6.5. Separator */
+/*! 6.6.6. Separator */
 @use '04-patterns/06-utilities/separator' as *;
-/*! 6.6.6. Pull to Refresh */
+/*! 6.6.7. Pull to Refresh */
 @use '04-patterns/06-utilities/pull-to-refresh' as *;
-/*! 6.6.7. List Updating */
+/*! 6.6.8. List Updating */
 @use '04-patterns/06-utilities/list-updating' as *;
-/*! 6.6.8. Provider Login Button */
+/*! 6.6.9. Provider Login Button */
 @use '04-patterns/06-utilities/provider-login-button' as *;
 /*! 6.7. Advanced */
 /*! 6.7.1. Dropdown ServerSide */
@@ -515,13 +519,15 @@ Section Index:
 @use '07-keyframes/animate' as *;
 /*! 9.2. Button Loading */
 @use '07-keyframes/btn-loading' as *;
-/*! 9.3. List Item */
+/*! 9.3. Spinner */
+@use '07-keyframes/spinner' as *;
+/*! 9.4. List Item */
 @use '07-keyframes/list-item' as *;
-/*! 9.4. Feedback Message */
+/*! 9.5. Feedback Message */
 @use '07-keyframes/feedback-message' as *;
-/*! 9.5. Pull To Refresh */
+/*! 9.6. Pull To Refresh */
 @use '07-keyframes/pull-to-refresh' as *;
-/*! 9.6. Miscellaneous */
+/*! 9.7. Miscellaneous */
 @use '07-keyframes/miscellaneous' as *;
 
 /*! ==============================================================================

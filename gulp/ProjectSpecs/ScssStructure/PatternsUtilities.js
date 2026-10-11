@@ -16,6 +16,9 @@ const sectionInfo = {
             "key": "button-loading"
         },
         {
+            "key": "spinner"
+        },
+        {
             "name": "Center Content",
             "path": "04-patterns/06-utilities/center-content"
         },

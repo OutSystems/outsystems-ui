@@ -1,0 +1,63 @@
+/* Keyframes - Spinner */
+////
+/// @group Keyframes-Spinner
+/// Keyframes - Spinner (same timing as the Mobile UI Spinner; prefixed so they never clash
+/// with the global `spinner` and `loadingSpinner` keyframes). Rotation reuses the global `spin`.
+
+///
+@keyframes osui-spinner-fade-out {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+///
+@keyframes osui-spinner-scale-out {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(0);
+	}
+}
+
+///
+@keyframes osui-spinner-dots {
+	0% {
+		opacity: 0.9;
+		transform: scale(1);
+	}
+
+	50% {
+		opacity: 0.3;
+		transform: scale(0.4);
+	}
+
+	100% {
+		opacity: 0.9;
+		transform: scale(1);
+	}
+}
+
+///
+@keyframes osui-spinner-circular-inner {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}

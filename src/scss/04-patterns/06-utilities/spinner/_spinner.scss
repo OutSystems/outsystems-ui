@@ -1,0 +1,227 @@
+@use 'sass:math';
+@use '../../../tokens/variables';
+
+/* Patterns - Utilities - Spinner */
+////
+/// @group Patterns-Spinner
+/// Patterns - Utilities - Spinner
+///
+/// The glyph markup lives in the block: one `<svg class="osui-spinner__<type>">` per animation type with
+/// identical child shapes. This file owns everything else: size, colour, the per-child geometry
+/// (rotation, position) and the staggered animation delays, via `nth-child`.
+
+// Stagger `$count` siblings across one animation cycle, as the Mobile UI Spinner does
+@mixin spinner-stagger($count, $duration) {
+	@for $i from 1 through $count {
+		&:nth-child(#{$i}) {
+			animation-delay: #{math.div($duration * ($i - 1), $count) - $duration}ms;
+		}
+	}
+}
+
+// Rotate `$count` radial lines around the glyph centre, one step each
+@mixin spinner-radial($count) {
+	@for $i from 1 through $count {
+		&:nth-child(#{$i}) {
+			transform: rotate(#{math.div(360, $count) * ($i - 1)}deg);
+		}
+	}
+}
+
+///
+.osui-spinner {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-spinner-color: #{variables.$token-icon-subtlest};
+	--osui-spinner-size: #{variables.$token-scale-600};
+	--osui-spinner-stroke-width: #{variables.$token-scale-150};
+	// ───────────────────────────────────────────────────────────────────
+
+	color: var(--osui-spinner-color);
+	display: inline-block;
+	flex-shrink: 0;
+	height: var(--osui-spinner-size);
+	position: relative;
+	user-select: none;
+	vertical-align: middle;
+	width: var(--osui-spinner-size);
+
+	svg {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	// When the glyph is authored through an InlineSVG block instead of HTML Element widgets, the block
+	// wrapper and the .osui-inline-svg container sit between the host and the <svg>; let the svg size
+	// against the host as if they were not there.
+	> [data-block],
+	.osui-inline-svg {
+		display: contents;
+	}
+
+	// Sizes ----------------------------------------------------------------------------
+	&--small {
+		--osui-spinner-size: #{variables.$token-scale-800};
+	}
+
+	&--medium {
+		--osui-spinner-size: #{variables.$token-scale-1000};
+	}
+
+	&--large {
+		--osui-spinner-size: #{variables.$token-scale-1200};
+	}
+
+	&--xlarge {
+		--osui-spinner-size: #{variables.$token-scale-1400};
+	}
+
+	// Default type ---------------------------------------------------------------------
+	// The block renders both the lines and the circular glyph; the platform's `ios` body class picks one.
+	&--default {
+		.osui-spinner__lines {
+			display: none;
+		}
+	}
+
+	// Glyphs ---------------------------------------------------------------------------
+	// Never add animation-fill-mode: under prefers-reduced-motion the global reset leaves each
+	// element on its base (fully visible) style only without it.
+	&__lines,
+	&__lines-sharp {
+		line {
+			animation: osui-spinner-fade-out variables.$token-transition-time-1000
+				variables.$token-transition-curve-linear infinite;
+			stroke: currentColor;
+			stroke-linecap: round;
+			stroke-width: var(--osui-spinner-stroke-width);
+			transform-box: view-box;
+			transform-origin: 32px 32px;
+		}
+	}
+
+	&__lines line {
+		@include spinner-radial(8);
+		@include spinner-stagger(8, 1000);
+	}
+
+	&__lines-sharp line {
+		@include spinner-radial(12);
+		@include spinner-stagger(12, 1000);
+	}
+
+	&__bubbles circle {
+		animation: osui-spinner-scale-out variables.$token-transition-time-1000 variables.$token-transition-curve-linear
+			infinite;
+		fill: currentColor;
+		transform-box: fill-box;
+		transform-origin: center;
+
+		@include spinner-stagger(9, 1000);
+	}
+
+	&__circle circle {
+		animation: osui-spinner-fade-out variables.$token-transition-time-1000 variables.$token-transition-curve-linear
+			infinite;
+		fill: currentColor;
+
+		@include spinner-stagger(8, 1000);
+	}
+
+	&__dots circle {
+		// No transition-time token for 750ms
+		animation: osui-spinner-dots 750ms variables.$token-transition-curve-linear infinite;
+		fill: currentColor;
+		transform-box: fill-box;
+		transform-origin: center;
+
+		@for $i from 1 through 3 {
+			&:nth-child(#{$i}) {
+				animation-delay: #{-110 * ($i - 1)}ms;
+			}
+		}
+	}
+
+	// Crescent and circular rotate the shape, not the <svg>: the rotation then stays correct whatever wraps the
+	// glyph (an InlineSVG block, or an extra <svg> around it), instead of compounding once per wrapper.
+	// `spin` is the global 0→360deg keyframe (07-keyframes/_miscellaneous.scss).
+	&__crescent {
+		circle {
+			// No transition-time token for 750ms
+			animation: spin 750ms variables.$token-transition-curve-linear infinite;
+			fill: transparent;
+			stroke: currentColor;
+			stroke-dasharray: 128px;
+			stroke-dashoffset: 82px;
+			stroke-width: variables.$token-scale-100;
+			transform-box: fill-box;
+			transform-origin: center;
+		}
+	}
+
+	&__circular {
+		circle {
+			// No transition-time token for 1400ms
+			animation:
+				spin 1400ms variables.$token-transition-curve-linear infinite,
+				osui-spinner-circular-inner 1400ms ease-in-out infinite;
+			fill: none;
+			stroke: currentColor;
+			// Also the static frame under prefers-reduced-motion
+			stroke-dasharray: 80px, 200px;
+			// Unitless on purpose: SVG user units inside the 48-unit viewBox (Mobile UI value)
+			stroke-width: 5.6;
+			transform-box: fill-box;
+			transform-origin: center;
+		}
+	}
+
+	&--lines-sharp {
+		--osui-spinner-stroke-width: #{variables.$token-scale-100};
+	}
+}
+
+// Reduced motion ------------------------------------------------------------------
+// Owned by the pattern rather than left to the global reset in 01-foundations/_resets.scss: the classic theme has no
+// such reset, so this keeps both themes identical. With no animation, every glyph shows its base frame, which is
+// fully visible and still recognisable (all lines / circles at full opacity and scale, the arcs unrotated).
+///
+@media (prefers-reduced-motion: reduce) {
+	.osui-spinner svg,
+	.osui-spinner circle,
+	.osui-spinner line {
+		animation: none;
+	}
+}
+
+// Default type on iOS: lines instead of circular (the platform sets the `ios` class on <body>) ----
+///
+.ios .osui-spinner--default {
+	.osui-spinner__lines {
+		display: block;
+	}
+
+	.osui-spinner__circular {
+		display: none;
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-spinner--lines {
+		--osui-spinner-stroke-width: #{variables.$token-scale-200};
+	}
+
+	.osui-spinner--lines-sharp {
+		--osui-spinner-stroke-width: #{variables.$token-scale-150};
+	}
+
+	.osui-spinner__crescent circle {
+		stroke-width: variables.$token-scale-150;
+	}
+
+	.osui-spinner__circular circle {
+		stroke-width: 8;
+	}
+}
