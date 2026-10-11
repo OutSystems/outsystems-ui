@@ -41,8 +41,8 @@ export type CssApiManifest = {
 export const CSS_API_MANIFEST: CssApiManifest = {
 	generatedAt: '2026-09-11T19:45:39.841Z',
 	totals: {
-		properties: 574,
-		components: 67,
+		properties: 578,
+		components: 68,
 		categories: 9,
 	},
 	categories: [
@@ -5055,6 +5055,52 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-primitives-neutral-700}',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Spinner',
+					slug: 'patterns-utilities-spinner',
+					file: 'src/scss/04-patterns/06-utilities/spinner/_spinner.scss',
+					storyId: 'patterns-utilities-spinner--default',
+					variants: [
+						{
+							selector: '.osui-spinner',
+							properties: [
+							{
+								name: '--osui-spinner-color',
+								default: '#{$token-icon-subtlest}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-icon-subtlest}',
+							},
+							{
+								name: '--osui-spinner-size',
+								default: '#{$token-scale-600}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-600}',
+							},
+							{
+								name: '--osui-spinner-stroke-width',
+								default: '#{$token-scale-150}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-150}',
+							},
+						],
+					},
+						{
+							selector: '.os-high-contrast',
+							properties: [
+							{
+								name: '--osui-spinner-stroke-width',
+								default: '#{$token-scale-200}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-200}',
 							},
 						],
 					},

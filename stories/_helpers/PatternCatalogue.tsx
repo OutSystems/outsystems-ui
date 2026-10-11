@@ -77,6 +77,7 @@ export const PATTERN_CATALOGUE: PatternEntry[] = [
 	{ name: 'InlineSvg', category: 'Utilities', blurb: 'Inline SVG helper for themed icons.', id: 'patterns-utilities-inlinesvg--default' },
 	{ name: 'MarginContainer', category: 'Utilities', blurb: 'Spacing wrapper using theme margins.', id: 'patterns-utilities-margincontainer--default' },
 	{ name: 'Separator', category: 'Utilities', blurb: 'Horizontal or vertical content divider.', id: 'patterns-utilities-separator--default' },
+	{ name: 'Spinner', category: 'Utilities', blurb: 'Animated loading indicator in seven styles.', id: 'patterns-utilities-spinner--default' },
 	{ name: 'SwipeEvents', category: 'Utilities', blurb: 'Gesture helpers for swipe interactions.', id: 'patterns-utilities-swipeevents--default' },
 	{ name: 'TouchEvents', category: 'Utilities', blurb: 'Low-level touch event helpers.', id: 'patterns-utilities-touchevents--default' },
 	{ name: 'Video', category: 'Utilities', blurb: 'Themed video player chrome.', id: 'patterns-utilities-video--default' },
