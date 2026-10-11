@@ -48,7 +48,31 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `.phone/.tablet .app-menu-links a` SS-preview rule (same relative position as the new theme).
   Mapping: none needed — the rule is a single `-servicestudio-*` declaration with no token
   values, so it is byte-identical in both themes. Approximations: none.
-
+- **2026-10-10 / 2026-10-11 — Spinner pattern, branch `gm-test-spinner` (working tree)** — added the
+  whole new Spinner pattern in both bundles: every `.osui-spinner*` rule (host, sizes, the
+  `.osui-spinner__{dots,lines,lines-sharp,bubbles,circle,circular,crescent}` glyph rules with their
+  `nth-child` rotation / stagger-delay rules, the `.osui-spinner--default` and
+  `.ios .osui-spinner--default` platform choice, the pattern-owned `prefers-reduced-motion` rule) plus
+  `.os-high-contrast .osui-spinner…`, inserted right after the last ButtonLoading rule
+  (`.os-high-contrast .osui-btn-loading …`) and before `/*! 6.6.3. Center Content */`; and the
+  four `osui-spinner-*` keyframes (`fade-out`, `scale-out`, `dots`, `circular-inner`, each with
+  its `@-webkit-` twin) inserted before `/*! 9.3. List Item */`. Rotation (crescent, circular)
+  reuses the global `spin` keyframe the classic bundle already has. No section banner was added,
+  so the classic section numbering is unchanged. Generated from the compiled
+  `dist/ODC.OutSystemsUI.css` (autoprefixed) by a script that de-tokenises and reformats it;
+  the 2026-10-11 re-port replaced the first (generated-SVG) version wholesale after the pattern
+  moved its glyph markup into the block and its geometry into CSS.
+  Mapping: `$token-scale-600` (24px) → `--space-m`; `-800` (32px) → `--space-l`;
+  `-1000` (40px) → `--space-xl`; `-1200` (48px) → `--space-xxl`; `-100` (4px) → `--space-xs`;
+  `-200` (8px) → `--space-s`; `$token-transition-time-1000` → `1000ms`;
+  `$token-transition-curve-linear` → `linear`.
+  Approximations: `$token-icon-subtlest` (neutral-800, #6c727a) → `var(--color-neutral-7)`
+  (#6a7178), the nearest step on the old ramp. No old-theme equivalent, emitted as literals:
+  `$token-scale-1400` (56px, xlarge size) and `$token-scale-150` (6px, lines and
+  high-contrast stroke widths). The 4px and 8px stroke widths reuse `--space-xs` / `--space-s`
+  by literal value, although they are strokes, not spacing. The unitless circular stroke
+  (`5.6` / `8`), the 750ms / 1400ms durations and the per-child `nth-child` delays and
+  rotations are literals in both themes.
 ### Refresh log
 
 - **2026-09-04 — refreshed d52518b15 → a67fcf378** (12 dev commits, v2.30.0 → v2.30.1).
