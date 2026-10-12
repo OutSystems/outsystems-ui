@@ -353,7 +353,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._eventOnKeypress = undefined;
 			this._onToggleEvent = undefined;
 			this._eventOnWindowResize = undefined;
-			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
+			(window as unknown as Record<string, unknown>)[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
 		}
 
 		/**
@@ -434,7 +434,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				if (isUpdate && this._floatingInstance !== undefined) {
 					this._floatingInstance.update(this._floatingOptions);
 				} else {
-					this._floatingInstance = new Utils.FloatingPosition.Factory.NewFloatingPosition(
+					this._floatingInstance = Utils.FloatingPosition.Factory.NewFloatingPosition(
 						this._floatingOptions,
 						Utils.FloatingPosition.Enum.Provider.FloatingUI
 					);
