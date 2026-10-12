@@ -65,7 +65,7 @@ function resolveHref(href: string, source: string): string {
 }
 
 const INLINE =
-	/(`[^`]+`)|(\*\*[\s\S]+?\*\*)|(\[[^\]]+\]\([^)]+\))|(\*[^*\s][^*]*?\*)|(?<![\w`])(_[^_\s][^_]*?_)(?![\w`])|(\bCategory [A-H]\b|\bStep 2[a-g]\b|\bPhase 2g\b)/;
+	/(`[^`]+`)|(\*\*.+?\*\*)|(\[[^\]]+\]\([^)]+\))|(\*[^*\s][^*]*?\*)|(?<![\w`])(_[^_\s][^_]*?_)(?![\w`])|(\bCategory [A-H]\b|\bStep 2[a-g]\b|\bPhase 2g\b)/s;
 
 export function Inline({ text, source = '' }: { text: string; source?: string }) {
 	return <>{renderInline(text, source, 0)}</>;
@@ -82,37 +82,44 @@ function renderInline(text: string, source: string, depth: number): React.ReactN
 			break;
 		}
 		if (m.index > 0) out.push(rest.slice(0, m.index));
-		const [token] = m;
-		if (m[1]) {
-			out.push(<code key={key++}>{token.slice(1, -1)}</code>);
-		} else if (m[2]) {
-			out.push(<strong key={key++}>{renderInline(token.slice(2, -2), source, depth + 1)}</strong>);
-		} else if (m[3]) {
-			const link = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/) as RegExpMatchArray;
-			const href = resolveHref(link[2], source);
-			const external = /^https?:\/\//.test(href);
-			out.push(
-				<a
-					key={key++}
-					href={href}
-					target={external ? '_blank' : undefined}
-					rel={external ? 'noreferrer' : undefined}
-				>
-					{renderInline(link[1], source, depth + 1)}
-				</a>
-			);
-		} else if (m[6]) {
-			out.push(
-				<a key={key++} href={SECTION_OF_REF[token]} className="mg-ref">
-					{token}
-				</a>
-			);
-		} else {
-			out.push(<em key={key++}>{renderInline(token.slice(1, -1), source, depth + 1)}</em>);
-		}
-		rest = rest.slice(m.index + token.length);
+		out.push(renderToken(m, source, depth, key));
+		key++;
+		rest = rest.slice(m.index + m[0].length);
 	}
 	return out;
+}
+
+/** One INLINE match → its element. The capture group that fired says which kind of token it is. */
+function renderToken(m: RegExpExecArray, source: string, depth: number, key: number): React.ReactNode {
+	const [token] = m;
+	const inner = (text: string) => renderInline(text, source, depth + 1);
+	if (m[1]) return <code key={key}>{token.slice(1, -1)}</code>;
+	if (m[2]) return <strong key={key}>{inner(token.slice(2, -2))}</strong>;
+	if (m[3]) return renderLink(token, source, key, inner);
+	if (m[6]) {
+		return (
+			<a key={key} href={SECTION_OF_REF[token]} className="mg-ref">
+				{token}
+			</a>
+		);
+	}
+	return <em key={key}>{inner(token.slice(1, -1))}</em>;
+}
+
+function renderLink(
+	token: string,
+	source: string,
+	key: number,
+	inner: (text: string) => React.ReactNode[]
+): React.ReactNode {
+	const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token) as RegExpExecArray;
+	const href = resolveHref(link[2], source);
+	const external = /^https?:\/\//.test(href);
+	return (
+		<a key={key} href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+			{inner(link[1])}
+		</a>
+	);
 }
 
 /** A pipe table from the skill. `wrap` lets long code cells break instead of forcing a scroll. */
@@ -156,9 +163,9 @@ export function MdTableView({
 
 /** A blockquote from the skill: `> **Warning:** …` becomes an error note, anything else an info note. */
 function Quote({ text, source }: { text: string; source: string }) {
-	const m = text.match(/^\*\*([^*]+?):?\*\*\s*([\s\S]*)$/);
+	const m = /^\*\*([^*]+?):?\*\*(.*)$/s.exec(text);
 	const title = m ? m[1].replace(/:$/, '') : 'Note';
-	const body = m ? m[2] : text;
+	const body = m ? m[2].trim() : text;
 	return (
 		<DocsNote title={title} variant={/warning|critical|trap/i.test(title) ? 'error' : 'alt'}>
 			<p>
