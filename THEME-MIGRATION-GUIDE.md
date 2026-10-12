@@ -271,6 +271,7 @@ Replacement by shade:
 | orange, lime, teal, indigo, violet, pink | `--token-bg-extended-{family}-subtle-default` | `--token-bg-extended-{family}-base-default` |
 | cyan                                     | `--token-primitives-aqua-100`                 | `--token-primitives-aqua-900`               |
 | grape                                    | `--token-primitives-purple-100`               | `--token-primitives-purple-800`             |
+| pumpkin, aqua, purple, magenta           | `--token-bg-extended-{family}-subtle-default` | `--token-bg-extended-{family}-base-default` |
 
 <!-- /generated:extended-palette-families -->
 

@@ -44,6 +44,10 @@ const PALETTE_FAMILIES = [
 	'violet',
 	'grape',
 	'pink',
+	'pumpkin',
+	'aqua',
+	'purple',
+	'magenta',
 ] as const;
 const SPACE_STEPS: readonly Entry[] = [
 	['--space-none', 'None'],
@@ -158,8 +162,14 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 			['--border-radius-xl', 'Tier xl'],
 			['--border-radius-2xl', 'Tier 2xl'],
 			['--border-radius-none', 'Legacy alias — 0px'],
-			['--border-radius-soft', 'Legacy knob — $token-shape-soft-xs (8px) on :root; portaled roots remap via shape-tier tokens'],
-			['--border-radius-rounded', 'Legacy knob — $token-border-radius-full (999px) on :root; portaled roots remap locally'],
+			[
+				'--border-radius-soft',
+				'Legacy knob — $token-shape-soft-xs (8px) on :root; portaled roots remap via shape-tier tokens',
+			],
+			[
+				'--border-radius-rounded',
+				'Legacy knob — $token-border-radius-full (999px) on :root; portaled roots remap locally',
+			],
 		]
 	),
 	group(

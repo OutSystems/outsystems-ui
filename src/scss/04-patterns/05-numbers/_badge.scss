@@ -9,8 +9,9 @@
 
 // Per-family IsLight=true text colors, per the Figma Badge spec: families
 // mapped to a semantic read the semantic text token, token-backed extended
-// families read text-extended-*, and cyan/grape read the primitives matching
-// their background family (no text token exists for them).
+// families (including the token package's pumpkin / aqua / purple / magenta)
+// read text-extended-*, and cyan/grape read the primitives matching their
+// background family (no text token exists for them).
 $osui-badge-lightest-text-colors: (
 	'red': variables.$token-text-danger,
 	'orange': variables.$token-text-extended-orange,
@@ -24,6 +25,10 @@ $osui-badge-lightest-text-colors: (
 	'violet': variables.$token-text-extended-violet,
 	'grape': variables.$token-primitives-purple-900,
 	'pink': variables.$token-text-extended-pink,
+	'pumpkin': variables.$token-text-extended-pumpkin,
+	'aqua': variables.$token-text-extended-aqua,
+	'purple': variables.$token-text-extended-purple,
+	'magenta': variables.$token-text-extended-magenta,
 );
 
 ///

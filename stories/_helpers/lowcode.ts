@@ -15,8 +15,9 @@
 export const cls = (...parts: (string | false | null | undefined)[]): string => parts.filter(Boolean).join(' ');
 
 /**
- * Extended palette families — the 12 `$osui-colors-extended` keys in
- * src/scss/00-abstract/_setup-global-vars.scss, in Color static-entity order.
+ * Extended palette families — the 16 `$osui-colors-extended` keys in
+ * src/scss/00-abstract/_setup-global-vars.scss, in Color static-entity order:
+ * the 12 classic families, then the four the token package added.
  */
 export const PALETTE_COLOR_OPTIONS = [
 	'red',
@@ -31,17 +32,25 @@ export const PALETTE_COLOR_OPTIONS = [
 	'violet',
 	'grape',
 	'pink',
+	'pumpkin',
+	'aqua',
+	'purple',
+	'magenta',
 ];
 
 /** Neutral ramp — `$osui-colors-neutral` keys, emitted as `background-neutral-{n}`. */
 export const NEUTRAL_COLOR_OPTIONS = Array.from({ length: 11 }, (_, i) => `neutral-${i}`);
 
+/** Neutral primitive scale — `$osui-colors-neutral-scale` keys, emitted as `background-neutral-{step}`. */
+export const NEUTRAL_SCALE_COLOR_OPTIONS = Array.from({ length: 12 }, (_, i) => `neutral-${(i + 1) * 100}`);
+
 /**
  * `Color` / `BackgroundColor` low-code enum → `background-{value}` utility class.
  * These are exactly the records of the OUI `Color` static entity: Primary, Secondary,
- * the 12 palette families, Transparent, Neutral0–Neutral10. The semantic roles
- * (success / warning / error / info) exist as `background-*` classes but are NOT Color
- * records, so they are deliberately absent. '' = no class, i.e. the pattern's own default.
+ * the 16 palette families, Transparent, Neutral0–Neutral10 and Neutral100–Neutral1200.
+ * The semantic roles (success / warning / error / info) exist as `background-*` classes
+ * but are NOT Color records, so they are deliberately absent. '' = no class, i.e. the
+ * pattern's own default.
  */
 export const COLOR_OPTIONS = [
 	'',
@@ -50,6 +59,7 @@ export const COLOR_OPTIONS = [
 	...PALETTE_COLOR_OPTIONS,
 	'transparent',
 	...NEUTRAL_COLOR_OPTIONS,
+	...NEUTRAL_SCALE_COLOR_OPTIONS,
 ];
 
 /**

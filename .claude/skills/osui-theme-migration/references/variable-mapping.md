@@ -170,10 +170,13 @@ Replacement by shade. Intermediate shades are primitives. `lightest` and the bar
 | orange, lime, teal, indigo, violet, pink | `--token-bg-extended-{family}-subtle-default` | `--token-bg-extended-{family}-base-default` |
 | cyan                                     | `--token-primitives-aqua-100`                 | `--token-primitives-aqua-900`               |
 | grape                                    | `--token-primitives-purple-100`               | `--token-primitives-purple-800`             |
+| pumpkin, aqua, purple, magenta           | `--token-bg-extended-{family}-subtle-default` | `--token-bg-extended-{family}-base-default` |
 
 <!-- /table:extended-palette-families -->
 
 Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqua`**, **`error` → `danger`**. Cyan's intermediate shades bind to teal primitives, not aqua.
+
+The last row is new, not a rename: `pumpkin`, `aqua`, `purple` and `magenta` are the four families the token package added. They never had classic `--color-*` variables, so there is nothing to migrate, but they ship the same `--color-{family}` role and `.background-{family}` / `.text-{family}` utilities as the classic twelve, and the Color entity offers them next to `cyan` and `grape`. The same applies to `.background-neutral-100` … `-1200` (the primitive ramp, no role) and `.background-danger` (an alias of `.background-error`).
 
 > **Prefer the semantic role over the family.** `--color-red` was a literal colour. Its replacement is usually `--color-error` (theme role) or `--token-bg-danger-base-default` (token). Route through the role and the CSS follows any future theme; hardcode a family primitive and it won't.
 

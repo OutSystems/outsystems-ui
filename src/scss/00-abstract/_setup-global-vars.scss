@@ -87,10 +87,33 @@ $osui-colors-neutral:
 	'9' variables.$token-primitives-neutral-1100,
 	'10' variables.$token-primitives-base-black;
 
-// Semantic palette — binds to variables.$token-semantics-* base/100 tokens
+// Neutral primitive scale (Neutral100…Neutral1200). The Color entity exposes the
+// token ramp under its own step names next to the classic Neutral0…10 records,
+// so Service Studio emits `background-neutral-{step}` for both. These have no
+// :root role: the keys do not line up with --color-neutral-0…10 (which skip
+// steps), so the utility classes read the primitive directly.
+$osui-colors-neutral-scale:
+	'100' variables.$token-primitives-neutral-100,
+	'200' variables.$token-primitives-neutral-200,
+	'300' variables.$token-primitives-neutral-300,
+	'400' variables.$token-primitives-neutral-400,
+	'500' variables.$token-primitives-neutral-500,
+	'600' variables.$token-primitives-neutral-600,
+	'700' variables.$token-primitives-neutral-700,
+	'800' variables.$token-primitives-neutral-800,
+	'900' variables.$token-primitives-neutral-900,
+	'1000' variables.$token-primitives-neutral-1000,
+	'1100' variables.$token-primitives-neutral-1100,
+	'1200' variables.$token-primitives-neutral-1200;
+
+// Semantic palette — binds to variables.$token-semantics-* base/100 tokens.
+// `danger` is the token package's name for `error`; both keys emit so the
+// classic `background-error` and the Color-entity `background-danger` resolve.
 $osui-colors-semantic:
 	'error-light' variables.$token-semantics-danger-100,
 	'error' variables.$token-semantics-danger-base,
+	'danger-light' variables.$token-semantics-danger-100,
+	'danger' variables.$token-semantics-danger-base,
 	'warning-light' variables.$token-semantics-warning-100,
 	'warning' variables.$token-primitives-yellow-700,
 	'success-light' variables.$token-semantics-success-100,
@@ -98,7 +121,8 @@ $osui-colors-semantic:
 	'info-light' variables.$token-semantics-info-100,
 	'info' variables.$token-semantics-info-base;
 
-// Extended palette — 12 families × 7 shades. The '' (base) and 'lightest'
+// Extended palette — 16 families × 7 shades (the 12 classic families plus the
+// token package's pumpkin / aqua / purple / magenta). The '' (base) and 'lightest'
 // shades bind to component bg tokens per the Figma Badge spec: families with
 // a bg-extended-* token use it, and families without one map to the matching
 // semantic (red→danger, green→success, blue→info, yellow→warning). The five
@@ -228,4 +252,48 @@ $osui-colors-extended:
 			'dark' variables.$token-primitives-pink-800,
 			'darker' variables.$token-primitives-pink-900,
 			'darkest' variables.$token-primitives-pink-1000
+		),
+	// The four families the token package added (Pumpkin, Aqua, Purple, Magenta).
+	// They are Color-entity records now, so Service Studio emits
+	// `background-{family}` / `text-{family}` for them exactly as for the 12 above;
+	// `cyan` and `grape` stay as the classic names of the aqua / purple ramps.
+	'pumpkin'
+		(
+			'lightest' variables.$token-bg-extended-pumpkin-subtle-default,
+			'lighter' variables.$token-primitives-pumpkin-300,
+			'light' variables.$token-primitives-pumpkin-500,
+			'' variables.$token-bg-extended-pumpkin-base-default,
+			'dark' variables.$token-primitives-pumpkin-800,
+			'darker' variables.$token-primitives-pumpkin-900,
+			'darkest' variables.$token-primitives-pumpkin-1000
+		),
+	'aqua'
+		(
+			'lightest' variables.$token-bg-extended-aqua-subtle-default,
+			'lighter' variables.$token-primitives-aqua-300,
+			'light' variables.$token-primitives-aqua-500,
+			'' variables.$token-bg-extended-aqua-base-default,
+			'dark' variables.$token-primitives-aqua-800,
+			'darker' variables.$token-primitives-aqua-900,
+			'darkest' variables.$token-primitives-aqua-1000
+		),
+	'purple'
+		(
+			'lightest' variables.$token-bg-extended-purple-subtle-default,
+			'lighter' variables.$token-primitives-purple-300,
+			'light' variables.$token-primitives-purple-500,
+			'' variables.$token-bg-extended-purple-base-default,
+			'dark' variables.$token-primitives-purple-800,
+			'darker' variables.$token-primitives-purple-900,
+			'darkest' variables.$token-primitives-purple-1000
+		),
+	'magenta'
+		(
+			'lightest' variables.$token-bg-extended-magenta-subtle-default,
+			'lighter' variables.$token-primitives-magenta-300,
+			'light' variables.$token-primitives-magenta-500,
+			'' variables.$token-bg-extended-magenta-base-default,
+			'dark' variables.$token-primitives-magenta-800,
+			'darker' variables.$token-primitives-magenta-900,
+			'darkest' variables.$token-primitives-magenta-1000
 		);

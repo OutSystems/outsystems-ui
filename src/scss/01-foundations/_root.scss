@@ -63,7 +63,8 @@
 	--color-info: #{variables.$token-semantics-info-base};
 
 	// ─── Theme layer · extended palette ──────────────────────────────────
-	// The 12 Color-entity families (Red…Pink) only — the base ('') entry of each,
+	// The 16 Color-entity families (Red…Pink, plus Pumpkin / Aqua / Purple /
+	// Magenta from the token package) only — the base ('') entry of each,
 	// token-backed via $osui-colors-extended. Without these,
 	// GetColorValueFromColorType falls through to the bare entity name: Progress
 	// rendered the CSS keyword `red` (#ff0000) instead of the token red, and

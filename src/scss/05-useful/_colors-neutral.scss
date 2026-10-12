@@ -1,5 +1,5 @@
 @use '../00-abstract/index' as *;
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Usefull - Colors Neutral */
 ////
@@ -25,6 +25,17 @@
 			}
 		}
 	}
+
+	// Neutral100…Neutral1200 entity records → the primitive ramp, read directly
+	@each $step, $value in $osui-colors-neutral-scale {
+		&-neutral-#{$step} {
+			background-color: #{$value};
+
+			&-lightest {
+				background-color: variables.$token-bg-surface-default;
+			}
+		}
+	}
 }
 
 ///
@@ -45,5 +56,12 @@
 			}
 		}
 		$i: $i + 1;
+	}
+
+	// Neutral100…Neutral1200 entity records → the primitive ramp, read directly
+	@each $step, $value in $osui-colors-neutral-scale {
+		&-neutral-#{$step} {
+			color: #{$value};
+		}
 	}
 }
