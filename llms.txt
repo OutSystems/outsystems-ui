@@ -1,0 +1,16 @@
+# OutSystems UI
+
+> OutSystems UI is a browser-side library providing TypeScript behaviors and SCSS for 70+ UI patterns. The build emits one AMD JS bundle and one CSS bundle per platform target (O11 and ODC).
+
+## Theme Migration
+
+The CSS layer was rebuilt on design tokens (`--token-*`), a framework theme layer (`--color-*`, `--border-radius-*`, `--space-*`), and a per-component CSS API (`--osui-*`). Customer apps with custom CSS may need migration.
+
+- [THEME-MIGRATION-GUIDE.md](THEME-MIGRATION-GUIDE.md): Complete migration guide — retired variables, replacement mappings, dark-mode fixes, recipes. Feed this file alongside the customer's CSS to migrate it.
+
+## Architecture & Contributing
+
+- [CLAUDE.md](CLAUDE.md): Project instructions, command reference, gotchas, and conventions.
+- [ARCHITECTURE.md](ARCHITECTURE.md): Layering, tenets, external integrations, compilation boundary.
+- [CSS-ARCHITECTURE.md](CSS-ARCHITECTURE.md): Tokens → theme layer → component CSS API, the read chain.
+- [CONTRIBUTING.md](CONTRIBUTING.md): Setup, dev-server, lint rules, PR gates, release workflows.
