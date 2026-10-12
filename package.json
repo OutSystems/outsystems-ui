@@ -24,7 +24,8 @@
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
 		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
-		"docs:tokens": "node scripts/generate-token-data.mjs"
+		"docs:tokens": "node scripts/generate-token-data.mjs",
+		"docs:migration": "node scripts/sync-migration-guide.mjs"
 	},
 	"repository": {
 		"type": "git",
