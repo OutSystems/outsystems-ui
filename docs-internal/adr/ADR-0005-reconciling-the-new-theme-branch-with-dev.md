@@ -49,11 +49,14 @@ Corollaries:
 
 **Verification is done on compiled artifacts, not sources.** Build both sides, diff `dist/` CSS and JS, cluster the CSS diff by selector, and grep the merged tree for retired constructs (`get-*(`, `--space-`, `--font-size-`, `--shadow-`, `--border-size-`).
 
+> **Update (ROU-13079, 2026-10-09):** those greps catch *variable* regressions only. Migrating a real app's CSS surfaced a second failure mode with the same silent shape — **class renames**. 158 of classic's 1,525 class names are absent from the current ODC bundle, and none of the five patterns above matches any of them. A customer rule targeting `.wizard-item-icon` (now `.osui-wizard-item-icon`) stays valid CSS, parses without error, and matches nothing. Add a selector-list diff to the verification step: extract `\.[a-zA-Z][a-zA-Z0-9_-]*` from each bundle, `sort -u`, and `comm -23`. Extract class *tokens* rather than whole selector lines — a class that only ever appears in a compound selector, and every PascalCase or underscored platform name, is invisible otherwise.
+
 Positive consequences:
 
 - The artifact diff caught defects the source review missed: two retired-var leaks, the silently deleted Wizard styles, and (on a later sync) a platform-specific behaviour regression — see ADR-0006.
 - It also produced a durable statement of the branch's true delta: the compiled JS differs from `dev` by only ~102 lines, all deliberate — the `LegacyTokenMap` runtime shim, two `GlobalEnum` var renames (`--footer-height` → `--size-footer`, `--header-size-content` → `--size-header-content`), a few behaviour tweaks, and prettier-only formatting noise. That list is the agenda for the eventual merge-to-`dev` review.
   > **Update (ROU-12975, 2026-08-20):** the `LegacyTokenMap` shim has since been deleted — `--space-*` was restored to `:root`, which was the only gap it genuinely covered — so the JS delta is now smaller than recorded above. The two `GlobalEnum` renames still stand.
+  > **Update (ROU-13079, 2026-10-09):** the two `GlobalEnum` renames no longer stand either. `GlobalEnum.ts` lines 69–70 carry the classic names (`FooterHeight = '--footer-height'`, `HeaderContentHeight = '--header-size-content'`), and neither `--size-footer` nor `--size-header-content` appears anywhere in the ODC CSS or JS bundle. That item is off the merge-to-`dev` agenda; the JS delta is smaller again.
 
 Negative consequences:
 
