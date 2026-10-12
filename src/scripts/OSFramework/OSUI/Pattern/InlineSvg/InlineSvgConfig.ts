@@ -4,7 +4,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/** Raw <svg> markup rendered inline; invalid markup is rejected with a console error. */
 		public SVGCode: string;
 
-		constructor(config) {
+		constructor(config: JSON) {
 			super(config);
 		}
 		/**

@@ -149,7 +149,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		CalendarMode?: 'range' | 'single';
 		/** Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format. */
 		DateFormat?: string;
-		/** Stores the ability to disable a range of dates from datepicker Source type: array */
+		/** Stores the ability to disable a range of dates from datepicker Source type: DisabledDate[] */
 		Disable?: unknown[];
 		/** Stores the ability to disable the mobile flatpickr behavior. False is the default provider option */
 		DisableMobile?: boolean;

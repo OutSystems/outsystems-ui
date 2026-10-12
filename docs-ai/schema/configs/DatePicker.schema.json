@@ -23,8 +23,9 @@
 			"type": "string"
 		},
 		"Disable": {
-			"description": "Stores the ability to disable a range of dates from datepicker (source type: array)",
-			"default": "[]"
+			"description": "Stores the ability to disable a range of dates from datepicker",
+			"default": "[]",
+			"type": "array"
 		},
 		"DisableMobile": {
 			"description": "Stores the ability to disable the mobile flatpickr behavior. False is the default provider option",

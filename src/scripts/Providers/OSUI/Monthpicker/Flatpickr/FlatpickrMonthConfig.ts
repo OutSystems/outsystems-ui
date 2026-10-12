@@ -40,7 +40,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			let _locale: FlatpickrLocale;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang];
+				_locale = window.flatpickr.l10ns[this.Lang as keyof typeof window.flatpickr.l10ns];
 			} catch (error) {
 				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
 			}

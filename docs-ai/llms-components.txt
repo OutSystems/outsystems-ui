@@ -149,7 +149,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
 - CalendarMode: 'range' | 'single'
 - DateFormat: string = "Helper.Dates.ServerFormat"
-- Disable: array = "[]"
+- Disable: DisabledDate[] = "[]"
 - DisableMobile: boolean = false
 - FirstWeekDay: number = 0
 - InitialDate: string | Date

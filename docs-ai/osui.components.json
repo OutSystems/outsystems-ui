@@ -1620,7 +1620,7 @@
 					"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format."
 				},
 				"Disable": {
-					"type": "array",
+					"type": "DisabledDate[]",
 					"default": "[]",
 					"description": "Stores the ability to disable a range of dates from datepicker"
 				},

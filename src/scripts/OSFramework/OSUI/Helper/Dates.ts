@@ -118,7 +118,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param date Date to check or convert
 		 * @param [normalizeToMax=true] True to normalize to the end of the day, false to the start
 		 */
-		public static NormalizeDateTime(date: string | Date, normalizeToMax): Date {
+		public static NormalizeDateTime(date: string | Date, normalizeToMax: boolean): Date {
 			let _newDate = date;
 
 			if (typeof _newDate === 'string') {

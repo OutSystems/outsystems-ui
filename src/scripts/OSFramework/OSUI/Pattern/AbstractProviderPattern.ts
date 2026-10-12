@@ -44,7 +44,7 @@ namespace OSFramework.OSUI.Patterns {
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
 			// Get callback from array
-			const _providerCallback = this.providerInfo.events[event.eventName].find((item) => {
+			const _providerCallback = this.providerInfo.events[event.eventName].find((item: unknown) => {
 				return item === event.callback;
 			});
 
@@ -57,7 +57,7 @@ namespace OSFramework.OSUI.Patterns {
 			}
 
 			// Get the index, using the callback
-			return this.providerInfo.events[event.eventName].findIndex((item) => {
+			return this.providerInfo.events[event.eventName].findIndex((item: unknown) => {
 				return item === _providerCallback;
 			});
 		}
