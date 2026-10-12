@@ -123,7 +123,8 @@ function parseMarkdown(text) {
 		// HTML comment (single or multi-line) — table markers, generator notes.
 		if (/^\s*<!--/.test(line)) {
 			let text = line;
-			while (!/-->\s*$/.test(lines[i]) && i < lines.length - 1) {
+			// `--!>` also ends a comment (HTML spec); CodeQL js/bad-tag-filter flags regexes that miss it.
+			while (!/--!?>\s*$/.test(lines[i]) && i < lines.length - 1) {
 				i++;
 				text += '\n' + lines[i];
 			}
