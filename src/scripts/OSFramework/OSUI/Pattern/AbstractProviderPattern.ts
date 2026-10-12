@@ -57,9 +57,7 @@ namespace OSFramework.OSUI.Patterns {
 			}
 
 			// Get the index, using the callback
-			return this.providerInfo.events[event.eventName].findIndex((item: unknown) => {
-				return item === _providerCallback;
-			});
+			return this.providerInfo.events[event.eventName].indexOf(_providerCallback);
 		}
 
 		// Method to check the provider events api type and add/ remove events
