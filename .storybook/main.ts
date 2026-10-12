@@ -110,6 +110,10 @@ const config: StorybookConfig = {
 			options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
 		},
 		'@chromatic-com/storybook',
+		// Forces :hover/:active/:focus states by rewriting the loaded stylesheets'
+		// own rules (`:hover` → `.pseudo-hover`), so state-gallery stories exercise
+		// the REAL compiled OUI CSS instead of hand-copied simulations.
+		'storybook-addon-pseudo-states',
 	],
 	framework: {
 		name: '@storybook/html-vite',

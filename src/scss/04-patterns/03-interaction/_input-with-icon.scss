@@ -103,9 +103,5 @@
 			padding-block-end: variables.$token-scale-600;
 			z-index: var(--layer-local-tier-1);
 		}
-
-		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-			inset-inline-start: 0;
-		}
 	}
 }

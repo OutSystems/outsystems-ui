@@ -23,6 +23,7 @@
 	--osui-submenu-item-color-disabled: var(--color-text-disabled);
 	--osui-submenu-header-color: var(--color-text);
 	--osui-submenu-active-border-color: var(--color-primary);
+	--osui-submenu-hover-border-color: var(--color-primary);
 	--osui-submenu-max-height: calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
@@ -394,7 +395,7 @@
 
 		&__header {
 			&:hover {
-				border-block-end: none;
+				border-block-end: variables.$token-border-size-050 solid var(--osui-submenu-hover-border-color);
 			}
 
 			&__item {

@@ -39,6 +39,26 @@
 <link rel="stylesheet" href="/vendor/phosphor/style.css" />
 <!-- Phosphor fill weight (.ph-fill) — for solid glyphs such as the Rating filled star. -->
 <link rel="stylesheet" href="/vendor/phosphor-fill/style.css" />
+<!-- Phosphor size classes — the platform's `Phosphor-IconSizes.css`, verbatim. The Icon widget
+     emits `ph ph-<name> ph-{1x..5x}` and the Phosphor package itself ships no size classes
+     (FontAwesome 4.7 ships its own fa-{1x..5x}). -->
+<style>
+	.ph-1x {
+		font-size: 1em;
+	}
+	.ph-2x {
+		font-size: 2em;
+	}
+	.ph-3x {
+		font-size: 3em;
+	}
+	.ph-4x {
+		font-size: 4em;
+	}
+	.ph-5x {
+		font-size: 5em;
+	}
+</style>
 
 <!-- Provider vendor CSS -->
 <link rel="stylesheet" href="/vendor/flatpickr/flatpickr.css" />
@@ -69,6 +89,10 @@
   public repo render the Widgets stories with no internal feed access at all.
   See docs-internal/adr/ADR-0009.
 -->
+<!-- Platform base stylesheet (_Basic.css): the OSBlockWidget / OSInline / OSFillParent helper
+     classes the generated DOM carries, loaded first as in a real app. Vendored copy with
+     provenance header: .storybook/platform/platform-basic.css -->
+<link rel="stylesheet" href="/platform/platform-basic.css" />
 <link rel="stylesheet" href="/platform/platform-core.css" />
 
 <!--

@@ -51,8 +51,9 @@ const sectionInfo = {
             "path": "02-layout/content"
         },
         {
-            "name": "ThemeGrid_Container",
-            "path": "02-layout/themegrid-container"
+            // Replaces the ThemeGrid_Container rules, see docs-internal/themegrid-inventory.md
+            "name": "Page Gutters",
+            "path": "02-layout/page-gutters"
         },
         {
             "name": "Section",

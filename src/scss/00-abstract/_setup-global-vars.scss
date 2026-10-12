@@ -12,6 +12,8 @@ $header-size-content: 48px;
 $side-menu-size: 300px;
 $bottom-bar-size: 56px;
 $footer-height: 0px;
+// Content width cap, see 02-layout/_page-gutters.scss.
+$layout-max-width: 1280px;
 
 /* ---------------------------------------------------------------------------- */
 /* Build helpers — name lists iterated by @each for utility class generation    */

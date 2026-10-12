@@ -848,8 +848,10 @@ body.iconLibrary-phosphor{
   content:var(--osui-icon-arrow-previous);
 }
 .password-policy_icon{
-  min-width:11px;
-  position:relative;
+  display: inline-block;
+  min-width: 11px;
+  position: relative;
+  vertical-align: top;
 }
 .password-policy_icon::after{
   position:absolute;
@@ -861,6 +863,9 @@ body.iconLibrary-phosphor{
 .password-policy_icon.is-valid::after{
   content:var(--osui-icon-circle-check);
   color:var(--color-green-darker);
+}
+.password-policy_icon + * {
+  display: inline-block;
 }
 /*! ==============================================================================
 1. Resets
@@ -13090,10 +13095,6 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   display:none;
   -servicestudio-display:none !important;
 }
-.btn.btn-provider-login-logo svg{
-  height:100%;
-  width:100%;
-}
 .btn.btn-provider-login.btn-small{
   padding:0 16px;
 }
@@ -13114,10 +13115,17 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   height:20px;
   width:20px;
 }
+.btn.btn-provider-login .btn-provider-login-logo svg{
+  height:100%;
+  width:100%;
+}
 .btn.btn-provider-login .btn-provider-login-text{
   color:var(--text-color-neutral-7, var(--color-neutral-7));
   margin-left:10px;
   white-space:nowrap;
+}
+.btn.btn-provider-login .btn-provider-login-text-name {
+  display: inline-block;
 }
 .phone .layout .btn.btn-provider-login.btn-provider-login-logo-only{
   width:50px;

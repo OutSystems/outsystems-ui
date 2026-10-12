@@ -195,12 +195,6 @@ body.iconLibrary-phosphor {
 	}
 }
 
-.form {
-	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
-		top: calc(50% - var(--token-scale-600, 24px) / 2);
-	}
-}
-
 // Table Widget - Sortable Icon
 .sortable-icon {
 	align-items: center;
@@ -642,8 +636,10 @@ body.iconLibrary-phosphor {
 
 // Password Policy
 .password-policy_icon {
+	display: inline-block;
 	min-width: 11px;
 	position: relative;
+	vertical-align: top;
 
 	&::after {
 		position: absolute;
@@ -656,5 +652,9 @@ body.iconLibrary-phosphor {
 	&.is-valid::after {
 		content: var(--osui-icon-circle-check);
 		color: #267d36;
+	}
+
+	& + * {
+		display: inline-block;
 	}
 }
