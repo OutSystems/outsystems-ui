@@ -35,7 +35,8 @@
  *   1. every `:root` variable the classic bundle declared and the current one
  *      does not must have a replacement row in the skill (plus the palette
  *      expansion) — no gaps, no rows for names that still ship;
- *   2. every `--token-*` the skill names must exist in the token package;
+ *   2. every `--token-*` the skill names must exist in the token package, and
+ *      every `--osui-*` knob it names must be declared or read by the bundle;
  *   3. the skill's extended-palette rules must match the SCSS map that drives
  *      the shipped `.background-*` / `.text-*` utilities;
  *   4. every re-valued `:root` variable lands in one of the page's tables;
@@ -79,19 +80,17 @@ function die(msg) {
 	process.exit(1);
 }
 
+const MISSING_HINT = {
+	current: 'Run `npm run build` (or `npm run dev -- --target ODC`) first.',
+	tokens: 'Run `npm run build:tokens` first.',
+};
 for (const [key, file] of Object.entries(IN)) {
 	if (fs.existsSync(file)) continue;
-	const hint =
-		key === 'current'
-			? 'Run `npm run build` (or `npm run dev -- --target ODC`) first.'
-			: key === 'tokens'
-				? 'Run `npm run build:tokens` first.'
-				: 'File is missing from the repo.';
-	die(`Cannot read ${rel(file)}. ${hint}`);
+	die(`Cannot read ${rel(file)}. ${MISSING_HINT[key] ?? 'File is missing from the repo.'}`);
 }
 
 // `.md` is not in .gitattributes' `eol=lf` list, so normalise on read.
-const read = (f) => fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n');
+const read = (f) => fs.readFileSync(f, 'utf8').replaceAll('\r\n', '\n');
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Part 1 — a small Markdown block parser (no dependencies, like the sync script)
@@ -102,121 +101,145 @@ const read = (f) => fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n');
  * [links]) is left as-is in the strings; the page renders it (DocsMarkdown.tsx).
  * Covers what the skill files use: ATX headings, paragraphs, fenced code, flat
  * bullet/numbered lists, pipe tables, blockquotes, `---` rules and HTML comments.
+ *
+ * Each reader takes `(lines, i)` and returns `[block, next]` when the block
+ * starts at line `i`, or `null` so the next reader gets a turn.
  */
 function parseMarkdown(text) {
 	const lines = text.split('\n');
 	const blocks = [];
 	let i = 0;
-
-	const isTableLine = (l) => /^\s*\|.*\|\s*$/.test(l);
-	const isListLine = (l) => /^\s*(?:[-*]|\d+\.)\s+/.test(l);
-	const isBlank = (l) => l.trim() === '';
-
 	while (i < lines.length) {
-		const line = lines[i];
-
-		if (isBlank(line)) {
+		if (isBlank(lines[i])) {
 			i++;
 			continue;
 		}
-
-		// HTML comment (single or multi-line) — table markers, generator notes.
-		if (/^\s*<!--/.test(line)) {
-			let text = line;
-			// `--!>` also ends a comment (HTML spec); CodeQL js/bad-tag-filter flags regexes that miss it.
-			while (!/--!?>\s*$/.test(lines[i]) && i < lines.length - 1) {
-				i++;
-				text += '\n' + lines[i];
-			}
-			blocks.push({ type: 'html', text });
-			i++;
-			continue;
-		}
-
-		const fence = line.match(/^\s*```(\w*)\s*$/);
-		if (fence) {
-			const code = [];
-			i++;
-			while (i < lines.length && !/^\s*```\s*$/.test(lines[i])) code.push(lines[i++]);
-			i++; // closing fence
-			blocks.push({ type: 'code', lang: fence[1] || '', code: code.join('\n') });
-			continue;
-		}
-
-		const heading = line.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/);
-		if (heading) {
-			blocks.push({ type: 'heading', depth: heading[1].length, text: heading[2] });
-			i++;
-			continue;
-		}
-
-		if (/^\s*(?:---+|\*\*\*+)\s*$/.test(line)) {
-			blocks.push({ type: 'hr' });
-			i++;
-			continue;
-		}
-
-		if (/^\s*>/.test(line)) {
-			const quoted = [];
-			while (i < lines.length && /^\s*>/.test(lines[i])) quoted.push(lines[i++].replace(/^\s*>\s?/, ''));
-			blocks.push({ type: 'quote', text: quoted.join('\n').trim() });
-			continue;
-		}
-
-		if (isTableLine(line) && i + 1 < lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i + 1])) {
-			const splitRow = (l) =>
-				l
-					.trim()
-					.replace(/^\||\|$/g, '')
-					.split(/(?<!\\)\|/)
-					.map((c) => c.trim().replace(/\\\|/g, '|'));
-			const header = splitRow(line);
-			i += 2;
-			const rows = [];
-			while (i < lines.length && isTableLine(lines[i])) rows.push(splitRow(lines[i++]));
-			blocks.push({ type: 'table', header, rows });
-			continue;
-		}
-
-		if (isListLine(line)) {
-			const ordered = /^\s*\d+\./.test(line);
-			const items = [];
-			while (i < lines.length && (isListLine(lines[i]) || (/^\s{2,}\S/.test(lines[i]) && items.length))) {
-				if (isListLine(lines[i])) items.push(lines[i].replace(/^\s*(?:[-*]|\d+\.)\s+/, ''));
-				else items[items.length - 1] += ' ' + lines[i].trim();
-				i++;
-			}
-			blocks.push({ type: 'list', ordered, items });
-			continue;
-		}
-
-		// Paragraph: run until a blank line or the start of another block.
-		const para = [];
-		while (
-			i < lines.length &&
-			!isBlank(lines[i]) &&
-			!/^\s*```/.test(lines[i]) &&
-			!/^#{1,6}\s/.test(lines[i]) &&
-			!/^\s*>/.test(lines[i]) &&
-			!/^\s*<!--/.test(lines[i]) &&
-			!(isTableLine(lines[i]) && i + 1 < lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i + 1])) &&
-			!isListLine(lines[i])
-		) {
-			para.push(lines[i++].trim());
-		}
-		if (para.length) blocks.push({ type: 'paragraph', text: para.join(' ') });
-		else i++;
+		const [block, next] = readBlock(lines, i);
+		if (block) blocks.push(block);
+		i = next;
 	}
 	return blocks;
 }
 
+const isBlank = (l) => l.trim() === '';
+const isComment = (l) => /^\s*<!--/.test(l);
+const isFence = (l) => /^\s*```/.test(l);
+const isHeading = (l) => /^#{1,6}\s/.test(l);
+const isQuote = (l) => /^\s*>/.test(l);
+const isTableLine = (l) => {
+	const t = l.trim();
+	return t.length > 1 && t.startsWith('|') && t.endsWith('|');
+};
+const isTableRule = (l) => /^\|?\s*:?-{2,}/.test(l.trim());
+const startsTable = (lines, i) => isTableLine(lines[i]) && i + 1 < lines.length && isTableRule(lines[i + 1]);
+const LIST_MARK = /^\s*(?:[-*]|\d+\.)\s+/;
+const isListLine = (l) => LIST_MARK.test(l);
+const isListContinuation = (l) => /^\s{2,}\S/.test(l);
+const startsBlock = (lines, i) =>
+	isBlank(lines[i]) ||
+	isComment(lines[i]) ||
+	isFence(lines[i]) ||
+	isHeading(lines[i]) ||
+	isQuote(lines[i]) ||
+	startsTable(lines, i) ||
+	isListLine(lines[i]);
+
+/** HTML comment (single or multi-line) — table markers, generator notes. `--!>` also ends one (HTML spec). */
+function readComment(lines, i) {
+	if (!isComment(lines[i])) return null;
+	let end = i;
+	while (end < lines.length - 1 && !/--!?>\s*$/.test(lines[end])) end++;
+	return [{ type: 'html', text: lines.slice(i, end + 1).join('\n') }, end + 1];
+}
+
+function readFence(lines, i) {
+	const fence = /^\s*```(\w*)\s*$/.exec(lines[i]);
+	if (!fence) return null;
+	let end = i + 1;
+	while (end < lines.length && !/^\s*```\s*$/.test(lines[end])) end++;
+	return [{ type: 'code', lang: fence[1] || '', code: lines.slice(i + 1, end).join('\n') }, end + 1];
+}
+
+function readHeading(lines, i) {
+	const m = /^(#{1,6}) +(\S.*)$/.exec(lines[i]);
+	if (!m) return null;
+	// Drop an optional closing `#` run.
+	const text = m[2].trim().replace(/\s+#+$/, '');
+	return [{ type: 'heading', depth: m[1].length, text }, i + 1];
+}
+
+function readRule(lines, i) {
+	if (!/^(?:-{3,}|\*{3,})$/.test(lines[i].trim())) return null;
+	return [{ type: 'hr' }, i + 1];
+}
+
+function readQuote(lines, i) {
+	if (!isQuote(lines[i])) return null;
+	let end = i;
+	while (end < lines.length && isQuote(lines[end])) end++;
+	const text = lines
+		.slice(i, end)
+		.map((l) => l.replace(/^\s*>\s?/, ''))
+		.join('\n')
+		.trim();
+	return [{ type: 'quote', text }, end];
+}
+
+const splitRow = (l) =>
+	l
+		.trim()
+		.replace(/^\|/, '')
+		.replace(/\|$/, '')
+		.split(/(?<!\\)\|/)
+		.map((c) => c.trim().replaceAll('\\|', '|'));
+
+function readTable(lines, i) {
+	if (!startsTable(lines, i)) return null;
+	let end = i + 2;
+	while (end < lines.length && isTableLine(lines[end])) end++;
+	return [{ type: 'table', header: splitRow(lines[i]), rows: lines.slice(i + 2, end).map(splitRow) }, end];
+}
+
+function readList(lines, i) {
+	if (!isListLine(lines[i])) return null;
+	const items = [];
+	let end = i;
+	while (end < lines.length && (isListLine(lines[end]) || (isListContinuation(lines[end]) && items.length))) {
+		if (isListLine(lines[end])) items.push(lines[end].replace(LIST_MARK, ''));
+		else items[items.length - 1] += ' ' + lines[end].trim();
+		end++;
+	}
+	return [{ type: 'list', ordered: /^\s*\d+\./.test(lines[i]), items }, end];
+}
+
+/** Paragraph: runs until a blank line or the start of another block. */
+function readParagraph(lines, i) {
+	let end = i;
+	while (end < lines.length && !startsBlock(lines, end)) end++;
+	if (end === i) return null;
+	const text = lines
+		.slice(i, end)
+		.map((l) => l.trim())
+		.join(' ');
+	return [{ type: 'paragraph', text }, end];
+}
+
+const READERS = [readComment, readFence, readHeading, readRule, readQuote, readTable, readList, readParagraph];
+function readBlock(lines, i) {
+	for (const reader of READERS) {
+		const hit = reader(lines, i);
+		if (hit) return hit;
+	}
+	return [null, i + 1];
+}
+
 /** YAML-ish frontmatter: only the flat `key: value` lines the skill uses. */
 function frontmatter(text) {
-	const m = text.match(/^---\n([\s\S]*?)\n---\n/);
+	const m = /^---\n(.*?)\n---\n/s.exec(text);
 	if (!m) return { body: text, meta: {} };
 	const meta = {};
 	for (const line of m[1].split('\n')) {
-		const kv = line.match(/^(\w+):\s*(.*)$/);
+		const kv = /^(\w+):(.*)$/.exec(line);
 		if (kv) meta[kv[1]] = kv[2].trim();
 	}
 	return { body: text.slice(m[0].length), meta };
@@ -234,6 +257,9 @@ function section(blocks, test, depth) {
 	}
 	return { heading: blocks[start].text, depth: d, blocks: out };
 }
+
+/** The section opened by the heading at index `i`. */
+const sectionAt = (blocks, i) => section(blocks.slice(i), () => true, blocks[i].depth);
 
 const requireSection = (blocks, test, depth, what, file) => {
 	const s = section(blocks, test, depth);
@@ -272,7 +298,7 @@ const slugify = (s) =>
 
 /** Strips the backticks off a single-code cell: `` `--x` `` → `--x`. */
 const code = (cell) => {
-	const m = String(cell).match(/^`([^`]+)`$/);
+	const m = /^`([^`]+)`$/.exec(String(cell));
 	return m ? m[1] : null;
 };
 
@@ -284,8 +310,8 @@ const skillRaw = read(IN.skill);
 const { body: skillBody, meta: skillMeta } = frontmatter(skillRaw);
 const skillBlocks = parseMarkdown(skillBody);
 
-const numbered = (n) => (t) => new RegExp(`^${n}\\.\\s`).test(t);
-const category = (letter) => (t) => new RegExp(`^Category ${letter} —`).test(t);
+const numbered = (n) => (t) => t.startsWith(`${n}. `);
+const category = (letter) => (t) => t.startsWith(`Category ${letter} —`);
 
 const s0 = requireSection(skillBlocks, numbered(0), 2, '0. Decide what you are actually fixing', IN.skill);
 const s1 = requireSection(skillBlocks, numbered(1), 2, '1. Triage', IN.skill);
@@ -306,10 +332,10 @@ const phases = [];
 for (let i = 0; i < s7.blocks.length; i++) {
 	const b = s7.blocks[i];
 	if (b.type !== 'heading') continue;
-	const phase = b.text.match(/^Phase (\d) — (.*)$/);
-	const step = b.text.match(/^Step (2[a-z]) — (.*)$/);
+	const phase = /^Phase (\d) — (.*)$/.exec(b.text);
+	const step = /^Step (2[a-z]) — (.*)$/.exec(b.text);
 	if (phase && b.depth === 3) {
-		const sec = section(s7.blocks.slice(i), () => true, 3);
+		const sec = sectionAt(s7.blocks, i);
 		phases.push({
 			id: `phase-${phase[1]}`,
 			n: Number(phase[1]),
@@ -318,7 +344,7 @@ for (let i = 0; i < s7.blocks.length; i++) {
 			steps: [],
 		});
 	} else if (step && b.depth === 4 && phases.length) {
-		const sec = section(s7.blocks.slice(i), () => true, 4);
+		const sec = sectionAt(s7.blocks, i);
 		phases
 			.at(-1)
 			.steps.push({ id: `step-${step[1]}`, label: step[1], title: step[2], summary: summaryOf(sec.blocks) });
@@ -346,6 +372,12 @@ const referencesTable = requireTable(
 	IN.skill
 );
 
+/** The write-back table says "this file"; on the page the file has a name. */
+const withSkillFileName = (t) => ({
+	...t,
+	rows: t.rows.map((r) => r.map((c) => (c === 'this file' ? '`SKILL.md`' : c))),
+});
+
 const skill = {
 	name: skillMeta.name ?? 'osui-theme-migration',
 	description: skillMeta.description ?? '',
@@ -361,10 +393,7 @@ const skill = {
 	scopeLocations: requireTable(scope.blocks, 'stylesheet locations', IN.skill),
 	phases,
 	manualSteps: renderable(manualSteps.blocks),
-	writeBack: (() => {
-		const t = requireTable(phase5.blocks, 'what you learned → where it goes', IN.skill);
-		return { ...t, rows: t.rows.map((r) => r.map((c) => (c === 'this file' ? '`SKILL.md`' : c))) };
-	})(),
+	writeBack: withSkillFileName(requireTable(phase5.blocks, 'what you learned → where it goes', IN.skill)),
 	sameName: requireTable(s8.blocks, 'same name, new value', IN.skill),
 	notToFlag: firstOf(s12.blocks, 'list')?.items ?? [],
 };
@@ -378,7 +407,7 @@ const mappingTables = [];
 	let pendingId = null;
 	for (const b of mappingBlocks) {
 		if (b.type === 'heading') title = b.text;
-		const open = b.type === 'html' && b.text.match(/<!-- table:([a-z0-9-]+) -->/);
+		const open = b.type === 'html' && /<!-- table:([a-z0-9-]+) -->/.exec(b.text);
 		if (open) pendingId = open[1];
 		if (b.type === 'table' && pendingId) {
 			mappingTables.push({ id: pendingId, title, header: b.header, rows: b.rows });
@@ -411,43 +440,48 @@ const catalogBlocks = parseMarkdown(read(IN.catalog));
 const shapesList = catalogBlocks.find(
 	(b, i) => b.type === 'list' && !catalogBlocks.slice(0, i).some((x) => x.type === 'heading' && x.depth === 2)
 );
-const catalogBuckets = [];
-for (let i = 0; i < catalogBlocks.length; i++) {
-	const b = catalogBlocks[i];
-	if (b.type !== 'heading' || b.depth !== 2) continue;
-	const m = b.text.match(/^(Breaks|Collides|Mixed|Preference)\s*\((\d+)\)$/);
+/** One `### Widget` entry: the four labelled paragraphs, anything else kept as notes, in order. */
+function parseCatalogEntry(name, body) {
+	const entry = { name, slug: slugify(name), classic: '', now: '', restore: '', split: '', notes: [] };
+	for (const p of body) {
+		if (p.type !== 'paragraph') continue;
+		const field = /^\*\*(Classic|Now|Restore|Split)\*\*\s+—\s+(.*)$/s.exec(p.text);
+		if (field) entry[field[1].toLowerCase()] = field[2];
+		else entry.notes.push(p.text);
+	}
+	if (!entry.classic || !entry.now || !entry.restore)
+		die(
+			`Catalog entry "${name}" in ${rel(IN.catalog)} is missing a **Classic**, **Now** or **Restore** paragraph.`
+		);
+	return entry;
+}
+
+/** One `## Bucket (N)` section: its intro paragraph and the N entries under it. */
+function parseCatalogBucket(blocks, i) {
+	const m = /^(Breaks|Collides|Mixed|Preference)\s*\((\d+)\)$/.exec(blocks[i].text);
 	if (!m)
 		die(
-			`Unexpected bucket heading "${b.text}" in ${rel(IN.catalog)} — expected "Breaks (N)", "Collides (N)", "Mixed (N)" or "Preference (N)".`
+			`Unexpected bucket heading "${blocks[i].text}" in ${rel(IN.catalog)} — expected "Breaks (N)", "Collides (N)", "Mixed (N)" or "Preference (N)".`
 		);
-	const sec = section(catalogBlocks.slice(i), () => true, 2);
+	const sec = sectionAt(blocks, i).blocks;
+	const firstEntry = sec.findIndex((x) => x.type === 'heading' && x.depth === 3);
+	const intro = firstParagraph(firstEntry < 0 ? sec : sec.slice(0, firstEntry));
 	const entries = [];
-	let intro = '';
-	for (let j = 0; j < sec.blocks.length; j++) {
-		const x = sec.blocks[j];
-		if (x.type === 'paragraph' && !entries.length && !intro) intro = x.text;
-		if (x.type !== 'heading' || x.depth !== 3) continue;
-		const body = section(sec.blocks.slice(j), () => true, 3).blocks;
-		// The four labelled paragraphs are the entry; anything else under the heading
-		// (the range slider's long caveats, for instance) is kept as notes, in order.
-		const entry = { name: x.text, slug: slugify(x.text), classic: '', now: '', restore: '', split: '', notes: [] };
-		for (const p of body) {
-			if (p.type !== 'paragraph') continue;
-			const field = p.text.match(/^\*\*(Classic|Now|Restore|Split)\*\*\s+—\s+([\s\S]*)$/);
-			if (field) entry[field[1].toLowerCase()] = field[2];
-			else entry.notes.push(p.text);
-		}
-		if (!entry.classic || !entry.now || !entry.restore)
-			die(
-				`Catalog entry "${x.text}" in ${rel(IN.catalog)} is missing a **Classic**, **Now** or **Restore** paragraph.`
-			);
-		entries.push(entry);
+	for (let j = 0; j < sec.length; j++) {
+		const x = sec[j];
+		if (x.type === 'heading' && x.depth === 3) entries.push(parseCatalogEntry(x.text, sectionAt(sec, j).blocks));
 	}
 	if (entries.length !== Number(m[2]))
 		die(
 			`${rel(IN.catalog)}: the "${m[1]}" heading says ${m[2]} entries but ${entries.length} follow it. Fix the count.`
 		);
-	catalogBuckets.push({ name: m[1], intro, entries });
+	return { name: m[1], intro, entries };
+}
+
+const catalogBuckets = [];
+for (let i = 0; i < catalogBlocks.length; i++) {
+	const b = catalogBlocks[i];
+	if (b.type === 'heading' && b.depth === 2) catalogBuckets.push(parseCatalogBucket(catalogBlocks, i));
 }
 if (catalogBuckets.length !== 4)
 	die(`${rel(IN.catalog)} should have exactly four buckets, found ${catalogBuckets.length}.`);
@@ -459,7 +493,7 @@ const recipes = [];
 for (let i = 0; i < recipeBlocks.length; i++) {
 	const b = recipeBlocks[i];
 	if (b.type !== 'heading' || b.depth !== 3) continue;
-	const sec = section(recipeBlocks.slice(i), () => true, 3);
+	const sec = sectionAt(recipeBlocks, i);
 	recipes.push({
 		title: b.text.replace(/^"|"$/g, ''),
 		anchor: slugify(b.text),
@@ -475,7 +509,7 @@ const greyShades = [];
 for (let i = 0; i < greyBlocks.length; i++) {
 	const b = greyBlocks[i];
 	if (b.type !== 'heading' || b.depth !== 2) continue;
-	const sec = section(greyBlocks.slice(i), () => true, 2);
+	const sec = sectionAt(greyBlocks, i);
 	greyShades.push({ title: b.text, slug: `grey-${slugify(b.text)}`, blocks: renderable(sec.blocks) });
 }
 if (!greyShades.length) die(`No \`##\` sections found in ${rel(IN.greyShades)}.`);
@@ -490,8 +524,8 @@ const currentCss = read(IN.current);
 /** Every custom property declared at `:root`, first declaration wins. */
 function rootVars(css) {
 	const out = new Map();
-	for (const block of css.matchAll(/:root\s*\{([\s\S]*?)\}/g)) {
-		for (const decl of block[1].matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
+	for (const block of css.matchAll(/:root\s*\{(.*?)\}/gs)) {
+		for (const decl of block[1].matchAll(/(--[a-z0-9-]+):([^;]+);/g)) {
 			if (!out.has(decl[1])) out.set(decl[1], decl[2].trim());
 		}
 	}
@@ -509,7 +543,7 @@ const added = [...newVars.keys()].filter((n) => !oldVars.has(n)).sort(byName);
 
 /** `$token-x: var(--token-x, <fallback chain>);` → Map('--token-x' → chain). */
 const tokenChains = new Map(
-	[...read(IN.tokens).matchAll(/^\$(token-[a-z0-9-]+):\s*var\(--token-[a-z0-9-]+,\s*([^;]+)\);/gm)].map((m) => [
+	[...read(IN.tokens).matchAll(/^\$(token-[a-z0-9-]+):\s*var\(--token-[a-z0-9-]+,([^;]+)\);/gm)].map((m) => [
 		`--${m[1]}`,
 		m[2].trim(),
 	])
@@ -527,6 +561,52 @@ function splitVar(inner) {
 }
 
 /**
+ * Evaluates the `+ - * /` arithmetic inside a numbers-only `calc()` — a tiny
+ * recursive-descent parser, so no `Function()` / `eval` is involved.
+ */
+function evalArithmetic(src) {
+	const tokens = src.match(/\d+(?:\.\d+)?|\.\d+|[-+*/()]/g) ?? [];
+	let pos = 0;
+	const next = () => {
+		const t = tokens[pos];
+		pos++;
+		return t;
+	};
+	const factor = () => {
+		const t = next();
+		if (t === '(') {
+			const v = expr();
+			next(); // ')'
+			return v;
+		}
+		if (t === '-') return -factor();
+		if (t === '+') return factor();
+		return Number(t);
+	};
+	const term = () => {
+		let v = factor();
+		while (tokens[pos] === '*' || tokens[pos] === '/') {
+			const op = next();
+			const rhs = factor();
+			v = op === '*' ? v * rhs : v / rhs;
+		}
+		return v;
+	};
+	const expr = () => {
+		let v = term();
+		while (tokens[pos] === '+' || tokens[pos] === '-') {
+			const op = next();
+			const rhs = term();
+			v = op === '+' ? v + rhs : v - rhs;
+		}
+		return v;
+	};
+	const value = expr();
+	if (pos !== tokens.length || Number.isNaN(value)) die(`Cannot evaluate \`calc(${src})\`.`);
+	return value;
+}
+
+/**
  * Follow a value down to its literal: `var(--x, fallback)` uses the surface's
  * own declaration of `--x` when it has one, then the token chain, then the
  * fallback. `calc()` over plain numbers is evaluated so z-index steps compare.
@@ -535,8 +615,8 @@ function resolve(value, vars, depth = 0) {
 	let v = String(value).trim();
 	if (depth > 20) return v;
 	if (/^\$token-[a-z0-9-]+$/.test(v)) return resolve(`var(--${v.slice(1)})`, vars, depth + 1);
-	const whole = v.match(/^var\(([\s\S]+)\)$/);
-	if (whole && splitVar(whole[1])[0].match(/^--[a-z0-9-]+$/)) {
+	const whole = /^var\((.+)\)$/s.exec(v);
+	if (whole && /^--[a-z0-9-]+$/.test(splitVar(whole[1])[0])) {
 		const [name, fallback] = splitVar(whole[1]);
 		if (vars.has(name)) return resolve(vars.get(name), vars, depth + 1);
 		if (tokenChains.has(name)) return resolve(tokenChains.get(name), vars, depth + 1);
@@ -546,16 +626,19 @@ function resolve(value, vars, depth = 0) {
 	v = v.replace(/var\((--[a-z0-9-]+)\)/g, (m, name) =>
 		vars.has(name) ? resolve(vars.get(name), vars, depth + 1) : m
 	);
-	const calc = v.match(/^calc\(([-+*/\d\s.()]+)\)$/);
-	if (calc) return String(Function(`"use strict";return (${calc[1]});`)());
+	const calc = /^calc\(([-+*/\d\s.()]+)\)$/.exec(v);
+	if (calc) return String(evalArithmetic(calc[1]));
 	return v.replace(/\s+/g, ' ');
 }
 
 const oldLiteral = (name) => (oldVars.has(name) ? resolve(oldVars.get(name), oldVars) : null);
 const newLiteral = (name) => (newVars.has(name) ? resolve(newVars.get(name), newVars) : null);
 /** `1.75rem` → `28px` so px-era values compare; leaves everything else alone. */
-const toPx = (v) =>
-	v === null || v === undefined ? null : /^-?[\d.]+rem$/.test(v) ? `${parseFloat(v) * 16}px` : v === '0' ? '0px' : v;
+const toPx = (v) => {
+	if (v === null || v === undefined) return null;
+	if (/^-?[\d.]+rem$/.test(v)) return `${parseFloat(v) * 16}px`;
+	return v === '0' ? '0px' : v;
+};
 
 /**
  * What a replacement from the skill resolves to in the current bundle. A bare
@@ -581,7 +664,7 @@ const mapsSrc = read(IN.maps);
 function extendedMap(scss) {
 	const block = scss.split('$osui-colors-extended:')[1].split(';')[0];
 	const out = new Map();
-	for (const fam of block.matchAll(/'([a-z]+)'\s*\(([\s\S]*?)\)/g)) {
+	for (const fam of block.matchAll(/'([a-z]+)'\s*\((.*?)\)/gs)) {
 		const shades = new Map();
 		for (const s of fam[2].matchAll(/'([a-z]*)'\s+variables\.\$(token-[a-z0-9-]+)/g)) shades.set(s[1], `--${s[2]}`);
 		out.set(fam[1], shades);
@@ -607,7 +690,7 @@ const shadeVar = (family, shade) => (shade === '' ? `--color-${family}` : `--col
 	const shadeRows = mappingTable('extended-palette-shades').rows;
 	const shadeStep = {};
 	for (const [shade, pattern] of shadeRows) {
-		const m = String(pattern).match(/`--token-primitives-\{family\}-(\d+)`/);
+		const m = /`--token-primitives-\{family\}-(\d+)`/.exec(String(pattern));
 		if (m) shadeStep[code(shade)] = m[1];
 	}
 	for (const s of ['lighter', 'light', 'dark', 'darker', 'darkest'])
@@ -719,16 +802,15 @@ if (spurious.length)
 	);
 if (duplicated.length) die(`Duplicate retired-variable rows across the skill's tables:\n  ${duplicated.join('\n  ')}`);
 
+/** Every match of `re` in `text`, deduplicated. */
+const namesIn = (text, re) => new Set([...text.matchAll(re)].map((m) => m[0]));
+/** Names in `named` that `exists` does not know. A name ending in `-` is a `{family}` / `{role}` pattern, not a name. */
+const ghostsIn = (named, exists) => [...named].filter((n) => !exists(n) && !n.endsWith('-')).sort(byName);
+
 // Invariant 2 — every `--token-*` the skill names exists in the token package.
 {
-	const named = new Set();
-	for (const t of mappingTables)
-		for (const r of t.rows)
-			for (const c of r) for (const m of String(c).matchAll(/--token-[a-z0-9-]+/g)) named.add(m[0]);
-	for (const r of skill.legacySelectors.rows)
-		for (const c of r) for (const m of String(c).matchAll(/--token-[a-z0-9-]+/g)) named.add(m[0]);
-	// A name ending in `-` is a `{family}` / `{role}` pattern, not a token.
-	const ghosts = [...named].filter((t) => !tokenChains.has(t) && !t.endsWith('-')).sort();
+	const cells = [...mappingTables.flatMap((t) => t.rows), ...skill.legacySelectors.rows].flat().join('\n');
+	const ghosts = ghostsIn(namesIn(cells, /--token-[a-z0-9-]+/g), (t) => tokenChains.has(t));
 	if (ghosts.length)
 		die(
 			`The skill references token(s) missing from the token package:\n  ${ghosts.join('\n  ')}\nCheck ${rel(IN.tokens)} and fix the row in the skill.`
@@ -740,12 +822,9 @@ if (duplicated.length) die(`Duplicate retired-variable rows across the skill's t
 // a theming branch renames, or one the skill names before the bundle that ships it is merged,
 // would otherwise reach the page as a dead override.
 {
-	const inBundle = new Set([...currentCss.matchAll(/--osui-[a-z0-9-]+/g)].map((m) => m[0]));
-	const named = new Set();
-	for (const file of [IN.skill, IN.mapping, IN.catalog, IN.recipes, IN.greyShades])
-		for (const m of read(file).matchAll(/--osui-[a-z0-9-]+/g)) named.add(m[0]);
-	// A name ending in `-` is a `--osui-{component}-…` pattern, not a knob.
-	const ghosts = [...named].filter((k) => !inBundle.has(k) && !k.endsWith('-')).sort();
+	const inBundle = namesIn(currentCss, /--osui-[a-z0-9-]+/g);
+	const skillText = [IN.skill, IN.mapping, IN.catalog, IN.recipes, IN.greyShades].map(read).join('\n');
+	const ghosts = ghostsIn(namesIn(skillText, /--osui-[a-z0-9-]+/g), (k) => inBundle.has(k));
 	if (ghosts.length)
 		die(
 			`The skill names ${ghosts.length} \`--osui-*\` knob(s) the current bundle neither declares nor reads:\n  ${ghosts.join('\n  ')}\nEither the knob is not shipped yet (merge the branch that adds it, rebuild) or the skill's Restore line is stale.`
@@ -853,8 +932,11 @@ function ruleProp(css, selector, prop) {
 				.includes(selector)
 		)
 			continue;
-		const decl = m[2].match(new RegExp(`(?:^|;)\\s*${prop}\\s*:\\s*([^;]+)`));
-		if (decl) return decl[1].trim();
+		const decl = m[2]
+			.split(';')
+			.map((d) => d.trim())
+			.find((d) => d.startsWith(`${prop}:`));
+		if (decl) return decl.slice(prop.length + 1).trim();
 	}
 	return null;
 }
@@ -960,7 +1042,7 @@ const VOICE = [
 
 function readerVoice(text) {
 	let out = text;
-	for (const [from, to] of VOICE) out = out.split(from).join(to);
+	for (const [from, to] of VOICE) out = out.replaceAll(from, to);
 	return out;
 }
 
@@ -969,7 +1051,7 @@ const PATHS = [
 	['classic-theme/ODC.OutSystemsUI.css', 'old/ODC.OutSystemsUI.css'],
 	['dist/ODC.OutSystemsUI.css', 'new/ODC.OutSystemsUI.css'],
 ];
-const readerPaths = (text) => PATHS.reduce((out, [from, to]) => out.split(from).join(to), text);
+const readerPaths = (text) => PATHS.reduce((out, [from, to]) => out.replaceAll(from, to), text);
 
 /** Applies readerVoice to every string in the tree except code (paths only) and the skill's own description. */
 function voiceDeep(value, key = '') {
