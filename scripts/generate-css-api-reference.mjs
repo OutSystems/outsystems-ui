@@ -427,31 +427,35 @@ const manifestLines = [
 ];
 
 for (const cat of manifestCategories) {
-	manifestLines.push('\t\t{');
-	manifestLines.push(`\t\t\tid: '${cat.id}',`);
-	manifestLines.push(`\t\t\tlabel: ${tsString(cat.label)},`);
-	manifestLines.push(`\t\t\torder: ${cat.order},`);
-	manifestLines.push('\t\t\tcomponents: [');
+	manifestLines.push(
+		'\t\t{',
+		`\t\t\tid: '${cat.id}',`,
+		`\t\t\tlabel: ${tsString(cat.label)},`,
+		`\t\t\torder: ${cat.order},`,
+		'\t\t\tcomponents: ['
+	);
 	for (const c of cat.components) {
-		manifestLines.push('\t\t\t\t{');
-		manifestLines.push(`\t\t\t\t\tname: ${tsString(c.name)},`);
-		manifestLines.push(`\t\t\t\t\tslug: ${tsString(c.slug)},`);
-		manifestLines.push(`\t\t\t\t\tfile: ${tsString(c.file)},`);
-		manifestLines.push(`\t\t\t\t\tstoryId: ${c.storyId ? tsString(c.storyId) : 'null'},`);
-		manifestLines.push('\t\t\t\t\tvariants: [');
+		manifestLines.push(
+			'\t\t\t\t{',
+			`\t\t\t\t\tname: ${tsString(c.name)},`,
+			`\t\t\t\t\tslug: ${tsString(c.slug)},`,
+			`\t\t\t\t\tfile: ${tsString(c.file)},`,
+			`\t\t\t\t\tstoryId: ${c.storyId ? tsString(c.storyId) : 'null'},`,
+			'\t\t\t\t\tvariants: ['
+		);
 		for (const v of c.variants) {
-			manifestLines.push('\t\t\t\t\t\t{');
-			manifestLines.push(`\t\t\t\t\t\t\tselector: ${tsString(v.selector)},`);
-			manifestLines.push('\t\t\t\t\t\t\tproperties: [');
-			for (const p of v.properties) manifestLines.push(emitProp(p, 7));
-			manifestLines.push('\t\t\t\t\t\t],');
-			manifestLines.push('\t\t\t\t\t},');
+			manifestLines.push(
+				'\t\t\t\t\t\t{',
+				`\t\t\t\t\t\t\tselector: ${tsString(v.selector)},`,
+				'\t\t\t\t\t\t\tproperties: [',
+				...v.properties.map((p) => emitProp(p, 7)),
+				'\t\t\t\t\t\t],',
+				'\t\t\t\t\t},'
+			);
 		}
-		manifestLines.push('\t\t\t\t],');
-		manifestLines.push('\t\t\t\t},');
+		manifestLines.push('\t\t\t\t],', '\t\t\t\t},');
 	}
-	manifestLines.push('\t\t\t],');
-	manifestLines.push('\t\t},');
+	manifestLines.push('\t\t\t],', '\t\t},');
 }
 
 manifestLines.push('\t],', '};', '');
