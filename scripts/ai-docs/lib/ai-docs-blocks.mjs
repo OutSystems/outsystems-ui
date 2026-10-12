@@ -206,7 +206,7 @@ export function renderBlockCards(manifest) {
 		.join(', ');
 	const intro = manifest.snapshots.length
 		? `One card per composable OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass (Text on purpose) from llms-utilities.txt. An optional parameter shows its default: the OML's, else the platform default of its data type.`
-		: 'No block snapshot is present under scripts/ai-docs/snapshot; export one with npm run blocks:export (see scripts/ai-docs/README.md).';
+		: 'No block snapshot is present under scripts/ai-docs/snapshot; export one with npm run docs:ai:blocks (see scripts/ai-docs/README.md).';
 	return `# OutSystems UI — block reference cards (OML producers)\n\n${intro}\n\n${cards.join('\n\n')}\n`;
 }
 

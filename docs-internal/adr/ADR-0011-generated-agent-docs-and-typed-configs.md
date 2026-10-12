@@ -50,9 +50,10 @@ Chosen option: "Option 2". Option 3 is recorded as future work.
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm run docs:ai`        | Regenerates everything under `docs-ai/` from the TypeScript program, the compiled SCSS partials, the Storybook stories and the OML block snapshot. Deterministic: no timestamps, sorted keys, so a re-run on the same tree is a no-op. |
 | `npm run docs:ai:check`  | Regenerates into a temporary folder and exits 1 when the committed `docs-ai/` differs (line endings ignored). The local guard against stale docs; it costs tens of seconds because it compiles the program and the partials.          |
-| `npm run types:generate` | Regenerates `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` from the configuration classes and event enums of every pattern.                                                                                                     |
-| `npm run blocks:export`  | Local extract only: runs the `osui-blocks-export` .NET tool over the one `.oml` under `scripts/ai-docs/snapshot/local/` and writes `scripts/ai-docs/snapshot/osui.blocks.json`. See "Running the extractor locally" below.           |
+| `npm run docs:ai:types`  | Regenerates `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` from the configuration classes and event enums of every pattern.                                                                                                     |
+| `npm run docs:ai:blocks` | Local extract only: runs the `osui-blocks-export` .NET tool over the one `.oml` under `scripts/ai-docs/snapshot/local/` and writes `scripts/ai-docs/snapshot/osui.blocks.json`. See "Running the extractor locally" below.              |
 | `npm run docs`           | The TypeDoc build into `docs/`; the new `postdocs` step copies `docs-ai/` into that output so the documentation site serves `llms.txt` and the manifests at its root. See "TypeDoc output" below.                                   |
+| `npm run docs:ai:test`   | `node --test tests/*.test.mjs`: unit tests of the generators, of `ParseConfigs`, and freshness assertions on every generated file. The library itself still has no local test runner; its E2E suite lives elsewhere.                    |
 
 #### Running the extractor locally
 
@@ -61,11 +62,11 @@ the only OML-derived file in git. To refresh it:
 
 1. Export the module from ODC Studio (or take the Forge `.oml`) and place it as the **one** `.oml` file under
    `scripts/ai-docs/snapshot/local/`. The folder is listed in `.gitignore`; any depth and any file name work.
-2. Run `npm run blocks:export` (add `-- --platform O11` for the O11 module). The command accepts nothing else:
+2. Run `npm run docs:ai:blocks` (add `-- --platform O11` for the O11 module). The command accepts nothing else:
    it refuses to run when the folder is missing, empty or holds more than one `.oml`, so a stale or ambiguous
    input cannot produce a snapshot by accident. The written file records the OML's file name and SHA-256 in
    `source.origin`, which is how a reviewer knows which module a snapshot came from.
-3. Run `npm run docs:ai && npm test` and commit the snapshot together with the regenerated `docs-ai/`.
+3. Run `npm run docs:ai && npm run docs:ai:test` and commit the snapshot together with the regenerated `docs-ai/`.
 
 The extractor itself (`osui-blocks-export`, a .NET 10 console tool) lives outside this repository: its project
 folder is read from `OSUI_BLOCKS_EXPORT`, else `../osui-blocks-export` next to the checkout; `dotnet` is taken
@@ -90,7 +91,6 @@ situations:
 TypeDoc reads the same TSDoc comments the generator reads, so the comment standard below serves both: a
 description and `@param`/`@returns` texts render in the HTML reference, and the Closure tags that were removed
 would have been ignored by it anyway.
-| `npm test`               | `node --test tests/*.test.mjs`: unit tests of the generators, of `ParseConfigs`, and freshness assertions on every generated file. The library itself still has no local test runner; its E2E suite lives elsewhere.                    |
 
 All generator code lives in `scripts/ai-docs/` (`README.md` there documents the modules and the snapshot
 refresh procedure). It is plain Node (`.mjs`), outside `tsconfig` and outside `eslint --ext .ts`, and depends
@@ -112,7 +112,7 @@ only on `typescript`, `sass`, `postcss`, `postcss-selector-parser`, `prettier` a
 | `docs-ai/osui.blocks.json`, `osui.enums.json`  | The block cards as data; the static-entity values an OML parameter may take                                                                                                     | The OML block snapshot                                                                                                              | —                                                                                                            |
 | `docs-ai/schema/configs/<Pattern>.schema.json` | JSON Schema of each pattern's `configs`, to validate before `Create`                                                                                                            | Configuration classes and enums                                                                                                     | Enum props carry the enum values (`'right'`), not member names                                               |
 | `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` | Per pattern a `Configs` object type (optional, documented props) and an `EventName` union with a `(string & {})` escape hatch                                            | Configuration classes and event enums                                                                                               | Compiled into the bundle's `.d.ts`; `Create` and `RegisterCallback` reference these types                    |
-| `scripts/ai-docs/snapshot/osui.blocks.json`    | The OutSystems UI module as an OML producer sees it: blocks, parameters, placeholders, events, API hints, static entities, structures                                            | `npm run blocks:export` over the local OML (`source.origin` records the file name and SHA-256)                                       | An input, not an output: a new snapshot changes the block docs; the OML itself is never committed            |
+| `scripts/ai-docs/snapshot/osui.blocks.json`    | The OutSystems UI module as an OML producer sees it: blocks, parameters, placeholders, events, API hints, static entities, structures                                           | `npm run docs:ai:blocks` over the local OML (`source.origin` records the file name and SHA-256)                                     | An input, not an output: a new snapshot changes the block docs; the OML itself is never committed            |
 | `docs/` (TypeDoc site)                         | The human API reference with UML diagrams, plus a copy of `docs-ai/` at its root                                                                                                | `npm run docs` (TypeDoc + `postdocs`), locally on demand and in CI by `create-n-deploy-docs.yaml`                                   | Git-ignored build output; published to the documentation site, which is where `llms.txt` is served           |
 
 Hand-maintained inputs: `scripts/ai-docs/registry.json` (only what the inventory cannot derive: a kind
@@ -177,10 +177,10 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
 
 ### Negative consequences
 
--   Contract changes carry a regeneration duty (`npm run types:generate && npm run docs:ai`); with no CI
-    check the guard is `npm test`.
+-   Contract changes carry a regeneration duty (`npm run docs:ai:types && npm run docs:ai`); with no CI
+    check the guard is `npm run docs:ai:test`.
 -   The jsdoc lint rules reject the previous comment style in new code.
--   `blocks:export` depends on a machine-local .NET tool and a locally provided OML.
+-   `docs:ai:blocks` depends on a machine-local .NET tool and a locally provided OML.
 -   `platform-docs.mjs` is hand-curated: its URLs are checked when added, not by a test.
 
 ## Links

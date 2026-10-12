@@ -24,15 +24,13 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                    |
 | `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                       |
 | `npm run update-version`                              | Interactive version bump across project files                                                                                                                                   |
-| `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages                                                                                         |
-| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                              |
 | `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                    |
 | `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
-| `npm run types:generate`                              | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
-| `npm run blocks:export`                               | Re-export the OML block snapshot (`scripts/ai-docs/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored, never committed)       |
-| `npm test`                                            | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale                                                                 |
+| `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
+| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/ai-docs/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored, never committed)       |
+| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale                                                                 |
 
-There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
+There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm run docs:ai:test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
 
 ## Agent documentation
 
@@ -46,7 +44,7 @@ module OML), `osui.blocks.json`, `osui.enums.json` and `osui.icons.json`; lines 
 browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc (see
 `.claude/rules/typescript.md` §7): the generator reads them, so a new function or prop needs its comment before
 `docs-ai/` regenerates. A change to a pattern's configs, API, story or SCSS is followed by
-`npm run types:generate && npm run docs:ai`; `npm test` fails while the generated files are stale. See
+`npm run docs:ai:types && npm run docs:ai`; `npm run docs:ai:test` fails while the generated files are stale. See
 `scripts/ai-docs/README.md` for the generators and the snapshot refresh procedure.
 
 ## Domain Terminology

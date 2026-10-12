@@ -21,10 +21,10 @@ conventions; this file is the short path to the right context.
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `npm run build`                    | Production build for O11 and ODC, then lint (zero errors and zero warnings)                               |
 | `npm run lint` / `npm run lintfix` | ESLint over `src/scripts` (TSDoc rules included)                                                          |
-| `npm test`                         | Unit tests of the docs generators and `ParseConfigs` (`tests/`)                                           |
+| `npm run docs:ai:test`             | Unit tests of the docs generators and `ParseConfigs` (`tests/`)                                           |
 | `npm run docs:ai`                  | Regenerate `docs-ai/` from the source; `npm run docs:ai:check` fails when the committed copy is stale     |
-| `npm run types:generate`           | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                       |
-| `npm run blocks:export`            | Re-export the OML block snapshot from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored) |
+| `npm run docs:ai:types`            | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                       |
+| `npm run docs:ai:blocks`           | Re-export the OML block snapshot from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored) |
 
 ## Rules that matter most
 
@@ -37,6 +37,6 @@ conventions; this file is the short path to the right context.
 - Styling goes through `--osui-*` knobs and `$token-*` variables, never literals; utilities follow
   `<property>[-<side>][-<value>]`.
 - A pull request that touches a pattern's configuration, API, story or SCSS regenerates `docs-ai/` and
-  `PatternTypes.ts` (`npm run types:generate && npm run docs:ai`); `npm test` fails while they are stale.
+  `PatternTypes.ts` (`npm run docs:ai:types && npm run docs:ai`); `npm run docs:ai:test` fails while they are stale.
 - Nothing here changes runtime behaviour without a documented decision: a breaking change is described with
   its impact, never applied silently.

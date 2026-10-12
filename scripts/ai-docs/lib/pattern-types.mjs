@@ -120,7 +120,7 @@ function renderPatternTypesRaw(ctx, manifest) {
 	return `${[
 		'/*',
 		' * GENERATED FILE — do not edit by hand.',
-		` * Source: the pattern configuration classes and event enums, via ${GENERATOR} (npm run types:generate).`,
+		` * Source: the pattern configuration classes and event enums, via ${GENERATOR} (npm run docs:ai:types).`,
 		" * Each block merges into the pattern's public API namespace and is emitted into the published .d.ts.",
 		' */',
 		'',

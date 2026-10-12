@@ -3,7 +3,7 @@
 /**
  * Regenerates src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts from the source.
  *
- *   npm run types:generate
+ *   npm run docs:ai:types
  */
 import fs from 'node:fs';
 import path from 'node:path';

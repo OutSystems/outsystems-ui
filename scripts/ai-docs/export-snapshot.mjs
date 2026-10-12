@@ -5,7 +5,7 @@
  *
  * Drop the module as the one `.oml` file under scripts/ai-docs/snapshot/local/ (git-ignored, any depth) and run
  *
- *   npm run blocks:export [-- --platform ODC|O11]
+ *   npm run docs:ai:blocks [-- --platform ODC|O11]
  *
  * The committed snapshot is pinned to that file by name and SHA-256 (`source.origin`). The OML itself is never
  * committed. After a refresh run `npm run docs:ai` so the block docs under docs-ai/ follow the snapshot.
@@ -91,7 +91,7 @@ export function parseArgs(argv) {
 	const out = { platform: 'ODC' };
 	for (let i = 0; i < argv.length; i++) {
 		if (argv[i] === '--platform' && ['ODC', 'O11'].includes(argv[i + 1])) out.platform = argv[++i];
-		else throw new Error(`unknown argument ${argv[i]}; usage: npm run blocks:export [-- --platform ODC|O11]`);
+		else throw new Error(`unknown argument ${argv[i]}; usage: npm run docs:ai:blocks [-- --platform ODC|O11]`);
 	}
 	return out;
 }
@@ -134,7 +134,7 @@ if (isEntryPoint()) {
 		main();
 	} catch (error) {
 		// A missing OML, exporter or dotnet is a setup step, not a crash: print the message without the stack.
-		process.stderr.write(`blocks:export: ${error instanceof Error ? error.message : String(error)}\n`);
+		process.stderr.write(`docs:ai:blocks: ${error instanceof Error ? error.message : String(error)}\n`);
 		process.exitCode = 1;
 	}
 }

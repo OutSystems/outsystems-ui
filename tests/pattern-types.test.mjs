@@ -46,5 +46,5 @@ test('event name unions list the pattern events plus the lifecycle events, with 
 
 test('the committed generated file is fresh', () => {
 	const committed = fs.readFileSync(path.join(root, OUTPUT_FILE), 'utf8').replace(/\r\n/g, '\n');
-	assert.equal(committed, source.replace(/\r\n/g, '\n'), 'run `npm run types:generate` and commit');
+	assert.equal(committed, source.replace(/\r\n/g, '\n'), 'run `npm run docs:ai:types` and commit');
 });

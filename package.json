@@ -29,9 +29,9 @@
 		"docs:migration": "node scripts/sync-migration-guide.mjs",
 		"docs:ai": "node scripts/ai-docs/generate-ai-docs.mjs",
 		"docs:ai:check": "node scripts/ai-docs/check-ai-docs-fresh.mjs",
-		"types:generate": "node scripts/ai-docs/generate-pattern-types.mjs",
-		"blocks:export": "node scripts/ai-docs/export-snapshot.mjs",
-		"test": "node --test \"tests/*.test.mjs\""
+		"docs:ai:types": "node scripts/ai-docs/generate-pattern-types.mjs",
+		"docs:ai:blocks": "node scripts/ai-docs/export-snapshot.mjs",
+		"docs:ai:test": "node --test \"tests/*.test.mjs\""
 	},
 	"repository": {
 		"type": "git",
