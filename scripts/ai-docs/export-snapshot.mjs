@@ -100,7 +100,10 @@ function main() {
 	const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 	const { platform } = parseArgs(process.argv.slice(2));
 	const snapshotFile = insideDir(root, SNAPSHOT);
-	const local = localOml(insideDir(root, LOCAL_DIR));
+	const localDir = insideDir(root, LOCAL_DIR);
+	// Create the git-ignored drop folder on a fresh clone, so the error below points at a folder that exists.
+	fs.mkdirSync(localDir, { recursive: true });
+	const local = localOml(localDir);
 	const exporter = exporterDir(root);
 	const dotnet = dotnetPath();
 	process.stdout.write(`exporting the local OML ${path.relative(root, local)}\n`);
@@ -116,4 +119,22 @@ function main() {
 	);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+/** Whether this file is the entry point; real paths, so a symlinked checkout (macOS /tmp, a junction) matches. */
+function isEntryPoint() {
+	if (!process.argv[1]) return false;
+	try {
+		return fs.realpathSync(process.argv[1]) === fs.realpathSync(fileURLToPath(import.meta.url));
+	} catch {
+		return false;
+	}
+}
+
+if (isEntryPoint()) {
+	try {
+		main();
+	} catch (error) {
+		// A missing OML, exporter or dotnet is a setup step, not a crash: print the message without the stack.
+		process.stderr.write(`blocks:export: ${error instanceof Error ? error.message : String(error)}\n`);
+		process.exitCode = 1;
+	}
+}
