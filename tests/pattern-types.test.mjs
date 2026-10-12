@@ -22,6 +22,13 @@ test('one namespace block per pattern, typed optional props with descriptions', 
 	assert.match(source, /ExtendedClass\?: string;/);
 });
 
+test('a string defaulted from Enum.Defaults stays a string: that enum is a bag of defaults, not a value set', () => {
+	const notification = source.slice(source.indexOf('Patterns.NotificationAPI {'));
+	assert.match(notification, /Position\?: string;/);
+	assert.match(notification, /Width\?: string;/);
+	assert.doesNotMatch(source, /'top' \| '370px'/);
+});
+
 test('types stay inside the public layer: no provider or framework references, callbacks excluded', () => {
 	const code = source.replace(/\/\*[\s\S]*?\*\//g, '');
 	assert.doesNotMatch(code, /Providers\./);

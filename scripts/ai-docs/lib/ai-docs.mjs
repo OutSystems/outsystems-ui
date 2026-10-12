@@ -212,7 +212,10 @@ function allowedValuesFor(ctx, pattern, prop) {
 	if (prop.kind === 'enum' && prop.typeText) return { allowed: enumValuesFor(ctx, pattern, `${prop.typeText}.X`) };
 	const enumDefault = prop.kind === 'string' ? parseEnumPath(prop.defaultText ?? '') : null;
 	if (!enumDefault?.member) return { allowed: null };
-	if (enumDefault.scope === 'Enum') return { allowed: enumValuesFor(ctx, pattern, prop.defaultText) };
+	// Enum.Defaults is a bag of unrelated default values (Notification: 'top' and '370px'), not a value set.
+	if (enumDefault.scope === 'Enum' && enumDefault.enumName !== 'Defaults') {
+		return { allowed: enumValuesFor(ctx, pattern, prop.defaultText) };
+	}
 	return {
 		allowed: null,
 		hint: `default from ${enumDefault.scope}.${enumDefault.enumName}; not validated — any string is accepted`,

@@ -352,9 +352,9 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - CloseAfterTime: number = "undefined" — Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
 - InteractToClose: boolean = true — Closes the notification on interaction outside it (click outside or Escape); ignored on native apps.
 - NeedsSwipes: boolean = false — Enables swipe gestures to dismiss the notification.
-- Position: 'top' | '370px' = "top" — Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
+- Position: string = "top" (default from Enum.Defaults; not validated — any string is accepted) — Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
 - StartsOpen: boolean = false — Shows the notification as soon as it is built.
-- Width: 'top' | '370px' = "370px" — Width of the notification (CSS length); 370px by default.
+- Width: string = "370px" (default from Enum.Defaults; not validated — any string is accepted) — Width of the notification (CSS length); 370px by default.
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.NotificationAPI):
 - ChangeProperty(notificationId: string, propertyName: string, propertyValue: unknown): string
@@ -533,7 +533,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - Direction: 'right' | 'left' = "right" — PUBLIC PROPERTIES *
 - HasOverlay: boolean = false — Dims the page behind the sidebar with an overlay while it is open (and closes on click outside).
 - StartsOpen: boolean = false — Renders the sidebar open when it is built.
-- Width: '500px' = "500px" — Width of the sidebar (CSS length); 500px by default.
+- Width: string = "500px" (default from Enum.Defaults; not validated — any string is accepted) — Width of the sidebar (CSS length); 500px by default.
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.SidebarAPI):
 - ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string

@@ -348,12 +348,12 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 		InteractToClose?: boolean;
 		/** Enables swipe gestures to dismiss the notification. */
 		NeedsSwipes?: boolean;
-		/** Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center. */
-		Position?: 'top' | '370px';
+		/** Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center. (default from Enum.Defaults; not validated — any string is accepted) */
+		Position?: string;
 		/** Shows the notification as soon as it is built. */
 		StartsOpen?: boolean;
-		/** Width of the notification (CSS length); 370px by default. */
-		Width?: 'top' | '370px';
+		/** Width of the notification (CSS length); 370px by default. (default from Enum.Defaults; not validated — any string is accepted) */
+		Width?: string;
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
@@ -540,8 +540,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		HasOverlay?: boolean;
 		/** Renders the sidebar open when it is built. */
 		StartsOpen?: boolean;
-		/** Width of the sidebar (CSS length); 500px by default. */
-		Width?: '500px';
+		/** Width of the sidebar (CSS length); 500px by default. (default from Enum.Defaults; not validated — any string is accepted) */
+		Width?: string;
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */

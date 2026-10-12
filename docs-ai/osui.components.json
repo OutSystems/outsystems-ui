@@ -3309,11 +3309,8 @@
 					"description": "Enables swipe gestures to dismiss the notification."
 				},
 				"Position": {
-					"type": "'top' | '370px'",
-					"allowed": [
-						"top",
-						"370px"
-					],
+					"type": "string",
+					"hint": "default from Enum.Defaults; not validated — any string is accepted",
 					"default": "top",
 					"description": "Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center."
 				},
@@ -3323,11 +3320,8 @@
 					"description": "Shows the notification as soon as it is built."
 				},
 				"Width": {
-					"type": "'top' | '370px'",
-					"allowed": [
-						"top",
-						"370px"
-					],
+					"type": "string",
+					"hint": "default from Enum.Defaults; not validated — any string is accepted",
 					"default": "370px",
 					"description": "Width of the notification (CSS length); 370px by default."
 				}
@@ -4929,10 +4923,8 @@
 					"description": "Renders the sidebar open when it is built."
 				},
 				"Width": {
-					"type": "'500px'",
-					"allowed": [
-						"500px"
-					],
+					"type": "string",
+					"hint": "default from Enum.Defaults; not validated — any string is accepted",
 					"default": "500px",
 					"description": "Width of the sidebar (CSS length); 500px by default."
 				}

@@ -26,9 +26,7 @@
 		"Width": {
 			"description": "Width of the sidebar (CSS length); 500px by default.",
 			"default": "500px",
-			"enum": [
-				"500px"
-			]
+			"type": "string"
 		},
 		"ExtendedClass": {
 			"type": "string",

@@ -23,10 +23,7 @@
 		"Position": {
 			"description": "Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.",
 			"default": "top",
-			"enum": [
-				"top",
-				"370px"
-			]
+			"type": "string"
 		},
 		"StartsOpen": {
 			"description": "Shows the notification as soon as it is built.",
@@ -36,10 +33,7 @@
 		"Width": {
 			"description": "Width of the notification (CSS length); 370px by default.",
 			"default": "370px",
-			"enum": [
-				"top",
-				"370px"
-			]
+			"type": "string"
 		},
 		"ExtendedClass": {
 			"type": "string",
