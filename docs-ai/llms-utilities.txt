@@ -1,6 +1,6 @@
 # OutSystems UI — utility classes
 
-Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+Scope: a single token-based theme (light, plus generated dark mode: class os-dark-theme on <html>). classic-theme/ is a pre-migration snapshot for Storybook comparison, not a target for generated code; to migrate an app's classic custom CSS, read https://github.com/OutSystems/outsystems-ui/blob/dev/THEME-MIGRATION-GUIDE.md.
 
 538 classes in 24 families, generated from src/scss/05-useful and the design tokens. Machine-readable, with every declaration: osui.utilities.json (schema/osui.utilities.schema.json).
 
