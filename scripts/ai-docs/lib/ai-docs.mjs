@@ -167,6 +167,20 @@ function jsonLiteral(text) {
 }
 
 /**
+ * The default the docs publish for a prop: its enum member's value, else its JSON literal, else undefined
+ * (no source default, or one with no JSON value).
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {{ defaultText: string|null }} prop
+ * @returns {unknown}
+ */
+export function publishedDefault(ctx, pattern, prop) {
+	if (prop.defaultText === null) return undefined;
+	const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
+	return resolved !== null ? resolved : jsonLiteral(prop.defaultText);
+}
+
+/**
  * @param {import('./context.mjs').EvalContext} ctx
  * @param {import('./inventory.mjs').Pattern} pattern
  * @param {import('./ts.mjs').ConfigProp} prop
@@ -178,11 +192,8 @@ function describeProp(ctx, pattern, prop) {
 	out.type = publicTypeText(prop, allowed);
 	if (allowed) out.allowed = allowed;
 	if (hint) out.hint = hint;
-	if (prop.defaultText !== null) {
-		const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
-		const value = resolved !== null ? resolved : jsonLiteral(prop.defaultText);
-		if (value !== undefined) out.default = value;
-	}
+	const value = publishedDefault(ctx, pattern, prop);
+	if (value !== undefined) out.default = value;
 	if (prop.docText) out.description = prop.docText;
 	return out;
 }
@@ -318,6 +329,19 @@ function lifecycleOf(ctx, pattern) {
 	return text;
 }
 
+/** Callback-typed fields (GlobalCallbacks.*, OSGeneric) are set by the runtime, never passed in the configs. */
+const INTERNAL_CALLBACK = /Callbacks|Generic/;
+
+/**
+ * Whether a config class field is an input of the configs JSON. Platform inputs are PascalCase and serializable:
+ * functions, internal callbacks and lower-case public fields (rangeSliderMode, …) are provider internals. One
+ * filter for the manifest, the JSON Schemas, the cards and PatternTypes.ts, so they document the same inputs.
+ * @param {import('./ts.mjs').ConfigProp} prop
+ */
+export function isPublicInput(prop) {
+	return prop.kind !== 'function' && !INTERNAL_CALLBACK.test(prop.typeText ?? '') && /^[A-Z]/.test(prop.name);
+}
+
 /**
  * Build the component manifest.
  * @param {import('./context.mjs').EvalContext} ctx
@@ -329,7 +353,7 @@ export function buildManifest(ctx) {
 		const e = expectationsFor(ctx, p);
 		/** @type {Record<string, any>} */
 		const props = {};
-		for (const prop of [...e.props].sort((a, b) => a.name.localeCompare(b.name)))
+		for (const prop of [...e.props].filter(isPublicInput).sort((a, b) => a.name.localeCompare(b.name)))
 			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,

@@ -1653,22 +1653,6 @@
 					"type": "string",
 					"description": "Earliest selectable date; empty for no lower limit."
 				},
-				"OnChange": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Set the OnChange Event that will be defined in the specific context for each Flatpickr mode"
-				},
-				"OnClose": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Set the OnClose callback to be used whenever the Flatpickr close"
-				},
-				"OnMonthChange": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Set the OnMonthChange callback to be used whenever the Flatpickr month changes"
-				},
-				"OnOpen": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Set the OnOpen callback to be used whenever the Flatpickr opens"
-				},
 				"ShowTodayButton": {
 					"type": "boolean",
 					"default": false,
@@ -3090,18 +3074,6 @@
 					"type": "MonthYear",
 					"description": "Earliest selectable month ({ Month, Year })."
 				},
-				"OnChangeEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Set the OnChange Event that will be defined in the specific context for each Flatpickr mode"
-				},
-				"OnCloseEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Store the OnClose callback to be defined to the Flatpicker config instance"
-				},
-				"OnOpenEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Store the OnOpen callback to be defined to the Flatpicker config instance"
-				},
 				"ServerDateFormat": {
 					"type": "string",
 					"description": "Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr"
@@ -4072,14 +4044,6 @@
 					],
 					"default": "horizontal",
 					"description": "horizontal (default) or vertical."
-				},
-				"rangeSliderMode": {
-					"type": "'single' | 'interval'",
-					"allowed": [
-						"single",
-						"interval"
-					],
-					"description": "Store rangeslider mode is in use"
 				},
 				"ShowFloatingLabel": {
 					"type": "boolean",
@@ -6220,18 +6184,6 @@
 				"MinTime": {
 					"type": "string",
 					"description": "Earliest selectable time (HH:mm)."
-				},
-				"OnChangeEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Store the OnChange Event callback to be defined in the specific context for each Flatpickr mode"
-				},
-				"OnCloseEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Store the OnClose callback to be defined to the Flatpicker config instance"
-				},
-				"OnOpenEventCallback": {
-					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
-					"description": "Store the OnOpen callback to be defined to the Flatpicker config instance"
 				},
 				"ServerDateFormat": {
 					"type": "string",

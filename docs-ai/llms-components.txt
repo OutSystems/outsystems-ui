@@ -157,10 +157,6 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - InitialStartDate: string
 - MaxDate: string
 - MinDate: string
-- OnChange: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnClose: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic
 - ShowTodayButton: boolean = false
 - ShowWeekNumbers: boolean
 - TimeFormat: 'disabled' | '12' | '24' = "disabled"
@@ -312,16 +308,13 @@ Docs: utilities/inline_svg
 ## MonthPicker
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- AllowInput: boolean = false
-- DateFormat: string = "MM/YYYY"
-- DisableMobile: boolean = true
-- InitialMonth: MonthYear
-- MaxMonth: MonthYear
-- MinMonth: MonthYear
-- OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- ServerDateFormat: string
+- AllowInput: boolean = false — Stores the ability to allow inputs to be editable or not
+- DateFormat: string = "MM/YYYY" — Display format of the selected month (e.g. MM/YYYY).
+- DisableMobile: boolean = true — Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+- InitialMonth: MonthYear — Month selected when the picker is built ({ Month, Year }).
+- MaxMonth: MonthYear — Latest selectable month ({ Month, Year }).
+- MinMonth: MonthYear — Earliest selectable month ({ Month, Year }).
+- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
@@ -345,6 +338,7 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 CSS classes: osui-monthpicker__dropdown osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
 Configs schema: schema/configs/MonthPicker.schema.json
 Docs: interaction/month_picker
+[runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div>
 
 ## Notification
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -425,21 +419,20 @@ Docs: numbers/progress_bar · numbers/progress_circle
 ## RangeSlider
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- InitialValueFrom: number = 0
-- InitialValueTo: number = 0
-- IsDisabled: boolean = false
-- IsInterval: boolean
-- MaxValue: number
-- MinValue: number
-- Orientation: 'horizontal' | 'vertical' = "horizontal"
-- rangeSliderMode: 'single' | 'interval'
-- ShowFloatingLabel: boolean = false
-- ShowTickMarks: boolean = false
-- Size: string
-- StartingValueFrom: number
-- StartingValueTo: number
-- Step: number = 1
-- TickMarksInterval: number = 0
+- InitialValueFrom: number = 0 — These variables hold the inital state of a RangeSlider
+- InitialValueTo: number = 0 — Value of the upper handle when the slider is built (interval mode).
+- IsDisabled: boolean = false — Renders the slider disabled.
+- IsInterval: boolean — Uses two handles (from/to) instead of a single one.
+- MaxValue: number — Upper bound of the range.
+- MinValue: number — Lower bound of the range.
+- Orientation: 'horizontal' | 'vertical' = "horizontal" — horizontal (default) or vertical.
+- ShowFloatingLabel: boolean = false — Shows the current value in a floating label above the handle.
+- ShowTickMarks: boolean = false — Renders tick marks (pips) along the track.
+- Size: string — Track length (CSS length); 100% when horizontal, 100px when vertical.
+- StartingValueFrom: number — Current value of the (lower) handle, kept across provider redraws.
+- StartingValueTo: number — Current value of the upper handle, kept across provider redraws (interval mode).
+- Step: number = 1 — Increment between selectable values.
+- TickMarksInterval: number = 0 — Distance between tick marks in slider units.
 API (OutSystems.OSUI.Patterns.RangeSliderAPI):
 - ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string
 - Create(rangeSliderId: string, configs: string | Configs, mode: Enum.Mode, provider: string): IRangeSlider
@@ -665,18 +658,15 @@ Docs: navigation/tabs
 ## TimePicker
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- AllowInput: boolean = false
-- DisableMobile: boolean = false
-- FirstWeekDay: number
-- InitialTime: string
-- Is24Hours: boolean = true
-- MaxTime: string
-- MinTime: string
-- OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- ServerDateFormat: string
-- TimeFormat: string
+- AllowInput: boolean = false — Stores the ability to allow inputs to be editable or not
+- DisableMobile: boolean = false — Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+- FirstWeekDay: number — First day of the week (0 = Sunday); forwarded to the provider locale.
+- InitialTime: string — Time selected when the picker is built (HH:mm).
+- Is24Hours: boolean = true — Uses a 24-hour clock; false shows an AM/PM selector.
+- MaxTime: string — Latest selectable time (HH:mm).
+- MinTime: string — Earliest selectable time (HH:mm).
+- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
+- TimeFormat: string — Display format of the selected time.
 API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(timePickerId: string): string
@@ -701,6 +691,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 CSS classes: osui-timepicker__dropdown osui-timepicker
 Configs schema: schema/configs/TimePicker.schema.json
 Docs: interaction/time_picker
+[runtime-only] Markup skeleton (from stories/TimePicker.stories.ts): <div class="osui-timepicker"><label for="-input">Pick a time</label><input id="-input" class="form-control" type="text" placeholder="Select a time" /></div>
 
 ## Tooltip
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

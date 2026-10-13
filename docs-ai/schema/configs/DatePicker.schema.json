@@ -54,18 +54,6 @@
 			"description": "Earliest selectable date; empty for no lower limit.",
 			"type": "string"
 		},
-		"OnChange": {
-			"description": "Set the OnChange Event that will be defined in the specific context for each Flatpickr mode (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
-		"OnClose": {
-			"description": "Set the OnClose callback to be used whenever the Flatpickr close (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
-		"OnMonthChange": {
-			"description": "Set the OnMonthChange callback to be used whenever the Flatpickr month changes (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
-		"OnOpen": {
-			"description": "Set the OnOpen callback to be used whenever the Flatpickr opens (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
 		"ShowTodayButton": {
 			"description": "Renders a Today button in the calendar footer.",
 			"default": false,

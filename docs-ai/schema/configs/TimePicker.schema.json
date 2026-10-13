@@ -36,15 +36,6 @@
 			"description": "Earliest selectable time (HH:mm).",
 			"type": "string"
 		},
-		"OnChangeEventCallback": {
-			"description": "Store the OnChange Event callback to be defined in the specific context for each Flatpickr mode (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
-		"OnCloseEventCallback": {
-			"description": "Store the OnClose callback to be defined to the Flatpicker config instance (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
-		"OnOpenEventCallback": {
-			"description": "Store the OnOpen callback to be defined to the Flatpicker config instance (source type: OSFramework.OSUI.GlobalCallbacks.Generic)"
-		},
 		"ServerDateFormat": {
 			"description": "Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr",
 			"type": "string"

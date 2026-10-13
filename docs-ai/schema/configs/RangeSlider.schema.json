@@ -40,13 +40,6 @@
 				"vertical"
 			]
 		},
-		"rangeSliderMode": {
-			"description": "Store rangeslider mode is in use",
-			"enum": [
-				"single",
-				"interval"
-			]
-		},
 		"ShowFloatingLabel": {
 			"description": "Shows the current value in a floating label above the handle.",
 			"default": false,
