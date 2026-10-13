@@ -1,4 +1,5 @@
-@use "../tokens/variables";
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
 
 /* Widgets - Switch */
 ////
@@ -86,10 +87,6 @@
 			background-color: var(--osui-switch-checked-track-color);
 		}
 	}
-
-	&:focus-visible:empty:before {
-		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
-	}
 }
 
 // Accessibility -----------------------------------------------------------------
@@ -119,8 +116,12 @@
 			}
 		}
 
-		&:focus:before {
-			border-color: variables.$token-semantics-primary-base;
+		&:focus {
+			@include a11y-focus-shadow;
+
+			&:before {
+				border-color: variables.$token-semantics-primary-base;
+			}
 		}
 	}
 }
