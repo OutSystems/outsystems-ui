@@ -174,6 +174,23 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		}
 
 		/**
+		 * Applies a configuration change; a new WidgetId moves the listeners to the new element.
+		 *
+		 * @param propertyName Name of the configuration property
+		 * @param propertyValue New value of the property
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt && propertyName === Enum.Properties.WidgetId) {
+				this.unsetCallbacks();
+				this.unsetHtmlElements();
+				this.setHtmlElements();
+				this.setCallbacks();
+			}
+		}
+
+		/**
 		 * Destroy SwipeEvents
 		 */
 		public dispose(): void {
