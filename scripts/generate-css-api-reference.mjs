@@ -240,7 +240,7 @@ function inferStoryId(name, file, patternStories) {
 
 
 function escTsString(v) {
-	return v.replaceAll(/\\/g, '\\\\').replaceAll(/'/g, "\\'");
+	return v.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
 }
 
 // A TypeScript string literal for v. A value with a backslash (an icon glyph such as '\e53a') is written as a

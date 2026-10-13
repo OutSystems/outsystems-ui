@@ -44,7 +44,7 @@ function publicType(ctx, pattern, type, prop) {
 }
 
 /** @param {string} text */
-const jsdocLine = (text) => `/** ${text.replaceAll(/\*\//g, '* /').trim()} */`;
+const jsdocLine = (text) => `/** ${text.replaceAll('*/', '* /').trim()} */`;
 
 /** Code-point order, which is what the member-ordering lint rule ("alphabetically") checks. */
 const codePointCompare = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));

@@ -60,12 +60,12 @@ const MARKUP_CAP = 1200;
  */
 function shortType(type) {
 	return type
-		.replaceAll(/string \| Record<string, unknown>/g, 'string | object')
-		.replaceAll(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
+		.replaceAll('string | Record<string, unknown>', 'string | object')
+		.replaceAll('OSFramework.OSUI.GlobalCallbacks.', '')
 		.replaceAll(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
 		.replaceAll(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')
-		.replaceAll(/OSFramework\.OSUI\./g, '')
-		.replaceAll(/OutSystems\.OSUI\./g, '')
+		.replaceAll('OSFramework.OSUI.', '')
+		.replaceAll('OutSystems.OSUI.', '')
 		.replaceAll(/Providers\.OSUI\.\w+\.\w+\./g, '');
 }
 
@@ -302,8 +302,8 @@ function cleanMarkup(html) {
 		.replaceAll(/\s+/g, ' ')
 		.replaceAll(/ style="[^"]*"/g, '')
 		.replaceAll(/\$\{[^}]*\}/g, '')
-		.replaceAll(/ class=""/g, '')
-		.replaceAll(/> </g, '><')
+		.replaceAll(' class=""', '')
+		.replaceAll('> <', '><')
 		.trim();
 	if (out.length > MARKUP_CAP) out = `${out.slice(0, MARKUP_CAP)}…`;
 	return out;
