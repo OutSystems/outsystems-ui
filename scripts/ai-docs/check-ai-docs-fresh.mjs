@@ -24,7 +24,7 @@ fs.rmSync(fresh, { recursive: true, force: true });
 if (drift.length === 0) {
 	console.log('docs-ai/ is up to date with the source.');
 } else {
-	console.error('docs-ai/ is stale — run `npm run docs:ai` and commit the result:');
+	console.error('docs-ai/ is stale — run `npm run docs:ai`, delete any obsolete file and commit the result:');
 	for (const d of drift) console.error(`  ${d.status.padEnd(8)} docs-ai/${d.file}`);
 	process.exitCode = 1;
 }

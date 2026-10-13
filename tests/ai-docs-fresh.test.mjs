@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
-import { compareDocs } from '../scripts/ai-docs/lib/ai-docs-fresh.mjs';
+import { compareDocs, HAND_WRITTEN } from '../scripts/ai-docs/lib/ai-docs-fresh.mjs';
 
 const mk = (files) => {
 	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-fresh-'));
@@ -18,7 +18,17 @@ const mk = (files) => {
 test('compareDocs reports no drift when committed files equal a fresh generation', () => {
 	const committed = mk({ 'llms.txt': 'a\n', 'osui.components.json': '{}\n', 'schema/x.json': '{}' });
 	const fresh = mk({ 'llms.txt': 'a\n', 'osui.components.json': '{}\n' });
-	assert.deepEqual(compareDocs(committed, fresh), []);
+	assert.deepEqual(compareDocs(committed, fresh, ['schema/x.json']), []);
+});
+
+test('compareDocs lists committed files the generator no longer writes, except the hand-written ones', () => {
+	const committed = mk({
+		'llms.txt': 'a\n',
+		'schema/configs/Removed.schema.json': '{}',
+		...Object.fromEntries(HAND_WRITTEN.map((file) => [file, '{}'])),
+	});
+	const fresh = mk({ 'llms.txt': 'a\n' });
+	assert.deepEqual(compareDocs(committed, fresh), [{ file: 'schema/configs/Removed.schema.json', status: 'obsolete' }]);
 });
 
 test('compareDocs lists modified and missing generated files, ignoring CRLF differences', () => {
