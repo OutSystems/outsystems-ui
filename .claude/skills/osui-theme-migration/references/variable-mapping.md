@@ -247,4 +247,17 @@ grep -E '^[[:space:]]*--border-radius-[a-z0-9]+:' dist/ODC.OutSystemsUI.css
 
 > **Warning:** `--border-radius-soft` doubling from 4px to 8px is a visual change even though the name survived. If the customer relied on 4px corners, they'll need `border-radius: 4px` explicitly.
 
+### Other retired names
+
+Two one-off `:root` declarations from the classic bundle with no family of their own. Both are read-hooks the framework consulted in a `var(a, var(b))` chain; the inner name is what moved.
+
+<!-- table:misc -->
+
+| Classic (retired)      | Replacement                 | Notes                                                                                                                                                                                     |
+| ---------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--header-color`       | `--color-background-header` | Classic read `var(--background-color-header, var(--header-color))`; the header now reads `var(--background-color-header, var(--color-background-header))`. The outer hook still works |
+| `--overlay-background` | `--token-backdrop`          | Same `rgba(0, 0, 0, 0.25)`. Write it as `var(--token-backdrop, rgba(0, 0, 0, 0.25))` — the token is not declared at `:root`                                                              |
+
+<!-- /table:misc -->
+
 ---
