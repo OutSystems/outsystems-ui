@@ -24,7 +24,7 @@ conventions; this file is the short path to the right context.
 | `npm run docs:ai:test`             | Unit tests of the docs generators and `ParseConfigs` (`tests/`)                                           |
 | `npm run docs:ai`                  | Regenerate `docs-ai/` from the source; `npm run docs:ai:check` fails when the committed copy is stale     |
 | `npm run docs:ai:types`            | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                       |
-| `npm run docs:ai:blocks`           | Re-export the OML block snapshot from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored) |
+| `npm run docs:ai:blocks`           | Re-export the OML block snapshot from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored) |
 
 ## Rules that matter most
 

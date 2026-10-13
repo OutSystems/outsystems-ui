@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
-import { compareDocs, HAND_WRITTEN } from '../scripts/ai-docs/lib/ai-docs-fresh.mjs';
+import { compareDocs, HAND_WRITTEN } from '../scripts/docs-ai-generator/lib/ai-docs-fresh.mjs';
 
 const mk = (files) => {
 	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-fresh-'));

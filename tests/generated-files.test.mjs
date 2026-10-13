@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 
-import { loadSnapshots, validateSnapshot } from '../scripts/ai-docs/lib/snapshot.mjs';
+import { loadSnapshots, validateSnapshot } from '../scripts/docs-ai-generator/lib/snapshot.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsAi = path.join(root, 'docs-ai');
@@ -37,11 +37,11 @@ test('every generated file names a generator that exists on this branch', () => 
 });
 
 test('registry.json carries only what the inventory cannot derive', async () => {
-	const { buildInventory } = await import('../scripts/ai-docs/lib/inventory.mjs');
+	const { buildInventory } = await import('../scripts/docs-ai-generator/lib/inventory.mjs');
 	const inv = buildInventory(root);
 	const defaults = new Map(inv.cssComponents.map((c) => [c.name, c.defaultKind]));
 	for (const p of inv.patterns) defaults.set(p.name, 'pattern');
-	const registry = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ai-docs/registry.json'), 'utf8'));
+	const registry = JSON.parse(fs.readFileSync(path.join(root, 'scripts/docs-ai-generator/registry.json'), 'utf8'));
 	const allowed = new Set(['kind', 'title', 'host', 'story', 'block']);
 	for (const [name, entry] of Object.entries(registry.components)) {
 		assert.ok(Object.keys(entry).length > 0, `${name}: empty entry`);
@@ -53,7 +53,7 @@ test('registry.json carries only what the inventory cannot derive', async () => 
 });
 
 test('llms.txt carries the platform context and every runtime name in the catalogue resolves', async () => {
-	const { DOCS_BASE, PATTERN_PAGES } = await import('../scripts/ai-docs/lib/platform-docs.mjs');
+	const { DOCS_BASE, PATTERN_PAGES } = await import('../scripts/docs-ai-generator/lib/platform-docs.mjs');
 	const index = fs.readFileSync(path.join(docsAi, 'llms.txt'), 'utf8');
 	assert.ok(index.includes('llms-platform.txt'), 'llms.txt must point at the platform tier');
 	const platform = fs.readFileSync(path.join(docsAi, 'llms-platform.txt'), 'utf8');
@@ -71,7 +71,7 @@ test('llms.txt carries the platform context and every runtime name in the catalo
 
 test('the committed block snapshot validates against its schema', () => {
 	const snapshots = loadSnapshots();
-	assert.ok(snapshots.length >= 1, 'no snapshot under scripts/ai-docs/snapshot');
+	assert.ok(snapshots.length >= 1, 'no snapshot under scripts/docs-ai-generator/snapshot');
 	for (const s of snapshots) {
 		assert.deepEqual(validateSnapshot(s), [], `${path.basename(s.file)} violates osui.blocks.schema.json`);
 		assert.ok(s.source.origin.sha256, 'origin.sha256 pins the exported OML');

@@ -1,4 +1,4 @@
-# Agent documentation generators (`scripts/ai-docs/`)
+# Agent documentation generators (`scripts/docs-ai-generator/`)
 
 Everything under `docs-ai/` and `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` is generated from the
 source by the scripts in this folder. Nothing here runs in the browser; the generators read the TypeScript

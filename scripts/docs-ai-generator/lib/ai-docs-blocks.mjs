@@ -6,7 +6,7 @@
  *                              runtime pattern it drives and the parameter map (crosswalk), two recipes
  *   docs-ai/llms-blocks.txt    one card per block (≤ 250 tokens): purpose, params, slots, events, recipes
  *   docs-ai/osui.enums.json    the static entities block parameters take, with their values
- * Derived from scripts/ai-docs/snapshot/osui.blocks*.json and scripts/ai-docs/registry.json.
+ * Derived from scripts/docs-ai-generator/snapshot/osui.blocks*.json and scripts/docs-ai-generator/registry.json.
  */
 import { registry } from './registry.mjs';
 import { countTokens } from './tokens.mjs';
@@ -72,7 +72,7 @@ export function buildBlocksManifest(ctx) {
 	const sorted = Object.fromEntries(Object.entries(blocks).sort(([a], [b]) => byCodePoint(a, b)));
 	return {
 		version: '1',
-		source: 'scripts/ai-docs/generate-ai-docs.mjs',
+		source: 'scripts/docs-ai-generator/generate-ai-docs.mjs',
 		snapshots: snapshots.map((s) => ({
 			platform: s.source.platform,
 			module: s.source.module,
@@ -206,7 +206,7 @@ export function renderBlockCards(manifest) {
 		.join(', ');
 	const intro = manifest.snapshots.length
 		? `One card per composable OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass (Text on purpose) from llms-utilities.txt. An optional parameter shows its default: the OML's, else the platform default of its data type.`
-		: 'No block snapshot is present under scripts/ai-docs/snapshot; export one with npm run docs:ai:blocks (see scripts/ai-docs/README.md).';
+		: 'No block snapshot is present under scripts/docs-ai-generator/snapshot; export one with npm run docs:ai:blocks (see scripts/docs-ai-generator/README.md).';
 	return `# OutSystems UI — block reference cards (OML producers)\n\n${intro}\n\n${cards.join('\n\n')}\n`;
 }
 

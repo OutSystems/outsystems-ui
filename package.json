@@ -13,7 +13,7 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
-		"postdocs": "node scripts/ai-docs/publish-ai-docs.mjs",
+		"postdocs": "node scripts/docs-ai-generator/publish-ai-docs.mjs",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
@@ -27,10 +27,10 @@
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:migration": "node scripts/sync-migration-guide.mjs",
-		"docs:ai": "node scripts/ai-docs/generate-ai-docs.mjs",
-		"docs:ai:check": "node scripts/ai-docs/check-ai-docs-fresh.mjs",
-		"docs:ai:types": "node scripts/ai-docs/generate-pattern-types.mjs",
-		"docs:ai:blocks": "node scripts/ai-docs/export-snapshot.mjs",
+		"docs:ai": "node scripts/docs-ai-generator/generate-ai-docs.mjs",
+		"docs:ai:check": "node scripts/docs-ai-generator/check-ai-docs-fresh.mjs",
+		"docs:ai:types": "node scripts/docs-ai-generator/generate-pattern-types.mjs",
+		"docs:ai:blocks": "node scripts/docs-ai-generator/export-snapshot.mjs",
 		"docs:ai:test": "node --test \"tests/*.test.mjs\""
 	},
 	"repository": {

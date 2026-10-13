@@ -131,4 +131,4 @@ docs/
 specs/
 
 # A local OutSystemsUI.oml to export the block snapshot from (npm run docs:ai:blocks reads it first)
-scripts/ai-docs/snapshot/local/
+scripts/docs-ai-generator/snapshot/local/

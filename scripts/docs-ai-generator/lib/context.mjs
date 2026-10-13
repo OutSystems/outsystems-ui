@@ -85,9 +85,9 @@ export function createContext(root, options = {}) {
 			return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
 		},
 
-		/** The block snapshots under scripts/ai-docs/snapshot (empty when none); tests inject their own. */
+		/** The block snapshots under scripts/docs-ai-generator/snapshot (empty when none); tests inject their own. */
 		modelSnapshots() {
-			return loadSnapshots(insideDir(root, 'scripts', 'ai-docs', 'snapshot'));
+			return loadSnapshots(insideDir(root, 'scripts', 'docs-ai-generator', 'snapshot'));
 		},
 
 

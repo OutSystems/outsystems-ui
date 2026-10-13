@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // @ts-check
 /**
- * Refreshes the block snapshot (scripts/ai-docs/snapshot/osui.blocks.json) from a local OutSystems UI OML.
+ * Refreshes the block snapshot (scripts/docs-ai-generator/snapshot/osui.blocks.json) from a local OutSystems UI OML.
  *
- * Drop the module as the one `.oml` file under scripts/ai-docs/snapshot/local/ (git-ignored, any depth) and run
+ * Drop the module as the one `.oml` file under scripts/docs-ai-generator/snapshot/local/ (git-ignored, any depth) and run
  *
  *   npm run docs:ai:blocks [-- --platform ODC|O11]
  *
@@ -22,8 +22,8 @@ import { fileURLToPath } from 'node:url';
 import { insideDir } from './lib/paths.mjs';
 
 /** The git-ignored folder the OutSystems UI OML to export is dropped in. */
-export const LOCAL_DIR = 'scripts/ai-docs/snapshot/local';
-export const SNAPSHOT = 'scripts/ai-docs/snapshot/osui.blocks.json';
+export const LOCAL_DIR = 'scripts/docs-ai-generator/snapshot/local';
+export const SNAPSHOT = 'scripts/docs-ai-generator/snapshot/osui.blocks.json';
 
 /** Every `.oml` file under a folder, any depth. @param {string} dir */
 function omlFiles(dir) {

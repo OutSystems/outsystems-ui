@@ -18,7 +18,7 @@ import { expectationsFor } from './expectations.mjs';
 import { isPublicInput, resolveEnumReference } from './ai-docs.mjs';
 
 export const OUTPUT_FILE = 'src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts';
-const GENERATOR = 'scripts/ai-docs/generate-pattern-types.mjs';
+const GENERATOR = 'scripts/docs-ai-generator/generate-pattern-types.mjs';
 
 const PRIMITIVE = /^(string|number|boolean|Date|MonthYear|'[^']*'|-?\d+(\.\d+)?|true|false)$/;
 

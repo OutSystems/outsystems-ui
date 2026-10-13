@@ -1,7 +1,7 @@
 {
 	"$schema": "./schema/osui.components.schema.json",
 	"version": "1",
-	"source": "scripts/ai-docs/generate-ai-docs.mjs",
+	"source": "scripts/docs-ai-generator/generate-ai-docs.mjs",
 	"components": {
 		"Accordion": {
 			"name": "Accordion",

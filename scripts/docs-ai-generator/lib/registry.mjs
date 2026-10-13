@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The component registry (`scripts/ai-docs/registry.json`): the inventory discovers components, this file
+ * The component registry (`scripts/docs-ai-generator/registry.json`): the inventory discovers components, this file
  * classifies them. Every eval that needs to know what a component *is* (a provider wrapper, an overlay,
  * a host-styled partial, a component with a loading state, a utility family, …) reads it from here, so
  * a new component is classified in one place, and a test fails when the registry and the inventory
