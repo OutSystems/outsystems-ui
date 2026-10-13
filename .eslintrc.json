@@ -40,9 +40,24 @@
         {
             "files": ["src/scripts/OutSystems/OSUI/Patterns/*API.ts"],
             "rules": {
-                "jsdoc/require-jsdoc": ["warn", { "publicOnly": true, "require": { "FunctionDeclaration": true } }],
+                "jsdoc/require-jsdoc": ["warn", { "enableFixer": false, "publicOnly": true, "require": { "FunctionDeclaration": true } }],
                 "jsdoc/require-param": "warn",
                 "jsdoc/require-returns": ["warn", { "forceRequireReturn": false }]
+            }
+        },
+        {
+            "files": ["src/scripts/**/*Config.ts", "src/scripts/**/*Configuration.ts"],
+            "rules": {
+                "jsdoc/require-jsdoc": [
+                    "warn",
+                    {
+                        "enableFixer": false,
+                        "require": { "FunctionDeclaration": false },
+                        "contexts": [
+                            "ClassBody > PropertyDefinition[accessibility='public'][static!=true][key.name=/^[A-Z]/]"
+                        ]
+                    }
+                ]
             }
         }
     ],

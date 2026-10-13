@@ -14,7 +14,7 @@
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
 		"postdocs": "node scripts/docs-ai-generator/publish-ai-docs.mjs",
-		"lint": "eslint . --ext .ts",
+		"lint": "eslint . --ext .ts --max-warnings=0",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
@@ -39,7 +39,7 @@
 		"url": "git+https://github.com/OutSystems/outsystems-ui"
 	},
 	"engines": {
-		"node": ">=12"
+		"node": ">=20.19.0"
 	},
 	"volta": {
 		"node": "24.13.1",

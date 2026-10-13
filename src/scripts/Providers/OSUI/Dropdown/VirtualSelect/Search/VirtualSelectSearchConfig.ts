@@ -4,6 +4,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 	 * Class that represents the custom configurations received by the Dropdown Search mode.
 	 */
 	export class VirtualSelectSearchConfig extends AbstractVirtualSelectConfig {
+		/** Lets the user select more than one option. */
 		public AllowMultipleSelection: boolean;
 
 		/**

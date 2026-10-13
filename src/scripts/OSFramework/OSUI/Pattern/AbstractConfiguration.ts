@@ -6,6 +6,7 @@ namespace OSFramework.OSUI.Patterns {
 	 * @abstract
 	 */
 	export abstract class AbstractConfiguration {
+		/** CSS classes added to the pattern root. */
 		public ExtendedClass: string;
 
 		constructor(config: JSON) {

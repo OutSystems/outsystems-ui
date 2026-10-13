@@ -30,7 +30,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/** Store calendar mode is in use */
 		public CalendarMode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode;
 
-		// Stores the ability to disable a range of dates from datepicker
+		/** Stores the ability to disable a range of dates from datepicker */
 		public Disable = [];
 
 		/** Stores the ability to disable the mobile flatpickr behavior. False is the default provider option */

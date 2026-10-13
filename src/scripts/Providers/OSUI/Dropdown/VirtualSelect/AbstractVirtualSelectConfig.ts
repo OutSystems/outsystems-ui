@@ -28,6 +28,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public SanitizeDropdownValues = false;
 		/** Placeholder of the search input. */
 		public SearchPrompt: string;
+		/** Opens the options list as a centred popup instead of an anchored dropbox (below PopupDropboxBreakpoint). */
 		public ShowDropboxAsPopup = true;
 		/** Options selected when the dropdown is built (same shape as OptionsList). */
 		public StartingSelection: DropDownOption[];

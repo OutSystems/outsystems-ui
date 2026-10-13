@@ -11,8 +11,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _balloonOptionsArialabel = '';
 		// Store the SelectValuesWrapper AriaLabel text
 		private _selectValuesWrapperAriaLabel = Enum.PropertiesValues.SelectValuesWrapperAriaLabelValue;
-		/** Properties */
+		/** Lets the user select more than one option. */
 		public AllowMultipleSelection: boolean;
+		/** Renders the dropdown disabled. */
 		public IsDisabled: boolean;
 
 		constructor(config: JSON) {
