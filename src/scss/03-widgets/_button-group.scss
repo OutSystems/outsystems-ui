@@ -138,7 +138,7 @@
 				top: -1px;
 				z-index: var(--layer-global-screen);
 
-				@include a11y-focus-shadow($type: button, $isInner: true);
+				@include a11y-focus-shadow($isInner: true);
 			}
 		}
 	}

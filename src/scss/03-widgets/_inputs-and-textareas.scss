@@ -206,7 +206,9 @@ span.validation-message {
 			}
 
 			&:focus {
-				@include a11y-focus-shadow($type: input);
+				@include a11y-focus-shadow;
+
+				border-color: variables.$token-semantics-primary-base;
 			}
 
 			&.not-valid {
