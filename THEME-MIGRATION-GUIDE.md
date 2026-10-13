@@ -311,6 +311,19 @@ New: `--border-radius-default` (a global override) and `--border-radius-2xs` thr
 
 **`--border-radius-default` doesn't re-radius quite everything.** The seven tier slots resolve `var(--border-radius-default, <own-default>)` and follow it. The three legacy roles — `--border-radius-none`, `--border-radius-soft`, `--border-radius-rounded` — resolve straight to their tokens and ignore it. Since `soft` is the one most custom CSS reads, setting the default won't bring those corners back to 4px; write the value explicitly.
 
+### Other retired names
+
+Two one-off names with no family of their own. The framework read each through a `var(a, var(b))` chain, and it's the inner name that moved — so if you set the outer hook, nothing changes for you.
+
+<!-- generated:misc -->
+
+| Classic (retired)      | Replacement                 | Notes                                                                                                                                                                                     |
+| ---------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--header-color`       | `--color-background-header` | Classic read `var(--background-color-header, var(--header-color))`; the header now reads `var(--background-color-header, var(--color-background-header))`. The outer hook still works |
+| `--overlay-background` | `--token-backdrop`          | Same `rgba(0, 0, 0, 0.25)`. Write it as `var(--token-backdrop, rgba(0, 0, 0, 0.25))` — the token is not declared at `:root`                                                              |
+
+<!-- /generated:misc -->
+
 ---
 
 ## Same name, new value

@@ -27,6 +27,7 @@
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:migration": "node scripts/sync-migration-guide.mjs",
+		"docs:migration-page": "node scripts/generate-migration-data.mjs",
 		"docs:ai": "node scripts/docs-ai-generator/generate-ai-docs.mjs",
 		"docs:ai:check": "node scripts/docs-ai-generator/check-ai-docs-fresh.mjs",
 		"docs:ai:types": "node scripts/docs-ai-generator/generate-pattern-types.mjs",
