@@ -303,7 +303,7 @@
 .has-accessible-features {
 	.osui-accordion-item {
 		&:has(.osui-accordion-item__title:focus) {
-			@include a11y-focus-shadow($isInner: false);
+			@include a11y-focus-shadow;
 
 			border-color: transparent;
 			z-index: var(--layer-local-tier-1);

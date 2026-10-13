@@ -271,6 +271,7 @@
 .has-accessible-features {
 	& .btn:focus {
 		@include a11y-focus-shadow;
+
 		border-color: var(--color-background-surface);
 	}
 }
