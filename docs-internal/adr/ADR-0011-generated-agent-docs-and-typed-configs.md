@@ -138,7 +138,9 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
 `undefined` (or keeps a field initializer) and, for some patterns, throws later (`VideoAPI.Create(id, {})` reaches
 `this.configs.URL.slice(...)` in `Initialize`). The platform never hits this because it always sends every
 input; required members give typed callers the same contract at compile time, instead of materializing defaults
-at runtime in all 33 Config classes. A published default is therefore what an *invalid* value falls back to.
+at runtime in all 33 Config classes. Types the JSON Schemas cannot express as a primitive are still constrained:
+enum-member unions become `enum`, `string | number` a type list, `string | Date` a string and `MonthYear` an object
+schema pinned to its declaration by a test; a test fails when any property is left without a `type` or `enum`. A published default is therefore what an *invalid* value falls back to.
 The usage examples follow: each passes every input (its default, else a neutral value such as `''`, `0`, `[]` or
 `{ Month: '', Year: -1 }`, with a few representative overrides where the neutral value would render nothing or
 throw, such as a 0..0 slider range). PascalCase fields the runtime sets itself (`DatePicker.CalendarMode` and

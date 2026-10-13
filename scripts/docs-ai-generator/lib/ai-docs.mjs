@@ -188,7 +188,9 @@ export function publishedDefault(ctx, pattern, prop) {
 function describeProp(ctx, pattern, prop) {
 	/** @type {{ type: string, default?: unknown, allowed?: (string|number)[], hint?: string, description?: string }} */
 	const out = { type: prop.typeText ?? 'unknown' };
-	const { allowed, hint } = allowedValuesFor(ctx, pattern, prop);
+	const found = allowedValuesFor(ctx, pattern, prop);
+	const { hint } = found;
+	const allowed = found.allowed ?? enumReferenceUnion(ctx, pattern, prop);
 	out.type = publicTypeText(prop, allowed);
 	if (allowed) out.allowed = allowed;
 	if (hint) out.hint = hint;
@@ -196,6 +198,22 @@ function describeProp(ctx, pattern, prop) {
 	if (value !== undefined) out.default = value;
 	if (prop.docText) out.description = prop.docText;
 	return out;
+}
+
+/**
+ * The values of a prop typed as a union of enum members (`GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL`),
+ * or null when the type is anything else. The type names the values the prop accepts, so they are its allowed set.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {import('./ts.mjs').ConfigProp} prop
+ * @returns {(string|number)[]|null}
+ */
+function enumReferenceUnion(ctx, pattern, prop) {
+	if (!prop.typeText) return null;
+	const values = prop.typeText.split(' | ').map((part) => resolveEnumReference(ctx, pattern, part));
+	return values.every((v) => typeof v === 'string' || typeof v === 'number')
+		? /** @type {(string|number)[]} */ (values)
+		: null;
 }
 
 /**
@@ -375,7 +393,7 @@ export function buildManifest(ctx) {
 		/** @type {Record<string, any>} */
 		const props = {};
 		const inputs = [...e.props].filter((prop) => isPublicInput(prop, p.name));
-		for (const prop of inputs.sort((a, b) => a.name.localeCompare(b.name)))
+		for (const prop of inputs.toSorted((a, b) => a.name.localeCompare(b.name)))
 			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,
@@ -535,16 +553,49 @@ export function quotedUnionMembers(type) {
 	return parts.every(isQuoted) ? parts.map((p) => p.slice(1, -1)) : null;
 }
 
-/** JSON Schema type of one manifest prop; a type beyond JSON primitives stays open and is described. @param {any} d */
+/**
+ * The shape of `MonthYear` (src/scripts/Global.d.ts): Month is a month name, or '' when unset; Year is a
+ * number, below 1900 when unset. A test pins it to the declaration.
+ */
+const MONTH_YEAR_SCHEMA = {
+	type: 'object',
+	properties: { Month: { type: 'string' }, Year: { type: 'number' } },
+	required: ['Month', 'Year'],
+	additionalProperties: false,
+};
+
+/** JSON types of the primitive members a source type may be a union of; a Date reaches the JSON as a string. */
+const JSON_PRIMITIVES = { string: 'string', number: 'number', boolean: 'boolean', Date: 'string' };
+
+/**
+ * The JSON `type` of a union of primitives (`string | number`, `string | Date`), or null when any member is not one.
+ * @param {string} type
+ * @returns {string|string[]|null}
+ */
+function primitiveUnionType(type) {
+	const parts = type.split(' | ').map((p) => p.trim());
+	if (!parts.every((p) => p in JSON_PRIMITIVES)) return null;
+	const types = [...new Set(parts.map((p) => JSON_PRIMITIVES[/** @type {keyof typeof JSON_PRIMITIVES} */ (p)]))];
+	return types.length === 1 ? types[0] : types;
+}
+
+/**
+ * JSON Schema of one manifest prop: a primitive, an enum, an array, a union of primitives or the MonthYear
+ * object. Only a type this does not know stays open and is described (and a test lists none).
+ * @param {any} d
+ */
 function schemaPropOf(d) {
-	const union = quotedUnionMembers(String(d.type ?? ''));
+	const type = String(d.type ?? '');
+	const union = quotedUnionMembers(type);
+	const primitives = primitiveUnionType(type);
 	/** @type {Record<string, unknown>} */
 	const out = {};
 	if (d.description) out.description = d.description;
 	if (d.default !== undefined) out.default = d.default;
 	if (Array.isArray(d.allowed) && d.allowed.length) out.enum = d.allowed;
-	else if (d.type === 'boolean' || d.type === 'number' || d.type === 'string') out.type = d.type;
-	else if (/\[\]$|^Array</.test(d.type)) out.type = 'array';
+	else if (primitives) out.type = primitives;
+	else if (type === 'MonthYear') Object.assign(out, MONTH_YEAR_SCHEMA);
+	else if (/\[\]$|^Array</.test(type)) out.type = 'array';
 	else if (union) out.enum = union;
 	else {
 		// out.description is d.description when present

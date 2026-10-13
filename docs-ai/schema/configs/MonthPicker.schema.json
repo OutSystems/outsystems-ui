@@ -21,13 +21,55 @@
 			"type": "boolean"
 		},
 		"InitialMonth": {
-			"description": "Month selected when the picker is built ({ Month, Year }). (source type: MonthYear)"
+			"description": "Month selected when the picker is built ({ Month, Year }).",
+			"type": "object",
+			"properties": {
+				"Month": {
+					"type": "string"
+				},
+				"Year": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"Month",
+				"Year"
+			],
+			"additionalProperties": false
 		},
 		"MaxMonth": {
-			"description": "Latest selectable month ({ Month, Year }). (source type: MonthYear)"
+			"description": "Latest selectable month ({ Month, Year }).",
+			"type": "object",
+			"properties": {
+				"Month": {
+					"type": "string"
+				},
+				"Year": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"Month",
+				"Year"
+			],
+			"additionalProperties": false
 		},
 		"MinMonth": {
-			"description": "Earliest selectable month ({ Month, Year }). (source type: MonthYear)"
+			"description": "Earliest selectable month ({ Month, Year }).",
+			"type": "object",
+			"properties": {
+				"Month": {
+					"type": "string"
+				},
+				"Year": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"Month",
+				"Year"
+			],
+			"additionalProperties": false
 		},
 		"ExtendedClass": {
 			"type": "string",

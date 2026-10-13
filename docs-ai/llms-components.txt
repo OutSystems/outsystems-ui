@@ -110,7 +110,7 @@ Docs: utilities/button_loading
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
 - AutoPlay: boolean = false
-- Direction: GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB
+- Direction: 'ltr' | 'rtl' | 'ttb'
 - Height: string | number = "auto"
 - ItemsDesktop: number = 1
 - ItemsGap: string | number = "0px"

@@ -1164,7 +1164,12 @@
 					"description": "Advances the slides automatically."
 				},
 				"Direction": {
-					"type": "GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB",
+					"type": "'ltr' | 'rtl' | 'ttb'",
+					"allowed": [
+						"ltr",
+						"rtl",
+						"ttb"
+					],
 					"description": "Slide direction: ltr, rtl or ttb (vertical)."
 				},
 				"Height": {
