@@ -32,3 +32,18 @@ test('anything that is neither a string nor an object is rejected with a clear m
 	assert.throws(() => ParseConfigs(42), /expected a JSON string or an object/);
 	assert.throws(() => ParseConfigs([1, 2]), /expected a JSON string or an object/);
 });
+
+test('a null-prototype object is accepted like a plain one', () => {
+	const configs = Object.assign(Object.create(null), { ExtendedClass: '' });
+	assert.equal(ParseConfigs(configs), configs);
+});
+
+test('an object with a non-plain prototype is rejected, so for...in cannot pick up inherited fields', () => {
+	class Configs {
+		ExtendedClass = '';
+	}
+	Configs.prototype.Injected = true;
+	assert.throws(() => ParseConfigs(new Configs()), /expected a JSON string or a plain object/);
+	assert.throws(() => ParseConfigs(Object.create({ Injected: true })), /expected a JSON string or a plain object/);
+	assert.throws(() => ParseConfigs(new Date()), /expected a JSON string or a plain object/);
+});
