@@ -27,16 +27,16 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Method signature to change the properties/configs of the pattern.
 		 *
-		 * @param propertyName
-		 * @param propertyValue
+		 * @param propertyName Name of the config property to change
+		 * @param propertyValue New value of the property
 		 */
 		changeProperty(propertyName: string, propertyValue: unknown): void;
 
 		/**
 		 * Enables to register simple callbacks for the platform. Internal use.
 		 *
-		 * @param eventName
-		 * @param callback
+		 * @param eventName Name of the event the callback is registered for
+		 * @param callback Function invoked when the event fires
 		 */
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 	}

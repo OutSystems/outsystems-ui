@@ -182,7 +182,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
-			if (this.isBuilt && propertyName === Enum.Properties.WidgetId) {
+			if (this.isBuilt && propertyName === Enum.ConfigProperties.WidgetId) {
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 				this.setHtmlElements();

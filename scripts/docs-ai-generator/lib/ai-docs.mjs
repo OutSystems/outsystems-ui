@@ -60,13 +60,13 @@ const MARKUP_CAP = 1200;
  */
 function shortType(type) {
 	return type
-		.replace(/string \| Record<string, unknown>/g, 'string | object')
-		.replace(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
-		.replace(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
-		.replace(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')
-		.replace(/OSFramework\.OSUI\./g, '')
-		.replace(/OutSystems\.OSUI\./g, '')
-		.replace(/Providers\.OSUI\.\w+\.\w+\./g, '');
+		.replaceAll('string | Record<string, unknown>', 'string | object')
+		.replaceAll('OSFramework.OSUI.GlobalCallbacks.', '')
+		.replaceAll(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
+		.replaceAll(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')
+		.replaceAll('OSFramework.OSUI.', '')
+		.replaceAll('OutSystems.OSUI.', '')
+		.replaceAll(/Providers\.OSUI\.\w+\.\w+\./g, '');
 }
 
 /** @param {import('./context.mjs').EvalContext} ctx */
@@ -106,7 +106,7 @@ export function resolveEnumReference(ctx, pattern, text) {
 	const quote = t[0];
 	if ((quote === "'" || quote === '"' || quote === '`') && t.length >= 2 && t.endsWith(quote)) return t.slice(1, -1);
 	const ref = parseEnumPath(t);
-	if (!ref || !ref.member) return null;
+	if (!ref?.member) return null;
 	const e = findEnum(ctx, pattern, ref.scope, ref.enumName);
 	if (!e || !(ref.member in e.members)) return null;
 	return e.members[ref.member];
@@ -188,7 +188,9 @@ export function publishedDefault(ctx, pattern, prop) {
 function describeProp(ctx, pattern, prop) {
 	/** @type {{ type: string, default?: unknown, allowed?: (string|number)[], hint?: string, description?: string }} */
 	const out = { type: prop.typeText ?? 'unknown' };
-	const { allowed, hint } = allowedValuesFor(ctx, pattern, prop);
+	const found = allowedValuesFor(ctx, pattern, prop);
+	const { hint } = found;
+	const allowed = found.allowed ?? enumReferenceUnion(ctx, pattern, prop);
 	out.type = publicTypeText(prop, allowed);
 	if (allowed) out.allowed = allowed;
 	if (hint) out.hint = hint;
@@ -196,6 +198,22 @@ function describeProp(ctx, pattern, prop) {
 	if (value !== undefined) out.default = value;
 	if (prop.docText) out.description = prop.docText;
 	return out;
+}
+
+/**
+ * The values of a prop typed as a union of enum members (`GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL`),
+ * or null when the type is anything else. The type names the values the prop accepts, so they are its allowed set.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {import('./ts.mjs').ConfigProp} prop
+ * @returns {(string|number)[]|null}
+ */
+function enumReferenceUnion(ctx, pattern, prop) {
+	if (!prop.typeText) return null;
+	const values = prop.typeText.split(' | ').map((part) => resolveEnumReference(ctx, pattern, part));
+	return values.every((v) => typeof v === 'string' || typeof v === 'number')
+		? /** @type {(string|number)[]} */ (values)
+		: null;
 }
 
 /**
@@ -281,11 +299,11 @@ function publicTypeText(prop, allowed) {
 function cleanMarkup(html) {
 	if (!html) return '';
 	let out = html
-		.replace(/\s+/g, ' ')
-		.replace(/ style="[^"]*"/g, '')
-		.replace(/\$\{[^}]*\}/g, '')
-		.replace(/ class=""/g, '')
-		.replace(/> </g, '><')
+		.replaceAll(/\s+/g, ' ')
+		.replaceAll(/ style="[^"]*"/g, '')
+		.replaceAll(/\$\{[^}]*\}/g, '')
+		.replaceAll(' class=""', '')
+		.replaceAll('> <', '><')
 		.trim();
 	if (out.length > MARKUP_CAP) out = `${out.slice(0, MARKUP_CAP)}…`;
 	return out;
@@ -375,7 +393,7 @@ export function buildManifest(ctx) {
 		/** @type {Record<string, any>} */
 		const props = {};
 		const inputs = [...e.props].filter((prop) => isPublicInput(prop, p.name));
-		for (const prop of inputs.sort((a, b) => a.name.localeCompare(b.name)))
+		for (const prop of inputs.toSorted((a, b) => a.name.localeCompare(b.name)))
 			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,
@@ -535,16 +553,49 @@ export function quotedUnionMembers(type) {
 	return parts.every(isQuoted) ? parts.map((p) => p.slice(1, -1)) : null;
 }
 
-/** JSON Schema type of one manifest prop; a type beyond JSON primitives stays open and is described. @param {any} d */
+/**
+ * The shape of `MonthYear` (src/scripts/Global.d.ts): Month is a month name, or '' when unset; Year is a
+ * number, below 1900 when unset. A test pins it to the declaration.
+ */
+const MONTH_YEAR_SCHEMA = {
+	type: 'object',
+	properties: { Month: { type: 'string' }, Year: { type: 'number' } },
+	required: ['Month', 'Year'],
+	additionalProperties: false,
+};
+
+/** JSON types of the primitive members a source type may be a union of; a Date reaches the JSON as a string. */
+const JSON_PRIMITIVES = { string: 'string', number: 'number', boolean: 'boolean', Date: 'string' };
+
+/**
+ * The JSON `type` of a union of primitives (`string | number`, `string | Date`), or null when any member is not one.
+ * @param {string} type
+ * @returns {string|string[]|null}
+ */
+function primitiveUnionType(type) {
+	const parts = type.split(' | ').map((p) => p.trim());
+	if (!parts.every((p) => p in JSON_PRIMITIVES)) return null;
+	const types = [...new Set(parts.map((p) => JSON_PRIMITIVES[/** @type {keyof typeof JSON_PRIMITIVES} */ (p)]))];
+	return types.length === 1 ? types[0] : types;
+}
+
+/**
+ * JSON Schema of one manifest prop: a primitive, an enum, an array, a union of primitives or the MonthYear
+ * object. Only a type this does not know stays open and is described (and a test lists none).
+ * @param {any} d
+ */
 function schemaPropOf(d) {
-	const union = quotedUnionMembers(String(d.type ?? ''));
+	const type = String(d.type ?? '');
+	const union = quotedUnionMembers(type);
+	const primitives = primitiveUnionType(type);
 	/** @type {Record<string, unknown>} */
 	const out = {};
 	if (d.description) out.description = d.description;
 	if (d.default !== undefined) out.default = d.default;
 	if (Array.isArray(d.allowed) && d.allowed.length) out.enum = d.allowed;
-	else if (d.type === 'boolean' || d.type === 'number' || d.type === 'string') out.type = d.type;
-	else if (/\[\]$|^Array</.test(d.type)) out.type = 'array';
+	else if (primitives) out.type = primitives;
+	else if (type === 'MonthYear') Object.assign(out, MONTH_YEAR_SCHEMA);
+	else if (/\[\]$|^Array</.test(type)) out.type = 'array';
 	else if (union) out.enum = union;
 	else {
 		// out.description is d.description when present
@@ -669,7 +720,7 @@ export function renderComponentCards(manifest) {
 			const card = renderCard(c, opts);
 			if (countTokens(card) <= CARD_TOKEN_BUDGET) return card;
 		}
-		return renderCard(c, CARD_STAGES[CARD_STAGES.length - 1]);
+		return renderCard(c, CARD_STAGES.at(-1));
 	});
 	return `# OutSystems UI — component reference cards\n\nOne card per pattern. Signatures, props, defaults and allowed values are generated from the TypeScript source; markup skeletons come from the Storybook stories that drive the compiled bundle exactly as the platform does.\n\n${cards.join('\n\n')}\n`;
 }
@@ -1036,7 +1087,7 @@ function numberRuns(names) {
 		const members = nums.map((v) => `${pre}${v}${post}`);
 		runAt.set(
 			names.find((n) => members.includes(n)) ?? members[0],
-			`${pre}{${nums[0]}..${nums[nums.length - 1]}}${post}`
+			`${pre}{${nums[0]}..${nums.at(-1)}}${post}`
 		);
 		for (const m of members) taken.add(m);
 	}

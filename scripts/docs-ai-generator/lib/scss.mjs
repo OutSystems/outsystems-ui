@@ -139,9 +139,9 @@ export function classNamesOf(css) {
 	const out = new Set();
 	root.walkRules((rule) => {
 		const parent = rule.parent;
-		if (parent && parent.type === 'atrule' && /keyframes$/i.test(/** @type {any} */ (parent).name)) return;
+		if (parent?.type === 'atrule' && /keyframes$/i.test(/** @type {any} */ (parent).name)) return;
 		// an escaped character (`.a\:b`) belongs to the name; the backslash itself does not
-		for (const m of rule.selector.matchAll(/\.(-?[_a-zA-Z](?:[\w-]|\\.)*)/g)) out.add(m[1].replace(/\\/g, ''));
+		for (const m of rule.selector.matchAll(/\.(-?[_a-zA-Z](?:[\w-]|\\.)*)/g)) out.add(m[1].replaceAll('\\', ''));
 	});
 	return [...out];
 }

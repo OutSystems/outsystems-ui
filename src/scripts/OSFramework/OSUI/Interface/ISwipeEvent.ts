@@ -9,10 +9,10 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Signature Method to add swipe events
 		 *
-		 * @param swipeDownCallback
-		 * @param swipeLeftCallback
-		 * @param swipeRightCallback
-		 * @param swipeUpCallback
+		 * @param swipeDownCallback Called when the user swipes down
+		 * @param swipeLeftCallback Called when the user swipes left
+		 * @param swipeRightCallback Called when the user swipes right
+		 * @param swipeUpCallback Called when the user swipes up
 		 */
 		setGestureEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,

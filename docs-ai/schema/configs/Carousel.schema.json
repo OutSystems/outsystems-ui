@@ -11,11 +11,20 @@
 			"type": "boolean"
 		},
 		"Direction": {
-			"description": "Slide direction: ltr, rtl or ttb (vertical). (source type: GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB)"
+			"description": "Slide direction: ltr, rtl or ttb (vertical).",
+			"enum": [
+				"ltr",
+				"rtl",
+				"ttb"
+			]
 		},
 		"Height": {
-			"description": "Height of the carousel (CSS length or pixel number); auto by default, required for the vertical direction. (source type: string | number)",
-			"default": "auto"
+			"description": "Height of the carousel (CSS length or pixel number); auto by default, required for the vertical direction.",
+			"default": "auto",
+			"type": [
+				"string",
+				"number"
+			]
 		},
 		"ItemsDesktop": {
 			"description": "Number of items visible at once on desktop.",
@@ -23,8 +32,12 @@
 			"type": "number"
 		},
 		"ItemsGap": {
-			"description": "Gap between items (CSS length or pixel number); 0px by default. (source type: string | number)",
-			"default": "0px"
+			"description": "Gap between items (CSS length or pixel number); 0px by default.",
+			"default": "0px",
+			"type": [
+				"string",
+				"number"
+			]
 		},
 		"ItemsPhone": {
 			"description": "Number of items visible at once on phones.",
@@ -52,8 +65,12 @@
 			]
 		},
 		"Padding": {
-			"description": "Padding on both ends of the track so neighbouring items peek in (CSS length or pixel number). (source type: string | number)",
-			"default": "0px"
+			"description": "Padding on both ends of the track so neighbouring items peek in (CSS length or pixel number).",
+			"default": "0px",
+			"type": [
+				"string",
+				"number"
+			]
 		},
 		"StartingPosition": {
 			"description": "Zero-based index of the item shown first.",

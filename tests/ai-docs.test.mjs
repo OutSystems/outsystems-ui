@@ -200,6 +200,45 @@ test('every input is required, and every usage example passes all of them and va
 	assert.deepEqual(validate(configSchemaOf(manifest.components.Video), { ExtendedClass: '' }).length > 0, true);
 });
 
+test('every schema property validates something: no source type falls through unconstrained', () => {
+	const open = [];
+	for (const c of Object.values(manifest.components)) {
+		for (const [name, p] of Object.entries(configSchemaOf(c).properties)) {
+			if (!p.type && !p.enum) open.push(`${c.name}.${name}`);
+		}
+	}
+	assert.deepEqual(open, [], 'give the type a schema in schemaPropOf instead of leaving it open');
+});
+
+test('nontrivial source types get concrete schemas that reject invalid values', () => {
+	const carousel = configSchemaOf(manifest.components.Carousel);
+	assert.deepEqual(carousel.properties.Direction.enum, ['ltr', 'rtl', 'ttb'], 'enum-member unions resolve to values');
+	assert.deepEqual(carousel.properties.Height.type, ['string', 'number']);
+	const usage = manifest.components.Carousel.usage.configs;
+	assert.notEqual(validate(carousel, { ...usage, Direction: 'diagonal' }).length, 0);
+	assert.notEqual(validate(carousel, { ...usage, Height: {} }).length, 0, 'an object is neither a string nor a number');
+	assert.deepEqual(validate(carousel, { ...usage, Height: 300 }), []);
+	const month = configSchemaOf(manifest.components.MonthPicker);
+	const monthUsage = manifest.components.MonthPicker.usage.configs;
+	assert.deepEqual(validate(month, { ...monthUsage, InitialMonth: { Month: 'May', Year: 2026 } }), []);
+	assert.notEqual(validate(month, { ...monthUsage, InitialMonth: 'May 2026' }).length, 0, 'a string is not a MonthYear');
+	assert.notEqual(validate(month, { ...monthUsage, InitialMonth: null }).length, 0);
+	assert.notEqual(validate(month, { ...monthUsage, InitialMonth: { Month: 'May' } }).length, 0, 'Year is required');
+	assert.equal(configSchemaOf(manifest.components.DatePicker).properties.InitialDate.type, 'string');
+});
+
+test('the MonthYear schema matches its declaration in Global.d.ts', () => {
+	const declaration = ctx.readText(path.join(root, 'src/scripts/Global.d.ts'));
+	const body = /type MonthYear = \{([^}]*)\}/.exec(declaration)?.[1] ?? '';
+	const members = Object.fromEntries([...body.matchAll(/(\w+)\??:\s*(\w+)/g)].map((m) => [m[1], m[2]]));
+	assert.deepEqual(members, { Month: 'string', Year: 'number' });
+	const schema = configSchemaOf(manifest.components.MonthPicker).properties.InitialMonth;
+	assert.deepEqual(
+		Object.fromEntries(Object.entries(schema.properties).map(([k, v]) => [k, v.type])),
+		members
+	);
+});
+
 test('utilities document states the grammar, then every family as template rows with declarations', () => {
 	const doc = renderUtilities(ctx);
 	assert.match(doc, /^## Grammar/m);

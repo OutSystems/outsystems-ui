@@ -34,7 +34,7 @@ export function normalizeKind(kind) {
  * @returns {Kind}
  */
 export function defaultKindFor(file) {
-	const posix = file.split('\\').join('/');
+	const posix = file.replaceAll('\\', '/');
 	if (posix.includes('/02-layout/')) return 'layout';
 	if (posix.includes('/05-useful/') || posix.includes('/06-utilities/')) return 'utility';
 	return 'component';

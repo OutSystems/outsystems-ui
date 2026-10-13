@@ -25,7 +25,8 @@
 			"type": "number"
 		},
 		"InitialDate": {
-			"description": "Set the property initialDate (source type: string | Date)"
+			"description": "Set the property initialDate",
+			"type": "string"
 		},
 		"InitialEndDate": {
 			"description": "Set the property EndDate",

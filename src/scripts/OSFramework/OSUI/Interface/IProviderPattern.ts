@@ -17,14 +17,14 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Method to enable extensibility to provider supported configs
 		 *
-		 * @param newConfigs
+		 * @param newConfigs Provider options to apply over the pattern ones
 		 */
 		setProviderConfigs(newConfigs: ProviderConfigs): void;
 
 		/**
 		 * Method to update the provider events API instance and save/pending events
 		 *
-		 * @param providerInfo
+		 * @param providerInfo Provider name, version and event list
 		 */
 		updateProviderEvents(providerInfo: ProviderInfo): void;
 	}

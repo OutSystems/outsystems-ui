@@ -9,9 +9,9 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Signature Method to add drag events
 		 *
-		 * @param onGestureStart
-		 * @param onGestureMove
-		 * @param onGestureEnd
+		 * @param onGestureStart Called when the drag gesture starts
+		 * @param onGestureMove Called while the drag gesture moves
+		 * @param onGestureEnd Called when the drag gesture ends
 		 */
 		setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

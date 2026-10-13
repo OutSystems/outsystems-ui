@@ -141,7 +141,7 @@ const HEADS_BY_LENGTH = [...GRAMMAR_HEADS].sort((a, b) => b.length - a.length);
 /** @param {import('postcss').Rule} rule */
 function isKeyframeStep(rule) {
 	const parent = rule.parent;
-	return Boolean(parent && parent.type === 'atrule' && /keyframes$/i.test(/** @type {any} */ (parent).name));
+	return Boolean(parent?.type === 'atrule' && /keyframes$/i.test(/** @type {any} */ (parent).name));
 }
 
 /** @param {import('postcss').Rule} rule @returns {Declaration[]} */
@@ -264,7 +264,7 @@ export function classifyName(name) {
 		}
 	}
 	const value = segments.length ? segments.join('-') : null;
-	const last = segments[segments.length - 1];
+	const last = segments.at(-1);
 	const step = last && STEPS.includes(/** @type {any} */ (last)) ? last : null;
 	return { conformant: true, head, side, value, step };
 }

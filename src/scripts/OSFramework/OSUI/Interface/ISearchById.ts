@@ -7,7 +7,7 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Validates if object matched with the given id
 		 *
-		 * @param id
+		 * @param id Id compared against the unique id and the widget id of the object
 		 */
 		equalsToID(id: string): boolean;
 	}

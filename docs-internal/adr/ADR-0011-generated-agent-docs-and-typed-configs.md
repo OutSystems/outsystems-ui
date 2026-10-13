@@ -125,8 +125,8 @@ stylesheet drives with its parameter and event maps; a test rejects anything els
 `Create(id, configs)` accepts the platform's JSON string or a typed object. Both go through
 `OSFramework.OSUI.Helper.ParseConfigs`, whose string path is byte-for-byte the previous `JSON.parse`; `null`,
 arrays and numbers are rejected with a clear error instead of a `TypeError` later, and so is an object whose
-prototype is not `Object.prototype` or `null`: the Config classes read the configs with `for...in`, which would
-pick up a class instance's inherited fields. `RegisterCallback` takes
+prototype is not `null` or a root prototype without enumerable keys (`Object.prototype`): the Config classes read the
+configs with `for...in`, which would pick up the inherited fields of a class instance or of a custom prototype. `RegisterCallback` takes
 `EventName`. `SwipeEvents` and `TouchEvents` gain `ChangeProperty` (error codes `OSUI-API-34001` and
 `OSUI-API-35001`) so every pattern exposes the same canonical set; changing their `WidgetId` moves the gesture
 listeners to the new element. The `Orientation` alias in `Global.d.ts`
@@ -138,7 +138,9 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
 `undefined` (or keeps a field initializer) and, for some patterns, throws later (`VideoAPI.Create(id, {})` reaches
 `this.configs.URL.slice(...)` in `Initialize`). The platform never hits this because it always sends every
 input; required members give typed callers the same contract at compile time, instead of materializing defaults
-at runtime in all 33 Config classes. A published default is therefore what an *invalid* value falls back to.
+at runtime in all 33 Config classes. Types the JSON Schemas cannot express as a primitive are still constrained:
+enum-member unions become `enum`, `string | number` a type list, `string | Date` a string and `MonthYear` an object
+schema pinned to its declaration by a test; a test fails when any property is left without a `type` or `enum`. A published default is therefore what an *invalid* value falls back to.
 The usage examples follow: each passes every input (its default, else a neutral value such as `''`, `0`, `[]` or
 `{ Month: '', Year: -1 }`, with a few representative overrides where the neutral value would render nothing or
 throw, such as a 0..0 slider range). PascalCase fields the runtime sets itself (`DatePicker.CalendarMode` and
@@ -170,7 +172,8 @@ schemas and docs, so no caller is forced to pass a value the pattern overwrites.
     types: the comment is trusted and the path it names does not exist.
 -   **ESLint enforces it** through `eslint-plugin-jsdoc` in TypeScript mode, scoped to `src/scripts/**/*.ts`
     (declaration files excluded): `no-types`, `check-tag-names` (with `defaultValue` and `remarks` allowed),
-    `check-param-names`, `require-param-description`, `require-returns-description`, `empty-tags`; and on
+    `check-param-names`, `require-param-description` and `require-returns-description` (in every context, so interface method signatures
+are checked too: the default contexts skip them, which let 39 bare `@param` tags through), `empty-tags`; and on
     `OutSystems/OSUI/Patterns/*API.ts` additionally `require-jsdoc` (public functions), `require-param` and
     `require-returns`; on `*Config.ts` and `*Configuration.ts`, `require-jsdoc` on every public PascalCase
     field (the configs inputs the generator documents). The rules are at warning level, but `npm run lint`

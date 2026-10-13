@@ -10,7 +10,8 @@ namespace OSFramework.OSUI.Helper {
 	 * Only plain objects are accepted (prototype Object.prototype or null): the Config classes read
 	 * the configs with for...in, so a class instance or an Object.create(...) value would leak its
 	 * inherited enumerable properties into the configuration. The prototype is checked by shape, not
-	 * by identity, so an object created in another realm (an iframe) still counts as plain.
+	 * by identity, so an object created in another realm (an iframe) still counts as plain: it must
+	 * be null, or a root prototype (itself without a prototype) that exposes no enumerable keys.
 	 *
 	 * @param configs JSON string or plain object with the pattern configuration
 	 * @returns The configuration object handed to the pattern's Config class
@@ -27,7 +28,7 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		const proto = Object.getPrototypeOf(configs);
-		if (proto !== null && Object.getPrototypeOf(proto) !== null) {
+		if (proto !== null && (Object.getPrototypeOf(proto) !== null || Object.keys(proto).length > 0)) {
 			throw new Error('Invalid configs: expected a JSON string or a plain object, got an object with a prototype.');
 		}
 

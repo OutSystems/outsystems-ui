@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import { insideDir } from './paths.mjs';
 
 /** @param {string} text */
-const normalize = (text) => text.replace(/\r\n/g, '\n');
+const normalize = (text) => text.replaceAll('\r\n', '\n');
 
 /**
  * Files under `dir`, recursively, as `/`-separated relative paths, sorted.

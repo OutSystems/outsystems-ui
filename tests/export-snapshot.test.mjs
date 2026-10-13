@@ -33,11 +33,21 @@ test('parseArgs: only --platform ODC|O11 is accepted', () => {
 });
 
 test('exporterDir: OSUI_BLOCKS_EXPORT wins, else the sibling folder; a clear error otherwise', () => {
-	const root = tmp();
-	const sibling = path.join(root, '..', 'osui-blocks-export');
+	// exporterDir looks one and two levels above the root, so the root sits two levels inside a unique folder:
+	// both candidates are then private to this test instead of shared names such as <tmpdir>/osui-blocks-export
+	const parent = tmp();
+	const root = path.join(parent, 'a', 'repo');
+	fs.mkdirSync(root, { recursive: true });
+	const sibling = path.join(parent, 'a', 'osui-blocks-export');
+	const grandparentSibling = path.join(parent, 'osui-blocks-export');
 	assert.throws(() => exporterDir(root, {}), /OSUI_BLOCKS_EXPORT/);
 	const custom = tmp();
 	fs.writeFileSync(path.join(custom, 'osui-blocks-export.csproj'), '');
 	assert.equal(exporterDir(root, { OSUI_BLOCKS_EXPORT: custom }), custom);
-	assert.ok(!fs.existsSync(sibling) || exporterDir(root, {}) === path.resolve(sibling));
+	fs.mkdirSync(grandparentSibling);
+	fs.writeFileSync(path.join(grandparentSibling, 'osui-blocks-export.csproj'), '');
+	assert.equal(exporterDir(root, {}), grandparentSibling, 'the folder two levels up is found');
+	fs.mkdirSync(sibling);
+	fs.writeFileSync(path.join(sibling, 'osui-blocks-export.csproj'), '');
+	assert.equal(exporterDir(root, {}), sibling, 'the sibling wins over the folder two levels up');
 });
