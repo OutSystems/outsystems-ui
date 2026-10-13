@@ -13,7 +13,7 @@ namespace OSFramework.OSUI.Interface {
 		/**
 		 * Method signature to open the pattern.
 		 *
-		 * @param [isOpenedByApi]
+		 * @param [isOpenedByApi] True when the open was requested through the API, not by user interaction
 		 */
 		open(isOpenedByApi?: boolean): void;
 	}

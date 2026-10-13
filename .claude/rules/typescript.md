@@ -202,7 +202,7 @@ export function Create(accordionId: string, configs: string): OSFramework.OSUI.P
 - Public config props carry a `/** */` comment: the description, and `@defaultValue` when the code does not make the
   default explicit. The agent docs generator reads these comments (TypeDoc ignores `//` lines).
 - ESLint (`eslint-plugin-jsdoc`, TypeScript mode) warns on types in tags, unknown tags, parameters or return values
-  without a description, on an API function without a comment, and on a public PascalCase field of a `*Config.ts` /
+  without a description (interface method signatures included), on an API function without a comment, and on a public PascalCase field of a `*Config.ts` /
   `*Configuration.ts` class without one. They are warnings, but `npm run lint` runs with `--max-warnings=0`, so the
   build fails on any of them.
 

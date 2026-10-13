@@ -7,8 +7,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Overload the open method.
 		 *
-		 * @param [isOpenedByApi]
-		 * @param [arrowKeyPressed]
+		 * @param [isOpenedByApi] True when the open was requested through the API, not by user interaction
+		 * @param [arrowKeyPressed] Arrow key that opened the balloon; moves the focus to the first (down) or last (up) focusable element
 		 */
 		open(
 			isOpenedByApi?: boolean,
@@ -18,14 +18,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to set the Balloon border shape
 		 *
-		 * @param [shape]
+		 * @param [shape] Shape applied to the balloon corners
 		 */
 		setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
 
 		/**
 		 * Method to update the Balloon position
 		 *
-		 * @param position
+		 * @param position Position of the balloon relative to its trigger
 		 */
 		updatePositionOption(position: GlobalEnum.FloatingPosition): void;
 	}

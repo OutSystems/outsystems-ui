@@ -27,7 +27,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 		 *
 		 * @protected
 		 * @abstract
-		 * @param mutationList
+		 * @param mutationList Mutations reported by the browser since the last call
 		 */
 		protected abstract observerHandler(mutationList: MutationRecord[]): void;
 	}

@@ -10,8 +10,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Overload the open method.
 		 *
-		 * @param [isOpenedByApi]
-		 * @param [arrowKeyPressed]
+		 * @param [isOpenedByApi] True when the open was requested through the API, not by user interaction
+		 * @param [arrowKeyPressed] Arrow key that opened the menu; moves the focus to the first (down) or last (up) item
 		 */
 		open(
 			isOpenedByApi?: boolean,

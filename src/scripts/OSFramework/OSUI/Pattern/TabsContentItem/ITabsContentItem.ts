@@ -41,14 +41,14 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		/**
 		 * Method to set the intersection observer
 		 *
-		 * @param observer
+		 * @param observer Intersection observer that watches the item while the tabs are dragged
 		 */
 		setOnDragObserver(observer: IntersectionObserver): void;
 
 		/**
 		 * Method to stop observing this element in the intersection observer
 		 *
-		 * @param observer
+		 * @param observer Intersection observer that stops watching the item
 		 */
 		unobserveDragObserver(observer: IntersectionObserver): void;
 

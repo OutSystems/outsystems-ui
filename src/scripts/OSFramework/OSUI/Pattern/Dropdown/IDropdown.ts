@@ -52,8 +52,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown {
 		/**
 		 * Method used to set the validation status, and also pass the message to show
 		 *
-		 * @param isValid
-		 * @param validationMessage
+		 * @param isValid False when the validation message must be shown
+		 * @param validationMessage Message shown when the dropdown is not valid
 		 */
 		validation(isValid: boolean, validationMessage: string): void;
 	}
