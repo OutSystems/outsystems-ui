@@ -15,7 +15,8 @@ then replaying every entry under **Hand-applied ports** below.
 > provenance line above. **After a refresh, re-sync the two banners by hand.** A refresh
 > overwrites the bundles (not this file) with whatever `dev` emitted, so their banners stop
 > matching the current version and the task skips them with a `⚠️ Skipped …` warning until
-> someone sets them back.
+> someone sets them back. `dev` emits `OutSystems UI <version>`, so re-add the `Classic` word
+> too: the task matches `OutSystems UI Classic <version>` only.
 
 ## Hand-applied ports
 
