@@ -1,6 +1,6 @@
 # OutSystems UI — theming surface
 
-Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+Scope: a single token-based theme (light, plus generated dark mode: class os-dark-theme on <html>). classic-theme/ is a pre-migration snapshot for Storybook comparison, not a target for generated code; to migrate an app's classic custom CSS, read https://github.com/OutSystems/outsystems-ui/blob/dev/THEME-MIGRATION-GUIDE.md.
 
 Read chain: property → var(--osui-{component}-{prop}) → var(--{role}) → $token-* → var(--token-*, fallback).
 Override variables only. App/theme: set roles or --token-* at :root (dark: class os-dark-theme on <html>). Instance: set an --osui-* knob inline or in a class.

@@ -769,7 +769,7 @@ ${PRODUCERS_HEADING}
 4. ${RUNTIME_ONLY} Every runtime API function returns a JSON string envelope \`{ code, isSuccess, message, value? }\`; only \`Create\` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (\`--color-primary\`, \`--border-radius-default\`, \`--osui-card-padding\`), never component rules. Dark mode = class \`os-dark-theme\` on \`<html>\`.
 6. Responsiveness is class-driven: the runtime sets \`phone\`, \`tablet\` or \`desktop\` (and \`landscape\`/\`portrait\`) on \`<body>\`; write \`.phone .card { … }\` rather than media queries.
-7. Utility classes follow \`<property>[-<side>][-<value>]\` in long form (\`margin-top-base\`, \`display-flex\`, \`justify-content-space-between\`); Tailwind-style short names do not exist. The grammar and the size scale are in llms-utilities.txt, every class with its CSS in osui.utilities.json.
+7. Utility classes follow \`<property>[-<side>][-<value>]\` in long form (\`margin-top-base\`, \`display-flex\`, \`justify-content-space-between\`); Tailwind-style short names do not exist.
 8. Logical CSS properties are the default (\`padding-inline-start\`, not \`padding-left\`); RTL is handled by the framework.
 9. ${RUNTIME_ONLY} Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
 `;
@@ -782,8 +782,10 @@ ${PRODUCERS_HEADING}
  */
 const LEGACY_ALIAS = /^--(color-neutral(-\d+)?|color-<color>|space-<type>|border-radius-(none|soft|rounded))$/;
 
-const SINGLE_THEME_SCOPE =
-	'Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.';
+/** Absolute, because the guide lives in the repository and is not copied to the documentation site. */
+const THEME_MIGRATION_GUIDE_URL = 'https://github.com/OutSystems/outsystems-ui/blob/dev/THEME-MIGRATION-GUIDE.md';
+
+const SINGLE_THEME_SCOPE = `Scope: a single token-based theme (light, plus generated dark mode: class os-dark-theme on <html>). classic-theme/ is a pre-migration snapshot for Storybook comparison, not a target for generated code; to migrate an app's classic custom CSS, read ${THEME_MIGRATION_GUIDE_URL}.`;
 
 /**
  * Theme-layer custom properties declared in `_root.scss`: literal declarations (`--color-text: …`) and
