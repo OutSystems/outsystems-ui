@@ -1253,7 +1253,7 @@
 					"Padding": "0px",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.CarouselAPI.Create(\"carousel1\", \"{\\\"AutoPlay\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"ItemsDesktop\\\":1,\\\"ItemsGap\\\":\\\"0px\\\",\\\"ItemsPhone\\\":1,\\\"ItemsTablet\\\":1,\\\"Loop\\\":true,\\\"Navigation\\\":\\\"both\\\",\\\"Padding\\\":\\\"0px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.CarouselAPI.Create(\"carousel1\", \"{\\\"AutoPlay\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"ItemsDesktop\\\":1,\\\"ItemsGap\\\":\\\"0px\\\",\\\"ItemsPhone\\\":1,\\\"ItemsTablet\\\":1,\\\"Loop\\\":true,\\\"Navigation\\\":\\\"both\\\",\\\"Padding\\\":\\\"0px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"Splide\")",
 				"initialize": "OutSystems.OSUI.Patterns.CarouselAPI.Initialize(\"carousel1\")"
 			},
 			"schema": "schema/configs/Carousel.schema.json",
@@ -1709,7 +1709,7 @@
 					"TimeFormat": "disabled",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"Disable\\\":[],\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"Disable\\\":[],\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
 			},
 			"schema": "schema/configs/DatePicker.schema.json",
@@ -2133,7 +2133,7 @@
 					"SanitizeDropdownValues": false,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DropdownAPI.Create(\"dropdown1\", \"{\\\"AllowMultipleSelection\\\":false,\\\"IsDisabled\\\":false,\\\"SanitizeDropdownValues\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DropdownAPI.Create(\"dropdown1\", \"search\", \"virtual-select\", \"{\\\"AllowMultipleSelection\\\":false,\\\"IsDisabled\\\":false,\\\"SanitizeDropdownValues\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.DropdownAPI.Initialize(\"dropdown1\")"
 			},
 			"schema": "schema/configs/Dropdown.schema.json",
@@ -3106,7 +3106,7 @@
 					"DisableMobile": true,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.MonthPickerAPI.Initialize(\"monthPicker1\")"
 			},
 			"schema": "schema/configs/MonthPicker.schema.json",
@@ -3760,7 +3760,7 @@
 				"configs": {
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.ProgressAPI.Create(\"progress1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.ProgressAPI.Create(\"progress1\", \"Bar\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.ProgressAPI.Initialize(\"progress1\")"
 			},
 			"schema": "schema/configs/Progress.schema.json",
@@ -4109,7 +4109,7 @@
 					"TickMarksInterval": 0,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"noUiSlider\")",
 				"initialize": "OutSystems.OSUI.Patterns.RangeSliderAPI.Initialize(\"rangeSlider1\")"
 			},
 			"schema": "schema/configs/RangeSlider.schema.json",
@@ -6215,7 +6215,7 @@
 					"Is24Hours": true,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"Is24Hours\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"Is24Hours\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.TimePickerAPI.Initialize(\"timePicker1\")"
 			},
 			"schema": "schema/configs/TimePicker.schema.json",

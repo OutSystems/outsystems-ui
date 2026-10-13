@@ -374,7 +374,7 @@ export function buildManifest(ctx) {
 			cssClasses: e.cssClassMap,
 			cssApi,
 			markup,
-			usage: usageOf(p.name, props),
+			usage: usageOf(ctx, p, props, e.apiFunctions),
 			schema: `schema/configs/${p.name}.schema.json`,
 			docs: (DOCS_BY_NAME.get(p.name) ?? []).map(patternPage),
 			story: p.storyFile ? ctx.rel(p.storyFile) : null,
@@ -391,20 +391,67 @@ export function buildManifest(ctx) {
 }
 
 /**
- * The canonical call shape of a pattern: a configs example with every documented default (the runtime
- * applies them anyway, so the example is behaviour-neutral) and the Create → Initialize calls.
- * @param {string} name
- * @param {Record<string, any>} props manifest props
+ * The value an example passes for a Create argument that selects an implementation, as an enum member of the
+ * pattern, resolved from the source so it cannot drift. Only arguments whose enum has several members are
+ * listed (a one-member enum, such as most providers, is used as is); each pair is one the factory accepts.
  */
-function usageOf(name, props) {
+const EXAMPLE_ARGUMENTS = {
+	DatePicker: { mode: 'Enum.Mode.Single' },
+	Dropdown: { mode: 'Enum.Mode.Search', provider: 'Enum.Provider.VirtualSelect' },
+	Progress: { type: 'Enum.ProgressTypes.Bar' },
+	RangeSlider: { mode: 'Enum.Mode.Single' },
+};
+
+/** The enum that holds the values of a Create selector argument. */
+const SELECTOR_ENUMS = { mode: 'Mode', provider: 'Provider', type: 'ProgressTypes' };
+
+/**
+ * The value an example passes for one Create argument other than the id and the configs.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {string} param
+ * @returns {string}
+ */
+function exampleArgument(ctx, pattern, param) {
+	const listed = EXAMPLE_ARGUMENTS[/** @type {keyof typeof EXAMPLE_ARGUMENTS} */ (pattern.name)];
+	const reference = listed?.[/** @type {never} */ (param)];
+	if (reference) {
+		const value = resolveEnumReference(ctx, pattern, reference);
+		if (typeof value === 'string') return value;
+		throw new Error(`${pattern.name}: example argument ${param} = ${reference} does not resolve`);
+	}
+	const enumName = SELECTOR_ENUMS[/** @type {keyof typeof SELECTOR_ENUMS} */ (param)];
+	const members = enumName ? Object.values(findEnum(ctx, pattern, 'Enum', enumName)?.members ?? {}) : [];
+	if (members.length === 1 && typeof members[0] === 'string') return members[0];
+	throw new Error(`${pattern.name}: no example value for the Create argument ${param}; list it in EXAMPLE_ARGUMENTS`);
+}
+
+/**
+ * The canonical call shape of a pattern: a configs example with every documented default (the runtime
+ * applies them anyway, so the example is behaviour-neutral) and the Create → Initialize calls. Create is
+ * written from its parsed signature, so selector arguments (mode, provider, type) sit where the API takes them.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {Record<string, any>} props manifest props
+ * @param {import('./ts.mjs').ExportedFunction[]} apiFunctions
+ */
+function usageOf(ctx, pattern, props, apiFunctions) {
+	const name = pattern.name;
 	/** @type {Record<string, unknown>} */
 	const configs = {};
 	for (const [k, d] of Object.entries(props)) if (d.default !== undefined) configs[k] = d.default;
 	configs.ExtendedClass = '';
 	const id = `${name.charAt(0).toLowerCase()}${name.slice(1)}1`;
+	const create = apiFunctions.find((f) => f.name === 'Create');
+	if (!create) throw new Error(`${name}API has no Create function`);
+	const args = create.params.map((param, index) => {
+		if (index === 0) return JSON.stringify(id);
+		if (param.name === 'configs') return JSON.stringify(JSON.stringify(configs));
+		return JSON.stringify(exampleArgument(ctx, pattern, param.name));
+	});
 	return {
 		configs,
-		create: `OutSystems.OSUI.Patterns.${name}API.Create("${id}", ${JSON.stringify(JSON.stringify(configs))})`,
+		create: `OutSystems.OSUI.Patterns.${name}API.Create(${args.join(', ')})`,
 		initialize: `OutSystems.OSUI.Patterns.${name}API.Initialize("${id}")`,
 	};
 }

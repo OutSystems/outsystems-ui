@@ -159,6 +159,11 @@ test('every pattern gets a configs JSON Schema and a usage example, and its card
 		'OutSystems.OSUI.Patterns.AccordionAPI.Create("accordion1", "{\\"MultipleItems\\":false,\\"ExtendedClass\\":\\"\\"}")'
 	);
 	assert.equal(accordion.usage.initialize, 'OutSystems.OSUI.Patterns.AccordionAPI.Initialize("accordion1")');
+	// Create is written from its signature: selector arguments sit where the API takes them
+	assert.match(manifest.components.Dropdown.usage.create, /^OutSystems\.OSUI\.Patterns\.DropdownAPI\.Create\("dropdown1", "search", "virtual-select", "\{/);
+	assert.match(manifest.components.Progress.usage.create, /^OutSystems\.OSUI\.Patterns\.ProgressAPI\.Create\("progress1", "Bar", "\{/);
+	assert.match(manifest.components.DatePicker.usage.create, /\}", "single", "flatpickr"\)$/);
+	assert.match(manifest.components.Carousel.usage.create, /\}", "Splide"\)$/);
 	const schema = configSchemaOf(accordion);
 	assert.equal(schema.type, 'object');
 	assert.equal(schema.additionalProperties, false);
