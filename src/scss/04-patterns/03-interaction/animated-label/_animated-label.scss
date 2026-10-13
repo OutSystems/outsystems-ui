@@ -98,14 +98,6 @@
 				padding: variables.$token-scale-0;
 				transition: all variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
-				&:focus {
-					border-block-end: variables.$token-border-size-025 solid var(--osui-animated-label-focus-border-color);
-
-					&::-webkit-datetime-edit {
-						color: var(--color-text);
-					}
-				}
-
 				&.not-valid {
 					border-block-end: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
 
@@ -163,11 +155,6 @@
 		border-color: var(--osui-animated-label-hover-border-color);
 	}
 
-	&:focus-within {
-		border-color: var(--osui-animated-label-focus-border-color);
-		box-shadow: var(--osui-animated-label-focus-shadow);
-	}
-
 	// Disabled — muted surface + label
 	&:has([disabled]) {
 		background-color: var(--osui-animated-label-disabled-background);
@@ -209,7 +196,7 @@
 			// Service Studio Preview
 			& {
 				-servicestudio-transform: TranslateY(-50%) !important;
-				-servicestudio-width: fit-content!important;
+				-servicestudio-width: fit-content !important;
 			}
 		}
 	}
@@ -250,12 +237,6 @@
 				padding-block: 0;
 				padding-inline: variables.$token-scale-400;
 				width: 100%;
-
-				&:focus {
-					border: none;
-					box-shadow: none;
-					outline: none;
-				}
 			}
 
 			&[data-textarea] {
@@ -265,12 +246,6 @@
 				padding-block: variables.$token-scale-400 0;
 				padding-inline: variables.$token-scale-400;
 				width: 100%;
-
-				&:focus {
-					border: none;
-					box-shadow: none;
-					outline: none;
-				}
 			}
 		}
 
@@ -339,18 +314,16 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: var(--color-border-input);
+			border: var(--color-border-input);
 
 			&:hover {
 				border-color: var(--osui-animated-label-hover-border-color);
 			}
+
+			&:focus {
+				border: variables.$token-border-size-025 solid var(--color-border-input);
+			}
 		}
-	}
-
-	.animated-label:focus-within {
-		--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-075} var(--color-focus-outer);
-
-		border-color: var(--osui-animated-label-border-color);
 	}
 }
 
