@@ -1,6 +1,7 @@
-@use "sass:map";
-@use "sass:string";
-@use "../tokens/variables";
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+@use '../tokens/variables';
 
 ////
 /// @group global
@@ -25,6 +26,38 @@
 	} @else {
 		box-shadow: 0 0 0 variables.$token-border-size-075 variables.$token-primitives-yellow-500;
 	}
+}
+
+/// Element types accepted by a11y-focus-shadow(). Add a member here when a new
+/// element needs its own focus treatment, then branch on it inside the mixin.
+$a11y-focus-shadow-types: button, link;
+
+/// Focus ring chosen by element type. $isInner only moves that ring inside the element.
+/// @param {String} $type [null] - One of $a11y-focus-shadow-types (`button`, `link`).
+/// @param {Boolean} $isInner [false] - Draw the ring inside the element when true.
+@mixin a11y-focus-shadow($type: null, $isInner: false) {
+	@if $type != null and list.index($a11y-focus-shadow-types, $type) == null {
+		@error 'a11y-focus-shadow() expected $type to be one of #{$a11y-focus-shadow-types}, got "#{$type}".';
+	}
+
+	@if $type == button {
+		border-color: var(--color-background-surface);
+	}
+
+	@if $isInner {
+		box-shadow: inset
+			0
+			0
+			0
+			calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width))
+			var(--osui-focus-shadow-color);
+	} @else {
+		box-shadow:
+			0 0 0 var(--osui-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width)) var(--osui-focus-shadow-color);
+	}
+
+	outline: none;
 }
 
 /// outline style for high contrast mode

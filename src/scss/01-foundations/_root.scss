@@ -138,4 +138,9 @@
 	--osui-popup-layer: var(--layer-global-off-canvas);
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
+
+	// A11Y focus shadow width
+	--osui-focus-shadow-width: #{variables.$token-border-size-050};
+	--osui-focus-shadow-gap: #{variables.$token-scale-050};
+	--osui-focus-shadow-color: #{variables.$token-border-focus-default};
 }
