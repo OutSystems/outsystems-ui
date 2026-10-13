@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Class that represents the Post Message on the Window.
-	 *
-	 * @export
-	 * @class WindowMessage
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class WindowMessage extends AbstractListener<string> {
 		constructor() {

@@ -2,8 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Auxiliar method that will return the container where the scroll will be set
-	 *
-	 * @return {*}  {(HTMLElement | Document)}
 	 */
 	function getScrollableScreenContainer(): HTMLElement | Document {
 		// Store the layout native element
@@ -26,10 +24,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 
 	/**
 	 * Class that represents the scroll on the active screen element.
-	 *
-	 * @export
-	 * @class ScreenOnScroll
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class ScreenOnScroll extends AbstractListener<string> {
 		constructor() {
@@ -46,8 +40,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 * Method to set a new handler and update the target if it's the case.
 		 * - At screen transitions if we do not update the eventTarget this event will be lost since the container will not be the same instance at the new screen!
 		 *
-		 * @param {GlobalCallbacks.OSGeneric} handler
-		 * @memberof ScreenOnScroll
+		 * @param handler Function to run when the screen scrolls
 		 */
 		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
 			// Check if the current eventTarget is different from the current one.

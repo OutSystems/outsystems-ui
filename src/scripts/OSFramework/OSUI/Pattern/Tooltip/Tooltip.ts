@@ -264,6 +264,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					break;
 				default:
 					_finalPosition = tooltipPosition;
+					// top/right/bottom/left share their string values across the two enums
 			}
 
 			return _finalPosition;
@@ -352,7 +353,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setA11YProperties(): void {
 			// Set Role to the tooltip trigger element
@@ -371,7 +371,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Set the method that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setCallbacks(): void {
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
@@ -390,7 +389,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -405,7 +403,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetCallbacks(): void {
 			this._eventBalloonOnToggle = undefined;
@@ -424,7 +421,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetHtmlElements(): void {
 			// unset the local properties
@@ -436,8 +432,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		/**
 		 * Method to build the Tooltip
-		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public build(): void {
 			super.build();
@@ -453,9 +447,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -485,8 +478,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		/**
 		 * Close the tooltip
-		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public close(): void {
 			if (this._balloonFeature.isOpen) {
@@ -496,8 +487,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		/**
 		 * Destroy the tooltip
-		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public dispose(): void {
 			this._unsetEvents();
@@ -509,8 +498,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		/**
 		 * Open the tooltip
-		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public open(): void {
 			if (this._balloonFeature.isOpen === false) {
@@ -522,9 +509,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName Event name that will be assigned
-		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @param eventName Event name that will be assigned
+		 * @param callback Function name that will be passed as a callback function to the event above
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -542,8 +528,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Method to set the Balloon options
 		 *
-		 * @param {Feature.Balloon.BalloonOptions} [balloonOptions]
-		 * @memberof Tooltip
+		 * @param [balloonOptions] Options of the balloon that renders the floating content
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
 			if (balloonOptions !== undefined) {
@@ -580,8 +565,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Getter that allows to obtain the IsOpen status.
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public get IsOpen(): boolean {
 			return this._isOpen;

@@ -12,8 +12,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.Lang {
 		/**
 		 * Observer callback method
 		 *
-		 * @param {MutationRecord[]} mutationList
-		 * @memberof LangObserver
+		 * @param mutationList Mutations observed since the last callback
 		 */
 		public observerHandler(mutationList: MutationRecord[]): void {
 			mutationList.forEach((mutation) => {

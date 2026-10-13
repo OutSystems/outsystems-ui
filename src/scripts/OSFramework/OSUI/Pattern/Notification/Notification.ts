@@ -230,7 +230,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *	Method to clear timeouts
 		 *
 		 * @protected
-		 * @memberof Notification
 		 */
 		protected clearTimeouts(): void {
 			if (this.configs.CloseAfterTime > 0) {
@@ -242,7 +241,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to set the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
@@ -259,7 +257,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *  Method to set the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._clickCallback.bind(this);
@@ -270,7 +267,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
@@ -280,7 +276,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected setInitialStates(): void {
 			if (this.isBuilt) {
@@ -311,7 +306,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected unsetCallbacks(): void {
 			// Reassign the elements to undefined, preventing memory leaks and remove events
@@ -327,7 +321,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -336,8 +329,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to build the Notification
-		 *
-		 * @memberof Notification
 		 */
 		public build(): void {
 			super.build();
@@ -361,9 +352,8 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Method to update value when a parameters changed occurs
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			const _oldNotificationPosition = this.configs.Position;
@@ -403,8 +393,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to destroy the Notification
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -432,8 +420,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to hide the notification, if it's visible.
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public hide(): void {
 			if (this._isOpen) {
@@ -444,8 +430,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to handle the platform swipe bottom gesture
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public onSwipeBottom(): void {
 			if (
@@ -460,8 +444,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to handle the platform swipe left gesture
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public onSwipeLeft(): void {
 			if (
@@ -475,8 +457,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to handle the platform swipe right gesture
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public onSwipeRight(): void {
 			if (
@@ -490,8 +470,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to handle the platform swipe top gesture
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public onSwipeUp(): void {
 			this.hide();
@@ -500,9 +478,8 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Method to register the provider callback
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -519,8 +496,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to remove the gesture events to open/close the Notification on Mobile Apps
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -536,7 +511,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to set the gesture events to open/close the Notification on Native Apps
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public setGestureEvents(
 			onSwipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
@@ -555,8 +529,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		/**
 		 * Method to show the notification, if it's closed.
-		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public show(): void {
 			if (this._isOpen === false) {
@@ -568,8 +540,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to get Gesture Events Instance
 		 *
 		 * @readonly
-		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.SwipeEvent {
 			return this._gestureEventInstance;
@@ -579,8 +549,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to check if gesture events is applied
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;

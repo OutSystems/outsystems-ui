@@ -5,8 +5,8 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 *
 	 * E.g. use this action to change Alert default values for the role attribute.
 	 * This action should be used only when the pattern's visibility is set to true.
-	 * @param {string} widgetId
-	 * @param {string} role
+	 * @param widgetId Id of the widget to update
+	 * @param role ARIA role to set
 	 */
 	export function SetAccessibilityRole(widgetId: string, role: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -41,8 +41,8 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 
 	/**
 	 * Use this action to toggle the status of the aria-hidden attribute of an element.
-	 * @param widgetId
-	 * @param isHidden
+	 * @param widgetId Id of the widget to update
+	 * @param isHidden True to hide the element from assistive technologies
 	 */
 	export function SetAriaHidden(widgetId: string, isHidden: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -61,7 +61,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 
 	/**
 	 * Use this action to focus the element.
-	 * @param widgetId
+	 * @param widgetId Id of the widget to update
 	 */
 	export function SetFocus(widgetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -80,7 +80,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 
 	/**
 	 * Use this action to specify the language of the element's content. E.g. "en"
-	 * @param lang
+	 * @param lang Language code to set on the html element
 	 */
 	export function SetLang(lang: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -96,7 +96,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	/**
 	 * Action used on OutSystems UI layouts, to allow the user to skip the navigation elements on the screen, and tab directly into content.
 	 * By default, the MainContentWrapper.Id is used. Use the targetId parameter to set a custom target.
-	 * @param targetId
+	 * @param targetId Id of the element to move the focus to
 	 */
 	export function SkipToContent(targetId: string): string {
 		// Method to remove tabindex from skipToContent at onBlur

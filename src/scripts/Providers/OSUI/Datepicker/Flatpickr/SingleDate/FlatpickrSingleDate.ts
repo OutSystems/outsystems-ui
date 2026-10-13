@@ -50,8 +50,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * Method that will be triggered by library each time any date is selected and will also trigger the input update value and also trigger the OnSelectedDate platform event callback!
 		 *
 		 * @protected
-		 * @param {string[]} selectedDates Array of selected dates
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 * @param selectedDates Array of selected dates
 		 */
 		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected date with the expected dateFormat as a string type
@@ -85,7 +84,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * The method used to prepare the pattern before being redrawn in order to prevent possible flickering.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		protected prepareToAndRedraw(): void {
 			// Ensure the Flag value is reset at the redraw!
@@ -98,7 +96,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * Trigger the jumToDate to now and trigger the Now as a selected Date!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
@@ -113,7 +110,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * Update platform input attributes in order to maintain consistency with data type!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		protected updatePlatformInputAttrs(): void {
 			// Set the type attribute value accordingly
@@ -133,8 +129,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 
 		/**
 		 * Builds the Pattern
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public build(): void {
 			super.build();
@@ -145,9 +139,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		/**
 		 * Method used to change given propertyName at OnParametersChange platform event
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Flag to help on dealing with the redraw when InitialDate has been changed
@@ -208,8 +201,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 
 		/**
 		 * Method used to toggle the default native behavior of DatePicker
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public toggleNativeBehavior(isNative: boolean): void {
 			// Invert the boolean value of IsNative because of provider option
@@ -223,7 +214,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * Method used to update the InitialDate config value
 		 *
 		 * @param value The new InitialDate value that will be set
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public updateInitialDate(value: string): void {
 			if (this.datePickerPlatformInputElem.disabled === false) {

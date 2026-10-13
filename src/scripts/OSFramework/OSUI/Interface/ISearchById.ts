@@ -2,17 +2,12 @@
 namespace OSFramework.OSUI.Interface {
 	/**
 	 * Defines the interface for objects with multiple DOM identifiers
-	 *
-	 * @export
-	 * @interface ISearchById
 	 */
 	export interface ISearchById {
 		/**
 		 * Validates if object matched with the given id
 		 *
-		 * @param {string} id
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Interface.ISearchById
+		 * @param id Id compared against the unique id and the widget id of the object
 		 */
 		equalsToID(id: string): boolean;
 	}

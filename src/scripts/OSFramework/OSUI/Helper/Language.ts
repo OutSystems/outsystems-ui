@@ -5,9 +5,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that allows to obtain the App Language based on SetLocale Action from platform!
 		 *
 		 * @readonly
-		 * @static
-		 * @type {string}
-		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get Lang(): string {
 			if (document.documentElement.lang === undefined) {
@@ -21,9 +18,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that allows to obtain the App Language with 2 characters only
 		 *
 		 * @readonly
-		 * @static
-		 * @type {string}
-		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get ShortLang(): string {
 			if (document.documentElement.lang === undefined) {

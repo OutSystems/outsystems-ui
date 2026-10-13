@@ -16,9 +16,8 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Creates an instance of InlineSvg.
 		 *
-		 * @param {string} uniqueId
-		 * @param {JSON} configs
-		 * @memberof InlineSvg
+		 * @param uniqueId Unique id of the pattern instance (the widget id)
+		 * @param configs Configuration object received from the platform
 		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new InlineSvgConfig(configs));
@@ -39,7 +38,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setA11YProperties(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -49,7 +47,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Set the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -59,7 +56,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -69,7 +65,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Unset the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
-		 * @memberof InlineSvg
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -79,7 +74,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Reassign the HTML elements to undefined, preventing memory leaks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -88,8 +82,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Method to apply the A11Y properties to the InlineSvg
 		 *
-		 * @param {string} options
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @param options Accessibility properties, as a JSON string
 		 */
 		public applyA11YProperties(options: string): void {
 			try {
@@ -134,8 +127,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 		/**
 		 * Method to build the InlineSVG
-		 *
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		public build(): void {
 			super.build();
@@ -148,9 +139,8 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Update value when a parameters changed occurs.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -165,8 +155,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 		/**
 		 * Destroy the InlineSvg
-		 *
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {

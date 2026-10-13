@@ -2,9 +2,6 @@
 namespace OSFramework.OSUI.Utils.FloatingPosition {
 	/**
 	 * Interface used by FloatingPosition Util
-	 *
-	 * @export
-	 * @interface IFloatingPosition
 	 */
 	export interface IFloatingPosition {
 		setFloatingPosition(): void;

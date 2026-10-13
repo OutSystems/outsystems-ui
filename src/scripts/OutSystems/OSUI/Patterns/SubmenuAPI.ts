@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will change the property of a given Submenu.
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the Submenu where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param submenuId ID of the Submenu where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(submenuId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 *
 	 * Function that will toggle the behaviour to close submenu when clicking the body
-	 * @export
-	 * @param {string} submenuId
-	 * @param {boolean} clickOutsideToClose
-	 * @return {*}  {string}
+	 * @param submenuId The id of the Submenu element
+	 * @param clickOutsideToClose Whether a click outside the submenu closes it
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -47,8 +46,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will close a given submenu.
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the submenu that will be closed
+	 * @param submenuId ID of the submenu that will be closed
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(submenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -66,8 +65,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will open a given submenu.
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the submenu that will be closed
+	 * @param submenuId ID of the submenu that will be closed
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(submenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -85,19 +84,21 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Create the new submenu instance and add it to the submenusMap
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the Submenu where the instance will be created.
-	 * @param {string} configs configurations for the Submenu in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.ISubmenu}
+	 * @param submenuId ID of the Submenu where the instance will be created.
+	 * @param configs configurations for the Submenu in JSON format.
+	 * @returns the Submenu instance
 	 */
-	export function Create(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
+	export function Create(submenuId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
 		if (_submenusMap.has(submenuId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`
 			);
 		}
 
-		const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+		const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(
+			submenuId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_submenusMap.set(submenuId, _newSubmenu);
 
@@ -107,8 +108,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will destroy the instance of the given submenu
 	 *
-	 * @export
-	 * @param {string} submenuId
+	 * @param submenuId The id of the Submenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(submenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -128,8 +129,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will return the Map with all the Submenu instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Isubmenu>}
+	 * @returns the ids of every Submenu instance
 	 */
 	export function GetAllSubmenus(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_submenusMap);
@@ -138,9 +138,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that gets the instance of submenu, by a given ID.
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the Submenu that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.ISubmenu}
+	 * @param submenuId ID of the Submenu that will be looked for.
+	 * @returns the Submenu instance
 	 */
 	export function GetSubmenuById(submenuId: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -153,9 +152,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} submenuId ID of the Submenu that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.ISubmenu}
+	 * @param submenuId ID of the Submenu that will be initialized.
+	 * @returns the Submenu instance
 	 */
 	export function Initialize(submenuId: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
 		const submenu = GetSubmenuById(submenuId);
@@ -168,15 +166,14 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} submenuId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param submenuId The id of the Submenu element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		submenuId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -194,8 +191,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will set the hover trigger to a given submenu.
 	 *
-	 * @export
-	 * @param {string} submenuId
+	 * @param submenuId The id of the Submenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SubmenuOpenOnHover(submenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -213,9 +210,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will run  on the pattern's OnRender.
 	 *
-	 * @export
-	 * @param {string} submenuId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Submenu.ISubmenu}
+	 * @param submenuId The id of the Submenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(submenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

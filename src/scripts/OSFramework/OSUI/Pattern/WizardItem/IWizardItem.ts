@@ -8,8 +8,7 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		/**
 		 * Method to be notified by the parent that a new property value has been set
 		 *
-		 * @param {Enum.ParentNotifyActionType} notificationType Notification type
-		 * @memberof OSFramework.Patterns.WizardItem.IWizardItem
+		 * @param notificationType Notification type
 		 */
 		beNotifiedByParent(notificationType: Enum.ParentNotifyActionType): void;
 	}

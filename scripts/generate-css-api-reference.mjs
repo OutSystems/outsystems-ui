@@ -240,7 +240,15 @@ function inferStoryId(name, file, patternStories) {
 
 
 function escTsString(v) {
-	return v.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+	return v.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+}
+
+// A TypeScript string literal for v. A value with a backslash (an icon glyph such as '\e53a') is written as a
+// String.raw template so the output needs no escaped backslashes (Sonar typescript:S7780); anything else stays
+// a single-quoted literal. A raw template cannot contain a backtick or `${`, nor end with a backslash.
+function tsString(v) {
+	const rawSafe = v.includes('\\') && !v.includes('`') && !v.includes('${') && !v.endsWith('\\');
+	return rawSafe ? `String.raw\`${v}\`` : `'${escTsString(v)}'`;
 }
 
 // Explicit comparator so the sort is not the type-dependent default. Compares by
@@ -358,11 +366,11 @@ function emitProp(p, indent) {
 	const pad = '\t'.repeat(indent);
 	return [
 		`${pad}{`,
-		`${pad}\tname: '${escTsString(p.name)}',`,
-		`${pad}\tdefault: '${escTsString(p.default)}',`,
+		`${pad}\tname: ${tsString(p.name)},`,
+		`${pad}\tdefault: ${tsString(p.default)},`,
 		`${pad}\tkind: '${p.kind}',`,
 		`${pad}\tchain: '${p.chain}',`,
-		`${pad}\thint: '${escTsString(p.hint)}',`,
+		`${pad}\thint: ${tsString(p.hint)},`,
 		`${pad}},`,
 	].join('\n');
 }
@@ -419,31 +427,35 @@ const manifestLines = [
 ];
 
 for (const cat of manifestCategories) {
-	manifestLines.push('\t\t{');
-	manifestLines.push(`\t\t\tid: '${cat.id}',`);
-	manifestLines.push(`\t\t\tlabel: '${escTsString(cat.label)}',`);
-	manifestLines.push(`\t\t\torder: ${cat.order},`);
-	manifestLines.push('\t\t\tcomponents: [');
+	manifestLines.push(
+		'\t\t{',
+		`\t\t\tid: '${cat.id}',`,
+		`\t\t\tlabel: ${tsString(cat.label)},`,
+		`\t\t\torder: ${cat.order},`,
+		'\t\t\tcomponents: ['
+	);
 	for (const c of cat.components) {
-		manifestLines.push('\t\t\t\t{');
-		manifestLines.push(`\t\t\t\t\tname: '${escTsString(c.name)}',`);
-		manifestLines.push(`\t\t\t\t\tslug: '${escTsString(c.slug)}',`);
-		manifestLines.push(`\t\t\t\t\tfile: '${escTsString(c.file)}',`);
-		manifestLines.push(`\t\t\t\t\tstoryId: ${c.storyId ? `'${escTsString(c.storyId)}'` : 'null'},`);
-		manifestLines.push('\t\t\t\t\tvariants: [');
+		manifestLines.push(
+			'\t\t\t\t{',
+			`\t\t\t\t\tname: ${tsString(c.name)},`,
+			`\t\t\t\t\tslug: ${tsString(c.slug)},`,
+			`\t\t\t\t\tfile: ${tsString(c.file)},`,
+			`\t\t\t\t\tstoryId: ${c.storyId ? tsString(c.storyId) : 'null'},`,
+			'\t\t\t\t\tvariants: ['
+		);
 		for (const v of c.variants) {
-			manifestLines.push('\t\t\t\t\t\t{');
-			manifestLines.push(`\t\t\t\t\t\t\tselector: '${escTsString(v.selector)}',`);
-			manifestLines.push('\t\t\t\t\t\t\tproperties: [');
-			for (const p of v.properties) manifestLines.push(emitProp(p, 7));
-			manifestLines.push('\t\t\t\t\t\t],');
-			manifestLines.push('\t\t\t\t\t},');
+			manifestLines.push(
+				'\t\t\t\t\t\t{',
+				`\t\t\t\t\t\t\tselector: ${tsString(v.selector)},`,
+				'\t\t\t\t\t\t\tproperties: [',
+				...v.properties.map((p) => emitProp(p, 7)),
+				'\t\t\t\t\t\t],',
+				'\t\t\t\t\t},'
+			);
 		}
-		manifestLines.push('\t\t\t\t],');
-		manifestLines.push('\t\t\t\t},');
+		manifestLines.push('\t\t\t\t],', '\t\t\t\t},');
 	}
-	manifestLines.push('\t\t\t],');
-	manifestLines.push('\t\t},');
+	manifestLines.push('\t\t\t],', '\t\t},');
 }
 
 manifestLines.push('\t],', '};', '');

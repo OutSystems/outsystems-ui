@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 	/**
 	 * Observer Mananer Class to handle the creation of all observer events
-	 *
-	 * @export
-	 * @class ObserverManager
-	 * @extends {AbstractEventsManager<unknown, string>}
 	 */
 	export class ObserverManager extends AbstractEventsManager<unknown, string> {
 		protected getInstanceOfEventType(observerType: Observers.ObserverEvent): Observers.IObserver<unknown, unknown> {
@@ -22,9 +18,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 
 	/**
 	 * Class to create and store the ObserverManager Class
-	 *
-	 * @export
-	 * @class GlobalObserverManager
 	 */
 	export class GlobalObserverManager {
 		private static _observerManager = new ObserverManager();
