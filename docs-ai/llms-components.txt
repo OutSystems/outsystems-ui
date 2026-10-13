@@ -147,9 +147,7 @@ Docs: interaction/carousel
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
-- CalendarMode: 'range' | 'single'
 - DateFormat: string
-- Disable: DisabledDate[] = []
 - DisableMobile: boolean = false
 - FirstWeekDay: number = 0
 - InitialDate: string | Date
@@ -191,7 +189,6 @@ Docs: interaction/date_picker · interaction/date_picker_range
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · parent pattern: Create before its children, Initialize before them, Dispose after them
 Props (configs JSON, always include "ExtendedClass": ""):
 - AllowMultipleSelection: boolean = false
-- ElementId: string
 - IsDisabled: boolean = false
 - NoOptionsText: string
 - NoResultsText: string
@@ -314,7 +311,6 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - InitialMonth: MonthYear — Month selected when the picker is built ({ Month, Year }).
 - MaxMonth: MonthYear — Latest selectable month ({ Month, Year }).
 - MinMonth: MonthYear — Earliest selectable month ({ Month, Year }).
-- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
@@ -336,6 +332,7 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string
 - UpdatePrompt(monthPickerId: string, promptMessage: string): string
 CSS classes: osui-monthpicker__dropdown osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
+CSS API: --osui-monthpicker-popup-border-radius --osui-monthpicker-disabled-background --osui-monthpicker-disabled-border-color --osui-monthpicker-disabled-color --osui-monthpicker-input-border-radius --osui-input-border-radius
 Configs schema: schema/configs/MonthPicker.schema.json
 Docs: interaction/month_picker
 [runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div>
@@ -458,7 +455,7 @@ Docs: interaction/range_slider · interaction/range_slider_interval
 Props (configs JSON, always include "ExtendedClass": ""):
 - IsEdit: boolean — Lets the user change the rating; when false it is read-only.
 - RatingScale: number — Number of rating items (0–100).
-- RatingValue: number — Current rating; decimals render a half-filled item.
+- RatingValue: number — Current rating; a fractional part from 0.3 to 0.7 renders a half-filled item, below rounds down, above rounds up.
 - Size: string — Size modifier appended as the rating-<Size> class (empty for the default size).
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.RatingAPI):
@@ -665,7 +662,6 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - Is24Hours: boolean = true — Uses a 24-hour clock; false shows an AM/PM selector.
 - MaxTime: string — Latest selectable time (HH:mm).
 - MinTime: string — Earliest selectable time (HH:mm).
-- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 - TimeFormat: string — Display format of the selected time.
 API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
@@ -696,7 +692,7 @@ Docs: interaction/time_picker
 ## Tooltip
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- IsHover: boolean = true — Opens on hover/focus; when false it opens on click.
+- IsHover: boolean = true — Opens on mouse hover on desktop and on click on touch devices; when false it opens on click or keyboard focus.
 - Position: 'bottom' | 'bottom-left' | 'bottom-right' | 'center' | 'left' | 'right' | 'top' | 'top-left' | 'top-right' = "right" — Placement of the balloon relative to the trigger (GlobalEnum.Position).
 - StartVisible: boolean = false — Shows the tooltip as soon as it is built.
 Events (RegisterCallback eventName): OnToggle

@@ -4,7 +4,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 	 * Class that represents the custom configurations received by the Tooltip.
 	 */
 	export class TooltipConfig extends AbstractConfiguration {
-		/** Opens on hover/focus; when false it opens on click. */
+		/** Opens on mouse hover on desktop and on click on touch devices; when false it opens on click or keyboard focus. */
 		public IsHover: boolean;
 		/** Placement of the balloon relative to the trigger (GlobalEnum.Position). */
 		public Position: GlobalEnum.Position;

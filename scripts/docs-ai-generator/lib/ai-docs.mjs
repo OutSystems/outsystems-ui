@@ -333,13 +333,34 @@ function lifecycleOf(ctx, pattern) {
 const INTERNAL_CALLBACK = /Callbacks|Generic/;
 
 /**
- * Whether a config class field is an input of the configs JSON. Platform inputs are PascalCase and serializable:
- * functions, internal callbacks and lower-case public fields (rangeSliderMode, …) are provider internals. One
- * filter for the manifest, the JSON Schemas, the cards and PatternTypes.ts, so they document the same inputs.
- * @param {import('./ts.mjs').ConfigProp} prop
+ * PascalCase config fields that are not inputs: the runtime overwrites them (CalendarMode from the Create mode,
+ * ElementId from the pattern element, Disable from DisabledDays, the MonthPicker ServerDateFormat from the
+ * platform format) or never reads them (the TimePicker ServerDateFormat). Every input is required in the types
+ * and schemas, so listing these would force callers to pass values the pattern ignores.
  */
-export function isPublicInput(prop) {
-	return prop.kind !== 'function' && !INTERNAL_CALLBACK.test(prop.typeText ?? '') && /^[A-Z]/.test(prop.name);
+const NOT_INPUTS = {
+	DatePicker: ['CalendarMode', 'Disable'],
+	Dropdown: ['ElementId'],
+	MonthPicker: ['ServerDateFormat'],
+	TimePicker: ['ServerDateFormat'],
+};
+
+/**
+ * Whether a config class field is an input of the configs JSON. Platform inputs are PascalCase and serializable:
+ * functions, internal callbacks and lower-case public fields (rangeSliderMode, …) are provider internals, and
+ * NOT_INPUTS lists the PascalCase fields the runtime sets itself. One filter for the manifest, the JSON Schemas,
+ * the cards and PatternTypes.ts, so they document the same inputs.
+ * @param {import('./ts.mjs').ConfigProp} prop
+ * @param {string} patternName
+ */
+export function isPublicInput(prop, patternName) {
+	const runtimeSet = NOT_INPUTS[/** @type {keyof typeof NOT_INPUTS} */ (patternName)] ?? [];
+	return (
+		prop.kind !== 'function' &&
+		!INTERNAL_CALLBACK.test(prop.typeText ?? '') &&
+		/^[A-Z]/.test(prop.name) &&
+		!runtimeSet.includes(prop.name)
+	);
 }
 
 /**
@@ -353,7 +374,8 @@ export function buildManifest(ctx) {
 		const e = expectationsFor(ctx, p);
 		/** @type {Record<string, any>} */
 		const props = {};
-		for (const prop of [...e.props].filter(isPublicInput).sort((a, b) => a.name.localeCompare(b.name)))
+		const inputs = [...e.props].filter((prop) => isPublicInput(prop, p.name));
+		for (const prop of inputs.sort((a, b) => a.name.localeCompare(b.name)))
 			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,
@@ -427,9 +449,46 @@ function exampleArgument(ctx, pattern, param) {
 }
 
 /**
- * The canonical call shape of a pattern: a configs example with every documented default (the runtime
- * applies them anyway, so the example is behaviour-neutral) and the Create → Initialize calls. Create is
- * written from its parsed signature, so selector arguments (mode, provider, type) sit where the API takes them.
+ * Example values for inputs whose neutral value (0, '') would make the example meaningless or throw: a slider
+ * whose range is 0..0, a rating or gallery with no items, a progress bar with no thickness.
+ */
+const EXAMPLE_CONFIGS = {
+	Gallery: { ItemsGap: 'base', RowItemsDesktop: 3, RowItemsPhone: 1, RowItemsTablet: 2 },
+	Progress: { Thickness: 4 },
+	RangeSlider: { MaxValue: 100 },
+	Rating: { RatingScale: 5 },
+};
+
+/**
+ * The value an example passes for an input with no default: the first allowed value, else the neutral value
+ * of its type (what the platform sends for an unset input). Throws for a type with no neutral value, so a new
+ * one is given an EXAMPLE_CONFIGS entry instead of an invented value.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {string} name
+ * @param {any} d manifest prop
+ * @returns {unknown}
+ */
+function neutralValue(ctx, pattern, name, d) {
+	if (Array.isArray(d.allowed) && d.allowed.length) return d.allowed[0];
+	const type = String(d.type ?? '');
+	if (type === 'boolean') return false;
+	if (type === 'number') return 0;
+	if (type === 'string' || type.startsWith('string |')) return '';
+	if (/\[\]$|^Array</.test(type)) return [];
+	if (type === 'MonthYear') return { Month: '', Year: -1 };
+	const union = quotedUnionMembers(type);
+	if (union) return union[0];
+	const member = resolveEnumReference(ctx, pattern, type.split(' | ')[0]);
+	if (member !== null) return member;
+	throw new Error(`${pattern.name}: no example value for the ${name} input (${type}); list it in EXAMPLE_CONFIGS`);
+}
+
+/**
+ * The canonical call shape of a pattern: a configs example with every input, since an omitted one is not
+ * defaulted (its default, else an EXAMPLE_CONFIGS value, else its neutral value), and the Create → Initialize
+ * calls. Create is written from its parsed signature, so selector arguments (mode, provider, type) sit where
+ * the API takes them.
  * @param {import('./context.mjs').EvalContext} ctx
  * @param {import('./inventory.mjs').Pattern} pattern
  * @param {Record<string, any>} props manifest props
@@ -439,7 +498,13 @@ function usageOf(ctx, pattern, props, apiFunctions) {
 	const name = pattern.name;
 	/** @type {Record<string, unknown>} */
 	const configs = {};
-	for (const [k, d] of Object.entries(props)) if (d.default !== undefined) configs[k] = d.default;
+	/** @type {Record<string, unknown>} */
+	const examples = EXAMPLE_CONFIGS[/** @type {keyof typeof EXAMPLE_CONFIGS} */ (name)] ?? {};
+	for (const [k, d] of Object.entries(props)) {
+		if (d.default !== undefined) configs[k] = d.default;
+		else if (k in examples) configs[k] = examples[k];
+		else configs[k] = neutralValue(ctx, pattern, k, d);
+	}
 	configs.ExtendedClass = '';
 	const id = `${name.charAt(0).toLowerCase()}${name.slice(1)}1`;
 	const create = apiFunctions.find((f) => f.name === 'Create');
@@ -507,9 +572,10 @@ export function configSchemaOf(c) {
 		$schema: 'https://json-schema.org/draft/2020-12/schema',
 		$id: `https://github.com/OutSystems/outsystems-ui/docs-ai/schema/configs/${c.name}.schema.json`,
 		title: `${c.name} configs`,
-		description: `The configs JSON string of OutSystems.OSUI.Patterns.${c.name}API.Create, parsed. Invalid values fall back to the defaults at runtime; unknown properties are ignored. Generated by scripts/docs-ai-generator/generate-ai-docs.mjs.`,
+		description: `The configs JSON string of OutSystems.OSUI.Patterns.${c.name}API.Create, parsed. Every property is required, as the platform always sends them all: an omitted one is not defaulted and stays undefined at runtime. A default is the value an invalid one falls back to. Generated by scripts/docs-ai-generator/generate-ai-docs.mjs.`,
 		type: 'object',
 		properties,
+		required: Object.keys(properties),
 		additionalProperties: false,
 	};
 }

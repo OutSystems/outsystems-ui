@@ -7,6 +7,11 @@ namespace OSFramework.OSUI.Helper {
 	 * Storybook stories and generated code may pass a plain object instead, so both are accepted and
 	 * a JSON string keeps exactly the JSON.parse behavior it always had.
 	 *
+	 * Only plain objects are accepted (prototype Object.prototype or null): the Config classes read
+	 * the configs with for...in, so a class instance or an Object.create(...) value would leak its
+	 * inherited enumerable properties into the configuration. The prototype is checked by shape, not
+	 * by identity, so an object created in another realm (an iframe) still counts as plain.
+	 *
 	 * @param configs JSON string or plain object with the pattern configuration
 	 * @returns The configuration object handed to the pattern's Config class
 	 */
@@ -15,12 +20,17 @@ namespace OSFramework.OSUI.Helper {
 			return JSON.parse(configs);
 		}
 
-		if (configs !== null && typeof configs === 'object' && Array.isArray(configs) === false) {
-			return configs as unknown as JSON;
+		if (configs === null || typeof configs !== 'object' || Array.isArray(configs)) {
+			throw new Error(
+				`Invalid configs: expected a JSON string or an object, got ${configs === null ? 'null' : typeof configs}.`
+			);
 		}
 
-		throw new Error(
-			`Invalid configs: expected a JSON string or an object, got ${configs === null ? 'null' : typeof configs}.`
-		);
+		const proto = Object.getPrototypeOf(configs);
+		if (proto !== null && Object.getPrototypeOf(proto) !== null) {
+			throw new Error('Invalid configs: expected a JSON string or a plain object, got an object with a prototype.');
+		}
+
+		return configs as unknown as JSON;
 	}
 }

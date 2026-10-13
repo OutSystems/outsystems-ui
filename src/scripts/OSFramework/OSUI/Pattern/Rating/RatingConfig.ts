@@ -8,7 +8,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		public IsEdit: boolean;
 		/** Number of rating items (0–100). */
 		public RatingScale: number;
-		/** Current rating; decimals render a half-filled item. */
+		/** Current rating; a fractional part from 0.3 to 0.7 renders a half-filled item, below rounds down, above rounds up. */
 		public RatingValue: number;
 		/** Size modifier appended as the rating-<Size> class (empty for the default size). */
 		public Size: string;

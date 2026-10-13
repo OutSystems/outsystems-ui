@@ -26,6 +26,7 @@ import {
 	resolveEnumReference,
 	writeDocs,
 } from '../scripts/docs-ai-generator/lib/ai-docs.mjs';
+import { validate } from '../scripts/docs-ai-generator/lib/schema.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ctx = createContext(root);
@@ -99,7 +100,7 @@ test('generated docs score ≥ 90 on E03 for every pattern (generator and eval a
 		// The docs cover the configs JSON inputs, and publish a default only when it has a JSON value.
 		const e = expectationsFor(ctx, p);
 		const props = e.props
-			.filter(isPublicInput)
+			.filter((x) => isPublicInput(x, p.name))
 			.map((x) => ({ ...x, defaultText: publishedDefault(ctx, p, x) === undefined ? null : x.defaultText }));
 		const r = componentFacets(manifest, p.name, { ...e, props });
 		assert.ok(r.score >= 0.9, `${p.name}: ${JSON.stringify(r.facets)}`);
@@ -179,9 +180,24 @@ test('every pattern gets a configs JSON Schema and a usage example, and its card
 	const picker = configSchemaOf(manifest.components.DatePicker);
 	assert.equal(picker.properties.OnChange, undefined, 'runtime callbacks are not configs inputs');
 	assert.equal(configSchemaOf(manifest.components.RangeSlider).properties.rangeSliderMode, undefined);
-	assert.deepEqual(picker.properties.Disable.default, [], 'a literal default keeps its JSON value');
+	assert.equal(picker.properties.Disable, undefined, 'a field the runtime computes is not an input');
+	assert.equal(picker.properties.CalendarMode, undefined, 'CalendarMode comes from the Create mode argument');
 	assert.equal(configSchemaOf(manifest.components.Notification).properties.CloseAfterTime.default, undefined);
+	assert.deepEqual(schema.required, ['MultipleItems', 'ExtendedClass']);
 	assert.match(renderComponentCards(manifest), /^Configs schema: schema\/configs\/Accordion\.schema\.json/m);
+});
+
+test('every input is required, and every usage example passes all of them and validates against its schema', () => {
+	for (const c of Object.values(manifest.components)) {
+		const schema = configSchemaOf(c);
+		assert.deepEqual(new Set(schema.required), new Set(Object.keys(schema.properties)), c.name);
+		assert.deepEqual(new Set(Object.keys(c.usage.configs)), new Set(schema.required), c.name);
+		assert.deepEqual(validate(schema, c.usage.configs), [], c.name);
+	}
+	assert.equal(manifest.components.Video.usage.configs.URL, '', 'an input with no default gets its neutral value');
+	assert.deepEqual(manifest.components.MonthPicker.usage.configs.InitialMonth, { Month: '', Year: -1 });
+	assert.equal(manifest.components.RangeSlider.usage.configs.MaxValue, 100, 'a 0..0 range is replaced');
+	assert.deepEqual(validate(configSchemaOf(manifest.components.Video), { ExtendedClass: '' }).length > 0, true);
 });
 
 test('utilities document states the grammar, then every family as template rows with declarations', () => {

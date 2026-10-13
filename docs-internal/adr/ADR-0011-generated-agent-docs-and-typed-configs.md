@@ -111,7 +111,7 @@ only on `typescript`, `sass`, `postcss`, `postcss-selector-parser`, `prettier` a
 | `docs-ai/osui.utilities.json`, `osui.icons.json` | Lookup tables: every utility class with its declarations and variants; every icon class of the installed fonts                                                                  | Compiled partials; the icon font stylesheets in `node_modules`                                                                      | Emitted compact (single line): read by programs, never by people                                            |
 | `docs-ai/osui.blocks.json`, `osui.enums.json`  | The block cards as data; the static-entity values an OML parameter may take                                                                                                     | The OML block snapshot                                                                                                              | —                                                                                                            |
 | `docs-ai/schema/configs/<Pattern>.schema.json` | JSON Schema of each pattern's `configs`, to validate before `Create`                                                                                                            | Configuration classes and enums                                                                                                     | Enum props carry the enum values (`'right'`), not member names                                               |
-| `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` | Per pattern a `Configs` object type (optional, documented props) and an `EventName` union with a `(string & {})` escape hatch                                            | Configuration classes and event enums                                                                                               | Compiled into the bundle's `.d.ts`; `Create` and `RegisterCallback` reference these types                    |
+| `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` | Per pattern a `Configs` object type (every input required and documented) and an `EventName` union with a `(string & {})` escape hatch                                   | Configuration classes and event enums                                                                                               | Compiled into the bundle's `.d.ts`; `Create` and `RegisterCallback` reference these types                    |
 | `scripts/docs-ai-generator/snapshot/osui.blocks.json`    | The OutSystems UI module as an OML producer sees it: blocks, parameters, placeholders, events, API hints, static entities, structures                                           | `npm run docs:ai:blocks` over the local OML (`source.origin` records the file name and SHA-256)                                     | An input, not an output: a new snapshot changes the block docs; the OML itself is never committed            |
 | `docs/` (TypeDoc site)                         | The human API reference with UML diagrams, plus a copy of `docs-ai/` at its root                                                                                                | `npm run docs` (TypeDoc + `postdocs`), locally on demand and in CI by `create-n-deploy-docs.yaml`                                   | Git-ignored build output; published to the documentation site, which is where `llms.txt` is served           |
 
@@ -124,11 +124,26 @@ stylesheet drives with its parameter and event maps; a test rejects anything els
 
 `Create(id, configs)` accepts the platform's JSON string or a typed object. Both go through
 `OSFramework.OSUI.Helper.ParseConfigs`, whose string path is byte-for-byte the previous `JSON.parse`; `null`,
-arrays and numbers are rejected with a clear error instead of a `TypeError` later. `RegisterCallback` takes
+arrays and numbers are rejected with a clear error instead of a `TypeError` later, and so is an object whose
+prototype is not `Object.prototype` or `null`: the Config classes read the configs with `for...in`, which would
+pick up a class instance's inherited fields. `RegisterCallback` takes
 `EventName`. `SwipeEvents` and `TouchEvents` gain `ChangeProperty` (error codes `OSUI-API-34001` and
-`OSUI-API-35001`) so every pattern exposes the same canonical set. The `Orientation` alias in `Global.d.ts`
+`OSUI-API-35001`) so every pattern exposes the same canonical set; changing their `WidgetId` moves the gesture
+listeners to the new element. The `Orientation` alias in `Global.d.ts`
 pointed at a namespace that does not exist and resolved to `any`; it now points at `OSFramework.OSUI.GlobalEnum`.
 Everything that compiled before still compiles; JavaScript callers are unaffected.
+
+**Every member of `Configs` is required**, and every JSON Schema lists all its properties under `required`.
+`AbstractConfiguration` validates only the keys that are present, so an omitted key is not defaulted: it stays
+`undefined` (or keeps a field initializer) and, for some patterns, throws later (`VideoAPI.Create(id, {})` reaches
+`this.configs.URL.slice(...)` in `Initialize`). The platform never hits this because it always sends every
+input; required members give typed callers the same contract at compile time, instead of materializing defaults
+at runtime in all 33 Config classes. A published default is therefore what an *invalid* value falls back to.
+The usage examples follow: each passes every input (its default, else a neutral value such as `''`, `0`, `[]` or
+`{ Month: '', Year: -1 }`, with a few representative overrides where the neutral value would render nothing or
+throw, such as a 0..0 slider range). PascalCase fields the runtime sets itself (`DatePicker.CalendarMode` and
+`Disable`, `Dropdown.ElementId`, the pickers' `ServerDateFormat`) are not inputs and are left out of the types,
+schemas and docs, so no caller is forced to pass a value the pattern overwrites.
 
 ### Comments, lint and TypeDoc
 
@@ -157,8 +172,11 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
     (declaration files excluded): `no-types`, `check-tag-names` (with `defaultValue` and `remarks` allowed),
     `check-param-names`, `require-param-description`, `require-returns-description`, `empty-tags`; and on
     `OutSystems/OSUI/Patterns/*API.ts` additionally `require-jsdoc` (public functions), `require-param` and
-    `require-returns`. The rules are at warning level, but `npm run build` requires zero warnings, so they
-    are mandatory in practice. The rewrite left zero findings.
+    `require-returns`; on `*Config.ts` and `*Configuration.ts`, `require-jsdoc` on every public PascalCase
+    field (the configs inputs the generator documents). The rules are at warning level, but `npm run lint`
+    runs with `--max-warnings=0`, so `npm run build` fails on any of them. `require-jsdoc` runs with its fixer
+    off: the build's `lintfix` step would otherwise insert empty `/** */` stubs that satisfy the rule. The
+    rewrite left zero findings.
 -   **TypeDoc** keeps its configuration except that the Closure tags were removed from `blockTags`; they were
     listed only to silence "unknown tag" warnings and no longer occur in the source.
 -   **The generator is the consumer.** A new function or prop needs its comment before `docs-ai/` is
