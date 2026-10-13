@@ -3747,7 +3747,40 @@
 					"description": "Funciton that sets a Progress Gradient"
 				}
 			],
-			"props": {},
+			"props": {
+				"AnimateInitialProgress": {
+					"type": "boolean",
+					"description": "Animates the fill from 0 to InitialProgress when the pattern is built."
+				},
+				"InitialProgress": {
+					"type": "number",
+					"description": "Progress shown when the pattern is built, from 0 to 100."
+				},
+				"Progress": {
+					"type": "number",
+					"description": "Current progress, from 0 to 100; values outside the range are clamped."
+				},
+				"ProgressCircleSize": {
+					"type": "string",
+					"description": "Diameter of the circle (CSS length); used by the circle type only."
+				},
+				"ProgressColor": {
+					"type": "string",
+					"description": "Color of the progress fill: a color name from the theme palette or a CSS color."
+				},
+				"Shape": {
+					"type": "string",
+					"description": "Shape of the progress ends: soft, rounded or none (sharp)."
+				},
+				"Thickness": {
+					"type": "number",
+					"description": "Thickness of the bar or of the circle stroke, in pixels."
+				},
+				"TrailColor": {
+					"type": "string",
+					"description": "Color of the unfilled track: a color name from the theme palette or a CSS color."
+				}
+			},
 			"events": [],
 			"cssClasses": {
 				"Progress": "osui-progress-circle__container__progress-path",
@@ -3781,9 +3814,9 @@
 			"files": [
 				"src/scripts/OutSystems/OSUI/Patterns/ProgressAPI.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/AbstractProgress.ts",
-				"src/scripts/OSFramework/OSUI/Pattern/Progress/AbstractProgressConfiguration.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/Bar/ProgressBar.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/Circle/ProgressCircle.ts",
+				"src/scripts/OSFramework/OSUI/Pattern/Progress/AbstractProgressConfiguration.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/Bar/ProgressBarConfig.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/Circle/ProgressCircleConfig.ts",
 				"src/scripts/OSFramework/OSUI/Pattern/Progress/Circle/Enum.ts",

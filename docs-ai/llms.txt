@@ -20,7 +20,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - MonthPicker: 10 props, 1 events, 18 API functions
 - Notification: 6 props, 1 events, 9 API functions
 - OverflowMenu: 2 props, 1 events, 11 API functions
-- Progress: 0 props, 0 events, 10 API functions
+- Progress: 8 props, 0 events, 10 API functions
 - RangeSlider: 15 props, 0 events, 15 API functions
 - Rating: 4 props, 1 events, 9 API functions
 - Search: 0 props, 0 events, 7 API functions
