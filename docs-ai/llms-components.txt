@@ -419,7 +419,7 @@ Docs: numbers/progress_bar · numbers/progress_circle
 ## RangeSlider
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- InitialValueFrom: number = 0 — These variables hold the inital state of a RangeSlider
+- InitialValueFrom: number = 0 — Value of the lower handle (or the only handle) when the slider is built.
 - InitialValueTo: number = 0 — Value of the upper handle when the slider is built (interval mode).
 - IsDisabled: boolean = false — Renders the slider disabled.
 - IsInterval: boolean — Uses two handles (from/to) instead of a single one.
@@ -531,7 +531,7 @@ Docs: navigation/section_index
 ## Sidebar
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- Direction: 'right' | 'left' = "right" — PUBLIC PROPERTIES *
+- Direction: 'right' | 'left' = "right" — Side of the screen the sidebar opens from (left or right).
 - HasOverlay: boolean = false — Dims the page behind the sidebar with an overlay while it is open (and closes on click outside).
 - StartsOpen: boolean = false — Renders the sidebar open when it is built.
 - Width: string = "500px" (default from Enum.Defaults; not validated — any string is accepted) — Width of the sidebar (CSS length); 500px by default.
@@ -557,7 +557,7 @@ Docs: interaction/sidebar
 ## Submenu
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- OpenOnHover: boolean = false — PUBLIC PROPERTIES *
+- OpenOnHover: boolean = false — Opens the submenu on hover instead of on click; ignored on touch devices.
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.SubmenuAPI):
 - ChangeProperty(submenuId: string, propertyName: string, propertyValue: unknown): string
@@ -576,7 +576,7 @@ CSS classes: osui-submenu active osui-submenu__header osui-submenu--is-dropdown 
 CSS API: --osui-submenu-items-background --osui-submenu-items-border-color --osui-submenu-items-border-radius --osui-submenu-items-shadow --osui-submenu-item-color --osui-submenu-item-font-size --osui-submenu-item-line-height --osui-submenu-item-border-radius --osui-submenu-item-selected-background --osui-submenu-item-pressed-background --osui-submenu-item-color-disabled --osui-submenu-header-color --osui-submenu-active-border-color --osui-submenu-hover-border-color --osui-submenu-max-height
 Configs schema: schema/configs/Submenu.schema.json
 Docs: navigation/submenu
-[runtime-only] Markup skeleton (from stories/Submenu.stories.ts): <style> .osui-submenu-header-states { display: flex; flex-direction: column; gap: 32px; } .osui-submenu-header-states__label { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; margin-bottom: 8px; } /* Room for the (absolutely positioned) open dropdown before the next header. */ .osui-submenu-header-states__cell--open { padding-bottom: 150px; } /* The real .layout is a min-height:100vh page root; in the gallery each cell only needs its header bar. Layout-only override, no state CSS. */ .osui-submenu-header-states .layout { min-height: 0; } </style><div class="osui-…
+[runtime-only] Markup skeleton (from stories/Submenu.stories.ts): <style> .osui-submenu-header-states { display: flex; flex-direction: column; gap: 32px; } .osui-submenu-header-states__label { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; margin-bottom: 8px; } /* Room for the (absolutely positioned) open dropdown before the next he…
 
 ## SwipeEvents
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

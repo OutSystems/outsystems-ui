@@ -6,7 +6,7 @@
 	"type": "object",
 	"properties": {
 		"OpenOnHover": {
-			"description": "PUBLIC PROPERTIES *",
+			"description": "Opens the submenu on hover instead of on click; ignored on touch devices.",
 			"default": false,
 			"type": "boolean"
 		},

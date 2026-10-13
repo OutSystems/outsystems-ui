@@ -6,7 +6,7 @@
 	"type": "object",
 	"properties": {
 		"InitialValueFrom": {
-			"description": "These variables hold the inital state of a RangeSlider",
+			"description": "Value of the lower handle (or the only handle) when the slider is built.",
 			"default": 0,
 			"type": "number"
 		},

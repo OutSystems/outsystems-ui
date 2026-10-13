@@ -9,7 +9,7 @@ namespace OSFramework.OSUI.Behaviors {
 	 * Trigger a scroll navigation into a given offset position
 	 *
 	 * @param element Element where the scroll will happen
-	 * @param options True if the scroll should be smooth
+	 * @param options Scroll options passed to scrollIntoView (behavior, block, inline)
 	 */
 	export function Scroll(element: HTMLElement, options: ScrollIntoViewOptions): void {
 		if (element) {

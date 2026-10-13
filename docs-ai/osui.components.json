@@ -4012,7 +4012,7 @@
 				"InitialValueFrom": {
 					"type": "number",
 					"default": 0,
-					"description": "These variables hold the inital state of a RangeSlider"
+					"description": "Value of the lower handle (or the only handle) when the slider is built."
 				},
 				"InitialValueTo": {
 					"type": "number",
@@ -4895,7 +4895,7 @@
 						"left"
 					],
 					"default": "right",
-					"description": "PUBLIC PROPERTIES *"
+					"description": "Side of the screen the sidebar opens from (left or right)."
 				},
 				"HasOverlay": {
 					"type": "boolean",
@@ -5124,7 +5124,7 @@
 				"OpenOnHover": {
 					"type": "boolean",
 					"default": false,
-					"description": "PUBLIC PROPERTIES *"
+					"description": "Opens the submenu on hover instead of on click; ignored on touch devices."
 				}
 			},
 			"events": [
