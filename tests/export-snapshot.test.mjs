@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
-import { exporterDir, localOml, parseArgs } from '../scripts/ai-docs/export-snapshot.mjs';
+import { exporterDir, localOml, parseArgs } from '../scripts/docs-ai-generator/export-snapshot.mjs';
 
 const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 'osui-oml-'));
 

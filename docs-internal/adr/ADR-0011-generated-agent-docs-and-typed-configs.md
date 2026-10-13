@@ -51,7 +51,7 @@ Chosen option: "Option 2". Option 3 is recorded as future work.
 | `npm run docs:ai`        | Regenerates everything under `docs-ai/` from the TypeScript program, the compiled SCSS partials, the Storybook stories and the OML block snapshot. Deterministic: no timestamps, sorted keys, so a re-run on the same tree is a no-op. |
 | `npm run docs:ai:check`  | Regenerates into a temporary folder and exits 1 when the committed `docs-ai/` differs (line endings ignored). The local guard against stale docs; it costs tens of seconds because it compiles the program and the partials.          |
 | `npm run docs:ai:types`  | Regenerates `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` from the configuration classes and event enums of every pattern.                                                                                                     |
-| `npm run docs:ai:blocks` | Local extract only: runs the `osui-blocks-export` .NET tool over the one `.oml` under `scripts/ai-docs/snapshot/local/` and writes `scripts/ai-docs/snapshot/osui.blocks.json`. See "Running the extractor locally" below.              |
+| `npm run docs:ai:blocks` | Local extract only: runs the `osui-blocks-export` .NET tool over the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` and writes `scripts/docs-ai-generator/snapshot/osui.blocks.json`. See "Running the extractor locally" below.              |
 | `npm run docs`           | The TypeDoc build into `docs/`; the new `postdocs` step copies `docs-ai/` into that output so the documentation site serves `llms.txt` and the manifests at its root. See "TypeDoc output" below.                                   |
 | `npm run docs:ai:test`   | `node --test tests/*.test.mjs`: unit tests of the generators, of `ParseConfigs`, and freshness assertions on every generated file. The library itself still has no local test runner; its E2E suite lives elsewhere.                    |
 
@@ -61,7 +61,7 @@ The OutSystems UI module OML is not part of this repository and is never committ
 the only OML-derived file in git. To refresh it:
 
 1. Export the module from ODC Studio (or take the Forge `.oml`) and place it as the **one** `.oml` file under
-   `scripts/ai-docs/snapshot/local/`. The folder is listed in `.gitignore`; any depth and any file name work.
+   `scripts/docs-ai-generator/snapshot/local/`. The folder is listed in `.gitignore`; any depth and any file name work.
 2. Run `npm run docs:ai:blocks` (add `-- --platform O11` for the O11 module). The command accepts nothing else:
    it refuses to run when the folder is missing, empty or holds more than one `.oml`, so a stale or ambiguous
    input cannot produce a snapshot by accident. The written file records the OML's file name and SHA-256 in
@@ -92,7 +92,7 @@ TypeDoc reads the same TSDoc comments the generator reads, so the comment standa
 description and `@param`/`@returns` texts render in the HTML reference, and the Closure tags that were removed
 would have been ignored by it anyway.
 
-All generator code lives in `scripts/ai-docs/` (`README.md` there documents the modules and the snapshot
+All generator code lives in `scripts/docs-ai-generator/` (`README.md` there documents the modules and the snapshot
 refresh procedure). It is plain Node (`.mjs`), outside `tsconfig` and outside `eslint --ext .ts`, and depends
 only on `typescript`, `sass`, `postcss`, `postcss-selector-parser`, `prettier` and `gpt-tokenizer`.
 
@@ -106,19 +106,19 @@ only on `typescript`, `sass`, `postcss`, `postcss-selector-parser`, `prettier` a
 | `docs-ai/llms-utilities.txt`                   | The utility-class grammar (`<property>[-<side>][-<value>]`), the size scale, hues and shades, and every family as template rows                                                  | Compiled `05-useful` partials                                                                                                       | Replaces guessing Tailwind-style names                                                                       |
 | `docs-ai/llms-tokens.txt`                      | Framework theme roles (`--color-*`, `--border-radius-*`) and every `--osui-*` knob; legacy aliases marked                                                                       | Compiled SCSS                                                                                                                       | The theming surface, in one place                                                                            |
 | `docs-ai/llms-blocks.txt`                      | One card per composable OutSystems UI block with OpenUI/TSX recipes                                                                                                             | The OML block snapshot and the block links of `registry.json`                                                                       | What an OML producer composes; `[runtime-only]` lines do not apply to it                                     |
-| `docs-ai/llms-platform.txt`                    | ODC platform concepts (screens and layout placeholders, blocks, themes, screen templates, accessibility, icons) with their public documentation pages, and the documentation's pattern catalogue mapped to the runtime cards | `scripts/ai-docs/lib/platform-docs.mjs` (hand-curated, URLs verified when added) and the inventory | Keeps `llms.txt` under its token budget while giving agents the platform vocabulary; cards carry a `Docs:` slug |
+| `docs-ai/llms-platform.txt`                    | ODC platform concepts (screens and layout placeholders, blocks, themes, screen templates, accessibility, icons) with their public documentation pages, and the documentation's pattern catalogue mapped to the runtime cards | `scripts/docs-ai-generator/lib/platform-docs.mjs` (hand-curated, URLs verified when added) and the inventory | Keeps `llms.txt` under its token budget while giving agents the platform vocabulary; cards carry a `Docs:` slug |
 | `docs-ai/osui.components.json`                 | The component cards as data, plus a usage example per pattern                                                                                                                   | Same readers as the cards                                                                                                           | Validated by `docs-ai/schema/osui.components.schema.json`                                                    |
 | `docs-ai/osui.utilities.json`, `osui.icons.json` | Lookup tables: every utility class with its declarations and variants; every icon class of the installed fonts                                                                  | Compiled partials; the icon font stylesheets in `node_modules`                                                                      | Emitted compact (single line): read by programs, never by people                                            |
 | `docs-ai/osui.blocks.json`, `osui.enums.json`  | The block cards as data; the static-entity values an OML parameter may take                                                                                                     | The OML block snapshot                                                                                                              | —                                                                                                            |
 | `docs-ai/schema/configs/<Pattern>.schema.json` | JSON Schema of each pattern's `configs`, to validate before `Create`                                                                                                            | Configuration classes and enums                                                                                                     | Enum props carry the enum values (`'right'`), not member names                                               |
 | `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` | Per pattern a `Configs` object type (optional, documented props) and an `EventName` union with a `(string & {})` escape hatch                                            | Configuration classes and event enums                                                                                               | Compiled into the bundle's `.d.ts`; `Create` and `RegisterCallback` reference these types                    |
-| `scripts/ai-docs/snapshot/osui.blocks.json`    | The OutSystems UI module as an OML producer sees it: blocks, parameters, placeholders, events, API hints, static entities, structures                                           | `npm run docs:ai:blocks` over the local OML (`source.origin` records the file name and SHA-256)                                     | An input, not an output: a new snapshot changes the block docs; the OML itself is never committed            |
+| `scripts/docs-ai-generator/snapshot/osui.blocks.json`    | The OutSystems UI module as an OML producer sees it: blocks, parameters, placeholders, events, API hints, static entities, structures                                           | `npm run docs:ai:blocks` over the local OML (`source.origin` records the file name and SHA-256)                                     | An input, not an output: a new snapshot changes the block docs; the OML itself is never committed            |
 | `docs/` (TypeDoc site)                         | The human API reference with UML diagrams, plus a copy of `docs-ai/` at its root                                                                                                | `npm run docs` (TypeDoc + `postdocs`), locally on demand and in CI by `create-n-deploy-docs.yaml`                                   | Git-ignored build output; published to the documentation site, which is where `llms.txt` is served           |
 
-Hand-maintained inputs: `scripts/ai-docs/registry.json` (only what the inventory cannot derive: a kind
+Hand-maintained inputs: `scripts/docs-ai-generator/registry.json` (only what the inventory cannot derive: a kind
 override, utility-family titles, host-styled partials, story aliases, and the OML block each pattern or
 stylesheet drives with its parameter and event maps; a test rejects anything else) and
-`scripts/ai-docs/lib/platform-docs.mjs` (the public documentation pointers).
+`scripts/docs-ai-generator/lib/platform-docs.mjs` (the public documentation pointers).
 
 ### Typed configs
 
@@ -142,6 +142,17 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
     namespace. `@param {number} x` had no effect in the IDE either: the language service reads the signature,
     and only the description text after the name reaches the hover. Modifier tags that carry meaning stay:
     `@protected`, `@private`, `@public`, `@readonly`, `@abstract`, `@deprecated`, `@defaultValue`, `@remarks`.
+-   **The tags were not invisible in VS Code; they made the hover worse.** TypeScript's quick info (what the
+    hover renders) prints every JSDoc tag it does not interpret as a literal line. Querying the language
+    service (TypeScript 5.9) for `Accordion.setA11YProperties` returned the true qualified name in the
+    signature, `OSFramework.OSUI.Patterns.Accordion.Accordion.setA11YProperties()`, and, a few lines below it,
+    the tag `@memberof OSFramework.Patterns.Accordion.Accordion` (no `OSUI`), plus `@export` and `@static`. The
+    developer saw two contradictory namespaces in one tooltip, and the one the compiler computed is the
+    correct one. Without the Closure tags the hover shows the signature, the description and the meaningful
+    modifiers, and nothing else. On `dev`, 839 of the 988 `@memberof` tags did not start with the namespace
+    declared in their own file (most often a missing `OSUI` segment), so this was the common case, not an
+    outlier. The same drift is what misleads a human or an LLM that reads the source instead of the compiled
+    types: the comment is trusted and the path it names does not exist.
 -   **ESLint enforces it** through `eslint-plugin-jsdoc` in TypeScript mode, scoped to `src/scripts/**/*.ts`
     (declaration files excluded): `no-types`, `check-tag-names` (with `defaultValue` and `remarks` allowed),
     `check-param-names`, `require-param-description`, `require-returns-description`, `empty-tags`; and on
@@ -185,7 +196,7 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
 
 ## Links
 
--   `scripts/ai-docs/README.md` — generators, snapshot provenance and the refresh procedure.
+-   `scripts/docs-ai-generator/README.md` — generators, snapshot provenance and the refresh procedure.
 -   `AGENTS.md`, `docs-ai/llms.txt` — agent entry points.
 -   `.claude/rules/typescript.md` §7 — the TSDoc rule in detail.
 -   https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/ —

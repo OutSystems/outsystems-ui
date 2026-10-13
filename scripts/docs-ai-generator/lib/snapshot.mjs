@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The block snapshots (`scripts/ai-docs/snapshot/osui.blocks*.json`): what the OutSystems UI OML declares, exported by
+ * The block snapshots (`scripts/docs-ai-generator/snapshot/osui.blocks*.json`): what the OutSystems UI OML declares, exported by
  * osui-blocks-export (see README.md). One file per platform; the metrics read every file and label a block
  * by platform only when more than one file is present.
  */

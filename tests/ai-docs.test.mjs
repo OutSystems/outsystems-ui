@@ -3,13 +3,13 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../scripts/ai-docs/lib/context.mjs';
-import { expectationsFor } from '../scripts/ai-docs/lib/expectations.mjs';
-import { componentFacets } from '../scripts/ai-docs/lib/manifest.mjs';
-import { countTokens } from '../scripts/ai-docs/lib/tokens.mjs';
-import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES } from '../scripts/ai-docs/lib/producers.mjs';
-import { docCoverage, utilityFamilies } from '../scripts/ai-docs/lib/utilities.mjs';
-import { buildBlocksManifest } from '../scripts/ai-docs/lib/ai-docs-blocks.mjs';
+import { createContext } from '../scripts/docs-ai-generator/lib/context.mjs';
+import { expectationsFor } from '../scripts/docs-ai-generator/lib/expectations.mjs';
+import { componentFacets } from '../scripts/docs-ai-generator/lib/manifest.mjs';
+import { countTokens } from '../scripts/docs-ai-generator/lib/tokens.mjs';
+import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES } from '../scripts/docs-ai-generator/lib/producers.mjs';
+import { docCoverage, utilityFamilies } from '../scripts/docs-ai-generator/lib/utilities.mjs';
+import { buildBlocksManifest } from '../scripts/docs-ai-generator/lib/ai-docs-blocks.mjs';
 import {
 	buildManifest,
 	buildUtilitiesManifest,
@@ -25,7 +25,7 @@ import {
 	renderUtilities,
 	resolveEnumReference,
 	writeDocs,
-} from '../scripts/ai-docs/lib/ai-docs.mjs';
+} from '../scripts/docs-ai-generator/lib/ai-docs.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ctx = createContext(root);
@@ -300,7 +300,7 @@ test('writeDocs emits the block-level files', async () => {
 });
 
 test('quotedUnionMembers reads a union of quoted literals without a regular expression', async () => {
-	const { quotedUnionMembers } = await import('../scripts/ai-docs/lib/ai-docs.mjs');
+	const { quotedUnionMembers } = await import('../scripts/docs-ai-generator/lib/ai-docs.mjs');
 	assert.deepEqual(quotedUnionMembers("'a' | 'b c'"), ['a', 'b c']);
 	assert.equal(quotedUnionMembers("'a'"), null, 'one literal is not a union');
 	assert.equal(quotedUnionMembers("'a' | b"), null, 'an unquoted member');
@@ -326,7 +326,7 @@ test('utility synonyms: the manifest names the canonical class of each group and
 });
 
 test('synonymLines compacts the groups: number runs, shared substitutions and shared suffixes', async () => {
-	const { synonymLines } = await import('../scripts/ai-docs/lib/ai-docs.mjs');
+	const { synonymLines } = await import('../scripts/docs-ai-generator/lib/ai-docs.mjs');
 	const lines = synonymLines([
 		['display-none', 'hidden'],
 		['font-bold', 'bold'],

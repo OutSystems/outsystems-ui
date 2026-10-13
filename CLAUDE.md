@@ -7,7 +7,7 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — layering (`OutSystems → OSFramework → Providers`), the six tenets (provider isolation, public-API envelope, ID registry, symmetric build/dispose, build-time platform resolution, factories), the External Integrations table, and the Compilation Boundary section.
 - [CSS-ARCHITECTURE.md](./CSS-ARCHITECTURE.md) — the styling architecture: design tokens → framework theme layer → component CSS API, and the read chain between them. Summarized under "Styling & Theming Architecture" below.
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — setup, dev-server behavior, ESLint/Prettier/Stylelint rules, PR title/label gates, E2E pipeline, release workflows.
-- [THEME-MIGRATION-GUIDE.md](./THEME-MIGRATION-GUIDE.md) — customer-facing guide for migrating custom CSS from the classic theme (pre-token) to the new token-based theme. Covers retired variables, replacement mappings, dark-mode fixes (neutral ramp flip, button contrast, `.os-dark-theme` recommendation), and recipes. Feed this to any LLM alongside a customer's CSS to migrate it. **Its ten lookup tables are generated** from `.claude/skills/osui-theme-migration/references/variable-mapping.md` by `npm run docs:migration` — correct a mapping value there, not here; edits inside the `<!-- generated:ID -->` markers are overwritten.
+- [THEME-MIGRATION-GUIDE.md](./THEME-MIGRATION-GUIDE.md) — customer-facing guide for migrating custom CSS from the classic theme (pre-token) to the new token-based theme. Covers retired variables, replacement mappings, dark-mode fixes (neutral ramp flip, button contrast, `.os-dark-theme` recommendation), and recipes. Feed this to any LLM alongside a customer's CSS to migrate it. The Storybook "Migration" page (`stories/Migration.mdx`, data regenerated via `npm run docs:migration-page`) renders the same skill content, plus a section on running the skill from a clone. **Its eleven lookup tables are generated** from `.claude/skills/osui-theme-migration/references/variable-mapping.md` by `npm run docs:migration` — correct a mapping value there, not here (the Storybook page generator cross-checks the same tables against `dist/` and fails on a gap); edits inside the `<!-- generated:ID -->` markers are overwritten.
 - [docs-internal/adr/](./docs-internal/adr/Readme.md) — Architecture Decision Records for cross-cutting decisions, each with its rejected alternatives.
 - `.claude/rules/typescript.md` and `.claude/rules/scss.md` — the evergreen conventions for each tree, in more detail than this file.
 - `src/README.md` for the directory breakdown, `gulp/README.md` for the build system.
@@ -25,9 +25,11 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                       |
 | `npm run update-version`                              | Interactive version bump across project files                                                                                                                                   |
 | `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                    |
+| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                              |
+| `npm run docs:migration-page`                         | Regenerate the Storybook "Migration" page data (`stories/_helpers/migration-data.ts`) from the same skill plus a `classic-theme/` vs `dist/` diff; needs a build; `-- --check` fails on drift |
 | `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
 | `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
-| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/ai-docs/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/ai-docs/snapshot/local/` (git-ignored, never committed)       |
+| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed)       |
 | `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale                                                                 |
 
 There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm run docs:ai:test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
@@ -39,13 +41,13 @@ There is no test runner for the library itself: its E2E suite lives in a separat
 components, layout partials, helper classes), `llms-utilities.txt` (the utility grammar and every family),
 `llms-tokens.txt` (theme roles and `--osui-*` knobs), plus `osui.components.json`, `osui.utilities.json` and
 the config schemas under `schema/configs/`. For OML producers (the Model bridge, Service Studio): `llms-blocks.txt`
-(one card per OutSystems UI block, from the snapshot `scripts/ai-docs/snapshot/osui.blocks.json` exported from the
+(one card per OutSystems UI block, from the snapshot `scripts/docs-ai-generator/snapshot/osui.blocks.json` exported from the
 module OML), `osui.blocks.json`, `osui.enums.json` and `osui.icons.json`; lines marked `[runtime-only]` concern the
 browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc (see
 `.claude/rules/typescript.md` §7): the generator reads them, so a new function or prop needs its comment before
 `docs-ai/` regenerates. A change to a pattern's configs, API, story or SCSS is followed by
 `npm run docs:ai:types && npm run docs:ai`; `npm run docs:ai:test` fails while the generated files are stale. See
-`scripts/ai-docs/README.md` for the generators and the snapshot refresh procedure.
+`scripts/docs-ai-generator/README.md` for the generators and the snapshot refresh procedure.
 
 ## Domain Terminology
 

@@ -4,9 +4,9 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../scripts/ai-docs/lib/context.mjs';
-import { buildManifest } from '../scripts/ai-docs/lib/ai-docs.mjs';
-import { OUTPUT_FILE, renderPatternTypes } from '../scripts/ai-docs/lib/pattern-types.mjs';
+import { createContext } from '../scripts/docs-ai-generator/lib/context.mjs';
+import { buildManifest } from '../scripts/docs-ai-generator/lib/ai-docs.mjs';
+import { OUTPUT_FILE, renderPatternTypes } from '../scripts/docs-ai-generator/lib/pattern-types.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ctx = createContext(root);

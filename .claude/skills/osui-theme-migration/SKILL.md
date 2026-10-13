@@ -904,7 +904,16 @@ npm run docs:migration            # copies the mapping tables into the guide
 npm run docs:migration -- --check # verifies without writing; use this first
 ```
 
-The sync moves the tables in `references/variable-mapping.md` and nothing else. **Three things it cannot do, which you must handle by hand:**
+The Storybook **Migration** page is the other downstream document, and it is generated from more of this skill than the guide is — every marked table in `references/variable-mapping.md`, the whole of `references/widget-catalog.md`, `references/recipes.md` and `references/grey-shades.md`, and the triage, bucket, phase and new-variable tables in this file. Its generator also cross-checks the skill against the shipped CSS (every retired `:root` name needs a replacement row, every `--token-*` named must exist, every `--osui-*` knob named must be declared or read by the built bundle, the palette tables must match `src/scss/00-abstract/_setup-global-vars.scss`), so a stale or wrong fact fails there instead of publishing. Run it after any skill edit; it needs a build:
+
+```bash
+npm run docs:migration-page             # rewrites stories/_helpers/migration-data.ts
+npm run docs:migration-page -- --check  # fails if the data file is stale
+```
+
+The widget-catalog bucket headings carry their entry counts (`## Breaks (5)`), and the page generator fails when a count and the entries under it disagree — update the number when adding an entry.
+
+The guide sync moves the tables in `references/variable-mapping.md` and nothing else. **Three things it cannot do, which you must handle by hand:**
 
 - **Prose.** The guide addresses a customer in their own app; this skill addresses you in the repo. The same fact is written differently on purpose — compare the spacing sections, where the guide offers a `getComputedStyle` check to run in the browser console and `references/variable-mapping.md` offers a `grep` against `dist/`. Write the customer's version yourself; do not paste this one.
 - **The widget catalog.** The guide's *Framework defaults that changed* is an editorial projection of `references/widget-catalog.md` — bucket folded into the widget name, `Classic` and `New default` condensed into one prose cell. It is not generated. Add the row in both places.

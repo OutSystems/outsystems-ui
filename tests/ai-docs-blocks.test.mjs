@@ -3,9 +3,9 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../scripts/ai-docs/lib/context.mjs';
-import { countTokens } from '../scripts/ai-docs/lib/tokens.mjs';
-import { loadSnapshots } from '../scripts/ai-docs/lib/snapshot.mjs';
+import { createContext } from '../scripts/docs-ai-generator/lib/context.mjs';
+import { countTokens } from '../scripts/docs-ai-generator/lib/tokens.mjs';
+import { loadSnapshots } from '../scripts/docs-ai-generator/lib/snapshot.mjs';
 import { sample } from './helpers/snapshot-sample.mjs';
 import {
 	BLOCK_CARD_BUDGET,
@@ -14,8 +14,8 @@ import {
 	recipesFor,
 	renderBlockCard,
 	renderBlockCards,
-} from '../scripts/ai-docs/lib/ai-docs-blocks.mjs';
-import { buildIconsManifest, iconClassesOf } from '../scripts/ai-docs/lib/ai-docs-icons.mjs';
+} from '../scripts/docs-ai-generator/lib/ai-docs-blocks.mjs';
+import { buildIconsManifest, iconClassesOf } from '../scripts/docs-ai-generator/lib/ai-docs-icons.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -89,7 +89,7 @@ test('buildEnumsManifest lists referenced static entities with their values and 
 
 test('on the committed snapshot every public block gets a card within budget (when a snapshot exists)', (t) => {
 	if (loadSnapshots().length === 0) {
-		t.skip('no scripts/ai-docs/snapshot/osui.blocks*.json snapshot');
+		t.skip('no scripts/docs-ai-generator/snapshot/osui.blocks*.json snapshot');
 		return;
 	}
 	const ctx = createContext(root);

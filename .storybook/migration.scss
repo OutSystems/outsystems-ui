@@ -1,0 +1,314 @@
+/* Migration docs page — rides on the CSS Architecture shell (`.osui-css-architecture`)
+   for header, prose, tables, notes, code and TOC; only page-specific bits live here.
+   Colours go through the --ca-* vars so docs-dark.scss flips them for free. */
+
+.osui-migration {
+	--mg-stop: #d82424;
+	--mg-warn: #b57a00;
+	--mg-ok: #1b8a33;
+	--mg-new: var(--ca-primary-700);
+	--mg-stop-bg: #fdeceb;
+	--mg-warn-bg: #fff6de;
+	--mg-ok-bg: #e9f8ec;
+}
+
+html.sb-app-dark .osui-migration,
+.osui-migration.docs-dark {
+	--mg-stop: #f87171;
+	--mg-warn: #fbbf24;
+	--mg-ok: #4ade80;
+	--mg-stop-bg: rgba(248, 113, 113, 0.14);
+	--mg-warn-bg: rgba(251, 191, 36, 0.14);
+	--mg-ok-bg: rgba(74, 222, 128, 0.14);
+}
+
+/* Section sub-headings — the shell only styles h2. */
+.sbdocs-wrapper .osui-migration .ca-body h3 {
+	font-size: 16px !important;
+	font-weight: 700 !important;
+	line-height: 1.3 !important;
+	letter-spacing: -0.01em !important;
+	margin: 32px 0 10px !important;
+	color: var(--ca-ink) !important;
+	font-family: 'Inter', sans-serif !important;
+	border: none !important;
+	scroll-margin-top: 24px;
+}
+
+.osui-migration .ca-body > :is(.mg-palette, .mg-details) {
+	max-width: none;
+	width: 100%;
+}
+
+/* Stats row in the header */
+.osui-migration .mg-stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 12px;
+	margin-top: 28px;
+}
+
+.osui-migration .mg-stat {
+	background: var(--ca-n-100);
+	border: 1px solid var(--ca-n-300);
+	border-top: 3px solid var(--mg-tone);
+	border-radius: var(--ca-r-300);
+	padding: 14px 16px;
+}
+
+.osui-migration .mg-stat--stop {
+	--mg-tone: var(--mg-stop);
+}
+.osui-migration .mg-stat--warn {
+	--mg-tone: var(--mg-warn);
+}
+.osui-migration .mg-stat--ok {
+	--mg-tone: var(--mg-ok);
+}
+.osui-migration .mg-stat--new {
+	--mg-tone: var(--mg-new);
+}
+
+.osui-migration .mg-stat-n {
+	font-size: 26px;
+	font-weight: 750;
+	line-height: 1.1;
+	color: var(--mg-tone);
+}
+
+.osui-migration .mg-stat-label {
+	font-size: 12.5px;
+	color: var(--ca-ink-3);
+	margin-top: 4px;
+}
+
+/* Verdict pills in the triage table */
+.osui-migration .mg-pill {
+	display: inline-block;
+	margin-inline-end: 6px;
+	padding: 1px 8px;
+	border-radius: var(--ca-r-full);
+	font-size: 11.5px;
+	font-weight: 650;
+	white-space: nowrap;
+}
+
+.sbdocs-wrapper .osui-migration .mg-pill--stop {
+	background: var(--mg-stop-bg);
+	color: var(--mg-stop) !important;
+}
+.sbdocs-wrapper .osui-migration .mg-pill--warn {
+	background: var(--mg-warn-bg);
+	color: var(--mg-warn) !important;
+}
+.sbdocs-wrapper .osui-migration .mg-pill--ok {
+	background: var(--mg-ok-bg);
+	color: var(--mg-ok) !important;
+}
+.sbdocs-wrapper .osui-migration .mg-pill--tip {
+	background: var(--ca-primary-100);
+	color: var(--ca-primary-700) !important;
+}
+
+/* Keep identifiers whole inside table cells */
+.osui-migration .ca-body td code {
+	white-space: nowrap;
+}
+
+/* Values with a colour chip */
+.osui-migration .mg-value {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+/* Long resolved values (multi-layer shadows, gradients) wrap; names never do. */
+.osui-migration .ca-body .mg-value code {
+	white-space: normal;
+	overflow-wrap: break-word;
+}
+
+.osui-migration .mg-swatch {
+	display: inline-block;
+	flex: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	vertical-align: middle;
+}
+
+.osui-migration .mg-dim {
+	color: var(--ca-n-700);
+}
+
+.osui-migration .mg-note {
+	display: block;
+	margin-top: 2px;
+	font-size: 12px;
+	font-weight: 650;
+	color: var(--mg-warn);
+}
+
+/* Palette before/after grid */
+.osui-migration .mg-palette {
+	margin: 16px 0 24px;
+}
+
+.sbdocs-wrapper .osui-migration .mg-palette :is(th, td) {
+	padding: 4px 6px !important;
+	text-align: center;
+	border-bottom: 0 !important;
+	font-size: 11px !important;
+}
+
+.sbdocs-wrapper .osui-migration .mg-palette :is(th, td):first-child {
+	text-align: start;
+	font-size: 12.5px !important;
+}
+
+.osui-migration .mg-palette-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	color: var(--ca-n-700);
+	font-size: 9px;
+	line-height: 1;
+}
+
+.osui-migration .mg-palette-cell .mg-swatch {
+	width: 22px;
+	height: 22px;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body .mg-caption {
+	font-size: 12.5px !important;
+	color: var(--ca-ink-3) !important;
+	margin-top: 6px !important;
+}
+
+/* Collapsible snippet */
+.osui-migration .mg-details {
+	margin: 0 0 20px;
+	border: 1px solid var(--ca-n-300);
+	border-radius: var(--ca-r-300);
+	padding: 12px 16px;
+}
+
+.osui-migration .mg-details summary {
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 650;
+	color: var(--ca-primary-700);
+}
+
+.osui-migration .mg-details[open] summary {
+	margin-bottom: 12px;
+}
+
+.osui-migration .mg-details > .code {
+	margin-bottom: 0;
+}
+
+.osui-migration .mg-details .code pre {
+	max-height: 480px;
+}
+
+/* ── Skill-sourced content (catalog, recipes, phases) ─────────────────── */
+
+/* Sub-sub-headings — catalog entries and skill reference sections. */
+.sbdocs-wrapper .osui-migration .ca-body h4 {
+	font-size: 14.5px !important;
+	font-weight: 700 !important;
+	line-height: 1.3 !important;
+	margin: 0 0 8px !important;
+	color: var(--ca-ink) !important;
+	font-family: 'Inter', sans-serif !important;
+	border: none !important;
+	scroll-margin-top: 24px;
+}
+
+/* Tables lifted from the skill carry long code cells (knob lists, selectors):
+   let them wrap instead of forcing a horizontal scroll. */
+.osui-migration .ca-body .mg-table--wrap td code {
+	white-space: normal;
+	overflow-wrap: break-word;
+}
+
+.osui-migration .ca-body .mg-table--wrap td:first-child code {
+	white-space: nowrap;
+}
+
+/* Phase list on the "Run it with the skill" section */
+.sbdocs-wrapper .osui-migration .ca-body ol.mg-phases > li {
+	margin-bottom: 14px !important;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body ol.mg-phases ul {
+	margin: 8px 0 0 !important;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body ol.mg-phases ul li {
+	font-size: 13.5px !important;
+	margin-bottom: 6px !important;
+}
+
+/* Widget catalog — one bucket per section */
+.osui-migration .mg-bucket {
+	margin-top: 8px;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body .mg-bucket h3 {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body .mg-bucket h3 .mg-pill {
+	font-size: 12px;
+	margin-inline-end: 0;
+}
+
+/* Widget names in a bucket, as a wrapped row of chips */
+.sbdocs-wrapper .osui-migration .ca-body ul.mg-widgets {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 8px;
+	margin: 0 0 8px !important;
+	padding: 0 !important;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body ul.mg-widgets li {
+	margin: 0 !important;
+	padding: 3px 10px;
+	font-size: 13px;
+	line-height: 1.4;
+	border: 1px solid var(--ca-n-300);
+	border-radius: 999px;
+	background: var(--ca-n-100);
+	color: var(--ca-ink-2);
+}
+
+/* Recipes and grey-shade sections rendered from the skill */
+.osui-migration .mg-recipe {
+	scroll-margin-top: 24px;
+}
+
+.sbdocs-wrapper .osui-migration .ca-body .mg-details h3 {
+	margin-top: 16px !important;
+}
+
+/* Horizontal space for the wide bucket cards */
+.osui-migration .ca-body > :is(.mg-bucket, .mg-recipe) {
+	max-width: none;
+	width: 100%;
+}
+
+/* Auto-linked "Category H" / "Step 2f" references inside skill text */
+.sbdocs-wrapper .osui-migration .ca-body a.mg-ref {
+	font-weight: 600;
+	text-decoration: underline dotted;
+	text-underline-offset: 3px;
+}
