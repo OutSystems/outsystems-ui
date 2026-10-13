@@ -15,7 +15,9 @@ import {
 	buildUtilitiesManifest,
 	CARD_TOKEN_BUDGET,
 	configSchemaOf,
+	isPublicInput,
 	parseVarChain,
+	publishedDefault,
 	renderComponentCards,
 	renderCssComponents,
 	renderIndex,
@@ -94,7 +96,12 @@ test('events, css classes, css api knobs and a markup skeleton are present where
 
 test('generated docs score ≥ 90 on E03 for every pattern (generator and eval agree)', () => {
 	for (const p of ctx.inventory.patterns) {
-		const r = componentFacets(manifest, p.name, expectationsFor(ctx, p));
+		// The docs cover the configs JSON inputs, and publish a default only when it has a JSON value.
+		const e = expectationsFor(ctx, p);
+		const props = e.props
+			.filter(isPublicInput)
+			.map((x) => ({ ...x, defaultText: publishedDefault(ctx, p, x) === undefined ? null : x.defaultText }));
+		const r = componentFacets(manifest, p.name, { ...e, props });
 		assert.ok(r.score >= 0.9, `${p.name}: ${JSON.stringify(r.facets)}`);
 	}
 });
@@ -152,6 +159,11 @@ test('every pattern gets a configs JSON Schema and a usage example, and its card
 		'OutSystems.OSUI.Patterns.AccordionAPI.Create("accordion1", "{\\"MultipleItems\\":false,\\"ExtendedClass\\":\\"\\"}")'
 	);
 	assert.equal(accordion.usage.initialize, 'OutSystems.OSUI.Patterns.AccordionAPI.Initialize("accordion1")');
+	// Create is written from its signature: selector arguments sit where the API takes them
+	assert.match(manifest.components.Dropdown.usage.create, /^OutSystems\.OSUI\.Patterns\.DropdownAPI\.Create\("dropdown1", "search", "virtual-select", "\{/);
+	assert.match(manifest.components.Progress.usage.create, /^OutSystems\.OSUI\.Patterns\.ProgressAPI\.Create\("progress1", "Bar", "\{/);
+	assert.match(manifest.components.DatePicker.usage.create, /\}", "single", "flatpickr"\)$/);
+	assert.match(manifest.components.Carousel.usage.create, /\}", "Splide"\)$/);
 	const schema = configSchemaOf(accordion);
 	assert.equal(schema.type, 'object');
 	assert.equal(schema.additionalProperties, false);
@@ -165,11 +177,10 @@ test('every pattern gets a configs JSON Schema and a usage example, and its card
 	assert.deepEqual(item.properties.Icon.enum, ['Caret', 'Custom', 'PlusMinus']);
 	assert.equal(item.properties.Icon.default, 'Caret');
 	const picker = configSchemaOf(manifest.components.DatePicker);
-	assert.match(
-		picker.properties.OnChange.description,
-		/source type: .*Generic/,
-		'a callback type stays open and is described'
-	);
+	assert.equal(picker.properties.OnChange, undefined, 'runtime callbacks are not configs inputs');
+	assert.equal(configSchemaOf(manifest.components.RangeSlider).properties.rangeSliderMode, undefined);
+	assert.deepEqual(picker.properties.Disable.default, [], 'a literal default keeps its JSON value');
+	assert.equal(configSchemaOf(manifest.components.Notification).properties.CloseAfterTime.default, undefined);
 	assert.match(renderComponentCards(manifest), /^Configs schema: schema\/configs\/Accordion\.schema\.json/m);
 });
 

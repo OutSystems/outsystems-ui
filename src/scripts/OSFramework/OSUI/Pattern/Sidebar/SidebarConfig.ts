@@ -4,7 +4,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 	 * Class that represents the custom configurations received by the Sidebar.
 	 */
 	export class SidebarConfig extends AbstractConfiguration {
-		/** PUBLIC PROPERTIES **/
+		/** Side of the screen the sidebar opens from (left or right). */
 		public Direction: GlobalEnum.Direction;
 		/** Dims the page behind the sidebar with an overlay while it is open (and closes on click outside). */
 		public HasOverlay: boolean;

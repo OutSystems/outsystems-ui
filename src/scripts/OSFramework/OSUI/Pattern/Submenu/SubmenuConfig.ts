@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Submenu {
 	export class SubmenuConfig extends AbstractConfiguration {
-		/** PUBLIC PROPERTIES **/
+		/** Opens the submenu on hover instead of on click; ignored on touch devices. */
 		public OpenOnHover = false;
 
 		/**

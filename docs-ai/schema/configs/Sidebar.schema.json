@@ -6,7 +6,7 @@
 	"type": "object",
 	"properties": {
 		"Direction": {
-			"description": "PUBLIC PROPERTIES *",
+			"description": "Side of the screen the sidebar opens from (left or right).",
 			"default": "right",
 			"enum": [
 				"right",

@@ -150,6 +150,37 @@ function enumValuesFor(ctx, pattern, text) {
 const unionType = (values) => values.map((v) => (typeof v === 'string' ? `'${v}'` : String(v))).join(' | ');
 
 /**
+ * The JSON value of a default written as a literal in the source (`[]`, `0`, `false`, `'top'`), or undefined
+ * for anything else: `undefined` itself and expressions such as `Helper.Dates.ServerFormat` have no JSON
+ * value, and publishing their source text would document a string the runtime never uses.
+ * @param {string} text
+ * @returns {unknown}
+ */
+function jsonLiteral(text) {
+	const source = text.trim();
+	const quoted = source.length >= 2 && source.startsWith("'") && source.endsWith("'");
+	try {
+		return JSON.parse(quoted ? JSON.stringify(source.slice(1, -1)) : source);
+	} catch {
+		return undefined;
+	}
+}
+
+/**
+ * The default the docs publish for a prop: its enum member's value, else its JSON literal, else undefined
+ * (no source default, or one with no JSON value).
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {{ defaultText: string|null }} prop
+ * @returns {unknown}
+ */
+export function publishedDefault(ctx, pattern, prop) {
+	if (prop.defaultText === null) return undefined;
+	const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
+	return resolved !== null ? resolved : jsonLiteral(prop.defaultText);
+}
+
+/**
  * @param {import('./context.mjs').EvalContext} ctx
  * @param {import('./inventory.mjs').Pattern} pattern
  * @param {import('./ts.mjs').ConfigProp} prop
@@ -161,10 +192,8 @@ function describeProp(ctx, pattern, prop) {
 	out.type = publicTypeText(prop, allowed);
 	if (allowed) out.allowed = allowed;
 	if (hint) out.hint = hint;
-	if (prop.defaultText !== null) {
-		const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
-		out.default = resolved !== null ? resolved : prop.defaultText;
-	}
+	const value = publishedDefault(ctx, pattern, prop);
+	if (value !== undefined) out.default = value;
 	if (prop.docText) out.description = prop.docText;
 	return out;
 }
@@ -300,6 +329,19 @@ function lifecycleOf(ctx, pattern) {
 	return text;
 }
 
+/** Callback-typed fields (GlobalCallbacks.*, OSGeneric) are set by the runtime, never passed in the configs. */
+const INTERNAL_CALLBACK = /Callbacks|Generic/;
+
+/**
+ * Whether a config class field is an input of the configs JSON. Platform inputs are PascalCase and serializable:
+ * functions, internal callbacks and lower-case public fields (rangeSliderMode, …) are provider internals. One
+ * filter for the manifest, the JSON Schemas, the cards and PatternTypes.ts, so they document the same inputs.
+ * @param {import('./ts.mjs').ConfigProp} prop
+ */
+export function isPublicInput(prop) {
+	return prop.kind !== 'function' && !INTERNAL_CALLBACK.test(prop.typeText ?? '') && /^[A-Z]/.test(prop.name);
+}
+
 /**
  * Build the component manifest.
  * @param {import('./context.mjs').EvalContext} ctx
@@ -311,7 +353,7 @@ export function buildManifest(ctx) {
 		const e = expectationsFor(ctx, p);
 		/** @type {Record<string, any>} */
 		const props = {};
-		for (const prop of [...e.props].sort((a, b) => a.name.localeCompare(b.name)))
+		for (const prop of [...e.props].filter(isPublicInput).sort((a, b) => a.name.localeCompare(b.name)))
 			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,
@@ -332,7 +374,7 @@ export function buildManifest(ctx) {
 			cssClasses: e.cssClassMap,
 			cssApi,
 			markup,
-			usage: usageOf(p.name, props),
+			usage: usageOf(ctx, p, props, e.apiFunctions),
 			schema: `schema/configs/${p.name}.schema.json`,
 			docs: (DOCS_BY_NAME.get(p.name) ?? []).map(patternPage),
 			story: p.storyFile ? ctx.rel(p.storyFile) : null,
@@ -349,20 +391,67 @@ export function buildManifest(ctx) {
 }
 
 /**
- * The canonical call shape of a pattern: a configs example with every documented default (the runtime
- * applies them anyway, so the example is behaviour-neutral) and the Create → Initialize calls.
- * @param {string} name
- * @param {Record<string, any>} props manifest props
+ * The value an example passes for a Create argument that selects an implementation, as an enum member of the
+ * pattern, resolved from the source so it cannot drift. Only arguments whose enum has several members are
+ * listed (a one-member enum, such as most providers, is used as is); each pair is one the factory accepts.
  */
-function usageOf(name, props) {
+const EXAMPLE_ARGUMENTS = {
+	DatePicker: { mode: 'Enum.Mode.Single' },
+	Dropdown: { mode: 'Enum.Mode.Search', provider: 'Enum.Provider.VirtualSelect' },
+	Progress: { type: 'Enum.ProgressTypes.Bar' },
+	RangeSlider: { mode: 'Enum.Mode.Single' },
+};
+
+/** The enum that holds the values of a Create selector argument. */
+const SELECTOR_ENUMS = { mode: 'Mode', provider: 'Provider', type: 'ProgressTypes' };
+
+/**
+ * The value an example passes for one Create argument other than the id and the configs.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {string} param
+ * @returns {string}
+ */
+function exampleArgument(ctx, pattern, param) {
+	const listed = EXAMPLE_ARGUMENTS[/** @type {keyof typeof EXAMPLE_ARGUMENTS} */ (pattern.name)];
+	const reference = listed?.[/** @type {never} */ (param)];
+	if (reference) {
+		const value = resolveEnumReference(ctx, pattern, reference);
+		if (typeof value === 'string') return value;
+		throw new Error(`${pattern.name}: example argument ${param} = ${reference} does not resolve`);
+	}
+	const enumName = SELECTOR_ENUMS[/** @type {keyof typeof SELECTOR_ENUMS} */ (param)];
+	const members = enumName ? Object.values(findEnum(ctx, pattern, 'Enum', enumName)?.members ?? {}) : [];
+	if (members.length === 1 && typeof members[0] === 'string') return members[0];
+	throw new Error(`${pattern.name}: no example value for the Create argument ${param}; list it in EXAMPLE_ARGUMENTS`);
+}
+
+/**
+ * The canonical call shape of a pattern: a configs example with every documented default (the runtime
+ * applies them anyway, so the example is behaviour-neutral) and the Create → Initialize calls. Create is
+ * written from its parsed signature, so selector arguments (mode, provider, type) sit where the API takes them.
+ * @param {import('./context.mjs').EvalContext} ctx
+ * @param {import('./inventory.mjs').Pattern} pattern
+ * @param {Record<string, any>} props manifest props
+ * @param {import('./ts.mjs').ExportedFunction[]} apiFunctions
+ */
+function usageOf(ctx, pattern, props, apiFunctions) {
+	const name = pattern.name;
 	/** @type {Record<string, unknown>} */
 	const configs = {};
 	for (const [k, d] of Object.entries(props)) if (d.default !== undefined) configs[k] = d.default;
 	configs.ExtendedClass = '';
 	const id = `${name.charAt(0).toLowerCase()}${name.slice(1)}1`;
+	const create = apiFunctions.find((f) => f.name === 'Create');
+	if (!create) throw new Error(`${name}API has no Create function`);
+	const args = create.params.map((param, index) => {
+		if (index === 0) return JSON.stringify(id);
+		if (param.name === 'configs') return JSON.stringify(JSON.stringify(configs));
+		return JSON.stringify(exampleArgument(ctx, pattern, param.name));
+	});
 	return {
 		configs,
-		create: `OutSystems.OSUI.Patterns.${name}API.Create("${id}", ${JSON.stringify(JSON.stringify(configs))})`,
+		create: `OutSystems.OSUI.Patterns.${name}API.Create(${args.join(', ')})`,
 		initialize: `OutSystems.OSUI.Patterns.${name}API.Initialize("${id}")`,
 	};
 }

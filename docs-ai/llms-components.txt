@@ -148,19 +148,15 @@ Docs: interaction/carousel
 Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
 - CalendarMode: 'range' | 'single'
-- DateFormat: string = "Helper.Dates.ServerFormat"
-- Disable: DisabledDate[] = "[]"
+- DateFormat: string
+- Disable: DisabledDate[] = []
 - DisableMobile: boolean = false
 - FirstWeekDay: number = 0
 - InitialDate: string | Date
 - InitialEndDate: string
 - InitialStartDate: string
-- MaxDate: string = "undefined"
-- MinDate: string = "undefined"
-- OnChange: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnClose: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic
+- MaxDate: string
+- MinDate: string
 - ShowTodayButton: boolean = false
 - ShowWeekNumbers: boolean
 - TimeFormat: 'disabled' | '12' | '24' = "disabled"
@@ -235,7 +231,7 @@ Docs: interaction/dropdown_search · interaction/dropdown_tags
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · child pattern: Create after its parent, Initialize after the parent, Dispose before it
 Props (configs JSON, always include "ExtendedClass": ""):
 - IsSelected: boolean = false — Marks the item as selected when it is built.
-- ItemId: string = "undefined" — Identifier of the item reported to the parent dropdown when it is selected.
+- ItemId: string — Identifier of the item reported to the parent dropdown when it is selected.
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.DropdownServerSideItemAPI):
 - ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: unknown): string
@@ -312,16 +308,13 @@ Docs: utilities/inline_svg
 ## MonthPicker
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- AllowInput: boolean = false
-- DateFormat: string = "MM/YYYY"
-- DisableMobile: boolean = true
-- InitialMonth: MonthYear
-- MaxMonth: MonthYear
-- MinMonth: MonthYear
-- OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- ServerDateFormat: string
+- AllowInput: boolean = false — Stores the ability to allow inputs to be editable or not
+- DateFormat: string = "MM/YYYY" — Display format of the selected month (e.g. MM/YYYY).
+- DisableMobile: boolean = true — Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+- InitialMonth: MonthYear — Month selected when the picker is built ({ Month, Year }).
+- MaxMonth: MonthYear — Latest selectable month ({ Month, Year }).
+- MinMonth: MonthYear — Earliest selectable month ({ Month, Year }).
+- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
@@ -345,11 +338,12 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 CSS classes: osui-monthpicker__dropdown osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
 Configs schema: schema/configs/MonthPicker.schema.json
 Docs: interaction/month_picker
+[runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div>
 
 ## Notification
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- CloseAfterTime: number = "undefined" — Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
+- CloseAfterTime: number — Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
 - InteractToClose: boolean = true — Closes the notification on interaction outside it (click outside or Escape); ignored on native apps.
 - NeedsSwipes: boolean = false — Enables swipe gestures to dismiss the notification.
 - Position: string = "top" (default from Enum.Defaults; not validated — any string is accepted) — Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
@@ -397,7 +391,15 @@ Configs schema: schema/configs/OverflowMenu.schema.json
 
 ## Progress
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
-Props: none besides ExtendedClass
+Props (configs JSON, always include "ExtendedClass": ""):
+- AnimateInitialProgress: boolean — Animates the fill from 0 to InitialProgress when the pattern is built.
+- InitialProgress: number — Progress shown when the pattern is built, from 0 to 100.
+- Progress: number — Current progress, from 0 to 100; values outside the range are clamped.
+- ProgressCircleSize: string — Diameter of the circle (CSS length); used by the circle type only.
+- ProgressColor: string — Color of the progress fill: a color name from the theme palette or a CSS color.
+- Shape: string — Shape of the progress ends: soft, rounded or none (sharp).
+- Thickness: number — Thickness of the bar or of the circle stroke, in pixels.
+- TrailColor: string — Color of the unfilled track: a color name from the theme palette or a CSS color.
 API (OutSystems.OSUI.Patterns.ProgressAPI):
 - ChangeProperty(progressId: string, propertyName: string, propertyValue: unknown): string
 - Create(progressId: string, type: string, configs: string | Configs): IProgress
@@ -417,21 +419,20 @@ Docs: numbers/progress_bar · numbers/progress_circle
 ## RangeSlider
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- InitialValueFrom: number = 0
-- InitialValueTo: number = 0
-- IsDisabled: boolean = false
-- IsInterval: boolean
-- MaxValue: number
-- MinValue: number
-- Orientation: 'horizontal' | 'vertical' = "horizontal"
-- rangeSliderMode: 'single' | 'interval'
-- ShowFloatingLabel: boolean = false
-- ShowTickMarks: boolean = false
-- Size: string = "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize"
-- StartingValueFrom: number
-- StartingValueTo: number
-- Step: number = 1
-- TickMarksInterval: number = 0
+- InitialValueFrom: number = 0 — Value of the lower handle (or the only handle) when the slider is built.
+- InitialValueTo: number = 0 — Value of the upper handle when the slider is built (interval mode).
+- IsDisabled: boolean = false — Renders the slider disabled.
+- IsInterval: boolean — Uses two handles (from/to) instead of a single one.
+- MaxValue: number — Upper bound of the range.
+- MinValue: number — Lower bound of the range.
+- Orientation: 'horizontal' | 'vertical' = "horizontal" — horizontal (default) or vertical.
+- ShowFloatingLabel: boolean = false — Shows the current value in a floating label above the handle.
+- ShowTickMarks: boolean = false — Renders tick marks (pips) along the track.
+- Size: string — Track length (CSS length); 100% when horizontal, 100px when vertical.
+- StartingValueFrom: number — Current value of the (lower) handle, kept across provider redraws.
+- StartingValueTo: number — Current value of the upper handle, kept across provider redraws (interval mode).
+- Step: number = 1 — Increment between selectable values.
+- TickMarksInterval: number = 0 — Distance between tick marks in slider units.
 API (OutSystems.OSUI.Patterns.RangeSliderAPI):
 - ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string
 - Create(rangeSliderId: string, configs: string | Configs, mode: Enum.Mode, provider: string): IRangeSlider
@@ -530,7 +531,7 @@ Docs: navigation/section_index
 ## Sidebar
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- Direction: 'right' | 'left' = "right" — PUBLIC PROPERTIES *
+- Direction: 'right' | 'left' = "right" — Side of the screen the sidebar opens from (left or right).
 - HasOverlay: boolean = false — Dims the page behind the sidebar with an overlay while it is open (and closes on click outside).
 - StartsOpen: boolean = false — Renders the sidebar open when it is built.
 - Width: string = "500px" (default from Enum.Defaults; not validated — any string is accepted) — Width of the sidebar (CSS length); 500px by default.
@@ -556,7 +557,7 @@ Docs: interaction/sidebar
 ## Submenu
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- OpenOnHover: boolean = false — PUBLIC PROPERTIES *
+- OpenOnHover: boolean = false — Opens the submenu on hover instead of on click; ignored on touch devices.
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.SubmenuAPI):
 - ChangeProperty(submenuId: string, propertyName: string, propertyValue: unknown): string
@@ -575,7 +576,7 @@ CSS classes: osui-submenu active osui-submenu__header osui-submenu--is-dropdown 
 CSS API: --osui-submenu-items-background --osui-submenu-items-border-color --osui-submenu-items-border-radius --osui-submenu-items-shadow --osui-submenu-item-color --osui-submenu-item-font-size --osui-submenu-item-line-height --osui-submenu-item-border-radius --osui-submenu-item-selected-background --osui-submenu-item-pressed-background --osui-submenu-item-color-disabled --osui-submenu-header-color --osui-submenu-active-border-color --osui-submenu-hover-border-color --osui-submenu-max-height
 Configs schema: schema/configs/Submenu.schema.json
 Docs: navigation/submenu
-[runtime-only] Markup skeleton (from stories/Submenu.stories.ts): <style> .osui-submenu-header-states { display: flex; flex-direction: column; gap: 32px; } .osui-submenu-header-states__label { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; margin-bottom: 8px; } /* Room for the (absolutely positioned) open dropdown before the next header. */ .osui-submenu-header-states__cell--open { padding-bottom: 150px; } /* The real .layout is a min-height:100vh page root; in the gallery each cell only needs its header bar. Layout-only override, no state CSS. */ .osui-submenu-header-states .layout { min-height: 0; } </style><div class="osui-…
+[runtime-only] Markup skeleton (from stories/Submenu.stories.ts): <style> .osui-submenu-header-states { display: flex; flex-direction: column; gap: 32px; } .osui-submenu-header-states__label { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; margin-bottom: 8px; } /* Room for the (absolutely positioned) open dropdown before the next he…
 
 ## SwipeEvents
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -657,18 +658,15 @@ Docs: navigation/tabs
 ## TimePicker
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- AllowInput: boolean = false
-- DisableMobile: boolean = false
-- FirstWeekDay: number
-- InitialTime: string = "undefined"
-- Is24Hours: boolean = true
-- MaxTime: string = "undefined"
-- MinTime: string = "undefined"
-- OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
-- ServerDateFormat: string
-- TimeFormat: string
+- AllowInput: boolean = false — Stores the ability to allow inputs to be editable or not
+- DisableMobile: boolean = false — Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+- FirstWeekDay: number — First day of the week (0 = Sunday); forwarded to the provider locale.
+- InitialTime: string — Time selected when the picker is built (HH:mm).
+- Is24Hours: boolean = true — Uses a 24-hour clock; false shows an AM/PM selector.
+- MaxTime: string — Latest selectable time (HH:mm).
+- MinTime: string — Earliest selectable time (HH:mm).
+- ServerDateFormat: string — Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
+- TimeFormat: string — Display format of the selected time.
 API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(timePickerId: string): string
@@ -693,6 +691,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 CSS classes: osui-timepicker__dropdown osui-timepicker
 Configs schema: schema/configs/TimePicker.schema.json
 Docs: interaction/time_picker
+[runtime-only] Markup skeleton (from stories/TimePicker.stories.ts): <div class="osui-timepicker"><label for="-input">Pick a time</label><input id="-input" class="form-control" type="text" placeholder="Select a time" /></div>
 
 ## Tooltip
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

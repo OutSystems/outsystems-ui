@@ -15,13 +15,12 @@ import path from 'node:path';
 import prettier from 'prettier';
 
 import { expectationsFor } from './expectations.mjs';
-import { resolveEnumReference } from './ai-docs.mjs';
+import { isPublicInput, resolveEnumReference } from './ai-docs.mjs';
 
 export const OUTPUT_FILE = 'src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts';
 const GENERATOR = 'scripts/ai-docs/generate-pattern-types.mjs';
 
 const PRIMITIVE = /^(string|number|boolean|Date|MonthYear|'[^']*'|-?\d+(\.\d+)?|true|false)$/;
-const INTERNAL_CALLBACK = /Callbacks|Generic/;
 
 /**
  * TypeScript type text usable inside `OutSystems.OSUI.Patterns.*` for a manifest prop type.
@@ -71,10 +70,7 @@ function renderPatternTypesRaw(ctx, manifest) {
 	for (const p of ctx.inventory.patterns) {
 		const component = manifest.components[p.name];
 		const e = expectationsFor(ctx, p);
-		// platform inputs are PascalCase; lower-case public fields (rangeSliderMode, …) are provider internals
-		const props = [...e.props].filter(
-			(x) => x.kind !== 'function' && !INTERNAL_CALLBACK.test(x.typeText ?? '') && /^[A-Z]/.test(x.name)
-		);
+		const props = [...e.props].filter(isPublicInput);
 		const lines = [
 			'// eslint-disable-next-line @typescript-eslint/no-unused-vars',
 			`namespace OutSystems.OSUI.Patterns.${p.name}API {`,

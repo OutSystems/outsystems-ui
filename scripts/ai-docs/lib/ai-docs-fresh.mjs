@@ -24,18 +24,24 @@ function listFiles(dir, prefix = []) {
 	return out.sort((a, b) => a.localeCompare(b));
 }
 
+/** The files of docs-ai/ written by hand rather than by the generator: the schemas of the two manifests. */
+export const HAND_WRITTEN = ['schema/osui.components.schema.json', 'schema/osui.utilities.schema.json'];
+
 /**
- * Generated files (in `freshDir`, nested directories included) that differ from, or are missing in, the
- * committed `committedDir`. Files that only exist in the committed dir (the hand-written JSON Schemas)
- * are ignored.
+ * Drift between the committed `committedDir` and a fresh generation in `freshDir` (nested directories
+ * included): generated files that differ (`modified`) or are not committed (`missing`), and committed files
+ * the generator no longer writes (`obsolete`), such as the config schema of a removed or renamed pattern.
+ * The hand-written files are never obsolete.
  * @param {string} committedDir
  * @param {string} freshDir
- * @returns {{ file: string, status: 'modified'|'missing' }[]}
+ * @param {string[]} [handWritten]
+ * @returns {{ file: string, status: 'modified'|'missing'|'obsolete' }[]}
  */
-export function compareDocs(committedDir, freshDir) {
-	/** @type {{ file: string, status: 'modified'|'missing' }[]} */
+export function compareDocs(committedDir, freshDir, handWritten = HAND_WRITTEN) {
+	/** @type {{ file: string, status: 'modified'|'missing'|'obsolete' }[]} */
 	const drift = [];
-	for (const file of listFiles(freshDir)) {
+	const freshFiles = listFiles(freshDir);
+	for (const file of freshFiles) {
 		const segments = file.split('/');
 		const committed = insideDir(committedDir, ...segments);
 		if (!fs.existsSync(committed)) {
@@ -48,6 +54,11 @@ export function compareDocs(committedDir, freshDir) {
 		) {
 			drift.push({ file, status: 'modified' });
 		}
+	}
+	const generated = new Set(freshFiles);
+	const kept = new Set(handWritten);
+	for (const file of listFiles(committedDir)) {
+		if (!generated.has(file) && !kept.has(file)) drift.push({ file, status: 'obsolete' });
 	}
 	return drift;
 }

@@ -6,7 +6,7 @@
 	"type": "object",
 	"properties": {
 		"InitialValueFrom": {
-			"description": "These variables hold the inital state of a RangeSlider",
+			"description": "Value of the lower handle (or the only handle) when the slider is built.",
 			"default": 0,
 			"type": "number"
 		},
@@ -40,13 +40,6 @@
 				"vertical"
 			]
 		},
-		"rangeSliderMode": {
-			"description": "Store rangeslider mode is in use",
-			"enum": [
-				"single",
-				"interval"
-			]
-		},
 		"ShowFloatingLabel": {
 			"description": "Shows the current value in a floating label above the handle.",
 			"default": false,
@@ -59,7 +52,6 @@
 		},
 		"Size": {
 			"description": "Track length (CSS length); 100% when horizontal, 100px when vertical.",
-			"default": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
 			"type": "string"
 		},
 		"StartingValueFrom": {

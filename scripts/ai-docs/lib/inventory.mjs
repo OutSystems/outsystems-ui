@@ -104,7 +104,7 @@ function classifyTsFile(file) {
 	const base = path.basename(file);
 	if (!base.endsWith('.ts')) return 'ignore';
 	if (base.endsWith('.d.ts')) return 'typing';
-	if (base.endsWith('Config.ts')) return 'config';
+	if (base.endsWith('Config.ts') || base.endsWith('Configuration.ts')) return 'config';
 	if (base.endsWith('Enum.ts')) return 'enum';
 	if (base.endsWith('Factory.ts')) return 'factory';
 	if (/^I[A-Z][A-Za-z0-9]*\.ts$/.test(base)) return 'interface';
