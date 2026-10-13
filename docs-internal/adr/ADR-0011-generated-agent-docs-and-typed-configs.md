@@ -142,6 +142,17 @@ Everything that compiled before still compiles; JavaScript callers are unaffecte
     namespace. `@param {number} x` had no effect in the IDE either: the language service reads the signature,
     and only the description text after the name reaches the hover. Modifier tags that carry meaning stay:
     `@protected`, `@private`, `@public`, `@readonly`, `@abstract`, `@deprecated`, `@defaultValue`, `@remarks`.
+-   **The tags were not invisible in VS Code; they made the hover worse.** TypeScript's quick info (what the
+    hover renders) prints every JSDoc tag it does not interpret as a literal line. Querying the language
+    service (TypeScript 5.9) for `Accordion.setA11YProperties` returned the true qualified name in the
+    signature, `OSFramework.OSUI.Patterns.Accordion.Accordion.setA11YProperties()`, and, a few lines below it,
+    the tag `@memberof OSFramework.Patterns.Accordion.Accordion` (no `OSUI`), plus `@export` and `@static`. The
+    developer saw two contradictory namespaces in one tooltip, and the one the compiler computed is the
+    correct one. Without the Closure tags the hover shows the signature, the description and the meaningful
+    modifiers, and nothing else. On `dev`, 839 of the 988 `@memberof` tags did not start with the namespace
+    declared in their own file (most often a missing `OSUI` segment), so this was the common case, not an
+    outlier. The same drift is what misleads a human or an LLM that reads the source instead of the compiled
+    types: the comment is trusted and the path it names does not exist.
 -   **ESLint enforces it** through `eslint-plugin-jsdoc` in TypeScript mode, scoped to `src/scripts/**/*.ts`
     (declaration files excluded): `no-types`, `check-tag-names` (with `defaultValue` and `remarks` allowed),
     `check-param-names`, `require-param-description`, `require-returns-description`, `empty-tags`; and on
