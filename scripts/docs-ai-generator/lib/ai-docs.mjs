@@ -60,13 +60,13 @@ const MARKUP_CAP = 1200;
  */
 function shortType(type) {
 	return type
-		.replace(/string \| Record<string, unknown>/g, 'string | object')
-		.replace(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
-		.replace(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
-		.replace(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')
-		.replace(/OSFramework\.OSUI\./g, '')
-		.replace(/OutSystems\.OSUI\./g, '')
-		.replace(/Providers\.OSUI\.\w+\.\w+\./g, '');
+		.replaceAll(/string \| Record<string, unknown>/g, 'string | object')
+		.replaceAll(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
+		.replaceAll(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
+		.replaceAll(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')
+		.replaceAll(/OSFramework\.OSUI\./g, '')
+		.replaceAll(/OutSystems\.OSUI\./g, '')
+		.replaceAll(/Providers\.OSUI\.\w+\.\w+\./g, '');
 }
 
 /** @param {import('./context.mjs').EvalContext} ctx */
@@ -106,7 +106,7 @@ export function resolveEnumReference(ctx, pattern, text) {
 	const quote = t[0];
 	if ((quote === "'" || quote === '"' || quote === '`') && t.length >= 2 && t.endsWith(quote)) return t.slice(1, -1);
 	const ref = parseEnumPath(t);
-	if (!ref || !ref.member) return null;
+	if (!ref?.member) return null;
 	const e = findEnum(ctx, pattern, ref.scope, ref.enumName);
 	if (!e || !(ref.member in e.members)) return null;
 	return e.members[ref.member];
@@ -299,11 +299,11 @@ function publicTypeText(prop, allowed) {
 function cleanMarkup(html) {
 	if (!html) return '';
 	let out = html
-		.replace(/\s+/g, ' ')
-		.replace(/ style="[^"]*"/g, '')
-		.replace(/\$\{[^}]*\}/g, '')
-		.replace(/ class=""/g, '')
-		.replace(/> </g, '><')
+		.replaceAll(/\s+/g, ' ')
+		.replaceAll(/ style="[^"]*"/g, '')
+		.replaceAll(/\$\{[^}]*\}/g, '')
+		.replaceAll(/ class=""/g, '')
+		.replaceAll(/> </g, '><')
 		.trim();
 	if (out.length > MARKUP_CAP) out = `${out.slice(0, MARKUP_CAP)}…`;
 	return out;
@@ -720,7 +720,7 @@ export function renderComponentCards(manifest) {
 			const card = renderCard(c, opts);
 			if (countTokens(card) <= CARD_TOKEN_BUDGET) return card;
 		}
-		return renderCard(c, CARD_STAGES[CARD_STAGES.length - 1]);
+		return renderCard(c, CARD_STAGES.at(-1));
 	});
 	return `# OutSystems UI — component reference cards\n\nOne card per pattern. Signatures, props, defaults and allowed values are generated from the TypeScript source; markup skeletons come from the Storybook stories that drive the compiled bundle exactly as the platform does.\n\n${cards.join('\n\n')}\n`;
 }
@@ -1087,7 +1087,7 @@ function numberRuns(names) {
 		const members = nums.map((v) => `${pre}${v}${post}`);
 		runAt.set(
 			names.find((n) => members.includes(n)) ?? members[0],
-			`${pre}{${nums[0]}..${nums[nums.length - 1]}}${post}`
+			`${pre}{${nums[0]}..${nums.at(-1)}}${post}`
 		);
 		for (const m of members) taken.add(m);
 	}

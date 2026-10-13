@@ -46,7 +46,7 @@ export async function loadNamespaceFile(file, globals = {}) {
 		compilerOptions: { target: ts.ScriptTarget.ES2017, module: ts.ModuleKind.None, removeComments: true },
 		reportDiagnostics: true,
 	});
-	if (diagnostics && diagnostics.length) {
+	if (diagnostics?.length) {
 		throw new Error(diagnostics.map((d) => ts.flattenDiagnosticMessageText(d.messageText, '\n')).join('\n'));
 	}
 	/** @type {Record<string, any>} */

@@ -13,6 +13,12 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents.Enum {
 	export enum Properties {
 		Threshold = 10,
 		Velocity = 0.3,
+	}
+
+	/**
+	 * SwipeEvents configuration property names
+	 */
+	export enum ConfigProperties {
 		WidgetId = 'WidgetId',
 	}
 }

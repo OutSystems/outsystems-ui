@@ -64,7 +64,7 @@ export function componentFacets(manifest, name, expected) {
 		),
 		defaults: coverage(
 			withDefault.map((p) => p.name),
-			(n) => props[n] !== undefined && props[n].default !== undefined
+			(n) => props[n]?.default !== undefined
 		),
 		api: coverage(expected.api, (n) => apiNames.has(n)),
 		events: coverage(expected.events, (n) => events.has(n)),
