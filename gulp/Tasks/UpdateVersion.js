@@ -61,8 +61,8 @@ function getFilesList(cb) {
 			// Both bundles share the same banner prefix, only the platform suffix differs
 			case filesList.classicThemeO11:
 			case filesList.classicThemeODC:
-				findFor = `OutSystems UI ${defaultSpecs.info.version}`
-				replaceTo = `OutSystems UI ${newVersionToBeSet}`
+				findFor = `OutSystems UI Classic ${defaultSpecs.info.version}`
+				replaceTo = `OutSystems UI Classic ${newVersionToBeSet}`
 				break;
 
 			case filesList.constants:
