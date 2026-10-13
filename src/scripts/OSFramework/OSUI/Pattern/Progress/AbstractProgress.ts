@@ -156,7 +156,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * @param gradientType Type of the gradient to apply
 		 * @param colors Gradient colour stops
 		 */
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			this.gradientLength = Object.keys(colors).length;
 
 			if (this.gradientLength < 2) {

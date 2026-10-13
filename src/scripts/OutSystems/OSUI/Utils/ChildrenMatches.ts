@@ -7,7 +7,7 @@ namespace OutSystems.OSUI.Utils {
 	 * @param selector CSS selector to match
 	 */
 	export function ChildrenMatches(elem: HTMLElement, selector: string): Element[] {
-		let matchingChildren = [];
+		let matchingChildren: Element[] = [];
 
 		if (elem) {
 			matchingChildren = [...elem.children].filter((child) => child.matches(selector));

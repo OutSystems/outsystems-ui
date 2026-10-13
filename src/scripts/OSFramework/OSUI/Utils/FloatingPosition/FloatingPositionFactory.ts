@@ -5,9 +5,10 @@ namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
 	 *
 	 * @param configs Positioning configuration of the floating element
 	 * @param provider Positioning library that implements the behaviour
+	 * @returns the FloatingPosition instance of the given provider
 	 */
-	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void {
-		let _floatingPositionItem = null;
+	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): FloatingPosition {
+		let _floatingPositionItem: FloatingPosition = null;
 
 		switch (provider) {
 			case Enum.Provider.FloatingUI:
