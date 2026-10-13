@@ -30,7 +30,7 @@
 
 /// Element types accepted by a11y-focus-shadow(). Add a member here when a new
 /// element needs its own focus treatment, then branch on it inside the mixin.
-$a11y-focus-shadow-types: button, link;
+$a11y-focus-shadow-types: button, link, input, textarea;
 
 /// Focus ring chosen by element type. $isInner only moves that ring inside the element.
 /// @param {String} $type [null] - One of $a11y-focus-shadow-types (`button`, `link`).
@@ -42,6 +42,9 @@ $a11y-focus-shadow-types: button, link;
 
 	@if $type == button {
 		border-color: var(--color-background-surface);
+	}
+	@if $type == input or $type == textarea {
+		border-color: variables.$token-semantics-primary-base;
 	}
 
 	@if $isInner {
