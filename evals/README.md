@@ -3,6 +3,10 @@
 Offline, deterministic measurements of the OutSystems UI library, organised in **suites**. Each suite
 answers one question with its own index (an unweighted mean of its evals, 0–100); indices are never merged.
 
+> **Results frozen at `zero-impact` (2026-10-07).** The series continues in `OutSystems/uiframeworks-evaluator`
+> (`results/osui/`), which runs these evals against this branch and serves every framework at
+> https://claude.ai/code/artifact/5ed97cb6-593d-4af7-8f13-def00d239f35; `evals/results/` here is no longer written (ADR-0004 there).
+
 | Suite        | Directory                                       | Index                                  | Question                                                                                   |
 | ------------ | ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `ai`         | [`ai-friendliness/`](ai-friendliness/README.md) | AI-Friendliness Index (E01–E10)        | how legible the library is to coding agents                                                |

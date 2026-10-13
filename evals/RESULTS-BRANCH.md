@@ -1,5 +1,7 @@
 # Eval runs recorded on dev
 
+> **Frozen at `zero-impact` (2026-10-07).** New runs are recorded in `OutSystems/uiframeworks-evaluator` (`results/osui/`); nothing is published here any more.
+
 This branch is written by the `AI-friendliness gate` workflow on every push to `dev` (steps "Record
 dev-<sha>" and "Publish to the evals-results branch"). It holds no source code; do not commit to it by hand.
 
