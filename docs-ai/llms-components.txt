@@ -148,15 +148,15 @@ Docs: interaction/carousel
 Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
 - CalendarMode: 'range' | 'single'
-- DateFormat: string = "Helper.Dates.ServerFormat"
-- Disable: array = "[]"
+- DateFormat: string
+- Disable: array = []
 - DisableMobile: boolean = false
 - FirstWeekDay: number = 0
 - InitialDate: string | Date
 - InitialEndDate: string
 - InitialStartDate: string
-- MaxDate: string = "undefined"
-- MinDate: string = "undefined"
+- MaxDate: string
+- MinDate: string
 - OnChange: OSFramework.OSUI.GlobalCallbacks.Generic
 - OnClose: OSFramework.OSUI.GlobalCallbacks.Generic
 - OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic
@@ -235,7 +235,7 @@ Docs: interaction/dropdown_search · interaction/dropdown_tags
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · child pattern: Create after its parent, Initialize after the parent, Dispose before it
 Props (configs JSON, always include "ExtendedClass": ""):
 - IsSelected: boolean = false — Marks the item as selected when it is built.
-- ItemId: string = "undefined" — Identifier of the item reported to the parent dropdown when it is selected.
+- ItemId: string — Identifier of the item reported to the parent dropdown when it is selected.
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.DropdownServerSideItemAPI):
 - ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: unknown): string
@@ -349,7 +349,7 @@ Docs: interaction/month_picker
 ## Notification
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- CloseAfterTime: number = "undefined" — Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
+- CloseAfterTime: number — Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
 - InteractToClose: boolean = true — Closes the notification on interaction outside it (click outside or Escape); ignored on native apps.
 - NeedsSwipes: boolean = false — Enables swipe gestures to dismiss the notification.
 - Position: string = "top" (default from Enum.Defaults; not validated — any string is accepted) — Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
@@ -435,7 +435,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - rangeSliderMode: 'single' | 'interval'
 - ShowFloatingLabel: boolean = false
 - ShowTickMarks: boolean = false
-- Size: string = "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize"
+- Size: string
 - StartingValueFrom: number
 - StartingValueTo: number
 - Step: number = 1
@@ -668,10 +668,10 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
 - DisableMobile: boolean = false
 - FirstWeekDay: number
-- InitialTime: string = "undefined"
+- InitialTime: string
 - Is24Hours: boolean = true
-- MaxTime: string = "undefined"
-- MinTime: string = "undefined"
+- MaxTime: string
+- MinTime: string
 - OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
 - OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
 - OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic

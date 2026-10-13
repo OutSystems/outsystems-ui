@@ -12,7 +12,6 @@
 		},
 		"ItemId": {
 			"description": "Identifier of the item reported to the parent dropdown when it is selected.",
-			"default": "undefined",
 			"type": "string"
 		},
 		"ExtendedClass": {

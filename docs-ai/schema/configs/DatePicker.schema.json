@@ -19,12 +19,11 @@
 		},
 		"DateFormat": {
 			"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format.",
-			"default": "Helper.Dates.ServerFormat",
 			"type": "string"
 		},
 		"Disable": {
 			"description": "Stores the ability to disable a range of dates from datepicker (source type: array)",
-			"default": "[]"
+			"default": []
 		},
 		"DisableMobile": {
 			"description": "Stores the ability to disable the mobile flatpickr behavior. False is the default provider option",
@@ -49,12 +48,10 @@
 		},
 		"MaxDate": {
 			"description": "Latest selectable date; empty for no upper limit.",
-			"default": "undefined",
 			"type": "string"
 		},
 		"MinDate": {
 			"description": "Earliest selectable date; empty for no lower limit.",
-			"default": "undefined",
 			"type": "string"
 		},
 		"OnChange": {

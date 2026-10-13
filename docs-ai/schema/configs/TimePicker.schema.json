@@ -21,7 +21,6 @@
 		},
 		"InitialTime": {
 			"description": "Time selected when the picker is built (HH:mm).",
-			"default": "undefined",
 			"type": "string"
 		},
 		"Is24Hours": {
@@ -31,12 +30,10 @@
 		},
 		"MaxTime": {
 			"description": "Latest selectable time (HH:mm).",
-			"default": "undefined",
 			"type": "string"
 		},
 		"MinTime": {
 			"description": "Earliest selectable time (HH:mm).",
-			"default": "undefined",
 			"type": "string"
 		},
 		"OnChangeEventCallback": {

@@ -1616,12 +1616,11 @@
 				},
 				"DateFormat": {
 					"type": "string",
-					"default": "Helper.Dates.ServerFormat",
 					"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format."
 				},
 				"Disable": {
 					"type": "array",
-					"default": "[]",
+					"default": [],
 					"description": "Stores the ability to disable a range of dates from datepicker"
 				},
 				"DisableMobile": {
@@ -1648,12 +1647,10 @@
 				},
 				"MaxDate": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Latest selectable date; empty for no upper limit."
 				},
 				"MinDate": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Earliest selectable date; empty for no lower limit."
 				},
 				"OnChange": {
@@ -1721,17 +1718,14 @@
 			"usage": {
 				"configs": {
 					"AllowInput": false,
-					"DateFormat": "Helper.Dates.ServerFormat",
-					"Disable": "[]",
+					"Disable": [],
 					"DisableMobile": false,
 					"FirstWeekDay": 0,
-					"MaxDate": "undefined",
-					"MinDate": "undefined",
 					"ShowTodayButton": false,
 					"TimeFormat": "disabled",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"Helper.Dates.ServerFormat\\\",\\\"Disable\\\":\\\"[]\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"MaxDate\\\":\\\"undefined\\\",\\\"MinDate\\\":\\\"undefined\\\",\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"Disable\\\":[],\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
 			},
 			"schema": "schema/configs/DatePicker.schema.json",
@@ -2301,7 +2295,6 @@
 				},
 				"ItemId": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Identifier of the item reported to the parent dropdown when it is selected."
 				}
 			},
@@ -2321,10 +2314,9 @@
 			"usage": {
 				"configs": {
 					"IsSelected": false,
-					"ItemId": "undefined",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Create(\"dropdownServerSideItem1\", \"{\\\"IsSelected\\\":false,\\\"ItemId\\\":\\\"undefined\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Create(\"dropdownServerSideItem1\", \"{\\\"IsSelected\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Initialize(\"dropdownServerSideItem1\")"
 			},
 			"schema": "schema/configs/DropdownServerSideItem.schema.json",
@@ -3295,7 +3287,6 @@
 			"props": {
 				"CloseAfterTime": {
 					"type": "number",
-					"default": "undefined",
 					"description": "Milliseconds after which the notification closes itself; 0 or undefined keeps it open."
 				},
 				"InteractToClose": {
@@ -3346,7 +3337,6 @@
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Show notification</button><div class=\"osui-notification\" aria-hidden=\"true\" tabindex=\"-1\"><div>Saved successfully. ✓</div></div></div>",
 			"usage": {
 				"configs": {
-					"CloseAfterTime": "undefined",
 					"InteractToClose": true,
 					"NeedsSwipes": false,
 					"Position": "top",
@@ -3354,7 +3344,7 @@
 					"Width": "370px",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.NotificationAPI.Create(\"notification1\", \"{\\\"CloseAfterTime\\\":\\\"undefined\\\",\\\"InteractToClose\\\":true,\\\"NeedsSwipes\\\":false,\\\"Position\\\":\\\"top\\\",\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"370px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.NotificationAPI.Create(\"notification1\", \"{\\\"InteractToClose\\\":true,\\\"NeedsSwipes\\\":false,\\\"Position\\\":\\\"top\\\",\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"370px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.NotificationAPI.Initialize(\"notification1\")"
 			},
 			"schema": "schema/configs/Notification.schema.json",
@@ -4103,7 +4093,6 @@
 				},
 				"Size": {
 					"type": "string",
-					"default": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
 					"description": "Track length (CSS length); 100% when horizontal, 100px when vertical."
 				},
 				"StartingValueFrom": {
@@ -4152,12 +4141,11 @@
 					"Orientation": "horizontal",
 					"ShowFloatingLabel": false,
 					"ShowTickMarks": false,
-					"Size": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
 					"Step": 1,
 					"TickMarksInterval": 0,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Size\\\":\\\"this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t? Enum.DefaultValues.PercentualSize\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t: Enum.DefaultValues.PixelSize\\\",\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.RangeSliderAPI.Initialize(\"rangeSlider1\")"
 			},
 			"schema": "schema/configs/RangeSlider.schema.json",
@@ -6218,7 +6206,6 @@
 				},
 				"InitialTime": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Time selected when the picker is built (HH:mm)."
 				},
 				"Is24Hours": {
@@ -6228,12 +6215,10 @@
 				},
 				"MaxTime": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Latest selectable time (HH:mm)."
 				},
 				"MinTime": {
 					"type": "string",
-					"default": "undefined",
 					"description": "Earliest selectable time (HH:mm)."
 				},
 				"OnChangeEventCallback": {
@@ -6275,13 +6260,10 @@
 				"configs": {
 					"AllowInput": false,
 					"DisableMobile": false,
-					"InitialTime": "undefined",
 					"Is24Hours": true,
-					"MaxTime": "undefined",
-					"MinTime": "undefined",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"InitialTime\\\":\\\"undefined\\\",\\\"Is24Hours\\\":true,\\\"MaxTime\\\":\\\"undefined\\\",\\\"MinTime\\\":\\\"undefined\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"Is24Hours\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.TimePickerAPI.Initialize(\"timePicker1\")"
 			},
 			"schema": "schema/configs/TimePicker.schema.json",

@@ -7,7 +7,6 @@
 	"properties": {
 		"CloseAfterTime": {
 			"description": "Milliseconds after which the notification closes itself; 0 or undefined keeps it open.",
-			"default": "undefined",
 			"type": "number"
 		},
 		"InteractToClose": {

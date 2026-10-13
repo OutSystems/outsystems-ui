@@ -59,7 +59,6 @@
 		},
 		"Size": {
 			"description": "Track length (CSS length); 100% when horizontal, 100px when vertical.",
-			"default": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
 			"type": "string"
 		},
 		"StartingValueFrom": {

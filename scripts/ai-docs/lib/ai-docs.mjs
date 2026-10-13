@@ -150,6 +150,23 @@ function enumValuesFor(ctx, pattern, text) {
 const unionType = (values) => values.map((v) => (typeof v === 'string' ? `'${v}'` : String(v))).join(' | ');
 
 /**
+ * The JSON value of a default written as a literal in the source (`[]`, `0`, `false`, `'top'`), or undefined
+ * for anything else: `undefined` itself and expressions such as `Helper.Dates.ServerFormat` have no JSON
+ * value, and publishing their source text would document a string the runtime never uses.
+ * @param {string} text
+ * @returns {unknown}
+ */
+function jsonLiteral(text) {
+	const source = text.trim();
+	const quoted = source.length >= 2 && source.startsWith("'") && source.endsWith("'");
+	try {
+		return JSON.parse(quoted ? JSON.stringify(source.slice(1, -1)) : source);
+	} catch {
+		return undefined;
+	}
+}
+
+/**
  * @param {import('./context.mjs').EvalContext} ctx
  * @param {import('./inventory.mjs').Pattern} pattern
  * @param {import('./ts.mjs').ConfigProp} prop
@@ -163,7 +180,8 @@ function describeProp(ctx, pattern, prop) {
 	if (hint) out.hint = hint;
 	if (prop.defaultText !== null) {
 		const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
-		out.default = resolved !== null ? resolved : prop.defaultText;
+		const value = resolved !== null ? resolved : jsonLiteral(prop.defaultText);
+		if (value !== undefined) out.default = value;
 	}
 	if (prop.docText) out.description = prop.docText;
 	return out;
