@@ -1,3 +1,4 @@
+@use '../../../../scss/00-abstract/_mixins.scss' as *;
 @use '../../../tokens/variables';
 
 /* Patterns - Content - Accordion Item */
@@ -301,14 +302,16 @@
 ///
 .has-accessible-features {
 	.osui-accordion-item {
-		&__title,
-		&__content {
+		&:has(.osui-accordion-item__title:focus) {
+			@include a11y-focus-shadow($isInner: false);
+
+			border-color: transparent;
+			z-index: var(--layer-local-tier-1);
+		}
+
+		&__title {
 			&:focus {
 				box-shadow: none;
-			}
-
-			&:focus-visible {
-				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
