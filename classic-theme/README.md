@@ -9,7 +9,7 @@ Refresh by building `dev` (`npm run build`) and copying dist/*.OutSystemsUI.css 
 then replaying every entry under **Hand-applied ports** below.
 
 > **The version above tracks the release, not the snapshot.** The heading of this file and
-> the `OutSystems UI <version>` banner at the top of both bundles are rewritten by
+> the `OutSystems UI Classic <version>` banner at the top of both bundles are rewritten by
 > `npm run update-version` ([gulp/Tasks/UpdateVersion.js](../gulp/Tasks/UpdateVersion.js)),
 > so they report the shipped OutSystems UI version — the _snapshot's_ real version is the
 > provenance line above. **After a refresh, re-sync the two banners by hand.** A refresh
