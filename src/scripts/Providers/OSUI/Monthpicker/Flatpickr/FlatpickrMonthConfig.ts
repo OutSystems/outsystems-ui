@@ -37,12 +37,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
-			let _locale: FlatpickrLocale;
-			try {
-				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang as keyof typeof window.flatpickr.l10ns];
-			} catch (error) {
-				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
+			// Set the locale in order to define the calendar language
+			const _locale: FlatpickrLocale = window.flatpickr.l10ns[this.Lang as keyof typeof window.flatpickr.l10ns];
+
+			// A locale that isn't loaded is missing from l10ns: report it and let Flatpickr use its default language
+			if (_locale === undefined) {
+				console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
 			}
 
 			return _locale;
