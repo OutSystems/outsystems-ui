@@ -125,8 +125,8 @@ stylesheet drives with its parameter and event maps; a test rejects anything els
 `Create(id, configs)` accepts the platform's JSON string or a typed object. Both go through
 `OSFramework.OSUI.Helper.ParseConfigs`, whose string path is byte-for-byte the previous `JSON.parse`; `null`,
 arrays and numbers are rejected with a clear error instead of a `TypeError` later, and so is an object whose
-prototype is not `Object.prototype` or `null`: the Config classes read the configs with `for...in`, which would
-pick up a class instance's inherited fields. `RegisterCallback` takes
+prototype is not `null` or a root prototype without enumerable keys (`Object.prototype`): the Config classes read the
+configs with `for...in`, which would pick up the inherited fields of a class instance or of a custom prototype. `RegisterCallback` takes
 `EventName`. `SwipeEvents` and `TouchEvents` gain `ChangeProperty` (error codes `OSUI-API-34001` and
 `OSUI-API-35001`) so every pattern exposes the same canonical set; changing their `WidgetId` moves the gesture
 listeners to the new element. The `Orientation` alias in `Global.d.ts`

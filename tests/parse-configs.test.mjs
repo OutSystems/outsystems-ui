@@ -46,4 +46,7 @@ test('an object with a non-plain prototype is rejected, so for...in cannot pick 
 	assert.throws(() => ParseConfigs(new Configs()), /expected a JSON string or a plain object/);
 	assert.throws(() => ParseConfigs(Object.create({ Injected: true })), /expected a JSON string or a plain object/);
 	assert.throws(() => ParseConfigs(new Date()), /expected a JSON string or a plain object/);
+	// a null-prototype object as the direct prototype still passes a depth-only check, and for...in reads its keys
+	const injected = Object.assign(Object.create(null), { Injected: true });
+	assert.throws(() => ParseConfigs(Object.create(injected)), /expected a JSON string or a plain object/);
 });
