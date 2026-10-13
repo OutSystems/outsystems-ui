@@ -382,10 +382,11 @@
 					"Icon": "Caret",
 					"IconPosition": "right",
 					"IsDisabled": false,
+					"StartsExpanded": false,
 					"ToggleWithIcon": false,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.AccordionItemAPI.Create(\"accordionItem1\", \"{\\\"Icon\\\":\\\"Caret\\\",\\\"IconPosition\\\":\\\"right\\\",\\\"IsDisabled\\\":false,\\\"ToggleWithIcon\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.AccordionItemAPI.Create(\"accordionItem1\", \"{\\\"Icon\\\":\\\"Caret\\\",\\\"IconPosition\\\":\\\"right\\\",\\\"IsDisabled\\\":false,\\\"StartsExpanded\\\":false,\\\"ToggleWithIcon\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.AccordionItemAPI.Initialize(\"accordionItem1\")"
 			},
 			"schema": "schema/configs/AccordionItem.schema.json",
@@ -879,9 +880,11 @@
 			"markup": "<div class=\"osui-btn-loading\"><button class=\"btn btn-primary\" type=\"button\"><span class=\"osui-btn-loading__spinner-animation\"></span> Save changes </button></div>",
 			"usage": {
 				"configs": {
+					"IsLoading": false,
+					"ShowLoadingAndLabel": false,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.ButtonLoadingAPI.Create(\"buttonLoading1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.ButtonLoadingAPI.Create(\"buttonLoading1\", \"{\\\"IsLoading\\\":false,\\\"ShowLoadingAndLabel\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.ButtonLoadingAPI.Initialize(\"buttonLoading1\")"
 			},
 			"schema": "schema/configs/ButtonLoading.schema.json",
@@ -1243,6 +1246,7 @@
 			"usage": {
 				"configs": {
 					"AutoPlay": false,
+					"Direction": "ltr",
 					"Height": "auto",
 					"ItemsDesktop": 1,
 					"ItemsGap": "0px",
@@ -1251,9 +1255,10 @@
 					"Loop": true,
 					"Navigation": "both",
 					"Padding": "0px",
+					"StartingPosition": 0,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.CarouselAPI.Create(\"carousel1\", \"{\\\"AutoPlay\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"ItemsDesktop\\\":1,\\\"ItemsGap\\\":\\\"0px\\\",\\\"ItemsPhone\\\":1,\\\"ItemsTablet\\\":1,\\\"Loop\\\":true,\\\"Navigation\\\":\\\"both\\\",\\\"Padding\\\":\\\"0px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"Splide\")",
+				"create": "OutSystems.OSUI.Patterns.CarouselAPI.Create(\"carousel1\", \"{\\\"AutoPlay\\\":false,\\\"Direction\\\":\\\"ltr\\\",\\\"Height\\\":\\\"auto\\\",\\\"ItemsDesktop\\\":1,\\\"ItemsGap\\\":\\\"0px\\\",\\\"ItemsPhone\\\":1,\\\"ItemsTablet\\\":1,\\\"Loop\\\":true,\\\"Navigation\\\":\\\"both\\\",\\\"Padding\\\":\\\"0px\\\",\\\"StartingPosition\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\", \"Splide\")",
 				"initialize": "OutSystems.OSUI.Patterns.CarouselAPI.Initialize(\"carousel1\")"
 			},
 			"schema": "schema/configs/Carousel.schema.json",
@@ -1606,22 +1611,9 @@
 					"default": false,
 					"description": "Stores the ability to allow inputs to be editable or not"
 				},
-				"CalendarMode": {
-					"type": "'range' | 'single'",
-					"allowed": [
-						"range",
-						"single"
-					],
-					"description": "Store calendar mode is in use"
-				},
 				"DateFormat": {
 					"type": "string",
 					"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format."
-				},
-				"Disable": {
-					"type": "array",
-					"default": [],
-					"description": "Stores the ability to disable a range of dates from datepicker"
 				},
 				"DisableMobile": {
 					"type": "boolean",
@@ -1702,14 +1694,20 @@
 			"usage": {
 				"configs": {
 					"AllowInput": false,
-					"Disable": [],
+					"DateFormat": "",
 					"DisableMobile": false,
 					"FirstWeekDay": 0,
+					"InitialDate": "",
+					"InitialEndDate": "",
+					"InitialStartDate": "",
+					"MaxDate": "",
+					"MinDate": "",
 					"ShowTodayButton": false,
+					"ShowWeekNumbers": false,
 					"TimeFormat": "disabled",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"Disable\\\":[],\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialDate\\\":\\\"\\\",\\\"InitialEndDate\\\":\\\"\\\",\\\"InitialStartDate\\\":\\\"\\\",\\\"MaxDate\\\":\\\"\\\",\\\"MinDate\\\":\\\"\\\",\\\"ShowTodayButton\\\":false,\\\"ShowWeekNumbers\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
 			},
 			"schema": "schema/configs/DatePicker.schema.json",
@@ -2030,11 +2028,7 @@
 				"AllowMultipleSelection": {
 					"type": "boolean",
 					"default": false,
-					"description": "Properties"
-				},
-				"ElementId": {
-					"type": "string",
-					"description": "CSS id selector of the element the provider renders into; set by the pattern from its own element."
+					"description": "Lets the user select more than one option."
 				},
 				"IsDisabled": {
 					"type": "boolean",
@@ -2130,10 +2124,18 @@
 				"configs": {
 					"AllowMultipleSelection": false,
 					"IsDisabled": false,
+					"NoOptionsText": "",
+					"NoResultsText": "",
+					"OptionsList": [],
+					"PopupDropboxBreakpoint": "",
+					"Prompt": "",
 					"SanitizeDropdownValues": false,
+					"SearchPrompt": "",
+					"ShowDropboxAsPopup": false,
+					"StartingSelection": [],
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DropdownAPI.Create(\"dropdown1\", \"search\", \"virtual-select\", \"{\\\"AllowMultipleSelection\\\":false,\\\"IsDisabled\\\":false,\\\"SanitizeDropdownValues\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DropdownAPI.Create(\"dropdown1\", \"search\", \"virtual-select\", \"{\\\"AllowMultipleSelection\\\":false,\\\"IsDisabled\\\":false,\\\"NoOptionsText\\\":\\\"\\\",\\\"NoResultsText\\\":\\\"\\\",\\\"OptionsList\\\":[],\\\"PopupDropboxBreakpoint\\\":\\\"\\\",\\\"Prompt\\\":\\\"\\\",\\\"SanitizeDropdownValues\\\":false,\\\"SearchPrompt\\\":\\\"\\\",\\\"ShowDropboxAsPopup\\\":false,\\\"StartingSelection\\\":[],\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.DropdownAPI.Initialize(\"dropdown1\")"
 			},
 			"schema": "schema/configs/Dropdown.schema.json",
@@ -2298,9 +2300,10 @@
 			"usage": {
 				"configs": {
 					"IsSelected": false,
+					"ItemId": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Create(\"dropdownServerSideItem1\", \"{\\\"IsSelected\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Create(\"dropdownServerSideItem1\", \"{\\\"IsSelected\\\":false,\\\"ItemId\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Initialize(\"dropdownServerSideItem1\")"
 			},
 			"schema": "schema/configs/DropdownServerSideItem.schema.json",
@@ -2475,9 +2478,11 @@
 			"markup": "<div class=\"osui-flip-content\"><div class=\"osui-flip-content__container\"><div class=\"osui-flip-content__container__front\">Front — click to flip</div><div class=\"osui-flip-content__container__back\">Back side</div></div></div>",
 			"usage": {
 				"configs": {
+					"FlipSelf": false,
+					"IsFlipped": false,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.FlipContentAPI.Create(\"flipContent1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.FlipContentAPI.Create(\"flipContent1\", \"{\\\"FlipSelf\\\":false,\\\"IsFlipped\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.FlipContentAPI.Initialize(\"flipContent1\")"
 			},
 			"schema": "schema/configs/FlipContent.schema.json",
@@ -2619,9 +2624,13 @@
 			"markup": "<div class=\"osui-gallery\"><div class=\"list\"></div></div>",
 			"usage": {
 				"configs": {
+					"ItemsGap": "base",
+					"RowItemsDesktop": 3,
+					"RowItemsPhone": 1,
+					"RowItemsTablet": 2,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.GalleryAPI.Create(\"gallery1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.GalleryAPI.Create(\"gallery1\", \"{\\\"ItemsGap\\\":\\\"base\\\",\\\"RowItemsDesktop\\\":3,\\\"RowItemsPhone\\\":1,\\\"RowItemsTablet\\\":2,\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.GalleryAPI.Initialize(\"gallery1\")"
 			},
 			"schema": "schema/configs/Gallery.schema.json",
@@ -2768,9 +2777,10 @@
 			"markup": "<div class=\"osui-inline-svg\"></div>",
 			"usage": {
 				"configs": {
+					"SVGCode": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.InlineSvgAPI.Create(\"inlineSvg1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.InlineSvgAPI.Create(\"inlineSvg1\", \"{\\\"SVGCode\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.InlineSvgAPI.Initialize(\"inlineSvg1\")"
 			},
 			"schema": "schema/configs/InlineSvg.schema.json",
@@ -3073,10 +3083,6 @@
 				"MinMonth": {
 					"type": "MonthYear",
 					"description": "Earliest selectable month ({ Month, Year })."
-				},
-				"ServerDateFormat": {
-					"type": "string",
-					"description": "Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr"
 				}
 			},
 			"events": [
@@ -3104,9 +3110,21 @@
 					"AllowInput": false,
 					"DateFormat": "MM/YYYY",
 					"DisableMobile": true,
+					"InitialMonth": {
+						"Month": "",
+						"Year": -1
+					},
+					"MaxMonth": {
+						"Month": "",
+						"Year": -1
+					},
+					"MinMonth": {
+						"Month": "",
+						"Year": -1
+					},
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"InitialMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MaxMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MinMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.MonthPickerAPI.Initialize(\"monthPicker1\")"
 			},
 			"schema": "schema/configs/MonthPicker.schema.json",
@@ -3309,6 +3327,7 @@
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Show notification</button><div class=\"osui-notification\" aria-hidden=\"true\" tabindex=\"-1\"><div>Saved successfully. ✓</div></div></div>",
 			"usage": {
 				"configs": {
+					"CloseAfterTime": 0,
 					"InteractToClose": true,
 					"NeedsSwipes": false,
 					"Position": "top",
@@ -3316,7 +3335,7 @@
 					"Width": "370px",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.NotificationAPI.Create(\"notification1\", \"{\\\"InteractToClose\\\":true,\\\"NeedsSwipes\\\":false,\\\"Position\\\":\\\"top\\\",\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"370px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.NotificationAPI.Create(\"notification1\", \"{\\\"CloseAfterTime\\\":0,\\\"InteractToClose\\\":true,\\\"NeedsSwipes\\\":false,\\\"Position\\\":\\\"top\\\",\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"370px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.NotificationAPI.Initialize(\"notification1\")"
 			},
 			"schema": "schema/configs/Notification.schema.json",
@@ -3758,9 +3777,17 @@
 			"markup": "<div class=\"osui-progress-circle\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-circle__container\"><div class=\"svg-wrapper\"><svg><defs></defs><circle class=\"osui-progress-circle__container__trail-path\"></circle><circle class=\"osui-progress-circle__container__progress-path\"></circle></svg></div></div><div class=\"osui-progress-circle__content\" id=\"-label\"></div></div>",
 			"usage": {
 				"configs": {
+					"AnimateInitialProgress": false,
+					"InitialProgress": 0,
+					"Progress": 0,
+					"ProgressCircleSize": "",
+					"ProgressColor": "",
+					"Shape": "",
+					"Thickness": 4,
+					"TrailColor": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.ProgressAPI.Create(\"progress1\", \"Bar\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.ProgressAPI.Create(\"progress1\", \"Bar\", \"{\\\"AnimateInitialProgress\\\":false,\\\"InitialProgress\\\":0,\\\"Progress\\\":0,\\\"ProgressCircleSize\\\":\\\"\\\",\\\"ProgressColor\\\":\\\"\\\",\\\"Shape\\\":\\\"\\\",\\\"Thickness\\\":4,\\\"TrailColor\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.ProgressAPI.Initialize(\"progress1\")"
 			},
 			"schema": "schema/configs/Progress.schema.json",
@@ -4102,14 +4129,20 @@
 					"InitialValueFrom": 0,
 					"InitialValueTo": 0,
 					"IsDisabled": false,
+					"IsInterval": false,
+					"MaxValue": 100,
+					"MinValue": 0,
 					"Orientation": "horizontal",
 					"ShowFloatingLabel": false,
 					"ShowTickMarks": false,
+					"Size": "",
+					"StartingValueFrom": 0,
+					"StartingValueTo": 0,
 					"Step": 1,
 					"TickMarksInterval": 0,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"noUiSlider\")",
+				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"IsInterval\\\":false,\\\"MaxValue\\\":100,\\\"MinValue\\\":0,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Size\\\":\\\"\\\",\\\"StartingValueFrom\\\":0,\\\"StartingValueTo\\\":0,\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"noUiSlider\")",
 				"initialize": "OutSystems.OSUI.Patterns.RangeSliderAPI.Initialize(\"rangeSlider1\")"
 			},
 			"schema": "schema/configs/RangeSlider.schema.json",
@@ -4273,7 +4306,7 @@
 				},
 				"RatingValue": {
 					"type": "number",
-					"description": "Current rating; decimals render a half-filled item."
+					"description": "Current rating; a fractional part from 0.3 to 0.7 renders a half-filled item, below rounds down, above rounds up."
 				},
 				"Size": {
 					"type": "string",
@@ -4301,9 +4334,13 @@
 			"markup": "<div class=\"icon-states\"><div class=\"rating-item-filled\"><i class=\"icon ph-fill ph-star\"></i></div><div class=\"rating-item-half\"><i class=\"icon ph ph-star-half\"></i></div><div class=\"rating-item-empty\"><i class=\"icon ph ph-star\"></i></div></div>",
 			"usage": {
 				"configs": {
+					"IsEdit": false,
+					"RatingScale": 5,
+					"RatingValue": 0,
+					"Size": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.RatingAPI.Create(\"rating1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.RatingAPI.Create(\"rating1\", \"{\\\"IsEdit\\\":false,\\\"RatingScale\\\":5,\\\"RatingValue\\\":0,\\\"Size\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.RatingAPI.Initialize(\"rating1\")"
 			},
 			"schema": "schema/configs/Rating.schema.json",
@@ -4717,9 +4754,10 @@
 			"markup": "<section id=\"\"><h3></h3><p>Content for .</p></section>",
 			"usage": {
 				"configs": {
+					"ScrollToWidgetId": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.SectionIndexItemAPI.Create(\"sectionIndexItem1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.SectionIndexItemAPI.Create(\"sectionIndexItem1\", \"{\\\"ScrollToWidgetId\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.SectionIndexItemAPI.Initialize(\"sectionIndexItem1\")"
 			},
 			"schema": "schema/configs/SectionIndexItem.schema.json",
@@ -5338,9 +5376,10 @@
 			"markup": "<div><span data-output>Swipe inside this box (touch device / emulation)</span></div>",
 			"usage": {
 				"configs": {
+					"WidgetId": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.SwipeEventsAPI.Create(\"swipeEvents1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.SwipeEventsAPI.Create(\"swipeEvents1\", \"{\\\"WidgetId\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.SwipeEventsAPI.Initialize(\"swipeEvents1\")"
 			},
 			"schema": "schema/configs/SwipeEvents.schema.json",
@@ -5564,11 +5603,12 @@
 					"ContentAutoHeight": false,
 					"Height": "auto",
 					"JustifyHeaders": false,
+					"StartingTab": 0,
 					"TabsOrientation": "horizontal",
 					"TabsVerticalPosition": "left",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TabsAPI.Create(\"tabs1\", \"{\\\"ContentAutoHeight\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"JustifyHeaders\\\":false,\\\"TabsOrientation\\\":\\\"horizontal\\\",\\\"TabsVerticalPosition\\\":\\\"left\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.TabsAPI.Create(\"tabs1\", \"{\\\"ContentAutoHeight\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"JustifyHeaders\\\":false,\\\"StartingTab\\\":0,\\\"TabsOrientation\\\":\\\"horizontal\\\",\\\"TabsVerticalPosition\\\":\\\"left\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.TabsAPI.Initialize(\"tabs1\")"
 			},
 			"schema": "schema/configs/Tabs.schema.json",
@@ -6185,10 +6225,6 @@
 					"type": "string",
 					"description": "Earliest selectable time (HH:mm)."
 				},
-				"ServerDateFormat": {
-					"type": "string",
-					"description": "Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr"
-				},
 				"TimeFormat": {
 					"type": "string",
 					"description": "Display format of the selected time."
@@ -6212,10 +6248,15 @@
 				"configs": {
 					"AllowInput": false,
 					"DisableMobile": false,
+					"FirstWeekDay": 0,
+					"InitialTime": "",
 					"Is24Hours": true,
+					"MaxTime": "",
+					"MinTime": "",
+					"TimeFormat": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"Is24Hours\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialTime\\\":\\\"\\\",\\\"Is24Hours\\\":true,\\\"MaxTime\\\":\\\"\\\",\\\"MinTime\\\":\\\"\\\",\\\"TimeFormat\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.TimePickerAPI.Initialize(\"timePicker1\")"
 			},
 			"schema": "schema/configs/TimePicker.schema.json",
@@ -6366,7 +6407,7 @@
 				"IsHover": {
 					"type": "boolean",
 					"default": true,
-					"description": "Opens on hover/focus; when false it opens on click."
+					"description": "Opens on mouse hover on desktop and on click on touch devices; when false it opens on click or keyboard focus."
 				},
 				"Position": {
 					"type": "'bottom' | 'bottom-left' | 'bottom-right' | 'center' | 'left' | 'right' | 'top' | 'top-left' | 'top-right'",
@@ -6559,9 +6600,10 @@
 			"markup": "<div><span data-output>Touch &amp; drag inside this box (touch device / emulation)</span></div>",
 			"usage": {
 				"configs": {
+					"WidgetId": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TouchEventsAPI.Create(\"touchEvents1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.TouchEventsAPI.Create(\"touchEvents1\", \"{\\\"WidgetId\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.TouchEventsAPI.Initialize(\"touchEvents1\")"
 			},
 			"schema": "schema/configs/TouchEvents.schema.json",
@@ -6774,9 +6816,18 @@
 			"markup": "<video class=\"osui-video\"></video>",
 			"usage": {
 				"configs": {
+					"Autoplay": false,
+					"Captions": "",
+					"Controls": false,
+					"Height": "",
+					"Loop": false,
+					"Muted": false,
+					"PosterURL": "",
+					"URL": "",
+					"Width": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.VideoAPI.Create(\"video1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"create": "OutSystems.OSUI.Patterns.VideoAPI.Create(\"video1\", \"{\\\"Autoplay\\\":false,\\\"Captions\\\":\\\"\\\",\\\"Controls\\\":false,\\\"Height\\\":\\\"\\\",\\\"Loop\\\":false,\\\"Muted\\\":false,\\\"PosterURL\\\":\\\"\\\",\\\"URL\\\":\\\"\\\",\\\"Width\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
 				"initialize": "OutSystems.OSUI.Patterns.VideoAPI.Initialize(\"video1\")"
 			},
 			"schema": "schema/configs/Video.schema.json",
