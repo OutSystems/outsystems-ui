@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../00-abstract/_mixins.scss' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - DropdownServerSide */
 ////
@@ -120,14 +121,6 @@ $balloonMobileTopMargin: 5vh;
 			// Hover — border darkens (matches Figma border/input/hover)
 			&:hover {
 				border-color: var(--osui-dropdown-ss-hover-border-color);
-			}
-
-			// Focus ring
-			&:focus,
-			&:focus-visible {
-				border-color: var(--osui-dropdown-ss-focus-border-color);
-				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
-				outline: none;
 			}
 
 			// Service Studio Preview
@@ -351,8 +344,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&-search-wrapper {
 				&:focus-within {
-					outline: variables.$token-border-size-075 solid var(--color-focus-outer);
-					outline-offset: -(variables.$token-border-size-075);
+					@include a11y-focus-shadow($isInner: true);
 				}
 			}
 
@@ -363,7 +355,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-content {
-				--osui-outline-size: #{variables.$token-border-size-075};
+				--osui-outline-size: calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width));
 
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-border-input);
@@ -378,7 +370,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: var(--color-focus-outer);
+						background-color: var(--osui-focus-shadow-color);
 						content: '';
 						display: block;
 					}
@@ -539,7 +531,10 @@ $balloonMobileTopMargin: 5vh;
 
 			&-container {
 				background: variables.$token-bg-surface-default;
-				border-radius: var(--osui-dropdown-ss-popup-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
+				border-radius: var(
+					--osui-dropdown-ss-popup-border-radius,
+					var(--border-radius-lg, #{variables.$token-shape-soft-lg})
+				);
 				box-shadow: variables.$token-elevation-4;
 				display: flex;
 				flex-direction: column;
