@@ -71,7 +71,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: variables.$token-semantics-primary-base;
+				-servicestudio-color: var(--color-primary);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(20px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
@@ -109,7 +109,7 @@
 			}
 
 			&.time12h .osui-datepicker-calendar-ss-preview--time::before {
-				-servicestudio-background-color: variables.$token-semantics-primary-base;
+				-servicestudio-background-color: var(--color-primary);
 				-servicestudio-border-radius: variables.$token-border-radius-100;
 				-servicestudio-color: variables.$token-primitives-base-white;
 				-servicestudio-content: 'am';

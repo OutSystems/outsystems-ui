@@ -165,13 +165,13 @@
 		}
 
 		&:focus:before {
-			background-color: variables.$token-semantics-primary-base;
+			background-color: var(--color-primary);
 			border-color: var(--color-text);
 			box-shadow: none;
 		}
 
 		&:checked:before {
-			border-color: variables.$token-semantics-primary-base;
+			border-color: var(--color-primary);
 		}
 
 		&:hover:before {
@@ -180,6 +180,6 @@
 	}
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: variables.$token-semantics-primary-base;
+		border-color: var(--color-primary);
 	}
 }

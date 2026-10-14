@@ -44,7 +44,7 @@
 
 		&:hover,
 		&.active {
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 			text-decoration: none;
 		}
 	}
@@ -180,7 +180,7 @@ body {
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.header a.active:focus {
-		color: variables.$token-semantics-primary-base;
+		color: var(--color-primary);
 	}
 
 	.app-menu-links a:focus {
