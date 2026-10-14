@@ -41,7 +41,7 @@
 
 		.change-image {
 			background-color: transparent;
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 			height: auto;
 			margin-block-start: variables.$token-scale-400;
 			opacity: 1;
@@ -64,7 +64,7 @@
 	}
 
 	&:focus-visible {
-		border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+		border: variables.$token-border-size-025 solid var(--color-primary);
 	}
 }
 

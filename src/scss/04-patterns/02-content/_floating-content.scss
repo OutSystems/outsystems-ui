@@ -332,7 +332,7 @@
 .os-high-contrast {
 	.floating {
 		&-button {
-			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
+			border: variables.$token-border-size-050 solid var(--color-neutral-6);
 		}
 	}
 }

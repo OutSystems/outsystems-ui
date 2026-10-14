@@ -88,7 +88,7 @@
 	}
 
 	&:focus-visible:empty:before {
-		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, var(--color-primary) 22%, transparent);
 	}
 }
 
@@ -120,7 +120,7 @@
 		}
 
 		&:focus:before {
-			border-color: variables.$token-semantics-primary-base;
+			border-color: var(--color-primary);
 		}
 	}
 }
