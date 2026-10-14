@@ -206,9 +206,6 @@ Markup emitted by: app template Layout blocks (native). header variant of the na
 ### header-layout-side (src/scss/02-layout/_header-layout-side.scss) — host-styled
 Markup emitted by: app template Layout blocks (side menu). header variant of the side-menu layout. Do not generate this markup.
 
-### ios-bounce (src/scss/02-layout/_ios-bounce.scss) — host-styled
-Markup emitted by: platform runtime (iOS). a fix applied to the native layout by the runtime; no markup of its own. Do not generate this markup.
-
 ### layout (src/scss/02-layout/_layout.scss) — host-styled
 Markup emitted by: app template Layout blocks. the screen layout skeleton (.screen-container > .layout) comes from the template's Layout block. Do not generate this markup.
 CSS API: --osui-layout-aside-lines
@@ -236,6 +233,9 @@ Markup emitted by: app template Menu block (native). menu variant of the native 
 
 ### menu-layout-side (src/scss/02-layout/_menu-layout-side.scss) — host-styled
 Markup emitted by: app template Menu block (side menu). menu variant of the side-menu layout. Do not generate this markup.
+
+### native-scroll (src/scss/02-layout/_native-scroll.scss) — host-styled
+Markup emitted by: app template Layout blocks (native). pins the header and bottom bar of the native layout and scrolls .content alone; no markup of its own. Do not generate this markup.
 
 ### page-gutters (src/scss/02-layout/_page-gutters.scss)
 Layout classes applied to the app template's containers: layout header-top main-content footer layout-native full-width-section section-background content-top-title content-top-actions tablet phone layout-side

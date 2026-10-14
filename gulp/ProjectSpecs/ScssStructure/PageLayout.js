@@ -64,8 +64,8 @@ const sectionInfo = {
             "path": "02-layout/login"
         },
         {
-            "name": "iOS Scroll Bounce",
-            "path": "02-layout/ios-bounce"
+            "name": "Layout Native - Scroll",
+            "path": "02-layout/native-scroll"
         }
     ]
 };
