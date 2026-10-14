@@ -19,16 +19,7 @@
 	@return string.unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
 }
 
-/// default outline style
-@mixin a11y-default-outline($isInner: false) {
-	@if $isInner {
-		box-shadow: inset 0 0 0 variables.$token-border-size-075 variables.$token-primitives-yellow-500;
-	} @else {
-		box-shadow: 0 0 0 variables.$token-border-size-075 variables.$token-primitives-yellow-500;
-	}
-}
-
-/// Focus ring chosen by element type. $isInner only moves that ring inside the element.
+/// Focus ring. $isInner only moves that ring inside the element.
 /// @param {Boolean} $isInner [false] - Draw the ring inside the element when true.
 @mixin a11y-focus-shadow($isInner: false) {
 	@if $isInner {
@@ -45,6 +36,14 @@
 	}
 
 	outline: none;
+	outline-offset: variables.$token-border-size-0;
+}
+
+/// Focus outline. Used for special cases where the focus ring is not enough, such Carousel arrows, where the outline offset is not possible with the focus ring.
+@mixin a11y-focus-outline() {
+	box-shadow: none;
+	outline: var(--osui-focus-shadow-width) solid var(--osui-focus-shadow-color);
+	outline-offset: var(--osui-focus-shadow-gap);
 }
 
 /// outline style for high contrast mode
