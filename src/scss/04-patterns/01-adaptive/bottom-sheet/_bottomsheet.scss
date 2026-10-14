@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../../scss/00-abstract/_mixins.scss' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - section - BottomSheet */
 ////
@@ -204,6 +205,16 @@
 		.osui-monthpicker,
 		.osui-timepicker {
 			position: relative;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-bottom-sheet {
+		&:focus {
+			@include a11y-focus-shadow($isInner: true);
 		}
 	}
 }
