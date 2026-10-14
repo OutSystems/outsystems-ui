@@ -203,7 +203,7 @@ span.validation-message {
 			}
 
 			&:focus {
-				border-color: variables.$token-semantics-primary-base;
+				border-color: var(--color-primary);
 			}
 
 			&.not-valid {
