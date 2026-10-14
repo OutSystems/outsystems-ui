@@ -1,4 +1,5 @@
-@use "../../../../tokens/variables";
+@use '../../../../00-abstract/_mixins.scss' as *;
+@use '../../../../tokens/variables';
 
 /*
 	Overriding styles for Flatpickr library.
@@ -504,7 +505,9 @@ span.flatpickr-weekday {
 		font-weight: variables.$token-font-weight-medium;
 		justify-content: center;
 		padding: variables.$token-scale-100 variables.$token-scale-400;
-		transition: border-color 100ms ease, background-color 100ms ease;
+		transition:
+			border-color 100ms ease,
+			background-color 100ms ease;
 
 		&:hover {
 			background-color: variables.$token-bg-neutral-subtle-default;
@@ -683,13 +686,13 @@ span.flatpickr-weekday {
 	// Declared here (not on .osui-datepicker) because the calendar is portaled
 	// to the body, detached from the pattern root.
 	--osui-datepicker-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
-	--osui-datepicker-time-background:     var(--osui-input-background, var(--color-background-input));
-	--osui-datepicker-time-border-color:   var(--osui-input-border-color, var(--color-border));
-	--osui-datepicker-time-border-radius:  var(--border-radius-xs, #{variables.$token-shape-soft-xs});
-	--osui-datepicker-time-color:          var(--color-text-subtlest);
-	--osui-datepicker-time-focus-color:    #{variables.$token-semantics-primary-base};
-	--osui-datepicker-time-height:         #{variables.$token-scale-1000};
-	--osui-datepicker-time-segment-width:  #{variables.$token-scale-1200};
+	--osui-datepicker-time-background: var(--osui-input-background, var(--color-background-input));
+	--osui-datepicker-time-border-color: var(--osui-input-border-color, var(--color-border));
+	--osui-datepicker-time-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+	--osui-datepicker-time-color: var(--color-text-subtlest);
+	--osui-datepicker-time-focus-color: #{variables.$token-semantics-primary-base};
+	--osui-datepicker-time-height: #{variables.$token-scale-1000};
+	--osui-datepicker-time-segment-width: #{variables.$token-scale-1200};
 	// ───────────────────────────────────────────────────────────────────
 
 	// ─── hasWeeks side column ───────────────────────────────────────────
@@ -844,35 +847,43 @@ span.flatpickr-weekday {
 }
 
 // Accessibility ------------------------------------------------------------------
-// cannot use has-accessible-features class, as the pickder is detached from its context on layout
-.osui-datepicker-calendar {
-	.flatpickr-months .flatpickr-month:focus-within {
-		overflow: visible;
-	}
+body:has(.has-accessible-features) {
+	.osui-datepicker-calendar {
+		.flatpickr-days {
+			overflow: visible;
+		}
 
-	.numInputWrapper input,
-	.flatpickr-monthDropdown-months,
-	.flatpickr-prev-month,
-	.flatpickr-next-month,
-	.flatpickr-am-pm,
-	.flatpickr-today-button a {
-		&:focus-visible {
-			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		.flatpickr-day:focus {
+			border-color: var(--color-focus-outer);
+			z-index: var(--layer-local-tier-1);
+		}
+
+		.flatpickr-day:focus,
+		.flatpickr-months .flatpickr-month:focus-within {
+			overflow: visible;
+		}
+
+		.numInputWrapper input,
+		.flatpickr-monthDropdown-months,
+		.flatpickr-prev-month,
+		.flatpickr-next-month,
+		.flatpickr-am-pm,
+		.flatpickr-day,
+		.flatpickr-today-button a {
+			&:focus {
+				@include a11y-focus-shadow;
+			}
 		}
 	}
 
-	.flatpickr-day:focus-visible {
-		border-color: var(--color-focus-outer);
-	}
-}
-
-body:has(.has-accessible-features) .osui-monthpicker__dropdown {
-	.numInputWrapper input,
-	.flatpickr-prev-month,
-	.flatpickr-next-month,
-	.flatpickr-monthSelect-month.selected {
-		&:focus-visible {
-			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+	.osui-monthpicker__dropdown {
+		.numInputWrapper input,
+		.flatpickr-prev-month,
+		.flatpickr-next-month,
+		.flatpickr-monthSelect-month.selected {
+			&:focus {
+				@include a11y-focus-shadow;
+			}
 		}
 	}
 }
