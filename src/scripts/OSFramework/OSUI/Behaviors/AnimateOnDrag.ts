@@ -33,7 +33,7 @@ namespace OSFramework.OSUI.Behaviors {
 		public LastY = 0;
 		public MoveX = 0;
 		public MoveY = 0;
-		public Size = undefined;
+		public Size: string = undefined;
 		public SpringAnimation: Animation;
 		public VerticalDrag = false;
 	}
@@ -363,7 +363,7 @@ namespace OSFramework.OSUI.Behaviors {
 
 			let frames = 0;
 			let frames_below_threshold = 0;
-			let largest_displ;
+			let largest_displ: number;
 
 			// CHange value to be used, depending if is a vertical or horizontal drag
 			let directionDisplacement = isVertical ? dy : dx;

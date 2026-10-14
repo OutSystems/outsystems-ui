@@ -116,9 +116,10 @@ namespace OSFramework.OSUI.Helper {
 		 * Function used to normalize the OutSystems DateTimes, used on scopes expecting a Date
 		 *
 		 * @param date Date to check or convert
-		 * @param [normalizeToMax=true] True to normalize to the end of the day, false to the start
+		 * @param normalizeToMax True to normalize to the end of the day; false or omitted normalizes to the start
+		 * @returns the date with its time set to the start or the end of the day
 		 */
-		public static NormalizeDateTime(date: string | Date, normalizeToMax): Date {
+		public static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date {
 			let _newDate = date;
 
 			if (typeof _newDate === 'string') {

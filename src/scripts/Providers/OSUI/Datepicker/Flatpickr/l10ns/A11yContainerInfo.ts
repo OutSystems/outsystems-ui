@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 	// Store all HTML text translated to be placed inside A11y Container info
-	export const A11yContainerInfo = {
+	export const A11yContainerInfo: Record<string, { htmlTex: string }> = {
 		ar: {
 			htmlTex:
 				'استخدم مفتاح السهم للأسفل لفتح التقويم؛ استخدم مفاتيح الأسهم للتنقل في أيام التقويم؛ استخدم مفتاح Ctrl أو Cmd + الأسهم اليمين أو اليسار للتنقل بين الشهور؛ استخدم مفتاح Ctrl أو Cmd + الأسهم للأعلى أو للأسفل للتنقل بين السنوات؛',
