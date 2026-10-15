@@ -209,8 +209,8 @@ a mistake here:
 | A compiler | **No** — there is no SCSS behind `classic-theme/` to validate |
 
 So if you skip the visual check, a broken port ships and **nothing reports it**. Do not treat §8 as
-a formality — it is the whole safety net. (Recorded as a decision in
-`docs-internal/adr/ADR-0011-functional-test-and-chromatic-ownership-split.md`, §D2.)
+a formality — it is the whole safety net. (Recorded as a decision in ADR-0010 of the
+`OutSystems/outsystems-ui-tests` repository, `docs/adr/ADR-0010-Split-Functional-Test-And-Chromatic-Ownership.md`, §D2.)
 
 Two limits of the toggle, so it is not trusted further than it goes:
 
