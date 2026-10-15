@@ -179,7 +179,7 @@
 		}
 
 		&:checked:before {
-			border-color: variables.$token-semantics-primary-base;
+			border-color: var(--color-primary);
 		}
 
 		&:hover:before {
@@ -188,6 +188,6 @@
 	}
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: variables.$token-semantics-primary-base;
+		border-color: var(--color-primary);
 	}
 }

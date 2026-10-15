@@ -2,18 +2,12 @@
 namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown Tags mode.
-	 *
-	 * @export
-	 * @class VirtualSelectTagsConfig
-	 * @extends {AbstractVirtualSelectConfig}
 	 */
 	export class VirtualSelectTagsConfig extends AbstractVirtualSelectConfig {
 		/**
 		 * Method used to get the key values of the given selected values
 		 *
 		 * @protected
-		 * @return {*}  {string[]}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Tags.VirtualSelectTagsConfig
 		 */
 		protected getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
@@ -33,9 +27,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 
 		/**
 		 * Set the configs for the Dropdown Tags mode
-		 *
-		 * @return {*}  {VirtualSelectOpts}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Tags.VirtualSelectTagsConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectTagsOpts = {

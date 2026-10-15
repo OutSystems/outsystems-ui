@@ -61,8 +61,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * Method that will be triggered by library each time any date is selected and will also trigger the input update value and also trigger the OnSelectedDate platform event callback!
 		 *
 		 * @protected
-		 * @param {string[]} selectedDates Array of selected dates
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 * @param selectedDates Array of selected dates
 		 */
 		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected dates with the expected dateFormat as a string type
@@ -97,7 +96,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * Trigger the jumpToDate to now
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
@@ -108,7 +106,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * Update platform input attributes in order to maintain consistency with data type!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected updatePlatformInputAttrs(): void {
 			// Set the type attribute value
@@ -122,8 +119,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 
 		/**
 		 * Builds the Pattern
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public build(): void {
 			super.build();
@@ -134,9 +129,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		/**
 		 * Method used to change given propertyName at OnParametersChange platform event
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -157,8 +151,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 
 		/**
 		 * This method has no implementation on this pattern context!
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public toggleNativeBehavior(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -169,7 +161,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 *
 		 * @param startDate The new StartInitialDate value
 		 * @param endDate The new EndInitialDate value
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public updateInitialDate(startDate: string, endDate: string): void {
 			// Ensure assigns only occurs if both dates are set!

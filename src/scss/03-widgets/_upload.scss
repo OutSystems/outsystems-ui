@@ -42,7 +42,7 @@
 
 		.change-image {
 			background-color: transparent;
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 			height: auto;
 			margin-block-start: variables.$token-scale-400;
 			opacity: 1;

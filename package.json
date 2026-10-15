@@ -13,7 +13,8 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
-		"lint": "eslint . --ext .ts",
+		"postdocs": "node scripts/docs-ai-generator/publish-ai-docs.mjs",
+		"lint": "eslint . --ext .ts --max-warnings=0",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
@@ -26,14 +27,19 @@
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:migration": "node scripts/sync-migration-guide.mjs",
-		"docs:migration-page": "node scripts/generate-migration-data.mjs"
+		"docs:migration-page": "node scripts/generate-migration-data.mjs",
+		"docs:ai": "node scripts/docs-ai-generator/generate-ai-docs.mjs",
+		"docs:ai:check": "node scripts/docs-ai-generator/check-ai-docs-fresh.mjs",
+		"docs:ai:types": "node scripts/docs-ai-generator/generate-pattern-types.mjs",
+		"docs:ai:blocks": "node scripts/docs-ai-generator/export-snapshot.mjs",
+		"docs:ai:test": "node --test \"tests/*.test.mjs\""
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/OutSystems/outsystems-ui"
 	},
 	"engines": {
-		"node": ">=12"
+		"node": ">=20.19.0"
 	},
 	"volta": {
 		"node": "24.13.1",
@@ -61,9 +67,11 @@
 		"chromatic": "^17.0.0",
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-jsdoc": "64.5.4",
 		"eslint-plugin-prettier": "^5.2.5",
 		"flatpickr": "4.6.13",
 		"font-awesome": "^4.7.0",
+		"gpt-tokenizer": "4.0.0",
 		"gulp": "^5.0.1",
 		"gulp-autoprefixer": "^10.0.0",
 		"gulp-clean": "^0.4.0",

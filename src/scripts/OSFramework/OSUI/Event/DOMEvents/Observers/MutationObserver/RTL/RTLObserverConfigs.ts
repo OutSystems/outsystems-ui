@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
 	/**
 	 * MutationObserver Configs for the RTL Observer
-	 *
-	 * @export
-	 * @class RTLObserverConfigs
-	 * @implements {MutationObserverInit}
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class RTLObserverConfigs implements MutationObserverInit {

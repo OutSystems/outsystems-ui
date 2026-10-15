@@ -10,8 +10,8 @@ export const Display = [
             "value": "2rem"
         },
         "line_height": {
-            "token": "scale.1100",
-            "value": "2.75rem"
+            "token": "scale.1.375",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.light",
@@ -27,8 +27,8 @@ export const Display = [
             "value": "2rem"
         },
         "line_height": {
-            "token": "scale.1100",
-            "value": "2.75rem"
+            "token": "scale.1.375",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -44,8 +44,8 @@ export const Display = [
             "value": "2.25rem"
         },
         "line_height": {
-            "token": "scale.1200",
-            "value": "3rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.light",
@@ -61,8 +61,8 @@ export const Display = [
             "value": "2.25rem"
         },
         "line_height": {
-            "token": "scale.1200",
-            "value": "3rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -81,8 +81,8 @@ export const Heading = [
             "value": "1.75rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.285714",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -98,8 +98,8 @@ export const Heading = [
             "value": "1.75rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.285714",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -115,8 +115,8 @@ export const Heading = [
             "value": "1.75rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.285714",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -132,8 +132,8 @@ export const Heading = [
             "value": "1.75rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.285714",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -149,8 +149,8 @@ export const Heading = [
             "value": "1.625rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.384615",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -166,8 +166,8 @@ export const Heading = [
             "value": "1.625rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.384615",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -183,8 +183,8 @@ export const Heading = [
             "value": "1.625rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.384615",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -200,8 +200,8 @@ export const Heading = [
             "value": "1.625rem"
         },
         "line_height": {
-            "token": "scale.900",
-            "value": "2.25rem"
+            "token": "scale.1.384615",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -217,8 +217,8 @@ export const Heading = [
             "value": "1.5rem"
         },
         "line_height": {
-            "token": "scale.800",
-            "value": "2rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -234,8 +234,8 @@ export const Heading = [
             "value": "1.5rem"
         },
         "line_height": {
-            "token": "scale.800",
-            "value": "2rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -251,8 +251,8 @@ export const Heading = [
             "value": "1.5rem"
         },
         "line_height": {
-            "token": "scale.800",
-            "value": "2rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -268,8 +268,8 @@ export const Heading = [
             "value": "1.5rem"
         },
         "line_height": {
-            "token": "scale.800",
-            "value": "2rem"
+            "token": "scale.1.333333",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -285,8 +285,8 @@ export const Heading = [
             "value": "1.375rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.272727",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -302,8 +302,8 @@ export const Heading = [
             "value": "1.375rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.272727",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -319,8 +319,8 @@ export const Heading = [
             "value": "1.375rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.272727",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -336,8 +336,8 @@ export const Heading = [
             "value": "1.375rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.272727",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -353,8 +353,8 @@ export const Heading = [
             "value": "1.25rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.4",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -370,8 +370,8 @@ export const Heading = [
             "value": "1.25rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.4",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -387,8 +387,8 @@ export const Heading = [
             "value": "1.25rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.4",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -404,8 +404,8 @@ export const Heading = [
             "value": "1.25rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.4",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -421,8 +421,8 @@ export const Heading = [
             "value": "1.125rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.555556",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -438,8 +438,8 @@ export const Heading = [
             "value": "1.125rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.555556",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -455,8 +455,8 @@ export const Heading = [
             "value": "1.125rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.555556",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -472,8 +472,8 @@ export const Heading = [
             "value": "1.125rem"
         },
         "line_height": {
-            "token": "scale.700",
-            "value": "1.75rem"
+            "token": "scale.1.555556",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -492,8 +492,8 @@ export const Body = [
             "value": "1rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.5",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -509,8 +509,8 @@ export const Body = [
             "value": "1rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.5",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -526,8 +526,8 @@ export const Body = [
             "value": "1rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.5",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -543,8 +543,8 @@ export const Body = [
             "value": "1rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.5",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -560,8 +560,8 @@ export const Body = [
             "value": "0.875rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.714286",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -577,8 +577,8 @@ export const Body = [
             "value": "0.875rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.714286",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -594,8 +594,8 @@ export const Body = [
             "value": "0.875rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.714286",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -611,8 +611,8 @@ export const Body = [
             "value": "0.875rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.714286",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -628,8 +628,8 @@ export const Body = [
             "value": "0.75rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.666667",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -645,8 +645,8 @@ export const Body = [
             "value": "0.75rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.666667",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.regular",
@@ -662,8 +662,8 @@ export const Body = [
             "value": "0.75rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.666667",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.semi-bold",
@@ -679,8 +679,8 @@ export const Body = [
             "value": "0.75rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.666667",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.bold",
@@ -696,8 +696,8 @@ export const Body = [
             "value": "1.25rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.2",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -713,8 +713,8 @@ export const Body = [
             "value": "1rem"
         },
         "line_height": {
-            "token": "scale.600",
-            "value": "1.5rem"
+            "token": "scale.1.5",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -730,8 +730,8 @@ export const Body = [
             "value": "0.875rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.428571",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",
@@ -747,8 +747,8 @@ export const Body = [
             "value": "0.75rem"
         },
         "line_height": {
-            "token": "scale.500",
-            "value": "1.25rem"
+            "token": "scale.1.666667",
+            "value": ""
         },
         "weight": {
             "token": "font-weight.medium",

@@ -3,26 +3,22 @@ namespace OSFramework.OSUI.Interface {
 	export interface ISwipeEvent extends IGestureEvent {
 		/**
 		 * Gesture Events Instance
-		 *
-		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof OSFramework.Interface.ISwipeEvent
 		 */
 		gestureEventInstance: Event.GestureEvent.SwipeEvent;
 
 		/**
 		 * Signature Method to add swipe events
 		 *
-		 * @param {Event.GestureEvent.swipeDown} swipeDownCallback
-		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
-		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
-		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
-		 * @memberof OSFramework.Interface.ISwipeEvent
+		 * @param swipeDownCallback Called when the user swipes down
+		 * @param swipeLeftCallback Called when the user swipes left
+		 * @param swipeRightCallback Called when the user swipes right
+		 * @param swipeUpCallback Called when the user swipes up
 		 */
 		setGestureEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
 			swipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft,
 			swipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight,
 			swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
-		);
+		): void;
 	}
 }

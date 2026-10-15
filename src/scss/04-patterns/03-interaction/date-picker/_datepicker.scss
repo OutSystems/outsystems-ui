@@ -21,14 +21,43 @@
 	input {
 		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
 		&[type='date'] {
-			&::-webkit-inner-spin-button,
-			&::-webkit-calendar-picker-indicator,
-			&::-webkit-datetime-edit-year-field,
-			&::-webkit-datetime-edit-month-field,
-			&::-webkit-datetime-edit-day-field,
-			&::-webkit-datetime-edit-fields-wrapper {
+			&::-webkit-inner-spin-button {
 				display: none;
 				-moz-appearance: none;
+			}
+
+			&:not(.flatpickr-mobile) {
+				&::-webkit-calendar-picker-indicator,
+				&::-webkit-datetime-edit-year-field,
+				&::-webkit-datetime-edit-month-field,
+				&::-webkit-datetime-edit-day-field,
+				&::-webkit-datetime-edit-fields-wrapper {
+					display: none;
+					-moz-appearance: none;
+				}
+			}
+		}
+
+		// The flatpickr mobile input is the visible field on touch devices — type=date
+		// for Date values, type=datetime-local when time is enabled. Since Chrome for
+		// Android M154 it renders with the desktop multi-field layout, where a tap can
+		// land on an inner edit field without opening the picker. Make the text
+		// click-through and stretch the (invisible) picker indicator over the whole
+		// input so any tap opens the native calendar.
+		&.flatpickr-mobile {
+			position: relative;
+
+			&::-webkit-datetime-edit {
+				pointer-events: none;
+			}
+
+			&::-webkit-calendar-picker-indicator {
+				height: auto;
+				inset: 0;
+				opacity: 0;
+				position: absolute;
+				width: auto;
+				z-index: 1;
 			}
 		}
 
@@ -71,7 +100,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: variables.$token-semantics-primary-base;
+				-servicestudio-color: var(--color-primary);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(20px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
@@ -109,7 +138,7 @@
 			}
 
 			&.time12h .osui-datepicker-calendar-ss-preview--time::before {
-				-servicestudio-background-color: variables.$token-semantics-primary-base;
+				-servicestudio-background-color: var(--color-primary);
 				-servicestudio-border-radius: variables.$token-border-radius-100;
 				-servicestudio-color: variables.$token-primitives-base-white;
 				-servicestudio-content: 'am';

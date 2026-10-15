@@ -3,12 +3,9 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function to get closest element, in use by AnimatedLabel
 	 *
-	 * @export
-	 * @param {HTMLElement} elem
-	 * @param {string} selector
-	 * @return {*}  {*}
+	 * @param elem Element whose children are inspected
+	 * @param selector CSS selector to match
 	 * @deprecated use 'OSFramework.OSUI.Helper.Dom.GetClosest' instead.
-	 *
 	 */
 	export function GetClosest(elem: HTMLElement, selector: string): unknown {
 		console.warn(`This method is deprecated.`);
@@ -18,10 +15,9 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
-	 * @export
-	 * @param {HTMLElement} element
-	 * @param {*} state
-	 * @param {string} className
+	 * @param element Target element
+	 * @param state Truthy to add the class, falsy to remove it
+	 * @param className CSS class to toggle
 	 * @deprecated use 'OSFramework.OSUI.Helper.Dom.Styles.ToggleClass' instead.
 	 */
 	export function ToggleClass(element: HTMLElement, state: unknown, className: string): void {
@@ -43,7 +39,6 @@ namespace OutSystems.OSUI.Utils {
 	 * on the DEPRECATED_LayoutReadyMobile. Removing this now would be a breaking-change
 	 * and it needs to be present as long as the DEPRECATED_LayoutReadyMobile isn’t removed.
 	 *
-	 * @export
 	 * @deprecated use 'OSFramework.OSUI.Helper.Dom.ClassSelector(document.body, 'split-screen-wrapper')' instead.
 	 */
 	export function HasMasterDetail(): boolean {
@@ -68,8 +63,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
 	 * Function used to set the RTL observer
 	 *
-	 * @param callback
-	 * @returns
+	 * @param callback Function invoked when the text direction changes
 	 * @deprecated use 'OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler' instead.
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention

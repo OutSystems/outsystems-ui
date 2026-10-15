@@ -50,7 +50,7 @@ Section Index:
     3.12. Page Gutters
     3.13. Section
     3.14. Login
-    3.15. iOS Scroll Bounce
+    3.15. Layout Native - Scroll
 4. Widgets
     4.1. Inputs and TextAreas
     4.2. Switch
@@ -240,8 +240,8 @@ Section Index:
 @use '02-layout/section' as *;
 /*! 3.14. Login */
 @use '02-layout/login' as *;
-/*! 3.15. iOS Scroll Bounce */
-@use '02-layout/ios-bounce' as *;
+/*! 3.15. Layout Native - Scroll */
+@use '02-layout/native-scroll' as *;
 
 /*! ==============================================================================
 4. Widgets

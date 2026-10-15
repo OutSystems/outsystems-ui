@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
-	 *
-	 * @export
-	 * @class OSUIDropdownServerSideConfig
-	 * @extends {Patterns.AbstractConfiguration}
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSideConfig extends Patterns.AbstractConfiguration {
@@ -15,8 +11,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _balloonOptionsArialabel = '';
 		// Store the SelectValuesWrapper AriaLabel text
 		private _selectValuesWrapperAriaLabel = Enum.PropertiesValues.SelectValuesWrapperAriaLabelValue;
-		// Properties
+		/** Lets the user select more than one option. */
 		public AllowMultipleSelection: boolean;
+		/** Renders the dropdown disabled. */
 		public IsDisabled: boolean;
 
 		constructor(config: JSON) {
@@ -32,8 +29,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
@@ -55,8 +51,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Getter that allows to obtain the MaxHeight that ballon should have.
 		 *
 		 * @readonly
-		 * @type {number}
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get balloonMaxHeight(): number {
 			return this._balloonMaxHeight as number;
@@ -66,7 +60,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Getter that allows to obtain the string that should be added to the balloon options container by default
 		 *
 		 * @readonly
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get balloonOptionsArialabel(): string {
 			return this._balloonOptionsArialabel;
@@ -76,7 +69,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Getter that allows to obtain the string that should be added to the select "input" container.
 		 *
 		 * @readonly
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get selectValuesWrapperAriaLabel(): string {
 			return this._selectValuesWrapperAriaLabel as string;

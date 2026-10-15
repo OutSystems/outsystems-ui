@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Gallery {
 	/**
 	 * Defines the interface for OutSystemsUI Gallery Pattern
-	 *
-	 * @export
-	 * @class Gallery
-	 * @extends {AbstractPattern<GalleryConfig>}
-	 * @implements {IGallery}
 	 */
 	export class Gallery extends AbstractPattern<GalleryConfig> implements IGallery {
 		constructor(uniqueId: string, configs: JSON) {
@@ -97,7 +92,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -107,7 +101,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -117,7 +110,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -127,7 +119,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -137,7 +128,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -145,8 +135,6 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 
 		/**
 		 * Method to build the Gallery
-		 *
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		public build(): void {
 			super.build();
@@ -165,9 +153,8 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);

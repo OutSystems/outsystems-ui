@@ -3,8 +3,8 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Used by MasterDetailSetContentFocus and MasterDetailSetContentFocus_Legacy clientActions.
 	 *
-	 * @param contentId
-	 * @param triggerItem
+	 * @param contentId Id of the detail content element
+	 * @param triggerItem Id of the item that opens the detail content
 	 */
 	export function SetFocusBehaviour(contentId: string, triggerItem: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

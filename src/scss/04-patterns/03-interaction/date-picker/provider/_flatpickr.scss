@@ -70,7 +70,7 @@
 			margin-right: variables.$token-scale-100;
 
 			.flatpickr-day {
-				color: variables.$token-primitives-neutral-500;
+				color: var(--color-neutral-4);
 			}
 		}
 
@@ -149,7 +149,7 @@
 
 			path {
 				stroke-width: 1px;
-				stroke: variables.$token-semantics-primary-base;
+				stroke: var(--color-primary);
 			}
 		}
 	}
@@ -292,7 +292,7 @@ span.flatpickr-weekday {
 		&:focus {
 			background: var(--color-border-subtle);
 			border-color: variables.$token-border-subtle;
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 		}
 
 		&.inRange {
@@ -346,8 +346,8 @@ span.flatpickr-weekday {
 	&.endRange.inRange,
 	&.endRange.prevMonthDay,
 	&.endRange.nextMonthDay {
-		background: variables.$token-semantics-primary-base;
-		border-color: variables.$token-semantics-primary-base;
+		background: var(--color-primary);
+		border-color: var(--color-primary);
 		border-radius: variables.$token-border-radius-100;
 
 		&.today {
@@ -462,7 +462,7 @@ span.flatpickr-weekday {
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: variables.$token-semantics-primary-base;
+		background-color: var(--color-primary);
 		border-radius: variables.$token-border-radius-100;
 		color: var(--color-text-inverse);
 		font-size: variables.$token-font-size-300;
@@ -496,7 +496,7 @@ span.flatpickr-weekday {
 		align-items: center;
 		border: variables.$token-border-size-025 solid var(--color-border);
 		border-radius: var(--border-radius-rounded);
-		color: variables.$token-semantics-primary-base;
+		color: var(--color-primary);
 		cursor: pointer;
 		display: inline-flex;
 		font-size: variables.$token-font-size-350;
@@ -719,7 +719,7 @@ span.flatpickr-weekday {
 			background: transparent;
 			border: none;
 			border-radius: 0;
-			color: variables.$token-semantics-primary-base;
+			color: var(--color-primary);
 			display: block;
 			font-size: variables.$token-font-size-350;
 			font-weight: variables.$token-font-weight-medium;

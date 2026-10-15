@@ -2,13 +2,11 @@
 namespace OSFramework.OSUI.Patterns.Wizard {
 	/**
 	 * Class that represents the custom configurations received by Wizard.
-	 *
-	 * @export
-	 * @class WizardConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class WizardConfig extends AbstractConfiguration {
+		/** Stacks the steps vertically. */
 		public IsVertical: boolean;
+		/** Interactive lets users navigate by clicking steps; ProgressOnly makes steps read-only indicators. */
 		public StepBehavior: Enum.StepBehavior;
 
 		/**
@@ -16,8 +14,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 *
 		 * @param key property name
 		 * @param value value to be set
-		 * @returns {*}
-		 * @memberof OSFramework.Patterns.Wizard.WizardConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

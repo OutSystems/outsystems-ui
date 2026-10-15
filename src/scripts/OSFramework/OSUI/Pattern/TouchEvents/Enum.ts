@@ -3,8 +3,9 @@ namespace OSFramework.OSUI.Patterns.TouchEvents.Enum {
 	/**
 	 * TouchEvents Enum properties
 	 */
-	export enum Properties {}
-	//Implement you code here
+	export enum Properties {
+		WidgetId = 'WidgetId',
+	}
 	/**
 	 * TouchEvents Enum for Events
 	 */

@@ -4,21 +4,16 @@ namespace OSFramework.OSUI.Patterns {
 	 * Represents the configurations for a provider.
 	 * Will have a method to get the configurations in the provider format.
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractProviderConfiguration
-	 * @extends {AbstractConfiguration}
 	 */
 	export abstract class AbstractProviderConfiguration extends AbstractConfiguration {
 		/**
 		 * Method to merge Common, Specific and External configs
 		 *
 		 * @protected
-		 * @param {ProviderConfigs} commonConfigs
-		 * @param {ProviderConfigs} specificConfigs
-		 * @param {ProviderConfigs} extendedConfigs
-		 * @return {*}  {ProviderConfigs}
-		 * @memberof OSFramework.Patterns.AbstractProviderConfiguration
+		 * @param commonConfigs Configurations shared by every mode of the provider
+		 * @param specificConfigs Configurations of the current mode
+		 * @param extendedConfigs Extensibility configurations set by the developer
 		 */
 		protected mergeConfigs(
 			commonConfigs: ProviderConfigs,

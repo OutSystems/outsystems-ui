@@ -38,7 +38,7 @@
 		}
 
 		&.selected {
-			background-color: variables.$token-semantics-primary-base;
+			background-color: var(--color-primary);
 			border-color: transparent;
 			color: var(--color-text-inverse);
 		}
@@ -65,7 +65,7 @@
 			&:focus {
 				background: var(--color-border-subtle);
 				border-color: variables.$token-border-subtle;
-				color: variables.$token-semantics-primary-base;
+				color: var(--color-primary);
 			}
 		}
 	}

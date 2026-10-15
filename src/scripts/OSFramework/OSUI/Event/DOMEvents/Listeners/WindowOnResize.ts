@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Class that represents the Resize on the Window.
-	 *
-	 * @export
-	 * @class WindowResize
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class WindowResize extends AbstractListener<string> {
 		private _timeout: number;

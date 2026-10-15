@@ -2,25 +2,19 @@
 namespace OSFramework.OSUI.Patterns.Tabs {
 	/**
 	 * Defines the interface for OutSystemsUI Tabs Pattern
-	 *
-	 * @export
-	 * @interface ITabs
-	 * @extends {Interface.IParent}
 	 */
 	export interface ITabs extends Interface.IParent {
 		/**
 		 * Function that will trigger the change tab method
 		 *
-		 * @param {number} tabIndex
-		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
-		 * @param {boolean} [blockObserver]
-		 * @param {boolean} [triggerEvent]
-		 * @param {boolean} [triggeredByObserver]
+		 * @param tabIndex Zero-based index of the tab to activate
+		 * @param tabsHeaderItem Header item of the tab to activate
+		 * @param [triggerEvent] True to trigger the OnTabsChange event
+		 * @param [triggeredByObserver] True when the change comes from the drag observer
 		 */
 		changeTab(
 			tabIndex: number,
 			tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem,
-			blockObserver?: boolean,
 			triggerEvent?: boolean,
 			triggeredByObserver?: boolean
 		): void;
@@ -28,7 +22,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Function that will toggle the gestures on Tabs
 		 *
-		 * @param {boolean} addDragGestures
+		 * @param addDragGestures True to add the drag gestures, false to remove them
 		 */
 		toggleDragGestures(addDragGestures: boolean): void;
 	}

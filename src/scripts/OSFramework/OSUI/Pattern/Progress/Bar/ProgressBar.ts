@@ -75,7 +75,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Add the initial animation to the pattern if it's applicable
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected addInitialAnimation(): void {
 			if (this.isBuilt) {
@@ -93,7 +92,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setA11YProperties(): void {
 			if (this.contentElem.innerHTML) Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElem.id);
@@ -104,7 +102,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Method to set callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setCallbacks(): void {
 			super.setCallbacks();
@@ -114,7 +111,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Add the animation on progress before applying progress value based on value change
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setElementProgressValue(value: number): void {
 			this.configs.Progress = value;
@@ -130,7 +126,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Method to set HTML elements reference
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -145,7 +140,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Method to unset callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected unsetCallbacks(): void {
 			super.unsetCallbacks();
@@ -155,7 +149,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * Method to unset HTML elements reference
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected unsetHtmlElements(): void {
 			super.unsetHtmlElements();
@@ -163,8 +156,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 
 		/**
 		 * Method to build the ProgressBar
-		 *
-		 * @memberof Bar
 		 */
 		public build(): void {
 			super.build();
@@ -215,8 +206,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 
 		/**
 		 * Destroy ProgressBar
-		 *
-		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
@@ -224,7 +213,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 			super.dispose();
 		}
 
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			// Call super to clean and validate color string
 			super.progressApplyGradient(gradientType, colors);
 			// Stole gradient to later used on CSS Variable

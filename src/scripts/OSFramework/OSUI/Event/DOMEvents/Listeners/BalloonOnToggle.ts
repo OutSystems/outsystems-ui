@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Class that represents the BalloonOnToggle custom event
-	 *
-	 * @export
-	 * @class BalloonOnToggle
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class BalloonOnToggle extends AbstractListener<string> {
 		constructor() {

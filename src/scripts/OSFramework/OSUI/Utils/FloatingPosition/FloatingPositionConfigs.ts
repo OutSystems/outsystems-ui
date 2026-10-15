@@ -2,9 +2,6 @@
 namespace OSFramework.OSUI.Utils.FloatingPosition {
 	/**
 	 * FloatingPosition configs
-	 *
-	 * @export
-	 * @class FloatingPositionConfig
 	 */
 	export class FloatingPositionConfig {
 		public AnchorElem: HTMLElement;

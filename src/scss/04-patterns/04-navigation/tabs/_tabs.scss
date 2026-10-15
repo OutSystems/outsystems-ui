@@ -379,7 +379,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		border: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
+		border: variables.$token-border-size-050 solid var(--color-primary);
 		bottom: 0;
 		content: '';
 		display: block;

@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Patterns.MonthPicker {
 	/**
 	 * Defines the interface for OutSystemsUI MonthPicker Pattern
-	 *
-	 * @export
-	 * @interface IMonthPicker
-	 * @extends {Interface.IPattern}
 	 */
 	export interface IMonthPicker extends Interface.IPattern, Interface.IOpenable {
 		clear(): void;

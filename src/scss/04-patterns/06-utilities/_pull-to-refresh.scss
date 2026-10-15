@@ -73,6 +73,12 @@
 				transform: rotate(180deg);
 			}
 		}
+
+		// While refreshing, `.content` is translated down: cap the grid container so the
+		// overshoot does not turn into a scrollbar on the screen container.
+		.layout-native .main {
+			overflow: hidden;
+		}
 	}
 }
 
@@ -90,16 +96,6 @@
 	.layout-native {
 		.pull-to-refresh {
 			display: none;
-		}
-	}
-}
-
-// iOS ---------------------------------------------------------------------------
-///
-.ios.ptr-refresh {
-	.layout-native.ios-bounce {
-		.main {
-			overflow: hidden;
 		}
 	}
 }

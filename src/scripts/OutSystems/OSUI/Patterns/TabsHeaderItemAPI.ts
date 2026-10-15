@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will change the property of a given Tabs pattern.
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId ID of the Tabs Item where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param tabsHeaderItemId ID of the Tabs Item where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,14 +26,13 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Create the new TabsHeaderItem instance and add it to the tabsContentItem Map
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsHeaderItemId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the TabsHeaderItem instance
 	 */
 	export function Create(
 		tabsHeaderItemId: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem {
 		if (_tabsHeaderItemMap.has(tabsHeaderItemId)) {
 			throw new Error(
@@ -43,7 +42,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 
 		const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
@@ -54,9 +53,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Funtion that will disable a specific TabHeaderItem by its Id
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId
-	 * @return {*}  {string}
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function DisableTabItem(tabsHeaderItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -73,8 +71,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsHeaderItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -94,9 +92,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Funtion that will enable a specific TabHeaderItem by its Id
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId
-	 * @return {*}  {string}
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function EnableTabItem(tabsHeaderItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -113,8 +110,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will return the Map with all the Tabs instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
+	 * @returns the ids of every TabsHeaderItem instance
 	 */
 	export function GetAllTabsHeaderItems(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsHeaderItemMap);
@@ -123,9 +119,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that gets the instance of Tabs by a given ID.
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId ID of the TabsHeaderItem that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsHeaderItemId ID of the TabsHeaderItem that will be looked for.
+	 * @returns the TabsHeaderItem instance
 	 */
 	export function GetTabsHeaderItemById(
 		tabsHeaderItemId: string
@@ -140,9 +135,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will update on DOM changes inside the TabsHeaderItem
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId
-	 * @return {*}  {string}
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(tabsHeaderItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -160,9 +154,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId ID of the TabsHeaderItem pattern that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem}
+	 * @param tabsHeaderItemId ID of the TabsHeaderItem pattern that will be initialized.
+	 * @returns the TabsHeaderItem instance
 	 */
 	export function Initialize(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem {
 		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
@@ -175,15 +168,14 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @export
-	 * @param {string} tabsHeaderItemId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		tabsHeaderItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
