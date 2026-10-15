@@ -514,12 +514,6 @@
 				}
 			]
 		},
-		"ios-bounce": {
-			"host": {
-				"host": "platform runtime (iOS)",
-				"reason": "a fix applied to the native layout by the runtime; no markup of its own"
-			}
-		},
 		"layout": {
 			"host": {
 				"host": "app template Layout blocks",
@@ -620,6 +614,12 @@
 					}
 				}
 			]
+		},
+		"native-scroll": {
+			"host": {
+				"host": "app template Layout blocks (native)",
+				"reason": "pins the header and bottom bar of the native layout and scrolls .content alone; no markup of its own"
+			}
 		},
 		"Notification": {
 			"kind": "pattern",
