@@ -9108,9 +9108,30 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown .flatpickr-monthS
   left:-2px;
   right:0;
 }
-.osui-datepicker input[type=date]::-webkit-inner-spin-button, .osui-datepicker input[type=date]::-webkit-calendar-picker-indicator, .osui-datepicker input[type=date]::-webkit-datetime-edit-year-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-month-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-day-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-fields-wrapper{
+.osui-datepicker input[type=date]::-webkit-inner-spin-button{
   display:none;
   -moz-appearance:none;
+}
+.osui-datepicker input[type=date]:not(.flatpickr-mobile)::-webkit-calendar-picker-indicator, .osui-datepicker input[type=date]:not(.flatpickr-mobile)::-webkit-datetime-edit-year-field, .osui-datepicker input[type=date]:not(.flatpickr-mobile)::-webkit-datetime-edit-month-field, .osui-datepicker input[type=date]:not(.flatpickr-mobile)::-webkit-datetime-edit-day-field, .osui-datepicker input[type=date]:not(.flatpickr-mobile)::-webkit-datetime-edit-fields-wrapper{
+  display:none;
+  -moz-appearance:none;
+}
+.osui-datepicker input.flatpickr-mobile{
+  position:relative;
+}
+.osui-datepicker input.flatpickr-mobile::-webkit-datetime-edit{
+  pointer-events:none;
+}
+.osui-datepicker input.flatpickr-mobile::-webkit-calendar-picker-indicator{
+  height:auto;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  opacity:0;
+  position:absolute;
+  width:auto;
+  z-index:1;
 }
 .osui-datepicker input.flatpickr-input[disabled] + input{
   background-color:var(--background-color-neutral-2, var(--color-neutral-2));

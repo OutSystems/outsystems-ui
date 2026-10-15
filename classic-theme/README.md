@@ -49,6 +49,21 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `.phone/.tablet .app-menu-links a` SS-preview rule (same relative position as the new theme).
   Mapping: none needed — the rule is a single `-servicestudio-*` declaration with no token
   values, so it is byte-identical in both themes. Approximations: none.
+- **2026-10-13 — RDINC-94039 DatePicker value hidden on Android Chrome M154+ (working tree)** —
+  replaced the single `.osui-datepicker input[type=date]::-webkit-*` hiding block with the
+  new theme's five compiled blocks, in both bundles, in place: spin button stays hidden
+  everywhere; the calendar-picker indicator and `::-webkit-datetime-edit-*` fields are now
+  hidden only on `[type=date]:not(.flatpickr-mobile)`; on `input.flatpickr-mobile`
+  (type-agnostic — the mobile input is `type=datetime-local` when time is enabled) the
+  input gets `position:relative`, the `::-webkit-datetime-edit` text is made click-through
+  (`pointer-events:none`), and the indicator becomes an invisible full-input hit area
+  (`position:absolute;opacity:0;z-index:1`) so taps anywhere — including on the text —
+  open the native calendar.
+  Mapping: none needed — no token values in these rules.
+  Approximations: the new theme's `inset:0` was written as `top/right/bottom/left:0` —
+  `inset` appears nowhere in the snapshot, so the longhands match its compiled-output era.
+  The equivalent `.osui-timepicker input[type=time]` block was deliberately **not** changed
+  (TimePicker not reproduced; out of scope of the fix).
 
 ### Refresh log
 

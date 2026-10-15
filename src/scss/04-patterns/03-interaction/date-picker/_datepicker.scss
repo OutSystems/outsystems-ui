@@ -21,14 +21,43 @@
 	input {
 		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
 		&[type='date'] {
-			&::-webkit-inner-spin-button,
-			&::-webkit-calendar-picker-indicator,
-			&::-webkit-datetime-edit-year-field,
-			&::-webkit-datetime-edit-month-field,
-			&::-webkit-datetime-edit-day-field,
-			&::-webkit-datetime-edit-fields-wrapper {
+			&::-webkit-inner-spin-button {
 				display: none;
 				-moz-appearance: none;
+			}
+
+			&:not(.flatpickr-mobile) {
+				&::-webkit-calendar-picker-indicator,
+				&::-webkit-datetime-edit-year-field,
+				&::-webkit-datetime-edit-month-field,
+				&::-webkit-datetime-edit-day-field,
+				&::-webkit-datetime-edit-fields-wrapper {
+					display: none;
+					-moz-appearance: none;
+				}
+			}
+		}
+
+		// The flatpickr mobile input is the visible field on touch devices — type=date
+		// for Date values, type=datetime-local when time is enabled. Since Chrome for
+		// Android M154 it renders with the desktop multi-field layout, where a tap can
+		// land on an inner edit field without opening the picker. Make the text
+		// click-through and stretch the (invisible) picker indicator over the whole
+		// input so any tap opens the native calendar.
+		&.flatpickr-mobile {
+			position: relative;
+
+			&::-webkit-datetime-edit {
+				pointer-events: none;
+			}
+
+			&::-webkit-calendar-picker-indicator {
+				height: auto;
+				inset: 0;
+				opacity: 0;
+				position: absolute;
+				width: auto;
+				z-index: 1;
 			}
 		}
 
