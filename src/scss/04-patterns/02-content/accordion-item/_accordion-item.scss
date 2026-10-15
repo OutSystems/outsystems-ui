@@ -116,13 +116,6 @@
 			text-underline-offset: 3px; // no $token-* available for underline offset
 		}
 
-		a:focus {
-			background-color: var(--color-focus-outer);
-			box-shadow: none;
-			outline: none;
-			text-decoration-color: var(--color-focus-outer);
-		}
-
 		&__placeholder {
 			align-items: center;
 			display: flex;
@@ -301,18 +294,12 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.osui-accordion-item {
-		&:has(.osui-accordion-item__title:focus-visible) {
-			@include a11y-focus-shadow;
-
-			border-color: transparent;
+	.osui-accordion-item__title {
+		&:focus-visible {
+			position: relative;
 			z-index: var(--layer-local-tier-1);
-		}
 
-		&__title {
-			&:focus-visible {
-				box-shadow: none;
-			}
+			@include a11y-focus-shadow;
 		}
 	}
 }
