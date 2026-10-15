@@ -1,5 +1,5 @@
 @use '../../../00-abstract/index' as *;
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - Sidebar */
 ////
@@ -225,6 +225,17 @@
 		max-width: 85vw;
 	}
 }
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-sidebar {
+		&--is-open:focus {
+			@include a11y-focus-shadow($isInner: true);
+		}
+	}
+}
+
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
