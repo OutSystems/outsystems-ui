@@ -302,7 +302,7 @@
 ///
 .has-accessible-features {
 	.osui-accordion-item {
-		&:has(.osui-accordion-item__title:focus) {
+		&:has(.osui-accordion-item__title:focus-visible) {
 			@include a11y-focus-shadow;
 
 			border-color: transparent;
@@ -310,7 +310,7 @@
 		}
 
 		&__title {
-			&:focus {
+			&:focus-visible {
 				box-shadow: none;
 			}
 		}

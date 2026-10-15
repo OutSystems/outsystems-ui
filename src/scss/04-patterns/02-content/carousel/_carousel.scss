@@ -192,6 +192,8 @@
 
 	.osui-carousel {
 		.splide {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
 			&__pagination__page {
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
@@ -199,12 +201,12 @@
 				margin: variables.$token-scale-150;
 				width: variables.$token-scale-300;
 
-				&:focus {
+				&:focus-visible {
 					@include a11y-focus-shadow;
 				}
 			}
 
-			&__arrow:focus {
+			&__arrow:focus-visible {
 				@include a11y-focus-outline;
 			}
 		}

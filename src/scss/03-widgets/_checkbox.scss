@@ -118,7 +118,7 @@
 			}
 		}
 
-		&:focus {
+		&:focus-visible {
 			@include a11y-focus-shadow();
 
 			&:before {

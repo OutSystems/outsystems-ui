@@ -77,7 +77,7 @@ body {
 }
 
 ///
-.has-accessible-features :focus {
+.has-accessible-features :focus-visible {
 	@include a11y-focus-shadow;
 }
 

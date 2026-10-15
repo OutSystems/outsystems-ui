@@ -230,19 +230,19 @@ select.dropdown-display[disabled] {
 			&.dropdown-display {
 				border-color: var(--color-border-input);
 
-				&:focus {
+				&:focus-visible {
 					@include a11y-focus-shadow;
 				}
 			}
 		}
 
 		& > select {
-			&.dropdown-display:focus {
+			&.dropdown-display:focus-visible {
 				@include a11y-focus-shadow;
 			}
 		}
 
-		.dropdown-popup-row:focus {
+		.dropdown-popup-row:focus-visible {
 			@include a11y-focus-shadow($isInner: true);
 		}
 	}

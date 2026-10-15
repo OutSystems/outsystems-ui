@@ -230,7 +230,7 @@
 ///
 .has-accessible-features {
 	.osui-sidebar {
-		&--is-open:focus {
+		&--is-open:focus-visible {
 			@include a11y-focus-shadow($isInner: true);
 		}
 	}

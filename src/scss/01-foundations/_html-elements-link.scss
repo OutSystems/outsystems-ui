@@ -51,7 +51,7 @@ a {
 ///
 .has-accessible-features {
 	a {
-		&:focus {
+		&:focus-visible {
 			background-color: var(--osui-focus-shadow-color);
 			box-shadow: 0 2px var(--color-focus-inner);
 			color: var(--color-text);

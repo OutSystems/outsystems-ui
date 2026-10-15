@@ -85,7 +85,7 @@
 			background-color: variables.$token-bg-neutral-subtle-press;
 		}
 
-		&:focus {
+		&:focus-visible {
 			@include a11y-focus-shadow($isInner: true);
 		}
 	}

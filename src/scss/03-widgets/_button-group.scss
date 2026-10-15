@@ -124,7 +124,7 @@
 ///
 .has-accessible-features {
 	.button-group-item {
-		&:focus {
+		&:focus-visible {
 			box-shadow: none;
 			outline: none;
 

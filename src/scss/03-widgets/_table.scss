@@ -207,8 +207,9 @@
 // Accessibility ------------------------------------------------------------------
 ///
 .has-accessible-features {
-	th.sortable:focus {
+	th.sortable:focus-visible {
 		@include a11y-focus-shadow;
+
 		position: relative;
 		z-index: var(--layer-global-screen);
 	}

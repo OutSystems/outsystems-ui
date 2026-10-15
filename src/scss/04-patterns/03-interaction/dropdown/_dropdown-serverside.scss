@@ -343,7 +343,7 @@ $balloonMobileTopMargin: 5vh;
 			border-color: var(--color-border-input);
 
 			&-search-wrapper {
-				&:focus-within {
+				&:focus-within:has(:focus-visible) {
 					@include a11y-focus-shadow($isInner: true);
 				}
 			}
@@ -361,7 +361,7 @@ $balloonMobileTopMargin: 5vh;
 					background-color: var(--color-border-input);
 				}
 
-				&:focus {
+				&:focus-visible {
 					// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
 					box-shadow: none;
 
@@ -419,7 +419,7 @@ $balloonMobileTopMargin: 5vh;
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
-	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus {
+	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus-visible {
 		--osui-outline-size: 0;
 
 		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);

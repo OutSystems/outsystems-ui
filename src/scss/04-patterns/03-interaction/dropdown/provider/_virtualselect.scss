@@ -609,11 +609,11 @@ body:has(.has-accessible-features) {
 		}
 	}
 
-	.vscomp-search-input:focus {
+	.vscomp-search-container:focus-within {
 		@include a11y-focus-shadow($isInner: true);
 	}
 
-	.vscomp-toggle-all-button:focus {
+	.vscomp-toggle-all-button:focus-visible {
 		box-shadow: none;
 
 		.checkbox-icon {
@@ -621,7 +621,7 @@ body:has(.has-accessible-features) {
 		}
 	}
 
-	.vscomp-option.focused:focus {
+	.vscomp-option.focused:focus-visible {
 		@include a11y-focus-shadow($isInner: true);
 	}
 }

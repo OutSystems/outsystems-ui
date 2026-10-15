@@ -78,7 +78,7 @@ body:has(.has-accessible-features) {
 		&-search,
 		&-tags {
 			.vscomp-wrapper {
-				&:focus {
+				&:focus-visible {
 					box-shadow: none;
 
 					.vscomp-toggle-button {
@@ -90,7 +90,7 @@ body:has(.has-accessible-features) {
 	}
 
 	.vscomp-search-clear {
-		&:focus {
+		&:focus-visible {
 			@include a11y-focus-shadow;
 		}
 	}

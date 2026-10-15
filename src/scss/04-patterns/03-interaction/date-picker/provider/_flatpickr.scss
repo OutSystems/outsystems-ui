@@ -852,7 +852,7 @@ body:has(.has-accessible-features) {
 		}
 
 		.flatpickr-day {
-			&:focus {
+			&:focus-visible {
 				border-color: var(--color-focus-outer);
 				z-index: var(--layer-local-tier-1);
 
@@ -869,21 +869,21 @@ body:has(.has-accessible-features) {
 			&.selected.startRange + .endRange,
 			&.startRange.startRange + .endRange,
 			&.endRange.startRange + .endRange {
-				&:focus {
+				&:focus-visible {
 					@include a11y-focus-shadow;
 				}
 			}
 
 			&.prevMonthDay,
 			&.nextMonthDay {
-				&:focus {
+				&:focus-visible {
 					color: variables.$token-primitives-neutral-400;
 				}
 			}
 		}
 
-		.flatpickr-day:focus,
-		.flatpickr-months .flatpickr-month:focus {
+		.flatpickr-day:focus-visible,
+		.flatpickr-months .flatpickr-month:focus-visible {
 			overflow: visible;
 		}
 
@@ -894,7 +894,7 @@ body:has(.has-accessible-features) {
 		.flatpickr-am-pm,
 		.flatpickr-day,
 		.flatpickr-today-button a {
-			&:focus {
+			&:focus-visible {
 				@include a11y-focus-shadow;
 			}
 		}
@@ -908,13 +908,13 @@ body:has(.has-accessible-features) {
 		.numInputWrapper input,
 		.flatpickr-prev-month,
 		.flatpickr-next-month {
-			&:focus {
+			&:focus-visible {
 				@include a11y-focus-shadow;
 			}
 		}
 
 		.flatpickr-monthSelect-month {
-			&:focus {
+			&:focus-visible {
 				&,
 				&.selected {
 					@include a11y-focus-shadow;

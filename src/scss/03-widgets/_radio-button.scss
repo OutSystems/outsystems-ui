@@ -166,7 +166,9 @@
 			width: variables.$token-scale-300;
 		}
 
-		&:focus {
+		&:focus-visible {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
 			@include a11y-focus-shadow;
 
 			&:before {
