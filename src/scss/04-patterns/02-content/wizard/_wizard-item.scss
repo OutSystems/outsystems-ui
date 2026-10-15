@@ -1,3 +1,4 @@
+@use '../../../00-abstract/mixins' as *;
 @use '../../../tokens/variables';
 
 /* Patterns - Content - Wizard Item */
@@ -132,11 +133,6 @@
 		width: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		z-index: var(--layer-local-tier-1);
 
-		[data-block*='WizardItem']:focus-visible & {
-			box-shadow: 0 0 0 var(--osui-wizard-focus-halo-width) var(--osui-wizard-focus-halo-color);
-			outline: none;
-		}
-
 		&:empty {
 			height: variables.$token-scale-200;
 			// `box-sizing: border-box` is global, but when padding + border exceed the box the
@@ -156,6 +152,17 @@
 		font-size: var(--osui-wizard-font-size);
 		line-height: var(--osui-wizard-label-line-height);
 		text-align: center;
+	}
+}
+
+// Accessibility ------------------------------------------------------------
+.has-accessible-features {
+	[data-block*='WizardItem']:focus {
+		box-shadow: none;
+
+		.osui-wizard-item-icon {
+			@include a11y-focus-shadow;
+		}
 	}
 }
 
