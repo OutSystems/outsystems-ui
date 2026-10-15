@@ -142,5 +142,6 @@
 	// A11Y focus shadow width
 	--osui-focus-shadow-width: #{variables.$token-border-size-050};
 	--osui-focus-shadow-gap: #{variables.$token-scale-050};
+	--osui-focus-inner-shadow-gap: #{variables.$token-scale-0};
 	--osui-focus-shadow-color: #{variables.$token-border-focus-default};
 }

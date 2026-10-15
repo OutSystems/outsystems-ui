@@ -214,6 +214,8 @@
 .has-accessible-features {
 	.osui-bottom-sheet {
 		&:focus {
+			--osui-focus-inner-shadow-gap: #{variables.$token-scale-050};
+
 			@include a11y-focus-shadow($isInner: true);
 		}
 	}

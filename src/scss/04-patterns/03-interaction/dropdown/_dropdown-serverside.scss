@@ -355,7 +355,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-content {
-				--osui-outline-size: calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width));
+				--osui-outline-size: calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width));
 
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-border-input);

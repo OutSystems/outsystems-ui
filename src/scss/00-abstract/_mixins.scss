@@ -27,7 +27,7 @@
 			0
 			0
 			0
-			calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width))
+			calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width))
 			var(--osui-focus-shadow-color);
 	} @else {
 		box-shadow:
