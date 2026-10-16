@@ -5,14 +5,15 @@
 
 // Import common dropdown styles based on Current provider
 @use 'provider/virtualselect';
-@use "../../../tokens/variables";
+@use '../../../00-abstract/_mixins.scss' as *;
+@use '../../../tokens/variables';
 
 // Common dropdown styles
 .osui-dropdown {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-disabled-background:   var(--color-background-input-disabled);
+	--osui-dropdown-disabled-background: var(--color-background-input-disabled);
 	--osui-dropdown-disabled-border-color: var(--color-border-input);
-	--osui-dropdown-disabled-color:        var(--color-text-disabled);
+	--osui-dropdown-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-search,
@@ -68,5 +69,29 @@
 		font-size: variables.$token-font-size-300;
 		margin-inline-start: variables.$token-scale-0;
 		margin-block-start: variables.$token-scale-075;
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+body:has(.has-accessible-features) {
+	.osui-dropdown {
+		&-search,
+		&-tags {
+			.vscomp-wrapper {
+				&:focus-visible {
+					box-shadow: none;
+
+					.vscomp-toggle-button {
+						@include a11y-focus-shadow;
+					}
+				}
+			}
+		}
+	}
+
+	.vscomp-search-clear {
+		&:focus-visible {
+			@include a11y-focus-shadow;
+		}
 	}
 }

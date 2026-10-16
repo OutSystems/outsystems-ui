@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../00-abstract/index' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - Range Slider */
 ////
@@ -93,7 +94,8 @@
 			}
 
 			.noUi-handle:before {
-				border-width: variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-025;
+				border-width: variables.$token-border-size-0 variables.$token-border-size-0
+					variables.$token-border-size-0 variables.$token-border-size-025;
 				// physical: noUiSlider positions handles physically and does its own
 				// RTL via .noUi-txt-dir-rtl — logical props here would double-flip
 				left: calc(var(--range-slider-handle-size) / 4);
@@ -304,20 +306,14 @@
 ///
 .has-accessible-features {
 	.osui-range-slider {
-		border: variables.$token-border-size-050 solid transparent;
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
-		&:focus-within {
-			border-color: var(--color-focus-outer);
+		.osui-range-slider__provider:focus-within:has(:focus-visible) {
+			@include a11y-focus-shadow;
 		}
 
-		// Keep the handle's own border colour on focus — the focus affordance is the halo
-		// below, not a recolour. This rule comes after the `.noUi-active` / `:hover`
-		// primary border at equal specificity, so hardcoding a colour here silently wins
-		// over it and turns the pressed handle black. Routing through the CSS API var also
-		// means a disabled handle (which overrides it) stays grey when focused.
-		.noUi-handle:focus {
-			border-color: var(--osui-range-slider-handle-border-color);
-			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		.noUi-handle:focus-visible {
+			@include a11y-focus-shadow;
 		}
 	}
 }

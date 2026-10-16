@@ -33,9 +33,10 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-start-end-radius: var(--osui-accordion-border-radius);
-			border-start-start-radius: var(--osui-accordion-border-radius);
-			overflow: hidden;
+			.osui-accordion-item__title {
+				border-start-end-radius: var(--osui-accordion-border-radius);
+				border-start-start-radius: var(--osui-accordion-border-radius);
+			}
 		}
 	}
 
@@ -43,9 +44,16 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-end-end-radius: var(--osui-accordion-border-radius);
-			border-end-start-radius: var(--osui-accordion-border-radius);
-			overflow: hidden;
+			.osui-accordion-item__title {
+				border-end-end-radius: var(--osui-accordion-border-radius);
+				border-end-start-radius: var(--osui-accordion-border-radius);
+			}
+
+			&.osui-accordion-item--is-open {
+				.osui-accordion-item__title {
+					border-radius: variables.$token-border-radius-0;
+				}
+			}
 
 			&:not(.osui-accordion-item--is-open) {
 				.osui-accordion-item__title:hover {
