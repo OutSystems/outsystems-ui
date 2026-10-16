@@ -64,6 +64,24 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `inset` appears nowhere in the snapshot, so the longhands match its compiled-output era.
   The equivalent `.osui-timepicker input[type=time]` block was deliberately **not** changed
   (TimePicker not reproduced; out of scope of the fix).
+- **2026-10-16 — DatePicker input width flicker (working tree)** — classic-only.
+  On `.form-control[data-input], .form-control[data-textarea]` in both bundles,
+  replaced `transition:all 180ms linear` with
+  `border-color 180ms linear, background-color 180ms linear` (and the `-webkit-`
+  prefix). Matches the new theme, where that selector never uses `transition:all`,
+  so a redrawn DatePicker input no longer animates width. Timing kept at
+  `180ms linear`. The leftover `.osui-datepicker input.flatpickr-input` override
+  in O11 was removed; it targeted the hidden input. Safari `transition:none`
+  is unchanged. Approximations: none.
+- **2026-10-16 — DatePicker redraw skips input transition (working tree)** — added
+  `.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input` and
+  `.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input + input`
+  immediately before `.safari input.flatpickr-input`, in both bundles. The class
+  is set in `prepareToAndRedraw`, so only a recreated input matches. The visible
+  field is the sibling after the hidden `.flatpickr-input`. Recreated inputs
+  use `transition:none` (and `-webkit-transition`). The first create has no
+  class, so it keeps `.form-control[data-input]`: border-color and
+  background-color only, at `180ms linear`. Approximations: none.
 
 ### Refresh log
 
