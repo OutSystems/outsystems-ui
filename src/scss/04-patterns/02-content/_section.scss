@@ -43,9 +43,15 @@
 		--osui-section-group-gap: #{variables.$token-space-400};
 		// ───────────────────────────────────────────────────────────────────
 
-		display: flex;
-		flex-direction: column;
-		gap: var(--osui-section-group-gap);
+		// Service Studio wraps the sections in an unclassed placeholder div, so the gap has to reach
+		// that level as well, or the sections sit flush against each other. The custom property is
+		// inherited from the group, so the wrapper uses the same value.
+		&,
+		> :not(.section) {
+			display: flex;
+			flex-direction: column;
+			gap: var(--osui-section-group-gap);
+		}
 
 		&.is--sticky {
 			.section-title {
