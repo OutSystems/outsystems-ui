@@ -2107,8 +2107,8 @@ body .app-menu-content .app-menu-links{
   border-radius:var(--border-radius-soft);
   color:var(--text-color-neutral-9, var(--color-neutral-9));
   font-size:var(--font-size-s);
-  -webkit-transition:all 180ms linear;
-  transition:all 180ms linear;
+  -webkit-transition:border-color 180ms linear,background-color 180ms linear;
+  transition:border-color 180ms linear,background-color 180ms linear;
 }
 .form-control[data-input]:hover, .form-control[data-textarea]:hover{
   border:var(--border-size-s) solid var(--border-color-neutral-6, var(--color-neutral-6));
@@ -8597,6 +8597,11 @@ span.flatpickr-weekday{
 }
 .flatpickr-today-button a:hover{
   text-decoration:none;
+}
+.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input,
+.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input + input{
+  -webkit-transition:none;
+  transition:none;
 }
 .safari input.flatpickr-input,
 .safari input.flatpickr-input + input{
