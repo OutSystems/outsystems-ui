@@ -39,10 +39,10 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-12T21:09:51.361Z',
+	generatedAt: '2026-10-16T14:02:02.186Z',
 	totals: {
-		properties: 598,
-		components: 68,
+		properties: 611,
+		components: 69,
 		categories: 9,
 	},
 	categories: [
@@ -1131,6 +1131,27 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								chain: 'theme-role',
 								hint: 'var(--color-text-subtlest)',
 							},
+							{
+								name: '--osui-dropdown-selected-background',
+								default: 'transparent',
+								kind: 'color',
+								chain: 'other',
+								hint: 'transparent',
+							},
+							{
+								name: '--osui-dropdown-selected-indicator',
+								default: 'var(--osui-icon-check)',
+								kind: 'other',
+								chain: 'theme-role',
+								hint: 'var(--osui-icon-check)',
+							},
+							{
+								name: '--osui-dropdown-selected-indicator-color',
+								default: 'var(--color-primary)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-primary)',
+							},
 						],
 					},
 				],
@@ -2042,6 +2063,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: '20px',
 							},
 							{
+								name: '--osui-accordion-item-title-font-size',
+								default: '#{$token-font-size-400}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-font-size-400}',
+							},
+							{
 								name: '--osui-accordion-item-title-hover-background',
 								default: '#{$token-bg-neutral-subtlest-hover}',
 								kind: 'color',
@@ -2054,6 +2082,20 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--osui-accordion-item-border-color)',
+							},
+							{
+								name: '--osui-accordion-item-title-padding-block',
+								default: '#{$token-scale-300}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-300}',
+							},
+							{
+								name: '--osui-accordion-item-title-padding-inline',
+								default: '#{$token-scale-600}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-600}',
 							},
 						],
 					},
@@ -2591,10 +2633,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-wizard-active-icon-color',
-								default: '#{$token-text-primary}',
+								default: '#{$token-text-subtle}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-text-primary}',
+								hint: '#{$token-text-subtle}',
 							},
 							{
 								name: '--osui-wizard-connector-color',
@@ -3552,10 +3594,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-datepicker-time-focus-color',
-								default: '#{$token-semantics-primary-base}',
+								default: 'var(--color-primary)',
 								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-semantics-primary-base}',
+								chain: 'theme-role',
+								hint: 'var(--color-primary)',
 							},
 							{
 								name: '--osui-datepicker-time-height',
@@ -4020,6 +4062,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.osui-range-slider',
 							properties: [
 							{
+								name: '--osui-range-slider-connect-color',
+								default: 'var(--color-primary)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-primary)',
+							},
+							{
 								name: '--osui-range-slider-disabled-color',
 								default: 'var(--color-text-disabled)',
 								kind: 'color',
@@ -4053,6 +4102,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-primary)',
+							},
+							{
+								name: '--osui-range-slider-handle-border-width',
+								default: '#{$token-border-size-050}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-border-size-050}',
 							},
 							{
 								name: '--osui-range-slider-handle-shadow',
@@ -4650,6 +4706,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-primary)',
 							},
 							{
+								name: '--osui-submenu-header-border-radius',
+								default: '#{$token-border-radius-200}',
+								kind: 'border',
+								chain: 'token',
+								hint: '#{$token-border-radius-200}',
+							},
+							{
 								name: '--osui-submenu-header-color',
 								default: 'var(--color-text)',
 								kind: 'color',
@@ -4657,11 +4720,25 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-submenu-hover-border-color',
-								default: 'var(--color-primary)',
+								name: '--osui-submenu-header-hover-background',
+								default: '#{$token-bg-neutral-subtlest-hover}',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary)',
+								chain: 'token',
+								hint: '#{$token-bg-neutral-subtlest-hover}',
+							},
+							{
+								name: '--osui-submenu-header-padding-block',
+								default: '#{$token-scale-200}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-200}',
+							},
+							{
+								name: '--osui-submenu-header-padding-inline',
+								default: '#{$token-scale-300}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-300}',
 							},
 							{
 								name: '--osui-submenu-item-border-radius',
@@ -5073,6 +5150,33 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 			label: 'Patterns – Utilities',
 			order: 7,
 			components: [
+				{
+					name: 'List Updating',
+					slug: 'patterns-utilities-list-updating',
+					file: 'src/scss/04-patterns/06-utilities/_list-updating.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.list-updating',
+							properties: [
+							{
+								name: '--osui-list-updating-indicator-color',
+								default: 'var(--color-neutral-6)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-neutral-6)',
+							},
+							{
+								name: '--osui-list-updating-track-color',
+								default: 'var(--color-border-input)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-border-input)',
+							},
+						],
+					},
+				],
+				},
 				{
 					name: 'Provider Login Button',
 					slug: 'patterns-utilities-provider-login-button',
