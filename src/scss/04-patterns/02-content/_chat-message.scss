@@ -1,4 +1,4 @@
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Content - Chat Message */
 ////
@@ -55,7 +55,7 @@
 		max-width: 600px;
 		padding: variables.$token-space-300;
 		position: relative;
-		word-break: break-word;
+		overflow-wrap: anywhere;
 
 		&-status {
 			color: var(--osui-chat-message-status-color);
