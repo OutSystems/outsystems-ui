@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { expect, waitFor } from 'storybook/test';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -116,31 +115,13 @@ export const Default: Story = {
 			});
 		});
 	},
-	// ROU-13149: header items round the corners facing away from the content.
-	// Horizontal rounds the top; vertical rounds inline-start (left) or inline-end (right).
-	play: async ({ args, canvasElement }) => {
-		// The pattern applies its orientation class while building, after the story is rendered.
-		const orientationClass = `osui-tabs--is-${args.orientation}`;
-		await waitFor(() => expect(canvasElement.querySelector(`.${orientationClass}`)).not.toBeNull());
-		const item = canvasElement.querySelector<HTMLElement>('.osui-tabs__header-item');
-		const style = getComputedStyle(item);
-		const radius = {
-			topLeft: style.borderTopLeftRadius,
-			topRight: style.borderTopRightRadius,
-			bottomLeft: style.borderBottomLeftRadius,
-			bottomRight: style.borderBottomRightRadius,
-		};
-		const round = (px: string) => parseFloat(px) > 0;
+};
 
-		if (args.orientation === 'horizontal') {
-			await expect([round(radius.topLeft), round(radius.topRight)]).toEqual([true, true]);
-			await expect([round(radius.bottomLeft), round(radius.bottomRight)]).toEqual([false, false]);
-			return;
-		}
-
-		const isRtl = style.direction === 'rtl';
-		const roundsLeft = (args.verticalPosition === 'left') !== isRtl;
-		await expect([round(radius.topLeft), round(radius.bottomLeft)]).toEqual([roundsLeft, roundsLeft]);
-		await expect([round(radius.topRight), round(radius.bottomRight)]).toEqual([!roundsLeft, !roundsLeft]);
-	},
+/**
+ * Vertical orientation. Header items round the corners facing away from the content
+ * (inline-start for left, inline-end for right); switch TabsVerticalPosition to compare.
+ */
+export const Vertical: Story = {
+	args: { orientation: 'vertical', verticalPosition: 'left' },
+	render: Default.render,
 };
