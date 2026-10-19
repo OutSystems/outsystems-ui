@@ -374,6 +374,9 @@
 				"--osui-accordion-item-icon-color",
 				"--osui-accordion-item-title-hover-background",
 				"--osui-accordion-item-title-hover-border-color",
+				"--osui-accordion-item-title-font-size",
+				"--osui-accordion-item-title-padding-block",
+				"--osui-accordion-item-title-padding-inline",
 				"--osui-accordion-item-plus-minus-size"
 			],
 			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><span></span></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
@@ -1674,6 +1677,7 @@
 			"cssClasses": {
 				"Calendar": "osui-datepicker-calendar",
 				"Pattern": "osui-datepicker",
+				"Redrawn": "osui-datepicker--redrawn",
 				"AccessibilityContainerInfo": "osui-datepicker-a11y",
 				"TodayBtn": "flatpickr-today-button"
 			},
@@ -4123,7 +4127,9 @@
 				"--osui-range-slider-track-radius",
 				"--osui-range-slider-handle-background",
 				"--osui-range-slider-handle-border-color",
+				"--osui-range-slider-handle-border-width",
 				"--osui-range-slider-handle-shadow",
+				"--osui-range-slider-connect-color",
 				"--osui-range-slider-disabled-track-color",
 				"--osui-range-slider-disabled-connect-color",
 				"--osui-range-slider-disabled-color"

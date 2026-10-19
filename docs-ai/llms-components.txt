@@ -181,7 +181,7 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - SetProviderEvent(datePickerId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(datePickerId: string, eventId: string): string
 - SetEditableInput(datePickerId: string, isEditable: boolean): string
-CSS classes: osui-datepicker-calendar osui-datepicker osui-datepicker-a11y flatpickr-today-button
+CSS classes: osui-datepicker-calendar osui-datepicker osui-datepicker--redrawn osui-datepicker-a11y flatpickr-today-button
 Configs schema: schema/configs/DatePicker.schema.json
 Docs: interaction/date_picker · interaction/date_picker_range
 
