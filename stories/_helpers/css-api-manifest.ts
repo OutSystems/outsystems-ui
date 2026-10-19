@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-16T14:02:02.186Z',
+	generatedAt: '2026-10-19T14:48:17.007Z',
 	totals: {
-		properties: 611,
+		properties: 613,
 		components: 69,
 		categories: 9,
 	},
@@ -2043,10 +2043,24 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-accordion-item-color',
+								default: 'var(--color-text)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-accordion-item-content-color',
 								default: 'var(--color-text-subtle)',
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-subtle)',
+							},
+							{
+								name: '--osui-accordion-item-font-size',
+								default: '#{$token-font-size-350}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-font-size-350}',
 							},
 							{
 								name: '--osui-accordion-item-icon-color',

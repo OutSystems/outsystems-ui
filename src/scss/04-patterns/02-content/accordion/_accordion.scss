@@ -67,6 +67,7 @@
 	& &-item {
 		& {
 			-servicestudio-border-bottom-width: variables.$token-border-size-025;
+			-servicestudio-display: grid;
 		}
 	}
 }
