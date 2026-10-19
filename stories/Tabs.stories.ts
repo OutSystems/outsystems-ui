@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { expect, waitFor } from 'storybook/test';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -115,39 +116,31 @@ export const Default: Story = {
 			});
 		});
 	},
-};
+	// ROU-13149: header items round the corners facing away from the content.
+	// Horizontal rounds the top; vertical rounds inline-start (left) or inline-end (right).
+	play: async ({ args, canvasElement }) => {
+		// The pattern applies its orientation class while building, after the story is rendered.
+		const orientationClass = `osui-tabs--is-${args.orientation}`;
+		await waitFor(() => expect(canvasElement.querySelector(`.${orientationClass}`)).not.toBeNull());
+		const item = canvasElement.querySelector<HTMLElement>('.osui-tabs__header-item');
+		const style = getComputedStyle(item);
+		const radius = {
+			topLeft: style.borderTopLeftRadius,
+			topRight: style.borderTopRightRadius,
+			bottomLeft: style.borderBottomLeftRadius,
+			bottomRight: style.borderBottomRightRadius,
+		};
+		const round = (px: string) => parseFloat(px) > 0;
 
-/**
- * Vertical, header on the left. Header items round the corners facing away from the
- * content (inline-start); the edge next to the content stays square (ROU-13149).
- */
-export const VerticalLeft: Story = {
-	args: { orientation: 'vertical', verticalPosition: 'left' },
-	render: Default.render,
-};
+		if (args.orientation === 'horizontal') {
+			await expect([round(radius.topLeft), round(radius.topRight)]).toEqual([true, true]);
+			await expect([round(radius.bottomLeft), round(radius.bottomRight)]).toEqual([false, false]);
+			return;
+		}
 
-/** Vertical, header on the right. Header items round the inline-end corners (ROU-13149). */
-export const VerticalRight: Story = {
-	args: { orientation: 'vertical', verticalPosition: 'right' },
-	render: Default.render,
-};
-
-/** Vertical in RTL: the rounded corners mirror along with the header position (ROU-13149). */
-export const VerticalRtl: Story = {
-	args: { orientation: 'vertical', verticalPosition: 'left' },
-	decorators: [
-		(story) => {
-			const wrapper = document.createElement('div');
-			wrapper.className = 'is-rtl';
-			wrapper.setAttribute('dir', 'rtl');
-			const rendered = story();
-			if (typeof rendered === 'string') {
-				wrapper.innerHTML = rendered;
-			} else {
-				wrapper.appendChild(rendered as Node);
-			}
-			return wrapper;
-		},
-	],
-	render: Default.render,
+		const isRtl = style.direction === 'rtl';
+		const roundsLeft = (args.verticalPosition === 'left') !== isRtl;
+		await expect([round(radius.topLeft), round(radius.bottomLeft)]).toEqual([roundsLeft, roundsLeft]);
+		await expect([round(radius.topRight), round(radius.bottomRight)]).toEqual([!roundsLeft, !roundsLeft]);
+	},
 };
