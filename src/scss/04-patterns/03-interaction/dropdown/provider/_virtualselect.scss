@@ -429,7 +429,7 @@
 	--osui-dropdown-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	// ───────────────────────────────────────────────────────────────────
 
-	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
+	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-elevation-3);
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: var(--osui-dropdown-popup-border-radius);
 	box-shadow: var(--osui-dropdown-list-shadow, #{variables.$token-elevation-3});
@@ -530,21 +530,21 @@
 // Option Item
 .vscomp-option {
 	align-items: center;
-	background-color: var(--color-background-input);
+	background-color: transparent;
 	flex-wrap: nowrap;
 	font-weight: variables.$token-font-weight-regular;
 	justify-content: space-between;
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&.focused {
-		background-color: variables.$token-bg-neutral-subtlest-hover;
+		background-color: variables.$token-bg-neutral-subtle-hover;
 	}
 
 	&.selected {
 		background-color: transparent;
 
 		&.focused {
-			background-color: variables.$token-bg-neutral-subtlest-hover;
+			background-color: variables.$token-bg-neutral-subtle-hover;
 		}
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)

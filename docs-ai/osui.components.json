@@ -1677,6 +1677,7 @@
 			"cssClasses": {
 				"Calendar": "osui-datepicker-calendar",
 				"Pattern": "osui-datepicker",
+				"Redrawn": "osui-datepicker--redrawn",
 				"AccessibilityContainerInfo": "osui-datepicker-a11y",
 				"TodayBtn": "flatpickr-today-button"
 			},
@@ -5200,6 +5201,7 @@
 				"--osui-submenu-item-line-height",
 				"--osui-submenu-item-border-radius",
 				"--osui-submenu-item-selected-background",
+				"--osui-submenu-item-hover-background",
 				"--osui-submenu-item-pressed-background",
 				"--osui-submenu-item-color-disabled",
 				"--osui-submenu-header-color",

@@ -8,7 +8,7 @@
 ///
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-submenu-items-background: var(--color-background-surface);
+	--osui-submenu-items-background: var(--color-background-panel);
 	--osui-submenu-items-border-color: var(--color-border);
 	--osui-submenu-items-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
@@ -18,8 +18,11 @@
 	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-submenu-item-border-radius: var(--border-radius-none, #{variables.$token-border-radius-0});
 	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
+	// Hover and pressed sit on the elevated items panel, so they step up from the
+	// `subtlest` ramp the header pills use (ROU-13151).
+	--osui-submenu-item-hover-background: #{variables.$token-bg-neutral-subtle-hover};
 	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
-	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtlest-press};
+	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtle-press};
 	--osui-submenu-item-color-disabled: var(--color-text-disabled);
 	--osui-submenu-header-color: var(--color-text);
 	// The header is a pill in every context (ROU-13132) — the same geometry and
@@ -284,7 +287,7 @@
 ///
 .layout-side .app-menu-links .osui-submenu,
 .menu-visible .app-menu-links .osui-submenu {
-	--osui-submenu-items-background: var(--color-background-sidemenu, #{variables.$token-bg-surface-default});
+	--osui-submenu-items-background: var(--color-background-sidemenu, #{variables.$token-bg-surface-elevation-3});
 
 	display: flex;
 	flex-direction: column;
@@ -344,7 +347,7 @@
 
 			// `:not(:active)` — let the pressed background through
 			&:not(:active):hover {
-				background-color: variables.$token-bg-neutral-subtlest-hover;
+				background-color: var(--osui-submenu-item-hover-background);
 				color: var(--color-text);
 			}
 
@@ -428,7 +431,7 @@
 			a {
 				// `:not(:active)` — let the pressed background through
 				&:not(:active):hover {
-					background-color: variables.$token-bg-neutral-subtlest-hover;
+					background-color: var(--osui-submenu-item-hover-background);
 					color: var(--color-text);
 				}
 
@@ -507,7 +510,7 @@
 
 // Top menu: submenu items — `:not(:active)` lets the pressed background through
 .desktop .osui-submenu__items a.active:not(:active):hover {
-	background-color: variables.$token-bg-neutral-subtlest-hover;
+	background-color: var(--osui-submenu-item-hover-background);
 }
 
 // Side menu desktop: direct link
@@ -524,7 +527,7 @@
 
 // Side menu desktop: submenu items — `:not(:active)` lets the pressed background through
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:not(:active):hover {
-	background-color: variables.$token-bg-neutral-subtlest-hover;
+	background-color: var(--osui-submenu-item-hover-background);
 	color: var(--color-primary);
 }
 
@@ -602,7 +605,7 @@
 				}
 
 				&:not(:active):hover {
-					background-color: variables.$token-bg-neutral-subtlest-hover;
+					background-color: var(--osui-submenu-item-hover-background);
 					color: var(--color-text);
 				}
 			}
@@ -626,7 +629,7 @@
 
 	// Mobile/tablet: submenu items active hover — `:not(:active)` lets the pressed background through
 	.osui-submenu__items a.active:not(:active):hover {
-		background-color: variables.$token-bg-neutral-subtlest-hover;
+		background-color: var(--osui-submenu-item-hover-background);
 		color: var(--color-primary);
 	}
 

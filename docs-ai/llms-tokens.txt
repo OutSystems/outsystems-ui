@@ -8,6 +8,8 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 ## Framework theme roles (src/scss/01-foundations/_root.scss)
 - --color-background-body
 - --color-background-surface
+- --color-background-raised
+- --color-background-panel
 - --color-background-header
 - --color-background-sidemenu
 - --color-background-footer
@@ -109,7 +111,7 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - Rating: --osui-rating-filled-color --osui-rating-empty-color --osui-rating-disabled-color --osui-rating-disabled-empty-color
 - SectionIndex: --osui-section-index-border-color --osui-section-index-border-width --osui-section-index-item-color --osui-section-index-item-color-hover --osui-section-index-item-active-color --osui-section-index-item-border-radius --osui-section-index-item-hover-background --osui-section-index-item-press-background --osui-section-index-active-indicator-color --osui-section-index-active-indicator-width --osui-section-index-active-indicator-offset
 - Sidebar: --osui-sidebar-background --osui-sidebar-color --osui-sidebar-shadow --osui-sidebar-padding-inline --osui-sidebar-padding-block
-- Submenu: --osui-submenu-items-background --osui-submenu-items-border-color --osui-submenu-items-border-radius --osui-submenu-items-shadow --osui-submenu-item-color --osui-submenu-item-font-size --osui-submenu-item-line-height --osui-submenu-item-border-radius --osui-submenu-item-selected-background --osui-submenu-item-pressed-background --osui-submenu-item-color-disabled --osui-submenu-header-color --osui-submenu-header-hover-background --osui-submenu-header-border-radius --osui-submenu-header-padding-block --osui-submenu-header-padding-inline --osui-submenu-active-border-color --osui-submenu-max-height
+- Submenu: --osui-submenu-items-background --osui-submenu-items-border-color --osui-submenu-items-border-radius --osui-submenu-items-shadow --osui-submenu-item-color --osui-submenu-item-font-size --osui-submenu-item-line-height --osui-submenu-item-border-radius --osui-submenu-item-selected-background --osui-submenu-item-hover-background --osui-submenu-item-pressed-background --osui-submenu-item-color-disabled --osui-submenu-header-color --osui-submenu-header-hover-background --osui-submenu-header-border-radius --osui-submenu-header-padding-block --osui-submenu-header-padding-inline --osui-submenu-active-border-color --osui-submenu-max-height
 - Tabs: --osui-tabs-border-color --osui-tabs-header-gap --osui-tabs-header-item-color --osui-tabs-header-item-font-size --osui-tabs-header-item-border-radius --osui-tabs-header-item-line-height --osui-tabs-header-item-color-active --osui-tabs-header-item-color-active-hover --osui-tabs-header-item-color-hover --osui-tabs-header-item-color-disabled --osui-tabs-header-item-hover-background --osui-tabs-indicator-color
 - TimePicker: --osui-timepicker-popup-border-radius --osui-timepicker-disabled-background --osui-timepicker-disabled-border-color --osui-timepicker-disabled-color --osui-timepicker-input-border-radius --osui-input-border-radius
 - Tooltip: --osui-tooltip-background --osui-tooltip-color --osui-tooltip-border-radius --osui-tooltip-padding --osui-tooltip-font-size --osui-tooltip-shadow --osui-tooltip-min-height --osui-tooltip-max-width --osui-tooltip-background-color --osui-tooltip-arrow-size --osui-floating-offset

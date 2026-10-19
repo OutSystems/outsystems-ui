@@ -181,7 +181,7 @@ export const MIGRATION_DATA = {
 				],
 				[
 					'Custom dark class (`.dark-mode`) without `.os-dark-theme`',
-					"~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light",
+					"~450 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light",
 					'Section 6, Step 2d',
 				],
 				[
@@ -300,7 +300,9 @@ export const MIGRATION_DATA = {
 				['`--color-text-light`', 'Light text on dark/primary backgrounds'],
 				['`--color-text-dark`', 'Dark text on light/accent backgrounds'],
 				['`--color-background-body`', 'Page background'],
-				['`--color-background-surface`', 'Card/panel/popup background'],
+				['`--color-background-surface`', 'Card, list and control background'],
+				['`--color-background-raised`', 'Tooltip / notification surface (one step above the page)'],
+				['`--color-background-panel`', 'Menu, popover, modal and sheet surface (the top tier)'],
 				['`--color-background-header`', 'Header background'],
 				['`--color-background-sidemenu`', 'Side menu background'],
 				['`--color-background-footer`', 'Footer background'],
@@ -1203,7 +1205,7 @@ export const MIGRATION_DATA = {
 			blocks: [
 				{
 					type: 'paragraph',
-					text: "Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~447 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.",
+					text: "Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~450 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.",
 				},
 			],
 		},
@@ -1430,7 +1432,7 @@ export const MIGRATION_DATA = {
 			retired: 105,
 			revalued: 52,
 			unchanged: 44,
-			added: 30,
+			added: 32,
 			hooksRetired: 233,
 			catalogEntries: 26,
 			recipes: 11,

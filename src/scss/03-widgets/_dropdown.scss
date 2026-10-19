@@ -16,7 +16,7 @@
 		--osui-dropdown-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
 		--osui-dropdown-prompt-color: var(--color-text-subtlest);
-		--osui-dropdown-list-background: var(--color-background-surface);
+		--osui-dropdown-list-background: var(--color-background-panel);
 		--osui-dropdown-list-border-color: var(--color-border);
 		--osui-dropdown-list-max-height: 240px;
 		--osui-dropdown-list-shadow: #{variables.$token-elevation-3};
@@ -122,7 +122,7 @@
 
 			&:hover,
 			&-selected:hover {
-				background: var(--color-border-subtle);
+				background: #{variables.$token-bg-neutral-subtle-hover};
 			}
 
 			&-selected {
