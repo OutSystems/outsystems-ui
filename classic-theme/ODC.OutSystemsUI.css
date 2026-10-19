@@ -7358,6 +7358,9 @@ span.flatpickr-weekday{
 .section-group .section-title{
   background-color:var(--background-color-body, var(--color-background-body));
 }
+.section-group .section-content.no-padding{
+  padding:var(--space-none);
+}
 .layout-native .section-title{
   padding:var(--space-s) var(--space-base) var(--space-s) var(--space-base);
 }

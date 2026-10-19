@@ -82,6 +82,12 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   use `transition:none` (and `-webkit-transition`). The first create has no
   class, so it keeps `.form-control[data-input]`: border-color and
   background-color only, at `180ms linear`. Approximations: none.
+- **2026-10-19 — section content padding reset inside a section group (working tree)** —
+  added `.section-group .section-content.no-padding, .section-group .section-content.padding-none`
+  immediately after `.section-group .section-title`, in both bundles. Same reset as
+  `.section-expandable .section-expandable-content.no-padding`: UsePadding=False
+  clears the content padding when the section sits in a group.
+  Mapping: `$token-scale-0` (0px) → `--space-none`. Approximations: none.
 
 ### Refresh log
 
