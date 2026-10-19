@@ -371,6 +371,7 @@
 				"--osui-accordion-item-border-radius",
 				"--osui-accordion-item-color",
 				"--osui-accordion-item-active-indicator-color",
+				"--osui-accordion-item-font-size",
 				"--osui-accordion-item-icon-color",
 				"--osui-accordion-item-title-hover-background",
 				"--osui-accordion-item-title-hover-border-color",
@@ -1677,6 +1678,7 @@
 			"cssClasses": {
 				"Calendar": "osui-datepicker-calendar",
 				"Pattern": "osui-datepicker",
+				"Redrawn": "osui-datepicker--redrawn",
 				"AccessibilityContainerInfo": "osui-datepicker-a11y",
 				"TodayBtn": "flatpickr-today-button"
 			},
