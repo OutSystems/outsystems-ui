@@ -50,11 +50,6 @@
 		background-color: var(--osui-list-item-background);
 		cursor: pointer;
 
-		// `:not(:active)` keeps this higher-specificity rule from masking the pressed state.
-		&:hover:not(.list-item-no-hover):not(.list-item-selected):not(:active) {
-			background-color: var(--osui-list-item-hover-background);
-		}
-
 		// Pressed state, on every device — replaces the legacy ripple animation.
 		&:active {
 			background-color: var(--osui-list-item-active-background);
@@ -66,6 +61,19 @@
 .layout-native {
 	.list-item {
 		padding: variables.$token-scale-400;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.list {
+		.list-item:hover {
+			// `:not(:active)` keeps this higher-specificity rule from masking the pressed state.
+			&:not(.list-item-no-hover):not(.list-item-selected):not(:active) {
+				background-color: var(--osui-list-item-hover-background);
+			}
+		}
 	}
 }
 
