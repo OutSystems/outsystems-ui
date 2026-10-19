@@ -56,20 +56,10 @@ html[data-uieditorversion^='1'] {
 
 		.app-menu {
 			&-content {
-				-servicestudio-align-items: flex-start;
 				-servicestudio-height: 100% !important;
 				-servicestudio-left: 0;
 				-servicestudio-position: relative;
 				-servicestudio-width: 100% !important;
-
-				& > * {
-					-servicestudio-align-items: flex-start;
-					-servicestudio-display: flex;
-				}
-
-				.app-login-info {
-					-servicestudio-display: flex;
-				}
 			}
 
 			&-links {
@@ -81,6 +71,41 @@ html[data-uieditorversion^='1'] {
 				& {
 					pointer-events: none !important;
 				}
+			}
+		}
+
+		// The drawer menu lays its children out as flex rows. The side layout's menu is
+		// the aside's own column (02-layout/_menu-layout-side.scss), where flex-start
+		// would shrink every child to its content instead of letting it span the menu,
+		// so it is excluded — same :not idiom as
+		// .desktop .layout:not(.layout-side) .app-menu-links in 02-layout/_menu-app-menu-links.scss.
+		// The first selector is the Menu block previewed on its own, outside any layout.
+		& > .app-menu-content,
+		.layout:not(.layout-side) .app-menu-content {
+			-servicestudio-align-items: flex-start;
+
+			& > * {
+				-servicestudio-align-items: flex-start;
+				-servicestudio-display: flex;
+			}
+
+			.app-login-info {
+				-servicestudio-display: flex;
+			}
+		}
+
+		// Side layout: the logo and the login info carry no width of their own
+		// (.app-menu-links does, from 02-layout/_menu-app-menu-links.scss), so pin them
+		// to the menu width for the logo's height and the login info's border-block-start
+		// to show.
+		&:not(.phone):not(.tablet) .layout-side .app-menu-content {
+			.header-logo {
+				-servicestudio-width: 100%;
+			}
+
+			.app-login-info {
+				-servicestudio-display: flex;
+				-servicestudio-width: 100%;
 			}
 		}
 	}

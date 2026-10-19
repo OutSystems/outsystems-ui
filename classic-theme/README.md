@@ -82,6 +82,13 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   use `transition:none` (and `-webkit-transition`). The first create has no
   class, so it keeps `.form-control[data-input]`: border-color and
   background-color only, at `180ms linear`. Approximations: none.
+- **2026-10-18 — ROU-13124 ChatMessage empty placeholders clipped in Service Studio (working tree)** —
+  added `.chat-photo > div:empty` and `.right .chat-photo > div:empty` (negative margin on the photo-gap side, min-height, min-width; the new theme is 48px wide with the same 16px offset because its avatar is 32px, not 40px) immediately after `.chat-photo` and
+  `.chat-message > div:empty` immediately after `.chat-message`, in both bundles. Each sets
+  only `-servicestudio-*` properties, so neither has any effect at runtime. The block's placeholders
+  carry no class, which is why the selectors are structural.
+  Mapping: `$token-scale-400` → `var(--space-base)` (inside `calc(-1 * …)`), `$token-scale-1400` → `56px` (min-width), `$token-scale-1600` → `64px` (min-height), `$token-scale-4000` → `160px` (literals, because
+  the old `--space-*` ladder stops at 48px). Approximations: none.
 - **2026-10-19 — section content padding reset inside a section group (working tree)** —
   added `.section-group .section-content.no-padding, .section-group .section-content.padding-none`
   immediately after `.section-group .section-title`, in both bundles. Same reset as
