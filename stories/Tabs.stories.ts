@@ -116,3 +116,38 @@ export const Default: Story = {
 		});
 	},
 };
+
+/**
+ * Vertical, header on the left. Header items round the corners facing away from the
+ * content (inline-start); the edge next to the content stays square (ROU-13149).
+ */
+export const VerticalLeft: Story = {
+	args: { orientation: 'vertical', verticalPosition: 'left' },
+	render: Default.render,
+};
+
+/** Vertical, header on the right. Header items round the inline-end corners (ROU-13149). */
+export const VerticalRight: Story = {
+	args: { orientation: 'vertical', verticalPosition: 'right' },
+	render: Default.render,
+};
+
+/** Vertical in RTL: the rounded corners mirror along with the header position (ROU-13149). */
+export const VerticalRtl: Story = {
+	args: { orientation: 'vertical', verticalPosition: 'left' },
+	decorators: [
+		(story) => {
+			const wrapper = document.createElement('div');
+			wrapper.className = 'is-rtl';
+			wrapper.setAttribute('dir', 'rtl');
+			const rendered = story();
+			if (typeof rendered === 'string') {
+				wrapper.innerHTML = rendered;
+			} else {
+				wrapper.appendChild(rendered as Node);
+			}
+			return wrapper;
+		},
+	],
+	render: Default.render,
+};
