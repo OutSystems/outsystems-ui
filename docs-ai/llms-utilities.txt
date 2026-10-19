@@ -56,9 +56,9 @@ Scope: a single token-based theme (light, plus generated dark mode: class os-dar
 - background-secondary → background-color: --color-secondary
 - background-primary-lightest → background-color: --token-bg-surface-default (#ffffff)
 - background-secondary-lightest → background-color: --token-bg-surface-default (#ffffff)
-- text-primary → color: --token-semantics-primary-base (#105cef)
+- text-primary → color: --color-primary
 - text-secondary → color: --color-text-subtle
-- text-primary-darker → color: --token-semantics-primary-base (#105cef)
+- text-primary-darker → color: --color-primary
 - text-secondary-darker → color: --color-text-subtle
 
 ## Colours · neutral (39 classes; src/scss/05-useful/_colors-neutral.scss)

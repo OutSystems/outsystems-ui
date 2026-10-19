@@ -22,8 +22,15 @@
 	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtlest-press};
 	--osui-submenu-item-color-disabled: var(--color-text-disabled);
 	--osui-submenu-header-color: var(--color-text);
+	// The header is a pill in every context (ROU-13132) — the same geometry and
+	// hover/open background it has inside the app header, not only there.
+	--osui-submenu-header-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-submenu-header-border-radius: #{variables.$token-border-radius-200};
+	--osui-submenu-header-padding-block: #{variables.$token-scale-200};
+	--osui-submenu-header-padding-inline: #{variables.$token-scale-300};
+	// Only paints text (the selected underline was dropped in ROU-13132); the name is
+	// kept because it is already part of the published CSS API.
 	--osui-submenu-active-border-color: var(--color-primary);
-	--osui-submenu-hover-border-color: var(--color-primary);
 	--osui-submenu-max-height: calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
@@ -55,8 +62,6 @@
 
 		.osui-submenu {
 			&__header {
-				border-block-end: variables.$token-border-size-050 solid var(--osui-submenu-active-border-color);
-
 				&__item {
 					&,
 					a {
@@ -102,12 +107,14 @@
 
 	&__header {
 		align-items: center;
-		border-block-end: variables.$token-border-size-050 solid transparent;
-		border-block-start: variables.$token-border-size-050 solid transparent;
+		align-self: center;
+		border-radius: var(--osui-submenu-header-border-radius);
 		display: flex;
-		padding-block: variables.$token-scale-0;
-		padding-inline: variables.$token-scale-200;
-		transition: all variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+		margin-block: 0;
+		margin-inline: variables.$token-scale-025;
+		padding-block: var(--osui-submenu-header-padding-block);
+		padding-inline: var(--osui-submenu-header-padding-inline);
+		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 
 		&__item {
 			align-items: center;
@@ -306,6 +313,8 @@
 
 	.osui-submenu__header {
 		border: none;
+		// The pill's side gutter would push the full-width side-menu row out of its column.
+		margin-inline: 0;
 		padding-block: variables.$token-scale-200;
 		padding-inline: variables.$token-scale-400;
 		width: 100%;
@@ -393,9 +402,19 @@
 			}
 		}
 
+		// Open keeps the hover background on the header, so the pill reads as the
+		// dropdown's anchor for as long as the panel is out.
+		&--is-open {
+			.osui-submenu__header {
+				background-color: var(--osui-submenu-header-hover-background);
+				color: var(--color-text);
+			}
+		}
+
 		&__header {
 			&:hover {
-				border-block-end: variables.$token-border-size-050 solid var(--osui-submenu-hover-border-color);
+				background-color: var(--osui-submenu-header-hover-background);
+				color: var(--color-text);
 			}
 
 			&__item {
@@ -418,30 +437,6 @@
 				}
 			}
 		}
-	}
-
-	// Pill style for horizontal nav
-	.app-menu-links .osui-submenu__header {
-		align-self: center;
-		border-block-end: none;
-		border-radius: variables.$token-border-radius-200;
-		border-block-start: none;
-		margin-block: 0;
-		margin-inline: variables.$token-scale-025;
-		padding-block: variables.$token-scale-200;
-		padding-inline: variables.$token-scale-300;
-		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
-	}
-
-	.app-menu-links .osui-submenu__header:hover,
-	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
-		background-color: variables.$token-bg-neutral-subtlest-hover;
-		border-radius: variables.$token-border-radius-200;
-		color: var(--color-text);
-	}
-
-	.app-menu-links .osui-submenu.active .osui-submenu__header {
-		border-block-end: none;
 	}
 
 	// Direct links in header navigation
@@ -480,10 +475,8 @@
 			.osui-submenu {
 				&__header {
 					&:hover {
-						background-color: variables.$token-bg-neutral-subtlest-hover;
-						border-block-end: none;
-						border-inline-start: none;
-						border-radius: variables.$token-border-radius-200;
+						background-color: var(--osui-submenu-header-hover-background);
+						border-radius: var(--osui-submenu-header-border-radius);
 					}
 				}
 			}
@@ -564,6 +557,8 @@
 
 		&__header {
 			border: none;
+			// The pill's side gutter would push the full-width stacked row out of its column.
+			margin-inline: 0;
 			padding-block: variables.$token-scale-200;
 			padding-inline: variables.$token-scale-400;
 
@@ -572,8 +567,8 @@
 			}
 
 			&:hover {
-				background-color: variables.$token-bg-neutral-subtlest-hover;
-				border-radius: variables.$token-border-radius-200;
+				background-color: var(--osui-submenu-header-hover-background);
+				border-radius: var(--osui-submenu-header-border-radius);
 				color: var(--color-text);
 			}
 		}
