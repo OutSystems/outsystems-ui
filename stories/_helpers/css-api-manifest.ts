@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-19T10:01:50.259Z',
+	generatedAt: '2026-10-19T14:48:17.007Z',
 	totals: {
-		properties: 612,
+		properties: 613,
 		components: 69,
 		categories: 9,
 	},
@@ -2047,6 +2047,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-accordion-item-content-color',
+								default: 'var(--color-text-subtle)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-text-subtle)',
 							},
 							{
 								name: '--osui-accordion-item-font-size',

@@ -370,6 +370,7 @@
 				"--osui-accordion-item-border-width",
 				"--osui-accordion-item-border-radius",
 				"--osui-accordion-item-color",
+				"--osui-accordion-item-content-color",
 				"--osui-accordion-item-active-indicator-color",
 				"--osui-accordion-item-font-size",
 				"--osui-accordion-item-icon-color",
