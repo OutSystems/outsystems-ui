@@ -64,6 +64,31 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `inset` appears nowhere in the snapshot, so the longhands match its compiled-output era.
   The equivalent `.osui-timepicker input[type=time]` block was deliberately **not** changed
   (TimePicker not reproduced; out of scope of the fix).
+- **2026-10-16 — DatePicker input width flicker (working tree)** — classic-only.
+  On `.form-control[data-input], .form-control[data-textarea]` in both bundles,
+  replaced `transition:all 180ms linear` with
+  `border-color 180ms linear, background-color 180ms linear` (and the `-webkit-`
+  prefix). Matches the new theme, where that selector never uses `transition:all`,
+  so a redrawn DatePicker input no longer animates width. Timing kept at
+  `180ms linear`. The leftover `.osui-datepicker input.flatpickr-input` override
+  in O11 was removed; it targeted the hidden input. Safari `transition:none`
+  is unchanged. Approximations: none.
+- **2026-10-16 — DatePicker redraw skips input transition (working tree)** — added
+  `.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input` and
+  `.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input + input`
+  immediately before `.safari input.flatpickr-input`, in both bundles. The class
+  is set in `prepareToAndRedraw`, so only a recreated input matches. The visible
+  field is the sibling after the hidden `.flatpickr-input`. Recreated inputs
+  use `transition:none` (and `-webkit-transition`). The first create has no
+  class, so it keeps `.form-control[data-input]`: border-color and
+  background-color only, at `180ms linear`. Approximations: none.
+- **2026-10-18 — ROU-13124 ChatMessage empty placeholders clipped in Service Studio (working tree)** —
+  added `.chat-photo > div:empty` and `.right .chat-photo > div:empty` (negative margin on the photo-gap side, min-height, min-width; the new theme is 48px wide with the same 16px offset because its avatar is 32px, not 40px) immediately after `.chat-photo` and
+  `.chat-message > div:empty` immediately after `.chat-message`, in both bundles. Each sets
+  only `-servicestudio-*` properties, so neither has any effect at runtime. The block's placeholders
+  carry no class, which is why the selectors are structural.
+  Mapping: `$token-scale-400` → `var(--space-base)` (inside `calc(-1 * …)`), `$token-scale-1400` → `56px` (min-width), `$token-scale-1600` → `64px` (min-height), `$token-scale-4000` → `160px` (literals, because
+  the old `--space-*` ladder stops at 48px). Approximations: none.
 
 ### Refresh log
 

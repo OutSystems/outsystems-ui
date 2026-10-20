@@ -364,6 +364,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @protected
 		 */
 		protected prepareToAndRedraw(): void {
+			// Present before the replacement input is created, so its width transition does not run.
+			OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+				this.selfElement,
+				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.Redrawn
+			);
 			this._setParentMinHeight();
 			this.redraw();
 		}

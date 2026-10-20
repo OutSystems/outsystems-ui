@@ -1,4 +1,4 @@
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Content - Chat Message */
 ////
@@ -39,6 +39,22 @@
 	&-photo {
 		margin-inline-end: variables.$token-space-400;
 
+		// Service Studio Preview
+		// Empty placeholders (unclassed div children) collapse and clip the editor's hint;
+		// give them room until content is added. The negative margin equals the photo gap, so the
+		// placeholder fills avatar plus gap and the message does not move when an avatar is dropped in.
+		& > div:empty {
+			-servicestudio-margin-right: calc(-1 * #{variables.$token-scale-400});
+			-servicestudio-min-height: variables.$token-scale-1600;
+			-servicestudio-min-width: variables.$token-scale-1200;
+		}
+
+		// The photo gap sits on the left when the message is displayed on the right.
+		.right & > div:empty {
+			-servicestudio-margin-left: calc(-1 * #{variables.$token-scale-400});
+			-servicestudio-margin-right: 0;
+		}
+
 		img {
 			border-radius: var(--border-radius-rounded);
 			height: variables.$token-scale-800;
@@ -55,7 +71,12 @@
 		max-width: 600px;
 		padding: variables.$token-space-300;
 		position: relative;
-		word-break: break-word;
+		overflow-wrap: anywhere;
+
+		// Service Studio Preview — see .chat-photo above
+		& > div:empty {
+			-servicestudio-min-width: variables.$token-scale-4000;
+		}
 
 		&-status {
 			color: var(--osui-chat-message-status-color);

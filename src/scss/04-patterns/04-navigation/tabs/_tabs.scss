@@ -13,8 +13,8 @@
 	--osui-tabs-header-gap: #{variables.$token-space-800}; // horizontal only; Justified stretches instead
 	--osui-tabs-header-item-color: var(--color-text-subtlest);
 	--osui-tabs-header-item-font-size: #{variables.$token-font-size-350};
-	--osui-tabs-header-item-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg})
-		var(--border-radius-lg, #{variables.$token-shape-soft-lg}) 0 0;
+	--osui-tabs-header-item-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	--osui-tabs-header-item-border-radius: var(--osui-tabs-header-item-radius) var(--osui-tabs-header-item-radius) 0 0; // horizontal only; vertical rounds the side facing away from the content
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-tabs-header-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-tabs-header-item-color-active: #{variables.$token-text-select};
@@ -41,6 +41,9 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
+					border-radius: 0;
+					border-end-end-radius: var(--osui-tabs-header-item-radius);
+					border-start-end-radius: var(--osui-tabs-header-item-radius);
 					padding-block: variables.$token-space-200;
 					padding-inline-end: variables.$token-space-200;
 					padding-inline-start: variables.$token-space-400;
@@ -63,6 +66,9 @@
 
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
+					border-radius: 0;
+					border-end-start-radius: var(--osui-tabs-header-item-radius);
+					border-start-start-radius: var(--osui-tabs-header-item-radius);
 					justify-content: flex-start;
 					padding-block: variables.$token-space-200;
 					padding-inline-end: variables.$token-space-400;

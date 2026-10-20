@@ -39,10 +39,10 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-16T10:57:47.093Z',
+	generatedAt: '2026-10-19T14:48:17.007Z',
 	totals: {
-		properties: 619,
-		components: 70,
+		properties: 613,
+		components: 69,
 		categories: 9,
 	},
 	categories: [
@@ -2086,10 +2086,24 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-accordion-item-color',
+								default: 'var(--color-text)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-accordion-item-content-color',
 								default: 'var(--color-text-subtle)',
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-subtle)',
+							},
+							{
+								name: '--osui-accordion-item-font-size',
+								default: '#{$token-font-size-350}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-font-size-350}',
 							},
 							{
 								name: '--osui-accordion-item-icon-color',
@@ -3673,10 +3687,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-datepicker-time-focus-color',
-								default: '#{$token-semantics-primary-base}',
+								default: 'var(--color-primary)',
 								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-semantics-primary-base}',
+								chain: 'theme-role',
+								hint: 'var(--color-primary)',
 							},
 							{
 								name: '--osui-datepicker-time-height',
@@ -4809,6 +4823,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-primary)',
 							},
 							{
+								name: '--osui-submenu-header-border-radius',
+								default: '#{$token-border-radius-200}',
+								kind: 'border',
+								chain: 'token',
+								hint: '#{$token-border-radius-200}',
+							},
+							{
 								name: '--osui-submenu-header-color',
 								default: 'var(--color-text)',
 								kind: 'color',
@@ -4816,11 +4837,25 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-submenu-hover-border-color',
-								default: 'var(--color-primary)',
+								name: '--osui-submenu-header-hover-background',
+								default: '#{$token-bg-neutral-subtlest-hover}',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary)',
+								chain: 'token',
+								hint: '#{$token-bg-neutral-subtlest-hover}',
+							},
+							{
+								name: '--osui-submenu-header-padding-block',
+								default: '#{$token-scale-200}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-200}',
+							},
+							{
+								name: '--osui-submenu-header-padding-inline',
+								default: '#{$token-scale-300}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-300}',
 							},
 							{
 								name: '--osui-submenu-item-border-radius',

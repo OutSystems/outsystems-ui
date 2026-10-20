@@ -2328,8 +2328,8 @@ body .app-menu-content .app-menu-links{
   border-radius:var(--border-radius-soft);
   color:var(--text-color-neutral-9, var(--color-neutral-9));
   font-size:var(--font-size-s);
-  -webkit-transition:all 180ms linear;
-  transition:all 180ms linear;
+  -webkit-transition:border-color 180ms linear,background-color 180ms linear;
+  transition:border-color 180ms linear,background-color 180ms linear;
 }
 .form-control[data-input]:hover, .form-control[data-textarea]:hover{
   border:var(--border-size-s) solid var(--border-color-neutral-6, var(--color-neutral-6));
@@ -6957,6 +6957,15 @@ span.flatpickr-weekday{
 .chat-photo{
   margin-right:var(--space-base);
 }
+.chat-photo > div:empty{
+  -servicestudio-margin-right:calc(-1 * var(--space-base));
+  -servicestudio-min-height:64px;
+  -servicestudio-min-width:56px;
+}
+.right .chat-photo > div:empty{
+  -servicestudio-margin-left:calc(-1 * var(--space-base));
+  -servicestudio-margin-right:0;
+}
 .chat-photo img{
   border-radius:var(--border-radius-circle);
   height:40px;
@@ -6978,6 +6987,9 @@ span.flatpickr-weekday{
   padding:var(--space-base);
   position:relative;
   word-break:break-word;
+}
+.chat-message > div:empty{
+  -servicestudio-min-width:160px;
 }
 .chat-message-status{
   display:block;
@@ -8836,6 +8848,11 @@ span.flatpickr-weekday{
 }
 .flatpickr-today-button a:hover{
   text-decoration:none;
+}
+.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input,
+.osui-datepicker.osui-datepicker--redrawn input.flatpickr-input + input{
+  -webkit-transition:none;
+  transition:none;
 }
 .safari input.flatpickr-input,
 .safari input.flatpickr-input + input{
