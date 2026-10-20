@@ -411,7 +411,7 @@ API (OutSystems.OSUI.Patterns.ProgressAPI):
 CSS classes: osui-progress-circle__container__progress-path svg-wrapper osui-progress-circle__container__trail-path animate-entrance animate-progress-change osui-progress-bar__container osui-progress-bar__content osui-progress-circle__content
 Configs schema: schema/configs/Progress.schema.json
 Docs: numbers/progress_bar · numbers/progress_circle
-[runtime-only] Markup skeleton (from stories/Progress.stories.ts): <div class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="osui-progress-circle__container"><div class="svg-wrapper"><svg><defs></defs><circle class="osui-progress-circle__container__trail-path"></circle><circle class="osui-progress-circle__container__progress-path"></circle></svg></div></div><div class="osui-progress-circle__content" id="-label"></div></div>
+[runtime-only] Markup skeleton (from stories/Progress.stories.ts): <div class="osui-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="osui-progress-bar__container"><div class="osui-progress-bar__value"></div></div><div class="osui-progress-bar__content" id="-label"></div></div>
 
 ## RangeSlider
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
