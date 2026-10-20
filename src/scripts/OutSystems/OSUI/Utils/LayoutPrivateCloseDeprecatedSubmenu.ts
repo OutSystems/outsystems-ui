@@ -21,7 +21,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			if (this._checkMenuLinks) {
 				// Store the deprecated submenu items
 				this._deprecatedSubmenuItems = this._checkMenuLinks.querySelectorAll(
-					OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.GlobalEnum.CssClassElements.DeprecatedSubmenu
+					OSFramework.OSUI.Constants.Dot + 'submenu'
 				);
 			}
 		}
