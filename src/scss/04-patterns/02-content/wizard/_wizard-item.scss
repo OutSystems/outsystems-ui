@@ -27,7 +27,7 @@
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-wizard-label-line-height: #{variables.$token-font-line-height-500};
 	--osui-wizard-active-color: var(--color-primary);
-	--osui-wizard-active-icon-color: #{variables.$token-text-subtle};
+	--osui-wizard-active-icon-color: var(--osui-wizard-active-color);
 	--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
 	--osui-wizard-past-background: var(--color-primary);
 	--osui-wizard-past-color: var(--color-text-inverse);
