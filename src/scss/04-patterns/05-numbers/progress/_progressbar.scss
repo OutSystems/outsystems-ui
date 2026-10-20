@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Numbers - ProgressBar */
 ////
@@ -98,6 +98,14 @@
 			& {
 				-servicestudio-text-align: center;
 			}
+		}
+	}
+}
+
+.has-accessible-features {
+	.osui-progress-bar {
+		&:focus-visible {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
 		}
 	}
 }

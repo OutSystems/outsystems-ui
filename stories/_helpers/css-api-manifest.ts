@@ -68,6 +68,34 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--layer-global-off-canvas)',
 							},
 							{
+								name: '--osui-focus-inner-shadow-gap',
+								default: '#{$token-scale-0}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-0}',
+							},
+							{
+								name: '--osui-focus-shadow-color',
+								default: '#{$token-border-focus-default}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-border-focus-default}',
+							},
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-0}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-0}',
+							},
+							{
+								name: '--osui-focus-shadow-width',
+								default: '#{$token-border-size-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-border-size-050}',
+							},
+							{
 								name: '--osui-menu-layer',
 								default: 'calc(var(--layer-global-navigation) + var(--layer-local-tier-2))',
 								kind: 'other',
@@ -715,27 +743,6 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-light)',
-							},
-							{
-								name: '--osui-btn-focus-shadow-color',
-								default: '#{$token-border-focus-default}',
-								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-border-focus-default}',
-							},
-							{
-								name: '--osui-btn-focus-shadow-gap',
-								default: '#{$token-scale-050}',
-								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-scale-050}',
-							},
-							{
-								name: '--osui-btn-focus-shadow-width',
-								default: '#{$token-border-size-050}',
-								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-border-size-050}',
 							},
 							{
 								name: '--osui-btn-hover-background',
@@ -1630,6 +1637,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 						],
 					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
 				],
 				},
 				{
@@ -1710,6 +1729,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-scale-1000}',
+							},
+						],
+					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
 							},
 						],
 					},
@@ -1931,6 +1962,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'other',
 								chain: 'token',
 								hint: '#{$token-transition-curve-quick}',
+							},
+						],
+					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-inner-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
 							},
 						],
 					},
@@ -2168,6 +2211,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 						],
 					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
 				],
 				},
 				{
@@ -2391,6 +2446,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'spacing',
 								chain: 'literal',
 								hint: '100%',
+							},
+						],
+					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
 							},
 						],
 					},
@@ -2794,6 +2861,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 						],
 					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
 				],
 				},
 			],
@@ -2892,6 +2971,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 						],
 					},
 						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-inner-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
+						{
 							selector: '.os-high-contrast',
 							properties: [
 							{
@@ -2976,18 +3067,6 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-border-input-hover)',
-							},
-						],
-					},
-						{
-							selector: '.has-accessible-features',
-							properties: [
-							{
-								name: '--osui-animated-label-focus-shadow',
-								default: '0 0 0 #{$token-border-size-075} var(--color-focus-outer)',
-								kind: 'color',
-								chain: 'literal',
-								hint: '0 0 0 #{$token-border-size-075} var(--color-focus-outer)',
 							},
 						],
 					},
@@ -3362,10 +3441,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-outline-size',
-								default: '#{$token-border-size-075}',
+								default: 'calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width))',
 								kind: 'spacing',
-								chain: 'token',
-								hint: '#{$token-border-size-075}',
+								chain: 'literal',
+								hint: 'calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width))',
 							},
 						],
 					},
@@ -3785,6 +3864,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 						],
 					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
 				],
 				},
 				{
@@ -4144,6 +4235,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'border',
 								chain: 'theme-role',
 								hint: 'var(--border-radius-rounded)',
+							},
+						],
+					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
 							},
 						],
 					},
@@ -4597,10 +4700,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-section-index-active-indicator-offset',
-								default: 'calc(var(--osui-section-index-border-width, #{$token-border-size-025}) / 2)',
+								default: 'calc( var(--osui-section-index-border-width, #{$token-border-size-025}) / 2 )',
 								kind: 'spacing',
 								chain: 'literal',
-								hint: 'calc(var(--osui-section-index-border-width, #{$token-border-size-025}) / 2)',
+								hint: 'calc( var(--osui-section-index-border-width, #{$token-border-size-025}) / 2 )',
 							},
 							{
 								name: '--osui-section-index-active-indicator-width',
@@ -5117,6 +5220,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 				],
 				},
 				{
+					name: 'Progressbar',
+					slug: 'patterns-numbers-progressbar',
+					file: 'src/scss/04-patterns/05-numbers/progress/_progressbar.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
+							},
+						],
+					},
+				],
+				},
+				{
 					name: 'Rating',
 					slug: 'patterns-numbers-rating',
 					file: 'src/scss/04-patterns/05-numbers/rating/_rating.scss',
@@ -5152,6 +5275,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-primary)',
+							},
+						],
+					},
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-scale-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-scale-050}',
 							},
 						],
 					},

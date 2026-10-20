@@ -1,3 +1,4 @@
+@use '../00-abstract/index' as *;
 @use '../tokens/variables';
 
 /* Widgets - Button */
@@ -38,10 +39,6 @@
 	--osui-btn-error-background: #{variables.$token-bg-danger-base-default};
 	--osui-btn-error-border-color: #{variables.$token-bg-danger-base-default};
 	--osui-btn-error-color: var(--color-text-light);
-	// Focus state
-	--osui-btn-focus-shadow-width: #{variables.$token-border-size-050};
-	--osui-btn-focus-shadow-gap: #{variables.$token-scale-050};
-	--osui-btn-focus-shadow-color: #{variables.$token-border-focus-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -72,14 +69,6 @@
 	// variants below (primary/success/error) additionally track it to their fill.
 	&:active {
 		background-color: var(--osui-btn-active-background);
-	}
-
-	&:focus-visible {
-		box-shadow:
-			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
-			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
-				var(--osui-btn-focus-shadow-color);
-		outline: none;
 	}
 
 	& > span:empty {
@@ -281,10 +270,7 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		box-shadow:
-			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
-			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
-				var(--osui-btn-focus-shadow-color);
+		border-color: var(--color-background-surface);
 	}
 }
 

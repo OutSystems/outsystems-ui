@@ -1,5 +1,5 @@
 @use '../../00-abstract/index' as *;
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Interaction - Action Sheet */
 ////
@@ -127,12 +127,23 @@
 			@include apply-typography(variables.$token-body-action-sm);
 
 			border: none;
+			border-radius: inherit;
 			margin-block-start: 1px;
 			width: 100%;
 		}
 
-		&:first-child .btn {
-			margin-block-start: 0;
+		&:first-child {
+			border-top-left-radius: var(--osui-action-sheet-border-radius);
+			border-top-right-radius: var(--osui-action-sheet-border-radius);
+
+			.btn {
+				margin-block-start: 0;
+			}
+		}
+
+		&:not(:empty):not(:has(~ .action-sheet-actions:not(:empty))) {
+			border-bottom-left-radius: var(--osui-action-sheet-border-radius);
+			border-bottom-right-radius: var(--osui-action-sheet-border-radius);
 		}
 	}
 
@@ -190,6 +201,23 @@
 	}
 }
 
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.action-sheet-actions,
+	.action-sheet-cancel {
+		& > .btn:focus-visible {
+			--osui-focus-inner-shadow-gap: #{variables.$token-scale-050};
+
+			@include a11y-focus-shadow($isInner: true);
+
+			border: variables.$token-border-size-025 solid var(--color-background-surface);
+			position: relative;
+			z-index: var(--layer-local-tier-1);
+		}
+	}
+}
+
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
@@ -204,7 +232,7 @@
 		position: relative;
 		z-index: var(--osui-action-sheet-actions-layer);
 
-		&:has(.btn:focus) {
+		&:has(.btn:focus-visible) {
 			z-index: calc(var(--osui-action-sheet-actions-layer) + var(--layer-local-tier-1));
 		}
 	}

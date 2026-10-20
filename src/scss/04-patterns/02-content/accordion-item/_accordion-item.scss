@@ -1,3 +1,4 @@
+@use '../../../../scss/00-abstract/_mixins.scss' as *;
 @use '../../../tokens/variables';
 
 /* Patterns - Content - Accordion Item */
@@ -119,13 +120,6 @@
 		a {
 			text-decoration: underline;
 			text-underline-offset: 3px; // no $token-* available for underline offset
-		}
-
-		a:focus {
-			background-color: var(--color-focus-outer);
-			box-shadow: none;
-			outline: none;
-			text-decoration-color: var(--color-focus-outer);
 		}
 
 		&__placeholder {
@@ -307,16 +301,12 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.osui-accordion-item {
-		&__title,
-		&__content {
-			&:focus {
-				box-shadow: none;
-			}
+	.osui-accordion-item__title {
+		&:focus-visible {
+			position: relative;
+			z-index: var(--layer-local-tier-1);
 
-			&:focus-visible {
-				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
-			}
+			@include a11y-focus-shadow;
 		}
 	}
 }
