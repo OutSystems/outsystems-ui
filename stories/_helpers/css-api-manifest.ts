@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-19T14:23:38.139Z',
+	generatedAt: '2026-10-20T09:44:33.749Z',
 	totals: {
-		properties: 612,
+		properties: 615,
 		components: 69,
 		categories: 9,
 	},
@@ -1899,10 +1899,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-bottom-sheet-handler-background',
-								default: '#{$token-bg-neutral-subtle-default}',
+								default: '#{$token-bg-neutral-base-default}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-bg-neutral-subtle-default}',
+								hint: '#{$token-bg-neutral-base-default}',
 							},
 							{
 								name: '--osui-bottom-sheet-handler-width',
@@ -2043,10 +2043,24 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-accordion-item-color',
+								default: 'var(--color-text)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-accordion-item-content-color',
 								default: 'var(--color-text-subtle)',
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-subtle)',
+							},
+							{
+								name: '--osui-accordion-item-font-size',
+								default: '#{$token-font-size-350}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-font-size-350}',
 							},
 							{
 								name: '--osui-accordion-item-icon-color',
@@ -4872,10 +4886,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-header-item-border-radius',
-								default: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
+								default: 'var(--osui-tabs-header-item-radius) var(--osui-tabs-header-item-radius) 0 0',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
+								hint: 'var(--osui-tabs-header-item-radius) var(--osui-tabs-header-item-radius) 0 0',
 							},
 							{
 								name: '--osui-tabs-header-item-color',
@@ -4932,6 +4946,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-font-line-height-500}',
+							},
+							{
+								name: '--osui-tabs-header-item-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-tabs-indicator-color',

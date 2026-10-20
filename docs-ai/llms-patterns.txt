@@ -150,7 +150,7 @@ CSS API: --osui-radio-size --osui-radio-background --osui-radio-border-color --o
 [runtime-only] Skeleton (from stories/RangeSlider.stories.ts): <style> .osui-rs-matrix { align-items: center; display: grid; gap: 24px 40px; grid-template-columns: max-content repeat(2, minmax(240px, 1fr)); } .osui-rs-matrix__head { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; } /* Room for the floating label above and the pips below, which both sit outside the track's own box. */ .osui-rs-cell { padding: 28px 8px 8px; } </style><div class="osui-rs-matrix"><div></div><div class="osui-rs-matrix__head">Default</div><div class="osui-rs-matrix__head">Disabled</div><div class="osui-rs-matrix__head"></div><div class="osui-rs-cell"><div class="osui-range-slider"><div class="osui-range-slider__provider"></div></div></div></div>
 
 ### scrollable-area (src/scss/04-patterns/03-interaction/_scrollable-area.scss)
-[runtime-only] Skeleton (from stories/ScrollableArea.stories.ts): <div class="card">Item </div>
+[runtime-only] Skeleton (from stories/ScrollableArea.stories.ts): <div><p class="text-neutral-7">ScrollbarStyle = </p><div data-block="Interaction.ScrollableArea"><div class="scrollable-area-content "></div></div></div>
 Docs: interaction/scrollable_area
 
 ### section (src/scss/04-patterns/02-content/_section.scss)
