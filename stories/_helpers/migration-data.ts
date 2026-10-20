@@ -1432,7 +1432,7 @@ export const MIGRATION_DATA = {
 			retired: 105,
 			revalued: 52,
 			unchanged: 44,
-			added: 32,
+			added: 36,
 			hooksRetired: 233,
 			catalogEntries: 26,
 			recipes: 11,

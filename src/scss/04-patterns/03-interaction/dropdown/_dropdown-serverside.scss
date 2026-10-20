@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../00-abstract/_mixins.scss' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - DropdownServerSide */
 ////
@@ -120,14 +121,6 @@ $balloonMobileTopMargin: 5vh;
 			// Hover — border darkens (matches Figma border/input/hover)
 			&:hover {
 				border-color: var(--osui-dropdown-ss-hover-border-color);
-			}
-
-			// Focus ring
-			&:focus,
-			&:focus-visible {
-				border-color: var(--osui-dropdown-ss-focus-border-color);
-				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
-				outline: none;
 			}
 
 			// Service Studio Preview
@@ -350,9 +343,8 @@ $balloonMobileTopMargin: 5vh;
 			border-color: var(--color-border-input);
 
 			&-search-wrapper {
-				&:focus-within {
-					outline: variables.$token-border-size-075 solid var(--color-focus-outer);
-					outline-offset: -(variables.$token-border-size-075);
+				&:focus-within:has(:focus-visible) {
+					@include a11y-focus-shadow($isInner: true);
 				}
 			}
 
@@ -363,13 +355,13 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-content {
-				--osui-outline-size: #{variables.$token-border-size-075};
+				--osui-outline-size: calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width));
 
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-border-input);
 				}
 
-				&:focus {
+				&:focus-visible {
 					// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
 					box-shadow: none;
 
@@ -378,7 +370,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: var(--color-focus-outer);
+						background-color: var(--osui-focus-shadow-color);
 						content: '';
 						display: block;
 					}
@@ -427,7 +419,7 @@ $balloonMobileTopMargin: 5vh;
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
-	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus {
+	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus-visible {
 		--osui-outline-size: 0;
 
 		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
@@ -539,7 +531,10 @@ $balloonMobileTopMargin: 5vh;
 
 			&-container {
 				background: variables.$token-bg-surface-default;
-				border-radius: var(--osui-dropdown-ss-popup-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
+				border-radius: var(
+					--osui-dropdown-ss-popup-border-radius,
+					var(--border-radius-lg, #{variables.$token-shape-soft-lg})
+				);
 				box-shadow: variables.$token-elevation-4;
 				display: flex;
 				flex-direction: column;

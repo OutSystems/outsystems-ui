@@ -1,4 +1,5 @@
-@use "../tokens/variables";
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
 
 /* Widgets - Popover */
 ////
@@ -19,11 +20,11 @@
 
 		&-bottom {
 			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-popover-background:     var(--color-background-panel);
-			--osui-popover-color:          var(--color-text);
-			--osui-popover-border-radius:  var(--border-radius-xl, #{variables.$token-shape-soft-xl});
-			--osui-popover-shadow:         #{variables.$token-elevation-3};
-			--osui-popover-max-width:      350px;
+			--osui-popover-background: var(--color-background-panel);
+			--osui-popover-color: var(--color-text);
+			--osui-popover-border-radius: var(--border-radius-xl, #{variables.$token-shape-soft-xl});
+			--osui-popover-shadow: #{variables.$token-elevation-3};
+			--osui-popover-max-width: 350px;
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
@@ -45,6 +46,20 @@
 		& > .popover {
 			&-top {
 				display: inline;
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	[data-popover] {
+		& > .popover {
+			&-top {
+				&:focus-visible {
+					@include a11y-focus-shadow;
+				}
 			}
 		}
 	}

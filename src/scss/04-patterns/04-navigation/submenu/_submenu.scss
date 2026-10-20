@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Navigation - Submenu */
 ////
@@ -649,7 +649,6 @@
 .is-rtl {
 	.layout-side {
 		.osui-submenu {
-
 			&.active .osui-submenu__header {
 				background-color: transparent;
 			}
@@ -669,7 +668,7 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.osui-submenu:focus-within {
+	.osui-submenu:focus-visible:focus-within {
 		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		outline: 0;
 	}
@@ -679,7 +678,7 @@
 .tablet,
 .phone {
 	.has-accessible-features {
-		.osui-submenu:focus-within {
+		.osui-submenu:focus-visible:focus-within {
 			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 			outline: 0;
 		}
