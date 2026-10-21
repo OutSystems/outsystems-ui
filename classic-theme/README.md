@@ -92,6 +92,13 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
 
 ### Refresh log
 
+- **2026-10-20 — ROU-13098 ODC-only removal of the "6.8 Deprecated Patterns" section (working tree)** —
+  removed, from `ODC.OutSystemsUI.css` only: the whole `6.8. Deprecated Patterns` block (22 patterns,
+  6.8.1–6.8.22), its `6.8.*` entries in the table of contents, and the `.osui-deprecated:before`
+  Service Studio preview rule. Mirrors ROU-13057 (`41653843c`), which omits deprecated code from the ODC build.
+  O11 snapshot is untouched (O11 still imports the deprecated preview). Replay: delete the same blocks after rebuilding.
+  Not removed in this entry: `.osui-deprecated` selector lists elsewhere in the same file (excluder lists and
+  a carousel selector), which are handled separately. Mapping: none (removal only).
 - **2026-09-04 — refreshed d52518b15 → a67fcf378** (12 dev commits, v2.30.0 → v2.30.1).
   Both hand-applied ports above were replayed and verified: the refreshed snapshot now
   differs from a clean `dev` build by exactly those two blocks and nothing else.
