@@ -89,6 +89,12 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   carry no class, which is why the selectors are structural.
   Mapping: `$token-scale-400` → `var(--space-base)` (inside `calc(-1 * …)`), `$token-scale-1400` → `56px` (min-width), `$token-scale-1600` → `64px` (min-height), `$token-scale-4000` → `160px` (literals, because
   the old `--space-*` ladder stops at 48px). Approximations: none.
+- **2026-10-19 — section content padding reset inside a section group (working tree)** —
+  added `.section-group .section-content.no-padding, .section-group .section-content.padding-none`
+  immediately after `.section-group .section-title`, in both bundles. Same reset as
+  `.section-expandable .section-expandable-content.no-padding`: UsePadding=False
+  clears the content padding when the section sits in a group.
+  Mapping: `$token-scale-0` (0px) → `--space-none`. Approximations: none.
 
 ### Refresh log
 

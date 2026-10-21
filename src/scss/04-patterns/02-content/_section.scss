@@ -36,6 +36,10 @@
 		line-height: var(--osui-section-content-line-height);
 		padding-block: variables.$token-space-200 variables.$token-scale-0;
 		padding-inline: variables.$token-scale-0;
+
+		&.no-padding {
+			padding: variables.$token-scale-0;
+		}
 	}
 
 	&-group {

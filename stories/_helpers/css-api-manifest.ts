@@ -39,10 +39,10 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-19T14:48:17.007Z',
+	generatedAt: '2026-10-20T16:19:21.926Z',
 	totals: {
-		properties: 613,
-		components: 69,
+		properties: 627,
+		components: 70,
 		categories: 9,
 	},
 	categories: [
@@ -1098,10 +1098,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-list-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-dropdown-list-border-color',
@@ -1471,10 +1471,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-popover-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-popover-border-radius',
@@ -1499,10 +1499,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-popover-shadow',
-								default: '#{$token-elevation-2}',
+								default: '#{$token-elevation-3}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-2}',
+								hint: '#{$token-elevation-3}',
 							},
 						],
 					},
@@ -1519,10 +1519,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-popup-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-popup-border-color',
@@ -1916,10 +1916,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-bottom-sheet-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-bottom-sheet-draggable-area',
@@ -1930,10 +1930,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-bottom-sheet-handler-background',
-								default: '#{$token-bg-neutral-subtle-default}',
+								default: '#{$token-bg-neutral-base-default}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-bg-neutral-subtle-default}',
+								hint: '#{$token-bg-neutral-base-default}',
 							},
 							{
 								name: '--osui-bottom-sheet-handler-width',
@@ -1951,10 +1951,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-bottom-sheet-shadow',
-								default: '#{$token-elevation-3}',
+								default: '#{$token-elevation-4}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-3}',
+								hint: '#{$token-elevation-4}',
 							},
 							{
 								name: '--osui-bottom-sheet-transition-function',
@@ -2893,10 +2893,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-action-sheet-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-action-sheet-border-radius',
@@ -2935,10 +2935,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-action-sheet-shadow',
-								default: '#{$token-elevation-3}',
+								default: '#{$token-elevation-4}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-3}',
+								hint: '#{$token-elevation-4}',
 							},
 							{
 								name: '--osui-btn-background',
@@ -3283,10 +3283,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-list-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 						],
 					},
@@ -3560,10 +3560,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-list-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-dropdown-tag-color',
@@ -3619,6 +3619,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 						{
 							selector: '.flatpickr-calendar',
 							properties: [
+							{
+								name: '--osui-flatpickr-background',
+								default: 'var(--color-background-panel)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-background-panel)',
+							},
 							{
 								name: '--osui-flatpickr-layer',
 								default: 'var(--layer-global-elevated)',
@@ -3687,10 +3694,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-datepicker-time-focus-color',
-								default: 'var(--color-primary)',
+								default: '#{$token-semantics-primary-base}',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary)',
+								chain: 'token',
+								hint: '#{$token-semantics-primary-base}',
 							},
 							{
 								name: '--osui-datepicker-time-height',
@@ -3964,10 +3971,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-notification-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-raised)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-raised)',
 							},
 							{
 								name: '--osui-notification-border-radius',
@@ -4006,10 +4013,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-notification-shadow',
-								default: '#{$token-elevation-3}',
+								default: '#{$token-elevation-2}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-3}',
+								hint: '#{$token-elevation-2}',
 							},
 						],
 					},
@@ -4373,10 +4380,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-background',
-								default: '#{$token-bg-surface-default}',
+								default: 'var(--color-background-raised)',
 								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-bg-surface-default}',
+								chain: 'theme-role',
+								hint: 'var(--color-background-raised)',
 							},
 							{
 								name: '--osui-tooltip-background-color',
@@ -4429,10 +4436,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-shadow',
-								default: '#{$token-elevation-3}',
+								default: '#{$token-elevation-2}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-3}',
+								hint: '#{$token-elevation-2}',
 							},
 						],
 					},
@@ -4886,6 +4893,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: '#{$token-font-size-350}',
 							},
 							{
+								name: '--osui-submenu-item-hover-background',
+								default: '#{$token-bg-neutral-subtle-hover}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-bg-neutral-subtle-hover}',
+							},
+							{
 								name: '--osui-submenu-item-line-height',
 								default: '#{$token-font-line-height-500}',
 								kind: 'spacing',
@@ -4894,10 +4908,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-submenu-item-pressed-background',
-								default: '#{$token-bg-neutral-subtlest-press}',
+								default: '#{$token-bg-neutral-subtle-press}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-bg-neutral-subtlest-press}',
+								hint: '#{$token-bg-neutral-subtle-press}',
 							},
 							{
 								name: '--osui-submenu-item-selected-background',
@@ -4908,10 +4922,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-submenu-items-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
 							},
 							{
 								name: '--osui-submenu-items-border-color',
@@ -4948,10 +4962,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-submenu-items-background',
-								default: 'var(--color-background-sidemenu, #{$token-bg-surface-default})',
+								default: 'var(--color-background-sidemenu, #{$token-bg-surface-elevation-3})',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-sidemenu, #{$token-bg-surface-default})',
+								hint: 'var(--color-background-sidemenu, #{$token-bg-surface-elevation-3})',
 							},
 						],
 					},
@@ -4982,10 +4996,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-header-item-border-radius',
-								default: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
+								default: 'var(--osui-tabs-header-item-radius) var(--osui-tabs-header-item-radius) 0 0',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
+								hint: 'var(--osui-tabs-header-item-radius) var(--osui-tabs-header-item-radius) 0 0',
 							},
 							{
 								name: '--osui-tabs-header-item-color',
@@ -5042,6 +5056,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-font-line-height-500}',
+							},
+							{
+								name: '--osui-tabs-header-item-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-tabs-indicator-color',
