@@ -142,3 +142,52 @@ export const MarkerEmpty: Story = {
 	name: 'Marker: empty (dot)',
 	render: (args) => renderWizard(args, EMPTY_STEPS),
 };
+
+/** Label under the marker, then above it (`ReverseLabelPosition`). */
+export const ReverseLabel: Story = {
+	name: 'Reverse label',
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const rows = [
+			{ label: 'Default', reverse: false },
+			{ label: 'Reversed', reverse: true },
+		] as const;
+		const instances = rows.map((row) => ({
+			...row,
+			wizId: uid('wizard'),
+			itemIds: STEPS.map(() => uid('wizard-item')),
+		}));
+		const board = document.createElement('div');
+		board.style.cssText = 'display:flex;flex-direction:column;gap:32px;';
+		for (const instance of instances) {
+			const item = document.createElement('div');
+			const label = document.createElement('div');
+			label.textContent = instance.label;
+			label.style.cssText =
+				'color:var(--color-text-subtle);font-family:monospace;font-size:0.8125rem;margin-bottom:8px;';
+			item.append(label);
+			item.insertAdjacentHTML(
+				'beforeend',
+				`<div ${osuiRoot(instance.wizId)} class="osui-wizard"><div class="list">${instance.itemIds
+					.map((id, i) => itemMarkup(id, STEPS[i][1], STEPS[i][2]))
+					.join('')}</div></div>`
+			);
+			board.append(item);
+		}
+		return renderPattern(board.outerHTML, (_root, register) => {
+			const P = Patterns();
+			for (const instance of instances) {
+				P.WizardAPI.Create(instance.wizId, cfg({ IsVertical: false, StepBehavior: 'ProgressOnly' }));
+				instance.itemIds.forEach((id, i) =>
+					P.WizardItemAPI.Create(id, cfg({ Status: STEPS[i][0], ReverseLabelPosition: instance.reverse }))
+				);
+				P.WizardAPI.Initialize(instance.wizId);
+				instance.itemIds.forEach((id) => P.WizardItemAPI.Initialize(id));
+				register(() => {
+					instance.itemIds.forEach((id) => P.WizardItemAPI.Dispose?.(id));
+					P.WizardAPI.Dispose?.(instance.wizId);
+				});
+			}
+		});
+	},
+};
