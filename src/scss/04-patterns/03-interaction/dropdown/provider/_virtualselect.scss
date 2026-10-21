@@ -1,3 +1,4 @@
+@use '../../../../00-abstract/_mixins.scss' as *;
 @use '../../../../tokens/variables';
 
 // Set the transform values to checkBox Checked Icon
@@ -402,7 +403,13 @@
 
 // Bottom part - Parent wrapper Options container
 .pop-comp-wrapper {
+	// The bundled popover library paints `color: #000` and `background-color: #fff` here. The
+	// dropbox it hosts is themed and rounded, so the white reads as light wedges in its corners
+	// under `.os-dark-theme`, and the black is inherited by everything the dropbox does not
+	// colour itself — typed search text, the toggle-all label, the no-options/no-results messages.
+	background-color: transparent;
 	box-shadow: none;
+	color: var(--color-text);
 }
 
 // Wrapper options container
@@ -429,7 +436,7 @@
 	--osui-dropdown-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	// ───────────────────────────────────────────────────────────────────
 
-	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
+	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-elevation-3);
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: var(--osui-dropdown-popup-border-radius);
 	box-shadow: var(--osui-dropdown-list-shadow, #{variables.$token-elevation-3});
@@ -447,7 +454,7 @@
 	border-block-end: variables.$token-border-size-025 solid var(--color-border);
 	padding-block: variables.$token-scale-0;
 	padding-inline-end: variables.$token-scale-200;
-	padding-inline-start: variables.$token-scale-400;
+	padding-inline-start: variables.$token-scale-0;
 	position: relative;
 
 	&::before {
@@ -492,6 +499,7 @@
 // Options container input search
 .vscomp-search-input {
 	font-size: variables.$token-font-size-350;
+	padding-inline-start: variables.$token-scale-400;
 
 	&::placeholder {
 		color: var(--color-text-subtlest);
@@ -530,21 +538,21 @@
 // Option Item
 .vscomp-option {
 	align-items: center;
-	background-color: var(--color-background-input);
+	background-color: transparent;
 	flex-wrap: nowrap;
 	font-weight: variables.$token-font-weight-regular;
 	justify-content: space-between;
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&.focused {
-		background-color: variables.$token-bg-neutral-subtlest-hover;
+		background-color: variables.$token-bg-neutral-subtle-hover;
 	}
 
 	&.selected {
 		background-color: transparent;
 
 		&.focused {
-			background-color: variables.$token-bg-neutral-subtlest-hover;
+			background-color: variables.$token-bg-neutral-subtle-hover;
 		}
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
@@ -597,7 +605,7 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
+body:has(.has-accessible-features) {
 	.vscomp-toggle-button {
 		border-color: var(--color-border-input);
 		color: var(--color-text);
@@ -607,16 +615,20 @@
 		}
 	}
 
-	.vscomp-toggle-all-button:focus {
+	.vscomp-search-container:focus-within {
+		@include a11y-focus-shadow($isInner: true);
+	}
+
+	.vscomp-toggle-all-button:focus-visible {
 		box-shadow: none;
 
 		.checkbox-icon {
-			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			@include a11y-focus-shadow;
 		}
 	}
 
-	.vscomp-option.focused {
-		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+	.vscomp-option.focused:focus-visible {
+		@include a11y-focus-shadow($isInner: true);
 	}
 }
 

@@ -41,10 +41,35 @@
 		}
 
 		&.horizontal-scroll {
+			/// Lay the content out on a single line. Without it the children wrap to the
+			/// container width, nothing overflows on the inline axis and `overflow-x: auto`
+			/// has nothing to scroll. Previously inherited from the deprecated
+			/// `.horizontal-scroll` pattern, dropped with `10-deprecated/`.
+			white-space: nowrap;
+
 			&,
 			.list.list-group {
 				overflow-x: auto;
 				overflow-y: hidden;
+			}
+
+			// Service Studio Preview
+			& {
+				-servicestudio-min-height: 80px;
+				-servicestudio-white-space: normal;
+			}
+
+			> *:not(table),
+			> .list > * {
+				display: inline-block;
+				/// Promotes each item to its own layer, keeping the scroll smooth on touch
+				/// devices. Z-axis only, so it is RTL-safe.
+				transform: translateZ(0);
+			}
+
+			> :not(:first-child),
+			> .list > :not(:first-child) {
+				margin-inline-start: variables.$token-scale-400;
 			}
 		}
 
@@ -104,19 +129,5 @@
 	&::-webkit-scrollbar-thumb:hover {
 		background-color: rgba(106, 113, 120, 0.5);
 		border-radius: variables.$token-scale-150;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-/// The LTR counterpart of this spacing is not declared in the OSUI bundle (it comes from
-/// the consuming list/carousel), so there is no logical declaration for RTL to mirror.
-/// Kept physical until that owner is found.
-.is-rtl {
-	.horizontal-scroll {
-		& > :not(:first-child),
-		.list > :not(:first-child) {
-			margin-left: unset;
-			margin-right: variables.$token-scale-400;
-		}
 	}
 }

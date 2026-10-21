@@ -9,7 +9,12 @@
 :root {
 	// ─── Theme layer · surfaces ──────────────────────────────────────────
 	--color-background-body: #{variables.$token-bg-body};
-	--color-background-surface: #{variables.$token-bg-surface-default}; // cards, popups, menus, panels…
+	--color-background-surface: #{variables.$token-bg-surface-default}; // cards, lists, controls, nav surfaces
+	// Elevated surface tiers. The digit in the token name is the *fill* step and is
+	// independent of the $token-elevation-N *shadow* scale — a Popup pairs this
+	// elevation-3 fill with an elevation-4 shadow.
+	--color-background-raised: #{variables.$token-bg-surface-elevation-2}; // tooltips, notifications
+	--color-background-panel: #{variables.$token-bg-surface-elevation-3}; // menus, popovers, modals, sheets
 	--color-background-header: #{variables.$token-bg-surface-default};
 	--color-background-sidemenu: #{variables.$token-bg-surface-default};
 	--color-background-footer: #{variables.$token-bg-surface-default};
@@ -138,4 +143,10 @@
 	--osui-popup-layer: var(--layer-global-off-canvas);
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
+
+	// A11Y focus shadow vars
+	--osui-focus-shadow-width: #{variables.$token-border-size-050};
+	--osui-focus-shadow-gap: #{variables.$token-scale-0};
+	--osui-focus-inner-shadow-gap: #{variables.$token-scale-0};
+	--osui-focus-shadow-color: #{variables.$token-border-focus-default};
 }

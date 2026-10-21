@@ -28,7 +28,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Container = 'screen-container',
 		Content = 'content',
 		DarkMode = 'os-dark-mode',
-		DeprecatedSubmenu = 'submenu',
 		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',

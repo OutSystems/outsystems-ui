@@ -1,4 +1,5 @@
-@use "../../tokens/variables";
+@use '../../00-abstract/_mixins.scss' as *;
+@use '../../tokens/variables';
 
 /* Patterns - Interaction - Floating Actions */
 ////
@@ -245,14 +246,16 @@
 // Accessibility --------------------------------------------------------------------
 ///
 .has-accessible-features {
-	.floating-button:focus {
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+	.floating-button:focus-visible {
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
+		@include a11y-focus-shadow;
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
-			.floating-button:focus {
-				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			.floating-button:focus-visible {
+				@include a11y-focus-shadow;
 			}
 		}
 	}

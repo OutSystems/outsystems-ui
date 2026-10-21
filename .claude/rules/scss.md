@@ -228,8 +228,11 @@ x-axis transform keeps its inset physical.**
 **2. Before deleting an `.is-rtl` rule, check the base declaration is ours.** Some `.is-rtl`
 rules mirror physical CSS owned by the **platform** stylesheet or a vendor baseline, not by
 OSUI. Making our side logical does nothing for those - the physical base never mirrors, so
-the `.is-rtl` rule is still load-bearing. Popover ODC (platform's `margin-left: -50%`) and
-Scrollable Area are the two kept for this reason.
+the `.is-rtl` rule is still load-bearing. Popover ODC (platform's `margin-left: -50%`) is
+kept for this reason. Scrollable Area's `.is-rtl` rule was dropped once the pattern took
+ownership of the base spacing (ROU-13126): the LTR declaration it mirrored had been living
+in the deleted `10-deprecated/_horizontal-scroll-deprecated.scss`, so re-declaring it
+logically on `.scrollable-area-content.horizontal-scroll` made the override redundant.
 
 ### Still physical, on purpose
 

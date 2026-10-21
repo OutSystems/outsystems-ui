@@ -3,20 +3,21 @@
 /// @group Patterns-Carousel
 /// Patterns - Interaction - Carousel
 
+@use '../../../../scss/00-abstract/_mixins.scss' as *;
 @use 'carousel_ss_preview_imgs';
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* OutSystems UI Carousel customization */
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-carousel-arrow-background:         var(--color-background-surface);
-	--osui-carousel-arrow-border-radius:      var(--border-radius-2xs, #{variables.$token-shape-soft-2xs});
-	--osui-carousel-arrow-shadow:             #{variables.$token-elevation-2};
-	--osui-carousel-arrow-icon-color:         var(--color-text);
-	--osui-carousel-arrow-disabled-overlay:   #{variables.$token-state-disabled};
-	--osui-carousel-pagination-color:         var(--color-border);
-	--osui-carousel-pagination-active-color:  var(--color-primary);
+	--osui-carousel-arrow-background: var(--color-background-surface);
+	--osui-carousel-arrow-border-radius: var(--border-radius-2xs, #{variables.$token-shape-soft-2xs});
+	--osui-carousel-arrow-shadow: #{variables.$token-elevation-2};
+	--osui-carousel-arrow-icon-color: var(--color-text);
+	--osui-carousel-arrow-disabled-overlay: #{variables.$token-state-disabled};
+	--osui-carousel-pagination-color: var(--color-border);
+	--osui-carousel-pagination-active-color: var(--color-primary);
 	--osui-carousel-track-width: 100%;
 	// Reserved space below the track: pagination row height ($token-scale-600) + 16px gap ($token-scale-400)
 	--osui-carousel-pagination-margin: #{variables.$token-scale-1000};
@@ -69,7 +70,7 @@
 			gap: variables.$token-space-200;
 			margin: 0;
 			z-index: var(--layer-local-tier-1);
-			
+
 			li {
 				align-items: center;
 				display: flex;
@@ -83,11 +84,12 @@
 				border-radius: var(--border-radius-rounded);
 				height: variables.$token-scale-300;
 				width: variables.$token-scale-300;
-				transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
+				transition: background-color variables.$token-transition-time-200
+					variables.$token-transition-curve-linear;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
-					z-index: var(--layer-local-tier-1);	
+					z-index: var(--layer-local-tier-1);
 				}
 			}
 		}
@@ -190,12 +192,22 @@
 
 	.osui-carousel {
 		.splide {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
 			&__pagination__page {
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				height: variables.$token-scale-300;
 				margin: variables.$token-scale-150;
 				width: variables.$token-scale-300;
+
+				&:focus-visible {
+					@include a11y-focus-shadow;
+				}
+			}
+
+			&__arrow:focus-visible {
+				@include a11y-focus-outline;
 			}
 		}
 	}

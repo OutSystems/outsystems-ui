@@ -1,5 +1,5 @@
 @use '../../../00-abstract/index' as *;
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - Notification */
 ////
@@ -9,9 +9,9 @@
 ///
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-notification-background: var(--color-background-surface);
+	--osui-notification-background: var(--color-background-raised);
 	--osui-notification-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
-	--osui-notification-shadow: #{variables.$token-elevation-3};
+	--osui-notification-shadow: #{variables.$token-elevation-2};
 	--osui-notification-color: var(--color-text);
 	--osui-notification-gap: #{variables.$token-scale-400};
 	--osui-notification-padding: #{variables.$token-scale-400};

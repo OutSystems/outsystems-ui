@@ -5,28 +5,28 @@ export const Elevation = [
         "token": "elevation.1",
         "css_variable": "--token-elevation-1",
         "utility_class": ".token-elevation-1",
-        "value": "0px 3px 9px 0px rgba(0, 0, 0, 0.07058823529411765), 0px 0px 4px 0px rgba(0, 0, 0, 0.0392156862745098)",
+        "value": "0px 3px 9px 0px rgba(0, 0, 0, 0.07), 0px 0px 4px 0px rgba(0, 0, 0, 0.04)",
         "usage": "Used for foundational components like cards to create a subtle lift from the background."
     },
     {
         "token": "elevation.2",
         "css_variable": "--token-elevation-2",
         "utility_class": ".token-elevation-2",
-        "value": "0px 8px 25px 0px rgba(0, 0, 0, 0.0784313725490196), 0px 1px 5px 0px rgba(0, 0, 0, 0.050980392156862744)",
+        "value": "0px 8px 25px 0px rgba(0, 0, 0, 0.08), 0px 1px 5px 0px rgba(0, 0, 0, 0.05)",
         "usage": "Ideal for interactive elements such as top bar, tooltips, and layered components that appear on hover or click."
     },
     {
         "token": "elevation.3",
         "css_variable": "--token-elevation-3",
         "utility_class": ".token-elevation-3",
-        "value": "0px 6px 32px 0px rgba(0, 0, 0, 0.1607843137254902), 0px 2px 7px 0px rgba(0, 0, 0, 0.050980392156862744)",
+        "value": "0px 6px 32px 0px rgba(0, 0, 0, 0.16), 0px 2px 7px 0px rgba(0, 0, 0, 0.05)",
         "usage": "Reserved for components that provide feedback like bottom sheet or toasts, or secondary navigational elements."
     },
     {
         "token": "elevation.4",
         "css_variable": "--token-elevation-4",
         "utility_class": ".token-elevation-4",
-        "value": "0px 15px 48px 0px rgba(0, 0, 0, 0.1803921568627451), 0px 3px 12px 0px rgba(0, 0, 0, 0.12156862745098039)",
+        "value": "0px 15px 48px 0px rgba(0, 0, 0, 0.18), 0px 3px 12px 0px rgba(0, 0, 0, 0.12)",
         "usage": "The highest elevation, designed for high-priority and interruptive elements such as modals and side menus that appear over all other content."
     }
 ];
