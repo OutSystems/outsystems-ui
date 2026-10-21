@@ -117,11 +117,180 @@ export const Default: Story = {
 	},
 };
 
+const labelStyle = 'color:var(--color-text-subtle);font-family:monospace;font-size:0.8125rem;margin-bottom:8px;';
+
+interface TabsCell {
+	labels: string[];
+	bodies: string[];
+	startingTab?: number;
+	justifyHeaders?: boolean;
+	orientation?: 'horizontal' | 'vertical';
+	verticalPosition?: 'left' | 'right';
+	disabledTab?: number;
+	hoverTab?: number;
+	width?: string;
+}
+
+function tabsMarkup(tabsId: string, headerIds: string[], contentIds: string[], cell: TabsCell): string {
+	const headers = cell.labels
+		.map((label, i) => {
+			const pseudo = cell.hoverTab === i ? ' data-pseudo="tabs-hover"' : '';
+			return `<div id="${headerIds[i]}" data-block="osui"><button name="${headerIds[i]}" class="osui-tabs__header-item" data-tab="${i}" role="tab" type="button"${pseudo}>${label}</button></div>`;
+		})
+		.join('');
+	const contents = cell.bodies
+		.map(
+			(body, i) =>
+				`<div id="${contentIds[i]}" data-block="osui"><article name="${contentIds[i]}" class="osui-tabs__content-item" data-tab="${i}"><div style="padding:16px;">${body}</div></article></div>`
+		)
+		.join('');
+	const width = cell.width ? ` style="width:${cell.width};"` : '';
+	return `
+		<section ${osuiRoot(tabsId)} class="osui-tabs"${width}>
+			<header class="osui-tabs__header">
+				<div class="display-contents placeholder-empty">${headers}</div>
+				<div class="osui-tabs__header__indicator"></div>
+			</header>
+			<section class="osui-tabs__content">
+				<div class="display-contents placeholder-empty">${contents}</div>
+			</section>
+		</section>`;
+}
+
+function initTabs(
+	tabsId: string,
+	headerIds: string[],
+	contentIds: string[],
+	cell: TabsCell,
+	register: (dispose: () => void) => void
+): void {
+	const P = Patterns();
+	P.TabsAPI.Create(
+		tabsId,
+		cfg({
+			StartingTab: cell.startingTab ?? 0,
+			JustifyHeaders: cell.justifyHeaders ?? false,
+			TabsOrientation: cell.orientation ?? 'horizontal',
+			TabsVerticalPosition: cell.verticalPosition ?? 'left',
+			Height: 'auto',
+		})
+	);
+	headerIds.forEach((id) => P.TabsHeaderItemAPI.Create(id, cfg()));
+	contentIds.forEach((id) => P.TabsContentItemAPI.Create(id, cfg()));
+	// Children register during their own build. The parent picks StartingTab in that
+	// same build, so the children have to be initialized first or the index falls back to 0.
+	headerIds.forEach((id) => P.TabsHeaderItemAPI.Initialize(id));
+	contentIds.forEach((id) => P.TabsContentItemAPI.Initialize(id));
+	P.TabsAPI.Initialize(tabsId);
+	// Justify and vertical position are deferred with a timeout. Set them now so the
+	// gallery does not paint the unset values.
+	P.TabsAPI.ChangeProperty(tabsId, 'JustifyHeaders', cell.justifyHeaders ?? false);
+	P.TabsAPI.ChangeProperty(tabsId, 'TabsVerticalPosition', cell.verticalPosition ?? 'left');
+	P.TabsHeaderItemAPI.UpdateOnRender(headerIds[cell.startingTab ?? 0]);
+	if (cell.disabledTab !== undefined && cell.disabledTab >= 0 && cell.disabledTab < headerIds.length) {
+		P.TabsHeaderItemAPI.DisableTabItem(headerIds[cell.disabledTab]);
+	}
+	register(() => {
+		headerIds.forEach((id) => P.TabsHeaderItemAPI.Dispose?.(id));
+		contentIds.forEach((id) => P.TabsContentItemAPI.Dispose?.(id));
+		P.TabsAPI.Dispose?.(tabsId);
+	});
+}
+
+function renderGallery(entries: Array<{ label: string; cell: TabsCell }>) {
+	const instances = entries.map((entry) => ({
+		...entry,
+		tabsId: uid('tabs'),
+		headerIds: entry.cell.labels.map(() => uid('tabs-header')),
+		contentIds: entry.cell.labels.map(() => uid('tabs-content')),
+	}));
+	const board = document.createElement('div');
+	board.style.cssText = 'align-items:flex-start;display:flex;flex-direction:column;gap:32px;';
+	for (const instance of instances) {
+		const item = document.createElement('div');
+		const label = document.createElement('div');
+		label.textContent = instance.label;
+		label.style.cssText = labelStyle;
+		item.append(label);
+		item.insertAdjacentHTML(
+			'beforeend',
+			tabsMarkup(instance.tabsId, instance.headerIds, instance.contentIds, instance.cell)
+		);
+		board.append(item);
+	}
+	return renderPattern(board.outerHTML, (_root, register) => {
+		for (const instance of instances) {
+			initTabs(instance.tabsId, instance.headerIds, instance.contentIds, instance.cell, register);
+		}
+	});
+}
+
+const SAMPLE = {
+	labels: ['Overview', 'Details', 'Activity'],
+	bodies: ['Overview pane.', 'Details pane.', 'Activity pane.'],
+	width: '520px',
+};
+
+/** Headers packed to the start, then stretched to fill the row. */
+export const JustifyHeaders: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderGallery([
+			{ label: 'Off', cell: { ...SAMPLE, justifyHeaders: false } },
+			{ label: 'Justified', cell: { ...SAMPLE, justifyHeaders: true } },
+		]),
+};
+
+/** Headers above the content, then beside it. */
+export const Orientation: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderGallery([
+			{ label: 'Horizontal', cell: { ...SAMPLE, orientation: 'horizontal' } },
+			{ label: 'Vertical', cell: { ...SAMPLE, orientation: 'vertical', verticalPosition: 'left' } },
+		]),
+};
+
+/** Vertical headers on the left of the content, then on the right. */
+export const VerticalPosition: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderGallery([
+			{ label: 'Left', cell: { ...SAMPLE, orientation: 'vertical', verticalPosition: 'left' } },
+			{ label: 'Right', cell: { ...SAMPLE, orientation: 'vertical', verticalPosition: 'right' } },
+		]),
+};
+
 /**
- * Vertical orientation. Header items round the corners facing away from the content
- * (inline-start for left, inline-end for right); switch TabsVerticalPosition to compare.
+ * Resting, hovered, selected, and disabled header items on one tab list.
+ * Hover is forced: a static gallery cannot hold a pointer.
  */
-export const Vertical: Story = {
-	args: { orientation: 'vertical', verticalPosition: 'left' },
-	render: Default.render,
+export const States: Story = {
+	parameters: {
+		controls: { disable: true },
+		pseudo: { hover: ['[data-pseudo="tabs-hover"]'] },
+	},
+	render: () => {
+		const style = document.createElement('style');
+		style.textContent = `
+			.osui-tabs [data-pseudo="tabs-hover"] {
+				background-color: var(--osui-tabs-header-item-hover-background);
+				color: var(--osui-tabs-header-item-color-hover);
+			}`;
+		const gallery = renderGallery([
+			{
+				label: 'Header states',
+				cell: {
+					labels: ['Default', 'Hover', 'Active', 'Disabled'],
+					bodies: ['Resting tab.', 'Hovered tab.', 'Selected tab.', 'Disabled tab.'],
+					startingTab: 2,
+					hoverTab: 1,
+					disabledTab: 3,
+					width: '520px',
+				},
+			},
+		]);
+		gallery.prepend(style);
+		return gallery;
+	},
 };
