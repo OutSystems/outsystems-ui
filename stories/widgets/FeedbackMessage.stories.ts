@@ -24,3 +24,35 @@ export const Default: Story = {
 				msg('feedback-message-info', 'ph-info', "Here's some useful information.")
 		),
 };
+
+/**
+ * Long text, including a word longer than the message is wide. The message is a flex
+ * container capped at `--osui-feedback-message-max-width` (600px), so a token with no break
+ * opportunity — a URL, a file path — used to keep the text item at its min-content width and
+ * spill past the rounded box. `.feedback-message` sets `overflow-wrap: anywhere`, which both
+ * breaks the line and lowers that min-content contribution so the item can narrow.
+ *
+ * Kept as the Chromatic guard for that: a regression reads as text outside the surface on the
+ * first message. The other two carry ordinary break opportunities and must still wrap at them
+ * — mid-word breaks there would mean someone reached for `word-break: break-all` instead.
+ */
+export const LongText: Story = {
+	render: () =>
+		renderStatic(
+			msg(
+				'feedback-message-info',
+				'ph-info',
+				"Saved to Clipboard. 'https://outsystemsui-dev.outsystemsenterprise.com/TaskSample_DEV_ROU12826/TestScreen_OSUITheme#Alert'"
+			) +
+				msg(
+					'feedback-message-error',
+					'ph-x-circle',
+					'Upload failed for C:\\Users\\Shared\\OutSystems\\Development\\Attachments\\2026\\Q4\\quarterly-revenue-consolidated-final.xlsx — the file exceeds the configured limit.'
+				) +
+				msg(
+					'feedback-message-success',
+					'ph-check-circle',
+					'Your changes to the application theme have been published and are now live for every environment in the deployment pipeline, including production.'
+				)
+		),
+};
