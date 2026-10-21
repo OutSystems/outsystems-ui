@@ -39,11 +39,16 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
-		// Service Studio Preview — flow in-document so the button is not
-		// hidden behind the bottom bar and placeholders are not clipped.
+		// Service Studio Preview — keep the runtime corner. An in-flow box
+		// sits at the top of MainContent; bottom: 0 lands under the bottom bar.
 		& {
-			-servicestudio-position: relative;
-			-servicestudio-margin-left: auto;
+			-servicestudio-position: fixed;
+		}
+
+		.main:has(.bottom-bar) & {
+			& {
+				-servicestudio-bottom: calc(var(--bottom-bar-size) + #{variables.$token-scale-400});
+			}
 		}
 
 		&:not(.is--open) {
@@ -126,6 +131,18 @@
 		}
 	}
 
+	&-actions-item-label:empty {
+		// Service Studio Preview — the placeholder is an empty div, so it
+		// collapses and the editor hint is clipped to nothing. It sits beside
+		// the icon placeholder, same as a filled item.
+		& {
+			-servicestudio-min-height: variables.$token-scale-1200;
+			-servicestudio-min-width: variables.$token-scale-2800;
+			-servicestudio-overflow: visible;
+			-servicestudio-white-space: normal;
+		}
+	}
+
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
@@ -146,6 +163,19 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-transform: scale(1);
+		}
+
+		// The fixed 40×40 box clips the empty-placeholder hint. Size only the
+		// empty state; a dropped icon keeps the runtime circle.
+		&:empty {
+			& {
+				-servicestudio-height: auto;
+				-servicestudio-min-height: variables.$token-scale-1200;
+				-servicestudio-min-width: variables.$token-scale-2800;
+				-servicestudio-overflow: visible;
+				-servicestudio-white-space: normal;
+				-servicestudio-width: auto;
+			}
 		}
 
 		&:hover {
