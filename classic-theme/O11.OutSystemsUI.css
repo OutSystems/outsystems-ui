@@ -6718,6 +6718,15 @@ span.flatpickr-weekday{
 .chat-photo{
   margin-right:var(--space-base);
 }
+.chat-photo > div:empty{
+  -servicestudio-margin-right:calc(-1 * var(--space-base));
+  -servicestudio-min-height:64px;
+  -servicestudio-min-width:56px;
+}
+.right .chat-photo > div:empty{
+  -servicestudio-margin-left:calc(-1 * var(--space-base));
+  -servicestudio-margin-right:0;
+}
 .chat-photo img{
   border-radius:var(--border-radius-circle);
   height:40px;
@@ -6739,6 +6748,9 @@ span.flatpickr-weekday{
   padding:var(--space-base);
   position:relative;
   word-break:break-word;
+}
+.chat-message > div:empty{
+  -servicestudio-min-width:160px;
 }
 .chat-message-status{
   display:block;
@@ -7118,6 +7130,9 @@ span.flatpickr-weekday{
 }
 .section-group .section-title{
   background-color:var(--background-color-body, var(--color-background-body));
+}
+.section-group .section-content.no-padding{
+  padding:var(--space-none);
 }
 .layout-native .section-title{
   padding:var(--space-s) var(--space-base) var(--space-s) var(--space-base);

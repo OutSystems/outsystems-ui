@@ -26,7 +26,7 @@
 
 	&-dialog {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-popup-background:    var(--color-background-surface);
+		--osui-popup-background:    var(--color-background-panel);
 		--osui-popup-border-color:  transparent;
 		--osui-popup-border-width:  #{variables.$token-border-size-025};
 		--osui-popup-border-radius: var(--border-radius-xl, #{variables.$token-shape-soft-xl});

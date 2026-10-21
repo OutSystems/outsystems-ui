@@ -25,6 +25,10 @@
 		align-items: center;
 		border: variables.$token-border-size-025 solid transparent;
 		border-radius: variables.$token-border-radius-200;
+		// The plugin hardcodes `color: #393939`, which only read as text while the
+		// calendar was the library's white; it has to follow the text role now that
+		// the surface is themed (ROU-13151).
+		color: var(--color-text);
 		display: flex;
 		height: variables.$token-scale-1000;
 		margin: 0;

@@ -1,3 +1,4 @@
+@use '../../../scss/00-abstract/_mixins.scss' as *;
 @use '../../tokens/variables';
 
 /* Patterns - Content - Alert */
@@ -108,6 +109,18 @@
 			--osui-alert-color: var(--color-text-dark);
 			--osui-alert-accent-color: var(--osui-alert-background);
 			--osui-alert-icon-color: currentColor;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.alert {
+		&:focus-visible {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
+			@include a11y-focus-shadow;
 		}
 	}
 }

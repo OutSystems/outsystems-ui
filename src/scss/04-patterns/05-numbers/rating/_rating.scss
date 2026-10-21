@@ -1,5 +1,5 @@
 @use '../../../00-abstract/index' as *;
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Numbers - Rating */
 ////
@@ -94,6 +94,7 @@
 		&-filled,
 		&-half,
 		&-empty {
+			display: flex;
 			left: 0; // physical: inside the scaleX(-1)-flipped item
 			line-height: var(--osui-font-line-height-full);
 			position: absolute;
@@ -156,8 +157,6 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				box-shadow: 0 0 0 variables.$token-border-size-075
-					color-mix(in srgb, var(--color-primary) 22%, transparent);
 				height: 100%;
 				left: 0; // physical: full-width overlay on the scaleX(-1)-flipped item
 				opacity: 0;
@@ -302,22 +301,18 @@
 ///
 .has-accessible-features {
 	.rating {
-		&.is-half input:focus + .rating-item .rating-item-filled,
-		&:not(.is-half) input:focus + .rating-item .rating-item-half,
-		input:checked + .rating-item .rating-item-empty {
-			&,
-			* {
-				box-shadow: none;
-			}
+		input:first-of-type:focus-visible + .rating-item,
+		&.is-half input:focus-visible + .rating-item .rating-item-half,
+		&:not(.is-half) input:focus-visible + .rating-item .rating-item-filled {
+			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
+			@include a11y-focus-shadow;
 		}
 
-		&.is-half input:focus + .rating-item .rating-item-half,
-		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
-			&,
-			* {
-				box-shadow: 0 0 0 variables.$token-border-size-075
-					color-mix(in srgb, var(--color-primary) 22%, transparent);
-			}
+		&.is-half input:focus-visible + .rating-item .rating-item-filled,
+		&:not(.is-half) input:focus-visible + .rating-item .rating-item-half,
+		input:checked + .rating-item .rating-item-empty {
+			box-shadow: none;
 		}
 	}
 

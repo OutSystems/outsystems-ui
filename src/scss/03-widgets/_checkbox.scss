@@ -1,4 +1,5 @@
-@use "../tokens/variables";
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
 
 /* Widgets - Checkbox */
 ////
@@ -117,9 +118,15 @@
 			}
 		}
 
-		&:focus {
+		&:focus-visible {
+			@include a11y-focus-shadow();
+
 			&:before {
-				border-color: var(--color-text);
+				border-color: var(--osui-checkbox-border-color);
+			}
+
+			&:checked:before {
+				border-color: var(--osui-checkbox-checked-color);
 			}
 		}
 	}

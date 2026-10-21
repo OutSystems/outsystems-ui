@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../../scss/00-abstract/_mixins.scss' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - section - BottomSheet */
 ////
@@ -8,10 +9,10 @@
 ///
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-bottom-sheet-background: var(--color-background-surface);
-	--osui-bottom-sheet-shadow: #{variables.$token-elevation-3};
+	--osui-bottom-sheet-background: var(--color-background-panel);
+	--osui-bottom-sheet-shadow: #{variables.$token-elevation-4};
 	--osui-bottom-sheet-padding: #{variables.$token-scale-400};
-	--osui-bottom-sheet-handler-background: #{variables.$token-bg-neutral-subtle-default};
+	--osui-bottom-sheet-handler-background: #{variables.$token-bg-neutral-base-default};
 	--osui-bottom-sheet-handler-width: 44px;
 	// ───────────────────────────────────────────────────────────────────
 
@@ -204,6 +205,18 @@
 		.osui-monthpicker,
 		.osui-timepicker {
 			position: relative;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-bottom-sheet {
+		&:focus-visible {
+			--osui-focus-inner-shadow-gap: #{variables.$token-scale-050};
+
+			@include a11y-focus-shadow($isInner: true);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 @use '../../00-abstract/index' as *;
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Interaction - Lightbox Image */
 ////
@@ -9,6 +9,8 @@
 ///
 .lightbox {
 	&-item {
+		display: inline-block;
+
 		// Service Studio Preview
 		& {
 			-servicestudio-position: relative;
@@ -126,10 +128,17 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.lightbox-item a:focus {
-		background-color: transparent;
-		box-shadow: none;
-		outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+	.lightbox-item {
+		&:focus-within {
+			--osui-focus-shadow-gap: #{variables.$token-border-size-050};
+
+			@include a11y-focus-shadow;
+		}
+
+		a:focus {
+			background-color: transparent;
+			box-shadow: none;
+		}
 	}
 }
 
@@ -137,7 +146,6 @@
 ///
 .is-rtl {
 	.pswp {
-
 		&__top-bar {
 			display: flex;
 			flex-direction: row-reverse;

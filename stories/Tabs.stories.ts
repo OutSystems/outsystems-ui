@@ -116,3 +116,12 @@ export const Default: Story = {
 		});
 	},
 };
+
+/**
+ * Vertical orientation. Header items round the corners facing away from the content
+ * (inline-start for left, inline-end for right); switch TabsVerticalPosition to compare.
+ */
+export const Vertical: Story = {
+	args: { orientation: 'vertical', verticalPosition: 'left' },
+	render: Default.render,
+};
