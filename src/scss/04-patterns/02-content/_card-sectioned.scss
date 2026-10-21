@@ -69,6 +69,10 @@
 			}
 		}
 
+		.card-content {
+			color: var(--color-text-subtlest);
+		}
+
 		// UsePadding=False removes all padding — the image's own padding no longer follows
 		// ImagePadding independently in this case (must come after .flex-direction-column above
 		// for the cascade to win when both classes are present).
@@ -104,7 +108,7 @@
 	}
 
 	&-content {
-		color: var(--color-text-subtlest);
+		color: var(--color-text-subtle);
 		flex: 1;
 	}
 
