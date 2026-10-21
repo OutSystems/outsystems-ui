@@ -263,6 +263,10 @@ span.flatpickr-weekday {
 	color: var(--color-text);
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-regular;
+	// Override the library's 39px cap so cells fill the container evenly,
+	// preventing gaps between in-range cells (visible in RTL where the
+	// calendar is 330px wide).
+	max-width: none;
 	user-select: none;
 	line-height: 37px;
 
@@ -592,10 +596,10 @@ span.flatpickr-weekday {
 		&.selected.startRange,
 		&.startRange.startRange,
 		&.endRange.startRange {
-			border-radius: 50px;
+			border-radius: variables.$token-border-radius-100;
 
 			&:before {
-				border-radius: 0 50px 50px 0;
+				border-radius: 0 variables.$token-border-radius-100 variables.$token-border-radius-100 0;
 				left: -2px;
 				right: 0;
 			}
@@ -604,10 +608,10 @@ span.flatpickr-weekday {
 		&.selected.endRange,
 		&.startRange.endRange,
 		&.endRange.endRange {
-			border-radius: 50px;
+			border-radius: variables.$token-border-radius-100;
 
 			&:before {
-				border-radius: 50px 0 0 50px;
+				border-radius: variables.$token-border-radius-100 0 0 variables.$token-border-radius-100;
 				left: 0;
 				right: -2px;
 			}
