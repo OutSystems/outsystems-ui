@@ -88,7 +88,10 @@ jobs:
               # none of that protection. Volta pins 11.18.0 for local work; CI does not
               # read the volta pin, hence this step. (ROU-13151: without it a sass
               # released hours earlier reached the build and crashed the SCSS compile.)
-              run: npm install -g npm@11.18.0
+              #
+              # --ignore-scripts to match the install below (githubactions:S6505). The npm
+              # package declares no install lifecycle script, so nothing is skipped.
+              run: npm install -g npm@11.18.0 --ignore-scripts
 
             - name: 🕸️ Install dependencies
               # Every dependency is public. There is no internal feed, no auth step, and
