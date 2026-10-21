@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-20T10:08:28.532Z',
+	generatedAt: '2026-10-20T16:19:21.926Z',
 	totals: {
-		properties: 626,
+		properties: 627,
 		components: 70,
 		categories: 9,
 	},
@@ -3619,6 +3619,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 						{
 							selector: '.flatpickr-calendar',
 							properties: [
+							{
+								name: '--osui-flatpickr-background',
+								default: 'var(--color-background-panel)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-background-panel)',
+							},
 							{
 								name: '--osui-flatpickr-layer',
 								default: 'var(--layer-global-elevated)',

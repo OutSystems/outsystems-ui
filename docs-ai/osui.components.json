@@ -1688,6 +1688,7 @@
 			"cssApi": [
 				"--osui-flatpickr-layer",
 				"--osui-flatpickr-shadow",
+				"--osui-flatpickr-background",
 				"--osui-datepicker-border-radius",
 				"--osui-datepicker-time-background",
 				"--osui-datepicker-time-border-color",

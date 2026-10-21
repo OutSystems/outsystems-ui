@@ -403,7 +403,13 @@
 
 // Bottom part - Parent wrapper Options container
 .pop-comp-wrapper {
+	// The bundled popover library paints `color: #000` and `background-color: #fff` here. The
+	// dropbox it hosts is themed and rounded, so the white reads as light wedges in its corners
+	// under `.os-dark-theme`, and the black is inherited by everything the dropbox does not
+	// colour itself — typed search text, the toggle-all label, the no-options/no-results messages.
+	background-color: transparent;
 	box-shadow: none;
+	color: var(--color-text);
 }
 
 // Wrapper options container

@@ -9,7 +9,12 @@
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 	--osui-flatpickr-shadow: #{variables.$token-elevation-3};
+	--osui-flatpickr-background: var(--color-background-panel);
 
+	// The library hardcodes `background: #fff`, which left every day number white on
+	// white under `.os-dark-theme`. The calendar is a floating panel, so it takes the
+	// same tier as menus, popovers and the Dropdown list (ROU-13151).
+	background: var(--osui-flatpickr-background);
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: var(--osui-datepicker-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
 	box-shadow: var(--osui-flatpickr-shadow);
