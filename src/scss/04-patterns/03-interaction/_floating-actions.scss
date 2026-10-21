@@ -39,6 +39,13 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
+		// Service Studio Preview — flow in-document so the button is not
+		// hidden behind the bottom bar and placeholders are not clipped.
+		& {
+			-servicestudio-position: relative;
+			-servicestudio-margin-left: auto;
+		}
+
 		&:not(.is--open) {
 			pointer-events: none;
 
@@ -190,6 +197,11 @@
 		transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-display: none;
+		}
 
 		&.is--open {
 			opacity: 1;
