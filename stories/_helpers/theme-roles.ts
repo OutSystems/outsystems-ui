@@ -82,7 +82,9 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 	]),
 	group({ id: 'surface', title: 'Surfaces', type: 'color', blurb: 'Page + component backgrounds.' }, [
 		['--color-background-body', 'Body'],
-		['--color-background-surface', 'Surface (cards, popups…)'],
+		['--color-background-surface', 'Surface (cards, lists, controls)'],
+		['--color-background-raised', 'Raised (tooltips, notifications)'],
+		['--color-background-panel', 'Panel (menus, popovers, modals, sheets)'],
 		['--color-background-header', 'Header'],
 		['--color-background-sidemenu', 'Side menu'],
 		['--color-background-footer', 'Footer'],
