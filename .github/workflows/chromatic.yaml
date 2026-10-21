@@ -81,6 +81,15 @@ jobs:
               with:
                   node-version: 24.13.1
 
+            - name: ⬆️ Match the npm the repo pins
+              # `.npmrc` refuses any package published in the last 7 days, and only
+              # npm >= 11.17 understands those keys — the npm bundled with Node 24.13.1
+              # warns "Unknown project config" and ignores them, so this job was buying
+              # none of that protection. Volta pins 11.18.0 for local work; CI does not
+              # read the volta pin, hence this step. (ROU-13151: without it a sass
+              # released hours earlier reached the build and crashed the SCSS compile.)
+              run: npm install -g npm@11.18.0
+
             - name: 🕸️ Install dependencies
               # Every dependency is public. There is no internal feed, no auth step, and
               # therefore no way for a silent auth failure to publish a reduced story set
