@@ -237,3 +237,23 @@
 		}
 	}
 }
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-sidebar--has-overlay {
+		&.osui-sidebar{
+			&--is-right {
+				&::before {
+					inset-inline-end: unset;
+					inset-inline-start: 100%;
+				}
+			}
+			&--is-left {
+				&::before {
+					inset-inline-start: unset;
+					inset-inline-end: 100%;
+				}
+			}
+		}
+	}
+}
