@@ -235,11 +235,13 @@
 ///
 .is-rtl {
 	.app-menu-content {
+		left: unset;
+		right: calc(-1 * var(--side-menu-size));
 		transition: transform 130ms ease-in;
 	}
 
 	.app-menu-content.is--open {
-		transform: translateX(0) translateZ(0);
+		transform: translateX(calc(-1 * var(--side-menu-size))) translateZ(0); 
 		transition: transform 130ms ease-out;
 	}
 }
