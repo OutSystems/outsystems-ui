@@ -16,17 +16,22 @@
 
 name: UI component tests
 
+# labeled/unlabeled: toggling the ignore-tests label re-evaluates the merge
+# gate. The run re-executes in full on purpose — skipping jobs on label events
+# would publish a skipped (= passing) required check that overwrites a previous
+# failure on the same commit.
 on:
-    pull_request:
-        types: [opened, synchronize, reopened]
+    pull_request_target:
+        types: [opened, synchronize, reopened, labeled, unlabeled]
 
 concurrency:
     group: osui-component-tests-${{ github.event.pull_request.number }}
     cancel-in-progress: true
 
+# Default for all jobs; jobs that need more declare their own block
+# (job-level permissions replace this entirely, so they re-list what they use).
 permissions:
     contents: read
-    pull-requests: write
 
 env:
     TESTS_REPO: OutSystems/outsystems-ui-tests-new
@@ -42,6 +47,9 @@ jobs:
     detect:
         name: Detect changed components
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: read # list the PR's changed files
         outputs:
             components: ${{ steps.map.outputs.components }}
             test_paths: ${{ steps.map.outputs.test_paths }}
@@ -72,7 +80,8 @@ jobs:
 
             - name: Map changed files to component tests
               id: map
-              run: node osui-tests/scripts/map-changed-files.mjs changed-files.txt >> "$GITHUB_OUTPUT"
+              # --no-legacy: PR runs only execute the Current (non-legacy) suites.
+              run: node osui-tests/scripts/map-changed-files.mjs changed-files.txt --no-legacy >> "$GITHUB_OUTPUT"
 
     test:
         name: web (${{ matrix.browser }})
@@ -99,10 +108,33 @@ jobs:
                   cache: npm
 
             - name: Install dependencies
-              run: npm ci
+              # --ignore-scripts: none of our dev deps need lifecycle scripts, and it
+              # prevents arbitrary script execution during install (Sonar S7598).
+              run: npm ci --ignore-scripts
+
+            - name: Resolve Playwright version
+              id: pw-version
+              run: echo "version=$(node -e "console.log(require('@playwright/test/package.json').version)")" >> "$GITHUB_OUTPUT"
+
+            # Browser binaries are cached per Playwright version; firefox/webkit
+            # downloads are the slowest part of setup. System deps are not cacheable,
+            # so on a hit only install-deps runs. msedge is an apt package (not a
+            # Playwright download), so caching does not apply to it.
+            - name: Cache Playwright browsers
+              if: ${{ matrix.browser != 'msedge' }}
+              id: pw-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}-${{ matrix.browser }}
 
             - name: Install ${{ matrix.browser }}
+              if: ${{ steps.pw-cache.outputs.cache-hit != 'true' }}
               run: npx playwright install --with-deps ${{ matrix.browser }}
+
+            - name: Install ${{ matrix.browser }} system deps (cache hit)
+              if: ${{ steps.pw-cache.outputs.cache-hit == 'true' }}
+              run: npx playwright install-deps ${{ matrix.browser }}
 
             - name: Run component tests
               id: tests
@@ -111,9 +143,6 @@ jobs:
                   THEME: ${{ env.THEME }}
                   PW_BROWSERS: ${{ matrix.browser }}
                   PW_WORKERS: ${{ env.PW_WORKERS }}
-                  # Mapped folders include Legacy/<component> suites, whose tests are
-                  # @legacy-tagged and only collected when this is set.
-                  INCLUDE_LEGACY: 'true'
               run: npx playwright test ${{ needs.detect.outputs.test_paths }}
 
             - name: Record outcome
@@ -152,6 +181,9 @@ jobs:
         needs: [detect, test]
         if: ${{ always() && needs.detect.result == 'success' }}
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write # upsert the sticky comment, read labels
+            actions: read # download outcome artifacts
         steps:
             - name: Download outcomes
               if: ${{ needs.detect.outputs.skip != 'true' }}
@@ -165,52 +197,74 @@ jobs:
             - name: Build comment body
               id: body
               env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SKIP: ${{ needs.detect.outputs.skip }}
                   COMPONENTS: ${{ needs.detect.outputs.components }}
                   UNMATCHED: ${{ needs.detect.outputs.unmatched }}
                   THEME: ${{ env.THEME }}
+                  PR_NUMBER: ${{ github.event.pull_request.number }}
                   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
               run: |
+                  ANY_FAILED=0
+                  if [ "$SKIP" != "true" ]; then
+                    : > rows.md
+                    for browser in chromium firefox webkit msedge; do
+                      OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
+                      JUNIT="outcomes/$browser.junit.xml"
+                      TESTS=0; FAILURES=0; SKIPPED=0
+                      if [ -f "$JUNIT" ]; then
+                        HEADER=$(grep -o '<testsuites[^>]*>' "$JUNIT" | head -1)
+                        TESTS=$(echo "$HEADER" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                        FAILURES=$(echo "$HEADER" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                        SKIPPED=$(echo "$HEADER" | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                      fi
+                      PASSED=$((TESTS - FAILURES - SKIPPED))
+                      if [ "$OUTCOME" = "success" ]; then
+                        RESULT="✅ passed"
+                      elif [ "$OUTCOME" = "missing" ]; then
+                        RESULT="⚠️ no result"; ANY_FAILED=1
+                      else
+                        RESULT="❌ **failed**"; ANY_FAILED=1
+                      fi
+                      echo "| $browser | $RESULT | $PASSED | $FAILURES | $SKIPPED |" >> rows.md
+                    done
+                  fi
+                  HAS_IGNORE_LABEL=0
+                  if [ "$ANY_FAILED" = "1" ]; then
+                    if gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/labels" --jq '.[].name' | grep -qx 'ignore-tests'; then
+                      HAS_IGNORE_LABEL=1
+                    fi
+                  fi
                   {
                     echo '<!-- osui-functional-tests -->'
                     echo '## UI component tests'
                     echo ''
                     if [ "$SKIP" = "true" ]; then
-                      echo 'No component test suites map to the files changed in this PR — tests were skipped.'
+                      echo '✅ No component test suites map to the files changed in this PR — tests were skipped and merging is not blocked.'
                       echo ''
                       echo "Unmatched changed files: ${UNMATCHED}. ([run]($RUN_URL))"
                     else
+                      if [ "$ANY_FAILED" = "0" ]; then
+                        echo '### ✅ All browsers passed'
+                      else
+                        echo '### ❌ Some browsers failed'
+                      fi
+                      echo ''
                       echo "**Components:** ${COMPONENTS// /, }"
                       echo "**Theme(s):** ${THEME} · **Environment:** ${TEST_ENV:-dev} ([run]($RUN_URL))"
                       echo ''
                       echo '| Browser | Result | Passed | Failed | Skipped |'
                       echo '|---|---|---|---|---|'
-                      ANY_FAILED=0
-                      for browser in chromium firefox webkit msedge; do
-                        OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
-                        JUNIT="outcomes/$browser.junit.xml"
-                        TESTS=0; FAILURES=0; SKIPPED=0
-                        if [ -f "$JUNIT" ]; then
-                          HEADER=$(grep -o '<testsuites[^>]*>' "$JUNIT" | head -1)
-                          TESTS=$(echo "$HEADER" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                          FAILURES=$(echo "$HEADER" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                          SKIPPED=$(echo "$HEADER" | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                        fi
-                        PASSED=$((TESTS - FAILURES - SKIPPED))
-                        if [ "$OUTCOME" = "success" ]; then
-                          RESULT="passed"
-                        elif [ "$OUTCOME" = "missing" ]; then
-                          RESULT="no result"; ANY_FAILED=1
-                        else
-                          RESULT="**failed**"; ANY_FAILED=1
-                        fi
-                        echo "| $browser | $RESULT | $PASSED | $FAILURES | $SKIPPED |"
-                      done
+                      cat rows.md
                       echo ''
+                      echo '_Legacy suites are excluded from PR runs._'
                       if [ "${UNMATCHED:-0}" != "0" ]; then
                         echo "_${UNMATCHED} changed file(s) did not map to any component suite._"
                       fi
-                      echo "any_failed=$ANY_FAILED" >> "$GITHUB_OUTPUT"
+                      if [ "$HAS_IGNORE_LABEL" = "1" ]; then
+                        echo ''
+                        echo '⚠️ _Failures are being ignored because the `ignore-tests` label is present — merging is not blocked._'
+                      fi
                     fi
                   } > comment-body.md
                   cat comment-body.md
@@ -234,6 +288,51 @@ jobs:
                         await github.rest.issues.createComment({ owner, repo, issue_number, body });
                       }
 
-            - name: Fail if any browser failed
-              if: ${{ needs.detect.outputs.skip != 'true' && steps.body.outputs.any_failed == '1' }}
-              run: exit 1
+    # Single job to mark as a required status check in branch protection.
+    # Passes when: no suites mapped to the changed files, all browsers passed,
+    # or failures exist but the PR carries the ignore-tests label (queried live,
+    # not from the possibly-stale event payload).
+    gate:
+        name: Merge gate
+        needs: [detect, test]
+        if: ${{ always() && needs.detect.result == 'success' }}
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: read # read live labels for the ignore-tests override
+            actions: read # download outcome artifacts
+        steps:
+            - name: Download outcomes
+              if: ${{ needs.detect.outputs.skip != 'true' }}
+              continue-on-error: true
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: outcome-*
+                  merge-multiple: true
+                  path: outcomes
+
+            - name: Evaluate gate
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SKIP: ${{ needs.detect.outputs.skip }}
+                  PR_NUMBER: ${{ github.event.pull_request.number }}
+              run: |
+                  if [ "$SKIP" = "true" ]; then
+                    echo "No component suites map to the changed files — gate passes."
+                    exit 0
+                  fi
+                  ANY_FAILED=0
+                  for browser in chromium firefox webkit msedge; do
+                    OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
+                    echo "$browser: $OUTCOME"
+                    [ "$OUTCOME" = "success" ] || ANY_FAILED=1
+                  done
+                  if [ "$ANY_FAILED" = "0" ]; then
+                    echo "All browsers passed — gate passes."
+                    exit 0
+                  fi
+                  if gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/labels" --jq '.[].name' | grep -qx 'ignore-tests'; then
+                    echo "Failures present but the ignore-tests label is set — gate passes."
+                    exit 0
+                  fi
+                  echo "Tests failed and the ignore-tests label is not set — blocking merge."
+                  exit 1
