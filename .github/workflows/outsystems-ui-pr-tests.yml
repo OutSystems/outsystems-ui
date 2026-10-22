@@ -1,27 +1,30 @@
 # UI component tests on PR — copy this file to outsystems-ui/.github/workflows/
 #
-# On every PR it maps the changed files to component test folders in
-# OutSystems/outsystems-ui-tests-new, runs those Playwright suites on all
-# browsers (and both page themes when THEME=both), and upserts a results
-# comment on the PR.
+# On every PR it builds this PR's OutSystems UI (both o11 and odc targets),
+# maps the changed files to component test folders in
+# OutSystems/outsystems-ui-tests-new, and runs those Playwright suites on all
+# browsers against BOTH platforms. The platform-served OutSystemsUI js/css are
+# replaced via network interception with this PR's build, so the tests
+# exercise the unmerged code. Results are upserted as one PR comment with a
+# table per platform.
 #
 # Required secret in outsystems-ui:
 #   OSUI_TESTS_REPO_TOKEN — fine-grained PAT with contents:read on
 #                           OutSystems/outsystems-ui-tests-new
 #
-# Safety note: pull_request_target is used so the default token can comment on
-# PRs (including from forks). The workflow NEVER checks out or executes PR
-# code — it only reads the changed-file list from the API; everything that
-# runs comes from the trusted tests repo.
+# Trigger note: plain pull_request is used because this workflow intentionally
+# builds and executes the PR's code (npm ci + gulp build). Fork PRs get no
+# secrets under pull_request, so they are skipped explicitly via the fork
+# guard on the first jobs.
 
 name: UI component tests
 
-# labeled/unlabeled: toggling the ignore-tests label re-evaluates the merge
-# gate. The run re-executes in full on purpose — skipping jobs on label events
-# would publish a skipped (= passing) required check that overwrites a previous
-# failure on the same commit.
+# labeled/unlabeled: toggling the ignore-tests label re-triggers the run.
+# With the label present the build and test jobs are skipped entirely (their
+# result would be ignored anyway) and the gate passes explicitly; removing the
+# label re-runs the full suite and produces a real gate result.
 on:
-    pull_request_target:
+    pull_request:
         types: [opened, synchronize, reopened, labeled, unlabeled]
 
 concurrency:
@@ -36,7 +39,6 @@ permissions:
 env:
     TESTS_REPO: OutSystems/outsystems-ui-tests-new
     TESTS_REF: main
-    TEST_ENV: dev
     # Page theme: new | classic | both. Flip to "both" once the _ClassicTheme
     # pages are published to the base AT_OSUIFunctional module (they 404 there
     # today, so "both" would fail every classic project).
@@ -46,13 +48,15 @@ env:
 jobs:
     detect:
         name: Detect changed components
+        # Fork PRs get no secrets under pull_request; skip them explicitly.
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         runs-on: ubuntu-latest
         permissions:
             contents: read
             pull-requests: read # list the PR's changed files
         outputs:
             components: ${{ steps.map.outputs.components }}
-            test_paths: ${{ steps.map.outputs.test_paths }}
+            grep_pattern: ${{ steps.map.outputs.grep_pattern }}
             skip: ${{ steps.map.outputs.skip }}
             unmatched: ${{ steps.map.outputs.unmatched }}
         steps:
@@ -83,9 +87,56 @@ jobs:
               # --no-legacy: PR runs only execute the Current (non-legacy) suites.
               run: node osui-tests/scripts/map-changed-files.mjs changed-files.txt --no-legacy >> "$GITHUB_OUTPUT"
 
-    test:
-        name: web (${{ matrix.browser }})
-        needs: detect
+    # Builds THIS PR's OutSystems UI for both platforms. The test jobs then
+    # serve these files instead of the platform-deployed ones.
+    build:
+        name: Build OutSystems UI (o11 + odc)
+        # Skipped when the ignore-tests label is present: the gate passes anyway,
+        # so building and testing would be wasted work. The test jobs depend on
+        # this job succeeding, so skipping it skips them too.
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(github.event.pull_request.labels.*.name, 'ignore-tests') }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        steps:
+            # Default pull_request checkout = the PR merged into its base branch,
+            # which is exactly what would ship after merging.
+            - name: Checkout PR merge ref
+              uses: actions/checkout@v4
+
+            # Node 24 (volta pin): the repo's .npmrc uses min-release-age-exclude[],
+            # which needs npm >= 11.17 — older npm ignores it and the install fails.
+            # No `cache: npm` and `npm install` instead of `npm ci`: outsystems-ui
+            # does not commit a package-lock.json.
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+
+            - name: Install dependencies
+              run: npm install --ignore-scripts
+
+            - name: Build all platform targets
+              # Without --target the gulp build produces every platform flavor
+              # (dist/O11.* and dist/ODC.*) in a single run.
+              run: |
+                  npm run build:osui
+                  mkdir -p osui-build
+                  cp -R dist osui-build/dist
+                  cp -R classic-theme osui-build/classic-theme
+                  ls -la osui-build/dist osui-build/classic-theme
+
+            - name: Upload build
+              uses: actions/upload-artifact@v4
+              with:
+                  name: osui-build
+                  path: osui-build
+                  retention-days: 1
+
+    # The platforms run sequentially (O11 first, then ODC) so the two target
+    # environments are never hammered at the same time. test-odc runs even when
+    # O11 legs failed (always() in its condition) so the comment reports both.
+    test-o11:
+        name: web o11 (${{ matrix.browser }})
+        needs: [detect, build]
         if: ${{ needs.detect.outputs.skip != 'true' }}
         runs-on: ubuntu-latest
         timeout-minutes: 60
@@ -101,6 +152,12 @@ jobs:
                   repository: ${{ env.TESTS_REPO }}
                   ref: ${{ env.TESTS_REF }}
                   token: ${{ secrets.OSUI_TESTS_REPO_TOKEN }}
+
+            - name: Download OutSystems UI build
+              uses: actions/download-artifact@v4
+              with:
+                  name: osui-build
+                  path: osui-build
 
             - uses: actions/setup-node@v4
               with:
@@ -128,6 +185,21 @@ jobs:
                   path: ~/.cache/ms-playwright
                   key: playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}-${{ matrix.browser }}
 
+            # Caches the downloaded .deb archives (webkit alone pulls ~117 MB of
+            # system packages) so a slow/broken Ubuntu mirror can't stall the job.
+            # apt checksums cached debs against the index, so stale ones are simply
+            # re-fetched. Unpacking/configuring still runs every time (~1-2 min).
+            - name: Cache apt package downloads
+              id: apt-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.apt-cache
+                  key: apt-${{ runner.os }}-${{ steps.pw-version.outputs.version }}-${{ matrix.browser }}
+
+            - name: Restore apt archives
+              if: ${{ steps.apt-cache.outputs.cache-hit == 'true' }}
+              run: sudo cp ~/.apt-cache/*.deb /var/cache/apt/archives/ || true
+
             - name: Install ${{ matrix.browser }}
               if: ${{ steps.pw-cache.outputs.cache-hit != 'true' }}
               run: npx playwright install --with-deps ${{ matrix.browser }}
@@ -136,14 +208,27 @@ jobs:
               if: ${{ steps.pw-cache.outputs.cache-hit == 'true' }}
               run: npx playwright install-deps ${{ matrix.browser }}
 
+            - name: Stash apt archives for cache
+              if: ${{ steps.apt-cache.outputs.cache-hit != 'true' }}
+              run: |
+                  mkdir -p ~/.apt-cache
+                  sudo find /var/cache/apt/archives -maxdepth 1 -name '*.deb' -exec cp -t "$HOME/.apt-cache" {} + || true
+                  sudo chown -R "$USER" ~/.apt-cache
+
             - name: Run component tests
               id: tests
               env:
-                  TEST_ENV: ${{ env.TEST_ENV }}
+                  TEST_ENV: dev
                   THEME: ${{ env.THEME }}
                   PW_BROWSERS: ${{ matrix.browser }}
                   PW_WORKERS: ${{ env.PW_WORKERS }}
-              run: npx playwright test ${{ needs.detect.outputs.test_paths }}
+                  # Serve this PR's OutSystemsUI js/css via network interception.
+                  OSUI_LOCAL_BUILD: ${{ github.workspace }}/osui-build
+                  GREP_PATTERN: ${{ needs.detect.outputs.grep_pattern }}
+              # Tag-based selection: every test whose title matches the changed
+              # components' tags runs, wherever it lives. The path scope keeps the
+              # Legacy suites out of PR runs.
+              run: npx playwright test tests/functional/Current --grep "$GREP_PATTERN"
 
             - name: Record outcome
               if: always()
@@ -153,17 +238,17 @@ jobs:
                   if [ -z "$OUTCOME" ] || [ "$OUTCOME" = "skipped" ]; then
                     OUTCOME=failure
                   fi
-                  echo "$OUTCOME" > "outcomes/${{ matrix.browser }}"
+                  echo "$OUTCOME" > "outcomes/o11-${{ matrix.browser }}"
                   # Keep the junit next to the outcome so the comment job can count tests.
                   if [ -f test-results/junit-results.xml ]; then
-                    cp test-results/junit-results.xml "outcomes/${{ matrix.browser }}.junit.xml"
+                    cp test-results/junit-results.xml "outcomes/o11-${{ matrix.browser }}.junit.xml"
                   fi
 
             - name: Upload outcome
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: outcome-${{ matrix.browser }}
+                  name: outcome-o11-${{ matrix.browser }}
                   path: outcomes/
                   retention-days: 1
 
@@ -171,14 +256,139 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: playwright-report-${{ matrix.browser }}
+                  name: playwright-report-o11-${{ matrix.browser }}
+                  path: playwright-report
+                  if-no-files-found: ignore
+                  retention-days: 14
+
+    test-odc:
+        name: web odc (${{ matrix.browser }})
+        needs: [detect, build, test-o11]
+        # always(): run even when O11 legs failed; still requires detect + build
+        # success and mapped suites.
+        if: ${{ always() && needs.detect.result == 'success' && needs.build.result == 'success' && needs.detect.outputs.skip != 'true' }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        strategy:
+            fail-fast: false
+            max-parallel: 4
+            matrix:
+                browser: [chromium, firefox, webkit, msedge]
+        steps:
+            - name: Checkout tests repo
+              uses: actions/checkout@v4
+              with:
+                  repository: ${{ env.TESTS_REPO }}
+                  ref: ${{ env.TESTS_REF }}
+                  token: ${{ secrets.OSUI_TESTS_REPO_TOKEN }}
+
+            - name: Download OutSystems UI build
+              uses: actions/download-artifact@v4
+              with:
+                  name: osui-build
+                  path: osui-build
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci --ignore-scripts
+
+            - name: Resolve Playwright version
+              id: pw-version
+              run: echo "version=$(node -e "console.log(require('@playwright/test/package.json').version)")" >> "$GITHUB_OUTPUT"
+
+            # Running after test-o11, these legs usually hit the cache the O11 legs
+            # just populated (keys are per browser, not per platform).
+            - name: Cache Playwright browsers
+              if: ${{ matrix.browser != 'msedge' }}
+              id: pw-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}-${{ matrix.browser }}
+
+            # Caches the downloaded .deb archives (webkit alone pulls ~117 MB of
+            # system packages) so a slow/broken Ubuntu mirror can't stall the job.
+            # apt checksums cached debs against the index, so stale ones are simply
+            # re-fetched. Unpacking/configuring still runs every time (~1-2 min).
+            - name: Cache apt package downloads
+              id: apt-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.apt-cache
+                  key: apt-${{ runner.os }}-${{ steps.pw-version.outputs.version }}-${{ matrix.browser }}
+
+            - name: Restore apt archives
+              if: ${{ steps.apt-cache.outputs.cache-hit == 'true' }}
+              run: sudo cp ~/.apt-cache/*.deb /var/cache/apt/archives/ || true
+
+            - name: Install ${{ matrix.browser }}
+              if: ${{ steps.pw-cache.outputs.cache-hit != 'true' }}
+              run: npx playwright install --with-deps ${{ matrix.browser }}
+
+            - name: Install ${{ matrix.browser }} system deps (cache hit)
+              if: ${{ steps.pw-cache.outputs.cache-hit == 'true' }}
+              run: npx playwright install-deps ${{ matrix.browser }}
+
+            - name: Stash apt archives for cache
+              if: ${{ steps.apt-cache.outputs.cache-hit != 'true' }}
+              run: |
+                  mkdir -p ~/.apt-cache
+                  sudo find /var/cache/apt/archives -maxdepth 1 -name '*.deb' -exec cp -t "$HOME/.apt-cache" {} + || true
+                  sudo chown -R "$USER" ~/.apt-cache
+
+            - name: Run component tests
+              id: tests
+              env:
+                  TEST_ENV: odc-dev
+                  THEME: ${{ env.THEME }}
+                  PW_BROWSERS: ${{ matrix.browser }}
+                  PW_WORKERS: ${{ env.PW_WORKERS }}
+                  # Serve this PR's OutSystemsUI js/css via network interception.
+                  OSUI_LOCAL_BUILD: ${{ github.workspace }}/osui-build
+                  GREP_PATTERN: ${{ needs.detect.outputs.grep_pattern }}
+              # Tag-based selection: every test whose title matches the changed
+              # components' tags runs, wherever it lives. The path scope keeps the
+              # Legacy suites out of PR runs.
+              run: npx playwright test tests/functional/Current --grep "$GREP_PATTERN"
+
+            - name: Record outcome
+              if: always()
+              run: |
+                  mkdir -p outcomes
+                  OUTCOME="${{ steps.tests.outcome }}"
+                  if [ -z "$OUTCOME" ] || [ "$OUTCOME" = "skipped" ]; then
+                    OUTCOME=failure
+                  fi
+                  echo "$OUTCOME" > "outcomes/odc-${{ matrix.browser }}"
+                  # Keep the junit next to the outcome so the comment job can count tests.
+                  if [ -f test-results/junit-results.xml ]; then
+                    cp test-results/junit-results.xml "outcomes/odc-${{ matrix.browser }}.junit.xml"
+                  fi
+
+            - name: Upload outcome
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: outcome-odc-${{ matrix.browser }}
+                  path: outcomes/
+                  retention-days: 1
+
+            - name: Upload report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report-odc-${{ matrix.browser }}
                   path: playwright-report
                   if-no-files-found: ignore
                   retention-days: 14
 
     comment:
         name: Comment results on PR
-        needs: [detect, test]
+        needs: [detect, build, test-o11, test-odc]
         if: ${{ always() && needs.detect.result == 'success' }}
         runs-on: ubuntu-latest
         permissions:
@@ -199,6 +409,8 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SKIP: ${{ needs.detect.outputs.skip }}
+                  IGNORED: ${{ contains(github.event.pull_request.labels.*.name, 'ignore-tests') }}
+                  BUILD_RESULT: ${{ needs.build.result }}
                   COMPONENTS: ${{ needs.detect.outputs.components }}
                   UNMATCHED: ${{ needs.detect.outputs.unmatched }}
                   THEME: ${{ env.THEME }}
@@ -206,27 +418,32 @@ jobs:
                   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
               run: |
                   ANY_FAILED=0
-                  if [ "$SKIP" != "true" ]; then
-                    : > rows.md
-                    for browser in chromium firefox webkit msedge; do
-                      OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
-                      JUNIT="outcomes/$browser.junit.xml"
-                      TESTS=0; FAILURES=0; SKIPPED=0
-                      if [ -f "$JUNIT" ]; then
-                        HEADER=$(grep -o '<testsuites[^>]*>' "$JUNIT" | head -1)
-                        TESTS=$(echo "$HEADER" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                        FAILURES=$(echo "$HEADER" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                        SKIPPED=$(echo "$HEADER" | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*' || echo 0)
-                      fi
-                      PASSED=$((TESTS - FAILURES - SKIPPED))
-                      if [ "$OUTCOME" = "success" ]; then
-                        RESULT="✅ passed"
-                      elif [ "$OUTCOME" = "missing" ]; then
-                        RESULT="⚠️ no result"; ANY_FAILED=1
-                      else
-                        RESULT="❌ **failed**"; ANY_FAILED=1
-                      fi
-                      echo "| $browser | $RESULT | $PASSED | $FAILURES | $SKIPPED |" >> rows.md
+                  if [ "$IGNORED" != "true" ] && [ "$SKIP" != "true" ] && [ "$BUILD_RESULT" != "success" ]; then
+                    ANY_FAILED=1
+                  fi
+                  if [ "$SKIP" != "true" ] && [ "$BUILD_RESULT" = "success" ]; then
+                    for platform in o11 odc; do
+                      : > "rows-$platform.md"
+                      for browser in chromium firefox webkit msedge; do
+                        OUTCOME=$(cat "outcomes/$platform-$browser" 2>/dev/null || echo "missing")
+                        JUNIT="outcomes/$platform-$browser.junit.xml"
+                        TESTS=0; FAILURES=0; SKIPPED=0
+                        if [ -f "$JUNIT" ]; then
+                          HEADER=$(grep -o '<testsuites[^>]*>' "$JUNIT" | head -1)
+                          TESTS=$(echo "$HEADER" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                          FAILURES=$(echo "$HEADER" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                          SKIPPED=$(echo "$HEADER" | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                        fi
+                        PASSED=$((TESTS - FAILURES - SKIPPED))
+                        if [ "$OUTCOME" = "success" ]; then
+                          RESULT="✅ passed"
+                        elif [ "$OUTCOME" = "missing" ]; then
+                          RESULT="⚠️ no result"; ANY_FAILED=1
+                        else
+                          RESULT="❌ **failed**"; ANY_FAILED=1
+                        fi
+                        echo "| $browser | $RESULT | $PASSED | $FAILURES | $SKIPPED |" >> "rows-$platform.md"
+                      done
                     done
                   fi
                   HAS_IGNORE_LABEL=0
@@ -239,23 +456,41 @@ jobs:
                     echo '<!-- osui-functional-tests -->'
                     echo '## UI component tests'
                     echo ''
-                    if [ "$SKIP" = "true" ]; then
+                    if [ "$IGNORED" = "true" ]; then
+                      echo '### ⚠️ Tests skipped — `ignore-tests` label is present'
+                      echo ''
+                      echo "The build and component tests did not run, and merging is not blocked. Remove the label to run them. ([run]($RUN_URL))"
+                    elif [ "$SKIP" = "true" ]; then
                       echo '✅ No component test suites map to the files changed in this PR — tests were skipped and merging is not blocked.'
                       echo ''
                       echo "Unmatched changed files: ${UNMATCHED}. ([run]($RUN_URL))"
+                    elif [ "$BUILD_RESULT" != "success" ]; then
+                      echo '### ❌ OutSystems UI build failed — component tests did not run.'
+                      echo ''
+                      echo "Fix the build to unblock the merge gate. ([run]($RUN_URL))"
                     else
                       if [ "$ANY_FAILED" = "0" ]; then
-                        echo '### ✅ All browsers passed'
+                        echo '### ✅ All platforms and browsers passed'
                       else
-                        echo '### ❌ Some browsers failed'
+                        echo '### ❌ Some runs failed'
                       fi
                       echo ''
                       echo "**Components:** ${COMPONENTS// /, }"
-                      echo "**Theme(s):** ${THEME} · **Environment:** ${TEST_ENV:-dev} ([run]($RUN_URL))"
+                      echo "**Theme(s):** ${THEME} ([run]($RUN_URL))"
+                      echo ''
+                      echo "_Tested against this PR's build — the OutSystemsUI js/css are served from the PR via network interception._"
+                      echo ''
+                      echo '### O11 (dev)'
                       echo ''
                       echo '| Browser | Result | Passed | Failed | Skipped |'
                       echo '|---|---|---|---|---|'
-                      cat rows.md
+                      cat rows-o11.md
+                      echo ''
+                      echo '### ODC (odc-dev)'
+                      echo ''
+                      echo '| Browser | Result | Passed | Failed | Skipped |'
+                      echo '|---|---|---|---|---|'
+                      cat rows-odc.md
                       echo ''
                       echo '_Legacy suites are excluded from PR runs._'
                       if [ "${UNMATCHED:-0}" != "0" ]; then
@@ -289,12 +524,14 @@ jobs:
                       }
 
     # Single job to mark as a required status check in branch protection.
-    # Passes when: no suites mapped to the changed files, all browsers passed,
-    # or failures exist but the PR carries the ignore-tests label (queried live,
-    # not from the possibly-stale event payload).
+    # Passes when: the ignore-tests label is present (tests are skipped
+    # entirely), or no suites mapped to the changed files, or the build
+    # succeeded and every platform/browser leg passed, or failures exist but
+    # the label was added after the run started (queried live). A failed
+    # OutSystems UI build without the label always fails the gate.
     gate:
         name: Merge gate
-        needs: [detect, test]
+        needs: [detect, build, test-o11, test-odc]
         if: ${{ always() && needs.detect.result == 'success' }}
         runs-on: ubuntu-latest
         permissions:
@@ -314,20 +551,32 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SKIP: ${{ needs.detect.outputs.skip }}
+                  IGNORED: ${{ contains(github.event.pull_request.labels.*.name, 'ignore-tests') }}
+                  BUILD_RESULT: ${{ needs.build.result }}
                   PR_NUMBER: ${{ github.event.pull_request.number }}
               run: |
+                  if [ "$IGNORED" = "true" ]; then
+                    echo "ignore-tests label present — tests were skipped and the gate passes."
+                    exit 0
+                  fi
                   if [ "$SKIP" = "true" ]; then
                     echo "No component suites map to the changed files — gate passes."
                     exit 0
                   fi
+                  if [ "$BUILD_RESULT" != "success" ]; then
+                    echo "OutSystems UI build failed — blocking merge."
+                    exit 1
+                  fi
                   ANY_FAILED=0
-                  for browser in chromium firefox webkit msedge; do
-                    OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
-                    echo "$browser: $OUTCOME"
-                    [ "$OUTCOME" = "success" ] || ANY_FAILED=1
+                  for platform in o11 odc; do
+                    for browser in chromium firefox webkit msedge; do
+                      OUTCOME=$(cat "outcomes/$platform-$browser" 2>/dev/null || echo "missing")
+                      echo "$platform-$browser: $OUTCOME"
+                      [ "$OUTCOME" = "success" ] || ANY_FAILED=1
+                    done
                   done
                   if [ "$ANY_FAILED" = "0" ]; then
-                    echo "All browsers passed — gate passes."
+                    echo "All platforms and browsers passed — gate passes."
                     exit 0
                   fi
                   if gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/labels" --jq '.[].name' | grep -qx 'ignore-tests'; then

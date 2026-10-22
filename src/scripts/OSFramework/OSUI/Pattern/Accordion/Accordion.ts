@@ -157,22 +157,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		/**
 		 * Method to open all accordionItems
 		 */
-		public expandAllItems(): void {
-			//If this accordion does not have multiple items, it means we can't expand all.
-			if (this.configs.MultipleItems) {
-				// Filter all items that are open and not disabled
-				const itemsToOpen = this.getChildItems().filter((item) => !item.isOpen && !item.isDisabled);
-
-				// Go through each item and open it!
-				itemsToOpen.forEach((item) => {
-					item.open();
-				});
-			} else {
-				console.warn(
-					`${GlobalEnum.PatternName.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
-				);
-			}
-		}
+		public expandAllItems(): void {}
 
 		/**
 		 * Method to remove an accordionItem
