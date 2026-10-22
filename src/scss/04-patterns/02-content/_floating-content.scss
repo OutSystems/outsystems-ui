@@ -158,7 +158,7 @@
 
 		&.floating-content {
 			&-center {
-				inset-inline-start: calc(50% - variables.$token-space-800);
+				left: calc(50% - variables.$token-space-800);
 				top: calc(50% - variables.$token-space-800);
 			}
 
@@ -169,7 +169,7 @@
 			&-top,
 			&-bottom,
 			&-center {
-				inset-inline-start: calc(50% - variables.$token-space-800);
+				left: calc(50% - variables.$token-space-800);
 			}
 		}
 	}
@@ -214,7 +214,7 @@
 				&-top:not(.absolute-top),
 				&-center:not(.absolute-center),
 				&-bottom:not(.absolute-bottom) {
-					inset-inline-start: calc(50% + ((var(--side-menu-size) / 2)));
+					left: calc(50% + ((var(--side-menu-size) / 2)));
 				}
 
 				&.floating-content-full-width,
