@@ -9,18 +9,15 @@
 ///
 .app-menu-content {
 	height: 100%;
+	left: calc(-1 * var(--side-menu-size));
+	transform: translateX(0) translateZ(0);
+	transition: transform 130ms ease-in;
 
 	// Service Studio Preview
 	& {
 		-servicestudio-background-color: var(--background-color-header, var(--color-background-header));
 		-servicestudio-height: auto !important;
 	}
-}
-
-.app-menu-content {
-	left: calc(-1 * var(--side-menu-size));
-	transform: translateX(0) translateZ(0);
-	transition: transform 130ms ease-in;
 
 	&.is--open {
 		transform: translateX(var(--side-menu-size)) translateZ(0);
