@@ -202,7 +202,7 @@ The new theme changed `--osui-blank-slate-icon-color` from a primary-adjacent co
 
 ### "I hand-built a dark mode"
 
-Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~447 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
+Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~450 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
 
 ### "I built dark mode by flipping the grey shades"
 

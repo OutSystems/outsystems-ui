@@ -67,7 +67,7 @@ Before diving in, search the customer's CSS for these patterns to identify which
 | `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 2) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
 | Dark block overrides 3+ `--color-neutral-*` steps (scale flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2 → `references/grey-shades.md`) |
-| Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
+| Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~450 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
 | Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | `references/recipes.md` |
 | A widget looks different from the classic app, and the custom CSS never mentioned it | The new theme changed a framework default — these do not show up in any search of the customer's CSS | `references/widget-catalog.md`, applied in Phase 2g |
 
@@ -150,7 +150,7 @@ So in the browser:
 |---|---|---|
 | `--color-*`, `--border-radius-*`, `--layer-*`, `--os-safe-area-*` | **Declared** | — |
 | `--osui-*` component knobs | Declared on each component | — |
-| `--token-*` **colours** | **Not declared** | **Declared — ~447 of them** |
+| `--token-*` **colours** | **Not declared** | **Declared — ~450 of them** |
 | `--token-*` sizes, scales, weights, border widths | **Not declared** | Not declared |
 
 The framework itself is unaffected because its SCSS never emits a bare reference: `$token-border-size-025` expands to `var(--token-border-size-025, var(--token-scale-025, 1px))`, so every component falls through to a literal. Customer CSS is plain CSS with no access to `$token-*` and gets no such chain.
@@ -167,7 +167,7 @@ border: var(--token-border-size-025) solid var(--color-neutral-10);
 border: var(--token-border-size-025, 1px) solid var(--color-neutral-10);
 ```
 
-2. A bare `var(--token-x)` for a **colour** is dead in light mode and **works in dark mode**, because `.os-dark-theme` declares those ~447 properties. An agent that verifies in dark mode first will conclude the rule is correct and ship a stylesheet that silently fails in the default theme. Always verify in light.
+2. A bare `var(--token-x)` for a **colour** is dead in light mode and **works in dark mode**, because `.os-dark-theme` declares those ~450 properties. An agent that verifies in dark mode first will conclude the rule is correct and ship a stylesheet that silently fails in the default theme. Always verify in light.
 
 **Rules to follow:** prefer the `--color-*` / `--border-radius-*` theme-layer roles, which are declared at `:root` and already follow dark mode. Reach for `--token-*` only when no role covers the case, and then always as `var(--token-x, <literal>)`, taking the literal from `src/scss/tokens/_variables.scss`.
 
@@ -500,7 +500,9 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 | `--color-text-light` | Light text on dark/primary backgrounds |
 | `--color-text-dark` | Dark text on light/accent backgrounds |
 | `--color-background-body` | Page background |
-| `--color-background-surface` | Card/panel/popup background |
+| `--color-background-surface` | Card, list and control background |
+| `--color-background-raised` | Tooltip / notification surface (one step above the page) |
+| `--color-background-panel` | Menu, popover, modal and sheet surface (the top tier) |
 | `--color-background-header` | Header background |
 | `--color-background-sidemenu` | Side menu background |
 | `--color-background-footer` | Footer background |
@@ -516,7 +518,7 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 
 ## 6. Dark theme considerations
 
-The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~447 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
+The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~450 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
 
 - Any hardcoded colour literal (`#abc123`, `rgb(...)`, `rgba(...)`, `hsl(...)`) that has a token or role equivalent.
 - Overrides pinned to a specific grey shade (e.g. `--color-neutral-9`) for text — these won't flip in dark mode. Prefer `--color-text` and its variants.
@@ -712,7 +714,7 @@ If the CSS uses a dark-mode selector other than `.os-dark-theme`, present the op
 - **Option A:** Keep the custom selector as-is (app manages its own dark mode).
 - **Option B (recommended):** Add `.os-dark-theme` alongside the custom selector to benefit from the framework's dark token overrides.
 
-**Why Option B matters.** The framework ships ~447 dark-mode `--token-*` overrides scoped under `.os-dark-theme`. These cover feedback messages (`--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, …), input backgrounds, surface colors, shadow colors, state overlays, and many component internals. Without `.os-dark-theme`, all of these stay at their light-mode values — producing white feedback messages, light inputs, and other light-on-dark glitches. Adding `.os-dark-theme` alongside the customer's class (e.g. toggling both `.dark-mode` and `.os-dark-theme` on `<html>`) fixes these automatically without needing individual token overrides.
+**Why Option B matters.** The framework ships ~450 dark-mode `--token-*` overrides scoped under `.os-dark-theme`. These cover feedback messages (`--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, …), input backgrounds, surface colors, shadow colors, state overlays, and many component internals. Without `.os-dark-theme`, all of these stay at their light-mode values — producing white feedback messages, light inputs, and other light-on-dark glitches. Adding `.os-dark-theme` alongside the customer's class (e.g. toggling both `.dark-mode` and `.os-dark-theme` on `<html>`) fixes these automatically without needing individual token overrides.
 
 If the customer chooses Option A, flag that they will need to manually override every `--token-*` that their dark mode exposes (feedback messages, dropdowns, inputs, etc.). This is significantly more work than adding the class.
 
