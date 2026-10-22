@@ -615,7 +615,8 @@ body:has(.has-accessible-features) {
 		}
 	}
 
-	.vscomp-search-container:focus-within {
+	// Search input is focused on open, so the focus ring is only shown on keyboard interaction (class set by the pattern)
+	.osui-dropdown--focus-visible .vscomp-search-container:focus-within {
 		@include a11y-focus-shadow($isInner: true);
 	}
 
