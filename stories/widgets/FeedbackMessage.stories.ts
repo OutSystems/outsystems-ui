@@ -47,7 +47,7 @@ export const LongText: Story = {
 				msg(
 					'feedback-message-error',
 					'ph-x-circle',
-					'Upload failed for C:\\Users\\Shared\\OutSystems\\Development\\Attachments\\2026\\Q4\\quarterly-revenue-consolidated-final.xlsx — the file exceeds the configured limit.'
+					'Upload failed for /mnt/shared/outsystems/development/attachments/2026/q4/quarterly-revenue-consolidated-final.xlsx — the file exceeds the configured limit.'
 				) +
 				msg(
 					'feedback-message-success',

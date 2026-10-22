@@ -54,7 +54,7 @@ export const Default: StoryObj<AlertArgs> = {
 
 const LONG_COPY: Record<string, string> = {
 	info: "Saved to Clipboard. 'https://outsystemsui-dev.outsystemsenterprise.com/TaskSample_DEV_ROU12826/TestScreen_OSUITheme#Alert'",
-	error: 'Upload failed for C:\\Users\\Shared\\OutSystems\\Development\\Attachments\\2026\\Q4\\quarterly-revenue-consolidated-final.xlsx — the file exceeds the configured limit.',
+	error: 'Upload failed for /mnt/shared/outsystems/development/attachments/2026/q4/quarterly-revenue-consolidated-final.xlsx — the file exceeds the configured limit.',
 	warning:
 		'Your changes to the application theme have been published and are now live for every environment in the deployment pipeline, including production.',
 };
