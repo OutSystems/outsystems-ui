@@ -721,7 +721,8 @@
 				"--osui-bottom-sheet-handler-background",
 				"--osui-bottom-sheet-handler-width",
 				"--osui-bottom-sheet-draggable-area",
-				"--osui-bottom-sheet-transition-function"
+				"--osui-bottom-sheet-transition-function",
+				"--osui-focus-inner-shadow-gap"
 			],
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Open bottom sheet</button><div class=\"osui-bottom-sheet\" aria-hidden=\"true\" tabindex=\"-1\"><div class=\"osui-bottom-sheet__header\"><div class=\"osui-bottom-sheet__header__top-bar\"><strong>Sheet title</strong></div></div><div class=\"osui-bottom-sheet__content\"><p>Bottom-sheet content slides up from the bottom edge.</p><button class=\"btn\" data-close type=\"button\">Close</button></div></div></div>",
 			"usage": {
@@ -1250,7 +1251,8 @@
 				"--osui-carousel-pagination-color",
 				"--osui-carousel-pagination-active-color",
 				"--osui-carousel-track-width",
-				"--osui-carousel-pagination-margin"
+				"--osui-carousel-pagination-margin",
+				"--osui-focus-shadow-gap"
 			],
 			"markup": "<div class=\"osui-carousel\" ><div class=\"osui-carousel__track\"><div class=\"osui-carousel__content\"></div></div></div>",
 			"usage": {
@@ -1686,6 +1688,7 @@
 			"cssApi": [
 				"--osui-flatpickr-layer",
 				"--osui-flatpickr-shadow",
+				"--osui-flatpickr-background",
 				"--osui-datepicker-border-radius",
 				"--osui-datepicker-time-background",
 				"--osui-datepicker-time-border-color",
@@ -3784,8 +3787,10 @@
 				"ProgressBarContent": "osui-progress-bar__content",
 				"ProgressCircleContent": "osui-progress-circle__content"
 			},
-			"cssApi": [],
-			"markup": "<div class=\"osui-progress-bar\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-bar__container\"><div class=\"osui-progress-bar__value\"></div></div><div class=\"osui-progress-bar__content\" id=\"-label\"></div></div>",
+			"cssApi": [
+				"--osui-focus-shadow-gap"
+			],
+			"markup": "<div class=\"osui-progress-circle\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-circle__container\"><div class=\"svg-wrapper\"><svg><defs></defs><circle class=\"osui-progress-circle__container__trail-path\"></circle><circle class=\"osui-progress-circle__container__progress-path\"></circle></svg></div></div><div class=\"osui-progress-circle__content\" id=\"-label\"></div></div>",
 			"usage": {
 				"configs": {
 					"AnimateInitialProgress": false,
@@ -4134,7 +4139,8 @@
 				"--osui-range-slider-connect-color",
 				"--osui-range-slider-disabled-track-color",
 				"--osui-range-slider-disabled-connect-color",
-				"--osui-range-slider-disabled-color"
+				"--osui-range-slider-disabled-color",
+				"--osui-focus-shadow-gap"
 			],
 			"markup": "<style> .osui-rs-matrix { align-items: center; display: grid; gap: 24px 40px; grid-template-columns: max-content repeat(2, minmax(240px, 1fr)); } .osui-rs-matrix__head { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; } /* Room for the floating label above and the pips below, which both sit outside the track's own box. */ .osui-rs-cell { padding: 28px 8px 8px; } </style><div class=\"osui-rs-matrix\"><div></div><div class=\"osui-rs-matrix__head\">Default</div><div class=\"osui-rs-matrix__head\">Disabled</div><div class=\"osui-rs-matrix__head\"></div><div class=\"osui-rs-cell\"><div class=\"osui-range-slider\"><div class=\"osui-range-slider__provider\"></div></div></div></div>",
 			"usage": {
@@ -4342,7 +4348,8 @@
 				"--osui-rating-filled-color",
 				"--osui-rating-empty-color",
 				"--osui-rating-disabled-color",
-				"--osui-rating-disabled-empty-color"
+				"--osui-rating-disabled-empty-color",
+				"--osui-focus-shadow-gap"
 			],
 			"markup": "<div class=\"icon-states\"><div class=\"rating-item-filled\"><i class=\"icon ph-fill ph-star\"></i></div><div class=\"rating-item-half\"><i class=\"icon ph ph-star-half\"></i></div><div class=\"rating-item-empty\"><i class=\"icon ph ph-star\"></i></div></div>",
 			"usage": {
@@ -5203,6 +5210,7 @@
 				"--osui-submenu-item-line-height",
 				"--osui-submenu-item-border-radius",
 				"--osui-submenu-item-selected-background",
+				"--osui-submenu-item-hover-background",
 				"--osui-submenu-item-pressed-background",
 				"--osui-submenu-item-color-disabled",
 				"--osui-submenu-header-color",
@@ -5604,6 +5612,7 @@
 				"--osui-tabs-header-gap",
 				"--osui-tabs-header-item-color",
 				"--osui-tabs-header-item-font-size",
+				"--osui-tabs-header-item-radius",
 				"--osui-tabs-header-item-border-radius",
 				"--osui-tabs-header-item-line-height",
 				"--osui-tabs-header-item-color-active",
@@ -7162,7 +7171,8 @@
 				"--osui-wizard-connector-radius",
 				"--osui-wizard-connector-size",
 				"--osui-wizard-focus-halo-color",
-				"--osui-wizard-focus-halo-width"
+				"--osui-wizard-focus-halo-width",
+				"--osui-focus-shadow-gap"
 			],
 			"markup": "<div class=\"osui-wizard\"><div class=\"list\"><div id=\"\" data-block=\"WizardItem.WizardItem\"><div name=\"\" class=\"osui-wizard-item\"><div class=\"osui-wizard-item-icon-wrapper\"><div class=\"osui-wizard-item-icon\"></div></div><div class=\"osui-wizard-item-label\"></div></div></div></div></div>",
 			"usage": {
