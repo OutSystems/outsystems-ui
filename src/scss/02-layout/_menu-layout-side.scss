@@ -30,15 +30,22 @@
 	.app-menu-content {
 		background-color: variables.$token-bg-surface-default;
 		flex-direction: column;
+		height: 100%;
+		left: calc(-1 * var(--side-menu-size));
 		position: fixed;
 		top: 0;
+		transform: translateX(0) translateZ(0);
+		transition: transform 130ms ease-in;
 		width: var(--side-menu-size);
+
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
+	}
 
-		&.is--open {
-			transition: transform 330ms ease-out;
-		}
+	.app-menu-content.is--open {
+		left: calc(-1 * var(--side-menu-size));
+		transform: translateX(var(--side-menu-size)) translateZ(0);
+		transition: transform 330ms ease-out;
 	}
 }
 
@@ -85,4 +92,19 @@
 			transition: none;
 		}
 	}	
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.app-menu-content {
+		left: unset;
+		right: calc(-1 * var(--side-menu-size));
+		transition: transform 330ms ease-in;
+	}
+
+	.app-menu-content.is--open {
+		transform: translateX(calc(-1 * var(--side-menu-size))) translateZ(0); 
+		transition: transform 130ms ease-out;
+	}
 }
