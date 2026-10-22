@@ -1,0 +1,239 @@
+# UI component tests on PR — copy this file to outsystems-ui/.github/workflows/
+#
+# On every PR it maps the changed files to component test folders in
+# OutSystems/outsystems-ui-tests-new, runs those Playwright suites on all
+# browsers (and both page themes when THEME=both), and upserts a results
+# comment on the PR.
+#
+# Required secret in outsystems-ui:
+#   OSUI_TESTS_REPO_TOKEN — fine-grained PAT with contents:read on
+#                           OutSystems/outsystems-ui-tests-new
+#
+# Safety note: pull_request_target is used so the default token can comment on
+# PRs (including from forks). The workflow NEVER checks out or executes PR
+# code — it only reads the changed-file list from the API; everything that
+# runs comes from the trusted tests repo.
+
+name: UI component tests
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: osui-component-tests-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  TESTS_REPO: OutSystems/outsystems-ui-tests-new
+  TESTS_REF: main
+  TEST_ENV: dev
+  # Page theme: new | classic | both. Flip to "both" once the _ClassicTheme
+  # pages are published to the base AT_OSUIFunctional module (they 404 there
+  # today, so "both" would fail every classic project).
+  THEME: new
+  PW_WORKERS: '6'
+
+jobs:
+  detect:
+    name: Detect changed components
+    runs-on: ubuntu-latest
+    outputs:
+      components: ${{ steps.map.outputs.components }}
+      test_paths: ${{ steps.map.outputs.test_paths }}
+      skip: ${{ steps.map.outputs.skip }}
+      unmatched: ${{ steps.map.outputs.unmatched }}
+    steps:
+      - name: List PR changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate \
+            "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" \
+            --jq '.[].filename' > changed-files.txt
+          echo "Changed files:"
+          cat changed-files.txt
+
+      - name: Checkout tests repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TESTS_REPO }}
+          ref: ${{ env.TESTS_REF }}
+          token: ${{ secrets.OSUI_TESTS_REPO_TOKEN }}
+          path: osui-tests
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Map changed files to component tests
+        id: map
+        run: node osui-tests/scripts/map-changed-files.mjs changed-files.txt >> "$GITHUB_OUTPUT"
+
+  test:
+    name: web (${{ matrix.browser }})
+    needs: detect
+    if: ${{ needs.detect.outputs.skip != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        browser: [chromium, firefox, webkit, msedge]
+    steps:
+      - name: Checkout tests repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TESTS_REPO }}
+          ref: ${{ env.TESTS_REF }}
+          token: ${{ secrets.OSUI_TESTS_REPO_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ${{ matrix.browser }}
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run component tests
+        id: tests
+        env:
+          TEST_ENV: ${{ env.TEST_ENV }}
+          THEME: ${{ env.THEME }}
+          PW_BROWSERS: ${{ matrix.browser }}
+          PW_WORKERS: ${{ env.PW_WORKERS }}
+          # Mapped folders include Legacy/<component> suites, whose tests are
+          # @legacy-tagged and only collected when this is set.
+          INCLUDE_LEGACY: 'true'
+        run: npx playwright test ${{ needs.detect.outputs.test_paths }}
+
+      - name: Record outcome
+        if: always()
+        run: |
+          mkdir -p outcomes
+          OUTCOME="${{ steps.tests.outcome }}"
+          if [ -z "$OUTCOME" ] || [ "$OUTCOME" = "skipped" ]; then
+            OUTCOME=failure
+          fi
+          echo "$OUTCOME" > "outcomes/${{ matrix.browser }}"
+          # Keep the junit next to the outcome so the comment job can count tests.
+          if [ -f test-results/junit-results.xml ]; then
+            cp test-results/junit-results.xml "outcomes/${{ matrix.browser }}.junit.xml"
+          fi
+
+      - name: Upload outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: outcome-${{ matrix.browser }}
+          path: outcomes/
+          retention-days: 1
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report
+          if-no-files-found: ignore
+          retention-days: 14
+
+  comment:
+    name: Comment results on PR
+    needs: [detect, test]
+    if: ${{ always() && needs.detect.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download outcomes
+        if: ${{ needs.detect.outputs.skip != 'true' }}
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          pattern: outcome-*
+          merge-multiple: true
+          path: outcomes
+
+      - name: Build comment body
+        id: body
+        env:
+          SKIP: ${{ needs.detect.outputs.skip }}
+          COMPONENTS: ${{ needs.detect.outputs.components }}
+          UNMATCHED: ${{ needs.detect.outputs.unmatched }}
+          THEME: ${{ env.THEME }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo '<!-- osui-functional-tests -->'
+            echo '## UI component tests'
+            echo ''
+            if [ "$SKIP" = "true" ]; then
+              echo 'No component test suites map to the files changed in this PR — tests were skipped.'
+              echo ''
+              echo "Unmatched changed files: ${UNMATCHED}. ([run]($RUN_URL))"
+            else
+              echo "**Components:** ${COMPONENTS// /, }"
+              echo "**Theme(s):** ${THEME} · **Environment:** ${TEST_ENV:-dev} ([run]($RUN_URL))"
+              echo ''
+              echo '| Browser | Result | Passed | Failed | Skipped |'
+              echo '|---|---|---|---|---|'
+              ANY_FAILED=0
+              for browser in chromium firefox webkit msedge; do
+                OUTCOME=$(cat "outcomes/$browser" 2>/dev/null || echo "missing")
+                JUNIT="outcomes/$browser.junit.xml"
+                TESTS=0; FAILURES=0; SKIPPED=0
+                if [ -f "$JUNIT" ]; then
+                  HEADER=$(grep -o '<testsuites[^>]*>' "$JUNIT" | head -1)
+                  TESTS=$(echo "$HEADER" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                  FAILURES=$(echo "$HEADER" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                  SKIPPED=$(echo "$HEADER" | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*' || echo 0)
+                fi
+                PASSED=$((TESTS - FAILURES - SKIPPED))
+                if [ "$OUTCOME" = "success" ]; then
+                  RESULT="passed"
+                elif [ "$OUTCOME" = "missing" ]; then
+                  RESULT="no result"; ANY_FAILED=1
+                else
+                  RESULT="**failed**"; ANY_FAILED=1
+                fi
+                echo "| $browser | $RESULT | $PASSED | $FAILURES | $SKIPPED |"
+              done
+              echo ''
+              if [ "${UNMATCHED:-0}" != "0" ]; then
+                echo "_${UNMATCHED} changed file(s) did not map to any component suite._"
+              fi
+              echo "any_failed=$ANY_FAILED" >> "$GITHUB_OUTPUT"
+            fi
+          } > comment-body.md
+          cat comment-body.md
+
+      - name: Upsert PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('comment-body.md', 'utf8');
+            const marker = '<!-- osui-functional-tests -->';
+            const issue_number = context.payload.pull_request.number;
+            const { owner, repo } = context.repo;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Fail if any browser failed
+        if: ${{ needs.detect.outputs.skip != 'true' && steps.body.outputs.any_failed == '1' }}
+        run: exit 1
