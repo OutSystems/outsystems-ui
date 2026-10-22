@@ -3790,7 +3790,7 @@
 			"cssApi": [
 				"--osui-focus-shadow-gap"
 			],
-			"markup": "<div class=\"osui-progress-circle\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-circle__container\"><div class=\"svg-wrapper\"><svg><defs></defs><circle class=\"osui-progress-circle__container__trail-path\"></circle><circle class=\"osui-progress-circle__container__progress-path\"></circle></svg></div></div><div class=\"osui-progress-circle__content\" id=\"-label\"></div></div>",
+			"markup": "<div class=\"osui-progress-bar\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-bar__container\"><div class=\"osui-progress-bar__value\"></div></div><div class=\"osui-progress-bar__content\" id=\"-label\"></div></div>",
 			"usage": {
 				"configs": {
 					"AnimateInitialProgress": false,

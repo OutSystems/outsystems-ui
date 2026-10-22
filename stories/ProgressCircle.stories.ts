@@ -1,5 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
+import { osuiRoot, renderPattern, uid } from './_helpers/osui';
+import {
+	COLOR_SECTIONS,
+	COLOR_SWATCHES,
+	initProgress,
+	labeledBoard,
+	PROGRESS_SHAPES,
+	PROGRESS_THICKNESSES,
+	progressArgTypes,
+	progressDefaultArgs,
+	sectionedBoard,
+	type ProgressArgs,
+} from './_helpers/progress';
 
 /**
  * Progress Circle — `Create(id, 'Circle', configs)`.
@@ -7,28 +19,18 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_h
  * `.osui-progress-circle__container > .osui-inline-svg.svg-wrapper`.
  * `auto` size follows the parent; any other size is a CSS length on `--progress-circle-size`.
  */
-interface ProgressCircleArgs {
-	progress: number;
-	thickness: number;
-	shape: string;
-}
-
-const meta: Meta<ProgressCircleArgs> = {
+const meta: Meta<ProgressArgs> = {
 	title: 'Patterns/Numbers/Progress Circle',
-	argTypes: {
-		progress: { control: { type: 'range', min: 0, max: 100 }, name: 'Progress' },
-		thickness: { control: { type: 'number', min: 1, max: 24 }, name: 'Thickness' },
-		shape: { control: 'inline-radio', options: ['sharp', 'soft', 'rounded', 'round'], name: 'Shape' },
-	},
-	args: { progress: 60, thickness: 8, shape: 'rounded' },
+	argTypes: progressArgTypes,
+	args: { ...progressDefaultArgs },
 };
 export default meta;
 
-type Story = StoryObj<ProgressCircleArgs>;
+type Story = StoryObj<ProgressArgs>;
 
-function circleMarkup(id: string): string {
+function circleMarkup(id: string, rootStyle = ''): string {
 	return `
-		<div ${osuiRoot(id)} class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+		<div ${osuiRoot(id)} class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100"${rootStyle ? ` style="${rootStyle}"` : ''}>
 			<div class="osui-progress-circle__container">
 				<div class="osui-inline-svg svg-wrapper">
 					<svg>
@@ -42,69 +44,18 @@ function circleMarkup(id: string): string {
 		</div>`;
 }
 
-function initCircle(
-	id: string,
-	configs: {
-		progress: number;
-		thickness: number;
-		shape: string;
-		animate: boolean;
-		progressColor?: string;
-		trailColor?: string;
-		size?: string;
-	},
-	register: Register
-): void {
-	const P = Patterns();
-	P.ProgressAPI.Create(
-		id,
-		'Circle',
-		cfg({
-			Progress: configs.progress,
-			Thickness: configs.thickness,
-			Shape: configs.shape,
-			ProgressColor: configs.progressColor ?? 'primary',
-			TrailColor: configs.trailColor ?? 'neutral-2',
-			AnimateInitialProgress: configs.animate,
-			InitialProgress: 0,
-			ProgressCircleSize: configs.size ?? 'auto',
-		})
-	);
-	P.ProgressAPI.Initialize(id);
-	// The circle applies its value on a timeout, and SetProgressValue then transitions
-	// the stroke for 0.35s. Set the value and drop that class before paint so a snapshot
-	// shows the arc.
-	if (!configs.animate) {
-		P.ProgressAPI.SetProgressValue(id, configs.progress);
-		document
-			.getElementById(id)
-			?.querySelector('.osui-progress-circle__container__progress-path')
-			?.classList.remove('animate-progress-change');
-	}
-	register(() => P.ProgressAPI.Dispose?.(id));
+/** The circle in a fixed square box, so `auto` size has a parent to follow. */
+function boxedCircle(id: string, box = '140px'): string {
+	return `<div style="height:${box};width:${box};">${circleMarkup(id)}</div>`;
 }
-
-const labelStyle = 'color:var(--color-text-subtle);font-family:monospace;font-size:0.8125rem;margin-bottom:8px;';
 
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('progress-circle');
-		const template = `
-			<div ${osuiRoot(id)} class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:140px;height:140px;">
-				<div class="osui-progress-circle__container">
-					<div class="osui-inline-svg svg-wrapper">
-						<svg>
-							<defs></defs>
-							<circle class="osui-progress-circle__container__trail-path"></circle>
-							<circle class="osui-progress-circle__container__progress-path"></circle>
-						</svg>
-					</div>
-				</div>
-				<div class="osui-progress-circle__content" id="${id}-label"></div>
-			</div>`;
-		return renderPattern(template, (_root, register) =>
-			initCircle(
+		return renderPattern(circleMarkup(id, 'width:140px;height:140px;'), (_root, register) =>
+			initProgress(
 				id,
+				'Circle',
 				{ progress: args.progress, thickness: args.thickness, shape: args.shape, animate: true },
 				register
 			)
@@ -116,25 +67,16 @@ export const Default: Story = {
 export const Thickness: Story = {
 	parameters: { controls: { disable: true } },
 	render: () => {
-		const thicknesses = [1, 8, 20] as const;
-		const cells = thicknesses.map((thickness) => ({ thickness, id: uid('progress-circle') }));
-		const board = document.createElement('div');
-		board.style.cssText = 'align-items:flex-start;display:flex;gap:24px;';
-		for (const cell of cells) {
-			const item = document.createElement('div');
-			const label = document.createElement('div');
-			label.textContent = String(cell.thickness);
-			label.style.cssText = labelStyle;
-			const box = document.createElement('div');
-			box.style.cssText = 'height:140px;width:140px;';
-			box.insertAdjacentHTML('beforeend', circleMarkup(cell.id));
-			item.append(label, box);
-			board.append(item);
-		}
+		const cells = PROGRESS_THICKNESSES.map((thickness) => ({ thickness, id: uid('progress-circle') }));
+		const board = labeledBoard(
+			cells.map((cell) => ({ label: String(cell.thickness), html: boxedCircle(cell.id) })),
+			{ direction: 'row' }
+		);
 		return renderPattern(board.outerHTML, (_root, register) => {
 			for (const cell of cells) {
-				initCircle(
+				initProgress(
 					cell.id,
+					'Circle',
 					{ progress: 60, thickness: cell.thickness, shape: 'rounded', animate: false, size: 'auto' },
 					register
 				);
@@ -150,29 +92,16 @@ export const Thickness: Story = {
 export const Shapes: Story = {
 	parameters: { controls: { disable: true } },
 	render: () => {
-		const shapes = [
-			{ label: 'Sharp', shape: 'none' },
-			{ label: 'Soft', shape: 'soft' },
-			{ label: 'Rounded', shape: 'rounded' },
-		] as const;
-		const cells = shapes.map((shape) => ({ ...shape, id: uid('progress-circle') }));
-		const board = document.createElement('div');
-		board.style.cssText = 'align-items:flex-start;display:flex;gap:24px;';
-		for (const cell of cells) {
-			const item = document.createElement('div');
-			const label = document.createElement('div');
-			label.textContent = cell.label;
-			label.style.cssText = labelStyle;
-			const box = document.createElement('div');
-			box.style.cssText = 'height:140px;width:140px;';
-			box.insertAdjacentHTML('beforeend', circleMarkup(cell.id));
-			item.append(label, box);
-			board.append(item);
-		}
+		const cells = PROGRESS_SHAPES.map((shape) => ({ ...shape, id: uid('progress-circle') }));
+		const board = labeledBoard(
+			cells.map((cell) => ({ label: cell.label, html: boxedCircle(cell.id) })),
+			{ direction: 'row' }
+		);
 		return renderPattern(board.outerHTML, (_root, register) => {
 			for (const cell of cells) {
-				initCircle(
+				initProgress(
 					cell.id,
+					'Circle',
 					{ progress: 60, thickness: 20, shape: cell.shape, animate: false, size: 'auto' },
 					register
 				);
@@ -184,56 +113,29 @@ export const Shapes: Story = {
 /**
  * Progress color keeps the stroke on each swatch and the trail on `neutral-2`.
  * Trail color uses the same swatches on the unfilled ring, with a primary stroke.
- * `GetColorValueFromColorType` resolves a known name and otherwise uses the string as a CSS color.
  */
 export const Colors: Story = {
 	parameters: { controls: { disable: true } },
 	render: () => {
-		const colors = [
-			{ label: 'Primary', color: 'primary' },
-			{ label: 'Success', color: 'success' },
-			{ label: 'Warning', color: 'warning' },
-			{ label: 'Error', color: 'error' },
-			{ label: 'Info', color: 'info' },
-			{ label: 'rgb(124, 58, 237)', color: 'rgb(124, 58, 237)' },
-			{ label: '#0F766E', color: '#0F766E' },
-		] as const;
-		const sections = [
-			{ title: 'Progress color', target: 'progress' },
-			{ title: 'Trail color', target: 'trail' },
-		] as const;
-		const cells = sections.flatMap((section) =>
-			colors.map((color) => ({ ...color, ...section, id: uid('progress-circle') }))
+		const cells = COLOR_SECTIONS.flatMap((section) =>
+			COLOR_SWATCHES.map((color) => ({ ...color, ...section, id: uid('progress-circle') }))
 		);
-		const board = document.createElement('div');
-		board.style.cssText = 'align-items:flex-start;display:flex;flex-direction:column;gap:40px;';
-		for (const section of sections) {
-			const group = document.createElement('div');
-			group.style.cssText = 'display:flex;flex-direction:column;gap:24px;';
-			const heading = document.createElement('div');
-			heading.textContent = section.title;
-			heading.style.cssText = 'font-size:0.875rem;font-weight:600;';
-			group.append(heading);
-			const row = document.createElement('div');
-			row.style.cssText = 'align-items:flex-start;display:flex;flex-wrap:wrap;gap:24px;';
-			for (const cell of cells.filter((entry) => entry.target === section.target)) {
-				const item = document.createElement('div');
-				const label = document.createElement('div');
-				label.textContent = cell.label;
-				label.style.cssText = labelStyle;
-				const box = document.createElement('div');
-				box.style.cssText = 'height:140px;width:140px;';
-				box.insertAdjacentHTML('beforeend', circleMarkup(cell.id));
-				item.append(label, box);
-				row.append(item);
-			}
-			group.append(row);
-			board.append(group);
-		}
+		const board = sectionedBoard(
+			COLOR_SECTIONS.map((section) => ({
+				title: section.title,
+				board: labeledBoard(
+					cells
+						.filter((cell) => cell.target === section.target)
+						.map((cell) => ({ label: cell.label, html: boxedCircle(cell.id) })),
+					{ direction: 'row', wrap: true }
+				),
+			}))
+		);
 		return renderPattern(board.outerHTML, (_root, register) => {
 			for (const cell of cells) {
-				initCircle(
+				initProgress(
 					cell.id,
+					'Circle',
 					{
 						progress: 60,
 						thickness: 8,
@@ -263,25 +165,18 @@ export const Sizes: Story = {
 			{ label: '200px', size: '200px', box: '' },
 		] as const;
 		const cells = sizes.map((size) => ({ ...size, id: uid('progress-circle') }));
-		const board = document.createElement('div');
-		board.style.cssText = 'align-items:flex-start;display:flex;gap:32px;';
-		for (const cell of cells) {
-			const item = document.createElement('div');
-			const label = document.createElement('div');
-			label.textContent = cell.label;
-			label.style.cssText = labelStyle;
-			const box = document.createElement('div');
-			if (cell.box) {
-				box.style.cssText = `height:${cell.box};width:${cell.box};`;
-			}
-			box.insertAdjacentHTML('beforeend', circleMarkup(cell.id));
-			item.append(label, box);
-			board.append(item);
-		}
+		const board = labeledBoard(
+			cells.map((cell) => ({
+				label: cell.label,
+				html: cell.box ? boxedCircle(cell.id, cell.box) : circleMarkup(cell.id),
+			})),
+			{ direction: 'row', gap: 32 }
+		);
 		return renderPattern(board.outerHTML, (_root, register) => {
 			for (const cell of cells) {
-				initCircle(
+				initProgress(
 					cell.id,
+					'Circle',
 					{ progress: 60, thickness: 8, shape: 'rounded', animate: false, size: cell.size },
 					register
 				);
