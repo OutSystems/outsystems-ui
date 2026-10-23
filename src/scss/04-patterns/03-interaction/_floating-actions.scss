@@ -109,12 +109,6 @@
 		flex-direction: column;
 		padding-block-end: variables.$token-scale-200;
 		padding-inline-end: variables.$token-scale-200;
-
-		// Service Studio Preview — this 8px inset centers the 40px icon on the
-		// 56px button. The empty icon is wider, so the inset shifts it off the button.
-		& {
-			-servicestudio-padding-inline-end: 0;
-		}
 	}
 
 	&-actions-item {
