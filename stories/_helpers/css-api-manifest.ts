@@ -39,10 +39,10 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-20T16:19:21.926Z',
+	generatedAt: '2026-10-21T15:01:15.944Z',
 	totals: {
-		properties: 627,
-		components: 70,
+		properties: 628,
+		components: 71,
 		categories: 9,
 	},
 	categories: [
@@ -2550,10 +2550,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-list-item-content-text-line-height',
-								default: '#{$token-font-line-height-500}',
+								default: '#{$token-font-line-height-600}',
 								kind: 'spacing',
 								chain: 'token',
-								hint: '#{$token-font-line-height-500}',
+								hint: '#{$token-font-line-height-600}',
 							},
 							{
 								name: '--osui-list-item-content-title-color',
@@ -3907,6 +3907,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-subtlest)',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Lightbox Image',
+					slug: 'patterns-interaction-lightbox-image',
+					file: 'src/scss/04-patterns/03-interaction/_lightbox-image.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.has-accessible-features',
+							properties: [
+							{
+								name: '--osui-focus-shadow-gap',
+								default: '#{$token-border-size-050}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-border-size-050}',
 							},
 						],
 					},

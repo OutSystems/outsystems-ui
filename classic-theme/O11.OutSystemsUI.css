@@ -11519,8 +11519,18 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon{
   padding:var(--space-s) var(--space-base);
   white-space:nowrap;
 }
+.osui-submenu__items a {
+  -servicestudio-display: block !important;
+}
 .osui-submenu__items a.active{
   color:var(--text-color-primary, var(--color-primary));
+}
+.osui-submenu__items a[disabled],
+.osui-submenu__items a.is-disabled {
+  background-color: transparent;
+  color:var(--text-color-neutral-6, var(--color-neutral-6));
+  cursor: auto;
+  pointer-events: none;
 }
 .layout:not(.layout-side) .app-menu-links .osui-submenu a{
   border-bottom:none;
