@@ -1,96 +1,133 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
+import { osuiRoot, renderPattern, uid } from './_helpers/osui';
+import {
+	COLOR_SECTIONS,
+	COLOR_SWATCHES,
+	initProgress,
+	labeledBoard,
+	PROGRESS_SHAPES,
+	PROGRESS_THICKNESSES,
+	progressArgTypes,
+	progressDefaultArgs,
+	sectionedBoard,
+	type ProgressArgs,
+} from './_helpers/progress';
 
 /**
- * Progress — `Create(id, type, configs)` where type ∈ {'Bar','Circle'}.
- * Bar needs `.osui-progress-bar__container > .osui-progress-bar__value`.
- * Circle needs an SVG with trail-path + progress-path circles inside
- * `.osui-progress-circle__container > .svg-wrapper`.
+ * Progress Bar — `Create(id, 'Bar', configs)`.
+ * Markup: `.osui-progress-bar__container > .osui-progress-bar__value`.
+ * Thickness is the `--thickness` inline length, in pixels.
  */
-interface ProgressArgs {
-	progress: number;
-	thickness: number;
-	shape: string;
-}
-
 const meta: Meta<ProgressArgs> = {
-	title: 'Patterns/Numbers/Progress',
-	argTypes: {
-		progress: { control: { type: 'range', min: 0, max: 100 }, name: 'Progress' },
-		thickness: { control: { type: 'number', min: 1, max: 24 }, name: 'Thickness' },
-		shape: { control: 'inline-radio', options: ['sharp', 'soft', 'rounded', 'round'], name: 'Shape' },
-	},
-	args: { progress: 60, thickness: 8, shape: 'rounded' },
+	title: 'Patterns/Numbers/Progress Bar',
+	argTypes: progressArgTypes,
+	args: { ...progressDefaultArgs },
 };
 export default meta;
 
 type Story = StoryObj<ProgressArgs>;
 
-export const Bar: Story = {
+function barMarkup(id: string): string {
+	return `
+		<div ${osuiRoot(id)} class="osui-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:360px;">
+			<div class="osui-progress-bar__container">
+				<div class="osui-progress-bar__value"></div>
+			</div>
+			<div class="osui-progress-bar__content" id="${id}-label"></div>
+		</div>`;
+}
+
+export const Default: Story = {
 	render: (args) => {
 		const id = uid('progress-bar');
-		const template = `
-			<div ${osuiRoot(id)} class="osui-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="max-width:360px;">
-				<div class="osui-progress-bar__container">
-					<div class="osui-progress-bar__value"></div>
-				</div>
-				<div class="osui-progress-bar__content" id="${id}-label"></div>
-			</div>`;
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			P.ProgressAPI.Create(
+		return renderPattern(barMarkup(id), (_root, register) =>
+			initProgress(
 				id,
 				'Bar',
-				cfg({
-					Progress: args.progress,
-					Thickness: args.thickness,
-					Shape: args.shape,
-					ProgressColor: 'primary',
-					TrailColor: 'border-subtle',
-					AnimateInitialProgress: true,
-					InitialProgress: 0,
-				})
-			);
-			P.ProgressAPI.Initialize(id);
-			register(() => P.ProgressAPI.Dispose?.(id));
+				{ progress: args.progress, thickness: args.thickness, shape: args.shape, animate: true },
+				register
+			)
+		);
+	},
+};
+
+/** The same fill at thickness 1, 8 and 20, so only the track height changes. */
+export const Thickness: Story = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const cells = PROGRESS_THICKNESSES.map((thickness) => ({ thickness, id: uid('progress-bar') }));
+		const board = labeledBoard(cells.map((cell) => ({ label: String(cell.thickness), html: barMarkup(cell.id) })));
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const cell of cells) {
+				initProgress(
+					cell.id,
+					'Bar',
+					{ progress: 60, thickness: cell.thickness, shape: 'rounded', animate: false },
+					register
+				);
+			}
 		});
 	},
 };
 
-export const Circle: Story = {
-	render: (args) => {
-		const id = uid('progress-circle');
-		const template = `
-			<div ${osuiRoot(id)} class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:140px;height:140px;">
-				<div class="osui-progress-circle__container">
-					<div class="svg-wrapper">
-						<svg>
-							<defs></defs>
-							<circle class="osui-progress-circle__container__trail-path"></circle>
-							<circle class="osui-progress-circle__container__progress-path"></circle>
-						</svg>
-					</div>
-				</div>
-				<div class="osui-progress-circle__content" id="${id}-label"></div>
-			</div>`;
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			P.ProgressAPI.Create(
-				id,
-				'Circle',
-				cfg({
-					Progress: args.progress,
-					Thickness: args.thickness,
-					Shape: args.shape,
-					ProgressColor: 'primary',
-					TrailColor: 'neutral-2',
-					AnimateInitialProgress: true,
-					InitialProgress: 0,
-					ProgressCircleSize: 'auto',
-				})
-			);
-			P.ProgressAPI.Initialize(id);
-			register(() => P.ProgressAPI.Dispose?.(id));
+/**
+ * Sharp (`none`, square ends), Soft and Rounded (pill) at the same fill.
+ * Shape is read from `--border-radius-{shape}` and applied as `--shape`.
+ */
+export const Shapes: Story = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const cells = PROGRESS_SHAPES.map((shape) => ({ ...shape, id: uid('progress-bar') }));
+		const board = labeledBoard(cells.map((cell) => ({ label: cell.label, html: barMarkup(cell.id) })));
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const cell of cells) {
+				initProgress(
+					cell.id,
+					'Bar',
+					{ progress: 60, thickness: 20, shape: cell.shape, animate: false },
+					register
+				);
+			}
+		});
+	},
+};
+
+/**
+ * Progress color keeps the fill on each swatch and the trail on `border-subtle`.
+ * Trail color uses the same swatches on the unfilled track, with a primary fill.
+ */
+export const Colors: Story = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const cells = COLOR_SECTIONS.flatMap((section) =>
+			COLOR_SWATCHES.map((color) => ({ ...color, ...section, id: uid('progress-bar') }))
+		);
+		const board = sectionedBoard(
+			COLOR_SECTIONS.map((section) => ({
+				title: section.title,
+				board: labeledBoard(
+					cells
+						.filter((cell) => cell.target === section.target)
+						.map((cell) => ({ label: cell.label, html: barMarkup(cell.id) }))
+				),
+			}))
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const cell of cells) {
+				initProgress(
+					cell.id,
+					'Bar',
+					{
+						progress: 60,
+						thickness: 8,
+						shape: 'rounded',
+						animate: false,
+						progressColor: cell.target === 'progress' ? cell.color : 'primary',
+						trailColor: cell.target === 'trail' ? cell.color : 'border-subtle',
+					},
+					register
+				);
+			}
 		});
 	},
 };

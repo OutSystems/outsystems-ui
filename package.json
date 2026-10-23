@@ -18,6 +18,8 @@
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
+		"test": "node scripts/run-e2e.mjs --theme new",
+		"test:classic": "node scripts/run-e2e.mjs --theme classic",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"chromatic": "chromatic --build-script-name=build-storybook",

@@ -53,8 +53,9 @@ jobs:
 
             - name: 🔍 Detect changes to the visual surface
               # Feeds the capture guard at the end of the job. Anything under src/ (the
-              # compiled library), stories/ or .storybook/ can move a snapshot, so if any
-              # of them changed, Chromatic must actually photograph something.
+              # compiled library), stories/, .storybook/ or classic-theme/ (snapshotted by
+              # the Chromatic `classic` mode) can move a snapshot, so if any of them
+              # changed, Chromatic must actually photograph something.
               #
               # Covers pushes as well as PRs — the base commit differs by event. Now that
               # push builds actually run (no Azure login to fail on, ADR-0009), the
@@ -73,7 +74,7 @@ jobs:
                     echo "No usable base commit for this event — assuming the visual surface changed."
                     exit 0
                   fi
-                  changed=$(git diff --name-only "$BASE...HEAD" -- src stories .storybook | wc -l | tr -d ' ')
+                  changed=$(git diff --name-only "$BASE...HEAD" -- src stories .storybook classic-theme | wc -l | tr -d ' ')
                   echo "changed=$changed" >> "$GITHUB_OUTPUT"
                   echo "Visual-surface files changed: $changed"
 
@@ -201,7 +202,7 @@ jobs:
                   CAPTURED: ${{ steps.chromatic.outputs.actualCaptureCount }}
               run: |
                   if [ "${CAPTURED:-0}" -eq 0 ]; then
-                    echo "::error::This build changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/ or .storybook/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
+                    echo "::error::This build changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/, .storybook/ or classic-theme/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
                     exit 1
                   fi
                   echo "Chromatic captured $CAPTURED snapshot(s)."

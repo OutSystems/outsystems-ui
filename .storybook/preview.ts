@@ -51,16 +51,44 @@ const THEME_HREF = {
 	classic: '/classic-theme/ODC.OutSystemsUI.css',
 } as const;
 
-function applyTheme(theme: string): void {
+/**
+ * Ceiling on the stylesheet wait, mirroring the font gate's reasoning: a broken
+ * or unreachable CSS request must not hang the whole canvas — better to capture
+ * with whatever is in effect than to show nothing.
+ */
+const THEME_CSS_TIMEOUT_MS = 5000;
+
+/**
+ * Resolves once the theme `<link>` has a parsed stylesheet. Needed because
+ * Chromatic captures as soon as loaders/decorators settle: a snapshot taken in a
+ * non-default mode (classic) between the href swap and the CSS arriving would
+ * photograph the wrong theme. `link.sheet` is non-null once the stylesheet is
+ * applied; before that, wait for `load`/`error` with the timeout as backstop
+ * (covers the listeners racing an already-fired event).
+ */
+function whenThemeStylesheetReady(link: HTMLLinkElement): Promise<void> {
+	if (link.sheet !== null) {
+		return Promise.resolve();
+	}
+	return new Promise<void>((resolve) => {
+		const settle = () => resolve();
+		link.addEventListener('load', settle, { once: true });
+		link.addEventListener('error', settle, { once: true });
+		setTimeout(settle, THEME_CSS_TIMEOUT_MS);
+	});
+}
+
+function applyTheme(theme: string): Promise<void> {
 	const link = document.getElementById('osui-theme') as HTMLLinkElement | null;
 	if (link === null) {
-		return;
+		return Promise.resolve();
 	}
 	const href = THEME_HREF[theme as keyof typeof THEME_HREF] ?? THEME_HREF.new;
 	// Only reassign when it actually changes to avoid a needless reflow / FOUC.
 	if (!link.href.endsWith(href)) {
 		link.setAttribute('href', href);
 	}
+	return whenThemeStylesheetReady(link);
 }
 
 function applyIconLibrary(library: string): void {
@@ -220,7 +248,19 @@ const preview: Preview = {
 	// geometry once at build time (Tabs' active-indicator width, etc.) otherwise
 	// race the Inter `display=swap` re-flow and bake in fallback-font metrics,
 	// which surfaces as a flaky few-px Chromatic diff. See `_helpers/fonts.ts`.
-	loaders: [() => waitForCanvasFonts()],
+	//
+	// Also gate on the theme stylesheet: the Chromatic `classic` mode (see
+	// `parameters.chromatic.modes`) swaps the `#osui-theme` href, and the capture
+	// must not race the classic CSS download. Loaders run before decorators and
+	// Chromatic awaits them; the decorator's own `applyTheme` call is then a
+	// no-op (href already matches).
+	loaders: [
+		(context) =>
+			Promise.all([
+				waitForCanvasFonts(),
+				applyTheme((context.globals.theme as string) ?? PREVIEW_GLOBAL_DEFAULTS.theme),
+			]),
+	],
 	// UI-review tracking: every story starts as `ui-pending`. As a component's UI
 	// is signed off, its meta opts out with `!ui-pending` and adds `ui-reviewed`
 	// (see e.g. Accordion / Alert stories). Filter by either in the sidebar's tag menu.
@@ -295,6 +335,17 @@ const preview: Preview = {
 	},
 	parameters: {
 		layout: 'padded',
+		chromatic: {
+			// Snapshot every story under BOTH themes. The keys inside each mode are
+			// Storybook globals — `theme` drives the `#osui-theme` <link> swap above
+			// (new token bundle vs the /classic-theme pre-migration snapshot). The
+			// other globals (appearance, direction, icons) keep their defaults, so
+			// this doubles the snapshot count rather than crossing a matrix.
+			modes: {
+				new: { theme: 'new' },
+				classic: { theme: 'classic' },
+			},
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
