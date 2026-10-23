@@ -17,7 +17,9 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
 		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
-		--osui-floating-actions-button-background-press: var(--color-primary-selected);
+		// Pressed shares the primary button's -active role; -selected is the
+		// selection role and a theme is free to give it a tint.
+		--osui-floating-actions-button-background-press: var(--color-primary-active, #{variables.$token-bg-primary-base-press});
 		--osui-floating-actions-button-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
@@ -39,15 +41,18 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
-		// Service Studio Preview — keep the runtime corner. An in-flow box
-		// sits at the top of MainContent; bottom: 0 lands under the bottom bar.
+		// Service Studio Preview — fixed leaves the preview and gets clipped.
+		// Absolute anchors to .content, whose bottom edge is the footer's top
+		// edge (.content-middle steps aside below, its box stops short of it).
 		& {
-			-servicestudio-position: fixed;
+			-servicestudio-position: absolute;
 		}
 
+		// Matches the runtime bottom-bar offset, so the gap above the bar reads
+		// the same at design time as the .bottom-bar-exists rule gives at runtime.
 		.main:has(.bottom-bar) & {
 			& {
-				-servicestudio-bottom: calc(var(--bottom-bar-size) + #{variables.$token-scale-400});
+				-servicestudio-bottom: variables.$token-scale-400;
 			}
 		}
 
@@ -142,18 +147,11 @@
 			-servicestudio-white-space: nowrap;
 		}
 
-		// The editor hint is painted inside the box at 10px and clipped.
-		// 56×56 keeps four lines and pulls the edge in to "Label widget".
-		// A real label stays right-aligned.
+		// Empty label keeps the design line: 20px tall, beside the 40px icon.
 		&:empty {
 			& {
-				-servicestudio-align-items: center;
-				-servicestudio-display: flex;
-				-servicestudio-height: variables.$token-scale-1400;
-				-servicestudio-justify-content: center;
-				-servicestudio-text-align: center;
-				-servicestudio-white-space: normal;
-				-servicestudio-width: variables.$token-scale-1400;
+				-servicestudio-min-height: variables.$token-scale-500;
+				-servicestudio-min-width: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -176,17 +174,10 @@
 		width: variables.$token-scale-1000;
 
 		// Service Studio Preview — 12px gap to the label (runtime keeps 16px).
-		// An empty icon grows so its hint fits; a dropped icon stays 40px.
+		// The icon stays 40px, inset from the 56px button by the items padding.
 		& {
 			-servicestudio-margin-inline-start: variables.$token-scale-300;
 			-servicestudio-transform: scale(1);
-		}
-
-		&:empty {
-			& {
-				-servicestudio-height: variables.$token-scale-1400;
-				-servicestudio-width: variables.$token-scale-1400;
-			}
 		}
 
 		&:hover {
@@ -248,6 +239,15 @@
 			opacity: 1;
 			pointer-events: auto;
 		}
+	}
+}
+
+// Service Studio Preview — .content-middle is the nearest positioned ancestor,
+// but its box ends above the footer, which left the button floating mid-screen.
+// Standing it down hands the anchor to .content, which reaches the footer.
+.content-middle:has(.floating-actions-wrapper) {
+	& {
+		-servicestudio-position: static;
 	}
 }
 // Responsive --------------------------------------------------------------------
