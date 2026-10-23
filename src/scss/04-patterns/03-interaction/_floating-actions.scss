@@ -17,8 +17,14 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
 		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
-		// Pressed uses the primary button's role; -selected is for selection.
-		--osui-floating-actions-button-background-press: var(--color-primary-active, #{variables.$token-bg-primary-base-press});
+		// The pressed colour comes from the same role the primary button presses
+		// with. Don't reach for --color-primary-selected here: that role means
+		// "selection highlight", and a theme is free to make it a faint tint,
+		// which would press this button to almost nothing.
+		--osui-floating-actions-button-background-press: var(
+			--color-primary-active,
+			#{variables.$token-bg-primary-base-press}
+		);
 		--osui-floating-actions-button-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
@@ -40,13 +46,16 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
-		// Service Studio Preview — anchors to .content, whose bottom edge is the
-		// footer's top edge (see the .content-middle rule at the end of the file).
+		// Service Studio Preview — the editor has no viewport to fix to, so the
+		// button is positioned against .content, whose bottom edge is the
+		// footer's top edge. The .content-middle rule at the end of this file
+		// is what hands the anchor over.
 		& {
 			-servicestudio-position: absolute;
 		}
 
-		// Service Studio Preview — mirrors the .bottom-bar-exists offset.
+		// Service Studio Preview — the same lift .bottom-bar-exists gives at
+		// runtime, so the gap above a bottom bar looks alike in both.
 		.main:has(.bottom-bar) & {
 			& {
 				-servicestudio-bottom: variables.$token-scale-400;
@@ -56,7 +65,7 @@
 		&:not(.is--open) {
 			pointer-events: none;
 
-			//Service Studio Preview
+			// Service Studio Preview
 			& {
 				-servicestudio-pointer-events: auto;
 			}
@@ -132,7 +141,9 @@
 	}
 
 	&-actions-item-label {
-		// Service Studio Preview — Figma sub item: body/action/xs, single line.
+		// Service Studio Preview — give the label the type Figma's sub item uses,
+		// body/action/xs on a single line, so a dropped Label widget already
+		// looks right in the editor.
 		& {
 			-servicestudio-color: var(--osui-floating-actions-item-color);
 			-servicestudio-font-size: variables.$token-font-size-300;
@@ -143,7 +154,8 @@
 			-servicestudio-white-space: nowrap;
 		}
 
-		// Keeps the design line when empty: 20px beside the 40px icon.
+		// An empty placeholder has no text to give it a size, so hold the shape
+		// the design asks for: 20px tall, sitting beside the 40px icon.
 		&:empty {
 			& {
 				-servicestudio-min-height: variables.$token-scale-500;
@@ -163,15 +175,14 @@
 		font-size: variables.$token-font-size-500;
 		height: variables.$token-scale-1000;
 		justify-content: center;
-		margin-inline-start: variables.$token-scale-400;
+		margin-inline-start: variables.$token-scale-300;
 		transform: translateZ(0) scale(0.3);
 		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 		width: variables.$token-scale-1000;
 
-		// Service Studio Preview — 12px gap to the label (runtime keeps 16px).
+		// Service Studio Preview
 		& {
-			-servicestudio-margin-inline-start: variables.$token-scale-300;
 			-servicestudio-transform: scale(1);
 		}
 
@@ -237,8 +248,10 @@
 	}
 }
 
-// Service Studio Preview — .content-middle is the nearest positioned ancestor
-// but its box ends above the footer, so .content takes the anchor instead.
+// Service Studio Preview — the wrapper above is positioned absolutely, and
+// .content-middle would normally catch it, being the nearest positioned
+// ancestor. Its box stops well short of the footer though, which strands the
+// button mid-screen, so it stands down and lets .content take the anchor.
 .content-middle:has(.floating-actions-wrapper) {
 	& {
 		-servicestudio-position: static;
