@@ -95,6 +95,18 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `.section-expandable .section-expandable-content.no-padding`: UsePadding=False
   clears the content padding when the section sits in a group.
   Mapping: `$token-scale-0` (0px) → `--space-none`. Approximations: none.
+- **2026-10-21 — ROU-13154 Submenu disabled state and Service Studio design-time (working tree)** —
+  added `.osui-submenu__items a { -servicestudio-display: block !important }` (the design-time
+  fix: Submenu links render in Service Studio the same way as the new theme) and the
+  `.osui-submenu__items a[disabled], .osui-submenu__items a.is-disabled` block (transparent
+  background, `cursor: auto`, `pointer-events: none`) immediately after `.osui-submenu__items a.active`,
+  in both bundles. The disabled rule comes after `a.active` at equal specificity, so it wins, as in the new theme.
+  Mapping: `$token-text-disabled` → `var(--text-color-neutral-6, var(--color-neutral-6))`, following
+  the classic fallback convention used by the rest of the file. The classic file defines no
+  `--text-color-neutral-6`, so the fallback always applies.
+  Approximations: the new theme's light `$token-text-disabled` resolves to primitive neutral-500
+  (`#9fa5ad`); the classic fallback is `--color-neutral-6` (`#adb5bd`), the nearest step on the old
+  neutral ramp. Not visually compared against a running build.
 
 ### Refresh log
 
