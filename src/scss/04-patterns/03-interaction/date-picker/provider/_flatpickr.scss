@@ -897,8 +897,7 @@ body:has(.has-accessible-features) {
 			}
 		}
 
-		.flatpickr-day:focus-visible,
-		.flatpickr-months .flatpickr-month:focus-visible {
+		.flatpickr-day:focus-visible {
 			overflow: visible;
 		}
 
