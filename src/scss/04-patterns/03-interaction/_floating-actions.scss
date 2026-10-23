@@ -75,8 +75,6 @@
 			}
 
 			.floating-button {
-				box-shadow: none;
-				filter: brightness(0.9);
 				transform: rotate(135deg) translateZ(0);
 			}
 		}
@@ -111,6 +109,12 @@
 		flex-direction: column;
 		padding-block-end: variables.$token-scale-200;
 		padding-inline-end: variables.$token-scale-200;
+
+		// Service Studio Preview — this 8px inset centers the 40px icon on the
+		// 56px button. The empty icon is wider, so the inset shifts it off the button.
+		& {
+			-servicestudio-padding-inline-end: 0;
+		}
 	}
 
 	&-actions-item {
@@ -131,15 +135,32 @@
 		}
 	}
 
-	&-actions-item-label:empty {
-		// Service Studio Preview — the placeholder is an empty div, so it
-		// collapses and the editor hint is clipped to nothing. It sits beside
-		// the icon placeholder, same as a filled item.
+	&-actions-item-label {
+		// Service Studio Preview — label sits to the start of the icon:
+		// body/action/xs, right-aligned, single line (Figma sub item).
 		& {
-			-servicestudio-min-height: variables.$token-scale-1200;
-			-servicestudio-min-width: variables.$token-scale-2800;
-			-servicestudio-overflow: visible;
-			-servicestudio-white-space: normal;
+			-servicestudio-color: var(--osui-floating-actions-item-color);
+			-servicestudio-font-size: variables.$token-font-size-300;
+			-servicestudio-font-weight: variables.$token-font-weight-medium;
+			-servicestudio-letter-spacing: variables.$token-font-letter-spacing-100;
+			-servicestudio-line-height: 1.666667;
+			-servicestudio-text-align: end;
+			-servicestudio-white-space: nowrap;
+		}
+
+		// The editor hint is painted inside the box at 10px and clipped.
+		// 56×56 keeps four lines and pulls the edge in to "Label widget".
+		// A real label stays right-aligned.
+		&:empty {
+			& {
+				-servicestudio-align-items: center;
+				-servicestudio-display: flex;
+				-servicestudio-height: variables.$token-scale-1400;
+				-servicestudio-justify-content: center;
+				-servicestudio-text-align: center;
+				-servicestudio-white-space: normal;
+				-servicestudio-width: variables.$token-scale-1400;
+			}
 		}
 	}
 
@@ -160,21 +181,17 @@
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 		width: variables.$token-scale-1000;
 
-		// Service Studio Preview
+		// Service Studio Preview — 12px gap to the label (runtime keeps 16px).
+		// An empty icon grows so its hint fits; a dropped icon stays 40px.
 		& {
+			-servicestudio-margin-inline-start: variables.$token-scale-300;
 			-servicestudio-transform: scale(1);
 		}
 
-		// The fixed 40×40 box clips the empty-placeholder hint. Size only the
-		// empty state; a dropped icon keeps the runtime circle.
 		&:empty {
 			& {
-				-servicestudio-height: auto;
-				-servicestudio-min-height: variables.$token-scale-1200;
-				-servicestudio-min-width: variables.$token-scale-2800;
-				-servicestudio-overflow: visible;
-				-servicestudio-white-space: normal;
-				-servicestudio-width: auto;
+				-servicestudio-height: variables.$token-scale-1400;
+				-servicestudio-width: variables.$token-scale-1400;
 			}
 		}
 
