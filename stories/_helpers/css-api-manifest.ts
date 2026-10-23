@@ -39,7 +39,7 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-22T16:38:17.161Z',
+	generatedAt: '2026-10-21T15:01:15.944Z',
 	totals: {
 		properties: 628,
 		components: 71,

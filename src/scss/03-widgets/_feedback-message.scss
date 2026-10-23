@@ -30,6 +30,7 @@
 	left: 50%; // physical: centring pair with the keyframes' translateX(-50%), which never mirrors
 	max-width: var(--osui-feedback-message-max-width);
 	min-width: var(--osui-feedback-message-min-width);
+	overflow-wrap: anywhere; // long unbreakable strings (URLs) wrap instead of spilling past max-width; `anywhere` (not `break-word`) also shrinks the text's min-content contribution, so the flex item can narrow
 	padding-block: variables.$token-scale-300;
 	padding-inline: variables.$token-scale-400;
 
