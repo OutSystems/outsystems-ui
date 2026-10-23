@@ -7,10 +7,15 @@
 // OSUI_LOCAL_BUILD env var, pointed here at this repo's root — it expects
 // dist/ and classic-theme/ under it).
 //
-// Usage (from package.json):
-//   npm run test                    -> new theme   (tests repo: test:functional)
-//   npm run test:classic           -> classic theme (tests repo: test:functional:classic)
-//   npm run test -- --grep Accordion  -> extra args are forwarded to Playwright
+// Usage (from package.json): every permutation of the tests repo is mirrored
+// as an npm script here (`npm run test`, `test:classic`, `test:odc:all-browsers`,
+// …), each invoking this wrapper with --script <tests repo script name>. The
+// wrapper delegates to that script so the env/project logic stays in the tests
+// repo. Extra args after -- are forwarded to Playwright:
+//   npm run test -- --grep Accordion
+//
+// Two permutations have no upstream script (current + legacy on all browsers)
+// and are composed here directly — see COMPOSED below.
 //
 // The tests repository is resolved in this order:
 //   1. OSUI_TESTS_DIR env var (an existing checkout),
@@ -20,7 +25,7 @@
 // Prerequisites: git read access to the private tests repository and network
 // access to the dev environment the tests navigate to.
 
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { spawnSync } from 'node:child_process';
@@ -28,6 +33,20 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TESTS_REPO_URL = process.env.OSUI_TESTS_REPO_URL || 'https://github.com/OutSystems/outsystems-ui-tests-new.git';
+
+const ALL_BROWSERS = 'chromium,firefox,webkit,msedge';
+
+// Permutations the tests repo does not expose as a script (its `:all` scripts
+// pin --project=chromium, which overrides PW_BROWSERS). These run Playwright
+// directly in the tests repo with the composing env vars.
+const COMPOSED = {
+	'test:functional:all:all-browsers': {
+		env: { INCLUDE_LEGACY: 'true', PW_BROWSERS: ALL_BROWSERS },
+	},
+	'test:functional:odc:all:all-browsers': {
+		env: { TEST_ENV: 'odc-dev', INCLUDE_LEGACY: 'true', PW_BROWSERS: ALL_BROWSERS },
+	},
+};
 
 /** Run a command inheriting stdio; returns its exit code (fails hard unless opts.soft). */
 function run(cmd, args, cwd, { env = {}, soft = false } = {}) {
@@ -46,20 +65,20 @@ function run(cmd, args, cwd, { env = {}, soft = false } = {}) {
 }
 
 function parseArgs(argv) {
-	let theme = 'new';
+	let script = 'test:functional';
 	const forward = [];
 	for (let i = 0; i < argv.length; i++) {
-		if (argv[i] === '--theme') {
-			theme = (argv[++i] || '').trim().toLowerCase();
+		if (argv[i] === '--script') {
+			script = (argv[++i] || '').trim();
 		} else {
 			forward.push(argv[i]);
 		}
 	}
-	if (theme !== 'new' && theme !== 'classic') {
-		console.error(`[run-e2e] Unknown --theme value: ${theme}. Valid: new, classic.`);
+	if (!script) {
+		console.error('[run-e2e] --script needs a tests repo script name (e.g. test:functional:odc).');
 		process.exit(1);
 	}
-	return { theme, forward };
+	return { script, forward };
 }
 
 function resolveTestsDir() {
@@ -102,35 +121,56 @@ function ensureBuild() {
 	run('npm', ['run', 'build:osui'], root);
 }
 
-function ensureTestsSetup(testsDir) {
+function ensureTestsSetup(testsDir, allBrowsers) {
 	if (!existsSync(path.join(testsDir, 'node_modules'))) {
 		console.log('[run-e2e] Installing tests repo dependencies…');
 		run('npm', ['ci', '--ignore-scripts'], testsDir);
 	}
-	// No-op when the browser is already present; downloads it on first run.
-	run('npx', ['playwright', 'install', 'chromium'], testsDir);
+	// No-op when the browsers are already present; downloads them on first run.
+	const browsers = allBrowsers ? ['chromium', 'firefox', 'webkit'] : ['chromium'];
+	run('npx', ['playwright', 'install', ...browsers], testsDir);
+	if (allBrowsers) {
+		console.log(
+			'[run-e2e] Note: the msedge leg uses the Microsoft Edge installed on this machine (a browser ' +
+				'channel, not a Playwright download) — install Edge if that leg fails to launch.'
+		);
+	}
 }
 
-const { theme, forward } = parseArgs(process.argv.slice(2));
+const { script, forward } = parseArgs(process.argv.slice(2));
 const testsDir = resolveTestsDir();
 console.log(`[run-e2e] Tests repo: ${testsDir}`);
 
-ensureBuild();
-ensureTestsSetup(testsDir);
+const composed = COMPOSED[script];
+if (!composed) {
+	const testsScripts = JSON.parse(readFileSync(path.join(testsDir, 'package.json'), 'utf8')).scripts ?? {};
+	if (!testsScripts[script]) {
+		console.error(`[run-e2e] Script not found in the tests repo: ${script}`);
+		console.error(`[run-e2e] Available: ${Object.keys(testsScripts).join(', ')}`);
+		process.exit(1);
+	}
+}
 
-if (theme === 'classic') {
+ensureBuild();
+ensureTestsSetup(testsDir, script.includes('all-browsers'));
+
+if (/classic|both-themes/.test(script)) {
 	console.log(
 		'[run-e2e] Note: the _ClassicTheme pages are not published to the base AT_OSUIFunctional module yet; ' +
 			'classic runs may fail wholesale until they are (see the note in outsystems-ui-pr-tests.yml).'
 	);
 }
 
-const script = theme === 'classic' ? 'test:functional:classic' : 'test:functional';
-console.log(`[run-e2e] Running ${script} against this checkout's build (THEME=${theme})…`);
-const code = run('npm', ['run', script, ...(forward.length > 0 ? ['--', ...forward] : [])], testsDir, {
-	env: { OSUI_LOCAL_BUILD: root },
-	soft: true,
-});
+console.log(`[run-e2e] Running ${script} against this checkout's build…`);
+const code = composed
+	? run('npx', ['playwright', 'test', 'tests/functional', ...forward], testsDir, {
+			env: { ...composed.env, OSUI_LOCAL_BUILD: root },
+			soft: true,
+		})
+	: run('npm', ['run', script, ...(forward.length > 0 ? ['--', ...forward] : [])], testsDir, {
+			env: { OSUI_LOCAL_BUILD: root },
+			soft: true,
+		});
 
 console.log(`\n[run-e2e] HTML report: ${path.join(testsDir, 'playwright-report', 'index.html')}`);
 process.exit(code);
