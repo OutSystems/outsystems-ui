@@ -239,12 +239,6 @@ select.dropdown-display[disabled] {
 			}
 		}
 
-		& > select {
-			&.dropdown-display:focus-visible {
-				@include a11y-focus-shadow;
-			}
-		}
-
 		.dropdown-popup-row:focus-visible {
 			@include a11y-focus-shadow($isInner: true);
 		}
