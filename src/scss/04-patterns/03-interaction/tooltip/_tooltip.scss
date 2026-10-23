@@ -81,6 +81,79 @@
 			-servicestudio-overflow: initial;
 			-servicestudio-pointer-events: initial;
 		}
+
+		// Service Studio Preview — FloatingUI places the arrow at runtime (half outside the edge
+		// facing the trigger), so mirror that per placement class; the shadow keeps the
+		// surface-coloured arrow visible on the canvas.
+		// physical: -servicestudio-* properties sit outside the logical-property conversion
+		$arrow-edge-offset: calc(var(--osui-tooltip-arrow-size) / -2);
+		$arrow-center-offset: calc(50% + var(--osui-tooltip-arrow-size) / -2);
+
+		.osui-tooltip__balloon-arrow {
+			-servicestudio-box-shadow: variables.$token-elevation-1;
+			-servicestudio-left: variables.$token-scale-300;
+			-servicestudio-top: $arrow-edge-offset;
+		}
+
+		&[class*='top'] .osui-tooltip__balloon-arrow {
+			-servicestudio-bottom: $arrow-edge-offset;
+			-servicestudio-top: initial;
+		}
+
+		&.top,
+		&.bottom {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-left: $arrow-center-offset;
+			}
+		}
+
+		&.top-end,
+		&.top-right,
+		&.bottom-end,
+		&.bottom-right {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-left: initial;
+				-servicestudio-right: variables.$token-scale-300;
+			}
+		}
+
+		&.right,
+		&.right-start,
+		&.right-end {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-left: $arrow-edge-offset;
+				-servicestudio-top: variables.$token-scale-300;
+			}
+		}
+
+		&.left,
+		&.left-start,
+		&.left-end {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-left: initial;
+				-servicestudio-right: $arrow-edge-offset;
+				-servicestudio-top: variables.$token-scale-300;
+			}
+		}
+
+		&.right,
+		&.left {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-top: $arrow-center-offset;
+			}
+		}
+
+		&.right-end,
+		&.left-end {
+			.osui-tooltip__balloon-arrow {
+				-servicestudio-bottom: variables.$token-scale-300;
+				-servicestudio-top: initial;
+			}
+		}
+
+		&.center .osui-tooltip__balloon-arrow {
+			-servicestudio-display: none;
+		}
 	}
 
 	&__balloon-arrow {
