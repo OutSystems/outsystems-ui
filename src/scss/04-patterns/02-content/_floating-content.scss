@@ -13,8 +13,8 @@
 
 	&.floating-content-full {
 		&-width {
-			inset-inline-end: 0;
-			inset-inline-start: 0;
+			left: 0;
+			right: 0;
 			width: auto;
 
 			& > .OSInline {
@@ -57,26 +57,26 @@
 		transform: translateX(-50%);
 
 		&-left {
-			inset-inline-start: 0;
+			left: 0;
 			margin-block-start: 0;
 			top: calc(var(--header-size) + variables.$token-space-400 * 2);
 		}
 
 		&-right {
-			inset-inline-end: 0;
+			right: 0;
 			margin-block-start: 0;
 			top: calc(var(--header-size) + variables.$token-space-400 * 2);
 		}
 	}
 
 	&-left {
-		inset-inline-start: 0;
+		left: 0;
 		top: 50%;
 		transform: translateY(-50%);
 	}
 
 	&-right {
-		inset-inline-end: 0;
+		right: 0;
 		top: 50%;
 		transform: translateY(-50%);
 	}
@@ -113,12 +113,12 @@
 
 		&-left {
 			bottom: 0;
-			inset-inline-start: 0;
+			left: 0;
 		}
 
 		&-right {
 			bottom: 0;
-			inset-inline-end: 0;
+			right: 0;
 		}
 	}
 
@@ -221,7 +221,7 @@
 				&-left:not(.absolute-left),
 				&-bottom-left:not(.absolute-left),
 				&-top-left:not(.absolute-left) {
-					inset-inline-start: var(--side-menu-size);
+					left: var(--side-menu-size);
 				}
 			}
 		}
@@ -237,7 +237,7 @@
 			&-left,
 			&-bottom-left {
 				&:not(.absolute-left) {
-					inset-inline-start: var(--side-menu-size);
+					left: var(--side-menu-size);
 				}
 			}
 		}
@@ -246,7 +246,7 @@
 	.layout-native {
 		.aside-visible {
 			.floating-content.floating-content-full-width {
-				inset-inline-start: var(--side-menu-size);
+				left: var(--side-menu-size);
 			}
 		}
 	}
@@ -259,7 +259,7 @@
 			.floating-content.floating-content-full-width {
 				.aside-visible.menu-visible {
 					.floating-content.floating-content-full-width {
-						inset-inline-start: var(--side-menu-size);
+						left: var(--side-menu-size);
 					}
 				}
 			}
@@ -278,8 +278,8 @@
 				}
 
 				&-width {
-					inset-inline-end: 0;
-					inset-inline-start: 0;
+					left: 0;
+					right: 0;
 				}
 			}
 
