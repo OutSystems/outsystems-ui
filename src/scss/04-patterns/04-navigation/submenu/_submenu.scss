@@ -236,6 +236,7 @@
 			// Disabled state — `pointer-events: none` is what keeps the hover and
 			// pressed rules from ever firing, so they need no `.is-disabled` guard.
 			// Declared last so its color wins over `.active`.
+			&[disabled],
 			&.is-disabled {
 				background-color: transparent;
 				color: var(--osui-submenu-item-color-disabled);
