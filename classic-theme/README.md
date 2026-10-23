@@ -107,6 +107,13 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   Approximations: the new theme's light `$token-text-disabled` resolves to primitive neutral-500
   (`#9fa5ad`); the classic fallback is `--color-neutral-6` (`#adb5bd`), the nearest step on the old
   neutral ramp. Not visually compared against a running build.
+- **2026-10-24 — ROU-13158 / df10716a2 "fix alert and feedback messages with long content" (#1325), feedback message only (working tree)** —
+  added `overflow-wrap:anywhere` to `.feedback-message`, between `min-width` and `padding`, in both bundles.
+  Long unbreakable strings (URLs) wrap instead of spilling past `max-width`; `anywhere` (not `break-word`)
+  also shrinks the text's min-content contribution so the flex item can narrow.
+  Mapping: none (a literal keyword, no tokens involved). Approximations: none.
+  Not ported: the `.alert` half of #1325 (`overflow-wrap:anywhere` on `.alert`) — out of scope for this entry.
+  Not visually compared against a running build.
 
 ### Refresh log
 
