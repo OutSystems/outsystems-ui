@@ -131,7 +131,7 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - btn: --osui-btn-min-height --osui-btn-background --osui-btn-color --osui-btn-border-color --osui-btn-hover-background --osui-btn-active-background --osui-btn-border-width --osui-btn-border-radius --osui-btn-disabled-overlay --osui-btn-primary-background --osui-btn-primary-border-color --osui-btn-primary-color --osui-btn-success-background --osui-btn-success-border-color --osui-btn-success-color --osui-btn-error-background --osui-btn-error-border-color --osui-btn-error-color
 - bulk-actions: --osui-checkbox-size
 - button-group: --osui-button-group-container-background --osui-button-group-container-padding --osui-button-group-container-gap --osui-button-group-container-border-radius --osui-button-group-background --osui-button-group-border-color --osui-button-group-border-width --osui-button-group-color --osui-button-group-border-radius --osui-button-group-font-size --osui-button-group-height --osui-button-group-min-width --osui-button-group-padding-inline --osui-button-group-selected-background --osui-button-group-selected-border-color --osui-button-group-selected-color --osui-button-group-hover-background --osui-button-group-disabled-color --osui-button-group-disabled-overlay
-- card: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-padding --osui-card-shadow
+- card: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-color --osui-card-padding --osui-card-shadow
 - card-background: --osui-card-background-color-rgb --osui-card-background-border-color --osui-card-background-border-width --osui-card-background-border-radius
 - card-item: --osui-card-detail-title-color --osui-card-detail-text-color
 - chat-message: --osui-chat-message-background --osui-chat-message-border-radius --osui-chat-message-sent-background --osui-chat-message-sent-color --osui-chat-message-status-color --osui-chat-message-status-line-height
@@ -144,6 +144,7 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - input-with-icon: --osui-input-with-icon-icon-color --osui-input-with-icon-icon-hover-color
 - inputs-and-textareas: --osui-input-background --osui-input-border-color --osui-input-hover-border-color --osui-input-color --osui-input-border-radius --osui-textarea-border-radius --osui-input-focus-border-color --osui-input-focus-ring-color --osui-input-error-border-color
 - layout: --osui-layout-aside-lines
+- lightbox-image: --osui-focus-shadow-gap
 - list-item: --osui-list-item-border-color --osui-list-item-background --osui-list-item-hover-background --osui-list-item-active-background --osui-list-item-selected-background --osui-list-item-selected-icon-color
 - list-item-content: --osui-list-item-content-title-color --osui-list-item-content-text-color --osui-list-item-content-text-line-height --osui-list-item-content-icon-size --osui-list-item-content-icon-color
 - list-updating: --osui-list-updating-track-color --osui-list-updating-indicator-color

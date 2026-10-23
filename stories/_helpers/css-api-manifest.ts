@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-21T15:01:15.944Z',
+	generatedAt: '2026-10-23T22:22:28.085Z',
 	totals: {
-		properties: 628,
+		properties: 629,
 		components: 71,
 		categories: 9,
 	},
@@ -2290,6 +2290,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: '#{$token-border-size-025}',
 							},
 							{
+								name: '--osui-card-color',
+								default: 'var(--color-text-subtle)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-text-subtle)',
+							},
+							{
 								name: '--osui-card-padding',
 								default: '#{$token-scale-600}',
 								kind: 'spacing',
@@ -2359,10 +2366,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-card-detail-text-color',
-								default: 'var(--color-text-subtlest)',
+								default: 'var(--color-text-subtle)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-subtlest)',
+								hint: 'var(--color-text-subtle)',
 							},
 							{
 								name: '--osui-card-detail-title-color',
@@ -3794,10 +3801,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-floating-actions-button-background-press',
-								default: 'var(--color-primary-selected)',
+								default: 'var(--color-primary-active, #{$token-bg-primary-base-press})',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-primary-selected)',
+								hint: 'var(--color-primary-active, #{$token-bg-primary-base-press})',
 							},
 							{
 								name: '--osui-floating-actions-button-border-radius',

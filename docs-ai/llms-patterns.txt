@@ -54,7 +54,7 @@ CSS API: --osui-button-group-container-background --osui-button-group-container-
 
 ### card (src/scss/04-patterns/02-content/_card.scss)
 [runtime-only] Skeleton (from stories/Card.stories.ts): <div><div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div><div class="card-detail-center"><div class="card-detail-title">Jane Doe</div><div class="card-detail-text">Product designer</div></div><div class="card-detail-right"><div class="badge border-radius-rounded background-primary OSInline"><span class="OSFillParent">3</span></div></div></div>
-CSS API: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-padding --osui-card-shadow
+CSS API: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-color --osui-card-padding --osui-card-shadow
 Docs: content/card
 
 ### chat-message (src/scss/04-patterns/02-content/_chat-message.scss)
@@ -110,6 +110,7 @@ CSS API: --osui-input-background --osui-input-border-color --osui-input-hover-bo
 
 ### lightbox-image (src/scss/04-patterns/03-interaction/_lightbox-image.scss)
 [runtime-only] Skeleton (from stories/LightboxImage.stories.ts): <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"><div class="pswp__bg"></div><div class="pswp__scroll-wrap"><div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div><div class="pswp__ui pswp__ui--hidden"><div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button><button class="pswp__button pswp__button--share" title="Share"></button><button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button><button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class="pswp__preloader"><div class="psw
+CSS API: --osui-focus-shadow-gap
 Docs: interaction/lightbox_image
 
 ### list (src/scss/03-widgets/_list.scss)

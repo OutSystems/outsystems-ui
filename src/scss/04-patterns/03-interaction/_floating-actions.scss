@@ -17,8 +17,7 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
 		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
-		// Pressed shares the primary button's -active role; -selected is the
-		// selection role and a theme is free to give it a tint.
+		// Pressed uses the primary button's role; -selected is for selection.
 		--osui-floating-actions-button-background-press: var(--color-primary-active, #{variables.$token-bg-primary-base-press});
 		--osui-floating-actions-button-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-button-color: var(--color-text-inverse);
@@ -41,15 +40,13 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
-		// Service Studio Preview — fixed leaves the preview and gets clipped.
-		// Absolute anchors to .content, whose bottom edge is the footer's top
-		// edge (.content-middle steps aside below, its box stops short of it).
+		// Service Studio Preview — anchors to .content, whose bottom edge is the
+		// footer's top edge (see the .content-middle rule at the end of the file).
 		& {
 			-servicestudio-position: absolute;
 		}
 
-		// Matches the runtime bottom-bar offset, so the gap above the bar reads
-		// the same at design time as the .bottom-bar-exists rule gives at runtime.
+		// Service Studio Preview — mirrors the .bottom-bar-exists offset.
 		.main:has(.bottom-bar) & {
 			& {
 				-servicestudio-bottom: variables.$token-scale-400;
@@ -135,19 +132,18 @@
 	}
 
 	&-actions-item-label {
-		// Service Studio Preview — label sits to the start of the icon:
-		// body/action/xs, right-aligned, single line (Figma sub item).
+		// Service Studio Preview — Figma sub item: body/action/xs, single line.
 		& {
 			-servicestudio-color: var(--osui-floating-actions-item-color);
 			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-font-weight: variables.$token-font-weight-medium;
 			-servicestudio-letter-spacing: variables.$token-font-letter-spacing-100;
-			-servicestudio-line-height: 1.666667;
+			-servicestudio-line-height: variables.$token-font-line-height-500;
 			-servicestudio-text-align: end;
 			-servicestudio-white-space: nowrap;
 		}
 
-		// Empty label keeps the design line: 20px tall, beside the 40px icon.
+		// Keeps the design line when empty: 20px beside the 40px icon.
 		&:empty {
 			& {
 				-servicestudio-min-height: variables.$token-scale-500;
@@ -174,7 +170,6 @@
 		width: variables.$token-scale-1000;
 
 		// Service Studio Preview — 12px gap to the label (runtime keeps 16px).
-		// The icon stays 40px, inset from the 56px button by the items padding.
 		& {
 			-servicestudio-margin-inline-start: variables.$token-scale-300;
 			-servicestudio-transform: scale(1);
@@ -242,9 +237,8 @@
 	}
 }
 
-// Service Studio Preview — .content-middle is the nearest positioned ancestor,
-// but its box ends above the footer, which left the button floating mid-screen.
-// Standing it down hands the anchor to .content, which reaches the footer.
+// Service Studio Preview — .content-middle is the nearest positioned ancestor
+// but its box ends above the footer, so .content takes the anchor instead.
 .content-middle:has(.floating-actions-wrapper) {
 	& {
 		-servicestudio-position: static;
