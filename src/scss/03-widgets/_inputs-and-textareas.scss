@@ -199,8 +199,6 @@ span.validation-message {
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: var(--color-border-input);
-
 			&:hover {
 				border-color: var(--osui-input-hover-border-color);
 			}
