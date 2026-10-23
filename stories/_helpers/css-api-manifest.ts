@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-23T22:53:46.227Z',
+	generatedAt: '2026-10-23T23:09:58.185Z',
 	totals: {
-		properties: 629,
+		properties: 630,
 		components: 71,
 		categories: 9,
 	},
@@ -3861,6 +3861,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-floating-actions-item-icon-color',
+								default: '#{$token-icon-subtle}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-icon-subtle}',
 							},
 							{
 								name: '--osui-floating-actions-item-shadow',

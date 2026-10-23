@@ -84,7 +84,7 @@ CSS API: --osui-feedback-message-background --osui-feedback-message-color --osui
 
 ### floating-actions (src/scss/04-patterns/03-interaction/_floating-actions.scss)
 [runtime-only] Skeleton (from stories/FloatingActions.stories.ts): <div><div class="floating-overlay"></div><div id=""><div class="floating-items" aria-hidden=""></div><div class="floating-button" role="button" tabindex="0" aria-expanded="" aria-label="Toggle actions"><i class="icon ph ph-plus"></i></div></div></div>
-CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-shadow --osui-focus-shadow-gap
+CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-icon-color --osui-floating-actions-item-shadow --osui-focus-shadow-gap
 Docs: interaction/floating_actions
 
 ### floating-content (src/scss/04-patterns/02-content/_floating-content.scss)

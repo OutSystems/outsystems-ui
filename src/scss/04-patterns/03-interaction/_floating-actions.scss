@@ -33,6 +33,7 @@
 		--osui-floating-actions-item-background-press: #{variables.$token-bg-neutral-subtlest-press};
 		--osui-floating-actions-item-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-item-color: var(--color-text);
+		--osui-floating-actions-item-icon-color: #{variables.$token-icon-subtle};
 		--osui-floating-actions-item-shadow: #{variables.$token-elevation-2};
 		// ───────────────────────────────────────────────────────────────────
 
@@ -149,6 +150,17 @@
 		text-align: end;
 		white-space: nowrap;
 
+		// A Label widget dropped in the placeholder arrives with the platform's
+		// form-label type on [data-label], and a declaration on the element
+		// overrides what it would inherit from here, so pull the values back down.
+		[data-label] {
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			letter-spacing: inherit;
+			line-height: inherit;
+		}
+
 		// An empty placeholder has no text to give it a size, so hold the shape
 		// the design asks for: 20px tall, sitting beside the 40px icon.
 		&:empty {
@@ -164,7 +176,7 @@
 		background-color: var(--osui-floating-actions-item-background);
 		border-radius: var(--osui-floating-actions-item-border-radius);
 		box-shadow: var(--osui-floating-actions-item-shadow);
-		color: var(--osui-floating-actions-item-color);
+		color: var(--osui-floating-actions-item-icon-color);
 		cursor: pointer;
 		display: flex;
 		font-size: variables.$token-font-size-500;
