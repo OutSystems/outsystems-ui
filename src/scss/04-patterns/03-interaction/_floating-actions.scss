@@ -141,18 +141,13 @@
 	}
 
 	&-actions-item-label {
-		// Service Studio Preview — give the label the type Figma's sub item uses,
-		// body/action/xs on a single line, so a dropped Label widget already
-		// looks right in the editor.
-		& {
-			-servicestudio-color: var(--osui-floating-actions-item-color);
-			-servicestudio-font-size: variables.$token-font-size-300;
-			-servicestudio-font-weight: variables.$token-font-weight-medium;
-			-servicestudio-letter-spacing: variables.$token-font-letter-spacing-100;
-			-servicestudio-line-height: variables.$token-font-line-height-500;
-			-servicestudio-text-align: end;
-			-servicestudio-white-space: nowrap;
-		}
+		color: var(--osui-floating-actions-item-color);
+		font-size: variables.$token-font-size-300;
+		font-weight: variables.$token-font-weight-medium;
+		letter-spacing: variables.$token-font-letter-spacing-100;
+		line-height: variables.$token-font-line-height-500;
+		text-align: end;
+		white-space: nowrap;
 
 		// An empty placeholder has no text to give it a size, so hold the shape
 		// the design asks for: 20px tall, sitting beside the 40px icon.

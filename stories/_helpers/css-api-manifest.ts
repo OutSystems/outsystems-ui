@@ -39,7 +39,7 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-23T22:22:28.085Z',
+	generatedAt: '2026-10-23T22:53:46.227Z',
 	totals: {
 		properties: 629,
 		components: 71,
@@ -3801,10 +3801,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-floating-actions-button-background-press',
-								default: 'var(--color-primary-active, #{$token-bg-primary-base-press})',
+								default: 'var( --color-primary-active, #{$token-bg-primary-base-press} )',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary-active, #{$token-bg-primary-base-press})',
+								chain: 'other',
+								hint: 'var( --color-primary-active, #{$token-bg-primary-base-press} )',
 							},
 							{
 								name: '--osui-floating-actions-button-border-radius',
