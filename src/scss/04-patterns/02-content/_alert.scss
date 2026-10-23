@@ -24,6 +24,7 @@
 	color: var(--osui-alert-color);
 	display: flex;
 	gap: variables.$token-space-300;
+	overflow-wrap: anywhere; // long unbreakable strings (URLs) wrap instead of spilling past the border; `anywhere` (not `break-word`) also shrinks the message's min-content contribution, so the flex item can narrow
 	padding: var(--osui-alert-padding);
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
