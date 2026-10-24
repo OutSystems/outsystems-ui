@@ -161,12 +161,13 @@
 			line-height: inherit;
 		}
 
-		// An empty placeholder has no text to give it a size, so hold the shape
-		// the design asks for: 20px tall, sitting beside the 40px icon.
+		// An empty placeholder has no text to give it a size. Hold the 20px
+		// height the design asks for, and enough width for the editor's
+		// "Drag Label here." hint to sit on one line without being clipped.
 		&:empty {
 			& {
 				-servicestudio-min-height: variables.$token-scale-500;
-				-servicestudio-min-width: variables.$token-scale-1000;
+				-servicestudio-min-width: variables.$token-scale-2000;
 			}
 		}
 	}
