@@ -17,7 +17,14 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
 		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
-		--osui-floating-actions-button-background-press: var(--color-primary-selected);
+		// The pressed colour comes from the same role the primary button presses
+		// with. Don't reach for --color-primary-selected here: that role means
+		// "selection highlight", and a theme is free to make it a faint tint,
+		// which would press this button to almost nothing.
+		--osui-floating-actions-button-background-press: var(
+			--color-primary-active,
+			#{variables.$token-bg-primary-base-press}
+		);
 		--osui-floating-actions-button-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
@@ -26,6 +33,7 @@
 		--osui-floating-actions-item-background-press: #{variables.$token-bg-neutral-subtlest-press};
 		--osui-floating-actions-item-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
 		--osui-floating-actions-item-color: var(--color-text);
+		--osui-floating-actions-item-icon-color: #{variables.$token-icon-subtle};
 		--osui-floating-actions-item-shadow: #{variables.$token-elevation-2};
 		// ───────────────────────────────────────────────────────────────────
 
@@ -39,10 +47,26 @@
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
+		// Service Studio Preview — the editor has no viewport to fix to, so the
+		// button is positioned against .content, whose bottom edge is the
+		// footer's top edge. The .content-middle rule at the end of this file
+		// is what hands the anchor over.
+		& {
+			-servicestudio-position: absolute;
+		}
+
+		// Service Studio Preview — the same lift .bottom-bar-exists gives at
+		// runtime, so the gap above a bottom bar looks alike in both.
+		.main:has(.bottom-bar) & {
+			& {
+				-servicestudio-bottom: variables.$token-scale-400;
+			}
+		}
+
 		&:not(.is--open) {
 			pointer-events: none;
 
-			//Service Studio Preview
+			// Service Studio Preview
 			& {
 				-servicestudio-pointer-events: auto;
 			}
@@ -63,8 +87,6 @@
 			}
 
 			.floating-button {
-				box-shadow: none;
-				filter: brightness(0.9);
 				transform: rotate(135deg) translateZ(0);
 			}
 		}
@@ -119,18 +141,49 @@
 		}
 	}
 
+	&-actions-item-label {
+		color: var(--osui-floating-actions-item-color);
+		font-size: variables.$token-font-size-300;
+		font-weight: variables.$token-font-weight-medium;
+		letter-spacing: variables.$token-font-letter-spacing-100;
+		line-height: variables.$token-font-line-height-500;
+		text-align: end;
+		white-space: nowrap;
+
+		// A Label widget dropped in the placeholder arrives with the platform's
+		// form-label type on [data-label], and a declaration on the element
+		// overrides what it would inherit from here, so pull the values back down.
+		[data-label] {
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			letter-spacing: inherit;
+			line-height: inherit;
+		}
+
+		// An empty placeholder has no text to give it a size. Hold the 20px
+		// height the design asks for, and enough width for the editor's
+		// "Drag Label here." hint to sit on one line without being clipped.
+		&:empty {
+			& {
+				-servicestudio-min-height: variables.$token-scale-500;
+				-servicestudio-min-width: variables.$token-scale-2000;
+			}
+		}
+	}
+
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
 		border-radius: var(--osui-floating-actions-item-border-radius);
 		box-shadow: var(--osui-floating-actions-item-shadow);
-		color: var(--osui-floating-actions-item-color);
+		color: var(--osui-floating-actions-item-icon-color);
 		cursor: pointer;
 		display: flex;
 		font-size: variables.$token-font-size-500;
 		height: variables.$token-scale-1000;
 		justify-content: center;
-		margin-inline-start: variables.$token-scale-400;
+		margin-inline-start: variables.$token-scale-300;
 		transform: translateZ(0) scale(0.3);
 		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
@@ -191,10 +244,25 @@
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-display: none;
+		}
+
 		&.is--open {
 			opacity: 1;
 			pointer-events: auto;
 		}
+	}
+}
+
+// Service Studio Preview — the wrapper above is positioned absolutely, and
+// .content-middle would normally catch it, being the nearest positioned
+// ancestor. Its box stops well short of the footer though, which strands the
+// button mid-screen, so it stands down and lets .content take the anchor.
+.content-middle:has(.floating-actions-wrapper) {
+	& {
+		-servicestudio-position: static;
 	}
 }
 // Responsive --------------------------------------------------------------------
