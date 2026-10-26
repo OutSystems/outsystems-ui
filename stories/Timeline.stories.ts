@@ -49,21 +49,32 @@ const timelineItemArgTypes: StoryObj<TimelineItemArgs>['argTypes'] = {
 	extendedClass: extendedClassArgType,
 };
 
-const timelineItem = (
-	left: string,
-	icon: string,
-	title: string,
-	desc: string,
-	active: boolean,
-	itemColor: string,
-	extra: string,
-	showIcon: boolean
-) => `
+interface TimelineItemOptions {
+	left: string;
+	icon: string;
+	title: string;
+	desc: string;
+	active?: boolean;
+	color?: string;
+	extra?: string;
+	showIcon?: boolean;
+}
+
+const timelineItem = ({
+	left,
+	icon,
+	title,
+	desc,
+	active = false,
+	color = 'primary',
+	extra = '',
+	showIcon = true,
+}: TimelineItemOptions) => `
 	<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
 		<div class="timeline-left OSInline">${left}</div>
 		<div class="timeline-icon OSInline">
 			<div class="timeline-icon-line OSInline"></div>
-			<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}">${showIcon ? `<i class="icon ph ${icon}"></i>` : ''}</div>
+			<div class="${cls('timeline-icon-container', color && `background-${color}`, 'OSInline')}">${showIcon ? `<i class="icon ph ${icon}"></i>` : ''}</div>
 		</div>
 		<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
 	</div>`;
@@ -76,9 +87,9 @@ const renderTimeline: NonNullable<StoryObj<TimelineItemArgs>['render']> = ({
 }) =>
 	renderStatic(`
 		<div class="timeline" role="list" style="max-width:480px;">
-			${timelineItem('2019', 'ph-archive', 'Pending approval', 'This request requires your approval.', false, 'primary', '', showIcon)}
-			${timelineItem('2020', 'ph-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass, showIcon)}
-			${timelineItem('2021', 'ph-flag', 'Closed', 'The request lifecycle is complete.', false, 'primary', '', showIcon)}
+			${timelineItem({ left: '2019', icon: 'ph-archive', title: 'Pending approval', desc: 'This request requires your approval.', showIcon })}
+			${timelineItem({ left: '2020', icon: 'ph-check', title: 'Approved', desc: 'The request was approved by the manager.', active: isActive, color, extra: extendedClass, showIcon })}
+			${timelineItem({ left: '2021', icon: 'ph-flag', title: 'Closed', desc: 'The request lifecycle is complete.', showIcon })}
 		</div>`);
 
 export const Default: StoryObj<TimelineItemArgs> = {
@@ -113,7 +124,7 @@ export const Colors: StoryObj = {
 					label: color,
 					html: `
 						<div class="timeline" role="list" style="width:220px;">
-							${timelineItem('2020', 'ph-check', 'Approved', `background-${color}`, false, color, '', true)}
+							${timelineItem({ left: '2020', icon: 'ph-check', title: 'Approved', desc: `background-${color}`, color })}
 						</div>`,
 				})),
 				{ direction: 'row', wrap: true }
