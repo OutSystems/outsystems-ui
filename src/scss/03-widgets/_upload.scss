@@ -68,13 +68,9 @@
 /* Accessibility -------------------------------------------------------------- */
 ///
 .has-accessible-features {
-	[data-upload] {
-		border: variables.$token-border-size-025 solid var(--color-border-input);
+	[data-upload]:focus-visible {
+		@include a11y-focus-shadow;
 
-		&:focus-visible {
-			@include a11y-focus-shadow;
-
-			border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
-		}
+		border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 	}
 }

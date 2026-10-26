@@ -50,20 +50,14 @@ a {
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	a {
-		&:focus-visible {
-			background-color: var(--osui-focus-shadow-color);
-			box-shadow: 0 2px var(--color-focus-inner);
-			color: var(--color-text);
+	a:focus-visible {
+		background-color: var(--osui-focus-shadow-color);
+		box-shadow: 0 2px var(--color-focus-inner);
+		color: var(--color-text);
 
-			&,
-			&:hover {
-				text-decoration: none;
-			}
-		}
-
-		&[disabled] {
-			color: var(--color-text-disabled);
+		&,
+		&:hover {
+			text-decoration: none;
 		}
 	}
 }

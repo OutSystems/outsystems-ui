@@ -48,12 +48,6 @@
 			border-color: var(--osui-input-hover-border-color);
 		}
 
-		&:focus {
-			border-color: var(--osui-input-focus-border-color);
-			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-input-focus-ring-color);
-			outline: none;
-		}
-
 		&[disabled] {
 			--osui-input-background: var(--color-background-input-disabled);
 			--osui-input-border-color: var(--color-border-input);
@@ -146,6 +140,7 @@ span.validation-message {
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-300;
 }
+
 /* Responsive ----------------------------------------------------------------- */
 ///
 .tablet,
@@ -184,10 +179,6 @@ span.validation-message {
 				border: 0;
 				border-block-end: variables.$token-border-size-025 solid transparent;
 				border-radius: 0;
-
-				&:focus {
-					border-block-end: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
-				}
 			}
 		}
 	}
@@ -199,10 +190,6 @@ span.validation-message {
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			&:hover {
-				border-color: var(--osui-input-hover-border-color);
-			}
-
 			&:focus-visible {
 				@include a11y-focus-shadow;
 
@@ -210,8 +197,6 @@ span.validation-message {
 			}
 
 			&.not-valid {
-				&,
-				&:hover,
 				&:focus-visible {
 					border-color: var(--osui-input-error-border-color);
 				}

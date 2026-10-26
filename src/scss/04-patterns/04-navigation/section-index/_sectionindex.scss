@@ -118,7 +118,7 @@
 ///
 .has-accessible-features {
 	.osui-section-index-item {
-		&:focus {
+		&:focus-visible {
 			background-color: transparent;
 			text-decoration: none;
 		}

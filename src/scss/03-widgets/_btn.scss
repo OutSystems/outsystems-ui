@@ -269,7 +269,7 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	& .btn:focus {
+	& .btn:focus-visible {
 		border-color: var(--color-background-surface);
 	}
 }
