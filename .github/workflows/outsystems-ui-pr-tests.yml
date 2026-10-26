@@ -2,7 +2,7 @@
 #
 # On every PR it builds this PR's OutSystems UI (both o11 and odc targets),
 # maps the changed files to component test folders in
-# OutSystems/outsystems-ui-tests-new, and runs those Playwright suites on all
+# OutSystems/outsystems-ui-tests-playwright, and runs those Playwright suites on all
 # browsers against BOTH platforms. The platform-served OutSystemsUI js/css are
 # replaced via network interception with this PR's build, so the tests
 # exercise the unmerged code. Results are upserted as one PR comment with a
@@ -10,7 +10,7 @@
 #
 # Required secret in outsystems-ui:
 #   OSUI_TESTS_REPO_TOKEN — fine-grained PAT with contents:read on
-#                           OutSystems/outsystems-ui-tests-new
+#                           OutSystems/outsystems-ui-tests-playwright
 #
 # Trigger note: plain pull_request is used because this workflow intentionally
 # builds and executes the PR's code (npm ci + gulp build). Fork PRs get no
@@ -37,7 +37,7 @@ permissions:
     contents: read
 
 env:
-    TESTS_REPO: OutSystems/outsystems-ui-tests-new
+    TESTS_REPO: OutSystems/outsystems-ui-tests-playwright
     TESTS_REF: main
     # Page theme: new | classic | both. Flip to "both" once the _ClassicTheme
     # pages are published to the base AT_OSUIFunctional module (they 404 there

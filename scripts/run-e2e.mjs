@@ -1,7 +1,7 @@
 // Run the OutSystems UI component tests against THIS checkout's build.
 //
 // The Playwright suites live in a separate repository
-// (OutSystems/outsystems-ui-tests-new). They navigate real pages on the dev
+// (OutSystems/outsystems-ui-tests-playwright). They navigate real pages on the dev
 // environment and swap the platform-served OutSystemsUI js/css with the files
 // of a local build via network interception (the tests repo reads the
 // OSUI_LOCAL_BUILD env var, pointed here at this repo's root — it expects
@@ -19,7 +19,8 @@
 //
 // The tests repository is resolved in this order:
 //   1. OSUI_TESTS_DIR env var (an existing checkout),
-//   2. a sibling checkout ../outsystems-ui-tests-new,
+//   2. a sibling checkout ../outsystems-ui-tests-playwright (or the repo's
+//      pre-rename name, ../outsystems-ui-tests-new),
 //   3. a clone into .osui-tests/ (git-ignored), updated with git pull on reuse.
 //
 // Prerequisites: git read access to the private tests repository and network
@@ -32,7 +33,8 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TESTS_REPO_URL = process.env.OSUI_TESTS_REPO_URL || 'https://github.com/OutSystems/outsystems-ui-tests-new.git';
+const TESTS_REPO_URL =
+	process.env.OSUI_TESTS_REPO_URL || 'https://github.com/OutSystems/outsystems-ui-tests-playwright.git';
 
 const ALL_BROWSERS = 'chromium,firefox,webkit,msedge';
 
@@ -92,9 +94,13 @@ function resolveTestsDir() {
 		return dir;
 	}
 
-	const sibling = path.resolve(root, '..', 'outsystems-ui-tests-new');
-	if (existsSync(path.join(sibling, 'package.json'))) {
-		return sibling;
+	// The repo was renamed outsystems-ui-tests-new → outsystems-ui-tests-playwright;
+	// older local checkouts may still carry the previous directory name.
+	for (const name of ['outsystems-ui-tests-playwright', 'outsystems-ui-tests-new']) {
+		const sibling = path.resolve(root, '..', name);
+		if (existsSync(path.join(sibling, 'package.json'))) {
+			return sibling;
+		}
 	}
 
 	const clone = path.join(root, '.osui-tests');
