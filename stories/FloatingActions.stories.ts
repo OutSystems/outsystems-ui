@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic, uid } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Floating Actions (parent) + Floating Actions Item (children).
@@ -39,11 +40,11 @@ const ACTIONS: Array<[label: string, icon: string]> = [
 	['Schedule', 'ph-calendar-plus'],
 ];
 
-function itemMarkup(label: string, icon: string, delay: number): string {
+function itemMarkup(label: string, icon: string, delay: number, pseudoAttr = ''): string {
 	return `
 		<div class="floating-actions-item" style="--delay: ${delay}">
 			<span >${label}</span>
-			<div class="floating-actions-item-button" role="button" tabindex="0" aria-label="${label}">
+			<div class="floating-actions-item-button"${pseudoAttr} role="button" tabindex="0" aria-label="${label}">
 				<i class="icon ph ${icon}"></i>
 			</div>
 		</div>`;
@@ -71,21 +72,38 @@ export default meta;
 
 type Story = StoryObj<FloatingActionsArgs>;
 
+/**
+ * The transformed demo box with the FAB stack inside, open or closed.
+ * `hover` marks the main FAB or the first item button with a `data-pseudo`
+ * attribute, which the OpenStates `pseudo` parameter forces into `:hover`
+ * (storybook-addon-pseudo-states).
+ */
+function floatingActionsMarkup(
+	isExpanded: boolean,
+	extendedClass: string,
+	size = 420,
+	hover?: 'button' | 'item'
+): string {
+	// Items animate bottom→top: the item closest to the FAB gets --delay: 1.
+	const items = ACTIONS.map(([label, icon], i) =>
+		itemMarkup(label, icon, ACTIONS.length - i, hover === 'item' && i === 0 ? ' data-pseudo="item-hover"' : '')
+	).join('');
+	const fabPseudo = hover === 'button' ? ' data-pseudo="fab-hover"' : '';
+	return `
+		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${size}px; width: ${size}px; max-width: 100%; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
+			<div class="floating-overlay"></div>
+			<div id="${uid('floating-actions')}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
+				<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
+				<div class="floating-button"${fabPseudo} role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
+					<i class="icon ph ph-plus"></i>
+				</div>
+			</div>
+		</div>`;
+}
+
 export const Default: Story = {
 	render: ({ isExpanded, isHover, extendedClass }) => {
-		const id = uid('floating-actions');
-		// Items animate bottom→top: the item closest to the FAB gets --delay: 1.
-		const items = ACTIONS.map(([label, icon], i) => itemMarkup(label, icon, ACTIONS.length - i)).join('');
-		const root = renderStatic(`
-			<div style="position: relative; transform: translateZ(0); overflow: hidden; height: 420px; width: 420px; max-width: 100%; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-				<div class="floating-overlay"></div>
-				<div id="${id}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
-					<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
-					<div class="floating-button" role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
-						<i class="icon ph ph-plus"></i>
-					</div>
-				</div>
-			</div>`);
+		const root = renderStatic(floatingActionsMarkup(isExpanded, extendedClass));
 
 		const wrapper = root.querySelector<HTMLElement>('.floating-actions-wrapper')!;
 		const overlay = root.querySelector<HTMLElement>('.floating-overlay')!;
@@ -118,4 +136,28 @@ export const Default: Story = {
 
 		return root;
 	},
+};
+
+/**
+ * The FAB stack closed next to its expanded (`.is--open`) state, plus the two
+ * hover states (forced via storybook-addon-pseudo-states): the main FAB
+ * hovered, and an expanded item button hovered.
+ */
+export const OpenStates: Story = {
+	parameters: {
+		controls: { disable: true },
+		pseudo: { hover: ['[data-pseudo="fab-hover"]', '[data-pseudo="item-hover"]'] },
+	},
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{ label: 'closed', html: floatingActionsMarkup(false, '', 300) },
+					{ label: 'hover (button)', html: floatingActionsMarkup(false, '', 300, 'button') },
+					{ label: 'open (is--open)', html: floatingActionsMarkup(true, '', 300) },
+					{ label: 'open + item hover', html: floatingActionsMarkup(true, '', 300, 'item') },
+				],
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };

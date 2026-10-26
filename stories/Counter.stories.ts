@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard, SWATCH_COLORS } from './_helpers/showcase';
 
 /**
  * Counter — shipped: `.counter.card.background-{color}.text-neutral-0` > `.center-align.flex-direction-{row|column}` > value + label + icon.
@@ -17,8 +18,21 @@ export default meta;
 
 type CounterArgs = { backgroundColor: string; isVertical: boolean; height: number; extendedClass: string };
 
+function counterMarkup({ backgroundColor, isVertical, height, extendedClass }: CounterArgs): string {
+	return `
+		<div class="${cls('counter', 'card', backgroundColor && `background-${backgroundColor}`, backgroundColor && 'text-neutral-0', extendedClass)}" style="max-width:240px;height:${height}px;">
+			<div class="${cls('center-align', isVertical ? 'flex-direction-column' : 'flex-direction-row')}" style="gap:12px;">
+				<div class="font-size-display text-neutral-0">26</div>
+				<div>Completed requests</div>
+				<div><i class="icon ph ph-check" style="font-size: 3em;"></i></div>
+			</div>
+		</div>`;
+}
+
+const baseArgs: CounterArgs = { backgroundColor: 'primary', isVertical: false, height: 150, extendedClass: '' };
+
 export const Default: StoryObj<CounterArgs> = {
-	args: { backgroundColor: 'primary', isVertical: false, height: 150, extendedClass: '' },
+	args: { ...baseArgs },
 	argTypes: {
 		backgroundColor: {
 			name: 'BackgroundColor',
@@ -39,13 +53,35 @@ export const Default: StoryObj<CounterArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ backgroundColor, isVertical, height, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('counter', 'card', backgroundColor && `background-${backgroundColor}`, backgroundColor && 'text-neutral-0', extendedClass)}" style="max-width:240px;height:${height}px;">
-				<div class="${cls('center-align', isVertical ? 'flex-direction-column' : 'flex-direction-row')}" style="gap:12px;">
-					<div class="font-size-display text-neutral-0">26</div>
-					<div>Completed requests</div>
-					<div><i class="icon ph ph-check" style="font-size: 3em;"></i></div>
-				</div>
-			</div>`),
+	render: (args) => renderStatic(counterMarkup(args)),
+};
+
+/** Every BackgroundColor swatch (solid; the Counter has no IsLight parameter). */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SWATCH_COLORS.map((color) => ({
+					label: color,
+					html: counterMarkup({ ...baseArgs, backgroundColor: color }),
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
+};
+
+/** Horizontal (row) next to vertical (column) content layout. */
+export const Orientation: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{ label: 'horizontal', html: counterMarkup({ ...baseArgs }) },
+					{ label: 'vertical', html: counterMarkup({ ...baseArgs, isVertical: true }) },
+				],
+				{ direction: 'row' }
+			).outerHTML
+		),
 };

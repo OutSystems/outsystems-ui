@@ -1,23 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
+import { renderPattern, uid } from './_helpers/osui';
+import { dropdownMarkup, initDropdown, pinDropdownOpen } from './_helpers/dropdown';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
- * Dropdown — VirtualSelect provider. Signature is
- * `Create(id, mode, provider, configs)` (mode + provider precede configs).
- * Options are passed as `OptionsList` in the config (data-driven, not DOM).
- * VirtualSelect mounts on the element whose id === the pattern id and appends
- * its dropbox to <body>. Requires `window.VirtualSelect`.
+ * Dropdown — the search-mode VirtualSelect dropdown (the low-code `Dropdown`
+ * block). Single selection by default; `AllowMultipleSelection` turns on
+ * checkbox multi-select. The tags variant is a separate pattern — see
+ * `DropdownTags.stories.ts`. Harness contract in `_helpers/dropdown.ts`.
  */
 interface DropdownArgs {
 	allowMultipleSelection: boolean;
 	isDisabled: boolean;
 }
-
-const OPTIONS = [
-	{ label: 'Apple', value: 'apple' },
-	{ label: 'Banana', value: 'banana' },
-	{ label: 'Cherry', value: 'cherry' },
-];
 
 const meta: Meta<DropdownArgs> = {
 	title: 'Patterns/Interaction/Dropdown',
@@ -31,39 +26,91 @@ export default meta;
 
 type Story = StoryObj<DropdownArgs>;
 
-function renderDropdown(args: DropdownArgs): HTMLElement {
-	const id = uid('dropdown');
-	// Platform markup parity: the widget root carries the mode class (osui-dropdown-search / osui-dropdown-tags)
-	const modeClass = args.allowMultipleSelection ? 'osui-dropdown-tags' : 'osui-dropdown-search';
-	const template = `<div ${osuiRoot(id)} class="osui-dropdown ${modeClass}" style="max-width:280px;"></div>`;
-	return renderPattern(template, (_root, register) => {
-		const P = Patterns();
-		const mode = args.allowMultipleSelection ? 'tags' : 'search';
-		P.DropdownAPI.Create(
-			id,
-			mode,
-			'virtual-select',
-			cfg({
-				AllowMultipleSelection: args.allowMultipleSelection,
-				IsDisabled: args.isDisabled,
-				OptionsList: OPTIONS,
-				StartingSelection: [],
-				Prompt: 'Choose a fruit',
-				SearchPrompt: 'Search…',
-				NoOptionsText: 'No options',
-				NoResultsText: 'No results',
-			})
-		);
-		P.DropdownAPI.Initialize(id);
-		register(() => P.DropdownAPI.Dispose?.(id));
-	});
-}
-
 export const Default: Story = {
-	render: renderDropdown,
+	render: (args) => {
+		const id = uid('dropdown');
+		return renderPattern(dropdownMarkup(id, 'search'), (_root, register) =>
+			initDropdown(
+				id,
+				'search',
+				{ AllowMultipleSelection: args.allowMultipleSelection, IsDisabled: args.isDisabled },
+				register
+			)
+		);
+	},
 };
 
-export const Tags: Story = {
-	args: { allowMultipleSelection: true },
-	render: renderDropdown,
+/** Enabled next to disabled (`IsDisabled: true`). */
+export const States: Story = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const entries = [
+			{ label: 'enabled', isDisabled: false },
+			{ label: 'disabled', isDisabled: true },
+		].map((v) => ({ ...v, id: uid('dropdown') }));
+		const board = labeledBoard(
+			entries.map(({ label, id }) => ({
+				label,
+				html: `<div style="width:280px;">${dropdownMarkup(id, 'search')}</div>`,
+			})),
+			{ direction: 'row', wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, isDisabled } of entries) {
+				initDropdown(id, 'search', { IsDisabled: isDisabled }, register);
+			}
+		});
+	},
+};
+
+/**
+ * The selection states: dropbox pinned open (single), one option selected,
+ * multi-select open (checkboxes), and multi-select with several selected
+ * ("2 options selected"). Open cells use VirtualSelect `keepAlwaysOpen` via
+ * `SetProviderConfigs` (see `pinDropdownOpen`).
+ */
+export const SelectionStates: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 300 } },
+	render: () => {
+		const variants: Array<{
+			label: string;
+			open: boolean;
+			configs: Record<string, unknown>;
+		}> = [
+			{ label: 'open', open: true, configs: {} },
+			{
+				label: 'one selected',
+				open: false,
+				configs: { StartingSelection: [{ label: 'Banana', value: 'banana' }] },
+			},
+			{ label: 'multiple options (open)', open: true, configs: { AllowMultipleSelection: true } },
+			{
+				label: 'multiple selected',
+				open: false,
+				configs: {
+					AllowMultipleSelection: true,
+					StartingSelection: [
+						{ label: 'Apple', value: 'apple' },
+						{ label: 'Cherry', value: 'cherry' },
+					],
+				},
+			},
+		];
+		const entries = variants.map((v) => ({ ...v, id: uid('dropdown') }));
+		const board = labeledBoard(
+			entries.map(({ label, id, open }) => ({
+				label,
+				html: `<div style="width:280px;${open ? 'height:260px;' : ''}">${dropdownMarkup(id, 'search')}</div>`,
+			})),
+			{ direction: 'row', gap: 24, wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, open, configs } of entries) {
+				initDropdown(id, 'search', configs, register);
+				if (open) {
+					pinDropdownOpen(id);
+				}
+			}
+		});
+	},
 };

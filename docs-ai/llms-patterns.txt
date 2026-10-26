@@ -7,7 +7,7 @@ Three kinds of styles without TypeScript behaviour, each with a different contra
 CSS-only components: no TypeScript behaviour. Emit the markup and classes below and the compiled stylesheet does the rest. Skeletons come from the Storybook stories; `--osui-*` knobs are the per-instance overrides. A component marked **host-styled** is a layer another pattern creates (a balloon): adjust it through its knobs only.
 
 ### action-sheet (src/scss/04-patterns/03-interaction/_action-sheet.scss)
-[runtime-only] Skeleton (from stories/ActionSheet.stories.ts): <div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div>
+[runtime-only] Skeleton (from stories/ActionSheet.stories.ts): <div><div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div></div>
 CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-focus-inner-shadow-gap --osui-action-sheet-actions-layer
 Docs: interaction/action_sheet
 
@@ -88,7 +88,7 @@ CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background
 Docs: interaction/floating_actions
 
 ### floating-content (src/scss/04-patterns/02-content/_floating-content.scss)
-[runtime-only] Skeleton (from stories/FloatingContent.stories.ts): <div><div>Screen content scrolls behind the floating block.</div><div><div class="card">Floating content</div></div></div>
+[runtime-only] Skeleton (from stories/FloatingContent.stories.ts): <div><div><div>Screen content scrolls behind the floating block.</div><div><div class="card"></div></div></div></div>
 Docs: content/floating_content
 
 ### form (src/scss/03-widgets/_form.scss)

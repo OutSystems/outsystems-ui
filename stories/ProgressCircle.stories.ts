@@ -4,14 +4,13 @@ import {
 	COLOR_SECTIONS,
 	COLOR_SWATCHES,
 	initProgress,
-	labeledBoard,
 	PROGRESS_SHAPES,
 	PROGRESS_THICKNESSES,
 	progressArgTypes,
 	progressDefaultArgs,
-	sectionedBoard,
 	type ProgressArgs,
 } from './_helpers/progress';
+import { labeledBoard, sectionedBoard } from './_helpers/showcase';
 
 /**
  * Progress Circle — `Create(id, 'Circle', configs)`.

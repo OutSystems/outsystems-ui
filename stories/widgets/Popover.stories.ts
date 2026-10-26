@@ -41,49 +41,48 @@ const content = `
 			</div>
 		</div>`;
 
+// The platform positions `.popover-bottom` centered under the trigger
+// (`margin-left: -50%` + `translateX(-50%)`), so it spreads half its width to
+// each side — the trigger is centered here to keep the popover fully visible.
+const stage = (inner: string): string => `<div style="padding:20px;min-height:220px;text-align:center;">${inner}</div>`;
+
 export const Default: Story = {
 	render: () =>
-		renderPattern(
-			`<div style="padding:20px;min-height:220px;">
-				<div data-popover="" class="">${trigger}</div>
-			</div>`,
-			(root, register) => {
-				const popover = root.querySelector<HTMLElement>('[data-popover]')!;
-				const top = popover.querySelector<HTMLElement>('.popover-top')!;
+		renderPattern(stage(`<div data-popover="" class="">${trigger}</div>`), (root, register) => {
+			const popover = root.querySelector<HTMLElement>('[data-popover]')!;
+			const top = popover.querySelector<HTMLElement>('.popover-top')!;
 
-				const setOpen = (open: boolean): void => {
-					// The widget appends/removes the content region rather than hiding it,
-					// and its root className keeps the leading space from an empty `style`.
-					popover.className = open ? ' popover-expanded' : '';
-					popover.querySelector('.popover-bottom')?.remove();
-					if (open) {
-						popover.insertAdjacentHTML('beforeend', content);
-					}
-				};
+			const setOpen = (open: boolean): void => {
+				// The widget appends/removes the content region rather than hiding it,
+				// and its root className keeps the leading space from an empty `style`.
+				popover.className = open ? ' popover-expanded' : '';
+				popover.querySelector('.popover-bottom')?.remove();
+				if (open) {
+					popover.insertAdjacentHTML('beforeend', content);
+				}
+			};
 
-				top.addEventListener('click', () => setOpen(!popover.classList.contains('popover-expanded')));
+			top.addEventListener('click', () => setOpen(!popover.classList.contains('popover-expanded')));
 
-				// Outside click collapses, as the live widget does via a document listener.
-				// Registered for teardown so it does not survive a story switch.
-				const onDocClick = (e: MouseEvent): void => {
-					if (!popover.contains(e.target as Node)) {
-						setOpen(false);
-					}
-				};
-				document.addEventListener('click', onDocClick);
-				register(() => document.removeEventListener('click', onDocClick));
-			}
-		),
+			// Outside click collapses, as the live widget does via a document listener.
+			// Registered for teardown so it does not survive a story switch.
+			const onDocClick = (e: MouseEvent): void => {
+				if (!popover.contains(e.target as Node)) {
+					setOpen(false);
+				}
+			};
+			document.addEventListener('click', onDocClick);
+			register(() => document.removeEventListener('click', onDocClick));
+		}),
 };
 
 /** Pinned open — the state that carries the widget's own CSS, so Chromatic sees it. */
 export const Expanded: Story = {
 	render: () =>
-		renderStatic(`
-			<div style="padding:20px;min-height:220px;">
-				<div data-popover="" class=" popover-expanded">
+		renderStatic(
+			stage(`<div data-popover="" class=" popover-expanded">
 					${trigger}
 					${content}
-				</div>
-			</div>`),
+				</div>`)
+		),
 };

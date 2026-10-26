@@ -336,13 +336,18 @@ const preview: Preview = {
 	parameters: {
 		layout: 'padded',
 		chromatic: {
-			// Snapshot every story under BOTH themes. The keys inside each mode are
-			// Storybook globals — `theme` drives the `#osui-theme` <link> swap above
-			// (new token bundle vs the /classic-theme pre-migration snapshot). The
-			// other globals (appearance, direction, icons) keep their defaults, so
-			// this doubles the snapshot count rather than crossing a matrix.
+			// Snapshot every story under the new theme (light AND dark appearance)
+			// plus the classic theme. The keys inside each mode are Storybook
+			// globals — `theme` drives the `#osui-theme` <link> swap above (new
+			// token bundle vs the /classic-theme pre-migration snapshot) and
+			// `colorScheme` toggles `.os-dark-theme` on `<html>` (same mechanism
+			// as the Appearance toolbar). The classic theme predates the tokens
+			// and has no dark mode, so it stays light-only. The remaining globals
+			// (direction, icons) keep their defaults, so this triples the snapshot
+			// count rather than crossing a matrix.
 			modes: {
 				new: { theme: 'new' },
+				'new dark': { theme: 'new', colorScheme: 'dark' },
 				classic: { theme: 'classic' },
 			},
 		},
