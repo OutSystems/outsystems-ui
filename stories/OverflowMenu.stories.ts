@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createAndInit, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
-import { labeledBoard } from './_helpers/showcase';
+import { labeledBoard, type BoardOptions } from './_helpers/showcase';
 
 /**
  * OverflowMenu — the low-code block exposes a `Trigger` placeholder where an Icon
@@ -100,7 +100,7 @@ export const Default: Story = {
 /** One labeled cell per variant, each menu pinned open via `OverflowMenuAPI.Open`. */
 function openMenusBoard(
 	variants: Array<{ label: string; configs: { Position: string; Shape: string }; cellStyle?: string }>,
-	boardOptions: { direction: 'row' | 'column'; gap?: number; wrap?: boolean } = { direction: 'row', wrap: true }
+	boardOptions?: BoardOptions
 ) {
 	const entries = variants.map((v) => ({ ...v, id: uid('overflow-menu') }));
 	const board = labeledBoard(
@@ -110,7 +110,7 @@ function openMenusBoard(
 				cellStyle ?? 'width:260px;height:300px;display:flex;align-items:flex-start;justify-content:flex-start;'
 			}">${overflowMenuMarkup(id, 'ph-dots-three-vertical')}</div>`,
 		})),
-		boardOptions
+		boardOptions ?? { direction: 'row', wrap: true }
 	);
 	const init = (_root: HTMLElement, register: Register) => {
 		for (const { id, configs } of entries) {
