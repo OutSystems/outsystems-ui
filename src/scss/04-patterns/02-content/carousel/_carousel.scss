@@ -82,7 +82,10 @@
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: var(--border-radius-rounded);
+				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
+				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				height: variables.$token-scale-300;
+				margin: variables.$token-scale-150;
 				width: variables.$token-scale-300;
 				transition: background-color variables.$token-transition-time-200
 					variables.$token-transition-curve-linear;
@@ -190,14 +193,8 @@
 		.splide {
 			--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
-			&__pagination__page {
-				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
-				// (12px dot + 6px margin × 2 = 24px total territory per axis)
-				margin: variables.$token-scale-150;
-
-				&:focus-visible {
-					@include a11y-focus-shadow;
-				}
+			&__pagination__page:focus-visible {
+				@include a11y-focus-shadow;
 			}
 
 			&__arrow:focus-visible {

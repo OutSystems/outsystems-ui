@@ -311,7 +311,7 @@
 
 		&.is-half input:focus-visible + .rating-item .rating-item-filled,
 		&:not(.is-half) input:focus-visible + .rating-item .rating-item-half,
-		input:checked + .rating-item .rating-item-empty {
+		input:focus-visible:checked + .rating-item .rating-item-empty {
 			box-shadow: none;
 		}
 	}

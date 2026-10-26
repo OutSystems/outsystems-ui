@@ -101,19 +101,17 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	[data-checkbox] {
-		&:focus-visible {
-			@include a11y-focus-shadow();
+	[data-checkbox]:focus-visible {
+		@include a11y-focus-shadow();
 
-			border-radius: var(--osui-checkbox-border-radius);
+		border-radius: var(--osui-checkbox-border-radius);
 
-			&:before {
-				border-color: var(--osui-checkbox-border-color);
-			}
+		&:before {
+			border-color: var(--osui-checkbox-border-color);
+		}
 
-			&:checked:before {
-				border-color: var(--osui-checkbox-checked-color);
-			}
+		&:checked:before {
+			border-color: var(--osui-checkbox-checked-color);
 		}
 	}
 }

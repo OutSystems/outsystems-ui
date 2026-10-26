@@ -496,6 +496,13 @@ span.flatpickr-weekday {
 	}
 }
 
+// Monthpicker dropdown
+.osui-monthpicker__dropdown {
+	.flatpickr-innerContainer {
+		overflow: visible;
+	}
+}
+
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
 	padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
@@ -916,10 +923,6 @@ body:has(.has-accessible-features) {
 	}
 
 	.osui-monthpicker__dropdown {
-		.flatpickr-innerContainer {
-			overflow: visible;
-		}
-
 		.numInputWrapper input,
 		.flatpickr-prev-month,
 		.flatpickr-next-month {
