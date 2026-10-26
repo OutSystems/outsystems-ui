@@ -71,6 +71,10 @@
 		}
 
 		&:checked {
+			&:before {
+				border-color: var(--color-border);
+			}
+
 			&:after {
 				border: variables.$token-border-size-075 solid var(--color-text-disabled);
 			}
@@ -98,28 +102,10 @@
 ///
 .has-accessible-features {
 	[data-checkbox] {
-		border-radius: var(--osui-checkbox-border-radius);
-
-		&:hover {
-			&:before {
-				border-color: var(--osui-checkbox-hover-border-color);
-			}
-		}
-
-		&[disabled]:checked {
-			&:before {
-				border-color: var(--color-border);
-			}
-		}
-
-		&:checked {
-			&:before {
-				border-color: var(--osui-checkbox-checked-color);
-			}
-		}
-
 		&:focus-visible {
 			@include a11y-focus-shadow();
+
+			border-radius: var(--osui-checkbox-border-radius);
 
 			&:before {
 				border-color: var(--osui-checkbox-border-color);

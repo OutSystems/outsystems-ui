@@ -92,38 +92,15 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	[data-switch] {
+	[data-switch]:focus-visible {
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
+		@include a11y-focus-shadow;
+
 		border-radius: var(--border-radius-rounded);
 
-		&:empty {
-			&:before {
-				background-color: var(--color-border-input);
-				border-color: var(--color-border-input);
-			}
-		}
-
-		&:hover {
-			&:before {
-				background-color: var(--color-border-input-hover);
-				border-color: var(--color-border-input-hover);
-			}
-		}
-
-		&:checked {
-			&:before {
-				background-color: var(--osui-switch-checked-track-color);
-				border-color: var(--osui-switch-checked-track-color);
-			}
-		}
-
-		&:focus-visible {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
-
-			@include a11y-focus-shadow;
-
-			&:before {
-				border-color: variables.$token-semantics-primary-base;
-			}
+		&:before {
+			border-color: variables.$token-semantics-primary-base;
 		}
 	}
 }

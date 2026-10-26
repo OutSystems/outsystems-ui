@@ -718,6 +718,11 @@ span.flatpickr-weekday {
 		opacity: 0.7;
 	}
 
+	// ─── Days container ─────────────────────────────────────────────────
+	.flatpickr-days {
+		overflow: visible;
+	}
+
 	// ─── Today button ───────────────────────────────────────────────────
 	.flatpickr-today-button {
 		border-top: variables.$token-border-size-025 solid variables.$token-border-subtle;
@@ -862,10 +867,6 @@ span.flatpickr-weekday {
 // Accessibility ------------------------------------------------------------------
 body:has(.has-accessible-features) {
 	.osui-datepicker-calendar {
-		.flatpickr-days {
-			overflow: visible;
-		}
-
 		.flatpickr-day {
 			&:focus-visible {
 				border-color: var(--color-focus-outer);

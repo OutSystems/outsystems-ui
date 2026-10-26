@@ -315,27 +315,6 @@
 			box-shadow: none;
 		}
 	}
-
-	fieldset[disabled='true'] {
-		.rating-item {
-			&-filled,
-			&-half {
-				color: var(--color-text-disabled);
-
-				.icon {
-					color: var(--color-text-disabled);
-				}
-			}
-
-			&-empty {
-				color: var(--color-text-disabled);
-
-				.icon {
-					color: var(--color-border-input);
-				}
-			}
-		}
-	}
 }
 
 // Fix issue on chromium based browsers, related with css snap and the complex combination of HTML and CSS properties used by the Rating

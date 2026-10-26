@@ -78,8 +78,9 @@
 		}
 
 		&.dropdown-expanded > div.dropdown-display {
+			@include a11y-focus-shadow;
+
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
-			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color);
 		}
 
 		& > div.dropdown-list {
@@ -222,20 +223,12 @@ select.dropdown-display[disabled] {
 ///
 .has-accessible-features {
 	.dropdown-container {
-		&.dropdown-expanded {
-			& > div.dropdown-display {
-				@include a11y-focus-shadow;
-			}
-		}
-
 		& > div,
 		& > select {
-			&.dropdown-display {
-				border-color: var(--color-border-input);
+			&.dropdown-display:focus-visible {
+				@include a11y-focus-shadow;
 
-				&:focus-visible {
-					@include a11y-focus-shadow;
-				}
+				border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
 			}
 		}
 

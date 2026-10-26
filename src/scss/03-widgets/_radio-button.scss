@@ -145,49 +145,17 @@
 
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
-	.radio-button {
+	.radio-button:focus-visible {
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+
+		@include a11y-focus-shadow;
+
 		border-radius: var(--border-radius-rounded);
 
 		&:before {
-			border-color: var(--color-border-input);
+			background-color: variables.$token-semantics-primary-base;
+			border-color: var(--color-text);
+			box-shadow: none;
 		}
-
-		&:after {
-			background-color: var(--color-background-input);
-			border-radius: var(--border-radius-rounded);
-			content: '';
-			height: variables.$token-scale-300;
-			inset-inline-start: 50%;
-			margin-inline-start: calc(#{variables.$token-scale-300} * -0.5);
-			margin-block-start: calc(#{variables.$token-scale-300} * -0.5);
-			position: absolute;
-			position: absolute;
-			top: 50%;
-			width: variables.$token-scale-300;
-		}
-
-		&:focus-visible {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
-
-			@include a11y-focus-shadow;
-
-			&:before {
-				background-color: variables.$token-semantics-primary-base;
-				border-color: var(--color-text);
-				box-shadow: none;
-			}
-		}
-
-		&:checked:before {
-			border-color: var(--color-primary);
-		}
-
-		&:hover:before {
-			border-color: var(--osui-radio-hover-border-color);
-		}
-	}
-
-	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: var(--color-primary);
 	}
 }

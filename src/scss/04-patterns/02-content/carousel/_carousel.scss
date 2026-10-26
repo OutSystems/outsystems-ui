@@ -186,10 +186,6 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.splide__slide {
-		box-shadow: none;
-	}
-
 	.osui-carousel {
 		.splide {
 			--osui-focus-shadow-gap: #{variables.$token-scale-050};

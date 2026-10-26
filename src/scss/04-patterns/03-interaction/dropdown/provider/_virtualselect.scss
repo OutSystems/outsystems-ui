@@ -606,15 +606,6 @@
 // Accessibility -----------------------------------------------------------------
 ///
 body:has(.has-accessible-features) {
-	.vscomp-toggle-button {
-		border-color: var(--color-border-input);
-		color: var(--color-text);
-
-		&:after {
-			color: var(--color-text);
-		}
-	}
-
 	.vscomp-search-container:focus-within {
 		@include a11y-focus-shadow($isInner: true);
 	}
