@@ -182,7 +182,7 @@
 		.aside-navigation {
 			// Service Studio Preview
 			& {
-				-servicestudio-display: none;
+				-servicestudio-display: none!important;
 			}
 		}
 	}

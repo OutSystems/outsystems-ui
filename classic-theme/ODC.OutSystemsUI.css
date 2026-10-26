@@ -3468,6 +3468,7 @@ span.validation-message{
   left:50%;
   max-width:600px;
   min-width:400px;
+  overflow-wrap:anywhere;
   padding:var(--space-base);
 }
 .feedback-message i{
