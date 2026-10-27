@@ -157,9 +157,13 @@
 			// If has today btn
 			&.has-today-btn {
 				.osui-datepicker-calendar-ss-preview--today {
+					border-top: variables.$token-border-size-025 solid variables.$token-border-subtle;	
+					color: var(--color-primary);
 					display: block;
-					text-align: center;
 					font-size: clamp(10px, 1.7vw, 14px);
+					font-weight: variables.$token-font-weight-medium;
+					padding: variables.$token-scale-200 variables.$token-scale-400;
+					text-align: center;
 				}
 			}
 
