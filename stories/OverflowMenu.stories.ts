@@ -15,11 +15,12 @@ interface OverflowMenuArgs {
 }
 
 /**
- * Sample menu content — the low-code `Content` placeholder takes whatever the dev
- * drops in it (here: a section title, four icon + label links, and a Separator
- * before the last one). Icon and label are wrapped in a flex span rather than
- * classed on the `<a>` itself: `.osui-overflow-menu__balloon a { display: block }`
- * (specificity 0,1,1) outweighs the `.display-flex` utility (0,1,0).
+ * Sample menu content — mirrors what the platform renders in the `Menu` placeholder
+ * (a section title, four icon + label links, and a Separator block before the last
+ * one), wrapped in a `nav.display-flex.flex-direction-column`. That wrapper is
+ * load-bearing in the classic theme: its CSS has no `.osui-overflow-menu__balloon
+ * a { display: block }`, so without the flex column the anchors flow inline. Each
+ * link holds the icon and a `.margin-left-s` span directly, as the platform emits.
  */
 const ITEMS: Array<[label: string, icon: string]> = [
 	['Item 1', 'ph-eye'],
@@ -30,11 +31,8 @@ const ITEMS: Array<[label: string, icon: string]> = [
 
 function itemMarkup(label: string, icon: string): string {
 	return `
-					<a href="#${label.toLowerCase().replace(/\s+/g, '-')}">
-						<span class="display-flex align-items-center gap-s">
-							<i class="icon ph ${icon}"></i>
-							<span>${label}</span>
-						</span>
+					<a role="menuitem" href="#${label.toLowerCase().replace(/\s+/g, '-')}">
+						<i class="icon ph ${icon}" aria-hidden="true" style="width: 16px;"></i><span class="margin-left-s">${label}</span>
 					</a>`;
 }
 
@@ -69,21 +67,25 @@ export default meta;
 type Story = StoryObj<OverflowMenuArgs>;
 
 function overflowMenuMarkup(id: string, icon: string): string {
-	// Separator sits above the last item. It has no CSS-API var (colour is a low-code
-	// param), so an instance tweak goes straight on background-color.
+	// The Separator block renders a padded container around the line; colour comes from
+	// the `background-neutral-4` utility (present in both themes), as the platform emits.
 	const items = ITEMS.map(([label, icon], i) =>
 		i === ITEMS.length - 1
 			? `
-					<div class="separator separator-horizontal" style="background-color: var(--color-border-subtle);"></div>${itemMarkup(label, icon)}`
+					<div class="padding-top-base padding-bottom-base">
+						<div class="separator separator-horizontal background-neutral-4"></div>
+					</div>${itemMarkup(label, icon)}`
 			: itemMarkup(label, icon)
 	).join('');
 	return `
 		<div ${osuiRoot(id)} class="osui-overflow-menu">
 			<button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph ${icon}"></i></button>
 			<div class="osui-overflow-menu__balloon osui-balloon" id="${id}-balloon">
-				<div class="font-size-label font-semi-bold text-uppercase text-neutral-7 padding-x-base padding-top-base padding-bottom-xs">
-					Title
-				</div>${items}
+				<nav class="display-flex flex-direction-column">
+					<span class="text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s" aria-hidden="true">
+						Title
+					</span>${items}
+				</nav>
 			</div>
 		</div>`;
 }

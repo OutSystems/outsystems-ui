@@ -8,12 +8,19 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *
  *   .bottom-bar-wrapper                    surface + top border (height: 100%)
  *     .bottom-bar > div[.active]           one container per item (flex: 1)
- *       .bottom-bar-item                   column layout
- *         .bottom-bar-item-icon            icon slot
- *         .bottom-bar-item-text            ellipsized label
+ *       .bottom-bar-item                        column layout
+ *         .placeholder-empty.bottom-bar-item-icon   icon slot
+ *         .placeholder-empty.bottom-bar-item-text   ellipsized label
  *
  * The item wrapper is a plain container — the BottomBarItem block does not render an
  * `<a>` — so the mock uses `div`. The SCSS covers `> a, > div` for that reason.
+ *
+ * The platform emits an inline `text-align: center;` on both placeholders (the block's
+ * alignment). The classic CSS relies on it — it has no centering of its own — while the
+ * new theme centers via `text-align: center` on `.bottom-bar-item`, so the mock must
+ * carry the inline styles for the classic theme to render correctly. The placeholder
+ * class is `placeholder-empty` on ODC (`ph` is O11-only, and collides with Phosphor's
+ * icon-font class in this Storybook).
  *
  * In the native layout the wrapper lives in a `.footer` sized by
  * `--bottom-bar-size`; the demo box reproduces that height.
@@ -57,8 +64,8 @@ export const Default: Story = {
 							([label, icon], i) => `
 							<div class="${cls(i === activeIndex && 'active')}">
 								<div class="bottom-bar-item">
-									<div class="bottom-bar-item-icon"><i class="icon ph ${icon}"></i></div>
-									<div class="bottom-bar-item-text">${label}</div>
+									<div class="placeholder-empty bottom-bar-item-icon" style="text-align: center;"><i class="icon ph ${icon}"></i></div>
+									<div class="placeholder-empty bottom-bar-item-text" style="text-align: center;">${label}</div>
 								</div>
 							</div>`
 						).join('')}

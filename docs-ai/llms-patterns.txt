@@ -31,7 +31,7 @@ CSS API: --osui-blank-slate-description-color --osui-blank-slate-icon-color
 Docs: content/blank_slate
 
 ### bottom-bar-item (src/scss/04-patterns/04-navigation/_bottom-bar-item.scss)
-[runtime-only] Skeleton (from stories/BottomBar.stories.ts): <div><div><div class="bottom-bar"><div><div class="bottom-bar-item"><div class="bottom-bar-item-icon"><i class="icon ph "></i></div><div class="bottom-bar-item-text"></div></div></div></div></div></div>
+[runtime-only] Skeleton (from stories/BottomBar.stories.ts): <div><div><div class="bottom-bar"><div><div class="bottom-bar-item"><div class="placeholder-empty bottom-bar-item-icon"><i class="icon ph "></i></div><div class="placeholder-empty bottom-bar-item-text"></div></div></div></div></div></div>
 CSS API: --osui-bottom-bar-background --osui-bottom-bar-border-color --osui-bottom-bar-item-color --osui-bottom-bar-item-active-color --osui-bottom-bar-item-icon-color --osui-bottom-bar-item-icon-active-color
 Docs: navigation/bottom_bar_item
 

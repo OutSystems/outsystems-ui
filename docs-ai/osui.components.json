@@ -138,7 +138,7 @@
 			"cssApi": [
 				"--osui-accordion-border-radius"
 			],
-			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><span></span></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__title__placeholder\"></div><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
 			"usage": {
 				"configs": {
 					"MultipleItems": false,
@@ -381,7 +381,7 @@
 				"--osui-accordion-item-title-padding-inline",
 				"--osui-accordion-item-plus-minus-size"
 			],
-			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><span></span></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__title__placeholder\"></div><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
 			"usage": {
 				"configs": {
 					"Icon": "Caret",
@@ -3569,7 +3569,7 @@
 				"--osui-balloon-border-radius",
 				"--osui-balloon-shadow"
 			],
-			"markup": "<div><div class=\"osui-overflow-menu\"><button class=\"osui-overflow-menu__trigger btn\" type=\"button\" aria-label=\"More actions\"><i class=\"icon ph \"></i></button><div class=\"osui-overflow-menu__balloon osui-balloon\" id=\"-balloon\"><div class=\"font-size-label font-semi-bold text-uppercase text-neutral-7 padding-x-base padding-top-base padding-bottom-xs\"> Title </div></div></div></div>",
+			"markup": "<div><div class=\"osui-overflow-menu\"><button class=\"osui-overflow-menu__trigger btn\" type=\"button\" aria-label=\"More actions\"><i class=\"icon ph \"></i></button><div class=\"osui-overflow-menu__balloon osui-balloon\" id=\"-balloon\"><nav class=\"display-flex flex-direction-column\"><span class=\"text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s\" aria-hidden=\"true\"> Title </span></nav></div></div></div>",
 			"usage": {
 				"configs": {
 					"Position": "auto",

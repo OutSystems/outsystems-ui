@@ -20,7 +20,7 @@ CSS classes: osui-accordion
 CSS API: --osui-accordion-border-radius
 Configs schema: schema/configs/Accordion.schema.json
 Docs: content/accordion
-[runtime-only] Markup skeleton (from stories/Accordion.stories.ts): <div class="osui-accordion"><div id="" data-block="osui"><div name="" class="osui-accordion-item"><div class="osui-accordion-item__title" id="-title"><div class="osui-accordion-item__icon"></div><div class="osui-accordion-item__icon placeholder-empty"></div><span></span></div><div class="osui-accordion-item__content"><div id="-content"></div></div></div></div></div>
+[runtime-only] Markup skeleton (from stories/Accordion.stories.ts): <div class="osui-accordion"><div id="" data-block="osui"><div name="" class="osui-accordion-item"><div class="osui-accordion-item__title" id="-title"><div class="osui-accordion-item__title__placeholder"></div><div class="osui-accordion-item__icon"></div><div class="osui-accordion-item__icon placeholder-empty"></div></div><div class="osui-accordion-item__content"><div id="-content"></div></div></div></div></div>
 
 ## AccordionItem
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · child pattern: Create after its parent, Initialize after the parent, Dispose before it
@@ -383,7 +383,7 @@ API (OutSystems.OSUI.Patterns.OverflowMenuAPI):
 CSS classes: osui-overflow-menu--is-open osui-overflow-menu__trigger osui-overflow-menu__balloon
 CSS API: --osui-overflow-menu-background --osui-overflow-menu-shadow --osui-overflow-menu-color --osui-overflow-menu-trigger-active-bg --osui-overflow-menu-min-width --osui-overflow-menu-border-radius --osui-btn-background --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-floating-offset --osui-balloon-background --osui-balloon-border-radius --osui-balloon-shadow
 Configs schema: schema/configs/OverflowMenu.schema.json
-[runtime-only] Markup skeleton (from stories/OverflowMenu.stories.ts): <div><div class="osui-overflow-menu"><button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph "></i></button><div class="osui-overflow-menu__balloon osui-balloon" id="-balloon"><div class="font-size-label font-semi-bold text-uppercase text-neutral-7 padding-x-base padding-top-base padding-bottom-xs"> Title </div></div></div></div>
+[runtime-only] Markup skeleton (from stories/OverflowMenu.stories.ts): <div><div class="osui-overflow-menu"><button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph "></i></button><div class="osui-overflow-menu__balloon osui-balloon" id="-balloon"><nav class="display-flex flex-direction-column"><span class="text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s" aria-hidden="true"> Title </span></nav></div></div></div>
 
 ## Progress
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

@@ -38,9 +38,9 @@ function itemMarkup(id: string, title: string, body: string, customIcon = ''): s
 		<div id="${id}" data-block="osui">
 			<div name="${id}" class="osui-accordion-item">
 				<div class="osui-accordion-item__title" id="${id}-title">
+					<div class="osui-accordion-item__title__placeholder">${title}</div>
 					<div class="osui-accordion-item__icon"></div>
 					<div class="osui-accordion-item__icon placeholder-empty">${customIcon}</div>
-					<span>${title}</span>
 				</div>
 				<div class="osui-accordion-item__content"><div id="${id}-content">${body}</div></div>
 			</div>
@@ -56,7 +56,7 @@ const meta: Meta<AccordionArgs> = {
 		iconPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'Item.IconPosition' },
 		startsExpanded: { control: 'boolean', name: 'Item.StartsExpanded' },
 	},
-	args: { multipleItems: false, icon: 'Caret', iconPosition: 'left', startsExpanded: false },
+	args: { multipleItems: false, icon: 'Caret', iconPosition: 'right', startsExpanded: false },
 };
 export default meta;
 
@@ -181,7 +181,7 @@ export const Icons: Story = {
 		]),
 };
 
-/** `right` keeps the icon at the start of the title. `left` reverses the row. */
+/** `right` (the platform default) keeps the icon at the end of the title. `left` reverses the row, placing it at the start. */
 export const IconPosition: Story = {
 	parameters: { controls: { disable: true } },
 	render: () =>
