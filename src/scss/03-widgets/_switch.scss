@@ -91,17 +91,15 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	[data-switch]:focus-visible {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+[data-switch]:focus-visible {
+	--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
-		@include a11y-focus-shadow;
+	@include a11y-focus-shadow;
 
-		border-radius: var(--border-radius-rounded);
+	border-radius: var(--border-radius-rounded);
 
-		&:before {
-			border-color: variables.$token-semantics-primary-base;
-		}
+	&:before {
+		border-color: variables.$token-semantics-primary-base;
 	}
 }
 

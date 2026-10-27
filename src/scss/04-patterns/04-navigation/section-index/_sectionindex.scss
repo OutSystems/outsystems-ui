@@ -116,12 +116,10 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-section-index-item {
-		&:focus-visible {
-			background-color: transparent;
-			text-decoration: none;
-		}
+.osui-section-index-item {
+	&:focus-visible {
+		background-color: transparent;
+		text-decoration: none;
 	}
 }
 
@@ -129,13 +127,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		border-inline-start: variables.$token-border-size-025 solid var(--color-focus-outer);
+		border-inline-start: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				border-inline-start: variables.$token-border-size-075 solid var(--color-focus-outer);
+				border-inline-start: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
 			}
 		}
 	}

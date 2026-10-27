@@ -328,88 +328,86 @@ $balloonMobileTopMargin: 5vh;
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-dropdown-serverside {
-		&__selected-values {
-			&:hover,
-			&:after,
-			&-wrapper,
-			&-footer {
-				border-color: var(--color-border-input);
+.osui-dropdown-serverside {
+	&__selected-values {
+		&:hover,
+		&:after,
+		&-wrapper,
+		&-footer {
+			border-color: var(--color-border-input);
+		}
+	}
+
+	&__balloon {
+		border-color: var(--color-border-input);
+
+		&-search-wrapper {
+			&:focus-within:has(:focus-visible) {
+				@include a11y-focus-shadow($isInner: true);
 			}
 		}
 
-		&__balloon {
-			border-color: var(--color-border-input);
+		&-search {
+			&:before {
+				color: var(--color-border-input);
+			}
+		}
 
-			&-search-wrapper {
-				&:focus-within:has(:focus-visible) {
-					@include a11y-focus-shadow($isInner: true);
-				}
+		&-content {
+			--osui-outline-size: calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width));
+
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--color-border-input);
 			}
 
-			&-search {
+			&:focus-visible {
+				// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
+				box-shadow: none;
+
+				// Common outline styles
+				&:before,
+				&:after,
+				& > *:before,
+				& > *:after {
+					background-color: var(--osui-focus-shadow-color);
+					content: '';
+					display: block;
+				}
+
+				// This is the outline that will be applied to the content of the balloon vertically.
+				&:before,
+				&:after {
+					height: var(--osui-outline-size);
+					/* This negative margin will avoid having sticky element on pushing down the elements */
+					margin-block-start: calc(-1 * var(--osui-outline-size));
+					position: sticky;
+					width: 100%;
+					z-index: var(--layer-local-tier-3);
+				}
+
 				&:before {
-					color: var(--color-border-input);
-				}
-			}
-
-			&-content {
-				--osui-outline-size: calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width));
-
-				&::-webkit-scrollbar-thumb {
-					background-color: var(--color-border-input);
+					top: 0;
 				}
 
-				&:focus-visible {
-					// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
-					box-shadow: none;
+				&:after {
+					bottom: 0;
+				}
 
-					// Common outline styles
-					&:before,
-					&:after,
-					& > *:before,
-					& > *:after {
-						background-color: var(--osui-focus-shadow-color);
-						content: '';
-						display: block;
-					}
+				// This is the outline that will be applied to the content of the balloon horizontally.
+				& > *:before,
+				& > *:after {
+					height: 100%;
+					position: absolute;
+					top: 0;
+					width: var(--osui-outline-size);
+					z-index: var(--layer-local-tier-2);
+				}
 
-					// This is the outline that will be applied to the content of the balloon vertically.
-					&:before,
-					&:after {
-						height: var(--osui-outline-size);
-						/* This negative margin will avoid having sticky element on pushing down the elements */
-						margin-block-start: calc(-1 * var(--osui-outline-size));
-						position: sticky;
-						width: 100%;
-						z-index: var(--layer-local-tier-3);
-					}
-
-					&:before {
-						top: 0;
-					}
-
-					&:after {
-						bottom: 0;
-					}
-
-					// This is the outline that will be applied to the content of the balloon horizontally.
-					& > *:before,
-					& > *:after {
-						height: 100%;
-						position: absolute;
-						top: 0;
-						width: var(--osui-outline-size);
-						z-index: var(--layer-local-tier-2);
-					}
-
-					& > *:before {
-						inset-inline-start: 0;
-					}
-					& > *:after {
-						inset-inline-end: 0;
-					}
+				& > *:before {
+					inset-inline-start: 0;
+				}
+				& > *:after {
+					inset-inline-end: 0;
 				}
 			}
 		}
@@ -422,7 +420,7 @@ $balloonMobileTopMargin: 5vh;
 	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus-visible {
 		--osui-outline-size: 0;
 
-		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--osui-focus-shadow-color);
 	}
 }
 

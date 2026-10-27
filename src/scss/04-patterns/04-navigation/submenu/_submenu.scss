@@ -669,10 +669,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-submenu:focus-visible:focus-within {
-		@include a11y-focus-shadow;
-	}
+.osui-submenu:focus-visible:focus-within {
+	@include a11y-focus-shadow;
 }
 
 // OS HighContrast Enabled -------------------------------------------------------

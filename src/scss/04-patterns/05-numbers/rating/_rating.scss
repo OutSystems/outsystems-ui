@@ -299,21 +299,19 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.rating {
-		input:first-of-type:focus-visible + .rating-item,
-		&.is-half input:focus-visible + .rating-item .rating-item-half,
-		&:not(.is-half) input:focus-visible + .rating-item .rating-item-filled {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+.rating {
+	input:first-of-type:focus-visible + .rating-item,
+	&.is-half input:focus-visible + .rating-item .rating-item-half,
+	&:not(.is-half) input:focus-visible + .rating-item .rating-item-filled {
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
-			@include a11y-focus-shadow;
-		}
+		@include a11y-focus-shadow;
+	}
 
-		&.is-half input:focus-visible + .rating-item .rating-item-filled,
-		&:not(.is-half) input:focus-visible + .rating-item .rating-item-half,
-		input:focus-visible:checked + .rating-item .rating-item-empty {
-			box-shadow: none;
-		}
+	&.is-half input:focus-visible + .rating-item .rating-item-filled,
+	&:not(.is-half) input:focus-visible + .rating-item .rating-item-half,
+	input:focus-visible:checked + .rating-item .rating-item-empty {
+		box-shadow: none;
 	}
 }
 

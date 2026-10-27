@@ -127,18 +127,16 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.lightbox-item {
-		&:focus-within {
-			--osui-focus-shadow-gap: #{variables.$token-border-size-050};
+.lightbox-item {
+	&:focus-within {
+		--osui-focus-shadow-gap: #{variables.$token-border-size-050};
 
-			@include a11y-focus-shadow;
-		}
+		@include a11y-focus-shadow;
+	}
 
-		a:focus {
-			background-color: transparent;
-			box-shadow: none;
-		}
+	a:focus-visible {
+		background-color: transparent;
+		box-shadow: none;
 	}
 }
 

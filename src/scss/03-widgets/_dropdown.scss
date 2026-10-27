@@ -221,19 +221,17 @@ select.dropdown-display[disabled] {
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.dropdown-container {
-		& > div,
-		& > select {
-			&.dropdown-display:focus-visible {
-				@include a11y-focus-shadow;
+.dropdown-container {
+	& > div,
+	& > select {
+		&.dropdown-display:focus-visible {
+			@include a11y-focus-shadow;
 
-				border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
-			}
+			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
 		}
+	}
 
-		.dropdown-popup-row:focus-visible {
-			@include a11y-focus-shadow($isInner: true);
-		}
+	.dropdown-popup-row:focus-visible {
+		@include a11y-focus-shadow($isInner: true);
 	}
 }

@@ -36,7 +36,7 @@
 	--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};
 	--osui-wizard-connector-radius: #{variables.$token-border-radius-full};
 	--osui-wizard-connector-size: #{variables.$token-border-size-050};
-	--osui-wizard-focus-halo-color: var(--color-focus-outer);
+	--osui-wizard-focus-halo-color: var(--osui-focus-shadow-color);
 	--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
 	// ───────────────────────────────────────────────────────────────────────────
 
@@ -156,15 +156,13 @@
 }
 
 // Accessibility ------------------------------------------------------------
-.has-accessible-features {
-	[data-block*='WizardItem']:focus-visible {
-		box-shadow: none;
+[data-block*='WizardItem']:focus-visible {
+	box-shadow: none;
 
-		.osui-wizard-item-icon {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+	.osui-wizard-item-icon {
+		--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
-			@include a11y-focus-shadow;
-		}
+		@include a11y-focus-shadow;
 	}
 }
 

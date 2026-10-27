@@ -100,11 +100,6 @@
 
 				&.not-valid {
 					border-block-end: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
-
-					&:focus {
-						border: variables.$token-border-size-0;
-						border-block-end: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
-					}
 				}
 
 				/* Removes placeholder text for input type date and time*/
@@ -311,12 +306,16 @@
 
 // Accessibility --------------------------------------------------------------------
 ///
-.has-accessible-features {
-	.animated-label-input {
-		.form-control[data-input] {
+.animated-label-input {
+	.form-control[data-input] {
+		&.not-valid {
 			&:focus-visible {
-				border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+				border-color: variables.$token-semantics-danger-base;
 			}
+		}
+
+		&:focus-visible {
+			border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 		}
 	}
 }

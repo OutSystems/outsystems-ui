@@ -122,23 +122,21 @@
 
 // Accessinility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.button-group-item:focus-visible {
-		box-shadow: none;
-		outline: none;
+.button-group-item:focus-visible {
+	box-shadow: none;
+	outline: none;
 
-		&:before {
-			border-radius: var(--osui-button-group-border-radius);
-			bottom: -1px;
-			content: '';
-			inset-inline-end: -1px;
-			inset-inline-start: -1px;
-			position: absolute;
-			top: -1px;
-			z-index: var(--layer-global-screen);
+	&:before {
+		border-radius: var(--osui-button-group-border-radius);
+		bottom: -1px;
+		content: '';
+		inset-inline-end: -1px;
+		inset-inline-start: -1px;
+		position: absolute;
+		top: -1px;
+		z-index: var(--layer-global-screen);
 
-			@include a11y-focus-shadow($isInner: true);
-		}
+		@include a11y-focus-shadow($isInner: true);
 	}
 }
 

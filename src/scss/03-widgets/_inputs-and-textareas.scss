@@ -186,20 +186,18 @@ span.validation-message {
 
 /* Accessibility -------------------------------------------------------------- */
 ///
-.has-accessible-features {
-	.form-control {
-		&[data-input],
-		&[data-textarea] {
+.form-control {
+	&[data-input],
+	&[data-textarea] {
+		&:focus-visible {
+			@include a11y-focus-shadow;
+
+			border-color: variables.$token-semantics-primary-base;
+		}
+
+		&.not-valid {
 			&:focus-visible {
-				@include a11y-focus-shadow;
-
-				border-color: variables.$token-semantics-primary-base;
-			}
-
-			&.not-valid {
-				&:focus-visible {
-					border-color: var(--osui-input-error-border-color);
-				}
+				border-color: var(--osui-input-error-border-color);
 			}
 		}
 	}

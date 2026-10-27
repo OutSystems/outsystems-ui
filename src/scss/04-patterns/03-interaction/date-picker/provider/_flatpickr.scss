@@ -872,71 +872,69 @@ span.flatpickr-weekday {
 }
 
 // Accessibility ------------------------------------------------------------------
-body:has(.has-accessible-features) {
-	.osui-datepicker-calendar {
-		.flatpickr-day {
-			&:focus-visible {
-				border-color: var(--color-focus-outer);
-				z-index: var(--layer-local-tier-1);
+.osui-datepicker-calendar {
+	.flatpickr-day {
+		&:focus-visible {
+			border-color: var(--osui-focus-shadow-color);
+			z-index: var(--layer-local-tier-1);
 
-				&.startRange,
-				&.startRange.startRange,
-				&.endRange,
-				&.endRange.endRange {
-					&:before {
-						opacity: 0;
-					}
-				}
-			}
-
-			&.selected.startRange + .endRange,
-			&.startRange.startRange + .endRange,
-			&.endRange.startRange + .endRange {
-				&:focus-visible {
-					@include a11y-focus-shadow;
-				}
-			}
-
-			&.prevMonthDay,
-			&.nextMonthDay {
-				&:focus-visible {
-					color: variables.$token-primitives-neutral-400;
+			&.startRange,
+			&.startRange.startRange,
+			&.endRange,
+			&.endRange.endRange {
+				&:before {
+					opacity: 0;
 				}
 			}
 		}
 
-		.flatpickr-day:focus-visible {
-			overflow: visible;
-		}
-
-		.numInputWrapper input,
-		.flatpickr-monthDropdown-months,
-		.flatpickr-prev-month,
-		.flatpickr-next-month,
-		.flatpickr-am-pm,
-		.flatpickr-day,
-		.flatpickr-today-button a {
+		&.selected.startRange + .endRange,
+		&.startRange.startRange + .endRange,
+		&.endRange.startRange + .endRange {
 			&:focus-visible {
 				@include a11y-focus-shadow;
+			}
+		}
+
+		&.prevMonthDay,
+		&.nextMonthDay {
+			&:focus-visible {
+				color: variables.$token-primitives-neutral-400;
 			}
 		}
 	}
 
-	.osui-monthpicker__dropdown {
-		.numInputWrapper input,
-		.flatpickr-prev-month,
-		.flatpickr-next-month {
-			&:focus-visible {
-				@include a11y-focus-shadow;
-			}
-		}
+	.flatpickr-day:focus-visible {
+		overflow: visible;
+	}
 
-		.flatpickr-monthSelect-month {
-			&:focus-visible {
-				&,
-				&.selected {
-					@include a11y-focus-shadow;
-				}
+	.numInputWrapper input,
+	.flatpickr-monthDropdown-months,
+	.flatpickr-prev-month,
+	.flatpickr-next-month,
+	.flatpickr-am-pm,
+	.flatpickr-day,
+	.flatpickr-today-button a {
+		&:focus-visible {
+			@include a11y-focus-shadow;
+		}
+	}
+}
+
+.osui-monthpicker__dropdown {
+	.numInputWrapper input,
+	.flatpickr-prev-month,
+	.flatpickr-next-month {
+		&:focus-visible {
+			@include a11y-focus-shadow;
+		}
+	}
+
+	.flatpickr-monthSelect-month {
+		&:focus-visible {
+			&,
+			&.selected {
+				@include a11y-focus-shadow;
 			}
 		}
 	}
@@ -970,7 +968,7 @@ body:has(.has-accessible-features) {
 
 			&:focus,
 			&:active {
-				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
 			}
 		}
 	}
@@ -980,7 +978,7 @@ body:has(.has-accessible-features) {
 		.flatpickr-next-month {
 			&:focus,
 			&:active {
-				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
 			}
 		}
 	}
@@ -1000,7 +998,7 @@ body:has(.has-accessible-features) {
 		}
 
 		&.today {
-			border: variables.$token-border-size-025 solid var(--color-focus-outer);
+			border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-1));
 		}
 
@@ -1011,7 +1009,7 @@ body:has(.has-accessible-features) {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			border: variables.$token-border-size-025 solid var(--color-focus-outer);
+			border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 			font-size: variables.$token-font-size-400;
 			font-weight: variables.$token-font-weight-semi-bold;
 		}
@@ -1029,7 +1027,7 @@ body:has(.has-accessible-features) {
 		&.today.inRange:focus-visible {
 			font-size: variables.$token-font-size-400;
 			font-weight: variables.$token-font-weight-semi-bold;
-			outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+			outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
 		}
 
 		&.inRange {
@@ -1039,7 +1037,7 @@ body:has(.has-accessible-features) {
 				border-left: none;
 				border-radius: variables.$token-border-radius-0;
 				border-right: none;
-				border: variables.$token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -1070,7 +1068,7 @@ body:has(.has-accessible-features) {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				border: variables.$token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 				left: 0;
 				right: -2px;
 			}
@@ -1081,7 +1079,7 @@ body:has(.has-accessible-features) {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				border: variables.$token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
 				left: -2px;
 				right: 0;
 			}

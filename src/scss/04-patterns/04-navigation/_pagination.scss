@@ -163,11 +163,9 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.pagination-button {
-		&:focus-visible {
-			@include a11y-focus-shadow;
-		}
+.pagination-button {
+	&:focus-visible {
+		@include a11y-focus-shadow;
 	}
 }
 

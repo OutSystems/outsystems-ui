@@ -35,15 +35,17 @@
 			0 0 0 calc(var(--osui-focus-shadow-gap) + var(--osui-focus-shadow-width)) var(--osui-focus-shadow-color);
 	}
 
-	outline: none;
-	outline-offset: variables.$token-border-size-0;
+	// !important is used to override styles that are more specific, such as libraries defaults (Ex: Carousel library)
+	outline: none !important;
+	outline-offset: variables.$token-border-size-0 !important;
 }
 
 /// Focus outline. Used for special cases where the focus ring is not enough, such Carousel arrows, where the outline offset is not possible with the focus ring.
 @mixin a11y-focus-outline() {
 	box-shadow: none;
-	outline: var(--osui-focus-shadow-width) solid var(--osui-focus-shadow-color);
-	outline-offset: var(--osui-focus-shadow-gap);
+	// !important is used to override styles that are more specific, such as libraries defaults (Ex: Carousel library)
+	outline: var(--osui-focus-shadow-width) solid var(--osui-focus-shadow-color) !important;
+	outline-offset: var(--osui-focus-shadow-gap) !important;
 }
 
 /// outline style for high contrast mode

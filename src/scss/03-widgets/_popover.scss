@@ -53,14 +53,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	[data-popover] {
-		& > .popover {
-			&-top {
-				&:focus-visible {
-					@include a11y-focus-shadow;
-				}
-			}
-		}
+[data-popover] {
+	& > .popover-top:focus-visible {
+		@include a11y-focus-shadow;
 	}
 }

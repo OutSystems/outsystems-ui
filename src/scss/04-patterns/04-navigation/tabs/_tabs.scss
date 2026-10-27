@@ -348,19 +348,18 @@
 	}
 }
 
+// Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-tabs {
-		&__header-item {
-			&:focus-visible:focus-within {
-				@include a11y-focus-shadow($isInner: true);
-			}
+.osui-tabs {
+	&__header-item {
+		&:focus-visible:focus-within {
+			@include a11y-focus-shadow($isInner: true);
 		}
+	}
 
-		&__content-item {
-			&:focus-visible {
-				@include a11y-focus-shadow($isInner: true);
-			}
+	&__content-item {
+		&:focus-visible {
+			@include a11y-focus-shadow($isInner: true);
 		}
 	}
 }

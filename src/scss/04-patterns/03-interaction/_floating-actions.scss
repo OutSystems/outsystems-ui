@@ -245,14 +245,14 @@
 
 // Accessibility --------------------------------------------------------------------
 ///
-.has-accessible-features {
-	.floating-button:focus-visible {
+.floating {
+	&-button:focus-visible {
 		--osui-focus-shadow-gap: #{variables.$token-scale-050};
 
 		@include a11y-focus-shadow;
 	}
 
-	.floating-actions-wrapper {
+	&-actions-wrapper {
 		&.is--open {
 			.floating-button:focus-visible {
 				@include a11y-focus-shadow;
