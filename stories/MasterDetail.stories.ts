@@ -63,7 +63,8 @@ function masterDetailMarkup(
 		: markup;
 }
 
-export const Default: StoryObj<MasterDetailArgs> = {
+export const Playground: StoryObj<MasterDetailArgs> = {
+	tags: ['docs-example'],
 	args: {
 		leftPercentage: 40,
 		openedOnPhone: false,

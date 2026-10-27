@@ -71,7 +71,8 @@ function horizontalCell(space: string, color: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ isVertical, space, color, extendedClass }) => {
 		const separator = cls(
 			'separator',

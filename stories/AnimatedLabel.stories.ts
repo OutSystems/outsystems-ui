@@ -53,7 +53,8 @@ type DefaultArgs = {
 	disabled: boolean;
 };
 
-export const Default: StoryObj<DefaultArgs> = {
+export const Playground: StoryObj<DefaultArgs> = {
+	tags: ['docs-example'],
 	args: {
 		disabled: false,
 	},
@@ -68,11 +69,13 @@ export const Default: StoryObj<DefaultArgs> = {
 };
 
 export const ErrorState: Story = {
+	tags: ['docs-example'],
 	render: () => animatedLabel({ label: 'Full name', value: 'Filled text', invalid: true }),
 };
 
 // Renders every state stacked for a side-by-side comparison against Figma.
 export const AllStates: Story = {
+	tags: ['docs-example'],
 	render: () => {
 		const wrapper = document.createElement('div');
 		wrapper.style.cssText = 'display:flex;flex-direction:column;gap:32px;padding:24px;';

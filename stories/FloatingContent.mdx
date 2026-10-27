@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FloatingContentStories from './FloatingContent.stories';
+import { FLOATING_CONTENT_RECIPES } from './_helpers/pattern-docs/floating-content-recipes';
+import { FLOATING_CONTENT_DOC } from './_helpers/pattern-docs/floating-content-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={FloatingContentStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={FLOATING_CONTENT_DOC}
+	examples={
+		<>
+			<PdExample title="Bottom right" description="Default corner anchor with margin — common for persistent panels over scrolling content." implement={<StudioHowTo recipe={FLOATING_CONTENT_RECIPES.bottomRight} />}>
+				<Canvas of={FloatingContentStories.BottomRight} />
+			</PdExample>
+			<PdExample title="Center" description="Position Center pins the floating block to the middle of the viewport." implement={<StudioHowTo recipe={FLOATING_CONTENT_RECIPES.center} />}>
+				<Canvas of={FloatingContentStories.Center} />
+			</PdExample>
+			<PdExample title="Full width" description="FullWidth stretches the floating block across the top edge." implement={<StudioHowTo recipe={FLOATING_CONTENT_RECIPES.fullWidth} />}>
+				<Canvas of={FloatingContentStories.FullWidth} />
+			</PdExample>
+		</>
+	}
+/>

@@ -54,7 +54,8 @@ export default meta;
 
 type Story = StoryObj<BottomBarArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ activeIndex, extendedClass }) =>
 		renderStatic(`
 			<div style="max-width: 420px; height: var(--bottom-bar-size, 56px);">

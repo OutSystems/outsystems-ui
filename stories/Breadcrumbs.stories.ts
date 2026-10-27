@@ -18,7 +18,8 @@ type BreadcrumbsArgs = { extendedClass: string };
 
 const sep = `<div aria-hidden="true"><i class="icon ph ph-caret-right"></i></div>`;
 
-export const Default: StoryObj<BreadcrumbsArgs> = {
+export const Playground: StoryObj<BreadcrumbsArgs> = {
+	tags: ['docs-example'],
 	args: { extendedClass: '' },
 	argTypes: { extendedClass: extendedClassArgType },
 	render: ({ extendedClass }) =>

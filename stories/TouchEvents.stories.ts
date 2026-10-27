@@ -13,7 +13,13 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Default: Story = {
+/**
+ * The block's input parameters are `WidgetId` (the demo box, wired here) and
+ * `PreventDefaults`, which the low-code block applies itself and the runtime config
+ * does not expose — so the playground has no controls; it logs the Move deltas instead.
+ */
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: () => {
 		const id = uid('touch');
 		const template = `

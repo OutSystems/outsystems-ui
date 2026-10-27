@@ -35,10 +35,14 @@ const meta: Meta<InputWithIconArgs> = {
 			name: 'IconPosition',
 			control: 'inline-radio',
 			options: ['left', 'right'],
-			description: 'Side of the input where the icon is rendered.',
+			description: 'Side of the input where the icon is rendered. Low-code parameter: `AlignIconRight`.',
 		},
 		icon: { name: 'Icon', control: 'text', description: 'Phosphor icon class (e.g. ph-magnifying-glass).' },
-		placeholder: { name: 'Placeholder', control: 'text' },
+		placeholder: {
+			name: 'Placeholder',
+			control: 'text',
+			description: 'Story-only: placeholder of the Input widget dropped in the Input placeholder.',
+		},
 		extendedClass: extendedClassArgType,
 	},
 	args: { iconPosition: 'left', icon: 'ph-magnifying-glass', placeholder: 'Search…', extendedClass: '' },
@@ -47,7 +51,8 @@ export default meta;
 
 type Story = StoryObj<InputWithIconArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ iconPosition, icon, placeholder, extendedClass }) =>
 		renderStatic(`
 			<div style="max-width: 320px;">
@@ -115,6 +120,7 @@ function field(size: Size, state: State): string {
  * read, so they cannot drift from the component's actual values.
  */
 export const SpecMatrix: Story = {
+	tags: ['docs-example'],
 	name: 'Spec matrix (size × state)',
 	parameters: { controls: { disable: true } },
 	render: () =>

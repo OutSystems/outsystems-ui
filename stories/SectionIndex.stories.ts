@@ -16,8 +16,16 @@ const SECTIONS = ['Introduction', 'Installation', 'Usage'];
 const meta: Meta<SectionIndexArgs> = {
 	title: 'Patterns/Navigation/SectionIndex',
 	argTypes: {
-		smoothScrolling: { control: 'boolean', name: 'SmoothScrolling' },
-		isFixed: { control: 'boolean', name: 'IsFixed' },
+		smoothScrolling: {
+			control: 'boolean',
+			name: 'SmoothScrolling',
+			description: 'If True, navigation to the destination is animated.',
+		},
+		isFixed: {
+			control: 'boolean',
+			name: 'IsFixed',
+			description: 'If True, the Section Index Pattern is always in the same position on the screen.',
+		},
 	},
 	args: { smoothScrolling: true, isFixed: false },
 };
@@ -25,7 +33,8 @@ export default meta;
 
 type Story = StoryObj<SectionIndexArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('section-index');
 		const itemIds = SECTIONS.map(() => uid('section-index-item'));

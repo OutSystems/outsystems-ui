@@ -32,7 +32,8 @@ function iconBadgeMarkup({ number, color, isLight, extendedClass }: IconBadgeArg
 
 const baseArgs: IconBadgeArgs = { number: 3, color: 'primary', isLight: false, extendedClass: '' };
 
-export const Default: StoryObj<IconBadgeArgs> = {
+export const Playground: StoryObj<IconBadgeArgs> = {
+	tags: ['docs-example'],
 	args: { ...baseArgs },
 	argTypes: {
 		number: {

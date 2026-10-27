@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RangeSliderStories from './RangeSlider.stories';
+import { RANGE_SLIDER_RECIPES } from './_helpers/pattern-docs/range-slider-recipes';
+import { RANGE_SLIDER_DOC } from './_helpers/pattern-docs/range-slider-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={RangeSliderStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={RANGE_SLIDER_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
+				<Canvas of={RangeSliderStories.Playground} />
+			</PdExample>
+			<PdExample title="Interval" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
+				<Canvas of={RangeSliderStories.Interval} />
+			</PdExample>
+			<PdExample title="Spec matrix (mode × state)" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
+				<Canvas of={RangeSliderStories.SpecMatrix} />
+			</PdExample>
+		</>
+	}
+/>

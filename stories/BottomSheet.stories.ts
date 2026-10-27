@@ -10,13 +10,18 @@ const meta: Meta<BottomSheetArgs> = {
 	title: 'Patterns/Interaction/BottomSheet',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		showHandler: { control: 'boolean', name: 'ShowHandler' },
+		showHandler: {
+			control: 'boolean',
+			name: 'ShowHandler',
+			description: 'Shows the drag handler bar at the top of the sheet.',
+		},
 		shape: {
 			// ShapeTypes values are soft / rounded / none. The low-code names fail
 			// validateInRange and every option falls back to soft.
 			control: { type: 'inline-radio', labels: { soft: 'SoftRounded', rounded: 'Rounded', none: 'Sharp' } },
 			options: ['soft', 'rounded', 'none'],
 			name: 'Shape',
+			description: 'Corner shape of the sheet: SoftRounded (default), Rounded or Sharp.',
 		},
 	},
 	args: { showHandler: true, shape: 'rounded' },
@@ -25,7 +30,8 @@ export default meta;
 
 type Story = StoryObj<BottomSheetArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('bottom-sheet');
 		const template = `

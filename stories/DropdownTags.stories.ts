@@ -15,7 +15,13 @@ interface DropdownTagsArgs {
 
 const meta: Meta<DropdownTagsArgs> = {
 	title: 'Patterns/Interaction/Dropdown Tags',
-	argTypes: { isDisabled: { control: 'boolean', name: 'IsDisabled' } },
+	argTypes: {
+		isDisabled: {
+			control: 'boolean',
+			name: 'OptionalConfigs.IsDisabled',
+			description: 'Renders the dropdown disabled.',
+		},
+	},
 	args: { isDisabled: false },
 };
 export default meta;
@@ -27,7 +33,7 @@ const TAGS_SELECTION = [
 	{ label: 'Banana', value: 'banana' },
 ];
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('dropdown-tags');
 		return renderPattern(dropdownMarkup(id, 'tags'), (_root, register) =>

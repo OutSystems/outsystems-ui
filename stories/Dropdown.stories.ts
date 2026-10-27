@@ -17,8 +17,16 @@ interface DropdownArgs {
 const meta: Meta<DropdownArgs> = {
 	title: 'Patterns/Interaction/Dropdown',
 	argTypes: {
-		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
-		isDisabled: { control: 'boolean', name: 'IsDisabled' },
+		allowMultipleSelection: {
+			control: 'boolean',
+			name: 'OptionalConfigs.AllowMultipleSelection',
+			description: 'Lets the user select more than one option.',
+		},
+		isDisabled: {
+			control: 'boolean',
+			name: 'OptionalConfigs.IsDisabled',
+			description: 'Renders the dropdown disabled.',
+		},
 	},
 	args: { allowMultipleSelection: false, isDisabled: false },
 };
@@ -26,7 +34,8 @@ export default meta;
 
 type Story = StoryObj<DropdownArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('dropdown');
 		return renderPattern(dropdownMarkup(id, 'search'), (_root, register) =>

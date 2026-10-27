@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './Pagination.stories';
+import { PAGINATION_RECIPES } from './_helpers/pattern-docs/pagination-recipes';
+import { PAGINATION_DOC } from './_helpers/pattern-docs/pagination-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={PaginationStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={PAGINATION_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Pagination." implement={<StudioHowTo recipe={PAGINATION_RECIPES.basicUsage} />}>
+				<Canvas of={PaginationStories.Playground} />
+			</PdExample>
+			<PdExample title="Show Go To Page" description="Live example of Pagination." implement={<StudioHowTo recipe={PAGINATION_RECIPES.basicUsage} />}>
+				<Canvas of={PaginationStories.ShowGoToPage} />
+			</PdExample>
+		</>
+	}
+/>

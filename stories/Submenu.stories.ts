@@ -17,14 +17,21 @@ interface SubmenuArgs {
 
 const meta: Meta<SubmenuArgs> = {
 	title: 'Patterns/Navigation/Submenu',
-	argTypes: { openOnHover: { control: 'boolean', name: 'OpenOnHover' } },
+	argTypes: {
+		openOnHover: {
+			control: 'boolean',
+			name: 'OpenOnHover',
+			description: 'Opens the submenu on hover instead of on click; ignored on touch devices.',
+		},
+	},
 	args: { openOnHover: false },
 };
 export default meta;
 
 type Story = StoryObj<SubmenuArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('submenu');
 		const template = `

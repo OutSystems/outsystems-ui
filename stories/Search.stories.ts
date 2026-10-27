@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createAndInit, osuiRoot, renderPattern, renderStatic, uid } from './_helpers/osui';
+import { extendedClassArgType } from './_helpers/lowcode';
 
 /**
  * Search — a lightweight wrapper; its build() is a no-op stub, the markup is the search input itself.
@@ -7,6 +8,9 @@ import { createAndInit, osuiRoot, renderPattern, renderStatic, uid } from './_he
  * The icon is painted by `.osui-search .osui-search__input > span::after` (ODC) and by a
  * background image on `.osui-search__input input` (O11), so the Input widget has to sit in
  * that span. Hover is the input widget's `:hover` border (`--osui-input-hover-border-color`).
+ *
+ * Controls mirror the low-code input parameters of the `Search` block:
+ *   ExtendedClass → extra classes on the `.osui-search` root (applied by the pattern at build)
  */
 const meta: Meta = {
 	title: 'Patterns/Interaction/Search',
@@ -14,6 +18,8 @@ const meta: Meta = {
 export default meta;
 
 type Story = StoryObj;
+
+type SearchArgs = { extendedClass: string };
 
 function searchField(id: string, value = '', pseudo = ''): string {
 	const valueAttr = value ? ` value="${value}"` : '';
@@ -28,10 +34,15 @@ function searchField(id: string, value = '', pseudo = ''): string {
 		</div>`;
 }
 
-export const Default: Story = {
-	render: () => {
+export const Playground: StoryObj<SearchArgs> = {
+	tags: ['docs-example'],
+	args: { extendedClass: '' },
+	argTypes: { extendedClass: extendedClassArgType },
+	render: ({ extendedClass }) => {
 		const id = uid('search');
-		return renderPattern(searchField(id), (_root, register) => createAndInit('SearchAPI', id, {}, register));
+		return renderPattern(searchField(id), (_root, register) =>
+			createAndInit('SearchAPI', id, { ExtendedClass: extendedClass }, register)
+		);
 	},
 };
 

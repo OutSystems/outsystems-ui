@@ -7,12 +7,16 @@ const meta: Meta = { title: 'Patterns/Content/Table' };
 export default meta;
 type Story = StoryObj;
 
+/**
+ * Table is the platform widget styled by OUI, not an OutSystemsUI block — it has no
+ * low-code input parameters of its own, so the playground carries no controls.
+ */
 const row = (selected: boolean, a: string, b: string, c: string) => `
 	<tr class="table-row ${selected ? 'table-row-selected' : ''}">
 		<td data-header="Name">${a}</td><td data-header="Status">${b}</td><td data-header="Email">${c}</td>
 	</tr>`;
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: () =>
 		renderStatic(`
 			<table class="table" role="grid" style="width:100%;max-width:560px;">
@@ -29,6 +33,77 @@ export const Default: Story = {
 					${row(true, 'Bob Johnson', 'Active', 'bob@example.com')}
 				</tbody>
 			</table>`),
+};
+
+// ─── Docs-page stories ────────────────────────────────────────────────────────
+
+const DEMO_WRAP = 'display:flex;justify-content:center;width:100%;';
+
+const rowDoc = (opts: { selected?: boolean; striped?: boolean }, a: string, b: string, c: string) => `
+	<tr class="table-row${opts.selected ? ' table-row-selected' : ''}${opts.striped ? ' table-row-stripping' : ''}">
+		<td data-header="Name">${a}</td><td data-header="Status">${b}</td><td data-header="Email">${c}</td>
+	</tr>`;
+
+function tableMarkup({
+	selectedIndex = null,
+	striped = false,
+}: {
+	selectedIndex?: number | null;
+	striped?: boolean;
+} = {}): string {
+	const r = (i: number, a: string, b: string, c: string) =>
+		rowDoc({ selected: selectedIndex === i, striped }, a, b, c);
+
+	const rows = striped
+		? `${r(0, 'John Doe', 'Active', 'john@example.com')}
+			${r(1, 'Jane Smith', 'Inactive', 'jane@example.com')}
+			${r(2, 'Bob Johnson', 'Active', 'bob@example.com')}
+			${r(3, 'Alice Brown', 'Active', 'alice@example.com')}
+			${r(4, 'James Sullivan', 'Active', 'james@example.com')}`
+		: `${r(0, 'John Doe', 'Active', 'john@example.com')}
+			${r(1, 'Jane Smith', 'Inactive', 'jane@example.com')}
+			${r(2, 'Bob Johnson', 'Active', 'bob@example.com')}`;
+
+	return `<div style="${DEMO_WRAP}"><table class="table" role="grid" style="width:100%;max-width:560px;">
+		<thead>
+			<tr class="table-header">
+				<th class="sortable" tabindex="0">Name<div class="sortable-icon"></div></th>
+				<th class="sortable" tabindex="0">Status<div class="sortable-icon"></div></th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			${rows}
+		</tbody>
+	</table></div>`;
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(tableMarkup()),
+};
+
+export const SelectedRow: Story = {
+	tags: ['docs-example'],
+	name: 'Selected row',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(tableMarkup({ selectedIndex: 2 })),
+};
+
+export const Stripes: Story = {
+	tags: ['docs-example'],
+	name: 'Stripes',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Rows use table-row-stripping so even rows pick up the stripe background.',
+			},
+		},
+	},
+	render: () => renderStatic(tableMarkup({ striped: true })),
 };
 
 /** Mini table demonstrating one state in isolation. */

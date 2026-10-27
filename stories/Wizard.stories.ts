@@ -71,11 +71,15 @@ function itemMarkup(id: string, glyph: string, label: string): string {
 const meta: Meta<WizardArgs> = {
 	title: 'Patterns/Navigation/Wizard',
 	argTypes: {
-		isVertical: { control: 'boolean', name: 'Wizard.IsVertical' },
+		isVertical: {
+			control: 'boolean',
+			name: 'Wizard.IsVertical',
+			description: 'Set the orientation: stacks the steps vertically.',
+		},
 		stepBehavior: {
 			control: 'inline-radio',
 			options: ['ProgressOnly', 'Interactive'],
-			name: 'Wizard.StepBehavior',
+			name: 'Wizard.StepsBehaviour',
 			description: 'Interactive makes past steps clickable (role=tablist); ProgressOnly renders a plain list.',
 		},
 		reverseLabelPosition: {
@@ -118,27 +122,31 @@ function renderWizard(args: WizardArgs, statuses: Array<[WizardItemStatus, strin
 	});
 }
 
-export const WizardStory: Story = {
-	name: 'Wizard',
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => renderWizard(args, STEPS),
 };
 
 export const Vertical: Story = {
+	tags: ['docs-example'],
 	args: { isVertical: true },
 	render: (args) => renderWizard(args, STEPS),
 };
 
 export const Interactive: Story = {
+	tags: ['docs-example'],
 	args: { stepBehavior: 'Interactive' },
 	render: (args) => renderWizard(args, STEPS),
 };
 
 export const MarkerIcon: Story = {
+	tags: ['docs-example'],
 	name: 'Marker: icon',
 	render: (args) => renderWizard(args, ICON_STEPS),
 };
 
 export const MarkerEmpty: Story = {
+	tags: ['docs-example'],
 	name: 'Marker: empty (dot)',
 	render: (args) => renderWizard(args, EMPTY_STEPS),
 };

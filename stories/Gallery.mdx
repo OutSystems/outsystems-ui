@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as GalleryStories from './Gallery.stories';
+import { GALLERY_RECIPES } from './_helpers/pattern-docs/gallery-recipes';
+import { GALLERY_DOC } from './_helpers/pattern-docs/gallery-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={GalleryStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={GALLERY_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Gallery." implement={<StudioHowTo recipe={GALLERY_RECIPES.basicUsage} />}>
+				<Canvas of={GalleryStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

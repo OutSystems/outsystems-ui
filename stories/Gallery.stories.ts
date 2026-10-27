@@ -14,9 +14,21 @@ const ITEMS_GAP_OPTIONS = ['none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl'] as 
 const meta: Meta<GalleryArgs> = {
 	title: 'Patterns/Adaptive/Gallery',
 	argTypes: {
-		rowItemsDesktop: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsDesktop' },
-		rowItemsTablet: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsTablet' },
-		rowItemsPhone: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsPhone' },
+		rowItemsDesktop: {
+			control: { type: 'number', min: 1, max: 8 },
+			name: 'RowItemsDesktop',
+			description: 'Number of items per row on desktop.',
+		},
+		rowItemsTablet: {
+			control: { type: 'number', min: 1, max: 8 },
+			name: 'RowItemsTablet',
+			description: 'Number of items per row on tablets.',
+		},
+		rowItemsPhone: {
+			control: { type: 'number', min: 1, max: 8 },
+			name: 'RowItemsPhone',
+			description: 'Number of items per row on phones.',
+		},
 		itemsGap: {
 			options: [...ITEMS_GAP_OPTIONS],
 			control: {
@@ -33,6 +45,7 @@ const meta: Meta<GalleryArgs> = {
 				},
 			},
 			name: 'ItemsGap',
+			description: 'Gap between items (Space static entity), mapped to the `--space-*` variables.',
 		},
 	},
 	args: { rowItemsDesktop: 3, rowItemsTablet: 2, rowItemsPhone: 1, itemsGap: 'base' },
@@ -60,7 +73,8 @@ function initGallery(id: string, overrides: Record<string, unknown>, register: R
 	register(() => P.GalleryAPI.Dispose?.(id));
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('gallery');
 		return renderPattern(galleryMarkup(id), (_root, register) =>

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownServerSideStories from './DropdownServerSide.stories';
+import { DROPDOWN_SERVER_SIDE_RECIPES } from './_helpers/pattern-docs/dropdown-server-side-recipes';
+import { DROPDOWN_SERVER_SIDE_DOC } from './_helpers/pattern-docs/dropdown-server-side-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={DropdownServerSideStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={DROPDOWN_SERVER_SIDE_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Dropdown Server Side." implement={<StudioHowTo recipe={DROPDOWN_SERVER_SIDE_RECIPES.basicUsage} />}>
+				<Canvas of={DropdownServerSideStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

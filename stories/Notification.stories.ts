@@ -16,10 +16,27 @@ const meta: Meta<NotificationArgs> = {
 	title: 'Patterns/Interaction/Notification',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		position: { control: 'select', options: POSITION_OPTIONS, name: 'Position' },
-		width: { control: 'text', name: 'Width' },
-		interactToClose: { control: 'boolean', name: 'InteractToClose' },
-		closeAfterTime: { control: 'number', name: 'CloseAfterTime (ms, 0 = off)' },
+		position: {
+			control: 'select',
+			options: POSITION_OPTIONS,
+			name: 'Position',
+			description: 'Set the position where the notification appears on the screen.',
+		},
+		width: {
+			control: 'text',
+			name: 'Width',
+			description: 'Set the Notification width (CSS length); 370px by default.',
+		},
+		interactToClose: {
+			control: 'boolean',
+			name: 'OptionalConfigs.InteractToClose',
+			description: 'Closes the notification on interaction outside it (click outside or Escape).',
+		},
+		closeAfterTime: {
+			control: 'number',
+			name: 'OptionalConfigs.CloseAfterTime (ms, 0 = off)',
+			description: 'Milliseconds after which the notification closes itself; 0 keeps it open.',
+		},
 	},
 	args: { position: 'top', width: '370px', interactToClose: true, closeAfterTime: 0 },
 };
@@ -27,7 +44,8 @@ export default meta;
 
 type Story = StoryObj<NotificationArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('notification');
 		const template = `

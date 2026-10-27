@@ -45,7 +45,8 @@ const baseArgs: BadgeArgs = {
 	extendedClass: '',
 };
 
-export const Default: StoryObj<BadgeArgs> = {
+export const Playground: StoryObj<BadgeArgs> = {
+	tags: ['docs-example'],
 	args: { ...baseArgs },
 	argTypes: {
 		number: {

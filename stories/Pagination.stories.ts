@@ -198,7 +198,9 @@ export default meta;
 type Story = StoryObj<PaginationArgs>;
 
 /** First page of 10 — `‹ 1 2 3 4 … 10 ›`. */
-export const Default: Story = {};
+export const Playground: Story = {
+	tags: ['docs-example'],
+};
 
 /** A page in the middle — both ellipses and the sliding window of three pages. */
 export const MiddlePage: Story = {
@@ -211,6 +213,7 @@ export const MiddlePage: Story = {
  * `_pagination.scss`) and the "of N pages" counter, all inside `.pagination-input`.
  */
 export const ShowGoToPage: Story = {
+	tags: ['docs-example'],
 	args: { showGoToPage: true },
 };
 

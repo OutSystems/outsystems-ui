@@ -61,11 +61,11 @@
 
 .osui-welcome,
 .osui-component-library {
-  --w-primary-100: #f0f2ff;
-  --w-primary-200: #e4e8ff;
-  --w-primary-400: #b5c0f7;
-  --w-primary-600: #6986f2;
-  --w-primary-700: #105cef;
+  --w-primary-100: #e6f7fa;
+  --w-primary-200: #cceef3;
+  --w-primary-400: #8dd4e0;
+  --w-primary-600: #0095ab;
+  --w-primary-700: #00a2bb;
   --w-n-0: #fff;
   --w-n-100: #f9f9f9;
   --w-n-200: #f2f2f2;
@@ -83,10 +83,10 @@
   --w-r-400: 16px;
   --w-r-500: 20px;
   --w-r-full: 999px;
-  --w-brand-a: #ff5e3e;
-  --w-brand-b: #d8161e;
-  --w-brand-c: #96082c;
-  --w-brand-d: #04053d;
+  --w-brand-a: #007a8f;
+  --w-brand-b: #00a2bb;
+  --w-brand-c: #005f6e;
+  --w-brand-d: #007a8f;
   --w-shadow-sm: 0 1px 2px rgba(21, 21, 21, 0.05), 0 1px 3px rgba(21, 21, 21, 0.04);
   --w-shadow-md: 0 4px 12px rgba(21, 21, 21, 0.06), 0 1px 3px rgba(21, 21, 21, 0.04);
   --w-shadow-lg: 0 18px 40px -12px rgba(21, 21, 21, 0.16), 0 2px 8px rgba(21, 21, 21, 0.05);
@@ -126,9 +126,9 @@
   height: 520px;
   pointer-events: none;
   background:
-    radial-gradient(52% 46% at calc(var(--mx) - 30%) calc(var(--my) - 1%), rgba(16, 92, 239, 0.18), transparent 70%),
-    radial-gradient(44% 44% at calc(var(--mx) + 30%) calc(var(--my) - 19%), rgba(255, 94, 62, 0.28), transparent 68%),
-    radial-gradient(40% 40% at calc(var(--mx) + 8%) calc(var(--my) + 27%), rgba(150, 8, 44, 0.14), transparent 70%);
+    radial-gradient(52% 46% at calc(var(--mx) - 30%) calc(var(--my) - 1%), rgba(0, 162, 187, 0.18), transparent 70%),
+    radial-gradient(44% 44% at calc(var(--mx) + 30%) calc(var(--my) - 19%), rgba(0, 162, 187, 0.28), transparent 68%),
+    radial-gradient(40% 40% at calc(var(--mx) + 8%) calc(var(--my) + 27%), rgba(0, 122, 143, 0.14), transparent 70%);
   filter: blur(6px);
 }
 .hero-grid {
@@ -261,7 +261,7 @@ h1 em {
 .bar{height:7px;border-radius:var(--w-r-full);background:var(--w-n-300);overflow:hidden;margin-top:12px}
 .bar i{display:block;height:100%;width:68%;border-radius:var(--w-r-full);background:var(--w-primary-700)}
 .code-demo{background:#12131a;border-radius:var(--w-r-300);padding:13px 15px;font-size:12px;line-height:1.7;color:#c8ccd8;overflow:auto}
-.code-demo .k{color:#ff8f70}.code-demo .s{color:#8ad6a0}.code-demo .c{color:#6b7280}.code-demo .f{color:#7cb3ff}
+.code-demo .k{color:#ff8f70}.code-demo .s{color:#8ad6a0}.code-demo .c{color:#6b7280}.code-demo .f{color:#6ecfe0}
 
 /* ── doc sections ───────────────────────────────── */
 .sec{padding:52px 0 0}
@@ -321,7 +321,7 @@ p{margin:0 0 16px;color:var(--w-ink-2)}
 /* Category palette — colour only when a chip is selected; meta label on cards */
 .osui-pattern-browser {
   --cat-all: #454545;
-  --cat-content: #105cef;
+  --cat-content: #00a2bb;
   --cat-interaction: #e85d04;
   --cat-navigation: #0d9488;
   --cat-adaptive: #1d4ed8;
@@ -406,7 +406,7 @@ p{margin:0 0 16px;color:var(--w-ink-2)}
 /* code + note */
 pre{background:#12131a;color:#c8ccd8;border-radius:var(--w-r-300);padding:17px 19px;overflow:auto;
   font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.75;margin:0 0 16px}
-pre .c{color:#6b7280}pre .k{color:#ff8f70}pre .s{color:#8ad6a0}pre .f{color:#7cb3ff}
+pre .c{color:#6b7280}pre .k{color:#ff8f70}pre .s{color:#8ad6a0}pre .f{color:#6ecfe0}
 .note{border:1px solid var(--w-n-300);border-left:3px solid var(--w-primary-700);background:var(--w-n-100);
   border-radius:var(--w-r-200);padding:15px 17px;margin:20px 0}
 .note.warn{border-left-color:var(--w-brand-b)}
@@ -422,7 +422,7 @@ td:first-child{font-weight:650;color:var(--w-ink);white-space:nowrap}
 .cta{background:var(--w-ink);color:#fff;border-radius:var(--w-r-500);padding:40px;display:grid;grid-template-columns:1.25fr .75fr;
   gap:30px;align-items:center;position:relative;overflow:hidden;margin-top:52px}
 .cta::after{content:"";position:absolute;right:-70px;top:-80px;width:330px;height:330px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%, rgba(255,94,62,.5), rgba(150,8,44,.18) 55%, transparent 70%);filter:blur(10px)}
+  background:radial-gradient(circle at 35% 35%, rgba(0, 162, 187, 0.5), rgba(0, 122, 143, 0.18) 55%, transparent 70%);filter:blur(10px)}
 .cta h2{color:#fff;margin-bottom:8px;font-size:26px}
 .cta p{margin:0;color:rgba(255,255,255,.72);font-size:15.5px}
 .cta .acts{display:flex;gap:10px;justify-content:flex-end;position:relative;z-index:1}

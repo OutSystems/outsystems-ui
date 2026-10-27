@@ -6,14 +6,21 @@ const SAMPLE_SVG =
 
 const meta: Meta<{ svgCode: string }> = {
 	title: 'Patterns/Utilities/InlineSvg',
-	argTypes: { svgCode: { control: 'text', name: 'SVGCode' } },
+	argTypes: {
+		svgCode: {
+			control: 'text',
+			name: 'SVGCode',
+			description: 'SVG markup code, that is going to be appended on the HTML.',
+		},
+	},
 	args: { svgCode: SAMPLE_SVG },
 };
 export default meta;
 
 type Story = StoryObj<{ svgCode: string }>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('inline-svg');
 		const template = `<div ${osuiRoot(id)} class="osui-inline-svg" style="color:#f5a623;"></div>`;

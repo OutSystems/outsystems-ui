@@ -21,7 +21,8 @@ export default meta;
 
 type Story = StoryObj<MarginContainerArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ extendedClass }) =>
 		renderStatic(`
 			<div style="max-width: 420px; border: 1px dashed var(--color-border); border-radius: var(--border-radius-soft);">

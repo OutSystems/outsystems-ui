@@ -121,7 +121,8 @@ function cards(count: number, orientation: Orientation): string {
  * Loose widgets dropped straight into the Content placeholder — styled by
  * `.horizontal-scroll > *:not(table)`.
  */
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => scrollableArea(args, cards(12, args.orientation)),
 };
 

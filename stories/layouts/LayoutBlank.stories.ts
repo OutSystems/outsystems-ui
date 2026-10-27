@@ -32,7 +32,7 @@ type Story = StoryObj<Args>;
 
 const render = (args: Args) => renderLayout(layoutBlank(args), { device: args.device });
 
-export const Default: Story = { render };
+export const Playground: Story = { render };
 
 export const Phone: Story = {
 	args: { device: 'phone' },

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TabsStories from './Tabs.stories';
+import { TABS_RECIPES } from './_helpers/pattern-docs/tabs-recipes';
+import { TABS_DOC } from './_helpers/pattern-docs/tabs-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={TabsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={TABS_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Tabs." implement={<StudioHowTo recipe={TABS_RECIPES.basicUsage} />}>
+				<Canvas of={TabsStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

@@ -21,8 +21,8 @@
 }
 
 .osui-css-api-reference {
-  --api-primary-100: #f0f2ff;
-  --api-primary-700: #105cef;
+  --api-primary-100: #e6f7fa;
+  --api-primary-700: #00a2bb;
   --api-n-100: #f9f9f9;
   --api-n-200: #f2f2f2;
   --api-n-300: #e8e8e8;
@@ -36,8 +36,8 @@
   --api-code-bg: rgb(247, 250, 252);
   --api-code-border: rgb(236, 244, 249);
   --api-code-ink: rgba(46, 52, 56, 0.9);
-  --api-brand-a: #ff5e3e;
-  --api-brand-b: #d8161e;
+  --api-brand-a: #007a8f;
+  --api-brand-b: #00a2bb;
   --api-nav-w: 216px;
   --api-nav-w-collapsed: 40px;
   --api-rail-handle-w: 22px;
@@ -81,8 +81,8 @@
   height: 460px;
   pointer-events: none;
   background:
-    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
-    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%);
+    radial-gradient(50% 46% at 18% 34%, rgba(0, 162, 187, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(0, 162, 187, 0.18), transparent 68%);
   filter: blur(6px);
 }
 
@@ -273,7 +273,7 @@
 .osui-css-api-reference .api-rail-handle:hover {
   color: var(--api-primary-700);
   border-color: #c8d8f8;
-  box-shadow: 2px 0 14px rgba(16, 92, 239, 0.12);
+  box-shadow: 2px 0 14px rgba(0, 162, 187, 0.12);
 }
 
 .osui-css-api-reference .api-rail-handle__icon {
@@ -611,9 +611,9 @@ html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-
 }
 
 .osui-css-api-reference .api-chip--color.is-active {
-  background: #e8f2ff;
+  background: #e6f7fa;
   border-color: #b8d4ff;
-  color: #105cef;
+  color: #00a2bb;
 }
 
 .osui-css-api-reference .api-chip--spacing.is-active {
@@ -808,8 +808,8 @@ html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-
 }
 
 .osui-css-api-reference .api-kind--color {
-  background: #e8f2ff;
-  color: #105cef;
+  background: #e6f7fa;
+  color: #00a2bb;
 }
 
 .osui-css-api-reference .api-kind--spacing {

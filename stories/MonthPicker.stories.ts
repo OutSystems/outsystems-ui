@@ -13,7 +13,13 @@ interface MonthPickerArgs {
 
 const meta: Meta<MonthPickerArgs> = {
 	title: 'Patterns/Interaction/MonthPicker',
-	argTypes: { dateFormat: { control: 'text', name: 'DateFormat' } },
+	argTypes: {
+		dateFormat: {
+			control: 'text',
+			name: 'DateFormat',
+			description: 'Display format of the selected month (e.g. MM/YYYY).',
+		},
+	},
 	args: { dateFormat: 'MM/YYYY' },
 };
 export default meta;
@@ -51,7 +57,8 @@ function initMonthPicker(
 	register(() => P.MonthPickerAPI.Dispose?.(id));
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('monthpicker');
 		return renderPattern(monthPickerMarkup(id), (_root, register) =>

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FloatingActionsStories from './FloatingActions.stories';
+import { FLOATING_ACTIONS_RECIPES } from './_helpers/pattern-docs/floating-actions-recipes';
+import { FLOATING_ACTIONS_DOC } from './_helpers/pattern-docs/floating-actions-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={FloatingActionsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={FLOATING_ACTIONS_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Floating Actions." implement={<StudioHowTo recipe={FLOATING_ACTIONS_RECIPES.basicUsage} />}>
+				<Canvas of={FloatingActionsStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

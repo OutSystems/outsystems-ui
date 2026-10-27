@@ -10,8 +10,17 @@ interface ButtonLoadingArgs {
 const meta: Meta<ButtonLoadingArgs> = {
 	title: 'Patterns/Utilities/ButtonLoading',
 	argTypes: {
-		isLoading: { control: 'boolean', name: 'IsLoading' },
-		showLoadingAndLabel: { control: 'boolean', name: 'ShowLoadingAndLabel' },
+		isLoading: {
+			control: 'boolean',
+			name: 'IsLoading',
+			description: 'If True, the button shows the loading spinner.',
+		},
+		showLoadingAndLabel: {
+			control: 'boolean',
+			name: 'ShowLabelOnLoading',
+			description:
+				'If True, the loading spinner displays beside the label. Runtime config: `ShowLoadingAndLabel`.',
+		},
 	},
 	args: { isLoading: true, showLoadingAndLabel: true },
 };
@@ -29,7 +38,8 @@ function buttonLoadingMarkup(id: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('btn-loading');
 		return renderPattern(buttonLoadingMarkup(id), (_root, register) =>

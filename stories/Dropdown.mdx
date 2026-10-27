@@ -1,0 +1,24 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownStories from './Dropdown.stories';
+import * as DropdownTagsStories from './DropdownTags.stories';
+import { DROPDOWN_RECIPES } from './_helpers/pattern-docs/dropdown-recipes';
+import { DROPDOWN_DOC } from './_helpers/pattern-docs/dropdown-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={DropdownStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={DROPDOWN_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Dropdown." implement={<StudioHowTo recipe={DROPDOWN_RECIPES.basicUsage} />}>
+				<Canvas of={DropdownStories.Playground} />
+			</PdExample>
+			<PdExample title="Tags" description="Live example of Dropdown." implement={<StudioHowTo recipe={DROPDOWN_RECIPES.basicUsage} />}>
+				<Canvas of={DropdownTagsStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

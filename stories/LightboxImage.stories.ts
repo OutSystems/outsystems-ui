@@ -166,9 +166,14 @@ export default meta;
  * The shipped thumbnail markup (`.lightbox-item > a > img`), wired to a real gallery
  * so the whole thumbnail → overlay journey is exercised. Click any image to open.
  */
-export const Default: StoryObj<ThumbnailArgs> = {
+export const Playground: StoryObj<ThumbnailArgs> = {
+	tags: ['docs-example'],
 	argTypes: {
-		thumbnailWidth: { name: 'ThumbnailWidth (px)', control: { type: 'number', min: 80, max: 640 } },
+		thumbnailWidth: {
+			name: 'ThumbnailWidth (px)',
+			control: { type: 'number', min: 80, max: 640 },
+			description: 'Story-only: rendered width of the thumbnail image.',
+		},
 		extendedClass: extendedClassArgType,
 		...chromeArgTypes,
 	},
@@ -215,6 +220,7 @@ export const Default: StoryObj<ThumbnailArgs> = {
  * icon overrides on top; nothing is faked.
  */
 export const OverlayChrome: StoryObj<PswpChrome> = {
+	tags: ['docs-example'],
 	name: 'Overlay chrome',
 	argTypes: chromeArgTypes,
 	args: { counterEl: true, zoomEl: true, shareEl: false, fullscreenEl: false },

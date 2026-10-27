@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimelineStories from './Timeline.stories';
+import { TIMELINE_RECIPES } from './_helpers/pattern-docs/timeline-recipes';
+import { TIMELINE_DOC } from './_helpers/pattern-docs/timeline-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={TimelineStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={TIMELINE_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Timeline." implement={<StudioHowTo recipe={TIMELINE_RECIPES.basicUsage} />}>
+				<Canvas of={TimelineStories.Playground} />
+			</PdExample>
+			<PdExample title="No Icon" description="Live example of Timeline." implement={<StudioHowTo recipe={TIMELINE_RECIPES.basicUsage} />}>
+				<Canvas of={TimelineStories.NoIcon} />
+			</PdExample>
+		</>
+	}
+/>

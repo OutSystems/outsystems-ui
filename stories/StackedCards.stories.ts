@@ -75,7 +75,8 @@ function stackedCardsMarkup({ overlay, extendedClass }: StackedCardsArgs): strin
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => renderStatic(stackedCardsMarkup(args)),
 };
 

@@ -42,7 +42,8 @@ const meta: Meta<OverflowMenuArgs> = {
 		position: {
 			control: 'select',
 			options: ['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'],
-			name: 'Position',
+			name: 'BalloonPosition',
+			description: 'Preferred placement of the menu relative to its trigger; auto picks the best fit.',
 		},
 		shape: {
 			// `GlobalEnum.ShapeTypes` maps the low-code names onto CSS-ish VALUES:
@@ -52,7 +53,8 @@ const meta: Meta<OverflowMenuArgs> = {
 			// and the control look broken. `labels` keeps the low-code names on screen.
 			control: { type: 'inline-radio', labels: { soft: 'SoftRounded', rounded: 'Rounded', none: 'Sharp' } },
 			options: ['soft', 'rounded', 'none'],
-			name: 'Shape',
+			name: 'BalloonShape',
+			description: 'Corner shape of the menu: SoftRounded (default), Rounded or Sharp.',
 		},
 		icon: {
 			name: 'Trigger (Icon)',
@@ -90,7 +92,8 @@ function overflowMenuMarkup(id: string, icon: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('overflow-menu');
 		return renderPattern(overflowMenuMarkup(id, args.icon), (_root, register) =>

@@ -31,7 +31,8 @@ function counterMarkup({ backgroundColor, isVertical, height, extendedClass }: C
 
 const baseArgs: CounterArgs = { backgroundColor: 'primary', isVertical: false, height: 150, extendedClass: '' };
 
-export const Default: StoryObj<CounterArgs> = {
+export const Playground: StoryObj<CounterArgs> = {
+	tags: ['docs-example'],
 	args: { ...baseArgs },
 	argTypes: {
 		backgroundColor: {

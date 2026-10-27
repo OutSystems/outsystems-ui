@@ -48,7 +48,7 @@ function boxedCircle(id: string, box = '140px'): string {
 	return `<div style="height:${box};width:${box};">${circleMarkup(id)}</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('progress-circle');
 		return renderPattern(circleMarkup(id, 'width:140px;height:140px;'), (_root, register) =>

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { floatingContentMarkup as floatingContentMarkupDoc } from './_helpers/floating-content-markup';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
@@ -97,8 +98,29 @@ function floatingContentMarkup(
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => renderStatic(floatingContentMarkup(args)),
+};
+
+export const BottomRight: Story = {
+	tags: ['docs-example'],
+	name: 'Bottom right',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(floatingContentMarkupDoc('bottom-right')),
+};
+
+export const Center: Story = {
+	tags: ['docs-example'],
+	name: 'Center',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(floatingContentMarkupDoc('center')),
+};
+
+export const FullWidth: Story = {
+	tags: ['docs-example'],
+	name: 'Full width',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(floatingContentMarkupDoc('top', { useMargin: false, fullWidth: true })),
 };
 
 /** All nine anchor positions in a grid of compact demo boxes. */

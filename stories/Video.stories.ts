@@ -12,10 +12,14 @@ interface VideoArgs {
 const meta: Meta<VideoArgs> = {
 	title: 'Patterns/Utilities/Video',
 	argTypes: {
-		url: { control: 'text', name: 'URL' },
-		controls: { control: 'boolean', name: 'Controls' },
-		muted: { control: 'boolean', name: 'Muted' },
-		loop: { control: 'boolean', name: 'Loop' },
+		url: { control: 'text', name: 'URL', description: 'Video source: a URL or a base64 data URL.' },
+		controls: { control: 'boolean', name: 'Controls', description: 'Shows the native player controls.' },
+		muted: { control: 'boolean', name: 'OptionalConfigs.Muted', description: 'Starts muted.' },
+		loop: {
+			control: 'boolean',
+			name: 'OptionalConfigs.Loop',
+			description: 'Restarts playback when the video ends.',
+		},
 	},
 	args: {
 		url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
@@ -53,7 +57,8 @@ function renderVideo(args: VideoArgs): HTMLElement {
 	});
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: renderVideo,
 };
 

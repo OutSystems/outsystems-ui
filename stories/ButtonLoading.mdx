@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ButtonLoadingStories from './ButtonLoading.stories';
+import { BUTTON_LOADING_RECIPES } from './_helpers/pattern-docs/button-loading-recipes';
+import { BUTTON_LOADING_DOC } from './_helpers/pattern-docs/button-loading-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={ButtonLoadingStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={BUTTON_LOADING_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Button Loading." implement={<StudioHowTo recipe={BUTTON_LOADING_RECIPES.basicUsage} />}>
+				<Canvas of={ButtonLoadingStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

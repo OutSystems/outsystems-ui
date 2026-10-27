@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MarginContainerStories from './MarginContainer.stories';
+import { MARGIN_CONTAINER_RECIPES } from './_helpers/pattern-docs/margin-container-recipes';
+import { MARGIN_CONTAINER_DOC } from './_helpers/pattern-docs/margin-container-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={MarginContainerStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={MARGIN_CONTAINER_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Margin Container." implement={<StudioHowTo recipe={MARGIN_CONTAINER_RECIPES.basicUsage} />}>
+				<Canvas of={MarginContainerStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

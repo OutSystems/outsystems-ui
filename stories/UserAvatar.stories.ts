@@ -14,6 +14,33 @@ import { colorBoard, labeledBoard } from './_helpers/showcase';
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
  *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
+// ─── Docs-page demos (ported from the docs stories) ─────────────────────────
+
+const DEMO_WRAP = 'display:flex;justify-content:center;width:100%;';
+const CARD_IMG = '/assets/placeholder-card.svg';
+
+function avatarMarkupDoc(
+	name: string,
+	image: string,
+	color: string,
+	size: string,
+	shape: string,
+	isLight: boolean,
+	extendedClass = ''
+): string {
+	const bgClass = backgroundClass(color, isLight);
+	const textClass = isLight ? lightTextClass(color) : '';
+	const shapeClass = shape ? `border-radius-${shape}` : '';
+	const sizeClass = size ? `avatar-${size}` : '';
+	const label = `user initials, ${initials(name)}`;
+	const inner = image
+		? `<img src="${image}" alt="${name}" />`
+		: `<span class="OSFillParent">${initials(name)}</span>`;
+	return `<div style="${DEMO_WRAP}"><div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div></div>`;
+}
+
+type Story = StoryObj;
+
 const meta: Meta = { title: 'Patterns/Content/UserAvatar' };
 export default meta;
 
@@ -71,7 +98,7 @@ const AVATAR_IMAGE =
 		'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" fill="#94a3b8"/><circle cx="24" cy="18" r="8" fill="#e2e8f0"/><path d="M8 44c0-9 7-14 16-14s16 5 16 14" fill="#e2e8f0"/></svg>'
 	);
 
-export const Default: StoryObj<UserAvatarArgs> = {
+export const Playground: StoryObj<UserAvatarArgs> = {
 	args: { ...baseArgs },
 	argTypes: {
 		name: {
@@ -110,6 +137,27 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: (args) => renderStatic(avatarMarkup(args)),
+};
+
+export const Initials: Story = {
+	tags: ['docs-example'],
+	name: 'Initials',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(avatarMarkupDoc('John Doe', '', 'primary', 'medium', 'rounded', false)),
+};
+
+export const WithImage: Story = {
+	tags: ['docs-example'],
+	name: 'With image',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(avatarMarkupDoc('Jane Doe', CARD_IMG, 'primary', 'medium', 'circle', false)),
+};
+
+export const LightStyle: Story = {
+	tags: ['docs-example'],
+	name: 'Light style',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(avatarMarkupDoc('Alex Kim', '', 'primary', 'medium', 'rounded', true)),
 };
 
 /** Every Color swatch as a solid and an IsLight avatar (initials type). */

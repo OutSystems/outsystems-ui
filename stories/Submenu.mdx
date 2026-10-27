@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SubmenuStories from './Submenu.stories';
+import { SUBMENU_RECIPES } from './_helpers/pattern-docs/submenu-recipes';
+import { SUBMENU_DOC } from './_helpers/pattern-docs/submenu-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={SubmenuStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SUBMENU_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Submenu." implement={<StudioHowTo recipe={SUBMENU_RECIPES.basicUsage} />}>
+				<Canvas of={SubmenuStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

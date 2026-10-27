@@ -83,11 +83,11 @@ const WELCOME_TAIL = `
         <h3>Colour</h3>
         <p>Primitive ramps resolve into semantic roles: primary, success, warning, danger, info.</p>
         <div class="swatches">
-          <div class="sw" style="background:#f0f2ff"></div><div class="sw" style="background:#e4e8ff"></div>
-          <div class="sw" style="background:#d0d7fa"></div><div class="sw" style="background:#b5c0f7"></div>
-          <div class="sw" style="background:#94a5f4"></div><div class="sw" style="background:#6986f2"></div>
-          <div class="sw" style="background:#105cef"></div><div class="sw" style="background:#0d4ec9"></div>
-          <div class="sw" style="background:#04053d"></div>
+          <div class="sw" style="background:#e6f7fa"></div><div class="sw" style="background:#cceef3"></div>
+          <div class="sw" style="background:#d0d7fa"></div><div class="sw" style="background:#8dd4e0"></div>
+          <div class="sw" style="background:#94a5f4"></div><div class="sw" style="background:#0095ab"></div>
+          <div class="sw" style="background:#00a2bb"></div><div class="sw" style="background:#0d4ec9"></div>
+          <div class="sw" style="background:#007a8f"></div>
         </div>
       </div>
       <div class="w-card">
@@ -104,7 +104,7 @@ const WELCOME_TAIL = `
         <h3>Tokens</h3>
         <p>Change one in the theme editor and every pattern that uses it follows.</p>
         <div style="margin-top:8px" class="mono">
-          <div class="tok"><span>--token-semantics-primary-700</span><span>#105cef</span></div>
+          <div class="tok"><span>--token-semantics-primary-700</span><span>#00a2bb</span></div>
           <div class="tok"><span>--token-border-radius-300</span><span>12px</span></div>
           <div class="tok"><span>--token-scale-400</span><span>16px</span></div>
           <div class="tok"><span>--osui-card-padding</span><span>inherits</span></div>

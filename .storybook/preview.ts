@@ -13,6 +13,15 @@ import './css-api-reference.scss';
 import './migration.scss';
 import './theme-editor.scss';
 import './foundations.scss';
+import './pattern-docs.scss';
+import './accordion-demos.scss';
+import './blank-slate-demos.scss';
+import './carousel-demos.scss';
+import './flip-content-demos.scss';
+import './floating-content-demos.scss';
+import './card-demos.scss';
+import './card-background-demos.scss';
+import './demo-icons.scss';
 import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
@@ -358,8 +367,13 @@ const preview: Preview = {
 			},
 		},
 		options: {
-			storySort: {
-				order: [
+			// Plain JavaScript and self-contained on purpose — Storybook evaluates this
+			// function from the preview SOURCE (no TypeScript syntax, no outer references). Same algorithm as
+			// the built-in `order` sort; within one component, the Docs page comes first, then
+			// the stories its page embeds (tagged `docs-example`, nested under Docs in the
+			// sidebar by manager.js), then the remaining stories in file order.
+			storySort: (a, b) => {
+				const ORDER = [
 					'Welcome',
 					'Getting Started',
 					'Migration',
@@ -380,7 +394,32 @@ const preview: Preview = {
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',
-				],
+				];
+				if (a.title === b.title) {
+					const rank = (e) => (e.type === 'docs' ? 0 : e.tags?.includes('docs-example') ? 1 : 2);
+					return rank(a) - rank(b);
+				}
+				let order = ORDER;
+				const pathA = a.title.trim().split(/\s*\/\s*/);
+				const pathB = b.title.trim().split(/\s*\/\s*/);
+				for (let depth = 0; pathA[depth] || pathB[depth]; depth++) {
+					if (!pathA[depth]) return -1;
+					if (!pathB[depth]) return 1;
+					const nameA = pathA[depth];
+					const nameB = pathB[depth];
+					if (nameA !== nameB) {
+						let indexA = order.indexOf(nameA);
+						let indexB = order.indexOf(nameB);
+						if (indexA === -1 && indexB === -1) return 0;
+						if (indexA === -1) indexA = order.length;
+						if (indexB === -1) indexB = order.length;
+						return indexA - indexB;
+					}
+					const index = order.indexOf(nameA);
+					const next = index !== -1 ? order[index + 1] : undefined;
+					order = Array.isArray(next) ? next : [];
+				}
+				return 0;
 			},
 		},
 	},

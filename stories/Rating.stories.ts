@@ -24,9 +24,21 @@ const ICON_STATES = `
 const meta: Meta<RatingArgs> = {
 	title: 'Patterns/Numbers/Rating',
 	argTypes: {
-		ratingValue: { control: { type: 'number', min: 0, max: 5, step: 0.5 }, name: 'RatingValue' },
-		ratingScale: { control: { type: 'number', min: 1, max: 10 }, name: 'RatingScale' },
-		isEdit: { control: 'boolean', name: 'IsEdit' },
+		ratingValue: {
+			control: { type: 'number', min: 0, max: 5, step: 0.5 },
+			name: 'RatingValue',
+			description: 'Current rating; a fractional part from 0.3 to 0.7 renders a half-filled item.',
+		},
+		ratingScale: {
+			control: { type: 'number', min: 1, max: 10 },
+			name: 'RatingScale',
+			description: 'Number of rating items.',
+		},
+		isEdit: {
+			control: 'boolean',
+			name: 'IsEdit',
+			description: 'Lets the user change the rating; when False it is read-only.',
+		},
 	},
 	args: { ratingValue: 3, ratingScale: 5, isEdit: true },
 };
@@ -43,7 +55,8 @@ function ratingMarkup(id: string, pseudo = ''): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('rating');
 		return renderPattern(ratingMarkup(id), (_root, register) =>

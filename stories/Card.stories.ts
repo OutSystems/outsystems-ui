@@ -1,28 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { basicCardMarkup, composedCardMarkup } from './_helpers/card-markup';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType, usePaddingArgType } from './_helpers/lowcode';
-import { labeledBoard } from './_helpers/showcase';
+import { cls, extendedClassArgType, usePaddingArgType } from './_helpers/lowcode';
 
 /**
- * Card family. Each story's controls mirror the low-code input parameters of the
- * matching OutSystemsUI block (extracted from the library OML), wired into the
- * shipped markup:
- *   Basic       → `Card`           (UsePadding, ExtendedClass)
- *   Sectioned   → `CardSectioned`  (UsePadding, IsVertical, ImagePadding, ExtendedClass)
- *   Background  → `CardBackground` (Color, MinHeight, ExtendedClass)
- *   Detail      → `CardItem`       (ExtendedClass)
- * Class mappings come from src/scss/04-patterns/02-content/_card*.scss.
+ * Card — simple bordered surface. Controls mirror the low-code input parameters of
+ * the `Card` block (UsePadding, ExtendedClass), wired into the shipped markup; class
+ * mappings from src/scss/04-patterns/02-content/_card.scss.
+ *
+ * Card Sectioned, Card Background and Card Item are separate blocks with their own
+ * stories (CardSectioned / CardBackground / CardItem).
  */
 const meta: Meta = { title: 'Patterns/Content/Card' };
 export default meta;
 
-// Static placeholder bundled under .storybook/assets (served via staticDirs at /assets/*):
-// no network dependency in the preview iframe, deterministic for Chromatic.
-const CARD_IMG = '/assets/placeholder-card.svg';
-
-// ─── Card ──────────────────────────────────────────────────────────────────────
 type CardArgs = { usePadding: boolean; extendedClass: string };
-export const Basic: StoryObj<CardArgs> = {
+
+export const Playground: StoryObj<CardArgs> = {
 	args: { usePadding: true, extendedClass: '' },
 	argTypes: { usePadding: usePaddingArgType, extendedClass: extendedClassArgType },
 	render: ({ usePadding, extendedClass }) =>
@@ -31,117 +25,32 @@ export const Basic: StoryObj<CardArgs> = {
 		),
 };
 
-// ─── CardSectioned ───────────────────────────────────────────────────────────────
-// Layout notes (confirmed against Figma + the live TaskSample_DEV_ROU12874/Cards sample,
-// and against ticket-owner decisions for this ticket's scope):
-//  • Vertical → image always renders last, after title/content/card-bottom; enforced by
-//    `.flex-direction-column .card-image { order: 1; }` in _card-sectioned.scss, so the
-//    DOM order here doesn't need to change.
-//  • Horizontal → image always renders first (Figma's "Last"/image-on-the-right variation
-//    is explicitly out of scope for this ticket — not exposed as a story control).
-//  • card-bottom is a real footer slot (confirmed, not superseded) — its content here is
-//    a text-link CTA ("Simulate Loan"), matching what's actually shown, not a button.
-//  • UsePadding=False removes all padding, including the image's, regardless of
-//    ImagePadding's own value — enforced by `.card-sectioned.padding-none` in the SCSS.
-type SectionedArgs = { usePadding: boolean; isVertical: boolean; imagePadding: boolean; extendedClass: string };
+type Story = StoryObj;
 
-function sectionedCardMarkup({ usePadding, isVertical, imagePadding, extendedClass }: SectionedArgs): string {
-	// Vertical → image is a full-width banner with a fixed height.
-	// Horizontal → image is a fixed-width column that stretches to the card's full height.
-	const cardStyle = `max-width:${isVertical ? 320 : 480}px;`;
-	return `
-		<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="${cardStyle}">
-			<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" /></div>
-			<div class="card-sectioned-top flex-direction-column">
-				<div class="card-title">Hire our personal plan</div>
-				<div class="card-content">Take control with a plan made for you — manage everything in one place.</div>
-				<div class="card-bottom"><a href="#">Simulate Loan</a></div>
-			</div>
-		</div>`;
-}
-
-export const Sectioned: StoryObj<SectionedArgs> = {
-	args: { usePadding: true, isVertical: true, imagePadding: true, extendedClass: '' },
-	argTypes: {
-		usePadding: usePaddingArgType,
-		isVertical: { name: 'IsVertical', control: 'boolean', description: 'Set the orientation.' },
-		imagePadding: {
-			name: 'ImagePadding',
-			control: 'boolean',
-			description: 'When true, image has 24px of padding. Has no effect while UsePadding is false.',
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default Card with padding — set <code>UsePadding</code> to False to remove inner spacing.',
+			},
 		},
-		extendedClass: extendedClassArgType,
 	},
-	render: (args) => renderStatic(sectionedCardMarkup(args)),
+	render: () => renderStatic(basicCardMarkup()),
 };
 
-/**
- * One Sectioned card per low-code control, each flipped from the defaults:
- * the baseline (vertical, padded, padded image), `IsVertical: false`,
- * `UsePadding: false` (removes ALL padding, including the image's), and
- * `ImagePadding: false`. ExtendedClass has no visual of its own.
- */
-export const SectionedVariants: StoryObj = {
-	parameters: { controls: { disable: true } },
-	render: () => {
-		const defaults: SectionedArgs = { usePadding: true, isVertical: true, imagePadding: true, extendedClass: '' };
-		const variants: Array<{ label: string; overrides: Partial<SectionedArgs> }> = [
-			{ label: 'default (vertical)', overrides: {} },
-			{ label: 'IsVertical: false', overrides: { isVertical: false } },
-			{ label: 'UsePadding: false', overrides: { usePadding: false } },
-			{ label: 'ImagePadding: false', overrides: { imagePadding: false } },
-		];
-		const board = labeledBoard(
-			variants.map(({ label, overrides }) => ({
-				label,
-				html: sectionedCardMarkup({ ...defaults, ...overrides }),
-			})),
-			{ direction: 'row', gap: 24, wrap: true }
-		);
-		return renderStatic(board.outerHTML);
-	},
-};
-
-// ─── CardBackground ──────────────────────────────────────────────────────────────
-type BackgroundArgs = { color: string; minHeight: number; extendedClass: string };
-export const Background: StoryObj<BackgroundArgs> = {
-	args: { color: 'primary', minHeight: 200, extendedClass: '' },
-	argTypes: {
-		color: {
-			name: 'Color',
-			control: 'select',
-			options: COLOR_OPTIONS,
-			description: 'Background color of the Block.',
+export const CardComposition: Story = {
+	tags: ['docs-example'],
+	name: 'Card composition',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Compose a richer layout inside a Card — header, highlighted row, summary lines, and a full-width action.',
+			},
 		},
-		minHeight: {
-			name: 'MinHeight',
-			control: { type: 'number', min: 0, step: 10 },
-			description: 'Minimum height of the Card, in pixels.',
-		},
-		extendedClass: extendedClassArgType,
 	},
-	render: ({ color, minHeight, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('card-background', extendedClass)}" style="max-width:320px;min-height:${minHeight}px;">
-				<div class="card-background-content"><div style="text-align:center;"><span class="heading2 text-neutral-0">Take control with a plan made for you</span></div></div>
-				<div class="card-background-image"><div style="width:100%;height:100%;background:linear-gradient(135deg,#3b5bdb,#1098ad);"></div></div>
-				<div class="${cls('card-background-color', color && `background-${color}`)}"></div>
-			</div>`),
-};
-
-// ─── CardItem ────────────────────────────────────────────────────────────────────
-type ItemArgs = { extendedClass: string };
-export const Item: StoryObj<ItemArgs> = {
-	args: { extendedClass: '' },
-	argTypes: { extendedClass: extendedClassArgType },
-	render: ({ extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('card card-detail', extendedClass)}" style="max-width:360px;">
-				<div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div>
-				<div class="card-detail-center">
-					<div class="card-detail-title">Jane Doe</div>
-					<div class="card-detail-text">Product designer</div>
-				</div>
-				<div class="card-detail-right"><div class="badge border-radius-rounded background-primary OSInline"><span class="OSFillParent">3</span></div></div>
-			</div>`),
+	render: () => renderStatic(composedCardMarkup()),
 };

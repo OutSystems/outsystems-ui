@@ -92,7 +92,7 @@ export default meta;
 
 type Story = StoryObj<ProviderLoginButtonArgs>;
 
-export const Default: Story = {};
+export const Playground: Story = {};
 
 /** The three providers stacked, as on a Login screen. */
 export const AllProviders: Story = {

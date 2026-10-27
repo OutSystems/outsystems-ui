@@ -36,7 +36,8 @@ function barMarkup(id: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('progress-bar');
 		return renderPattern(barMarkup(id), (_root, register) =>

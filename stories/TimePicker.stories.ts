@@ -14,7 +14,11 @@ interface TimePickerArgs {
 const meta: Meta<TimePickerArgs> = {
 	title: 'Patterns/Interaction/TimePicker',
 	argTypes: {
-		is24Hours: { control: 'boolean', name: 'Is24Hours' },
+		is24Hours: {
+			control: 'boolean',
+			name: 'Is24Hours',
+			description: 'Uses a 24-hour clock; False shows an AM/PM selector.',
+		},
 		timeFormat: {
 			control: 'text',
 			name: 'TimeFormat',
@@ -55,7 +59,8 @@ function initTimePicker(
 	register(() => P.TimePickerAPI.Dispose?.(id));
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('timepicker');
 		return renderPattern(timePickerMarkup(id), (_root, register) =>

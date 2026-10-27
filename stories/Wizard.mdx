@@ -1,0 +1,32 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as WizardStories from './Wizard.stories';
+import { WIZARD_RECIPES } from './_helpers/pattern-docs/wizard-recipes';
+import { WIZARD_DOC } from './_helpers/pattern-docs/wizard-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={WizardStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={WIZARD_DOC}
+	examples={
+		<>
+			<PdExample title="Wizard" description="Live example of Wizard." implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}>
+				<Canvas of={WizardStories.Playground} />
+			</PdExample>
+			<PdExample title="Vertical" description="Live example of Wizard." implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}>
+				<Canvas of={WizardStories.Vertical} />
+			</PdExample>
+			<PdExample title="Interactive" description="Live example of Wizard." implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}>
+				<Canvas of={WizardStories.Interactive} />
+			</PdExample>
+			<PdExample title="Marker: icon" description="Live example of Wizard." implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}>
+				<Canvas of={WizardStories.MarkerIcon} />
+			</PdExample>
+			<PdExample title="Marker: empty (dot)" description="Live example of Wizard." implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}>
+				<Canvas of={WizardStories.MarkerEmpty} />
+			</PdExample>
+		</>
+	}
+/>

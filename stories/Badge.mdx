@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BadgeStories from './Badge.stories';
+import { BADGE_RECIPES } from './_helpers/pattern-docs/badge-recipes';
+import { BADGE_DOC } from './_helpers/pattern-docs/badge-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={BadgeStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={BADGE_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Badge." implement={<StudioHowTo recipe={BADGE_RECIPES.basicUsage} />}>
+				<Canvas of={BadgeStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

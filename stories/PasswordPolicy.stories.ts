@@ -157,10 +157,26 @@ const meta: Meta<PasswordPolicyArgs> = {
 			control: { type: 'number', min: 0, step: 1 },
 			description: 'Not a block parameter — the app password policy the block reads at runtime.',
 		},
-		upperCaseLetterRequired: { name: 'Policy: UpperCaseLetterRequired', control: 'boolean' },
-		lowerCaseLetterRequired: { name: 'Policy: LowerCaseLetterRequired', control: 'boolean' },
-		numberRequired: { name: 'Policy: NumberRequired', control: 'boolean' },
-		specialCharacterRequired: { name: 'Policy: SpecialCharacterRequired', control: 'boolean' },
+		upperCaseLetterRequired: {
+			name: 'Policy: UpperCaseLetterRequired',
+			control: 'boolean',
+			description: 'App password policy rule (not a block parameter): at least one upper-case letter.',
+		},
+		lowerCaseLetterRequired: {
+			name: 'Policy: LowerCaseLetterRequired',
+			control: 'boolean',
+			description: 'App password policy rule (not a block parameter): at least one lower-case letter.',
+		},
+		numberRequired: {
+			name: 'Policy: NumberRequired',
+			control: 'boolean',
+			description: 'App password policy rule (not a block parameter): at least one digit.',
+		},
+		specialCharacterRequired: {
+			name: 'Policy: SpecialCharacterRequired',
+			control: 'boolean',
+			description: 'App password policy rule (not a block parameter): at least one special character.',
+		},
 	},
 	render,
 };
@@ -169,7 +185,7 @@ export default meta;
 type Story = StoryObj<PasswordPolicyArgs>;
 
 /** Empty field — every rule unmet. Type a password to watch the rules turn green. */
-export const Default: Story = {};
+export const Playground: Story = {};
 
 /** Some rules met: the met rows get `.is-valid` icons and (except length) turn green. */
 export const PartiallyValid: Story = {

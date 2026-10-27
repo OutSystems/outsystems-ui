@@ -28,15 +28,36 @@ interface DatePickerArgs {
 const meta: Meta<DatePickerArgs> = {
 	title: 'Patterns/Interaction/DatePicker',
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'range'] },
-		dateFormat: { control: 'text', name: 'DateFormat' },
-		firstWeekDay: { control: { type: 'number', min: 0, max: 6 }, name: 'FirstWeekDay' },
-		showTodayButton: { control: 'boolean', name: 'ShowTodayButton' },
-		showWeekNumbers: { control: 'boolean', name: 'ShowWeekNumbers' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'range'],
+			description: 'Story-only: `single` renders the DatePicker block, `range` the DatePickerRange block.',
+		},
+		dateFormat: {
+			control: 'text',
+			name: 'DateFormat',
+			description: 'Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format.',
+		},
+		firstWeekDay: {
+			control: { type: 'number', min: 0, max: 6 },
+			name: 'OptionalConfigs.FirstWeekDay',
+			description: 'First day of the week in the calendar (0 = Sunday … 6 = Saturday).',
+		},
+		showTodayButton: {
+			control: 'boolean',
+			name: 'ShowTodayButton',
+			description: 'Renders a Today button in the calendar footer.',
+		},
+		showWeekNumbers: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowWeekNumbers',
+			description: 'Shows the week-number column in the calendar.',
+		},
 		timeFormat: {
 			control: 'inline-radio',
 			options: ['disabled', '12', '24'],
 			name: 'TimeFormat',
+			description: 'Time selection appended to the calendar: Disabled (date only), 12 or 24 hour format.',
 		},
 	},
 	args: {
@@ -107,11 +128,13 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: renderDatePicker,
 };
 
 export const Range: Story = {
+	tags: ['docs-example'],
 	args: { mode: 'range' },
 	render: renderDatePicker,
 };

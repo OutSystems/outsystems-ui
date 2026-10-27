@@ -25,13 +25,23 @@ const meta: Meta<TooltipArgs> = {
 	title: 'Patterns/Interaction/Tooltip',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		isHover: { control: 'boolean', name: 'IsHover' },
+		isHover: {
+			control: 'boolean',
+			name: 'IsHover',
+			description:
+				'Opens on hover (low-code Trigger = OnHover); when False it opens on click or keyboard focus (Trigger = OnClick).',
+		},
 		position: {
 			control: 'select',
 			options: POSITION_OPTIONS,
 			name: 'Position',
+			description: 'Placement of the balloon relative to the trigger.',
 		},
-		startVisible: { control: 'boolean', name: 'StartVisible' },
+		startVisible: {
+			control: 'boolean',
+			name: 'StartVisible',
+			description: 'Shows the tooltip as soon as it is built. Low-code parameter: `StartsOpen`.',
+		},
 	},
 	args: { isHover: true, position: 'bottom', startVisible: false },
 	render: (args) => {
@@ -82,10 +92,13 @@ export default meta;
 
 type Story = StoryObj<TooltipArgs>;
 
-export const Default: Story = {};
+export const Playground: Story = {
+	tags: ['docs-example'],
+};
 
 /** Pinned open so Chromatic photographs the balloon, not just the trigger. */
 export const Visible: Story = {
+	tags: ['docs-example'],
 	args: { startVisible: true },
 	parameters: {
 		// Entrance animation is 150ms; wait it out so the snapshot is not mid-fade.

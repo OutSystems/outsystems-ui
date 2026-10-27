@@ -60,7 +60,8 @@ function actionSheetMarkup({ showCancel, extendedClass }: ActionSheetArgs, visib
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const root = renderStatic(actionSheetMarkup(args));
 

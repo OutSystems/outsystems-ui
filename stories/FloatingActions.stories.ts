@@ -101,7 +101,8 @@ function floatingActionsMarkup(
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ isExpanded, isHover, extendedClass }) => {
 		const root = renderStatic(floatingActionsMarkup(isExpanded, extendedClass));
 

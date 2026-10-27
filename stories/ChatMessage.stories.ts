@@ -42,6 +42,34 @@ function statusMarkup(time: string, status: MessageStatus): string {
 	}
 }
 
+// ─── Docs-page demos (ported from the docs stories) ─────────────────────────
+// Positional variant with a centred wrapper; reuses the shared statusMarkup above.
+
+function chatMessageMarkupDoc(
+	displayOnRight: boolean,
+	message: string,
+	initials: string,
+	time: string,
+	status: MessageStatus,
+	extendedClass = ''
+): string {
+	return `<div style="display:flex;justify-content:center;width:100%;"><div style="max-width:460px;width:100%;">
+		<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
+			<div class="chat-photo OSInline">
+				<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${initials}">
+					<span class="OSFillParent">${initials}</span>
+				</div>
+			</div>
+			<div class="chat-message-wrapper OSInline">
+				<div class="chat-message padding OSInline" role="button" tabindex="0"><span>${message}</span></div>
+				${statusMarkup(time, status)}
+			</div>
+		</div>
+	</div></div>`;
+}
+
+type Story = StoryObj;
+
 // ─── ChatMessage ──────────────────────────────────────────────────────────────
 
 type ChatMessageArgs = {
@@ -77,7 +105,7 @@ const baseArgs: ChatMessageArgs = {
 	extendedClass: '',
 };
 
-export const Default: StoryObj<ChatMessageArgs> = {
+export const Playground: StoryObj<ChatMessageArgs> = {
 	args: { ...baseArgs },
 	argTypes: {
 		displayOnRight: {
@@ -102,6 +130,28 @@ export const Default: StoryObj<ChatMessageArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: (args) => renderStatic(chatMessageMarkup(args)),
+};
+
+export const Received: Story = {
+	tags: ['docs-example'],
+	name: 'Received',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(chatMessageMarkupDoc(false, 'Hi! Are we still on for the review at 3pm?', 'SR', '10:24', 'none')),
+};
+
+export const Sent: Story = {
+	tags: ['docs-example'],
+	name: 'Sent',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkupDoc(true, 'Yes — see you then 👍', 'HS', '10:24', 'Sent')),
+};
+
+export const ReadStatus: Story = {
+	tags: ['docs-example'],
+	name: 'Read status',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkupDoc(true, 'Yes — see you then 👍', 'HS', '10:24', 'Read')),
 };
 
 /** Received (left) next to sent (right) alignment. */

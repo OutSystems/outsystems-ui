@@ -25,10 +25,28 @@ interface SidebarArgs {
 const meta: Meta<SidebarArgs> = {
 	title: 'Patterns/Navigation/Sidebar',
 	argTypes: {
-		direction: { control: 'inline-radio', options: ['left', 'right'], name: 'Direction' },
-		width: { control: 'text', name: 'Width' },
-		hasOverlay: { control: 'boolean', name: 'HasOverlay' },
-		startsOpen: { control: 'boolean', name: 'StartsOpen' },
+		direction: {
+			control: 'inline-radio',
+			options: ['left', 'right'],
+			name: 'Direction',
+			description: 'Side of the screen the sidebar opens from.',
+		},
+		width: {
+			control: 'text',
+			name: 'Width',
+			description: 'Width of the sidebar (CSS length); 500px by default.',
+		},
+		hasOverlay: {
+			control: 'boolean',
+			name: 'HasOverlay',
+			description:
+				'Dims the page behind the sidebar with an overlay while it is open (and closes on click outside).',
+		},
+		startsOpen: {
+			control: 'boolean',
+			name: 'StartsOpen',
+			description: 'Renders the sidebar open when it is built.',
+		},
 	},
 	args: { direction: 'left', width: '320px', hasOverlay: true, startsOpen: false },
 };
@@ -36,7 +54,8 @@ export default meta;
 
 type Story = StoryObj<SidebarArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('sidebar');
 		const template = `
@@ -88,7 +107,8 @@ export const Default: Story = {
  * preview, so one open sidebar per story.
  */
 export const OpenRight: Story = {
-	...Default,
+	...Playground,
+	tags: [],
 	args: { direction: 'right', startsOpen: true },
 	parameters: {
 		controls: { disable: true },

@@ -13,7 +13,12 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Default: Story = {
+/**
+ * The block's only input parameter is `WidgetId` (the demo box, wired here), so the
+ * playground has no controls — it logs the four swipe events instead.
+ */
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: () => {
 		const id = uid('swipe');
 		const template = `

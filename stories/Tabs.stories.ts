@@ -33,13 +33,32 @@ const meta: Meta<TabsArgs> = {
 	title: 'Patterns/Navigation/Tabs',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		startingTab: { control: { type: 'number', min: 0, max: 5 }, name: 'StartingTab' },
-		justifyHeaders: { control: 'boolean', name: 'JustifyHeaders' },
-		orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'], name: 'TabsOrientation' },
-		verticalPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'TabsVerticalPosition' },
+		startingTab: {
+			control: { type: 'number', min: 0, max: 5 },
+			name: 'StartingTab',
+			description: 'Zero-based index of the tab active when built.',
+		},
+		justifyHeaders: {
+			control: 'boolean',
+			name: 'OptionalConfigs.JustifyHeaders',
+			description: 'Stretches the header items to fill the available width.',
+		},
+		orientation: {
+			control: 'inline-radio',
+			options: ['horizontal', 'vertical'],
+			name: 'TabsOrientation',
+			description: 'Horizontal (headers above the content) or Vertical (headers beside it).',
+		},
+		verticalPosition: {
+			control: 'inline-radio',
+			options: ['left', 'right'],
+			name: 'TabsVerticalPosition',
+			description: 'Side of the content where vertical headers sit.',
+		},
 		disabledTab: {
 			control: { type: 'number', min: -1, max: 5 },
 			name: 'DisabledTab (story-only, -1 = none)',
+			description: 'Story-only: index of the TabsHeaderItem rendered disabled; -1 disables none.',
 		},
 	},
 	args: {
@@ -54,7 +73,8 @@ export default meta;
 
 type Story = StoryObj<TabsArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: (args) => {
 		const tabsId = uid('tabs');
 		const headerIds = TABS.map(() => uid('tabs-header'));

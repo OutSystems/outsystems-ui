@@ -92,7 +92,8 @@ const renderTimeline: NonNullable<StoryObj<TimelineItemArgs>['render']> = ({
 			${timelineItem({ left: '2021', icon: 'ph-flag', title: 'Closed', desc: 'The request lifecycle is complete.', showIcon })}
 		</div>`);
 
-export const Default: StoryObj<TimelineItemArgs> = {
+export const Playground: StoryObj<TimelineItemArgs> = {
+	tags: ['docs-example'],
 	args: {
 		isActive: false,
 		color: 'primary',
@@ -110,8 +111,9 @@ export const Default: StoryObj<TimelineItemArgs> = {
  * The `Color` control still paints the dot via `background-{value}`.
  */
 export const NoIcon: StoryObj<TimelineItemArgs> = {
-	...Default,
-	args: { ...Default.args, showIcon: false },
+	tags: ['docs-example'],
+	...Playground,
+	args: { ...Playground.args, showIcon: false },
 };
 
 /** Every Color swatch painted on the icon circle (`background-{value}` on `.timeline-icon-container`). */

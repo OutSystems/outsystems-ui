@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ActionSheetStories from './ActionSheet.stories';
+import { ACTION_SHEET_RECIPES } from './_helpers/pattern-docs/action-sheet-recipes';
+import { ACTION_SHEET_DOC } from './_helpers/pattern-docs/action-sheet-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={ActionSheetStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={ACTION_SHEET_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Action Sheet." implement={<StudioHowTo recipe={ACTION_SHEET_RECIPES.basicUsage} />}>
+				<Canvas of={ActionSheetStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

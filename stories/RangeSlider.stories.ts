@@ -20,12 +20,29 @@ const meta: Meta<RangeSliderArgs> = {
 	title: 'Patterns/Interaction/RangeSlider',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'interval'] },
-		minValue: { control: 'number', name: 'MinValue' },
-		maxValue: { control: 'number', name: 'MaxValue' },
-		step: { control: 'number', name: 'Step' },
-		showFloatingLabel: { control: 'boolean', name: 'ShowFloatingLabel' },
-		showTickMarks: { control: 'boolean', name: 'ShowTickMarks' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'interval'],
+			description:
+				'Story-only: `single` renders the RangeSlider block, `interval` the RangeSliderInterval block.',
+		},
+		minValue: { control: 'number', name: 'MinValue', description: 'Lower bound of the range.' },
+		maxValue: { control: 'number', name: 'MaxValue', description: 'Upper bound of the range.' },
+		step: {
+			control: 'number',
+			name: 'OptionalConfigs.Step',
+			description: 'Increment between selectable values.',
+		},
+		showFloatingLabel: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowFloatingLabel',
+			description: 'Shows the current value in a floating label above the handle.',
+		},
+		showTickMarks: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowTickMarks',
+			description: 'Renders tick marks (pips) along the track.',
+		},
 	},
 	args: { mode: 'single', minValue: 0, maxValue: 100, step: 1, showFloatingLabel: true, showTickMarks: false },
 };
@@ -91,11 +108,13 @@ function renderRangeSlider(args: RangeSliderArgs): HTMLElement {
 	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: renderRangeSlider,
 };
 
 export const Interval: Story = {
+	tags: ['docs-example'],
 	args: { mode: 'interval' },
 	render: renderRangeSlider,
 };
@@ -160,6 +179,7 @@ const CELLS = [
  * provider exactly as they are at runtime.
  */
 export const SpecMatrix: Story = {
+	tags: ['docs-example'],
 	name: 'Spec matrix (mode × state)',
 	parameters: { controls: { disable: true } },
 	render: () => {

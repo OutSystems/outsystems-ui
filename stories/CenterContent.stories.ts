@@ -24,8 +24,16 @@ interface CenterContentArgs {
 const meta: Meta<CenterContentArgs> = {
 	title: 'Patterns/Utilities/CenterContent',
 	argTypes: {
-		showHeader: { name: 'Header slot', control: 'boolean' },
-		showBottom: { name: 'Bottom slot', control: 'boolean' },
+		showHeader: {
+			name: 'Header slot',
+			control: 'boolean',
+			description: 'Story-only: whether the Header placeholder has content.',
+		},
+		showBottom: {
+			name: 'Bottom slot',
+			control: 'boolean',
+			description: 'Story-only: whether the Bottom placeholder has content.',
+		},
 		extendedClass: extendedClassArgType,
 	},
 	args: { showHeader: true, showBottom: true, extendedClass: '' },
@@ -50,7 +58,8 @@ function centerContentMarkup(showHeader: boolean, showBottom: boolean, extendedC
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
+	tags: ['docs-example'],
 	render: ({ showHeader, showBottom, extendedClass }) =>
 		renderStatic(centerContentMarkup(showHeader, showBottom, extendedClass)),
 };

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RatingStories from './Rating.stories';
+import { RATING_RECIPES } from './_helpers/pattern-docs/rating-recipes';
+import { RATING_DOC } from './_helpers/pattern-docs/rating-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={RatingStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={RATING_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Rating." implement={<StudioHowTo recipe={RATING_RECIPES.basicUsage} />}>
+				<Canvas of={RatingStories.Playground} />
+			</PdExample>
+		</>
+	}
+/>

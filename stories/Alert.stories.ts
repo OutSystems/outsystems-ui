@@ -13,6 +13,21 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *   ExtendedClass → extra classes on the root
  * Class mappings from src/scss/04-patterns/02-content/_alert.scss.
  */
+// ─── Docs-page demos (ported from the docs stories) ─────────────────────────
+
+// Docs order (success first) — differs from ALERT_TYPES below, so kept separate.
+const ALERT_TYPES_DOC = ['success', 'info', 'warning', 'error'] as const;
+
+function alertMarkup(type: string, message: string, vivid = false, style = ''): string {
+	return `
+		<div class="${cls('alert', `alert-${type}`, vivid && 'vivid')}" role="alert" aria-live="polite" aria-atomic="true" tabindex="0"${style ? ` style="${style}"` : ''}>
+			<div class="alert-icon OSInline" aria-hidden="true"></div>
+			<div class="alert-message"><span>${message}</span></div>
+		</div>`;
+}
+
+type Story = StoryObj;
+
 const meta: Meta = { title: 'Patterns/Content/Alert', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 
@@ -27,7 +42,7 @@ const ALERT_TYPES = ['info', 'success', 'warning', 'error'] as const;
 
 type AlertArgs = { alertType: string; vivid: boolean; extendedClass: string };
 
-export const Default: StoryObj<AlertArgs> = {
+export const Playground: StoryObj<AlertArgs> = {
 	args: { alertType: 'success', vivid: false, extendedClass: '' },
 	argTypes: {
 		alertType: {
@@ -50,6 +65,56 @@ export const Default: StoryObj<AlertArgs> = {
 				<div class="alert-icon OSInline" aria-hidden="true"></div>
 				<div class="alert-message"><span>${ALERT_COPY[alertType] ?? ALERT_COPY.info}</span></div>
 			</div>`),
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default success alert — <code>AlertType</code> maps to <code>.alert-success</code> on the root.',
+			},
+		},
+	},
+	render: () => renderStatic(alertMarkup('success', ALERT_COPY.success)),
+};
+
+export const AllSeverities: Story = {
+	tags: ['docs-example'],
+	name: 'All severities',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'All four severity types — each sets background, border, and icon colour via the matching <code>.alert-*</code> modifier.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			ALERT_TYPES_DOC.map((type) => alertMarkup(type, ALERT_COPY[type], false, 'margin-bottom:12px;')).join('')
+		),
+};
+
+export const Vivid: Story = {
+	tags: ['docs-example'],
+	name: 'Vivid',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Solid-fill look — add <code>vivid</code> via <code>ExtendedClass</code>. Warning keeps dark text on the yellow background.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			ALERT_TYPES_DOC.map((type) =>
+				alertMarkup(type, `${ALERT_COPY[type]} (vivid)`, true, 'margin-bottom:12px;')
+			).join('')
+		),
 };
 
 const LONG_COPY: Record<string, string> = {
