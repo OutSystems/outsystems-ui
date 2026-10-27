@@ -2,73 +2,59 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
 
-/**
- * Tag — low-code input parameters from the library OML wired as Storybook controls.
- * Class mappings come from src/scss/04-patterns/02-content/_tag.scss.
- *
- *   Color    → background-{value} (or background-{value}-lightest when IsLight=true)
- *   Size     → tag-small | tag-medium (no class = default compact size)
- *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
- *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
- *
- * The pattern SCSS now owns the IsLight text colors (per-family text tokens per the
- * Figma spec); the text-{color} classes below are kept only for platform markup parity.
- */
-const meta: Meta = { title: 'Patterns/Content/Tag' };
+const DEMO_WRAP = 'display:flex;justify-content:center;width:100%;';
+
+function tagMarkup(color: string, size: string, shape: string, isLight: boolean, label: string, extendedClass = ''): string {
+	const bgClass = backgroundClass(color, isLight);
+	const textClass = isLight ? lightTextClass(color) : '';
+	const shapeClass = shape ? `border-radius-${shape}` : '';
+	const sizeClass = size ? `tag-${size}` : '';
+	return `<div class="${cls('tag', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}">${label}</div>`;
+}
+
+const meta: Meta = {
+	title: 'Patterns/Content/Tag',
+	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
+};
 export default meta;
 
-type TagArgs = {
-	color: string;
-	size: string;
-	shape: string;
-	isLight: boolean;
-	extendedClass: string;
+type Story = StoryObj;
+
+export const DefaultStyle: Story = {
+	name: 'Default style',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(`<div style="${DEMO_WRAP}">${tagMarkup('primary', 'medium', 'rounded', false, 'Label')}</div>`),
 };
 
-const SIZE_OPTIONS = ['', 'small', 'medium'];
-const SHAPE_OPTIONS = ['none', 'soft', 'rounded', 'circle'];
+export const LightStyle: Story = {
+	name: 'Light style',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(`<div style="${DEMO_WRAP}">${tagMarkup('primary', 'medium', 'rounded', true, 'Label')}</div>`),
+};
+
+export const ColourVariants: Story = {
+	name: 'Colour variants',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(
+			`<div style="${DEMO_WRAP}display:flex;flex-wrap:wrap;gap:8px;max-width:480px;">${['primary', 'success', 'warning', 'error', 'info']
+				.map((c) => tagMarkup(c, 'medium', 'rounded', false, c))
+				.join('')}</div>`
+		),
+};
+
+type TagArgs = { color: string; size: string; shape: string; isLight: boolean; extendedClass: string };
 
 export const Default: StoryObj<TagArgs> = {
-	args: {
-		color: 'primary',
-		size: 'medium',
-		shape: 'rounded',
-		isLight: false,
-		extendedClass: '',
-	},
+	args: { color: 'primary', size: 'medium', shape: 'rounded', isLight: false, extendedClass: '' },
 	argTypes: {
-		color: {
-			name: 'Color',
-			control: 'select',
-			options: COLOR_OPTIONS,
-			description: 'Background color of the Block.',
-		},
-		size: {
-			name: 'Size',
-			control: 'select',
-			options: SIZE_OPTIONS,
-			description: 'Set the size of the Tag (small / medium).',
-		},
-		shape: {
-			name: 'Shape',
-			control: 'select',
-			options: SHAPE_OPTIONS,
-			description: 'Set the shape of the Tag (border-radius variant).',
-		},
-		isLight: {
-			name: 'IsLight',
-			control: 'boolean',
-			description: 'Use the lightest color version for the background and the darker color version for text.',
-		},
+		color: { name: 'Color', control: 'select', options: COLOR_OPTIONS },
+		size: { name: 'Size', control: 'select', options: ['', 'small', 'medium'] },
+		shape: { name: 'Shape', control: 'select', options: ['none', 'soft', 'rounded', 'circle'] },
+		isLight: { name: 'IsLight', control: 'boolean' },
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ color, size, shape, isLight, extendedClass }) => {
-		const bgClass = backgroundClass(color, isLight);
-		const textClass = isLight ? lightTextClass(color) : '';
-		const shapeClass = shape ? `border-radius-${shape}` : '';
-		const sizeClass = size ? `tag-${size}` : '';
-		return renderStatic(
-			`<div class="${cls('tag', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}">Label</div>`
-		);
-	},
+	render: ({ color, size, shape, isLight, extendedClass }) =>
+		renderStatic(`<div style="${DEMO_WRAP}">${tagMarkup(color, size, shape, isLight, 'Label', extendedClass)}</div>`),
 };

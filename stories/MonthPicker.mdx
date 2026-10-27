@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MonthPickerStories from './MonthPicker.stories';
+import { MONTH_PICKER_RECIPES } from './_helpers/pattern-docs/month-picker-recipes';
+import { MONTH_PICKER_DOC } from './_helpers/pattern-docs/month-picker-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={MonthPickerStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={MONTH_PICKER_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Month Picker." implement={<StudioHowTo recipe={MONTH_PICKER_RECIPES.basicUsage} />}>
+				<Canvas of={MonthPickerStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

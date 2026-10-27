@@ -35,6 +35,7 @@ const STACK_TRANSFORMS = ['', 'transform: translateY(12px) scale(0.96);', 'trans
 
 const meta: Meta<StackedCardsArgs> = {
 	title: 'Patterns/Interaction/StackedCards',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		overlay: {
 			name: 'Overlay preview',

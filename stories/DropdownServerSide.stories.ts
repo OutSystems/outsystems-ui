@@ -36,6 +36,7 @@ const OPTIONS = [
 
 const meta: Meta<DropdownServerSideArgs> = {
 	title: 'Patterns/Advanced/DropdownServerSide',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
 		isDisabled: { control: 'boolean', name: 'IsDisabled' },

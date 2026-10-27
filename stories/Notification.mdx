@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NotificationStories from './Notification.stories';
+import { NOTIFICATION_RECIPES } from './_helpers/pattern-docs/notification-recipes';
+import { NOTIFICATION_DOC } from './_helpers/pattern-docs/notification-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={NotificationStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={NOTIFICATION_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Notification." implement={<StudioHowTo recipe={NOTIFICATION_RECIPES.basicUsage} />}>
+				<Canvas of={NotificationStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

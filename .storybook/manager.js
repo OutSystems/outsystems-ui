@@ -148,7 +148,7 @@ function ThemeResetTool() {
 				border: 'none',
 				borderRadius: '4px',
 				background: 'transparent',
-				color: '#105cef',
+				color: '#00a2bb',
 				cursor: 'pointer',
 				font: '700 12px/1 "Inter", system-ui, sans-serif',
 			},

@@ -13,8 +13,6 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *   ExtendedClass → extra classes on the root
  * Class mappings from src/scss/04-patterns/02-content/_alert.scss.
  */
-const meta: Meta = { title: 'Patterns/Content/Alert', tags: ['!ui-pending', 'ui-reviewed'] };
-export default meta;
 
 const ALERT_COPY: Record<string, string> = {
 	success: 'Success! Your changes were saved.',
@@ -23,10 +21,82 @@ const ALERT_COPY: Record<string, string> = {
 	info: 'Heads up — this is an informational alert.',
 };
 
-const ALERT_TYPES = ['info', 'success', 'warning', 'error'] as const;
+const ALERT_TYPES = ['success', 'info', 'warning', 'error'] as const;
+
+function alertMarkup(type: string, message: string, vivid = false, style = ''): string {
+	return `
+		<div class="${cls('alert', `alert-${type}`, vivid && 'vivid')}" role="alert" aria-live="polite" aria-atomic="true" tabindex="0"${style ? ` style="${style}"` : ''}>
+			<div class="alert-icon OSInline" aria-hidden="true"></div>
+			<div class="alert-message"><span>${message}</span></div>
+		</div>`;
+}
+
+const meta: Meta = {
+	title: 'Patterns/Content/Alert',
+	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: {
+		docs: {
+			source: { disable: true },
+			canvas: { sourceState: 'none' },
+		},
+	},
+};
+export default meta;
+
+type Story = StoryObj;
+
+export const BasicUsage: Story = {
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default success alert — <code>AlertType</code> maps to <code>.alert-success</code> on the root.',
+			},
+		},
+	},
+	render: () => renderStatic(alertMarkup('success', ALERT_COPY.success)),
+};
+
+export const AllSeverities: Story = {
+	name: 'All severities',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story:
+					'All four severity types — each sets background, border, and icon colour via the matching <code>.alert-*</code> modifier.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			ALERT_TYPES.map((type) => alertMarkup(type, ALERT_COPY[type], false, 'margin-bottom:12px;')).join('')
+		),
+};
+
+export const Vivid: Story = {
+	name: 'Vivid',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story:
+					'Solid-fill look — add <code>vivid</code> via <code>ExtendedClass</code>. Warning keeps dark text on the yellow background.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			ALERT_TYPES.map((type) =>
+				alertMarkup(type, `${ALERT_COPY[type]} (vivid)`, true, 'margin-bottom:12px;')
+			).join('')
+		),
+};
 
 type AlertArgs = { alertType: string; vivid: boolean; extendedClass: string };
 
+/** Playground with Storybook controls — not used on the docs page. */
 export const Default: StoryObj<AlertArgs> = {
 	args: { alertType: 'success', vivid: false, extendedClass: '' },
 	argTypes: {

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BottomBarStories from './BottomBar.stories';
+import { BOTTOM_BAR_RECIPES } from './_helpers/pattern-docs/bottom-bar-recipes';
+import { BOTTOM_BAR_DOC } from './_helpers/pattern-docs/bottom-bar-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={BottomBarStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={BOTTOM_BAR_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Bottom Bar." implement={<StudioHowTo recipe={BOTTOM_BAR_RECIPES.basicUsage} />}>
+				<Canvas of={BottomBarStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

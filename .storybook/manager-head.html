@@ -44,7 +44,7 @@
 
   .css-wkfnut:hover a,
   .css-wkfnut:focus a {
-    color: #105cef;
+    color: #00a2bb;
   }
 
   /* Sidebar column — Storybook default is 300px */
@@ -56,12 +56,34 @@
     font-size: 13px !important;
   }
 
-  /* Match light SVG intrinsic size (190×45) — dark PNG is 493×97 and scales wider otherwise */
+  /* Brand header — logo + collapse button share one row (nav is 240px) */
+  .sidebar-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar-header > a,
+  .sidebar-header a:has(img) {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    margin-right: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .sidebar-header button {
+    flex: 0 0 auto !important;
+  }
+
+  /* Brand logos — SVG 1292×350 */
   .sidebar-header img {
-    width: 160px !important;
-    height: 38px !important;
-    max-width: 160px !important;
-    max-height: 38px !important;
+    width: auto !important;
+    height: 47px !important;
+    max-width: 100% !important;
+    max-height: 47px !important;
+    margin-right: 0 !important;
     object-fit: contain;
     object-position: left center;
   }
@@ -214,10 +236,6 @@
     font-weight: 400 !important;
   }
 
-  .sidebar-item button[aria-expanded="true"] {
-    background-color: #f5f5f5;
-  }
-
   /* Top-level docs / stories — no icon, align with Mobile UI Welcome pages */
   .sidebar-item[data-nodetype="document"]:not([data-parent-id]) a,
   .sidebar-item[data-nodetype="story"]:not([data-parent-id]) a {
@@ -228,7 +246,8 @@
   }
 
   /* Nested docs/stories — icon on the row (::before), not the link. Storybook emotion
-     injects `background` on the selected <a> and wipes background-image. */
+     injects `background` on the selected <a> and wipes background-image.
+     Docs sit under the component; stories nest one indent deeper so the tree reads. */
   .sidebar-item[data-nodetype="document"][data-parent-id],
   .sidebar-item[data-nodetype="story"][data-parent-id] {
     position: relative;
@@ -237,7 +256,7 @@
   .sidebar-item[data-nodetype="document"][data-parent-id]::before {
     content: "";
     position: absolute;
-    left: 24px;
+    left: 36px;
     top: 50%;
     transform: translateY(-50%);
     width: 15px;
@@ -252,7 +271,7 @@
   .sidebar-item[data-nodetype="story"][data-parent-id]::before {
     content: "";
     position: absolute;
-    left: 24px;
+    left: 52px;
     top: 50%;
     transform: translateY(-50%);
     width: 15px;
@@ -264,10 +283,14 @@
     z-index: 1;
   }
 
-  .sidebar-item[data-nodetype="document"][data-parent-id] a,
+  .sidebar-item[data-nodetype="document"][data-parent-id] a {
+    background-image: none !important;
+    padding: 0 8px 0 56px !important;
+  }
+
   .sidebar-item[data-nodetype="story"][data-parent-id] a {
     background-image: none !important;
-    padding: 0 8px 0 40px !important;
+    padding: 0 8px 0 72px !important;
   }
 
   /* Selected row — beat Storybook LeafNodeStyleWrapper (emotion injects after manager-head) */
@@ -324,16 +347,16 @@
     display: none !important;
   }
 
-  #storybook-checklist-widget {
-    display: none !important;
-  }
-
-  #storybook-testing-module {
+  /* Storybook sidebar widgets — animated rainbow/spin gradient borders */
+  #storybook-checklist-widget,
+  #storybook-testing-module,
+  #storybook-review-widget,
+  #sidebar-bottom-wrapper,
+  #sidebar-bottom-spacer {
     display: none !important;
   }
 
   /* App appearance — sidebar overrides for Storybook light-theme hardcodes */
-  html.osui-sb-dark .sidebar-header,
   html.osui-sb-dark .sidebar-header a {
     color: #ededed !important;
   }
@@ -352,10 +375,6 @@
     color: #c8c8c8 !important;
     background-color: transparent !important;
     box-shadow: none !important;
-  }
-
-  html.osui-sb-dark .sidebar-item button[aria-expanded="true"] {
-    background-color: #2a2a2a !important;
   }
 
   html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"],
@@ -392,6 +411,6 @@
 
   html.osui-sb-dark .css-wkfnut:hover a,
   html.osui-sb-dark .css-wkfnut:focus a {
-    color: #7cb3ff;
+    color: #6ecfe0;
   }
 </style>

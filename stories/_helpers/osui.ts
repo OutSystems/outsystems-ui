@@ -79,6 +79,23 @@ export function cfg(configs: Record<string, unknown> = {}): string {
 	return JSON.stringify({ ExtendedClass: '', ...configs });
 }
 
+/** Poll until vendor globals (e.g. Splide) and the OUI bundle are ready. */
+export function whenVendorReady(ready: () => boolean, fn: () => void, attempts = 120): void {
+	const tick = (left: number): void => {
+		if (ready()) {
+			fn();
+			return;
+		}
+		if (left <= 0) {
+			// eslint-disable-next-line no-console
+			console.error('[osui story] vendor bundle not ready after polling');
+			return;
+		}
+		requestAnimationFrame(() => tick(left - 1));
+	};
+	tick(attempts);
+}
+
 /**
  * Storybook `render` helper. Builds the container, schedules `init` for after
  * the node is mounted (the HTML renderer appends the returned node to the

@@ -98,6 +98,9 @@ const config: StorybookConfig = {
 	// We track UI review via story tags instead; keep the sidebar clean like Mobile UI.
 	features: {
 		changeDetection: false,
+		sidebarOnboardingChecklist: false,
+		menuOnboardingChecklist: false,
+		experimentalReview: false,
 	},
 	// Widget stories are static transcriptions (ADR-0009) — always include the full tree.
 	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],

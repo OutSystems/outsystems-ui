@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SectionIndexStories from './SectionIndex.stories';
+import { SECTION_INDEX_RECIPES } from './_helpers/pattern-docs/section-index-recipes';
+import { SECTION_INDEX_DOC } from './_helpers/pattern-docs/section-index-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={SectionIndexStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SECTION_INDEX_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Section Index." implement={<StudioHowTo recipe={SECTION_INDEX_RECIPES.basicUsage} />}>
+				<Canvas of={SectionIndexStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

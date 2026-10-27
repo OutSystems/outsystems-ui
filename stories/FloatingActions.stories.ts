@@ -52,6 +52,7 @@ function itemMarkup(label: string, icon: string, delay: number): string {
 const meta: Meta<FloatingActionsArgs> = {
 	title: 'Patterns/Interaction/FloatingActions',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		isExpanded: {
 			name: 'IsExpanded',

@@ -1,0 +1,62 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AccordionStories from './Accordion.stories';
+import { ACCORDION_RECIPES } from './_helpers/pattern-docs/accordion-recipes';
+import { ACCORDION_DOC } from './_helpers/pattern-docs/accordion-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={AccordionStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={ACCORDION_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Default accordion behaviour. When MultipleItems is False, opening one section collapses any other that is expanded."
+				implement={<StudioHowTo recipe={ACCORDION_RECIPES.basicUsage} />}
+			>
+				<Canvas of={AccordionStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Multiple expand"
+				description="Set MultipleItems to True on the Accordion so users can keep more than one section open at the same time."
+				implement={<StudioHowTo recipe={ACCORDION_RECIPES.multipleExpand} />}
+			>
+				<Canvas of={AccordionStories.MultipleExpand} />
+			</PdExample>
+			<PdExample
+				title="Plus/minus icon"
+				description="Set Icon to PlusMinus for a plus-when-closed / minus-when-open indicator. Set IconPosition to right so the control appears on the left of the title row."
+				implement={<StudioHowTo recipe={ACCORDION_RECIPES.plusMinusIcon} />}
+			>
+				<Canvas of={AccordionStories.PlusMinusIcon} />
+			</PdExample>
+			<PdExample
+				title="Disabled items"
+				description="Set IsDisabled to True on an Accordion Item to show the title row without allowing expand or collapse."
+				implement={<StudioHowTo recipe={ACCORDION_RECIPES.disabledItems} />}
+			>
+				<Canvas of={AccordionStories.DisabledItems} />
+			</PdExample>
+			<PdExample
+				title="Custom title markup"
+				description="The title placeholder accepts custom markup — compose richer header rows while content still expands below."
+				implement={<StudioHowTo recipe={ACCORDION_RECIPES.customTitleMarkup} />}
+			>
+				<Canvas of={AccordionStories.CustomTitleMarkup} />
+			</PdExample>
+		</>
+	}
+/>

@@ -9,6 +9,7 @@ interface BottomSheetArgs {
 const meta: Meta<BottomSheetArgs> = {
 	title: 'Patterns/Interaction/BottomSheet',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		showHandler: { control: 'boolean', name: 'ShowHandler' },
 		shape: { control: 'inline-radio', options: ['SoftRounded', 'Rounded', 'Sharp'], name: 'Shape' },

@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AnimatedLabelStories from './AnimatedLabel.stories';
+import { ANIMATED_LABEL_RECIPES } from './_helpers/pattern-docs/animated-label-recipes';
+import { ANIMATED_LABEL_DOC } from './_helpers/pattern-docs/animated-label-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={AnimatedLabelStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={ANIMATED_LABEL_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
+				<Canvas of={AnimatedLabelStories.Default} />
+			</PdExample>
+			<PdExample title="Error State" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
+				<Canvas of={AnimatedLabelStories.ErrorState} />
+			</PdExample>
+			<PdExample title="All States" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
+				<Canvas of={AnimatedLabelStories.AllStates} />
+			</PdExample>
+		</>
+	}
+/>

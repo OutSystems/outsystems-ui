@@ -8,9 +8,11 @@ import {
 
 export const APP_DARK_CLASS = 'sb-app-dark';
 export const APP_WINDOWS_CLASS = 'os-windows';
+/** OutSystems UI opt-in dark theme — must live on `<html>` (see preview.ts). */
+export const PATTERN_DARK_CLASS = 'os-dark-theme';
 
 export const DOCS_PAGE_SELECTOR =
-	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor, .osui-foundations';
+	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor, .osui-foundations, .osui-pattern-doc';
 
 let currentScheme = readStoredAppearance();
 let appearanceSyncReady = false;
@@ -20,13 +22,14 @@ export function applyDocsPlatformClass(): void {
 	document.documentElement.classList.toggle(APP_WINDOWS_CLASS, isWindowsPlatform());
 }
 
-/** App-wide docs chrome — toggles preview root + custom docs page roots. */
+/** App-wide docs chrome + OUI `.os-dark-theme` on `<html>` — toggles preview root + custom docs page roots. */
 export function applyAppAppearance(scheme: string): void {
 	const normalized = isDarkAppearance(scheme) ? 'dark' : 'light';
 	currentScheme = normalized;
 	const dark = normalized === 'dark';
 
 	document.documentElement.classList.toggle(APP_DARK_CLASS, dark);
+	document.documentElement.classList.toggle(PATTERN_DARK_CLASS, dark);
 	document.querySelectorAll(DOCS_PAGE_SELECTOR).forEach((el) => {
 		el.classList.toggle('docs-dark', dark);
 	});

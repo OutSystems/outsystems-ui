@@ -1,36 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
+import { flipContentMarkup } from './_helpers/flip-content-markup';
+import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
-interface FlipContentArgs {
-	flipSelf: boolean;
-	isFlipped: boolean;
-}
-
-const meta: Meta<FlipContentArgs> = {
+const meta: Meta = {
 	title: 'Patterns/Content/FlipContent',
-	argTypes: {
-		flipSelf: { control: 'boolean', name: 'FlipSelf (click to flip)' },
-		isFlipped: { control: 'boolean', name: 'IsFlipped' },
-	},
-	args: { flipSelf: true, isFlipped: false },
+	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 };
 export default meta;
 
-type Story = StoryObj<FlipContentArgs>;
+type Story = StoryObj;
 
-export const Default: Story = {
-	render: (args) => {
+export const BasicUsage: Story = {
+	name: 'Basic usage',
+	parameters: { layout: 'padded' },
+	render: () => {
 		const id = uid('flip');
-		const face = 'display:flex;align-items:center;justify-content:center;min-height:160px;border-radius:8px;';
-		const template = `
-			<div ${osuiRoot(id)} class="osui-flip-content" style="max-width:280px;">
-				<div class="osui-flip-content__container">
-					<div class="osui-flip-content__container__front" style="${face}background:var(--osui-bg-surface-hover,#eef);">Front — click to flip</div>
-					<div class="osui-flip-content__container__back" style="${face}background:var(--osui-bg-surface-active,#dde);">Back side</div>
-				</div>
-			</div>`;
-		return renderPattern(template, (_root, register) =>
-			createAndInit('FlipContentAPI', id, { FlipSelf: args.flipSelf, IsFlipped: args.isFlipped }, register)
+		return renderPattern(flipContentMarkup(osuiRoot(id)), (_root, register) =>
+			createAndInit('FlipContentAPI', id, { FlipSelf: true, IsFlipped: false }, register)
+		);
+	},
+};
+
+export const StartsFlipped: Story = {
+	name: 'Starts flipped',
+	parameters: { layout: 'padded' },
+	render: () => {
+		const id = uid('flip');
+		return renderPattern(flipContentMarkup(osuiRoot(id)), (_root, register) =>
+			createAndInit('FlipContentAPI', id, { FlipSelf: true, IsFlipped: true }, register)
 		);
 	},
 };

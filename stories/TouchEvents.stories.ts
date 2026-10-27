@@ -8,6 +8,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
  */
 const meta: Meta = {
 	title: 'Patterns/Utilities/TouchEvents',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 };
 export default meta;
 

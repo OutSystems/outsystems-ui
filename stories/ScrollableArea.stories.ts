@@ -23,6 +23,7 @@ interface ScrollableAreaArgs {
 
 const meta: Meta<ScrollableAreaArgs> = {
 	title: 'Patterns/Interaction/ScrollableArea',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		direction: {
 			name: 'ScrollDirection',

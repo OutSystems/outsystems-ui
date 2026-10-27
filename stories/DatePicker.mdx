@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DatePickerStories from './DatePicker.stories';
+import { DATE_PICKER_RECIPES } from './_helpers/pattern-docs/date-picker-recipes';
+import { DATE_PICKER_DOC } from './_helpers/pattern-docs/date-picker-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={DatePickerStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={DATE_PICKER_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Date Picker." implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.basicUsage} />}>
+				<Canvas of={DatePickerStories.Default} />
+			</PdExample>
+			<PdExample title="Range" description="Live example of Date Picker." implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.basicUsage} />}>
+				<Canvas of={DatePickerStories.Range} />
+			</PdExample>
+		</>
+	}
+/>

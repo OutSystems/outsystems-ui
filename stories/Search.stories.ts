@@ -4,6 +4,7 @@ import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 /** Search — a lightweight wrapper; its build() is a no-op stub, the markup is the search input itself. */
 const meta: Meta = {
 	title: 'Patterns/Interaction/Search',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 };
 export default meta;
 

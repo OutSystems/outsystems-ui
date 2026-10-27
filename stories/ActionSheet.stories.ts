@@ -27,6 +27,7 @@ const ACTIONS = ['Share', 'Add to favorites', 'Delete'];
 const meta: Meta<ActionSheetArgs> = {
 	title: 'Patterns/Interaction/ActionSheet',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		showCancel: {
 			name: 'ShowCancel',

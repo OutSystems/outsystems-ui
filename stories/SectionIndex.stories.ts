@@ -15,6 +15,7 @@ const SECTIONS = ['Introduction', 'Installation', 'Usage'];
 
 const meta: Meta<SectionIndexArgs> = {
 	title: 'Patterns/Navigation/SectionIndex',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		smoothScrolling: { control: 'boolean', name: 'SmoothScrolling' },
 		isFixed: { control: 'boolean', name: 'IsFixed' },

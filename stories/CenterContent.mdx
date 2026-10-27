@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CenterContentStories from './CenterContent.stories';
+import { CENTER_CONTENT_RECIPES } from './_helpers/pattern-docs/center-content-recipes';
+import { CENTER_CONTENT_DOC } from './_helpers/pattern-docs/center-content-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={CenterContentStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={CENTER_CONTENT_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Center Content." implement={<StudioHowTo recipe={CENTER_CONTENT_RECIPES.basicUsage} />}>
+				<Canvas of={CenterContentStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

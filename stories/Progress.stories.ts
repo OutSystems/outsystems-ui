@@ -15,6 +15,7 @@ interface ProgressArgs {
 
 const meta: Meta<ProgressArgs> = {
 	title: 'Patterns/Numbers/Progress',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		progress: { control: { type: 'range', min: 0, max: 100 }, name: 'Progress' },
 		thickness: { control: { type: 'number', min: 1, max: 24 }, name: 'Thickness' },

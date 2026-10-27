@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LightboxImageStories from './LightboxImage.stories';
+import { LIGHTBOX_IMAGE_RECIPES } from './_helpers/pattern-docs/lightbox-image-recipes';
+import { LIGHTBOX_IMAGE_DOC } from './_helpers/pattern-docs/lightbox-image-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={LightboxImageStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={LIGHTBOX_IMAGE_DOC}
+	examples={
+		<>
+			<PdExample title="ThumbnailWidth (px)" description="Live example of Lightbox Image." implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}>
+				<Canvas of={LightboxImageStories.Default} />
+			</PdExample>
+			<PdExample title="Overlay chrome" description="Live example of Lightbox Image." implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}>
+				<Canvas of={LightboxImageStories.OverlayChrome} />
+			</PdExample>
+		</>
+	}
+/>

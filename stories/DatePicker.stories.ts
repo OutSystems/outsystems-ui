@@ -26,6 +26,7 @@ interface DatePickerArgs {
 
 const meta: Meta<DatePickerArgs> = {
 	title: 'Patterns/Interaction/DatePicker',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		mode: { control: 'inline-radio', options: ['single', 'range'] },
 		dateFormat: { control: 'text', name: 'DateFormat' },

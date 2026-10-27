@@ -22,6 +22,7 @@ interface CenterContentArgs {
 
 const meta: Meta<CenterContentArgs> = {
 	title: 'Patterns/Utilities/CenterContent',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		showHeader: { name: 'Header slot', control: 'boolean' },
 		showBottom: { name: 'Bottom slot', control: 'boolean' },

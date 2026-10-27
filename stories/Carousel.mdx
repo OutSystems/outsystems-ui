@@ -1,0 +1,56 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CarouselStories from './Carousel.stories';
+import { CAROUSEL_RECIPES } from './_helpers/pattern-docs/carousel-recipes';
+import { CAROUSEL_DOC } from './_helpers/pattern-docs/carousel-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CarouselStories}
+	tags={['!ui-pending']}
+	parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }}
+/>
+
+<PatternDocPage
+	meta={CAROUSEL_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Single slide per view with arrows and dots. Loop is enabled so users can wrap from the last slide to the first."
+				implement={<StudioHowTo recipe={CAROUSEL_RECIPES.basicUsage} />}
+			>
+				<Canvas of={CarouselStories.Default} />
+			</PdExample>
+			<PdExample
+				title="Two items (loop)"
+				description="Show two slides at once with Loop enabled — users can scroll endlessly through the set."
+				implement={<StudioHowTo recipe={CAROUSEL_RECIPES.twoItemsInfinite} />}
+			>
+				<Canvas of={CarouselStories.TwoItemsInfinite} />
+			</PdExample>
+			<PdExample
+				title="Arrows only"
+				description="Set Navigation to Arrows to show prev/next controls without pagination dots."
+				implement={<StudioHowTo recipe={CAROUSEL_RECIPES.arrowsOnly} />}
+			>
+				<Canvas of={CarouselStories.ArrowsOnly} />
+			</PdExample>
+			<PdExample
+				title="Autoplay"
+				description="Set AutoPlay to True and Navigation to Dots for a self-advancing gallery."
+				implement={<StudioHowTo recipe={CAROUSEL_RECIPES.autoPlay} />}
+			>
+				<Canvas of={CarouselStories.AutoPlay} />
+			</PdExample>
+			<PdExample
+				title="Round shape"
+				description="Add the shape-round utility via ExtendedClass to apply the round border-radius profile to the carousel."
+				implement={<StudioHowTo recipe={CAROUSEL_RECIPES.roundShape} />}
+			>
+				<Canvas of={CarouselStories.RoundShape} />
+			</PdExample>
+		</>
+	}
+/>

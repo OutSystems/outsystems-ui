@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ScrollableAreaStories from './ScrollableArea.stories';
+import { SCROLLABLE_AREA_RECIPES } from './_helpers/pattern-docs/scrollable-area-recipes';
+import { SCROLLABLE_AREA_DOC } from './_helpers/pattern-docs/scrollable-area-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={ScrollableAreaStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SCROLLABLE_AREA_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Scrollable Area." implement={<StudioHowTo recipe={SCROLLABLE_AREA_RECIPES.basicUsage} />}>
+				<Canvas of={ScrollableAreaStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

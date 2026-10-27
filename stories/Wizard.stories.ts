@@ -70,6 +70,7 @@ function itemMarkup(id: string, glyph: string, label: string): string {
 
 const meta: Meta<WizardArgs> = {
 	title: 'Patterns/Navigation/Wizard',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		isVertical: { control: 'boolean', name: 'Wizard.IsVertical' },
 		stepBehavior: {

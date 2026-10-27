@@ -12,6 +12,15 @@ import './css-architecture.scss';
 import './css-api-reference.scss';
 import './theme-editor.scss';
 import './foundations.scss';
+import './pattern-docs.scss';
+import './accordion-demos.scss';
+import './blank-slate-demos.scss';
+import './carousel-demos.scss';
+import './flip-content-demos.scss';
+import './floating-content-demos.scss';
+import './card-demos.scss';
+import './card-background-demos.scss';
+import './demo-icons.scss';
 import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
@@ -108,6 +117,9 @@ function applyDirection(rtl: boolean): void {
  *
  * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
  * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev --target=odc`.
+ *
+ * The manager appearance toggle (docs-appearance.ts) also applies `.os-dark-theme`
+ * so docs chrome and pattern dark stay in sync.
  */
 const PATTERN_DARK_CLASS = 'os-dark-theme';
 
@@ -136,6 +148,8 @@ function applyPreviewGlobals(globals: Record<string, unknown>): void {
 /**
  * MDX docs pages skip preview story decorators — sync toolbar globals (icon font,
  * theme href, RTL, pattern dark mode, a11y body class) via the preview channel.
+ * Docs chrome dark mode is also driven by the manager appearance toggle via
+ * `applyAppAppearance` in docs-appearance.ts.
  */
 let previewToolbarSyncReady = false;
 

@@ -11,6 +11,7 @@ interface VideoArgs {
 
 const meta: Meta<VideoArgs> = {
 	title: 'Patterns/Utilities/Video',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		url: { control: 'text', name: 'URL' },
 		controls: { control: 'boolean', name: 'Controls' },

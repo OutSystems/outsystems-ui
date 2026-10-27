@@ -10,6 +10,7 @@ interface TooltipArgs {
 const meta: Meta<TooltipArgs> = {
 	title: 'Patterns/Interaction/Tooltip',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		isHover: { control: 'boolean', name: 'IsHover' },
 		position: {

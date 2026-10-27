@@ -12,6 +12,7 @@ interface TimePickerArgs {
 
 const meta: Meta<TimePickerArgs> = {
 	title: 'Patterns/Interaction/TimePicker',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		is24Hours: { control: 'boolean', name: 'Is24Hours' },
 		timeFormat: { control: 'text', name: 'TimeFormat' },

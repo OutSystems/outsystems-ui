@@ -2,28 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 
-/**
- * Chat Message family. Controls mirror the low-code input parameters of the
- * `ChatMessage` block (extracted from the library OML), wired into the shipped markup.
- *
- * Class mappings from src/scss/04-patterns/02-content/_chat-message.scss and
- * src/scss/01-foundations/_icon-library-odc.scss:
- *   DisplayOnRight → `.chat.right` (omit class for left/received layout)
- *   MessageStatus:
- *     Sent     → `.chat-message-status > .chat-message-status_icon` (shows sent icon via --osui-icon-sent)
- *     Received → `.chat-message-status > .chat-message-status_icon-time` (shows time icon)
- *     Read     → `.chat-message-status > .chat-message-status_icon.is-read` (sent icon in green)
- *     Hidden   → `.chat-message-status.hidden` (display:none)
- *     (none)   → plain timestamp text node
- */
-const meta: Meta = { title: 'Patterns/Content/ChatMessage' };
-export default meta;
-
-// ─── Shared status markup ─────────────────────────────────────────────────────
-
 type MessageStatus = 'none' | 'Sent' | 'Received' | 'Read' | 'Hidden';
-
-const MESSAGE_STATUS_OPTIONS: MessageStatus[] = ['none', 'Sent', 'Received', 'Read', 'Hidden'];
 
 function statusMarkup(time: string, status: MessageStatus): string {
 	switch (status) {
@@ -36,12 +15,62 @@ function statusMarkup(time: string, status: MessageStatus): string {
 		case 'Hidden':
 			return `<div class="chat-message-status hidden"></div>`;
 		default:
-			// 'none': fall back to plain timestamp text (the Time param)
 			return `<div class="chat-message-status">${time}</div>`;
 	}
 }
 
-// ─── ChatMessage ──────────────────────────────────────────────────────────────
+function chatMessageMarkup(
+	displayOnRight: boolean,
+	message: string,
+	initials: string,
+	time: string,
+	status: MessageStatus,
+	extendedClass = ''
+): string {
+	return `<div style="display:flex;justify-content:center;width:100%;"><div style="max-width:460px;width:100%;">
+		<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
+			<div class="chat-photo OSInline">
+				<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${initials}">
+					<span class="OSFillParent">${initials}</span>
+				</div>
+			</div>
+			<div class="chat-message-wrapper OSInline">
+				<div class="chat-message padding OSInline" role="button" tabindex="0"><span>${message}</span></div>
+				${statusMarkup(time, status)}
+			</div>
+		</div>
+	</div></div>`;
+}
+
+const meta: Meta = {
+	title: 'Patterns/Content/ChatMessage',
+	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
+};
+export default meta;
+
+type Story = StoryObj;
+
+export const Received: Story = {
+	name: 'Received',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(
+			chatMessageMarkup(false, 'Hi! Are we still on for the review at 3pm?', 'SR', '10:24', 'none')
+		),
+};
+
+export const Sent: Story = {
+	name: 'Sent',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkup(true, 'Yes — see you then 👍', 'HS', '10:24', 'Sent')),
+};
+
+export const ReadStatus: Story = {
+	name: 'Read status',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkup(true, 'Yes — see you then 👍', 'HS', '10:24', 'Read')),
+};
 
 type ChatMessageArgs = {
 	displayOnRight: boolean;
@@ -51,49 +80,26 @@ type ChatMessageArgs = {
 };
 
 export const Default: StoryObj<ChatMessageArgs> = {
-	args: {
-		displayOnRight: false,
-		time: '10:24',
-		messageStatus: 'none',
-		extendedClass: '',
-	},
+	args: { displayOnRight: false, time: '10:24', messageStatus: 'none', extendedClass: '' },
 	argTypes: {
-		displayOnRight: {
-			name: 'DisplayOnRight',
-			control: 'boolean',
-			description:
-				'When true, the message bubble aligns to the right (sent); when false, to the left (received).',
-		},
-		time: {
-			name: 'Time',
-			control: 'text',
-			description: 'Time of the message shown in the status area when MessageStatus is none.',
-		},
+		displayOnRight: { name: 'DisplayOnRight', control: 'boolean' },
+		time: { name: 'Time', control: 'text' },
 		messageStatus: {
 			name: 'MessageStatus',
 			control: 'select',
-			options: MESSAGE_STATUS_OPTIONS,
-			description:
-				'Visual status indicator rendered below the bubble. ' +
-				'Sent → sent icon; Received → time icon; Read → sent icon (green, .is-read); Hidden → status area hidden; none → plain Time text.',
+			options: ['none', 'Sent', 'Received', 'Read', 'Hidden'],
 		},
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ displayOnRight, time, messageStatus, extendedClass }) =>
-		renderStatic(`
-			<div style="max-width:460px;">
-				<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
-					<div class="chat-photo OSInline">
-						<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${displayOnRight ? 'HS' : 'SR'}">
-							<span class="OSFillParent">${displayOnRight ? 'HS' : 'SR'}</span>
-						</div>
-					</div>
-					<div class="chat-message-wrapper OSInline">
-						<div class="chat-message padding OSInline" role="button" tabindex="0">
-							<span>${displayOnRight ? 'Yes — see you then 👍' : 'Hi! Are we still on for the review at 3pm?'}</span>
-						</div>
-						${statusMarkup(time, messageStatus)}
-					</div>
-				</div>
-			</div>`),
+		renderStatic(
+			chatMessageMarkup(
+				displayOnRight,
+				displayOnRight ? 'Yes — see you then 👍' : 'Hi! Are we still on for the review at 3pm?',
+				displayOnRight ? 'HS' : 'SR',
+				time,
+				messageStatus === 'none' ? 'none' : messageStatus,
+				extendedClass
+			)
+		),
 };

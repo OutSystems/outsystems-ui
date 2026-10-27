@@ -30,6 +30,7 @@ interface InputWithIconArgs {
 
 const meta: Meta<InputWithIconArgs> = {
 	title: 'Patterns/Interaction/InputWithIcon',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		iconPosition: {
 			name: 'IconPosition',

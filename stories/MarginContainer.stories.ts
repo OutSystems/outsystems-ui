@@ -14,6 +14,7 @@ interface MarginContainerArgs {
 
 const meta: Meta<MarginContainerArgs> = {
 	title: 'Patterns/Utilities/MarginContainer',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: { extendedClass: extendedClassArgType },
 	args: { extendedClass: '' },
 };

@@ -39,6 +39,7 @@ type PaginationArgs = {
 const meta: Meta<PaginationArgs> = {
 	title: 'Patterns/Navigation/Pagination',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	args: {
 		startIndex: 1,
 		maxRecords: 10,

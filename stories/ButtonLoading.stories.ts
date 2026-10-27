@@ -8,6 +8,7 @@ interface ButtonLoadingArgs {
 
 const meta: Meta<ButtonLoadingArgs> = {
 	title: 'Patterns/Utilities/ButtonLoading',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		isLoading: { control: 'boolean', name: 'IsLoading' },
 		showLoadingAndLabel: { control: 'boolean', name: 'ShowLoadingAndLabel' },

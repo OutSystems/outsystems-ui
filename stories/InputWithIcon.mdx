@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InputWithIconStories from './InputWithIcon.stories';
+import { INPUT_WITH_ICON_RECIPES } from './_helpers/pattern-docs/input-with-icon-recipes';
+import { INPUT_WITH_ICON_DOC } from './_helpers/pattern-docs/input-with-icon-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={InputWithIconStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={INPUT_WITH_ICON_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Input With Icon." implement={<StudioHowTo recipe={INPUT_WITH_ICON_RECIPES.basicUsage} />}>
+				<Canvas of={InputWithIconStories.Default} />
+			</PdExample>
+			<PdExample title="Spec matrix (size × state)" description="Live example of Input With Icon." implement={<StudioHowTo recipe={INPUT_WITH_ICON_RECIPES.basicUsage} />}>
+				<Canvas of={InputWithIconStories.SpecMatrix} />
+			</PdExample>
+		</>
+	}
+/>

@@ -6,6 +6,7 @@ const SAMPLE_SVG =
 
 const meta: Meta<{ svgCode: string }> = {
 	title: 'Patterns/Utilities/InlineSvg',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: { svgCode: { control: 'text', name: 'SVGCode' } },
 	args: { svgCode: SAMPLE_SVG },
 };

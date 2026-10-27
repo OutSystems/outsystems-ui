@@ -21,6 +21,7 @@ const OPTIONS = [
 
 const meta: Meta<DropdownArgs> = {
 	title: 'Patterns/Interaction/Dropdown',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
 		isDisabled: { control: 'boolean', name: 'IsDisabled' },

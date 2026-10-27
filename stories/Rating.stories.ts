@@ -23,6 +23,7 @@ const ICON_STATES = `
 
 const meta: Meta<RatingArgs> = {
 	title: 'Patterns/Numbers/Rating',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		ratingValue: { control: { type: 'number', min: 0, max: 5, step: 0.5 }, name: 'RatingValue' },
 		ratingScale: { control: { type: 'number', min: 1, max: 10 }, name: 'RatingScale' },

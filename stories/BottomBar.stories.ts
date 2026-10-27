@@ -33,6 +33,7 @@ const ITEMS: Array<[label: string, icon: string]> = [
 
 const meta: Meta<BottomBarArgs> = {
 	title: 'Patterns/Navigation/BottomBar',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		activeIndex: {
 			name: 'Active item',

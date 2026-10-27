@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MasterDetailStories from './MasterDetail.stories';
+import { MASTER_DETAIL_RECIPES } from './_helpers/pattern-docs/master-detail-recipes';
+import { MASTER_DETAIL_DOC } from './_helpers/pattern-docs/master-detail-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={MasterDetailStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={MASTER_DETAIL_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Master Detail." implement={<StudioHowTo recipe={MASTER_DETAIL_RECIPES.basicUsage} />}>
+				<Canvas of={MasterDetailStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

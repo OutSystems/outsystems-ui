@@ -32,6 +32,7 @@ interface SeparatorArgs {
 
 const meta: Meta<SeparatorArgs> = {
 	title: 'Patterns/Utilities/Separator',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		isVertical: {
 			name: 'IsVertical',

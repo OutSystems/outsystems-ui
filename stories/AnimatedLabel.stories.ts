@@ -3,6 +3,7 @@ import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 const meta: Meta = {
 	title: 'Patterns/Interaction/AnimatedLabel',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 };
 export default meta;
 

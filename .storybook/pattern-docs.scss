@@ -1,0 +1,836 @@
+/* Pattern documentation pages — shared chrome (Accordion pilot). */
+
+.sbdocs-wrapper:has(.osui-pattern-doc) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-pattern-doc) .sbdocs-content,
+.sbdocs-wrapper:has(.osui-pattern-doc) .sbdocs {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-pattern-doc) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-pattern-doc) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-pattern-doc {
+  --pd-primary-100: #e6f7fa;
+  --pd-primary-700: #007a8f;
+  --pd-tag-accent-fg: #007a8f;
+  --pd-n-100: #f9f9f9;
+  --pd-n-200: #f2f2f2;
+  --pd-n-300: #e8e8e8;
+  --pd-ink: #242424;
+  --pd-ink-2: #454545;
+  --pd-ink-3: #6b6b6b;
+  --pd-r-200: 8px;
+  --pd-r-full: 999px;
+
+  box-sizing: border-box;
+  color: var(--pd-ink);
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+.osui-pattern-doc .pd-head {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 36px 44px;
+  border-bottom: 1px solid var(--pd-n-300);
+  margin-bottom: 0;
+}
+
+.osui-pattern-doc .pd-head::before {
+  content: "";
+  position: absolute;
+  inset: -70% -10% auto -10%;
+  height: 460px;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(0, 162, 187, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(0, 162, 187, 0.18), transparent 68%);
+  filter: blur(6px);
+}
+
+.osui-pattern-doc .pd-head-in {
+  position: relative;
+}
+
+.osui-pattern-doc .pd-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: var(--pd-r-full);
+  background: var(--pd-primary-100);
+  color: var(--pd-primary-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.sbdocs-wrapper .osui-pattern-doc .pd-head h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--pd-ink) !important;
+}
+
+.osui-pattern-doc .pd-lede {
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  color: var(--pd-ink-3) !important;
+  max-width: 720px;
+  margin: 0 0 18px;
+}
+
+.osui-pattern-doc .pd-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.osui-pattern-doc .pd-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--pd-r-200);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.osui-pattern-doc .pd-btn--primary {
+  background: var(--pd-primary-700);
+  color: #fff;
+}
+
+.osui-pattern-doc .pd-btn--primary:hover {
+  filter: brightness(1.05);
+}
+
+.osui-pattern-doc .pd-btn--ghost {
+  background: #fff;
+  border-color: var(--pd-n-300);
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-btn--ghost:hover {
+  border-color: var(--pd-primary-700);
+  color: var(--pd-primary-700);
+}
+
+/* Embedded Storybook canvas — inline demo below page header */
+.osui-pattern-doc .pd-preview {
+  max-width: var(--docs-shell-max, 1060px);
+  margin: 0 auto;
+  padding: 52px var(--docs-shell-pad-x, 36px) 52px;
+}
+
+.osui-pattern-doc:has(.pd-preview) .pd-inner {
+  padding-top: 0;
+}
+
+.osui-pattern-doc .pd-preview > h2 {
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-preview .docs-story,
+.osui-pattern-doc .pd-preview .sb-story {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.osui-pattern-doc .pd-preview .sbdocs-preview {
+  margin: 0;
+}
+
+.osui-pattern-doc .pd-preview .innerZoomElementWrapper {
+  overflow: hidden;
+  border: 1px solid var(--pd-n-300);
+  border-radius: var(--pd-r-200);
+  background: #fff;
+}
+
+/* Example canvases inside the Examples section */
+.osui-pattern-doc .pd-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-top: 8px;
+}
+
+.osui-pattern-doc .pd-example > h3 {
+  font-size: 15.5px;
+  font-weight: 680;
+  margin: 0 0 6px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-example__desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--pd-ink-3);
+  margin: 0 0 12px;
+}
+
+.osui-pattern-doc .pd-example__canvas .docs-story,
+.osui-pattern-doc .pd-example__canvas .sb-story {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.osui-pattern-doc .pd-example__canvas .sbdocs-preview {
+  margin: 0;
+}
+
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper {
+  overflow: hidden;
+  border: 1px solid var(--pd-n-300);
+  border-radius: var(--pd-r-200);
+  background: #fff;
+}
+
+/* Story canvases must keep pattern/theme colours — docs prose must not bleed in. */
+.osui-pattern-doc .pd-example__canvas :is(p, span, h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+  margin: 0;
+}
+
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper:has(.blank-slate) {
+  width: 100%;
+}
+
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper:has(.blank-slate.large) {
+  min-height: 360px;
+}
+
+.osui-pattern-doc .pd-example__canvas .blank-slate {
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.osui-pattern-doc .pd-example__canvas .blank-slate:not(.large) {
+  margin-inline: auto;
+  max-width: 420px;
+  width: 100%;
+}
+
+.osui-pattern-doc .pd-example__canvas .blank-slate.large {
+  height: 100%;
+  min-height: 360px;
+  width: 100%;
+}
+
+.osui-pattern-doc .pd-example__canvas .blank-slate-icon {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Canvas + “How to implement” share one frame when both are present. */
+.osui-pattern-doc .pd-example__frame {
+  background: #fff;
+  border: 1px solid var(--pd-n-300);
+  border-radius: var(--pd-r-200);
+  overflow: hidden;
+}
+
+.osui-pattern-doc .pd-example__frame .pd-example__canvas .innerZoomElementWrapper {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.osui-pattern-doc .pd-example__foot {
+  background: var(--pd-n-100);
+  border-top: 1px solid var(--pd-n-300);
+  padding: 12px 16px 14px;
+}
+
+/* Pattern doc examples use StudioHowTo — no Storybook source / copy actions. */
+.osui-pattern-doc .pd-example__canvas .sbdocs-preview-actions,
+.osui-pattern-doc .pd-preview .sbdocs-preview-actions,
+.osui-pattern-doc .pd-example__canvas .docblock-source,
+.osui-pattern-doc .pd-preview .docblock-source {
+  display: none !important;
+}
+
+/* “How to implement” — discreet disclosure inside the example foot. */
+.osui-pattern-doc .pd-howto {
+  margin: 0;
+}
+
+.osui-pattern-doc .pd-howto__summary {
+  align-items: center;
+  color: var(--pd-ink-2);
+  cursor: pointer;
+  display: flex;
+  font-size: 13px;
+  font-weight: 550;
+  gap: 6px;
+  line-height: 1.4;
+  list-style: none;
+  user-select: none;
+  width: 100%;
+}
+
+.osui-pattern-doc .pd-howto__summary:hover {
+  color: var(--pd-primary-700);
+}
+
+.osui-pattern-doc .pd-howto__summary::-webkit-details-marker,
+.osui-pattern-doc .pd-howto__summary::marker {
+  content: "";
+  display: none;
+}
+
+.osui-pattern-doc .pd-howto__chevron {
+  color: currentColor;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.18s ease;
+}
+
+.osui-pattern-doc .pd-howto[open] .pd-howto__chevron {
+  transform: rotate(180deg);
+}
+
+.osui-pattern-doc .pd-howto__body {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--pd-n-300);
+}
+
+.osui-pattern-doc .pd-howto__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.osui-pattern-doc .pd-howto__step {
+  display: grid;
+  grid-template-columns: 1.5em minmax(0, 1fr);
+  column-gap: 0.5em;
+  align-items: start;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-howto__n {
+  color: var(--pd-ink-3);
+  font-size: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: inherit;
+  text-align: right;
+}
+
+.osui-pattern-doc .pd-howto__step-body {
+  min-width: 0;
+}
+
+.osui-pattern-doc .pd-howto__step-body > .pd-howto__bullets,
+.osui-pattern-doc .pd-howto__step-body > .pd-howto__hint {
+  margin-top: 2px;
+}
+
+.osui-pattern-doc .pd-howto__step-body > .pd-howto__items {
+  margin-top: 8px;
+}
+
+.osui-pattern-doc .pd-howto__lead,
+.osui-pattern-doc .pd-howto__hint {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.osui-pattern-doc .pd-howto__hint {
+  font-size: 13px;
+  color: var(--pd-ink-3);
+}
+
+.osui-pattern-doc .pd-howto__bullets {
+  list-style: disc;
+  list-style-position: outside;
+  margin: 0;
+  padding-left: 1.15em;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-howto__bullets li + li {
+  margin-top: 4px;
+}
+
+.osui-pattern-doc .pd-howto__bullets code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  background: #fff;
+  border: 1px solid var(--pd-n-300);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-howto__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.osui-pattern-doc .pd-howto__item > b {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pd-ink);
+  margin-bottom: 6px;
+}
+
+.osui-pattern-doc .pd-howto__label {
+  font-size: 12.5px;
+  color: var(--pd-ink-3);
+  margin: 0 0 4px;
+}
+
+.osui-pattern-doc .pd-howto__placeholder {
+  margin-top: 8px;
+}
+
+.osui-pattern-doc .pd-howto__placeholder > b {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pd-ink-3);
+  margin-bottom: 4px;
+}
+
+.osui-pattern-doc .pd-howto__placeholder ul {
+  margin-top: 4px;
+}
+
+.osui-pattern-doc .pd-howto__placeholder li + li {
+  margin-top: 4px;
+}
+
+.osui-pattern-doc .pd-inner {
+  padding-top: 52px;
+}
+
+.osui-pattern-doc .pd-body h2,
+.osui-pattern-doc .pd-sec > h2 {
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-body h3,
+.osui-pattern-doc .pd-sec > h3 {
+  font-size: 15.5px;
+  font-weight: 680;
+  margin: 28px 0 12px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-sec p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--pd-ink-2);
+  margin: 0 0 16px;
+}
+
+.osui-pattern-doc .pd-muted {
+  font-size: 13px;
+  color: var(--pd-ink-3);
+}
+
+.osui-pattern-doc .pd-muted a {
+  color: var(--pd-primary-700);
+}
+
+.osui-pattern-doc .pd-divider {
+  border: none;
+  border-top: 1px solid var(--pd-n-300);
+  margin: 40px 0;
+}
+
+.osui-pattern-doc .pd-guidance {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 4px 0 8px;
+}
+
+.osui-pattern-doc .pd-guidance__card {
+  border-radius: var(--pd-r-200);
+  border: 1px solid var(--pd-n-300);
+  padding: 16px 18px;
+}
+
+.osui-pattern-doc .pd-guidance__card--do {
+  background: linear-gradient(180deg, #f6fdf9 0%, #fff 100%);
+  border-color: #bbf7d0;
+}
+
+.osui-pattern-doc .pd-guidance__card--dont {
+  background: linear-gradient(180deg, #fff8f8 0%, #fff 100%);
+  border-color: #fecaca;
+}
+
+.osui-pattern-doc .pd-guidance__card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+.osui-pattern-doc .pd-guidance__card--do h3 {
+  color: #15803d !important;
+}
+
+.osui-pattern-doc .pd-guidance__card--dont h3 {
+  color: #b91c1c !important;
+}
+
+.osui-pattern-doc .pd-guidance__card h3::before {
+  content: "";
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+}
+
+.osui-pattern-doc .pd-guidance__card--do h3::before {
+  background-color: #dcfce7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%2315803d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.2 5 8.7 9.5 3.8'/%3E%3C/svg%3E");
+}
+
+.osui-pattern-doc .pd-guidance__card--dont h3::before {
+  background-color: #fee2e2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23b91c1c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 3 9 9M9 3 3 9'/%3E%3C/svg%3E");
+}
+
+.osui-pattern-doc .pd-guidance__list {
+  list-style: none !important;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.osui-pattern-doc .pd-guidance__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  list-style: none !important;
+  padding: 7px 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-guidance__list li::marker {
+  content: none;
+}
+
+.osui-pattern-doc .pd-guidance__list li::before {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: calc((1.55em - 6px) / 2);
+  border-radius: 999px;
+  content: "";
+}
+
+.osui-pattern-doc .pd-guidance__card--do .pd-guidance__list li::before {
+  background: #16a34a;
+}
+
+.osui-pattern-doc .pd-guidance__card--dont .pd-guidance__list li::before {
+  background: #dc2626;
+}
+
+.osui-pattern-doc .pd-list,
+.osui-pattern-doc .pd-steps {
+  margin: 0 0 18px;
+  padding-left: 1.25em;
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-list li,
+.osui-pattern-doc .pd-steps li {
+  margin-bottom: 8px;
+  line-height: 1.55;
+}
+
+/* Keyboard key caps (accessibility section). */
+.osui-pattern-doc .pd-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.65em;
+  min-width: 2em;
+  padding: 0.1em 0.55em 0.18em;
+  margin: 0 0.1em;
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 1.5px rgba(0, 0, 0, 0.07);
+  font-family: inherit;
+  font-size: 0.88em;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--pd-ink);
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.osui-pattern-doc .pd-key--wide {
+  min-width: 3.25em;
+}
+
+.osui-pattern-doc .pd-code {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border-radius: var(--pd-r-200);
+  background: var(--pd-n-100);
+  border: 1px solid var(--pd-n-300);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--pd-ink-2);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Anatomy — styled text tree */
+.osui-pattern-doc .pd-anatomy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0 4px;
+}
+
+.osui-pattern-doc .pd-anatomy-text {
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: var(--pd-r-200);
+  background: #f6f8fa;
+  border: 1px solid var(--pd-n-300);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--pd-ink-2);
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+  font-variant-ligatures: none;
+  font-feature-settings: normal;
+}
+
+/* Beat Storybook docs global `span { font-family: Inter !important }` */
+.sbdocs-wrapper .osui-pattern-doc .pd-anatomy-text,
+.sbdocs-wrapper .osui-pattern-doc .pd-anatomy-text .pd-code-tok {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+  font-variant-ligatures: none;
+  font-feature-settings: normal;
+}
+
+.osui-pattern-doc .pd-anatomy-text__line {
+  display: block;
+}
+
+.osui-pattern-doc .pd-code-tok--tag {
+  color: #0550ae;
+}
+
+.osui-pattern-doc .pd-code-tok--attr {
+  color: #953800;
+}
+
+.osui-pattern-doc .pd-code-tok--string {
+  color: #0a3069;
+}
+
+.osui-pattern-doc .pd-code-tok--comment {
+  color: #6e7781;
+  font-style: italic;
+}
+
+.osui-pattern-doc .pd-code-tok--punct {
+  color: var(--pd-ink-3);
+}
+
+.osui-pattern-doc .pd-demo-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: var(--pd-r-200);
+  border: 1px solid var(--pd-n-300);
+  background: linear-gradient(180deg, #fff, var(--pd-n-100));
+  text-decoration: none;
+  color: var(--pd-ink);
+  font-weight: 650;
+  transition: border-color 0.15s ease;
+}
+
+.osui-pattern-doc .pd-demo-link:hover {
+  border-color: var(--pd-primary-700);
+  color: var(--pd-primary-700);
+}
+
+.osui-pattern-doc .pd-demo-link__arrow {
+  color: var(--pd-ink-3);
+}
+
+.osui-pattern-doc .pd-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 20px;
+}
+
+.osui-pattern-doc .pd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.osui-pattern-doc .pd-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pd-ink-3);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--pd-n-300);
+  background: var(--pd-n-100);
+}
+
+.osui-pattern-doc .pd-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--pd-n-300);
+  vertical-align: top;
+  color: var(--pd-ink-2);
+  line-height: 1.5;
+}
+
+.osui-pattern-doc .pd-table code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  background: var(--pd-n-200);
+  padding: 1px 5px;
+  border: none;
+  border-radius: 3px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-tag {
+  display: inline-block;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  padding: 2px 7px;
+  border: none;
+  border-radius: 4px;
+  white-space: nowrap;
+  background: var(--pd-n-200);
+  color: var(--pd-ink-2);
+}
+
+.osui-pattern-doc .pd-tag--accent {
+  background: var(--pd-primary-100);
+  color: var(--pd-tag-accent-fg);
+  font-weight: 600;
+}
+
+.osui-pattern-doc .pd-table__opt {
+  display: block;
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pd-ink-3);
+}
+
+.osui-pattern-doc .pd-related {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.osui-pattern-doc .pd-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--pd-r-200);
+  border: 1px solid var(--pd-n-300);
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.osui-pattern-doc .pd-related__card:hover {
+  border-color: var(--pd-primary-700);
+}
+
+.osui-pattern-doc .pd-related__card b {
+  font-size: 14px;
+  color: var(--pd-ink);
+}
+
+.osui-pattern-doc .pd-related__card span {
+  font-size: 12.5px;
+  color: var(--pd-ink-3);
+  line-height: 1.45;
+}
+
+.sbdocs-wrapper .osui-pattern-doc .pd-body a:not(.pd-btn):not(.pd-demo-link):not(.pd-related__card) {
+  color: var(--pd-primary-700);
+}
+
+/* Beat Storybook `.sbdocs-content code { color: #00a2bb }` for inline code in prose */
+.sbdocs-wrapper .sbdocs-content .osui-pattern-doc .pd-body :is(p, li) > code,
+.sbdocs-wrapper .sbdocs-content .osui-pattern-doc .pd-muted code {
+  color: var(--pd-primary-700) !important;
+}

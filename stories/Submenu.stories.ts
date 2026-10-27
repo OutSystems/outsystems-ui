@@ -17,6 +17,7 @@ interface SubmenuArgs {
 
 const meta: Meta<SubmenuArgs> = {
 	title: 'Patterns/Navigation/Submenu',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: { openOnHover: { control: 'boolean', name: 'OpenOnHover' } },
 	args: { openOnHover: false },
 };

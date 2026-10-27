@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TouchEventsStories from './TouchEvents.stories';
+import { TOUCH_EVENTS_RECIPES } from './_helpers/pattern-docs/touch-events-recipes';
+import { TOUCH_EVENTS_DOC } from './_helpers/pattern-docs/touch-events-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={TouchEventsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={TOUCH_EVENTS_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Touch Events." implement={<StudioHowTo recipe={TOUCH_EVENTS_RECIPES.basicUsage} />}>
+				<Canvas of={TouchEventsStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

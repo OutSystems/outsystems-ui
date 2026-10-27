@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BottomSheetStories from './BottomSheet.stories';
+import { BOTTOM_SHEET_RECIPES } from './_helpers/pattern-docs/bottom-sheet-recipes';
+import { BOTTOM_SHEET_DOC } from './_helpers/pattern-docs/bottom-sheet-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={BottomSheetStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={BOTTOM_SHEET_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Bottom Sheet." implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.basicUsage} />}>
+				<Canvas of={BottomSheetStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

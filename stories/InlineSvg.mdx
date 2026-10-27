@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InlineSvgStories from './InlineSvg.stories';
+import { INLINE_SVG_RECIPES } from './_helpers/pattern-docs/inline-svg-recipes';
+import { INLINE_SVG_DOC } from './_helpers/pattern-docs/inline-svg-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={InlineSvgStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={INLINE_SVG_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Inline Svg." implement={<StudioHowTo recipe={INLINE_SVG_RECIPES.basicUsage} />}>
+				<Canvas of={InlineSvgStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

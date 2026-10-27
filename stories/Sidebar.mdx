@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SidebarStories from './Sidebar.stories';
+import { SIDEBAR_RECIPES } from './_helpers/pattern-docs/sidebar-recipes';
+import { SIDEBAR_DOC } from './_helpers/pattern-docs/sidebar-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={SidebarStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SIDEBAR_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Sidebar." implement={<StudioHowTo recipe={SIDEBAR_RECIPES.basicUsage} />}>
+				<Canvas of={SidebarStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

@@ -18,6 +18,7 @@ interface RangeSliderArgs {
 const meta: Meta<RangeSliderArgs> = {
 	title: 'Patterns/Interaction/RangeSlider',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		mode: { control: 'inline-radio', options: ['single', 'interval'] },
 		minValue: { control: 'number', name: 'MinValue' },

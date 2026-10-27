@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SeparatorStories from './Separator.stories';
+import { SEPARATOR_RECIPES } from './_helpers/pattern-docs/separator-recipes';
+import { SEPARATOR_DOC } from './_helpers/pattern-docs/separator-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={SeparatorStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SEPARATOR_DOC}
+	examples={
+		<>
+			<PdExample title="Default" description="Live example of Separator." implement={<StudioHowTo recipe={SEPARATOR_RECIPES.basicUsage} />}>
+				<Canvas of={SeparatorStories.Default} />
+			</PdExample>
+		</>
+	}
+/>

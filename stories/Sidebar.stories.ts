@@ -24,6 +24,7 @@ interface SidebarArgs {
 
 const meta: Meta<SidebarArgs> = {
 	title: 'Patterns/Navigation/Sidebar',
+	parameters: { docs: { source: { disable: true }, canvas: { sourceState: 'none' } } },
 	argTypes: {
 		direction: { control: 'inline-radio', options: ['left', 'right'], name: 'Direction' },
 		width: { control: 'text', name: 'Width' },
