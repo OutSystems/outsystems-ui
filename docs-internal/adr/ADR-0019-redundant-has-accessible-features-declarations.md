@@ -65,9 +65,22 @@ Negative consequences:
     that is a visual decision, not a cleanup.
 -   A static analysis alone is not enough to remove scoped styles safely.
 
+## Addendum (2026-10-27)
+
+After this decision, the same branch also took preparatory changes for the scope removal (ADR-0020). Unlike the
+removals above, these change visuals and are not covered by the no-effect browser check:
+
+-   For every app: the input/textarea base `:focus` ring and the native-layout `:focus` underline are removed in favour
+    of the `:focus-visible` ring; the carousel pagination margin and the date picker `overflow: visible` moved to the
+    base styles; the expanded dropdown widget uses `a11y-focus-shadow`; the disabled checked checkbox border moved to
+    the base styles.
+-   With `.has-accessible-features`: the radio inner dot and the checkbox, radio, switch, input, VirtualSelect toggle,
+    upload and rating contrast/hover overrides are removed; the submenu uses `a11y-focus-shadow`; button and section
+    index use `:focus-visible`.
+
 ## Links
 
--   ROU-13153; ROU-12826 and PR #1304 (`:focus-visible` migration); ADR-0018.
+-   ROU-13153; ROU-12826 and PR #1304 (`:focus-visible` migration); ADR-0018; ADR-0020.
 
 ## Date
 
