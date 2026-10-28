@@ -55,9 +55,6 @@ jobs:
               # Feeds the capture guard at the end of the job. Anything under src/ (the
               # compiled library), stories/ or .storybook/ can move a snapshot, so if
               # any of them changed, Chromatic must actually photograph something.
-              # classic-theme/ is no longer listed: the Chromatic `classic` mode was
-              # removed (the classic CSS is a frozen baseline, available locally via
-              # the Theme toolbar toggle), so changes there cannot move a snapshot.
               #
               # Covers pushes as well as PRs — the base commit differs by event. Now that
               # push builds actually run (no Azure login to fail on, ADR-0009), the
