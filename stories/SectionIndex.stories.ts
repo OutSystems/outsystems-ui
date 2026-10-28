@@ -70,10 +70,10 @@ function sectionIndexDemo(sections: readonly SectionCopy[], configs: SectionInde
 			? `
 			<div style="display:flex;gap:24px;" class="osui-main-content">
 				${nav}
-				<div style="flex:1;max-height:320px;overflow:auto;">${targets}</div>
+				<div style="flex:1;max-height:480px;overflow:auto;">${targets}</div>
 			</div>`
 			: `
-			<div style="max-height:320px;overflow:auto;" class="osui-main-content">
+			<div style="max-height:480px;overflow:auto;" class="osui-main-content">
 				<div style="display:flex;gap:24px;align-items:flex-start;">
 					${nav}
 					<div style="flex:1;">${targets}</div>

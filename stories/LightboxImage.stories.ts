@@ -231,6 +231,12 @@ const TRIP_PHOTOS = [
 	'Dunes after the rain',
 ];
 
+/**
+ * The docs canvas is the containing block of the fixed PhotoSwipe overlay, so the
+ * examples reserve enough height for the viewer to be usable when it opens.
+ */
+const DOC_CANVAS_STYLE = 'min-height: 480px;';
+
 /** The shipped thumbnail markup: `.lightbox-item > a > img`. */
 function thumbnailMarkup(src: string, index: number, title: string, width: number): string {
 	return `
@@ -255,7 +261,7 @@ export const BasicUsage: StoryObj = {
 	render: () =>
 		renderPattern(
 			`
-			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+			<div style="display: flex; flex-wrap: wrap; gap: 12px; align-content: flex-start; ${DOC_CANVAS_STYLE}">
 				${IMAGES.map((src, i) => thumbnailMarkup(src, i, TRIP_PHOTOS[i], 220)).join('')}
 			</div>
 			${PSWP_TEMPLATE}`,
@@ -283,14 +289,17 @@ export const SingleImage: StoryObj = {
 		},
 	},
 	render: () =>
-		renderPattern(`${thumbnailMarkup(IMAGES[0], 0, TRIP_PHOTOS[0], 320)}${PSWP_TEMPLATE}`, (root, register) => {
-			root.querySelector<HTMLAnchorElement>('.lightbox-item a')?.addEventListener('click', (ev) => {
-				ev.preventDefault();
-				openGallery(root, 0, DOC_CHROME, register, true, [
-					{ src: IMAGES[0], w: W, h: H, title: TRIP_PHOTOS[0] },
-				]);
-			});
-		}),
+		renderPattern(
+			`<div style="${DOC_CANVAS_STYLE}">${thumbnailMarkup(IMAGES[0], 0, TRIP_PHOTOS[0], 320)}</div>${PSWP_TEMPLATE}`,
+			(root, register) => {
+				root.querySelector<HTMLAnchorElement>('.lightbox-item a')?.addEventListener('click', (ev) => {
+					ev.preventDefault();
+					openGallery(root, 0, DOC_CHROME, register, true, [
+						{ src: IMAGES[0], w: W, h: H, title: TRIP_PHOTOS[0] },
+					]);
+				});
+			}
+		),
 };
 
 /* ── Overlay chrome ─────────────────────────────────────────────────────────── */

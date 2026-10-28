@@ -179,7 +179,7 @@ export const Vertical: Story = {
 			},
 		},
 	},
-	args: { orientation: 'Vertical', height: '220px', width: '320px' },
+	args: { orientation: 'Vertical', height: '320px', width: '320px' },
 	render: (args) => scrollableArea(args, cards(12, args.orientation)),
 };
 

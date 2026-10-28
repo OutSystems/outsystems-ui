@@ -78,8 +78,9 @@ export const BasicUsage: Story = {
 	},
 	render: () => {
 		const id = uid('bottom-sheet');
+		// Tall enough for the fixed sheet, contained by the docs canvas, to slide up fully.
 		const template = `
-			<div style="min-height:120px;">
+			<div style="min-height:420px;">
 				<button class="btn btn-primary" data-open type="button">Choose delivery slot</button>
 				<div ${osuiRoot(id)} class="osui-bottom-sheet" aria-hidden="true" tabindex="-1">
 					<div class="osui-bottom-sheet__header">

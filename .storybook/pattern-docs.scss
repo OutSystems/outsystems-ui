@@ -206,6 +206,15 @@
   padding: 0 !important;
 }
 
+/* Storybook's story wrapper is `overflow: auto`. Off-canvas patterns (Sidebar, Bottom
+   Sheet, Notification, Lightbox) are fixed-positioned and the zoom wrapper is their
+   containing block, so opening one — which moves focus into it mid-transition — scrolled
+   this wrapper to "reveal" it and left the example blank. `clip` forbids all scrolling,
+   programmatic included, while still cutting the overflow. */
+.osui-pattern-doc .pd-example__canvas .docs-story {
+  overflow: clip !important;
+}
+
 .osui-pattern-doc .pd-example__canvas .sbdocs-preview {
   margin: 0;
 }

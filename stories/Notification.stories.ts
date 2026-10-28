@@ -128,7 +128,7 @@ export const BasicUsage: Story = {
 	render: () => {
 		const id = uid('notification');
 		const template = `
-			<div style="min-height:120px;">
+			<div style="min-height:320px;">
 				<button class="btn btn-primary" data-open type="button">Send invoice</button>
 				${notificationMarkup(id, INVOICE_SENT)}
 			</div>`;
@@ -159,7 +159,7 @@ export const PositionVariants: Story = {
 	render: () => {
 		const entries = POSITION_DEMOS.map(([label, position]) => ({ label, position, id: uid('notification') }));
 		const template = `
-			<div style="min-height:120px;display:flex;flex-wrap:wrap;gap:12px;">
+			<div style="min-height:320px;display:flex;flex-wrap:wrap;gap:12px;align-content:flex-start;">
 				${entries
 					.map(
 						({ label, position, id }) => `
@@ -193,7 +193,7 @@ export const AutoClose: Story = {
 	render: () => {
 		const id = uid('notification');
 		const template = `
-			<div style="min-height:120px;">
+			<div style="min-height:320px;">
 				<button class="btn btn-primary" data-open type="button">Save draft</button>
 				${notificationMarkup(
 					id,

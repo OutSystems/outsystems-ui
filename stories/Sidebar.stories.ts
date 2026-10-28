@@ -150,8 +150,10 @@ const NAV_LINKS = `
  */
 function renderSidebarDoc(options: SidebarDocOptions): HTMLElement {
 	const id = uid('sidebar');
+	// The docs canvas contains the fixed aside (Storybook's zoom wrapper is a containing
+	// block), so the box must be tall enough to show the open panel and its content.
 	const template = `
-		<div style="min-height: 160px;">
+		<div style="min-height: 480px;">
 			<button class="btn btn-primary" data-open type="button">${options.trigger}</button>
 			<aside ${osuiRoot(id)} class="osui-sidebar" role="complementary" aria-haspopup="true" tabindex="-1" aria-hidden="true">
 				<div class="osui-sidebar__header" style="display:flex;align-items:center;justify-content:space-between;">
