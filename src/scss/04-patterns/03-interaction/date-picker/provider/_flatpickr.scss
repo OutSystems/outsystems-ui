@@ -139,8 +139,8 @@
 		z-index: calc(var(--osui-flatpickr-layer) + var(--layer-local-tier-1));
 
 		&:hover {
-			background-color: variables.$token-bg-neutral-subtle-default;
-			border-radius: 50%;
+			background-color: variables.$token-bg-neutral-subtle-hover;
+			border-radius: variables.$token-border-radius-100;
 		}
 
 		// Icon-font glyph (icon library replaces the inline svg with a :before)

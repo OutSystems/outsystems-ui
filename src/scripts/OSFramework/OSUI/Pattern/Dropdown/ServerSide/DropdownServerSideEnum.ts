@@ -22,6 +22,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
 		BalloonSearchIcon = 'osui-dropdown-serverside__balloon-search-icon',
 		ErrorMessage = 'osui-dropdown-serverside-error-message',
+		FocusVisible = 'osui-dropdown-serverside--focus-visible',
 		HasBeenMovedToContent = 'osui-dropdown-serverside--at-content',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
 		IsOpened = 'osui-dropdown-serverside--is-opened',

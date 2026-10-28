@@ -330,8 +330,9 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	&__balloon {
-		&-search-wrapper {
-			&:focus-within:has(:focus-visible) {
+		// Search input is focused on open, so the focus ring is only shown on keyboard interaction (class set by the pattern)
+		&.osui-dropdown-serverside--focus-visible {
+			.osui-dropdown-serverside__balloon-search-wrapper:focus-within:has(:focus-visible) {
 				@include a11y-focus-shadow($isInner: true);
 			}
 		}

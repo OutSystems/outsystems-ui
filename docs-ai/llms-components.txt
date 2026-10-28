@@ -220,7 +220,7 @@ API (OutSystems.OSUI.Patterns.DropdownAPI):
 - UnsetProviderEvent(dropdownId: string, eventId: string): string
 - SetValidation(dropdownId: string, isValid: boolean, validationMessage: string): string
 - SetValues(dropdownId: string, selectedValues: string, silentOnChangedEvent: unknown): string
-CSS classes: dropdown--is-large dropdown--is-small osui-dropdown-serverside__balloon osui-dropdown-serverside__balloon-container osui-dropdown-serverside__balloon-content osui-dropdown-serverside__balloon-footer (+15 more in osui.components.json)
+CSS classes: dropdown--is-large dropdown--is-small osui-dropdown-serverside__balloon osui-dropdown-serverside__balloon-container osui-dropdown-serverside__balloon-content osui-dropdown-serverside__balloon-footer (+16 more in osui.components.json)
 Configs schema: schema/configs/Dropdown.schema.json
 Docs: interaction/dropdown_search · interaction/dropdown_tags
 

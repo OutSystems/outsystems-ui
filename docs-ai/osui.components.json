@@ -2105,6 +2105,7 @@
 				"BalloonSearch": "osui-dropdown-serverside__balloon-search",
 				"BalloonSearchIcon": "osui-dropdown-serverside__balloon-search-icon",
 				"ErrorMessage": "osui-dropdown-error-message",
+				"FocusVisible": "osui-dropdown--focus-visible",
 				"HasBeenMovedToContent": "osui-dropdown-serverside--at-content",
 				"IsDisabled": "osui-dropdown-serverside--is-disabled",
 				"IsOpened": "osui-dropdown-serverside--is-opened",

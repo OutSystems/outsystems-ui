@@ -4,10 +4,16 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onKeyDown event
+		private _eventOnKeyDown: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the onMouseDown event
+		private _eventOnMouseDown: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onOrientationChange event
 		private _eventOnOrientationChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onResize event
 		private _eventOnWindowResize: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store a Flag property to know if the last user interaction was made by keyboard, in order to show the focus ring
+		private _isKeyboardInteraction = false;
 		// Dropdown callback events
 		private _onMouseUpEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
@@ -51,6 +57,28 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Set the keyboard interaction when a navigation key is pressed, typing at the search input does not count
+		private _onKeyDown(event: KeyboardEvent): void {
+			const isTextInput = event.target instanceof HTMLInputElement;
+
+			if (
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.Tab ||
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.ArrowUp ||
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.ArrowDown ||
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.PageUp ||
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.PageDown ||
+				event.key === OSFramework.OSUI.GlobalEnum.Keycodes.Enter ||
+				(event.key === OSFramework.OSUI.GlobalEnum.Keycodes.Space && isTextInput === false)
+			) {
+				this._setKeyboardInteraction(true);
+			}
+		}
+
+		// Unset the keyboard interaction when a pointer (mouse or touch) is used
+		private _onMouseDown(): void {
+			this._setKeyboardInteraction(false);
+		}
+
 		// Prevent the default behaviour of the event
 		private _onMouseUp(event: MouseEvent) {
 			event.preventDefault();
@@ -83,10 +111,33 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Method to (un)set the keyboard interaction flag and the class that allows the focus ring to be visible
+		private _setKeyboardInteraction(isKeyboard: boolean): void {
+			this._isKeyboardInteraction = isKeyboard;
+
+			// Balloon is rendered outside of the pattern context, the class must be added to its container
+			if (this.provider?.$dropboxContainer) {
+				if (this._isKeyboardInteraction) {
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+						this.provider.$dropboxContainer,
+						Enum.CssClass.FocusVisible
+					);
+				} else {
+					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
+						this.provider.$dropboxContainer,
+						Enum.CssClass.FocusVisible
+					);
+				}
+			}
+		}
+
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add the event that will get the selected options values
 			this.selfElement.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			// Add the events that will manage the focus ring visibility (keyboard vs pointer interaction)
+			this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
+			this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown, this._eventOnMouseDown);
 
 			if (OSFramework.OSUI.Helper.DeviceInfo.GetBrowser() === OSFramework.OSUI.GlobalEnum.Browser.edge) {
 				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
@@ -115,6 +166,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this.selfElement.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
+			this.selfElement.removeEventListener(
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown,
+				this._eventOnMouseDown
+			);
 			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -154,6 +210,18 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					OSFramework.OSUI.Constants.HasAccessibilityClass
 				);
 			}
+
+			// Since the balloon is rendered outside of the pattern context, its key/mouse events must be listened to at its container
+			this.provider.$dropboxContainer.addEventListener(
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown,
+				this._eventOnKeyDown
+			);
+			this.provider.$dropboxContainer.addEventListener(
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown,
+				this._eventOnMouseDown
+			);
+			// Keep the focus ring state after a redraw
+			this._setKeyboardInteraction(this._isKeyboardInteraction);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -222,6 +290,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
+			this._eventOnKeyDown = this._onKeyDown.bind(this);
+			this._eventOnMouseDown = this._onMouseDown.bind(this);
 			this._onMouseUpEvent = this._onMouseUp.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
@@ -241,6 +311,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @protected
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnKeyDown = undefined;
+			this._eventOnMouseDown = undefined;
 			this._eventOnWindowResize = undefined;
 			this._onSelectedOptionEvent = undefined;
 			this.virtualselectConfigs = undefined;

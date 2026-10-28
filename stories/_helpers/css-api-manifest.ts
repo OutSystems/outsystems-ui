@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-28T15:12:53.755Z',
+	generatedAt: '2026-10-28T15:43:10.374Z',
 	totals: {
-		properties: 632,
+		properties: 633,
 		components: 71,
 		categories: 9,
 	},
@@ -3786,10 +3786,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-floating-actions-button-background-press',
-								default: 'var(--color-primary-selected)',
+								default: 'var( --color-primary-active, #{$token-bg-primary-base-press} )',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary-selected)',
+								chain: 'other',
+								hint: 'var( --color-primary-active, #{$token-bg-primary-base-press} )',
 							},
 							{
 								name: '--osui-floating-actions-button-border-radius',
@@ -3846,6 +3846,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-floating-actions-item-icon-color',
+								default: '#{$token-icon-subtle}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-icon-subtle}',
 							},
 							{
 								name: '--osui-floating-actions-item-shadow',
