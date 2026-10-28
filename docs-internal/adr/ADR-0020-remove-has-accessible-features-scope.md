@@ -45,7 +45,11 @@ Chosen option: "Option 2".
 -   Intended behaviour changes: the app menu link `:focus` overrides (`.header a.active:focus`,
     `.app-menu-links a:focus`) are removed in favour of the global ring; the Dropdown Server Side hover and disabled
     border colors now show (they were forced to the input border color).
--   Out of scope for now: `.has-accessible-features` rules inside `.os-high-contrast` stay as they are.
+-   High contrast is included: the global high-contrast focus outline is `.os-high-contrast :focus-visible` with
+    `a11y-focus-outline`. It has the same specificity as the global ring and comes after it, so it wins over the ring's
+    `outline: none !important`. Elements whose own focus ring has a higher specificity keep that ring. The
+    pattern-specific high-contrast rules (Dropdown Server Side and its items, Rating, Pagination, Overflow Menu,
+    Range Slider) use the focus mixins and `:focus-visible`.
 
 Positive consequences:
 
@@ -55,8 +59,10 @@ Positive consequences:
 Negative consequences:
 
 -   App CSS that customizes the focus `outline`/`outline-offset` of OSUI elements now needs `!important`.
--   In high contrast, the global ring's `outline: none !important` suppresses the
-    `.os-high-contrast .has-accessible-features :focus` outline; to be handled with the high-contrast rules.
+-   In high contrast, the focus outline now shows on keyboard focus only and follows the focus tokens
+    (`--osui-focus-shadow-color`, width and gap, with an offset) instead of `--color-focus-outer`; the Dropdown
+    Server Side inset ring is thicker; the Overflow Menu link hover outline and the active Pagination button outline
+    use `a11y-focus-outline` (with `!important`).
 -   A focused date picker day that is today, in range and from the previous/next month keeps the library border
     color.
 -   The `has-accessible-features` class is still read by scripts (VirtualSelect, `Device.HasAccessibilityEnabled`).
