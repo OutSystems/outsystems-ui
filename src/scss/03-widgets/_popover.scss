@@ -16,6 +16,10 @@
 		&-top {
 			border: variables.$token-border-size-0;
 			padding: variables.$token-scale-0;
+
+			.uieditor-placeholder-wrapper-widget {
+				-servicestudio-display: inline-block;
+			}
 		}
 
 		&-bottom {
