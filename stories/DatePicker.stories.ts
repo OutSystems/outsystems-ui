@@ -129,14 +129,78 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 }
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: renderDatePicker,
+};
+
+/** One closed picker in `mode`, with `configs` merged over the block defaults. */
+function docsDatePicker(mode: 'single' | 'range', configs: Record<string, unknown>): HTMLElement {
+	const id = uid('datepicker');
+	return renderPattern(datePickerMarkup(id, mode === 'range'), (_root, register) =>
+		initDatePicker(id, mode, configs, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A single-date picker with DateFormat set to DD/MM/YYYY. Click or focus the input and press the down arrow to open the calendar; the selected day is written back in that format.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: false }),
 };
 
 export const Range: Story = {
 	tags: ['docs-example'],
+	name: 'Date range',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Date Picker Range block: two clicks in the same calendar pick a start and an end date, and OnSelected returns SelectedStartDate and SelectedEndDate.',
+			},
+		},
+	},
 	args: { mode: 'range' },
 	render: renderDatePicker,
+};
+
+export const WithTime: Story = {
+	tags: ['docs-example'],
+	name: 'With time selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set TimeFormat to Time24hFormat (or Time12hFormat) to append an hour and minute spinner to the calendar. DateFormat stays date-only — the runtime adds the time part itself.',
+			},
+		},
+	},
+	render: () =>
+		docsDatePicker('single', {
+			DateFormat: 'DD/MM/YYYY',
+			ShowTodayButton: false,
+			TimeFormat: '24',
+			InitialDate: '2024-03-15 09:30:00',
+		}),
+};
+
+export const TodayButton: Story = {
+	tags: ['docs-example'],
+	name: 'Today button',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set ShowTodayButton to True to add a Today shortcut under the calendar that selects the current day and closes the picker.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: true }),
 };
 
 /**

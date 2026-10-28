@@ -94,8 +94,32 @@ type Story = StoryObj<ProviderLoginButtonArgs>;
 
 export const Playground: Story = {};
 
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'IdentityProvider Google with the default Shape (SoftRounded): the brand mark on the left and the "Continue with Google" label, styled to the provider guidelines.',
+			},
+		},
+	},
+	args: { identityProvider: 'google' },
+};
+
 /** The three providers stacked, as on a Login screen. */
 export const AllProviders: Story = {
+	tags: ['docs-example'],
+	name: 'All providers',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'One button per IdentityProvider value — Google, Facebook and Apple — stacked as on a login screen; only the mark and the provider name change.',
+			},
+		},
+	},
 	render: (args) =>
 		renderStatic(`
 			<div style="display:flex; flex-direction:column; align-items:center; gap:24px;">
@@ -105,5 +129,34 @@ export const AllProviders: Story = {
 
 /** `IconOnly = True` — adds `.btn-provider-login-logo-only`, which hides the label. */
 export const IconOnly: Story = {
+	tags: ['docs-example'],
+	name: 'Icon only',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'IconOnly set to True hides the label and leaves a square button with just the brand mark — for a compact row of providers under the main form.',
+			},
+		},
+	},
 	args: { iconOnly: true },
+};
+
+/** The three Shape records side by side: SoftRounded (`.soft`), Rounded (`.rounded`) and Sharp (`.none`). */
+export const Shapes: Story = {
+	tags: ['docs-example'],
+	name: 'Shapes',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The three Shape values on the same provider: SoftRounded (default) uses the token radius, Rounded the pill radius, and Sharp squares the corners.',
+			},
+		},
+	},
+	render: (args) =>
+		renderStatic(`
+			<div style="display:flex; flex-wrap:wrap; align-items:center; gap:24px;">
+				${(['soft', 'rounded', 'none'] as Shape[]).map((shape) => button({ ...args, shape })).join('')}
+			</div>`),
 };

@@ -6,14 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={TabsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={TabsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={TABS_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Tabs." implement={<StudioHowTo recipe={TABS_RECIPES.basicUsage} />}>
-				<Canvas of={TabsStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Default Tabs: horizontal headers above the content, first tab active (`StartingTab` = 0) and the content height following the active pane (`Height` = auto). Click a header or use the arrow keys to switch."
+				implement={<StudioHowTo recipe={TABS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={TabsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Starting tab"
+				description="Set `StartingTab` to 1 to open on the second tab. The index is zero-based and fixed at build time; switch later from a client action with `SetActiveTab`."
+				implement={<StudioHowTo recipe={TABS_RECIPES.startingTab} />}
+			>
+				<Canvas of={TabsStories.StartingTab} />
+			</PdExample>
+			<PdExample
+				title="Orientation"
+				description="`TabsOrientation` = Horizontal keeps the headers above the content; Vertical stacks them beside it, on the side set by `TabsVerticalPosition` (Left here)."
+				implement={<StudioHowTo recipe={TABS_RECIPES.orientation} />}
+			>
+				<Canvas of={TabsStories.Orientation} />
+			</PdExample>
+			<PdExample
+				title="Justify headers"
+				description="Set `OptionalConfigs.JustifyHeaders` to True so the header items share the available width evenly instead of packing to the start."
+				implement={<StudioHowTo recipe={TABS_RECIPES.justifyHeaders} />}
+			>
+				<Canvas of={TabsStories.JustifyHeaders} />
 			</PdExample>
 		</>
 	}

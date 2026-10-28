@@ -10,7 +10,7 @@ export const TABLE_DOC: PatternDocMeta = {
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/table/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/table/',
 	liveStoryId: 'patterns-content-table--basic-usage',
-	cssApiSlug: 'patterns-content-table',
+	cssApiSlug: 'widgets-table',
 	whenToUse: [
 		'Structured datasets users compare column by column.',
 		'Admin lists with sortable columns.',

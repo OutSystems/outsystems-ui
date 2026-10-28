@@ -187,12 +187,46 @@ type Story = StoryObj<PasswordPolicyArgs>;
 /** Empty field — every rule unmet. Type a password to watch the rules turn green. */
 export const Playground: Story = {};
 
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The block under a password Input, bound to its value. With the field empty every rule of the app password policy is listed as unmet; type to watch each one turn green.',
+			},
+		},
+	},
+	args: { password: '' },
+};
+
 /** Some rules met: the met rows get `.is-valid` icons and (except length) turn green. */
 export const PartiallyValid: Story = {
+	tags: ['docs-example'],
+	name: 'Partially valid',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A Password that satisfies some rules: the met rows switch to the valid icon and turn green, the rest stay as a to-do list, and Compliant reports IsValid = False.',
+			},
+		},
+	},
 	args: { password: 'password1' },
 };
 
 /** Every rule met — the list collapses to the single success row. */
 export const Compliant: Story = {
+	tags: ['docs-example'],
+	name: 'Compliant',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Every rule met: the list collapses to the single success row and the Compliant event fires with IsValid = True, so the form can enable its submit button.',
+			},
+		},
+	},
 	args: { password: 'CorrectHorse42' },
 };

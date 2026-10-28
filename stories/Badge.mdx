@@ -6,14 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={BadgeStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={BadgeStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={BADGE_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Badge." implement={<StudioHowTo recipe={BADGE_RECIPES.basicUsage} />}>
-				<Canvas of={BadgeStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Studio defaults — `Number` 3 in the Primary `Color`, Rounded `Shape` and no `Size`, which gives the compact 20px pill."
+				implement={<StudioHowTo recipe={BADGE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={BadgeStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Light style"
+				description="Set `IsLight` to True to switch the background to the `-lightest` tint of the chosen `Color` and the text to the darker tone of the same family. Each column shows the solid badge next to its light twin."
+				implement={<StudioHowTo recipe={BADGE_RECIPES.lightStyle} />}
+			>
+				<Canvas of={BadgeStories.LightStyle} />
+			</PdExample>
+			<PdExample
+				title="Sizes"
+				description="`Size` empty (default, 20px), Small (`.badge-small`, 16px) and Medium (`.badge-medium`, 28px) at the same colour and shape."
+				implement={<StudioHowTo recipe={BADGE_RECIPES.sizes} />}
+			>
+				<Canvas of={BadgeStories.Sizes} />
+			</PdExample>
+			<PdExample
+				title="Shapes"
+				description="`Shape` Sharp, SoftRounded and Rounded map to `border-radius-none`, `border-radius-soft` and `border-radius-rounded`; the last cell adds `border-radius-circle` through `ExtendedClass`."
+				implement={<StudioHowTo recipe={BADGE_RECIPES.shapes} />}
+			>
+				<Canvas of={BadgeStories.Shapes} />
 			</PdExample>
 		</>
 	}

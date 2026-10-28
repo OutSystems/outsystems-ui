@@ -43,7 +43,12 @@ export default meta;
 type Story = StoryObj<ActionSheetArgs>;
 
 /** The demo box with the (optionally pre-opened) sheet inside. */
-function actionSheetMarkup({ showCancel, extendedClass }: ActionSheetArgs, visible = false, height = 420): string {
+function actionSheetMarkup(
+	{ showCancel, extendedClass }: ActionSheetArgs,
+	visible = false,
+	height = 420,
+	actions: readonly string[] = ACTIONS
+): string {
 	return `
 		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${height}px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
 			<div style="padding: 16px;">
@@ -52,7 +57,7 @@ function actionSheetMarkup({ showCancel, extendedClass }: ActionSheetArgs, visib
 			<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', visible && 'action-sheet-container--visible', extendedClass)}">
 				<div class="action-sheet">
 					<div class="action-sheet-buttons">
-						${ACTIONS.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
+						${actions.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
 					</div>
 					${showCancel ? '<div class="action-sheet-cancel"><button type="button" class="btn" data-cancel>Cancel</button></div>' : ''}
 				</div>
@@ -60,23 +65,64 @@ function actionSheetMarkup({ showCancel, extendedClass }: ActionSheetArgs, visib
 		</div>`;
 }
 
-export const Playground: Story = {
-	tags: ['docs-example'],
-	render: (args) => {
-		const root = renderStatic(actionSheetMarkup(args));
+/**
+ * Mirrors what the low-code block does with IsOpen: the open button adds
+ * `--visible`, the cancel row and a backdrop click remove it.
+ */
+function wireActionSheet(root: HTMLElement): HTMLElement {
+	const container = root.querySelector<HTMLElement>('.action-sheet-container')!;
+	const setOpen = (open: boolean): void => {
+		container.classList.toggle('action-sheet-container--visible', open);
+	};
+	root.querySelector('[data-open]')?.addEventListener('click', () => setOpen(true));
+	root.querySelector('[data-cancel]')?.addEventListener('click', () => setOpen(false));
+	// backdrop click: the ::after overlay is the container itself
+	container.addEventListener('click', (e) => {
+		if (e.target === container) setOpen(false);
+	});
+	return root;
+}
 
-		const container = root.querySelector<HTMLElement>('.action-sheet-container')!;
-		const setOpen = (open: boolean): void => {
-			container.classList.toggle('action-sheet-container--visible', open);
-		};
-		root.querySelector('[data-open]')?.addEventListener('click', () => setOpen(true));
-		root.querySelector('[data-cancel]')?.addEventListener('click', () => setOpen(false));
-		// backdrop click: the ::after overlay is the container itself
-		container.addEventListener('click', (e) => {
-			if (e.target === container) setOpen(false);
-		});
-		return root;
+export const Playground: Story = {
+	render: (args) => wireActionSheet(renderStatic(actionSheetMarkup(args))),
+};
+
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+const PHOTO_ACTIONS = ['Share photo', 'Save to album', 'Delete photo'];
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Three actions for a selected photo. <code>IsOpen</code> is False until the button sets it, then the backdrop fades in and the sheet slides up; Cancel or a backdrop tap closes it.',
+			},
+		},
 	},
+	render: () =>
+		wireActionSheet(
+			renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, false, 360, PHOTO_ACTIONS))
+		),
+};
+
+export const OpenState: Story = {
+	tags: ['docs-example'],
+	name: 'Open state',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsOpen</code> is True, so the sheet renders already open (<code>.action-sheet-container--visible</code>). Bind IsOpen to a Boolean variable and reset it in <code>OnClose</code>.',
+			},
+		},
+	},
+	render: () =>
+		wireActionSheet(
+			renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, 360, PHOTO_ACTIONS))
+		),
 };
 
 /** Sheet pinned open (`--visible`), with and without the cancel row. */

@@ -6,14 +6,33 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={SwipeEventsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={SwipeEventsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={SWIPE_EVENTS_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Swipe Events." implement={<StudioHowTo recipe={SWIPE_EVENTS_RECIPES.basicUsage} />}>
-				<Canvas of={SwipeEventsStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="`WidgetId` points at a Container; each gesture on it raises one of `SwipeUp`, `SwipeDown`, `SwipeLeft` or `SwipeRight`. The surface shows the last event and keeps a short log — use a touch device or browser device emulation."
+				implement={<StudioHowTo recipe={SWIPE_EVENTS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SwipeEventsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Swipe to dismiss"
+				description="One Swipe Events block per list row, each with `WidgetId` set to that row. Only `SwipeLeft` and `SwipeRight` are handled: they slide the message out of the inbox."
+				implement={<StudioHowTo recipe={SWIPE_EVENTS_RECIPES.swipeToDismiss} />}
+			>
+				<Canvas of={SwipeEventsStories.SwipeToDismiss} />
 			</PdExample>
 		</>
 	}

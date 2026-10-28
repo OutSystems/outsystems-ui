@@ -34,16 +34,60 @@ function searchField(id: string, value = '', pseudo = ''): string {
 		</div>`;
 }
 
+/** One Search instance: Create → Initialize → register Dispose, with the given ExtendedClass. */
+function renderSearch(value = '', extendedClass = ''): HTMLElement {
+	const id = uid('search');
+	return renderPattern(searchField(id, value), (_root, register) =>
+		createAndInit('SearchAPI', id, { ExtendedClass: extendedClass }, register)
+	);
+}
+
 export const Playground: StoryObj<SearchArgs> = {
-	tags: ['docs-example'],
 	args: { extendedClass: '' },
 	argTypes: { extendedClass: extendedClassArgType },
-	render: ({ extendedClass }) => {
-		const id = uid('search');
-		return renderPattern(searchField(id), (_root, register) =>
-			createAndInit('SearchAPI', id, { ExtendedClass: extendedClass }, register)
-		);
+	render: ({ extendedClass }) => renderSearch('', extendedClass),
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Search block wraps an Input widget and paints the magnifying-glass icon inside it. Bind the Input to a text variable and filter on its OnChange.',
+			},
+		},
 	},
+	render: () => renderSearch(),
+};
+
+export const PrefilledValue: Story = {
+	tags: ['docs-example'],
+	name: 'Pre-filled value',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'When the bound variable already holds a term, the Input renders it next to the icon — the pattern adds no state class of its own, so the filled look is the Input widget’s.',
+			},
+		},
+	},
+	render: () => renderSearch('Quarterly invoices'),
+};
+
+export const RoundShape: Story = {
+	tags: ['docs-example'],
+	name: 'Round shape',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set ExtendedClass to `shape-round` to apply the round border-radius profile to the search field, the usual look for a header search.',
+			},
+		},
+	},
+	render: () => renderSearch('', 'shape-round'),
 };
 
 /**

@@ -6,17 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={DatePickerStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={DatePickerStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={DATE_PICKER_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Date Picker." implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.basicUsage} />}>
-				<Canvas of={DatePickerStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="A single-date picker with `DateFormat` set to DD/MM/YYYY. Click the input (or press the down arrow on it) to open the calendar; the chosen day is written back in that format."
+				implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={DatePickerStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="Range" description="Live example of Date Picker." implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.basicUsage} />}>
+			<PdExample
+				title="Date range"
+				description="The Date Picker Range block: two clicks in the same calendar select a start and an end date, and `OnSelected` returns `SelectedStartDate` and `SelectedEndDate`."
+				implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.range} />}
+			>
 				<Canvas of={DatePickerStories.Range} />
+			</PdExample>
+			<PdExample
+				title="With time selection"
+				description="Set `TimeFormat` to Time24hFormat (or Time12hFormat) to add an hour:minute spinner under the calendar. Keep `DateFormat` date-only — the runtime appends the time part itself."
+				implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.withTime} />}
+			>
+				<Canvas of={DatePickerStories.WithTime} />
+			</PdExample>
+			<PdExample
+				title="Today button"
+				description="Set `ShowTodayButton` to True to add a Today shortcut under the calendar that selects the current day and closes the picker."
+				implement={<StudioHowTo recipe={DATE_PICKER_RECIPES.todayButton} />}
+			>
+				<Canvas of={DatePickerStories.TodayButton} />
 			</PdExample>
 		</>
 	}

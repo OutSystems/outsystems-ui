@@ -1,23 +1,52 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ProgressStories from './Progress.stories';
-import * as ProgressCircleStories from './ProgressCircle.stories';
 import { PROGRESS_RECIPES } from './_helpers/pattern-docs/progress-recipes';
 import { PROGRESS_DOC } from './_helpers/pattern-docs/progress-data';
 import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={ProgressStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={ProgressStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={PROGRESS_DOC}
 	examples={
 		<>
-			<PdExample title="Bar" description="Live example of Progress." implement={<StudioHowTo recipe={PROGRESS_RECIPES.basicUsage} />}>
-				<Canvas of={ProgressStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Studio defaults — `Progress` 60, `Thickness` 12 and a Rounded `Shape` — with a label in the Content placeholder. `AnimateInitialProgress` animates the fill from 0 on load."
+				implement={<StudioHowTo recipe={PROGRESS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={ProgressStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="Circle" description="Live example of Progress." implement={<StudioHowTo recipe={PROGRESS_RECIPES.basicUsage} />}>
-				<Canvas of={ProgressCircleStories.Playground} />
+			<PdExample
+				title="Thickness"
+				description="`Thickness` 1, 8 and 20 — the pixel height of the track, written to `--thickness`. The fill stays at 60% so only the height changes."
+				implement={<StudioHowTo recipe={PROGRESS_RECIPES.thickness} />}
+			>
+				<Canvas of={ProgressStories.Thickness} />
+			</PdExample>
+			<PdExample
+				title="Shapes"
+				description="`OptionalConfigs.Shape` Sharp, SoftRounded and Rounded at `Thickness` 20 — the end caps follow the theme radius of the matching shape."
+				implement={<StudioHowTo recipe={PROGRESS_RECIPES.shapes} />}
+			>
+				<Canvas of={ProgressStories.Shapes} />
+			</PdExample>
+			<PdExample
+				title="Progress colors"
+				description="`ProgressColor` Green, Orange and Red. Any Color record resolves through its `--color-*` theme role; a `TextToIdentifier('#hex')` value is used as-is."
+				implement={<StudioHowTo recipe={PROGRESS_RECIPES.progressColors} />}
+			>
+				<Canvas of={ProgressStories.ProgressColors} />
 			</PdExample>
 		</>
 	}

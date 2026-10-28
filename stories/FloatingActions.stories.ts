@@ -101,42 +101,91 @@ function floatingActionsMarkup(
 		</div>`;
 }
 
-export const Playground: Story = {
-	tags: ['docs-example'],
-	render: ({ isExpanded, isHover, extendedClass }) => {
-		const root = renderStatic(floatingActionsMarkup(isExpanded, extendedClass));
+/**
+ * Mirrors the block's IsHover / IsExpanded behaviour (what the removed runtime
+ * did): click or hover toggles `.is--open` on the wrapper and the overlay,
+ * Esc and an overlay click close, Enter / Space toggle from the keyboard.
+ */
+function wireFloatingActions(root: HTMLElement, isHover: boolean): HTMLElement {
+	const wrapper = root.querySelector<HTMLElement>('.floating-actions-wrapper')!;
+	const overlay = root.querySelector<HTMLElement>('.floating-overlay')!;
+	const itemsEl = root.querySelector<HTMLElement>('.floating-items')!;
+	const button = root.querySelector<HTMLElement>('.floating-button')!;
 
-		const wrapper = root.querySelector<HTMLElement>('.floating-actions-wrapper')!;
-		const overlay = root.querySelector<HTMLElement>('.floating-overlay')!;
-		const itemsEl = root.querySelector<HTMLElement>('.floating-items')!;
-		const button = root.querySelector<HTMLElement>('.floating-button')!;
+	const setOpen = (open: boolean): void => {
+		wrapper.classList.toggle('is--open', open);
+		overlay.classList.toggle('is--open', open);
+		button.setAttribute('aria-expanded', String(open));
+		itemsEl.setAttribute('aria-hidden', String(!open));
+	};
+	const toggle = (): void => setOpen(!wrapper.classList.contains('is--open'));
 
-		const setOpen = (open: boolean): void => {
-			wrapper.classList.toggle('is--open', open);
-			overlay.classList.toggle('is--open', open);
-			button.setAttribute('aria-expanded', String(open));
-			itemsEl.setAttribute('aria-hidden', String(!open));
-		};
-		const toggle = (): void => setOpen(!wrapper.classList.contains('is--open'));
-
-		if (isHover) {
-			wrapper.addEventListener('mouseenter', () => setOpen(true));
-			wrapper.addEventListener('mouseleave', () => setOpen(false));
-			button.addEventListener('focus', () => setOpen(true));
-		} else {
-			button.addEventListener('click', toggle);
+	if (isHover) {
+		wrapper.addEventListener('mouseenter', () => setOpen(true));
+		wrapper.addEventListener('mouseleave', () => setOpen(false));
+		button.addEventListener('focus', () => setOpen(true));
+	} else {
+		button.addEventListener('click', toggle);
+	}
+	overlay.addEventListener('click', () => setOpen(false));
+	wrapper.addEventListener('keydown', (e: KeyboardEvent) => {
+		if (e.key === 'Escape') setOpen(false);
+		if ((e.key === 'Enter' || e.key === ' ') && e.target === button) {
+			e.preventDefault();
+			toggle();
 		}
-		overlay.addEventListener('click', () => setOpen(false));
-		wrapper.addEventListener('keydown', (e: KeyboardEvent) => {
-			if (e.key === 'Escape') setOpen(false);
-			if ((e.key === 'Enter' || e.key === ' ') && e.target === button) {
-				e.preventDefault();
-				toggle();
-			}
-		});
+	});
 
-		return root;
+	return root;
+}
+
+export const Playground: Story = {
+	render: ({ isExpanded, isHover, extendedClass }) =>
+		wireFloatingActions(renderStatic(floatingActionsMarkup(isExpanded, extendedClass)), isHover),
+};
+
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Block defaults — <code>IsExpanded</code> False and <code>IsHover</code> False. The main button toggles the three Floating Actions Items on click; Esc or a click on the overlay closes them.',
+			},
+		},
 	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '', 360)), false),
+};
+
+export const StartsExpanded: Story = {
+	tags: ['docs-example'],
+	name: 'Starts expanded',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsExpanded</code> True — the items are visible as soon as the screen renders (<code>.is--open</code>) and the main button shows the close rotation.',
+			},
+		},
+	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(true, '', 360)), false),
+};
+
+export const HoverTrigger: Story = {
+	tags: ['docs-example'],
+	name: 'Hover trigger',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsHover</code> True — moving the pointer over the stack (or focusing the main button) opens it, leaving closes it. No click is needed.',
+			},
+		},
+	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '', 360)), true),
 };
 
 /**

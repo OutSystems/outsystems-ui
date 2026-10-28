@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={FloatingActionsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={FloatingActionsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={FLOATING_ACTIONS_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Floating Actions." implement={<StudioHowTo recipe={FLOATING_ACTIONS_RECIPES.basicUsage} />}>
-				<Canvas of={FloatingActionsStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `IsExpanded` False and `IsHover` False. The main button toggles three Floating Actions Items on click; Esc or a click on the overlay closes them."
+				implement={<StudioHowTo recipe={FLOATING_ACTIONS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={FloatingActionsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Starts expanded"
+				description="`IsExpanded` True renders the items already fanned out when the screen loads, with the main button in its rotated close state."
+				implement={<StudioHowTo recipe={FLOATING_ACTIONS_RECIPES.startsExpanded} />}
+			>
+				<Canvas of={FloatingActionsStories.StartsExpanded} />
+			</PdExample>
+			<PdExample
+				title="Hover trigger"
+				description="`IsHover` True opens the stack when the pointer enters it (or the main button is focused) and closes it when the pointer leaves — no click required."
+				implement={<StudioHowTo recipe={FLOATING_ACTIONS_RECIPES.hoverTrigger} />}
+			>
+				<Canvas of={FloatingActionsStories.HoverTrigger} />
 			</PdExample>
 		</>
 	}

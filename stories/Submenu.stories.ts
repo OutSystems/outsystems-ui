@@ -31,7 +31,6 @@ export default meta;
 type Story = StoryObj<SubmenuArgs>;
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('submenu');
 		const template = `
@@ -57,6 +56,92 @@ export const Playground: Story = {
 			return instance;
 		});
 	},
+};
+
+// ─── Docs examples ───────────────────────────────────────────────────────────
+
+interface SubmenuDocOptions {
+	openOnHover: boolean;
+	/** Marks the submenu (and this link) as the current screen — the platform adds `.active` for you. */
+	activeItem?: number;
+	label: string;
+	items: string[];
+}
+
+/**
+ * Docs example: a single header + items panel initialised exactly like `Playground`
+ * (Create → Initialize → UpdateOnRender). Room is reserved below the header so the
+ * absolutely positioned panel does not overlap the next example.
+ */
+function renderSubmenuDoc(options: SubmenuDocOptions): HTMLElement {
+	const id = uid('submenu');
+	const isActive = options.activeItem !== undefined;
+	const links = options.items
+		.map(
+			(item, i) =>
+				`<a href="#${item.toLowerCase().replace(/\s+/g, '-')}"${options.activeItem === i ? ' class="active"' : ''}>${item}</a>`
+		)
+		.join('');
+	const template = `
+		<div style="min-height: 220px;">
+			<div ${osuiRoot(id)} class="osui-submenu${isActive ? ' active' : ''}" style="width:220px;">
+				<div class="osui-submenu__header" id="${id}-header">
+					<div class="osui-submenu__header__item">${options.label}</div>
+					<span class="osui-submenu__header__icon"></span>
+				</div>
+				<div class="osui-submenu__items" id="${id}-items">${links}</div>
+			</div>
+		</div>`;
+	return renderPattern(template, (_root, register) => {
+		const instance = createAndInit('SubmenuAPI', id, { OpenOnHover: options.openOnHover }, register);
+		// See Playground: listeners are only wired on UpdateOnRender.
+		Patterns().SubmenuAPI.UpdateOnRender(id);
+		return instance;
+	});
+}
+
+const PRODUCT_LINKS = ['Analytics', 'Automation', 'Integrations', 'Pricing'];
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default Submenu: the Menu placeholder is the clickable header; the Items placeholder opens below it on click and closes on a click outside or Esc.',
+			},
+		},
+	},
+	render: () => renderSubmenuDoc({ openOnHover: false, label: 'Products', items: PRODUCT_LINKS }),
+};
+
+export const OpenOnHover: Story = {
+	tags: ['docs-example'],
+	name: 'Open on hover',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Runtime `OpenOnHover` config: the panel opens when the pointer enters the header and closes when it leaves. Ignored on touch devices, where the header stays click-to-open.',
+			},
+		},
+	},
+	render: () => renderSubmenuDoc({ openOnHover: true, label: 'Solutions', items: PRODUCT_LINKS }),
+};
+
+export const CurrentScreen: Story = {
+	tags: ['docs-example'],
+	name: 'Current screen',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'When one of the links points to the current screen the platform adds `.active` to that link and to the Submenu root, which highlights the header even while the panel is closed.',
+			},
+		},
+	},
+	render: () => renderSubmenuDoc({ openOnHover: false, activeItem: 1, label: 'Products', items: PRODUCT_LINKS }),
 };
 
 export const InPageHeader: Story = {

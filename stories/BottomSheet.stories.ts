@@ -31,7 +31,6 @@ export default meta;
 type Story = StoryObj<BottomSheetArgs>;
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('bottom-sheet');
 		const template = `
@@ -50,6 +49,60 @@ export const Playground: Story = {
 		return renderPattern(template, (root, register) => {
 			const P = Patterns();
 			P.BottomSheetAPI.Create(id, cfg({ ShowHandler: args.showHandler, Shape: args.shape }));
+			P.BottomSheetAPI.Initialize(id);
+			root.querySelector('[data-open]')?.addEventListener('click', () => P.BottomSheetAPI.Open(id));
+			root.querySelector('[data-close]')?.addEventListener('click', () => P.BottomSheetAPI.Close(id));
+			register(() => P.BottomSheetAPI.Dispose?.(id));
+		});
+	},
+};
+
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+const DELIVERY_SLOTS: Array<[window: string, price: string]> = [
+	['08:00 – 10:00', 'Free'],
+	['12:00 – 14:00', 'Free'],
+	['18:00 – 20:00', '€2.90'],
+];
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Block defaults — <code>Shape</code> SoftRounded and <code>ShowHandler</code> True. The sheet is fixed to the bottom of the viewport: the button opens it, the confirm button inside closes it.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('bottom-sheet');
+		const template = `
+			<div style="min-height:120px;">
+				<button class="btn btn-primary" data-open type="button">Choose delivery slot</button>
+				<div ${osuiRoot(id)} class="osui-bottom-sheet" aria-hidden="true" tabindex="-1">
+					<div class="osui-bottom-sheet__header">
+						<div class="osui-bottom-sheet__header__top-bar"><strong>Delivery slot</strong></div>
+					</div>
+					<div class="osui-bottom-sheet__content" style="padding:16px;">
+						<p style="margin:0 0 12px;">Pick a window for Thursday, 14 March.</p>
+						<div class="list" style="margin-bottom:16px;">
+							${DELIVERY_SLOTS.map(
+								([window, price]) => `
+							<div class="list-item" style="display:flex;justify-content:space-between;">
+								<span>${window}</span>
+								<span style="color:var(--color-text-subtle);">${price}</span>
+							</div>`
+							).join('')}
+						</div>
+						<button class="btn btn-primary" data-close type="button">Confirm slot</button>
+					</div>
+				</div>
+			</div>`;
+		return renderPattern(template, (root, register) => {
+			const P = Patterns();
+			P.BottomSheetAPI.Create(id, cfg({ ShowHandler: true, Shape: 'soft' }));
 			P.BottomSheetAPI.Initialize(id);
 			root.querySelector('[data-open]')?.addEventListener('click', () => P.BottomSheetAPI.Open(id));
 			root.querySelector('[data-close]')?.addEventListener('click', () => P.BottomSheetAPI.Close(id));
@@ -119,7 +172,17 @@ function sheetGallery(cells: Array<{ id: string; label: string }>): HTMLElement 
  * Then SoftRounded, Rounded (`rounded`) and Sharp (`none`).
  */
 export const Shapes: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Shapes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Shape</code> — SoftRounded (the default, also what an unknown value falls back to), Rounded and Sharp. The sheets are pinned open in the page so the corner radius of the top edge is visible.',
+			},
+		},
+	},
 	render: () => {
 		const shapes = [
 			{ label: 'Default', shape: '' },
@@ -138,7 +201,17 @@ export const Shapes: Story = {
 
 /** The drag bar is the `osui-bottom-sheet--has-handler` class. The block default is on. */
 export const Handler: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Drag handler',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>ShowHandler</code> True adds the drag bar (<code>osui-bottom-sheet--has-handler</code>) at the top of the sheet; False hides it. On touch devices the header is the drag area either way.',
+			},
+		},
+	},
 	render: () => {
 		const handlers = [
 			{ label: 'With handler', showHandler: true },

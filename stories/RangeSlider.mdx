@@ -6,20 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={RangeSliderStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={RangeSliderStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={RANGE_SLIDER_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
-				<Canvas of={RangeSliderStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="A single handle between `MinValue` 0 and `MaxValue` 100, starting at `StartingValue` 40. Drag the handle or use the arrow keys; `OnValueChange` fires with every change."
+				implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={RangeSliderStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="Interval" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
+			<PdExample
+				title="Interval"
+				description="The Range Slider Interval block: two handles pick a from/to pair (`StartingValueFrom` 25, `StartingValueTo` 75) and `OnValueChange` returns `IntervalStart` and `IntervalEnd`."
+				implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.interval} />}
+			>
 				<Canvas of={RangeSliderStories.Interval} />
 			</PdExample>
-			<PdExample title="Spec matrix (mode × state)" description="Live example of Range Slider." implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.basicUsage} />}>
-				<Canvas of={RangeSliderStories.SpecMatrix} />
+			<PdExample
+				title="Floating label"
+				description="Set `OptionalConfigs.ShowFloatingLabel` to True to show the current value in a tooltip above the handle while it moves."
+				implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.floatingLabel} />}
+			>
+				<Canvas of={RangeSliderStories.FloatingLabel} />
+			</PdExample>
+			<PdExample
+				title="Steps and tick marks"
+				description="`OptionalConfigs.Step` 25 snaps the handle to 0, 25, 50, 75, 100; `ShowTickMarks` True with `TickMarksInterval` 25 draws a pip at each snap point."
+				implement={<StudioHowTo recipe={RANGE_SLIDER_RECIPES.tickMarks} />}
+			>
+				<Canvas of={RangeSliderStories.TickMarks} />
 			</PdExample>
 		</>
 	}

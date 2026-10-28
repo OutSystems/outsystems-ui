@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={SidebarStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={SidebarStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={SIDEBAR_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Sidebar." implement={<StudioHowTo recipe={SIDEBAR_RECIPES.basicUsage} />}>
-				<Canvas of={SidebarStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Default behaviour: the panel is built closed and slides in from the right (`Direction` = Right) when the Open action runs. The header close button, Esc, or a swipe on touch devices dismiss it."
+				implement={<StudioHowTo recipe={SIDEBAR_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SidebarStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="With overlay"
+				description="Set `HasOverlay` to True to dim the page while the Sidebar is open. Clicking the backdrop closes the panel, so a dedicated close button becomes optional."
+				implement={<StudioHowTo recipe={SIDEBAR_RECIPES.withOverlay} />}
+			>
+				<Canvas of={SidebarStories.WithOverlay} />
+			</PdExample>
+			<PdExample
+				title="Direction left"
+				description="Set `Direction` to Entities.Direction.Left to anchor the panel to the start edge — the conventional place for a navigation drawer. `Width` accepts any CSS length."
+				implement={<StudioHowTo recipe={SIDEBAR_RECIPES.directionLeft} />}
+			>
+				<Canvas of={SidebarStories.DirectionLeft} />
 			</PdExample>
 		</>
 	}

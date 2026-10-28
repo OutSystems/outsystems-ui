@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={StackedCardsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={StackedCardsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={STACKED_CARDS_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Stacked Cards." implement={<StudioHowTo recipe={STACKED_CARDS_RECIPES.basicUsage} />}>
-				<Canvas of={StackedCardsStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `StackedOptions` Bottom, `Rotate` True, `Items` 5 and `ElementsMargin` 5. The front card is the active record; the next ones peek out below it."
+				implement={<StudioHowTo recipe={STACKED_CARDS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={StackedCardsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Stack origin"
+				description="`StackedOptions` Bottom versus Top — the back cards peek out below or above the active card. None hides them altogether and shows a single card."
+				implement={<StudioHowTo recipe={STACKED_CARDS_RECIPES.stackOrigin} />}
+			>
+				<Canvas of={StackedCardsStories.StackOrigin} />
+			</PdExample>
+			<PdExample
+				title="Swipe overlays"
+				description="With `UseOverlays` True the OverlayLeft, OverlayRight and OverlayTop placeholders fade in over the active card during the drag: left is reject (error colour), right is accept (success), top is info."
+				implement={<StudioHowTo recipe={STACKED_CARDS_RECIPES.swipeOverlays} />}
+			>
+				<Canvas of={StackedCardsStories.Overlays} />
 			</PdExample>
 		</>
 	}

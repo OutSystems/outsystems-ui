@@ -108,7 +108,16 @@ interface PswpChrome {
  * the URL, which fights Storybook's own routing and leaves the manager stuck on a
  * stale story after the overlay closes.
  */
-function openGallery(root: HTMLElement, index: number, chrome: PswpChrome, register: Register, captions = false): void {
+type PswpItem = { src: string; w: number; h: number; title?: string };
+
+function openGallery(
+	root: HTMLElement,
+	index: number,
+	chrome: PswpChrome,
+	register: Register,
+	captions = false,
+	items?: PswpItem[]
+): void {
 	const { PhotoSwipe, PhotoSwipeUI_Default } = window;
 	if (!PhotoSwipe || !PhotoSwipeUI_Default) {
 		throw new Error('PhotoSwipe globals missing — is /vendor/photoswipe loaded in preview-head.html?');
@@ -120,8 +129,9 @@ function openGallery(root: HTMLElement, index: number, chrome: PswpChrome, regis
 	// `title` is what populates `.pswp__caption__center`. The design has no caption, so
 	// the chrome story opts out; `Default` keeps it to exercise the caption rule OUI
 	// carries for the phone safe area (_lightbox-image.scss).
-	const items = IMAGES.map((src, i) => ({ src, w: W, h: H, ...(captions ? { title: `Image ${i + 1}` } : {}) }));
-	const gallery = new PhotoSwipe(pswpEl, PhotoSwipeUI_Default, items, {
+	const galleryItems: PswpItem[] =
+		items ?? IMAGES.map((src, i) => ({ src, w: W, h: H, ...(captions ? { title: `Image ${i + 1}` } : {}) }));
+	const gallery = new PhotoSwipe(pswpEl, PhotoSwipeUI_Default, galleryItems, {
 		index,
 		history: false, // see note above
 		bgOpacity: 1,
@@ -167,7 +177,6 @@ export default meta;
  * so the whole thumbnail → overlay journey is exercised. Click any image to open.
  */
 export const Playground: StoryObj<ThumbnailArgs> = {
-	tags: ['docs-example'],
 	argTypes: {
 		thumbnailWidth: {
 			name: 'ThumbnailWidth (px)',
@@ -211,6 +220,79 @@ export const Playground: StoryObj<ThumbnailArgs> = {
 		),
 };
 
+/* ── Docs-page examples ─────────────────────────────────────────────────────── */
+
+const DOC_CHROME: PswpChrome = { counterEl: true, zoomEl: true, shareEl: false, fullscreenEl: false };
+
+const TRIP_PHOTOS = [
+	'Aurora over the fjord',
+	'Basalt cliffs at low tide',
+	'Cedar valley in the fog',
+	'Dunes after the rain',
+];
+
+/** The shipped thumbnail markup: `.lightbox-item > a > img`. */
+function thumbnailMarkup(src: string, index: number, title: string, width: number): string {
+	return `
+		<div class="lightbox-item" style="width: ${width}px;">
+			<a href="${src}" data-index="${index}" aria-label="Open ${title}">
+				<img src="${src}" alt="${title}" style="width: 100%; border-radius: var(--border-radius-soft);" />
+			</a>
+		</div>`;
+}
+
+export const BasicUsage: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Four Lightbox Image blocks sharing the same <code>Group</code>: clicking any thumbnail opens the viewer on that photo, with prev/next arrows, the counter and the <code>Title</code> as caption.',
+			},
+		},
+	},
+	render: () =>
+		renderPattern(
+			`
+			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+				${IMAGES.map((src, i) => thumbnailMarkup(src, i, TRIP_PHOTOS[i], 220)).join('')}
+			</div>
+			${PSWP_TEMPLATE}`,
+			(root, register) => {
+				const items = IMAGES.map((src, i) => ({ src, w: W, h: H, title: TRIP_PHOTOS[i] }));
+				root.querySelectorAll<HTMLAnchorElement>('.lightbox-item a').forEach((link) => {
+					link.addEventListener('click', (ev) => {
+						ev.preventDefault();
+						openGallery(root, Number(link.dataset.index ?? 0), DOC_CHROME, register, true, items);
+					});
+				});
+			}
+		),
+};
+
+export const SingleImage: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Single image with title',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'One block with no <code>Group</code>: the viewer opens on that image alone — no arrows, no counter — and shows the <code>Title</code> as caption.',
+			},
+		},
+	},
+	render: () =>
+		renderPattern(`${thumbnailMarkup(IMAGES[0], 0, TRIP_PHOTOS[0], 320)}${PSWP_TEMPLATE}`, (root, register) => {
+			root.querySelector<HTMLAnchorElement>('.lightbox-item a')?.addEventListener('click', (ev) => {
+				ev.preventDefault();
+				openGallery(root, 0, DOC_CHROME, register, true, [
+					{ src: IMAGES[0], w: W, h: H, title: TRIP_PHOTOS[0] },
+				]);
+			});
+		}),
+};
+
 /* ── Overlay chrome ─────────────────────────────────────────────────────────── */
 
 /**
@@ -220,7 +302,6 @@ export const Playground: StoryObj<ThumbnailArgs> = {
  * icon overrides on top; nothing is faked.
  */
 export const OverlayChrome: StoryObj<PswpChrome> = {
-	tags: ['docs-example'],
 	name: 'Overlay chrome',
 	argTypes: chromeArgTypes,
 	args: { counterEl: true, zoomEl: true, shareEl: false, fullscreenEl: false },

@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProgressCircleStories from './ProgressCircle.stories';
+import { PROGRESS_CIRCLE_RECIPES } from './_helpers/pattern-docs/progress-circle-recipes';
+import { PROGRESS_CIRCLE_DOC } from './_helpers/pattern-docs/progress-circle-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={ProgressCircleStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={PROGRESS_CIRCLE_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="`Progress` 72 at `Size` 120px with the default `Thickness` 8 and the percentage in the Content placeholder, centred over the ring. The arc animates from 0 on load."
+				implement={<StudioHowTo recipe={PROGRESS_CIRCLE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={ProgressCircleStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Sizes"
+				description="`Size` 'auto' fills its parent (a 140px box here); '80px' and '200px' are written to `--progress-circle-size` and ignore the parent width."
+				implement={<StudioHowTo recipe={PROGRESS_CIRCLE_RECIPES.sizes} />}
+			>
+				<Canvas of={ProgressCircleStories.Sizes} />
+			</PdExample>
+			<PdExample
+				title="Thickness"
+				description="`Thickness` 1, 8 and 20 — the stroke width of both the trail and the progress path, in pixels."
+				implement={<StudioHowTo recipe={PROGRESS_CIRCLE_RECIPES.thickness} />}
+			>
+				<Canvas of={ProgressCircleStories.Thickness} />
+			</PdExample>
+			<PdExample
+				title="Shapes"
+				description="`OptionalConfigs.Shape` Sharp gives square (butt) line caps; SoftRounded and Rounded both render round caps on the arc ends."
+				implement={<StudioHowTo recipe={PROGRESS_CIRCLE_RECIPES.shapes} />}
+			>
+				<Canvas of={ProgressCircleStories.Shapes} />
+			</PdExample>
+		</>
+	}
+/>

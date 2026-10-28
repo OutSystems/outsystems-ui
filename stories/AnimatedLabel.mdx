@@ -6,20 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={AnimatedLabelStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={AnimatedLabelStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={ANIMATED_LABEL_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
-				<Canvas of={AnimatedLabelStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="A Label and an Input in the two placeholders. Click into the field: the label floats to the top edge and drops back when the input is blurred while empty."
+				implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}
+			>
+				<Canvas of={AnimatedLabelStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="Error State" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
+			<PdExample
+				title="Pre-filled value"
+				description="When the Input renders with a value the runtime calls `UpdateOnRender` and floats the label immediately — bound variables with a default never overlap their label."
+				implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.prefilledValue} />}
+			>
+				<Canvas of={AnimatedLabelStories.PrefilledValue} />
+			</PdExample>
+			<PdExample
+				title="Error state"
+				description="Validation is the Input widget's: when its `Valid` property is False the platform adds `not-valid` and the `ValidationMessage`, and the label and border switch to the error colour."
+				implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.errorState} />}
+			>
 				<Canvas of={AnimatedLabelStories.ErrorState} />
 			</PdExample>
-			<PdExample title="All States" description="Live example of Animated Label." implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.basicUsage} />}>
-				<Canvas of={AnimatedLabelStories.AllStates} />
+			<PdExample
+				title="Disabled"
+				description="Set the Input's `Enabled` property to False. The pattern mutes the field surface and the floating label together."
+				implement={<StudioHowTo recipe={ANIMATED_LABEL_RECIPES.disabled} />}
+			>
+				<Canvas of={AnimatedLabelStories.Disabled} />
 			</PdExample>
 		</>
 	}

@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={OverflowMenuStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={OverflowMenuStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={OVERFLOW_MENU_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Overflow Menu." implement={<StudioHowTo recipe={OVERFLOW_MENU_RECIPES.basicUsage} />}>
-				<Canvas of={OverflowMenuStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `BalloonPosition` left as Auto and `BalloonShape` SoftRounded. Click the three-dots trigger (or press ArrowDown on it) to open the menu; Esc or a click outside closes it."
+				implement={<StudioHowTo recipe={OVERFLOW_MENU_RECIPES.basicUsage} />}
+			>
+				<Canvas of={OverflowMenuStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Balloon shape"
+				description="`BalloonShape` sets the corner radius of the menu: SoftRounded, Rounded or Sharp. The three menus are pinned open with the Open client action so you can compare them."
+				implement={<StudioHowTo recipe={OVERFLOW_MENU_RECIPES.balloonShape} />}
+			>
+				<Canvas of={OverflowMenuStories.Shapes} />
+			</PdExample>
+			<PdExample
+				title="Balloon position"
+				description="`BalloonPosition` anchors the menu to a side of the trigger — Auto picks whichever has the most room and flips when the screen edge is near; Bottom, BottomStart, BottomEnd and Top pin it as named."
+				implement={<StudioHowTo recipe={OVERFLOW_MENU_RECIPES.balloonPosition} />}
+			>
+				<Canvas of={OverflowMenuStories.Positions} />
 			</PdExample>
 		</>
 	}

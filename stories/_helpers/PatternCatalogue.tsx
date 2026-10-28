@@ -43,6 +43,7 @@ export const PATTERN_CATALOGUE: PatternEntry[] = [
 	{ name: 'ButtonLoading', category: 'Utilities', blurb: 'Button that swaps to a loading state.', id: 'patterns-utilities-buttonloading--docs' },
 	{ name: 'DatePicker', category: 'Interaction', blurb: 'Calendar input with ranges and locales.', id: 'patterns-interaction-datepicker--docs' },
 	{ name: 'Dropdown', category: 'Interaction', blurb: 'Filterable select with multi-selection.', id: 'patterns-interaction-dropdown--docs' },
+	{ name: 'Dropdown Tags', category: 'Interaction', blurb: 'Multi-select dropdown that shows selections as tags.', id: 'patterns-interaction-dropdown-tags--docs' },
 	{ name: 'FloatingActions', category: 'Interaction', blurb: 'Expandable FAB with secondary actions.', id: 'patterns-interaction-floatingactions--docs' },
 	{ name: 'InputWithIcon', category: 'Interaction', blurb: 'Text input with a leading or trailing icon.', id: 'patterns-interaction-inputwithicon--docs' },
 	{ name: 'LightboxImage', category: 'Interaction', blurb: 'Fullscreen image viewer with gestures.', id: 'patterns-interaction-lightboximage--docs' },
@@ -74,7 +75,7 @@ export const PATTERN_CATALOGUE: PatternEntry[] = [
 	{ name: 'Counter', category: 'Numbers', blurb: 'Animated numeric counter display.', id: 'patterns-numbers-counter--docs' },
 	{ name: 'IconBadge', category: 'Numbers', blurb: 'Icon with an overlaid count badge.', id: 'patterns-numbers-iconbadge--docs' },
 	{ name: 'Progress Bar', category: 'Numbers', blurb: 'Linear completion indicator.', id: 'patterns-numbers-progress-bar--docs' },
-	{ name: 'Progress Circle', category: 'Numbers', blurb: 'Circular completion indicator.', id: 'patterns-numbers-progress-circle--playground' },
+	{ name: 'Progress Circle', category: 'Numbers', blurb: 'Circular completion indicator.', id: 'patterns-numbers-progress-circle--docs' },
 	{ name: 'Rating', category: 'Numbers', blurb: 'Star rating input and display.', id: 'patterns-numbers-rating--docs' },
 	// Utilities
 	{ name: 'CenterContent', category: 'Utilities', blurb: 'Centers children in the available space.', id: 'patterns-utilities-centercontent--docs' },
@@ -83,6 +84,8 @@ export const PATTERN_CATALOGUE: PatternEntry[] = [
 	{ name: 'Separator', category: 'Utilities', blurb: 'Horizontal or vertical content divider.', id: 'patterns-utilities-separator--docs' },
 	{ name: 'SwipeEvents', category: 'Utilities', blurb: 'Gesture helpers for swipe interactions.', id: 'patterns-utilities-swipeevents--docs' },
 	{ name: 'TouchEvents', category: 'Utilities', blurb: 'Low-level touch event helpers.', id: 'patterns-utilities-touchevents--docs' },
+	{ name: 'Password Policy', category: 'Utilities', blurb: 'Live checklist of password rules as the user types.', id: 'patterns-utilities-passwordpolicy--docs' },
+	{ name: 'Provider Login Button', category: 'Utilities', blurb: 'Branded sign-in button for an identity provider.', id: 'patterns-utilities-providerloginbutton--docs' },
 	{ name: 'Video', category: 'Utilities', blurb: 'Themed video player chrome.', id: 'patterns-utilities-video--docs' },
 	// Advanced
 	{ name: 'DropdownServerSide', category: 'Advanced', blurb: 'Dropdown fed by a server-side data source.', id: 'patterns-advanced-dropdownserverside--docs' },

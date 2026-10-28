@@ -6,14 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={RatingStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={RatingStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={RATING_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Rating." implement={<StudioHowTo recipe={RATING_RECIPES.basicUsage} />}>
-				<Canvas of={RatingStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Read-only (`IsEdit` False) with `RatingValue` 3.5 on the default `RatingScale` of 5 — the fractional part renders the fourth star half-filled."
+				implement={<StudioHowTo recipe={RATING_RECIPES.basicUsage} />}
+			>
+				<Canvas of={RatingStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Editable"
+				description="Set `IsEdit` to True: hovering previews the score, and a click or keyboard selection updates `RatingValue` and fires `OnSelect` with the new value."
+				implement={<StudioHowTo recipe={RATING_RECIPES.editable} />}
+			>
+				<Canvas of={RatingStories.Editable} />
+			</PdExample>
+			<PdExample
+				title="Sizes"
+				description="`Size` Small (12px), empty (default, 16px) and Medium (24px) at the same value — the modifier becomes `.rating-small` / `.rating-medium` on the root."
+				implement={<StudioHowTo recipe={RATING_RECIPES.sizes} />}
+			>
+				<Canvas of={RatingStories.Sizes} />
+			</PdExample>
+			<PdExample
+				title="Scale"
+				description="`RatingScale` 10 with `RatingValue` 7 — one item per point, up to 100. A scale of 1 is always read-only."
+				implement={<StudioHowTo recipe={RATING_RECIPES.scale} />}
+			>
+				<Canvas of={RatingStories.Scale} />
 			</PdExample>
 		</>
 	}

@@ -35,21 +35,26 @@ function monthPickerMarkup(id: string): string {
 		<div class="osui-monthpicker-a11y"></div>`;
 }
 
+type MonthYear = { Month: string; Year: number };
+
+// MonthYear objects use { Month, Year }; empty Month / Year < 1900 means "unset"
+const UNSET_MONTH: MonthYear = { Month: '', Year: -1 };
+
 function initMonthPicker(
 	id: string,
 	dateFormat: string,
-	initialMonth: { Month: string; Year: number },
-	register: Register
+	initialMonth: MonthYear,
+	register: Register,
+	limits: { MinMonth?: MonthYear; MaxMonth?: MonthYear } = {}
 ): void {
 	const P = Patterns();
 	P.MonthPickerAPI.Create(
 		id,
 		cfg({
 			DateFormat: dateFormat,
-			// MonthYear objects use { Month, Year }; empty Month / Year < 1900 means "unset"
 			InitialMonth: initialMonth,
-			MaxMonth: { Month: '', Year: -1 },
-			MinMonth: { Month: '', Year: -1 },
+			MaxMonth: limits.MaxMonth ?? UNSET_MONTH,
+			MinMonth: limits.MinMonth ?? UNSET_MONTH,
 		}),
 		'flatpickr'
 	);
@@ -58,11 +63,70 @@ function initMonthPicker(
 }
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('monthpicker');
 		return renderPattern(monthPickerMarkup(id), (_root, register) =>
-			initMonthPicker(id, args.dateFormat, { Month: '', Year: -1 }, register)
+			initMonthPicker(id, args.dateFormat, UNSET_MONTH, register)
+		);
+	},
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The default MM/YYYY format with no InitialMonth: the input starts empty and opens a year-by-year month grid on focus or click.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('monthpicker');
+		return renderPattern(monthPickerMarkup(id), (_root, register) =>
+			initMonthPicker(id, 'MM/YYYY', UNSET_MONTH, register)
+		);
+	},
+};
+
+export const MonthNameFormat: Story = {
+	tags: ['docs-example'],
+	name: 'Month name format',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set DateFormat to MMM YYYY to display the abbreviated month name (Mar 2024) instead of its number. InitialMonth preselects March 2024 so the format is visible on render.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('monthpicker');
+		return renderPattern(monthPickerMarkup(id), (_root, register) =>
+			initMonthPicker(id, 'MMM YYYY', { Month: 'March', Year: 2024 }, register)
+		);
+	},
+};
+
+export const MinMaxMonth: Story = {
+	tags: ['docs-example'],
+	name: 'Min and max month',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'MinMonth and MaxMonth bound the selectable range — here the 2024 fiscal year. Open the picker: months outside January–December 2024 are disabled and the year arrows stop at the limits.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('monthpicker');
+		return renderPattern(monthPickerMarkup(id), (_root, register) =>
+			initMonthPicker(id, 'MM/YYYY', { Month: 'June', Year: 2024 }, register, {
+				MinMonth: { Month: 'January', Year: 2024 },
+				MaxMonth: { Month: 'December', Year: 2024 },
+			})
 		);
 	},
 };

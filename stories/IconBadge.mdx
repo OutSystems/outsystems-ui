@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={IconBadgeStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={IconBadgeStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={ICON_BADGE_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Icon Badge." implement={<StudioHowTo recipe={ICON_BADGE_RECIPES.basicUsage} />}>
-				<Canvas of={IconBadgeStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="A bell icon in the Icon placeholder with `Number` 3 pinned to its top-right corner in the Primary `Color`."
+				implement={<StudioHowTo recipe={ICON_BADGE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={IconBadgeStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Counts"
+				description="`Number` 7, 42 and 128 — the badge keeps a 16px minimum and widens with the digits without wrapping; the ring keeps it separated from the icon."
+				implement={<StudioHowTo recipe={ICON_BADGE_RECIPES.counts} />}
+			>
+				<Canvas of={IconBadgeStories.Counts} />
+			</PdExample>
+			<PdExample
+				title="Light style"
+				description="Set `IsLight` to True so the badge takes the subtle tint of its `Color` with the darker text of the same family — Primary, Green and Red here."
+				implement={<StudioHowTo recipe={ICON_BADGE_RECIPES.lightStyle} />}
+			>
+				<Canvas of={IconBadgeStories.LightStyle} />
 			</PdExample>
 		</>
 	}

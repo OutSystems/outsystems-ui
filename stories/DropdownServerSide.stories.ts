@@ -143,7 +143,6 @@ function initServerSide(
 }
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('dropdown-ss');
 		const itemIds = OPTIONS.map(() => uid('dropdown-ss-item'));
@@ -151,6 +150,75 @@ export const Playground: Story = {
 			initServerSide(id, itemIds, args, register);
 			const textEl = root.querySelector('.osui-dropdown-serverside__text') as HTMLElement;
 			mirrorSelectionToTrigger(root, textEl, PLACEHOLDER);
+		});
+	},
+};
+
+/** One server-side dropdown with the trigger mirroring the selection, initialised exactly like the Playground. */
+function docsServerSide(args: DropdownServerSideArgs): HTMLElement {
+	const id = uid('dropdown-ss');
+	const itemIds = OPTIONS.map(() => uid('dropdown-ss-item'));
+	return renderPattern(serverSideMarkup(id, itemIds), (root, register) => {
+		initServerSide(id, itemIds, args, register);
+		const textEl = root.querySelector('.osui-dropdown-serverside__text') as HTMLElement;
+		mirrorSelectionToTrigger(root, textEl, PLACEHOLDER);
+	});
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Single selection: the balloon holds a search input and one Dropdown Server Side Item per option; picking one fires its OnSelected event and closes the balloon.',
+			},
+		},
+	},
+	render: () => docsServerSide({ allowMultipleSelection: false, isDisabled: false }),
+};
+
+export const MultipleSelection: Story = {
+	tags: ['docs-example'],
+	name: 'Multiple selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'AllowMultipleSelection set to True: the balloon stays open after each pick and every selected item keeps its highlight.',
+			},
+		},
+	},
+	render: () => docsServerSide({ allowMultipleSelection: true, isDisabled: false }),
+};
+
+/** Enabled trigger next to the disabled (`IsDisabled: true`) one. */
+export const States: Story = {
+	tags: ['docs-example'],
+	name: 'Disabled state',
+	parameters: {
+		controls: { disable: true },
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'IsDisabled set to True renders the trigger greyed out and the balloon never opens, next to the default enabled one.',
+			},
+		},
+	},
+	render: () => {
+		const entries = [
+			{ label: 'enabled', isDisabled: false },
+			{ label: 'disabled', isDisabled: true },
+		].map((v) => ({ ...v, id: uid('dropdown-ss'), itemIds: OPTIONS.map(() => uid('dropdown-ss-item')) }));
+		const board = labeledBoard(
+			entries.map(({ label, id, itemIds }) => ({ label, html: serverSideMarkup(id, itemIds) })),
+			{ direction: 'row', wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, itemIds, isDisabled } of entries) {
+				initServerSide(id, itemIds, { allowMultipleSelection: false, isDisabled }, register);
+			}
 		});
 	},
 };
@@ -189,26 +257,6 @@ export const Selection: Story = {
 				const textEl = root.querySelector<HTMLElement>(`[name="${id}"] .osui-dropdown-serverside__text`);
 				if (textEl) textEl.textContent = labels.join(', ');
 				P.DropdownAPI.Open(id);
-			}
-		});
-	},
-};
-
-/** Enabled trigger next to the disabled (`IsDisabled: true`) one. */
-export const States: Story = {
-	parameters: { controls: { disable: true } },
-	render: () => {
-		const entries = [
-			{ label: 'enabled', isDisabled: false },
-			{ label: 'disabled', isDisabled: true },
-		].map((v) => ({ ...v, id: uid('dropdown-ss'), itemIds: OPTIONS.map(() => uid('dropdown-ss-item')) }));
-		const board = labeledBoard(
-			entries.map(({ label, id, itemIds }) => ({ label, html: serverSideMarkup(id, itemIds) })),
-			{ direction: 'row', wrap: true }
-		);
-		return renderPattern(board.outerHTML, (_root, register) => {
-			for (const { id, itemIds, isDisabled } of entries) {
-				initServerSide(id, itemIds, { allowMultipleSelection: false, isDisabled }, register);
 			}
 		});
 	},

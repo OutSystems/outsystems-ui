@@ -6,14 +6,47 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={SeparatorStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={SeparatorStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={SEPARATOR_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Separator." implement={<StudioHowTo recipe={SEPARATOR_RECIPES.basicUsage} />}>
-				<Canvas of={SeparatorStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="The defaults: a horizontal rule (`IsVertical` False) in the `Neutral4` colour with `Base` space above and below."
+				implement={<StudioHowTo recipe={SEPARATOR_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SeparatorStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Orientation"
+				description="`IsVertical` switches from `.separator-horizontal` to `.separator-vertical` inside a full-height wrapper, so the rule needs a sized flex row to stretch in."
+				implement={<StudioHowTo recipe={SEPARATOR_RECIPES.orientation} />}
+			>
+				<Canvas of={SeparatorStories.Orientation} />
+			</PdExample>
+			<PdExample
+				title="Colors"
+				description="`Color` emits the matching `background-*` utility class on the rule — every record of the Color entity, with the empty default falling back to the neutral border token."
+				implement={<StudioHowTo recipe={SEPARATOR_RECIPES.colors} />}
+			>
+				<Canvas of={SeparatorStories.Colors} />
+			</PdExample>
+			<PdExample
+				title="Spaces"
+				description="`Space` becomes padding utility classes on the wrapper: block-axis padding for a horizontal rule, inline-axis padding for a vertical one, from None to XXLarge."
+				implement={<StudioHowTo recipe={SEPARATOR_RECIPES.spaces} />}
+			>
+				<Canvas of={SeparatorStories.Spaces} />
 			</PdExample>
 		</>
 	}

@@ -3,22 +3,30 @@ import type { PatternDocMeta } from './types';
 export const COUNTER_DOC: PatternDocMeta = {
 	name: 'Counter',
 	category: 'Numbers',
-	lede: 'Animated numeric counter display.',
-	overview: 'Use Counter when you need animated numeric counter display in your application UI.',
+	lede: 'Card-like tile that gives feedback about the current count of something — registered users, open requests, completed tasks — with a value, a label and an icon.',
+	overview:
+		'The Counter is CSS-only: the root is `.counter.card` carrying the BackgroundColor utility class, and its Content placeholder is a `.center-align` flex row — or a centred column when IsVertical is True. Drop the value, its label and an icon into the placeholder; Height fixes the tile height in pixels.',
 	stylingSelector: '.counter',
-	liveStoryId: 'patterns-numbers-counter--default',
-
+	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/numbers/counter/',
+	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/numbers/counter/',
+	liveStoryId: 'patterns-numbers-counter--basic-usage',
 	whenToUse: [
-		'When animated numeric counter display.',
-		'Inside numbers layouts where this pattern is the intended building block.',
+		'KPI tiles at the top of a dashboard — one Counter per metric, side by side in Columns.',
+		'A headline total above a list (open tickets, active users) that the list below details.',
+		'Feedback after a bulk action, such as how many records were imported or updated.',
 	],
 	whenNotToUse: [
-		'When a simpler utility or widget already covers the use case.',
-		'When the interaction model does not match how users should complete the task.',
+		'A small inline count beside a label or icon — use Badge or Icon Badge.',
+		'Progress toward a target — use Progress Bar or Progress Circle, which show the ratio.',
 	],
 	anatomy: {
-		tree: `<div class="counter">
-  <!-- Content placeholder -->
+		tree: `<div class="counter card background-primary text-neutral-0" style="height:150px;"> <!-- BackgroundColor, Height -->
+  <div class="center-align flex-direction-row"> <!-- IsVertical → flex-direction-column -->
+    <!-- Content placeholder -->
+    <div class="font-size-display">26</div>
+    <div>Completed requests</div>
+    <div><i class="icon ph ph-check"></i></div>
+  </div>
 </div>`,
 	},
 	properties: [
@@ -27,29 +35,43 @@ export const COUNTER_DOC: PatternDocMeta = {
 			rows: [
 				{
 					name: 'BackgroundColor',
-					type: 'Text',
-					description:
-						'Background color of the Block. Maps to `background-{value}` utility class on the root.',
+					type: 'Color',
+					defaultValue: 'Neutral0',
+					description: 'Background color of the Block. Maps to `background-{color}` on the root.',
 				},
 				{
 					name: 'IsVertical',
-					type: 'Text',
+					type: 'Boolean',
+					defaultValue: 'False',
 					description:
-						'When True, content is displayed vertically (column). Maps to `flex-direction-column` on `.center-align`; False maps to `flex-direction-row`.',
+						'If set to True, the content will be displayed vertically (`flex-direction-column`); False lays it out in a row with space between.',
 				},
-				{ name: 'Height', type: 'Text', description: 'Maps to the Height input parameter.' },
-				{ name: 'ExtendedClass', type: 'Text', description: 'Extra CSS classes on the root.' },
+				{
+					name: 'Height',
+					type: 'Text',
+					defaultValue: '"100"',
+					description: 'Height of the block, use Pixel units. Applied as an inline `height` on the root.',
+				},
+				{
+					name: 'ExtendedClass',
+					type: 'Text',
+					defaultValue: '""',
+					description:
+						'Add custom style classes to the Pattern. Example: `myclass` or `myclass1 myclass2`. OutSystems UI utility classes are supported.',
+				},
 			],
 		},
 	],
 	accessibility: [
-		'Ensure keyboard users can reach and operate interactive elements inside the pattern.',
-		'Provide meaningful labels for icons-only controls.',
-		'Use the Storybook A11y toolbar to check contrast and focus order on the live demo.',
+		'Value and label are plain text — keep the label inside the Content placeholder so the number is announced with its meaning, not on its own.',
+		'A coloured BackgroundColor switches the text to `text-neutral-0`; check contrast for the lighter families (Yellow, Lime, Cyan) and the low neutrals before shipping.',
+		'The icon is decorative — give it no accessible name so screen readers announce only the value and label.',
+		'Height is a fixed pixel value: make sure the label still fits at 200% zoom or larger font sizes, or leave Height generous.',
 	],
 	related: [
 		{ name: 'Badge', storyId: 'patterns-numbers-badge--docs' },
-		{ name: 'IconBadge', storyId: 'patterns-numbers-iconbadge--docs' },
-		{ name: 'Accordion', storyId: 'patterns-content-accordion--docs' },
+		{ name: 'Icon Badge', storyId: 'patterns-numbers-iconbadge--docs' },
+		{ name: 'Card', storyId: 'patterns-content-card--docs' },
+		{ name: 'Progress Bar', storyId: 'patterns-numbers-progress-bar--docs' },
 	],
 };

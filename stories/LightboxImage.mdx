@@ -6,17 +6,33 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={LightboxImageStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={LightboxImageStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={LIGHTBOX_IMAGE_DOC}
 	examples={
 		<>
-			<PdExample title="ThumbnailWidth (px)" description="Live example of Lightbox Image." implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}>
-				<Canvas of={LightboxImageStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Four Lightbox Image blocks sharing the same `Group`. Clicking any thumbnail opens the viewer on that photo with prev/next arrows, the counter and each block's `Title` as caption."
+				implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={LightboxImageStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="Overlay chrome" description="Live example of Lightbox Image." implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}>
-				<Canvas of={LightboxImageStories.OverlayChrome} />
+			<PdExample
+				title="Single image with title"
+				description="One block with an empty `Group`: the viewer opens on that image alone — no arrows, no counter — and shows the `Title` as caption."
+				implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.singleImage} />}
+			>
+				<Canvas of={LightboxImageStories.SingleImage} />
 			</PdExample>
 		</>
 	}

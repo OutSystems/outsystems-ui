@@ -6,17 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={TimelineStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={TimelineStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={TIMELINE_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Timeline." implement={<StudioHowTo recipe={TIMELINE_RECIPES.basicUsage} />}>
-				<Canvas of={TimelineStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Four Timeline Items inside a Container with role='list'. Each fills the Left (date), Icon, Title and Content placeholders; `Color` stays at Primary except the current step, which uses Green and `IsActive` = True."
+				implement={<StudioHowTo recipe={TIMELINE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={TimelineStories.BasicUsage} />
 			</PdExample>
-			<PdExample title="No Icon" description="Live example of Timeline." implement={<StudioHowTo recipe={TIMELINE_RECIPES.basicUsage} />}>
+			<PdExample
+				title="No icon"
+				description="Leave the Icon placeholder empty and the 24px marker collapses to an 8px dot. `Color` still paints the dot through the same `background-{value}` class."
+				implement={<StudioHowTo recipe={TIMELINE_RECIPES.noIcon} />}
+			>
 				<Canvas of={TimelineStories.NoIcon} />
+			</PdExample>
+			<PdExample
+				title="Colors"
+				description="Every `Color` entity value applied to the marker — brand roles, status colours and the neutral scale — one Timeline Item per swatch."
+				implement={<StudioHowTo recipe={TIMELINE_RECIPES.colors} />}
+			>
+				<Canvas of={TimelineStories.Colors} />
 			</PdExample>
 		</>
 	}

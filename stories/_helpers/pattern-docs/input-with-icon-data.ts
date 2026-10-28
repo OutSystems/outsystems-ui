@@ -3,43 +3,64 @@ import type { PatternDocMeta } from './types';
 export const INPUT_WITH_ICON_DOC: PatternDocMeta = {
 	name: 'Input With Icon',
 	category: 'Interaction',
-	lede: 'Text input with a leading or trailing icon.',
-	overview: 'Use Input With Icon when you need text input with a leading or trailing icon in your application UI.',
-	stylingSelector: '.osui-iwi-matrix',
-	liveStoryId: 'patterns-interaction-inputwithicon--default',
-
+	lede: 'An Input widget with an icon docked inside its start or end edge — a visual hint (envelope, calendar, user) that costs no extra space.',
+	overview:
+		'A CSS-only wrapper with two placeholders: Icon and Input. The icon slot is absolutely positioned over the input, and the input gets matching padding on that side so text never runs under the glyph. AlignIconRight moves the slot to the end edge; sizing and states (hover, focus, disabled, error) come from the Input widget itself.',
+	stylingSelector: '.input-with-icon',
+	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/input_with_icon/',
+	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/input_with_icon/',
+	liveStoryId: 'patterns-interaction-inputwithicon--basic-usage',
+	cssApiSlug: 'patterns-interaction-input-with-icon',
 	whenToUse: [
-		'When text input with a leading or trailing icon.',
-		'Inside interaction layouts where this pattern is the intended building block.',
+		'Fields whose type is instantly recognisable from a glyph: e-mail, phone, username, amount, location.',
+		'Date, time or password fields where an end-edge icon signals an action (open the calendar, toggle visibility).',
+		'Compact filter bars where an icon replaces a visible label.',
 	],
 	whenNotToUse: [
-		'When a simpler utility or widget already covers the use case.',
-		'When the interaction model does not match how users should complete the task.',
+		'A search box — the Search pattern paints its own magnifying glass and matches the header layout.',
+		'Fields that need a floating label — use the Animated Label pattern, which already reserves the inner space.',
 	],
 	anatomy: {
-		tree: `<div class="osui-iwi-matrix">
-  <!-- Content placeholder -->
-</div>`,
+		tree: `<div class="input-with-icon"> <!-- add .input-with-icon-right when AlignIconRight is True -->
+  <div class="input-with-icon-content-icon">
+    <i class="icon ph ph-envelope"></i> <!-- Icon placeholder -->
+  </div>
+  <div class="input-with-icon-input">
+    <input class="form-control" type="text" data-input /> <!-- Input placeholder -->
+  </div>
+</div>
+<span class="validation-message">…</span> <!-- platform, only when the Input is not valid -->`,
 	},
 	properties: [
 		{
 			title: 'Input With Icon',
 			rows: [
-				{ name: 'IconPosition', type: 'Text', description: 'Side of the input where the icon is rendered.' },
-				{ name: 'Icon', type: 'Text', description: 'Phosphor icon class (e.g. ph-magnifying-glass).' },
-				{ name: 'Placeholder', type: 'Text', description: 'Maps to the Placeholder input parameter.' },
-				{ name: 'ExtendedClass', type: 'Text', description: 'Extra CSS classes on the root.' },
+				{
+					name: 'AlignIconRight',
+					type: 'Boolean',
+					defaultValue: 'False',
+					description:
+						'When True, docks the icon to the end (right in LTR) edge of the input instead of the start edge.',
+				},
+				{
+					name: 'ExtendedClass',
+					type: 'Text',
+					defaultValue: '""',
+					description:
+						'Add custom style classes to the pattern. Example: myclass or myclass1 myclass2. OutSystems UI utility classes are supported.',
+				},
 			],
 		},
 	],
 	accessibility: [
-		'Ensure keyboard users can reach and operate interactive elements inside the pattern.',
-		'Provide meaningful labels for icons-only controls.',
-		'Use the Storybook A11y toolbar to check contrast and focus order on the live demo.',
+		'The icon is decorative: pair the Input with a Label widget (or an aria-label) so the field is announced by name, not by glyph.',
+		'The icon slot is positioned over the input and is not focusable, so the Input stays the only tab stop.',
+		'Sizes, focus ring and error colours are the Input widget’s own, so contrast and focus visibility match every other field on the screen.',
+		'Padding is logical (inline-start / inline-end), so the icon and the text indent mirror correctly in RTL layouts.',
 	],
 	related: [
-		{ name: 'ActionSheet', storyId: 'patterns-interaction-actionsheet--docs' },
-		{ name: 'AnimatedLabel', storyId: 'patterns-interaction-animatedlabel--docs' },
-		{ name: 'Accordion', storyId: 'patterns-content-accordion--docs' },
+		{ name: 'Search', storyId: 'patterns-interaction-search--docs' },
+		{ name: 'Animated Label', storyId: 'patterns-interaction-animatedlabel--docs' },
+		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 	],
 };

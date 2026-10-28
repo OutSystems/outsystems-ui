@@ -32,7 +32,6 @@ function counterMarkup({ backgroundColor, isVertical, height, extendedClass }: C
 const baseArgs: CounterArgs = { backgroundColor: 'primary', isVertical: false, height: 150, extendedClass: '' };
 
 export const Playground: StoryObj<CounterArgs> = {
-	tags: ['docs-example'],
 	args: { ...baseArgs },
 	argTypes: {
 		backgroundColor: {
@@ -57,6 +56,70 @@ export const Playground: StoryObj<CounterArgs> = {
 	render: (args) => renderStatic(counterMarkup(args)),
 };
 
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+export const BasicUsage: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A Primary tile, 150px tall, with the value, its label and an icon laid out in a row inside the Content placeholder.',
+			},
+		},
+	},
+	render: () => renderStatic(counterMarkup({ ...baseArgs })),
+};
+
+/** Horizontal (row) next to vertical (column) content layout. */
+export const Orientation: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Orientation',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>IsVertical</code> False spreads the content in a row (<code>flex-direction-row</code>, space-between); True stacks it in a centred column.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{ label: 'horizontal', html: counterMarkup({ ...baseArgs }) },
+					{ label: 'vertical', html: counterMarkup({ ...baseArgs, isVertical: true }) },
+				],
+				{ direction: 'row' }
+			).outerHTML
+		),
+};
+
+export const BackgroundColors: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Background colors',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>BackgroundColor</code> picks the <code>background-*</code> utility on the root; the text switches to <code>text-neutral-0</code> for contrast.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				['primary', 'green', 'orange'].map((color) => ({
+					label: color,
+					html: counterMarkup({ ...baseArgs, backgroundColor: color }),
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
+};
+
 /** Every BackgroundColor swatch (solid; the Counter has no IsLight parameter). */
 export const Colors: StoryObj = {
 	parameters: { controls: { disable: true } },
@@ -68,21 +131,6 @@ export const Colors: StoryObj = {
 					html: counterMarkup({ ...baseArgs, backgroundColor: color }),
 				})),
 				{ direction: 'row', wrap: true }
-			).outerHTML
-		),
-};
-
-/** Horizontal (row) next to vertical (column) content layout. */
-export const Orientation: StoryObj = {
-	parameters: { controls: { disable: true } },
-	render: () =>
-		renderStatic(
-			labeledBoard(
-				[
-					{ label: 'horizontal', html: counterMarkup({ ...baseArgs }) },
-					{ label: 'vertical', html: counterMarkup({ ...baseArgs, isVertical: true }) },
-				],
-				{ direction: 'row' }
 			).outerHTML
 		),
 };

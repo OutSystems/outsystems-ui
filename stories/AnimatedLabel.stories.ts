@@ -54,7 +54,6 @@ type DefaultArgs = {
 };
 
 export const Playground: StoryObj<DefaultArgs> = {
-	tags: ['docs-example'],
 	args: {
 		disabled: false,
 	},
@@ -68,14 +67,64 @@ export const Playground: StoryObj<DefaultArgs> = {
 	render: ({ disabled }) => animatedLabel({ label: 'Full name', disabled }),
 };
 
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'An empty field: the label rests inside the input and floats to the top edge on focus or as soon as a value is typed.',
+			},
+		},
+	},
+	render: () => animatedLabel({ label: 'Full name' }),
+};
+
+export const PrefilledValue: Story = {
+	tags: ['docs-example'],
+	name: 'Pre-filled value',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'When the Input already holds a value on render, the runtime adds the `active` class and the label starts floating — no focus needed.',
+			},
+		},
+	},
+	render: () => animatedLabel({ label: 'Email address', value: 'ana.silva@example.com' }),
+};
+
 export const ErrorState: Story = {
 	tags: ['docs-example'],
+	name: 'Error state',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Validation comes from the Input widget: when it is not valid the platform adds `not-valid` and the validation message, and the Animated Label colours the label and border to match.',
+			},
+		},
+	},
 	render: () => animatedLabel({ label: 'Full name', value: 'Filled text', invalid: true }),
+};
+
+export const Disabled: Story = {
+	tags: ['docs-example'],
+	name: 'Disabled',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A disabled Input mutes the field surface and the floating label together, so the read-only value still reads as part of the form.',
+			},
+		},
+	},
+	render: () => animatedLabel({ label: 'Employee ID', value: 'EMP-10482', disabled: true }),
 };
 
 // Renders every state stacked for a side-by-side comparison against Figma.
 export const AllStates: Story = {
-	tags: ['docs-example'],
 	render: () => {
 		const wrapper = document.createElement('div');
 		wrapper.style.cssText = 'display:flex;flex-direction:column;gap:32px;padding:24px;';

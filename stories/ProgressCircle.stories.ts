@@ -27,7 +27,8 @@ export default meta;
 
 type Story = StoryObj<ProgressArgs>;
 
-function circleMarkup(id: string, rootStyle = ''): string {
+/** The circle root; `content` goes into the Content placeholder centred over the ring. */
+function circleMarkup(id: string, rootStyle = '', content = ''): string {
 	return `
 		<div ${osuiRoot(id)} class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100"${rootStyle ? ` style="${rootStyle}"` : ''}>
 			<div class="osui-progress-circle__container">
@@ -39,7 +40,7 @@ function circleMarkup(id: string, rootStyle = ''): string {
 					</svg>
 				</div>
 			</div>
-			<div class="osui-progress-circle__content" id="${id}-label"></div>
+			<div class="osui-progress-circle__content" id="${id}-label">${content}</div>
 		</div>`;
 }
 
@@ -62,9 +63,90 @@ export const Playground: Story = {
 	},
 };
 
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>Progress</code> 72 at <code>Size</code> 120px with the default <code>Thickness</code> 8 and a percentage in the Content placeholder, centred over the ring. The arc animates from 0 on load.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('progress-circle');
+		return renderPattern(
+			circleMarkup(id, '', '<span class="font-size-h4 font-semi-bold">72%</span>'),
+			(_root, register) =>
+				initProgress(
+					id,
+					'Circle',
+					{ progress: 72, thickness: 8, shape: 'rounded', animate: true, size: '120px' },
+					register
+				)
+		);
+	},
+};
+
+/**
+ * Auto follows a 140px parent. Explicit sizes are CSS lengths on `--progress-circle-size`
+ * and must not set an inline width, which would override that variable.
+ */
+export const Sizes: Story = {
+	tags: ['docs-example'],
+	name: 'Sizes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Size</code> "auto" fills its parent (a 140px box here); "80px" and "200px" are written to <code>--progress-circle-size</code> and ignore the parent.',
+			},
+		},
+	},
+	render: () => {
+		const sizes = [
+			{ label: 'Auto', size: 'auto', box: '140px' },
+			{ label: '80px', size: '80px', box: '' },
+			{ label: '200px', size: '200px', box: '' },
+		] as const;
+		const cells = sizes.map((size) => ({ ...size, id: uid('progress-circle') }));
+		const board = labeledBoard(
+			cells.map((cell) => ({
+				label: cell.label,
+				html: cell.box ? boxedCircle(cell.id, cell.box) : circleMarkup(cell.id),
+			})),
+			{ direction: 'row', gap: 32 }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const cell of cells) {
+				initProgress(
+					cell.id,
+					'Circle',
+					{ progress: 60, thickness: 8, shape: 'rounded', animate: false, size: cell.size },
+					register
+				);
+			}
+		});
+	},
+};
+
 /** The same arc at thickness 1, 8 and 20, so only the stroke width changes. */
 export const Thickness: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Thickness',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Thickness</code> 1, 8 and 20 — the stroke width of both the trail and the progress path, in pixels.',
+			},
+		},
+	},
 	render: () => {
 		const cells = PROGRESS_THICKNESSES.map((thickness) => ({ thickness, id: uid('progress-circle') }));
 		const board = labeledBoard(
@@ -89,7 +171,17 @@ export const Thickness: Story = {
  * Anything other than Sharp is stored as `stroke-linecap: round`.
  */
 export const Shapes: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Shapes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>OptionalConfigs.Shape</code> Sharp gives square (butt) line caps; SoftRounded and Rounded both render round caps on the arc ends.',
+			},
+		},
+	},
 	render: () => {
 		const cells = PROGRESS_SHAPES.map((shape) => ({ ...shape, id: uid('progress-circle') }));
 		const board = labeledBoard(
@@ -144,39 +236,6 @@ export const Colors: Story = {
 						progressColor: cell.target === 'progress' ? cell.color : 'primary',
 						trailColor: cell.target === 'trail' ? cell.color : 'neutral-2',
 					},
-					register
-				);
-			}
-		});
-	},
-};
-
-/**
- * Auto follows a 140px parent. Explicit sizes are CSS lengths on `--progress-circle-size`
- * and must not set an inline width, which would override that variable.
- */
-export const Sizes: Story = {
-	parameters: { controls: { disable: true } },
-	render: () => {
-		const sizes = [
-			{ label: 'Auto', size: 'auto', box: '140px' },
-			{ label: '80px', size: '80px', box: '' },
-			{ label: '200px', size: '200px', box: '' },
-		] as const;
-		const cells = sizes.map((size) => ({ ...size, id: uid('progress-circle') }));
-		const board = labeledBoard(
-			cells.map((cell) => ({
-				label: cell.label,
-				html: cell.box ? boxedCircle(cell.id, cell.box) : circleMarkup(cell.id),
-			})),
-			{ direction: 'row', gap: 32 }
-		);
-		return renderPattern(board.outerHTML, (_root, register) => {
-			for (const cell of cells) {
-				initProgress(
-					cell.id,
-					'Circle',
-					{ progress: 60, thickness: 8, shape: 'rounded', animate: false, size: cell.size },
 					register
 				);
 			}

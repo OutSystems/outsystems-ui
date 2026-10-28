@@ -31,12 +31,47 @@ interface BottomBarArgs {
 	extendedClass: string;
 }
 
-const ITEMS: Array<[label: string, icon: string]> = [
+type BarItem = [label: string, icon: string];
+
+const ITEMS: BarItem[] = [
 	['Home', 'ph-house'],
 	['Search', 'ph-magnifying-glass'],
 	['Alerts', 'ph-bell'],
 	['Profile', 'ph-user'],
 ];
+
+/** Labels long enough to hit the `.bottom-bar-item-text` ellipsis at the 150px item max-width. */
+const LONG_LABEL_ITEMS: BarItem[] = [
+	['Home', 'ph-house'],
+	['Notifications centre', 'ph-bell'],
+	['Account settings', 'ph-gear'],
+	['Help and support', 'ph-question'],
+];
+
+/**
+ * One `.bottom-bar-wrapper` sized like the native layout footer. `activeIndex` is the item
+ * that carries `.active` — what `ExtendedClass = "active"` on a Bottom Bar Item yields.
+ */
+function bottomBarMarkup(items: readonly BarItem[], activeIndex: number, extendedClass = ''): string {
+	return `
+		<div style="max-width: 420px; height: var(--bottom-bar-size, 56px);">
+			<div class="${cls('bottom-bar-wrapper', extendedClass)}">
+				<div class="bottom-bar" style="height: 100%;">
+					${items
+						.map(
+							([label, icon], i) => `
+					<div class="${cls(i === activeIndex && 'active')}">
+						<div class="bottom-bar-item">
+							<div class="placeholder-empty bottom-bar-item-icon" style="text-align: center;"><i class="icon ph ${icon}"></i></div>
+							<div class="placeholder-empty bottom-bar-item-text" style="text-align: center;">${label}</div>
+						</div>
+					</div>`
+						)
+						.join('')}
+				</div>
+			</div>
+		</div>`;
+}
 
 const meta: Meta<BottomBarArgs> = {
 	title: 'Patterns/Navigation/BottomBar',
@@ -55,22 +90,47 @@ export default meta;
 type Story = StoryObj<BottomBarArgs>;
 
 export const Playground: Story = {
+	render: ({ activeIndex, extendedClass }) => renderStatic(bottomBarMarkup(ITEMS, activeIndex, extendedClass)),
+};
+
+export const BasicUsage: Story = {
 	tags: ['docs-example'],
-	render: ({ activeIndex, extendedClass }) =>
-		renderStatic(`
-			<div style="max-width: 420px; height: var(--bottom-bar-size, 56px);">
-				<div class="${cls('bottom-bar-wrapper', extendedClass)}">
-					<div class="bottom-bar" style="height: 100%;">
-						${ITEMS.map(
-							([label, icon], i) => `
-							<div class="${cls(i === activeIndex && 'active')}">
-								<div class="bottom-bar-item">
-									<div class="placeholder-empty bottom-bar-item-icon" style="text-align: center;"><i class="icon ph ${icon}"></i></div>
-									<div class="placeholder-empty bottom-bar-item-text" style="text-align: center;">${label}</div>
-								</div>
-							</div>`
-						).join('')}
-					</div>
-				</div>
-			</div>`),
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Four Bottom Bar Items in the layout Bottom placeholder — each with an Icon and a Text placeholder, sharing the width equally.',
+			},
+		},
+	},
+	render: () => renderStatic(bottomBarMarkup(ITEMS, 0)),
+};
+
+export const ActiveItem: Story = {
+	tags: ['docs-example'],
+	name: 'Active item',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The item of the current screen carries <code>active</code> (via <code>ExtendedClass</code>) — icon and label switch to <code>--osui-bottom-bar-item-active-color</code>.',
+			},
+		},
+	},
+	render: () => renderStatic(bottomBarMarkup(ITEMS, 2)),
+};
+
+export const LongLabels: Story = {
+	tags: ['docs-example'],
+	name: 'Long labels',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Labels never wrap — <code>.bottom-bar-item-text</code> ellipsizes whatever does not fit the item width, so keep them to one or two short words.',
+			},
+		},
+	},
+	render: () => renderStatic(bottomBarMarkup(LONG_LABEL_ITEMS, 0)),
 };

@@ -6,14 +6,40 @@ import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
 import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
 import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 
-<Meta of={NotificationStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+<Meta
+	of={NotificationStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
 
 <PatternDocPage
 	meta={NOTIFICATION_DOC}
 	examples={
 		<>
-			<PdExample title="Default" description="Live example of Notification." implement={<StudioHowTo recipe={NOTIFICATION_RECIPES.basicUsage} />}>
-				<Canvas of={NotificationStories.Playground} />
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `Position` Top, `Width` 370px, `StartsOpen` False. The button shows the notification; a click on it or Esc dismisses it because `OptionalConfigs.InteractToClose` is True."
+				implement={<StudioHowTo recipe={NOTIFICATION_RECIPES.basicUsage} />}
+			>
+				<Canvas of={NotificationStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Position"
+				description="One notification per `Position` — Top, BottomRight and Center. Each button shows its own instance; the notification is fixed, so it pins to that edge of the viewport."
+				implement={<StudioHowTo recipe={NOTIFICATION_RECIPES.position} />}
+			>
+				<Canvas of={NotificationStories.PositionVariants} />
+			</PdExample>
+			<PdExample
+				title="Auto close"
+				description="`OptionalConfigs.CloseAfterTime` is 3000, so the notification hides itself three seconds after it is shown. The default 0 keeps it open until the user dismisses it."
+				implement={<StudioHowTo recipe={NOTIFICATION_RECIPES.autoClose} />}
+			>
+				<Canvas of={NotificationStories.AutoClose} />
 			</PdExample>
 		</>
 	}
