@@ -19,7 +19,7 @@ import {
 	isChanged,
 	resolveDefault,
 } from './theme-editor-utils';
-import { CH_APP_APPEARANCE, readStoredAppearance } from './storybook-appearance.js';
+import { readSystemAppearance, watchSystemAppearance } from './storybook-appearance.js';
 import { ThemeEditorPreview } from './ThemeEditorPreview';
 
 const SEARCH_ICON = (
@@ -255,7 +255,7 @@ export function ThemeEditorPage(): React.ReactElement {
 	const [changeTick, setChangeTick] = useState(0);
 	const [feedback, setFeedback] = useState('');
 	const [activeGroup, setActiveGroup] = useState(THEME_ROLE_GROUPS[0]?.id ?? '');
-	const [docsDark, setDocsDark] = useState(() => readStoredAppearance() === 'dark');
+	const [docsDark, setDocsDark] = useState(() => readSystemAppearance() === 'dark');
 	const [railCollapsed, setRailCollapsed] = useState(false);
 	const [viewMode, setViewMode] = useState<'editor' | 'preview'>('editor');
 
@@ -318,17 +318,10 @@ export function ThemeEditorPage(): React.ReactElement {
 		}
 	}, [bump, emitState]);
 
-	// Docs appearance sync (story canvas, not MDX)
+	// Docs appearance follows the OS colour scheme (story canvas, not MDX)
 	useEffect(() => {
-		const sync = () => setDocsDark(readStoredAppearance() === 'dark');
-		sync();
-		try {
-			const ch = addons.getChannel();
-			ch.on(CH_APP_APPEARANCE, sync);
-			return () => ch.off(CH_APP_APPEARANCE, sync);
-		} catch {
-			return undefined;
-		}
+		setDocsDark(readSystemAppearance() === 'dark');
+		return watchSystemAppearance((scheme) => setDocsDark(scheme === 'dark'));
 	}, []);
 
 	// Cmd/Ctrl+K focuses role filter (no hint in UI).

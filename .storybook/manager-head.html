@@ -98,38 +98,6 @@
     display: none !important;
   }
 
-  /* App appearance toggle — canvas toolbar (next to viewport controls) */
-  .osui-app-appearance-tool {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    margin: 0 2px;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .osui-app-appearance-tool.is-dark {
-    color: #ededed;
-  }
-
-  .osui-app-appearance-tool svg {
-    display: block;
-  }
-
-  .osui-app-appearance-tool:hover {
-    background: rgba(0, 0, 0, 0.06);
-  }
-
-  html.osui-sb-dark .osui-app-appearance-tool:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
-
   /* Canvas toolbar globals (Theme, Icons, A11y, Direction, Appearance) */
   html:not(.osui-sb-dark) .sb-bar [role="toolbar"] button {
     color: #242424 !important;

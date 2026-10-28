@@ -1,9 +1,8 @@
-import { addons } from 'storybook/preview-api';
 import {
-	CH_APP_APPEARANCE,
 	isDarkAppearance,
 	isWindowsPlatform,
-	readStoredAppearance,
+	readSystemAppearance,
+	watchSystemAppearance,
 } from './storybook-appearance.js';
 
 export const APP_DARK_CLASS = 'sb-app-dark';
@@ -12,7 +11,6 @@ export const APP_WINDOWS_CLASS = 'os-windows';
 export const DOCS_PAGE_SELECTOR =
 	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor, .osui-foundations, .osui-pattern-doc';
 
-let currentScheme = readStoredAppearance();
 let appearanceSyncReady = false;
 
 export function applyDocsPlatformClass(): void {
@@ -22,9 +20,7 @@ export function applyDocsPlatformClass(): void {
 
 /** App-wide docs chrome — toggles preview root + custom docs page roots. */
 export function applyAppAppearance(scheme: string): void {
-	const normalized = isDarkAppearance(scheme) ? 'dark' : 'light';
-	currentScheme = normalized;
-	const dark = normalized === 'dark';
+	const dark = isDarkAppearance(scheme);
 
 	document.documentElement.classList.toggle(APP_DARK_CLASS, dark);
 	document.querySelectorAll(DOCS_PAGE_SELECTOR).forEach((el) => {
@@ -38,26 +34,27 @@ function nodeTouchesDocsPage(node: Node): boolean {
 	return node.querySelector(DOCS_PAGE_SELECTOR) !== null;
 }
 
-function syncFromStorage(): void {
-	applyAppAppearance(readStoredAppearance());
+function syncFromSystem(): void {
+	applyAppAppearance(readSystemAppearance());
 }
 
-function wireAppAppearanceChannel(): boolean {
-	let channel;
-	try {
-		channel = addons.getChannel();
-	} catch {
-		return false;
-	}
-	if (!channel) return false;
+/**
+ * MDX docs pages skip preview decorators — apply the OS colour scheme at preview boot,
+ * follow it live, and re-apply whenever a docs page root is mounted (the `.docs-dark`
+ * class lives on the page root, which Storybook renders after this module ran).
+ */
+export function initDocsAppearanceSync(): void {
+	applyDocsPlatformClass();
+	if (appearanceSyncReady || typeof document === 'undefined') return;
+	appearanceSyncReady = true;
 
-	channel.on(CH_APP_APPEARANCE, syncFromStorage);
+	watchSystemAppearance(applyAppAppearance);
 
 	const observer = new MutationObserver((mutations) => {
 		for (const mutation of mutations) {
 			for (const node of mutation.addedNodes) {
 				if (nodeTouchesDocsPage(node)) {
-					syncFromStorage();
+					syncFromSystem();
 					return;
 				}
 			}
@@ -65,19 +62,5 @@ function wireAppAppearanceChannel(): boolean {
 	});
 	observer.observe(document.documentElement, { childList: true, subtree: true });
 
-	syncFromStorage();
-	return true;
-}
-
-/** MDX docs pages skip preview decorators — wire manager appearance sync at preview boot. */
-export function initDocsAppearanceSync(): void {
-	applyDocsPlatformClass();
-	if (appearanceSyncReady) return;
-	if (wireAppAppearanceChannel()) {
-		appearanceSyncReady = true;
-		return;
-	}
-	if (typeof document !== 'undefined') {
-		document.addEventListener('DOMContentLoaded', () => initDocsAppearanceSync(), { once: true });
-	}
+	syncFromSystem();
 }
