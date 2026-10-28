@@ -50,6 +50,11 @@ Chosen option: "Option 2".
     `outline: none !important`. Elements whose own focus ring has a higher specificity keep that ring. The
     pattern-specific high-contrast rules (Dropdown Server Side and its items, Rating, Pagination, Overflow Menu,
     Range Slider) use the focus mixins and `:focus-visible`.
+-   The focus custom properties are renamed and the focus theme roles are removed, with no aliases for the old
+    names: `--osui-focus-shadow-color` → `--osui-color-focus`, `--osui-focus-shadow-gap` → `--osui-focus-gap`,
+    `--osui-focus-inner-shadow-gap` → `--osui-focus-gap-inner`, `--osui-focus-shadow-width` →
+    `--osui-focus-ring-width`; `--color-focus-outer` and `--color-focus-inner` are removed (the theme migration
+    guide maps them to `--osui-color-focus` and `--token-border-boldest`).
 
 Positive consequences:
 
@@ -58,9 +63,12 @@ Positive consequences:
 
 Negative consequences:
 
+-   Breaking change for app CSS: overrides of the old focus custom properties (`--osui-focus-shadow-*`,
+    `--osui-focus-inner-shadow-gap`) and of the removed `--color-focus-outer`/`--color-focus-inner` roles are silently
+    ignored and must move to the new names; this needs a release note.
 -   App CSS that customizes the focus `outline`/`outline-offset` of OSUI elements now needs `!important`.
 -   In high contrast, the focus outline now shows on keyboard focus only and follows the focus tokens
-    (`--osui-focus-shadow-color`, width and gap, with an offset) instead of `--color-focus-outer`; the Dropdown
+    (`--osui-color-focus`, width and gap, with an offset) instead of `--color-focus-outer`; the Dropdown
     Server Side inset ring is thicker; the Overflow Menu link hover outline and the active Pagination button outline
     use `a11y-focus-outline` (with `!important`).
 -   A focused date picker day that is today, in range and from the previous/next month keeps the library border

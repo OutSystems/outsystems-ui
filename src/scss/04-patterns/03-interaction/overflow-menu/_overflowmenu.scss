@@ -115,7 +115,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 
 		a {
 			&:hover {
-				--osui-focus-shadow-width: #{variables.$token-border-size-075};
+				--osui-focus-ring-width: #{variables.$token-border-size-075};
 
 				@include a11y-focus-outline;
 			}

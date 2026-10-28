@@ -8,12 +8,12 @@ CSS-only components: no TypeScript behaviour. Emit the markup and classes below 
 
 ### action-sheet (src/scss/04-patterns/03-interaction/_action-sheet.scss)
 [runtime-only] Skeleton (from stories/ActionSheet.stories.ts): <div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div>
-CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-focus-inner-shadow-gap --osui-action-sheet-actions-layer
+CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-focus-gap-inner --osui-action-sheet-actions-layer
 Docs: interaction/action_sheet
 
 ### alert (src/scss/04-patterns/02-content/_alert.scss)
 [runtime-only] Skeleton (from stories/Alert.stories.ts): <div role="alert" aria-live="polite" aria-atomic="true" tabindex="0"><div class="alert-icon OSInline" aria-hidden="true"></div><div class="alert-message"><span></span></div></div>
-CSS API: --osui-alert-background --osui-alert-color --osui-alert-accent-color --osui-alert-icon-color --osui-alert-border-radius --osui-alert-padding --osui-focus-shadow-gap
+CSS API: --osui-alert-background --osui-alert-color --osui-alert-accent-color --osui-alert-icon-color --osui-alert-border-radius --osui-alert-padding --osui-focus-gap
 Docs: content/alert
 
 ### badge (src/scss/04-patterns/05-numbers/_badge.scss)
@@ -54,7 +54,7 @@ CSS API: --osui-button-group-container-background --osui-button-group-container-
 
 ### card (src/scss/04-patterns/02-content/_card.scss)
 [runtime-only] Skeleton (from stories/Card.stories.ts): <div><div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div><div class="card-detail-center"><div class="card-detail-title">Jane Doe</div><div class="card-detail-text">Product designer</div></div><div class="card-detail-right"><div class="badge border-radius-rounded background-primary OSInline"><span class="OSFillParent">3</span></div></div></div>
-CSS API: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-padding --osui-card-shadow
+CSS API: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-color --osui-card-padding --osui-card-shadow
 Docs: content/card
 
 ### chat-message (src/scss/04-patterns/02-content/_chat-message.scss)
@@ -84,7 +84,7 @@ CSS API: --osui-feedback-message-background --osui-feedback-message-color --osui
 
 ### floating-actions (src/scss/04-patterns/03-interaction/_floating-actions.scss)
 [runtime-only] Skeleton (from stories/FloatingActions.stories.ts): <div><div class="floating-overlay"></div><div id=""><div class="floating-items" aria-hidden=""></div><div class="floating-button" role="button" tabindex="0" aria-expanded="" aria-label="Toggle actions"><i class="icon ph ph-plus"></i></div></div></div>
-CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-shadow --osui-focus-shadow-gap
+CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-shadow --osui-focus-gap
 Docs: interaction/floating_actions
 
 ### floating-content (src/scss/04-patterns/02-content/_floating-content.scss)
@@ -110,6 +110,7 @@ CSS API: --osui-input-background --osui-input-border-color --osui-input-hover-bo
 
 ### lightbox-image (src/scss/04-patterns/03-interaction/_lightbox-image.scss)
 [runtime-only] Skeleton (from stories/LightboxImage.stories.ts): <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"><div class="pswp__bg"></div><div class="pswp__scroll-wrap"><div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div><div class="pswp__ui pswp__ui--hidden"><div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button><button class="pswp__button pswp__button--share" title="Share"></button><button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button><button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class="pswp__preloader"><div class="psw
+CSS API: --osui-focus-gap
 Docs: interaction/lightbox_image
 
 ### list (src/scss/03-widgets/_list.scss)
@@ -127,7 +128,7 @@ Docs: adaptive/master_detail
 
 ### pagination (src/scss/04-patterns/04-navigation/_pagination.scss)
 [runtime-only] Skeleton (from stories/Pagination.stories.ts): <div data-container="" class="display-flex"><button data-button="" type="button" aria-label="" aria-current=""><span data-expression=""></span></button><div data-container="">...</div><div data-list="" data-virtualization-disabled="" data-animation-disabled="" class="list list-group" disable-virtualization="True" role="group"><button data-button="" type="button" aria-label="" aria-current=""><span data-expression=""></span></button></div><div data-container="">...</div><button data-button="" type="button" aria-label="" aria-current=""><span data-expression=""></span></button></div>
-CSS API: --osui-pagination-button-background --osui-pagination-button-border-color --osui-pagination-button-border-width --osui-pagination-button-font-weight --osui-pagination-button-hover-background --osui-pagination-button-padding --osui-pagination-button-size --osui-pagination-button-text-color --osui-pagination-active-background --osui-pagination-active-border-color --osui-pagination-active-color --osui-pagination-counter-color --osui-pagination-button-border-radius
+CSS API: --osui-pagination-button-background --osui-pagination-button-border-color --osui-pagination-button-border-width --osui-pagination-button-font-weight --osui-pagination-button-hover-background --osui-pagination-button-padding --osui-pagination-button-size --osui-pagination-button-text-color --osui-pagination-active-background --osui-pagination-active-border-color --osui-pagination-active-color --osui-pagination-counter-color --osui-pagination-button-border-radius --osui-focus-ring-width --osui-color-focus
 Docs: navigation/pagination
 
 ### popover (src/scss/03-widgets/_popover.scss)
@@ -144,7 +145,7 @@ CSS API: --osui-provider-login-button-background --osui-provider-login-button-bo
 
 ### radio-button (src/scss/03-widgets/_radio-button.scss)
 [runtime-only] Skeleton (from stories/widgets/RadioGroup.stories.ts): <div data-radio-group="" class="radio-group" role="radiogroup"><div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div></div></div>
-CSS API: --osui-radio-size --osui-radio-background --osui-radio-border-color --osui-radio-hover-border-color --osui-radio-checked-color --osui-radio-indicator-border --osui-radio-error-border-color --osui-radio-disabled-border-color --osui-focus-shadow-gap
+CSS API: --osui-radio-size --osui-radio-background --osui-radio-border-color --osui-radio-hover-border-color --osui-radio-checked-color --osui-radio-indicator-border --osui-radio-error-border-color --osui-radio-disabled-border-color --osui-focus-gap
 
 ### rangeslider-odc (src/scss/04-patterns/03-interaction/_rangeslider-odc.scss)
 [runtime-only] Skeleton (from stories/RangeSlider.stories.ts): <style> .osui-rs-matrix { align-items: center; display: grid; gap: 24px 40px; grid-template-columns: max-content repeat(2, minmax(240px, 1fr)); } .osui-rs-matrix__head { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; } /* Room for the floating label above and the pips below, which both sit outside the track's own box. */ .osui-rs-cell { padding: 28px 8px 8px; } </style><div class="osui-rs-matrix"><div></div><div class="osui-rs-matrix__head">Default</div><div class="osui-rs-matrix__head">Disabled</div><div class="osui-rs-matrix__head"></div><div class="osui-rs-cell"><div class="osui-range-slider"><div class="osui-range-slider__provider"></div></div></div></div>
@@ -165,7 +166,7 @@ Docs: interaction/stacked_cards
 
 ### switch (src/scss/03-widgets/_switch.scss)
 [runtime-only] Skeleton (from stories/widgets/Switch.stories.ts): <div><span><input data-switch="" type="checkbox" id=""><label data-label="" for=""></label></span><span><input data-switch="" type="checkbox" id=""><label data-label="" for=""></label></span><span><input data-switch="" type="checkbox" id=""><label data-label="" for=""></label></span><span><input data-switch="" type="checkbox" id=""><label data-label="" for=""></label></span></div>
-CSS API: --osui-switch-height --osui-switch-width --osui-switch-thumb-size --osui-switch-thumb-offset-start --osui-switch-thumb-offset-end --osui-switch-track-color --osui-switch-checked-track-color --osui-switch-disabled-overlay --osui-switch-thumb-color --osui-switch-thumb-shadow --osui-focus-shadow-gap
+CSS API: --osui-switch-height --osui-switch-width --osui-switch-thumb-size --osui-switch-thumb-offset-start --osui-switch-thumb-offset-end --osui-switch-track-color --osui-switch-checked-track-color --osui-switch-disabled-overlay --osui-switch-thumb-color --osui-switch-thumb-shadow --osui-focus-gap
 
 ### table (src/scss/03-widgets/_table.scss)
 [runtime-only] Skeleton (from stories/widgets/Table.stories.ts): <table class="table" role="grid"><thead><tr class="table-header"><th class="sortable sorted" tabindex="0">Name<div class="sortable-icon"></div></th><th class="sortable" tabindex="0">Status<div class="sortable-icon"></div></th><th>Email</th></tr></thead><tbody><tr class="table-row table-row-stripping"><td data-header="Name"></td><td data-header="Status"></td><td data-header="Email" class="table-cell-secondary"></td></tr><tr class="table-row table-row-stripping"><td data-header="Name"></td><td data-header="Status"></td><td data-header="Email" class="table-cell-secondary"></td></tr><tr class="table-row table-row-stripping"><td data-header="Name"></td><td data-header="Status"></td><td data-heade

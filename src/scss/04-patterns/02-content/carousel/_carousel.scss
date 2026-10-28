@@ -190,7 +190,7 @@
 ///
 .osui-carousel {
 	.splide {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+		--osui-focus-gap: #{variables.$token-scale-050};
 
 		&__pagination__page:focus-visible {
 			@include a11y-focus-shadow;
@@ -207,7 +207,7 @@
 .os-high-contrast {
 	.splide__pagination {
 		&__page {
-			outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
+			outline: variables.$token-border-size-075 solid var(--osui-color-focus);
 		}
 
 		li {

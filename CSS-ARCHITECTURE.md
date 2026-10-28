@@ -155,7 +155,6 @@ What lives here:
 | **Borders** | `--color-border`, `--color-border-{subtle,subtlest,input,…}` | |
 | **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
 | **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
-| **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
 | **Radius** | tier slots `--border-radius-{2xs,xs,sm,md,lg,xl,2xl}` + legacy aliases `--border-radius-{none,soft,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius every tier slot, or swap profile with `.shape-soft` / `.shape-round` / `.shape-rectangular`; the three aliases ↔ TS `GetBorderRadiusValueFromShapeType`. `softer` is **retired** |
 | **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
 
@@ -312,9 +311,8 @@ declared at `:root`, i.e. on `<html>`:
 | `<body>` | dark ✅ | **stay light** — the roles already resolved to their light fallbacks on `<html>` and inherit down as literals |
 | **`<html>`** ← what we do | dark ✅ | **dark ✅** — the tokens are defined on the very element the roles resolve on |
 
-So the class is applied to `document.documentElement`. **43 of the 44 `--color-*`
-knobs** follow the theme this way; the exception is `--color-focus-outer`, a
-deliberate hardcoded yellow. This is what replaced the deleted theme's
+So the class is applied to `document.documentElement`. **Every `--color-*`
+knob** follows the theme this way. This is what replaced the deleted theme's
 `--color-*` role bridge — the bridge existed only to compensate for a
 `<body>`-level scope. `.os-dark-theme` is an element-agnostic class selector, so
 nothing in the CSS had to change; only the element.

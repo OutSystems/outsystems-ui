@@ -105,7 +105,7 @@
 // Accessibility -----------------------------------------------------------------
 .osui-progress-bar {
 	&:focus-visible {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+		--osui-focus-gap: #{variables.$token-scale-050};
 	}
 }
 

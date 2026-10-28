@@ -173,8 +173,8 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		--osui-focus-shadow-width: #{variables.$token-border-size-075};
-		--osui-focus-shadow-color: var(--color-primary);
+		--osui-focus-ring-width: #{variables.$token-border-size-075};
+		--osui-color-focus: var(--color-primary);
 
 		@include a11y-focus-outline;
 	}

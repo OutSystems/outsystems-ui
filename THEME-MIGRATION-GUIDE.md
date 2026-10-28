@@ -321,6 +321,8 @@ Two one-off names with no family of their own. The framework read each through a
 | ---------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--header-color`       | `--color-background-header` | Classic read `var(--background-color-header, var(--header-color))`; the header now reads `var(--background-color-header, var(--color-background-header))`. The outer hook still works |
 | `--overlay-background` | `--token-backdrop`          | Same `rgba(0, 0, 0, 0.25)`. Write it as `var(--token-backdrop, rgba(0, 0, 0, 0.25))` — the token is not declared at `:root`                                                              |
+| `--color-focus-outer` | `--osui-color-focus` | Classic yellow `#ffd337` wash. The focus ring now reads `--osui-color-focus` (primary-tinted); set it at `:root` to recolor every focus ring and outline |
+| `--color-focus-inner` | `--token-border-boldest` | Classic `var(--color-neutral-10)` line under a focused link. Write it as `var(--token-border-boldest, #242528)` — the token is not declared at `:root` |
 
 <!-- /generated:misc -->
 

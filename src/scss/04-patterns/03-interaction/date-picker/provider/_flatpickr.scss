@@ -875,7 +875,7 @@ span.flatpickr-weekday {
 .osui-datepicker-calendar {
 	.flatpickr-day {
 		&:focus-visible {
-			border-color: var(--osui-focus-shadow-color);
+			border-color: var(--osui-color-focus);
 			z-index: var(--layer-local-tier-1);
 
 			&.startRange,
@@ -968,7 +968,7 @@ span.flatpickr-weekday {
 
 			&:focus,
 			&:active {
-				outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
+				outline: variables.$token-border-size-075 solid var(--osui-color-focus);
 			}
 		}
 	}
@@ -978,7 +978,7 @@ span.flatpickr-weekday {
 		.flatpickr-next-month {
 			&:focus,
 			&:active {
-				outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
+				outline: variables.$token-border-size-075 solid var(--osui-color-focus);
 			}
 		}
 	}
@@ -998,7 +998,7 @@ span.flatpickr-weekday {
 		}
 
 		&.today {
-			border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
+			border: variables.$token-border-size-025 solid var(--osui-color-focus);
 			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-1));
 		}
 
@@ -1009,7 +1009,7 @@ span.flatpickr-weekday {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
+			border: variables.$token-border-size-025 solid var(--osui-color-focus);
 			font-size: variables.$token-font-size-400;
 			font-weight: variables.$token-font-weight-semi-bold;
 		}
@@ -1027,7 +1027,7 @@ span.flatpickr-weekday {
 		&.today.inRange:focus-visible {
 			font-size: variables.$token-font-size-400;
 			font-weight: variables.$token-font-weight-semi-bold;
-			outline: variables.$token-border-size-075 solid var(--osui-focus-shadow-color);
+			outline: variables.$token-border-size-075 solid var(--osui-color-focus);
 		}
 
 		&.inRange {
@@ -1037,7 +1037,7 @@ span.flatpickr-weekday {
 				border-left: none;
 				border-radius: variables.$token-border-radius-0;
 				border-right: none;
-				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
+				border: variables.$token-border-size-025 solid var(--osui-color-focus);
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -1068,7 +1068,7 @@ span.flatpickr-weekday {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
+				border: variables.$token-border-size-025 solid var(--osui-color-focus);
 				left: 0;
 				right: -2px;
 			}
@@ -1079,7 +1079,7 @@ span.flatpickr-weekday {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				border: variables.$token-border-size-025 solid var(--osui-focus-shadow-color);
+				border: variables.$token-border-size-025 solid var(--osui-color-focus);
 				left: -2px;
 				right: 0;
 			}

@@ -338,7 +338,7 @@ $balloonMobileTopMargin: 5vh;
 
 		&-content {
 			&:focus-visible {
-				--osui-outline-size: calc(var(--osui-focus-inner-shadow-gap) + var(--osui-focus-shadow-width));
+				--osui-outline-size: calc(var(--osui-focus-gap-inner) + var(--osui-focus-ring-width));
 				// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
 				box-shadow: none;
 
@@ -347,7 +347,7 @@ $balloonMobileTopMargin: 5vh;
 				&:after,
 				& > *:before,
 				& > *:after {
-					background-color: var(--osui-focus-shadow-color);
+					background-color: var(--osui-color-focus);
 					content: '';
 					display: block;
 				}

@@ -52,8 +52,8 @@ a {
 // Doubled on purpose: keeps the (0,2,1) specificity this rule had as `.has-accessible-features a:focus-visible`,
 // so component link colors and text-decoration do not override the focus style.
 a:focus-visible:focus-visible {
-	background-color: var(--osui-focus-shadow-color);
-	box-shadow: 0 variables.$token-scale-050 var(--color-focus-inner);
+	background-color: var(--osui-color-focus);
+	box-shadow: 0 variables.$token-scale-050 variables.$token-border-boldest;
 	color: var(--color-text);
 
 	&,

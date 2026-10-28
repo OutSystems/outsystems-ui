@@ -129,7 +129,7 @@
 ///
 .lightbox-item {
 	&:focus-within {
-		--osui-focus-shadow-gap: #{variables.$token-border-size-050};
+		--osui-focus-gap: #{variables.$token-border-size-050};
 
 		@include a11y-focus-shadow;
 	}

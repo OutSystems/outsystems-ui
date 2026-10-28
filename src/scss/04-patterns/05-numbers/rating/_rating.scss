@@ -303,7 +303,7 @@
 	input:first-of-type:focus-visible + .rating-item,
 	&.is-half input:focus-visible + .rating-item .rating-item-half,
 	&:not(.is-half) input:focus-visible + .rating-item .rating-item-filled {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+		--osui-focus-gap: #{variables.$token-scale-050};
 
 		@include a11y-focus-shadow;
 	}

@@ -240,8 +240,8 @@
 	.active-screen {
 		.osui-sidebar {
 			&--is-open {
-				border-inline-start: variables.$token-border-size-050 solid var(--osui-focus-shadow-color);
-				border-inline-end: variables.$token-border-size-050 solid var(--osui-focus-shadow-color);
+				border-inline-start: variables.$token-border-size-050 solid var(--osui-color-focus);
+				border-inline-end: variables.$token-border-size-050 solid var(--osui-color-focus);
 			}
 		}
 	}
