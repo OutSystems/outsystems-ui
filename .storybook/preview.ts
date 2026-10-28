@@ -249,11 +249,12 @@ const preview: Preview = {
 	// race the Inter `display=swap` re-flow and bake in fallback-font metrics,
 	// which surfaces as a flaky few-px Chromatic diff. See `_helpers/fonts.ts`.
 	//
-	// Also gate on the theme stylesheet: the Chromatic `classic` mode (see
-	// `parameters.chromatic.modes`) swaps the `#osui-theme` href, and the capture
-	// must not race the classic CSS download. Loaders run before decorators and
-	// Chromatic awaits them; the decorator's own `applyTheme` call is then a
-	// no-op (href already matches).
+	// Also gate on the theme stylesheet: when the `theme` global is not the
+	// default (e.g. the Theme toolbar's classic toggle), the `#osui-theme` href
+	// swap must not race the CSS download — a capture or first paint taken in
+	// between would photograph the wrong theme. Loaders run before decorators
+	// (and Chromatic awaits them); the decorator's own `applyTheme` call is then
+	// a no-op (href already matches).
 	loaders: [
 		(context) =>
 			Promise.all([
@@ -336,19 +337,18 @@ const preview: Preview = {
 	parameters: {
 		layout: 'padded',
 		chromatic: {
-			// Snapshot every story under the new theme (light AND dark appearance)
-			// plus the classic theme. The keys inside each mode are Storybook
-			// globals — `theme` drives the `#osui-theme` <link> swap above (new
-			// token bundle vs the /classic-theme pre-migration snapshot) and
-			// `colorScheme` toggles `.os-dark-theme` on `<html>` (same mechanism
-			// as the Appearance toolbar). The classic theme predates the tokens
-			// and has no dark mode, so it stays light-only. The remaining globals
-			// (direction, icons) keep their defaults, so this triples the snapshot
-			// count rather than crossing a matrix.
+			// Snapshot every story under the new theme, light AND dark appearance.
+			// The keys inside each mode are Storybook globals — `theme` drives the
+			// `#osui-theme` <link> swap above and `colorScheme` toggles
+			// `.os-dark-theme` on `<html>` (same mechanism as the Appearance
+			// toolbar). The classic pre-migration theme is NOT snapshotted — it is
+			// a frozen baseline, so Chromatic runs against it only produced noise;
+			// it stays available locally through the Theme toolbar toggle. The
+			// remaining globals (direction, icons) keep their defaults, so this
+			// doubles the snapshot count rather than crossing a matrix.
 			modes: {
 				new: { theme: 'new' },
 				'new dark': { theme: 'new', colorScheme: 'dark' },
-				classic: { theme: 'classic' },
 			},
 		},
 		controls: {
