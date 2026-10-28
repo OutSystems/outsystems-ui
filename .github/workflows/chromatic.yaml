@@ -53,8 +53,8 @@ jobs:
 
             - name: 🔍 Detect changes to the visual surface
               # Feeds the capture guard at the end of the job. Anything under src/ (the
-              # compiled library), stories/ or .storybook/ can move a snapshot, so if
-              # any of them changed, Chromatic must actually photograph something.
+              # compiled library), stories/ or .storybook/ can move a snapshot, so if any
+              # of them changed, Chromatic must actually photograph something.
               #
               # Covers pushes as well as PRs — the base commit differs by event. Now that
               # push builds actually run (no Azure login to fail on, ADR-0009), the
