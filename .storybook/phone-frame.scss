@@ -1,0 +1,67 @@
+/* Phone frame — stories/_helpers/phone.ts. A phone-sized native-layout screen that the
+   phone-first patterns (Action Sheet, Bottom Sheet, Bottom Bar, Floating Actions) render
+   into, in the Playground and in the docs examples alike. */
+
+.osui-phone-frame {
+	position: relative;
+	/* Containing block for the fixed-positioned sheets, overlays and FAB. */
+	transform: translateZ(0);
+	/* `clip`, not `hidden`: opening a sheet moves focus into it, and a `hidden` box still
+	   scrolls programmatically to reveal the focused element (and the sheet's full-height
+	   `::before` slab below it), leaving the screen blank. */
+	overflow: clip;
+	box-sizing: border-box;
+	max-width: 100%;
+	margin-inline: auto;
+	border: 1px solid var(--color-border, #d5d5d5);
+	border-radius: 24px;
+	background: var(--color-background-body, #fff);
+	color: var(--color-text, #242424);
+}
+
+/* The native layout sizes itself to the viewport; here the frame is the viewport. */
+.osui-phone-frame .layout {
+	height: 100%;
+	min-height: 100%;
+}
+
+.osui-phone-frame .layout-native .main {
+	max-height: 100%;
+}
+
+/* The sheet and the overlays size themselves in viewport units (`min-height: 50vh`,
+   `100vw × 100vh`). Inside the frame the frame is the viewport: the fixed elements'
+   containing block is the transformed frame, so percentages resolve against it. */
+.osui-phone-frame .osui-bottom-sheet {
+	--bottom-sheet-max-height: calc(100% - 54px);
+	min-height: 50%;
+}
+
+.osui-phone-frame :is(.osui-bottom-sheet-overlay, .floating-overlay) {
+	height: 100%;
+	width: 100%;
+}
+
+/* Phone-only rules that the body's `desktop` class cancels (the body keeps `desktop`:
+   `.phone` also resizes h2–h5, which would restyle a docs page around the canvas). */
+.desktop .osui-phone-frame .floating-overlay {
+	display: block;
+}
+
+.osui-phone-frame .floating-actions-wrapper {
+	margin: var(--token-scale-400, 16px);
+}
+
+.desktop .osui-phone-frame .osui-bottom-sheet__header::after {
+	display: block;
+}
+
+.desktop .osui-phone-frame :is(.action-sheet-buttons, .action-sheet-cancel) {
+	max-width: none;
+}
+
+/* On a docs page the phone sits on a neutral backdrop, like a device on a desk. */
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper:has(.osui-phone-frame) {
+	background: var(--color-neutral-2, #f1f1f1);
+	padding: 24px 16px;
+}

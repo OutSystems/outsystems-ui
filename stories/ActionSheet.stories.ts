@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
+import { phoneFrame } from './_helpers/phone';
 
 /**
  * Action Sheet — CSS-only mobile pattern (the low-code block toggles the
@@ -14,8 +15,9 @@ import { labeledBoard } from './_helpers/showcase';
  *     .action-sheet-buttons > .action-sheet-actions > .btn   one row per action
  *     .action-sheet-cancel > .btn                            cancel row
  *
- * The story wires the open/close toggling inline and contains the fixed
- * container in a transformed demo box.
+ * The story wires the open/close toggling inline. Being a phone pattern, every
+ * example renders inside a phone-sized app screen (`_helpers/phone.ts`), which is
+ * also the containing block that keeps the fixed container in the frame.
  */
 
 interface ActionSheetArgs {
@@ -42,27 +44,34 @@ export default meta;
 
 type Story = StoryObj<ActionSheetArgs>;
 
-/** The demo box with the (optionally pre-opened) sheet inside. */
+/** The screen under the sheet: a selected photo and the button that opens the actions. */
+const PHOTO_SCREEN = `
+	<div style="display: grid; gap: 16px; padding: 16px;">
+		<div style="aspect-ratio: 4 / 3; border-radius: var(--border-radius-md, 16px); background: linear-gradient(135deg, var(--color-neutral-3, #e8e8e8), var(--color-neutral-5, #b8b8b8));"></div>
+		<div>
+			<div class="font-semi-bold">Lisbon, March 2026</div>
+			<div class="font-size-s text-neutral-7">4,032 × 3,024 · 2.4 MB</div>
+		</div>
+		<button type="button" class="btn btn-primary" data-open>More options</button>
+	</div>`;
+
+/** The phone screen with the (optionally pre-opened) sheet over it. */
 function actionSheetMarkup(
 	{ showCancel, extendedClass }: ActionSheetArgs,
 	visible = false,
-	height = 420,
-	actions: readonly string[] = ACTIONS
+	actions: readonly string[] = ACTIONS,
+	frame: { width: number; height: number } = { width: 390, height: 560 }
 ): string {
-	return `
-		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${height}px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-			<div style="padding: 16px;">
-				<button type="button" class="btn btn-primary" data-open>Open action sheet</button>
-			</div>
-			<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', visible && 'action-sheet-container--visible', extendedClass)}">
-				<div class="action-sheet">
-					<div class="action-sheet-buttons">
-						${actions.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
-					</div>
-					${showCancel ? '<div class="action-sheet-cancel"><button type="button" class="btn" data-cancel>Cancel</button></div>' : ''}
+	const sheet = `
+		<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', visible && 'action-sheet-container--visible', extendedClass)}">
+			<div class="action-sheet">
+				<div class="action-sheet-buttons">
+					${actions.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
 				</div>
+				${showCancel ? '<div class="action-sheet-cancel"><button type="button" class="btn" data-cancel>Cancel</button></div>' : ''}
 			</div>
 		</div>`;
+	return phoneFrame({ title: 'Photos', content: PHOTO_SCREEN, overlay: sheet, ...frame });
 }
 
 /**
@@ -103,9 +112,7 @@ export const BasicUsage: Story = {
 		},
 	},
 	render: () =>
-		wireActionSheet(
-			renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, false, 360, PHOTO_ACTIONS))
-		),
+		wireActionSheet(renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, false, PHOTO_ACTIONS))),
 };
 
 export const OpenState: Story = {
@@ -120,9 +127,7 @@ export const OpenState: Story = {
 		},
 	},
 	render: () =>
-		wireActionSheet(
-			renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, 360, PHOTO_ACTIONS))
-		),
+		wireActionSheet(renderStatic(actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, PHOTO_ACTIONS))),
 };
 
 /** Sheet pinned open (`--visible`), with and without the cancel row. */
@@ -134,11 +139,17 @@ export const OpenStates: Story = {
 				[
 					{
 						label: 'with cancel',
-						html: `<div style="width:320px;">${actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, 320)}</div>`,
+						html: actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, ACTIONS, {
+							width: 300,
+							height: 400,
+						}),
 					},
 					{
 						label: 'without cancel',
-						html: `<div style="width:320px;">${actionSheetMarkup({ showCancel: false, extendedClass: '' }, true, 320)}</div>`,
+						html: actionSheetMarkup({ showCancel: false, extendedClass: '' }, true, ACTIONS, {
+							width: 300,
+							height: 400,
+						}),
 					},
 				],
 				{ direction: 'row', wrap: true }

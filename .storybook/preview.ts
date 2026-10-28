@@ -14,6 +14,7 @@ import './migration.scss';
 import './theme-editor.scss';
 import './foundations.scss';
 import './pattern-docs.scss';
+import './phone-frame.scss';
 import './accordion-demos.scss';
 import './blank-slate-demos.scss';
 import './carousel-demos.scss';

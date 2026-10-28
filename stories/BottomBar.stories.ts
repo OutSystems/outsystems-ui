@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { phoneFrame, phoneList } from './_helpers/phone';
 
 /**
  * Bottom Bar (+ Bottom Bar Item) — CSS-only mobile navigation bar. Contract
@@ -22,8 +23,8 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * class is `placeholder-empty` on ODC (`ph` is O11-only, and collides with Phosphor's
  * icon-font class in this Storybook).
  *
- * In the native layout the wrapper lives in a `.footer` sized by
- * `--bottom-bar-size`; the demo box reproduces that height.
+ * In the native layout the wrapper lives in the `.footer` sized by `--bottom-bar-size`;
+ * the stories render it there, in a phone-sized screen (`_helpers/phone.ts`).
  */
 
 interface BottomBarArgs {
@@ -48,29 +49,41 @@ const LONG_LABEL_ITEMS: BarItem[] = [
 	['Help and support', 'ph-question'],
 ];
 
+/** The screen each bar sits under — the title follows the active item. */
+const SCREEN_ROWS: Array<[title: string, meta: string]> = [
+	['Spring collection', 'Published today'],
+	['Weekly digest', '3 new comments'],
+	['Team standup notes', 'Updated yesterday'],
+	['Q2 planning', 'Shared with you'],
+];
+
 /**
- * One `.bottom-bar-wrapper` sized like the native layout footer. `activeIndex` is the item
- * that carries `.active` — what `ExtendedClass = "active"` on a Bottom Bar Item yields.
+ * The phone screen with one `.bottom-bar-wrapper` in its footer. `activeIndex` is the
+ * item that carries `.active` — what `ExtendedClass = "active"` on a Bottom Bar Item yields.
  */
 function bottomBarMarkup(items: readonly BarItem[], activeIndex: number, extendedClass = ''): string {
-	return `
-		<div style="max-width: 420px; height: var(--bottom-bar-size, 56px);">
-			<div class="${cls('bottom-bar-wrapper', extendedClass)}">
-				<div class="bottom-bar" style="height: 100%;">
-					${items
-						.map(
-							([label, icon], i) => `
-					<div class="${cls(i === activeIndex && 'active')}">
-						<div class="bottom-bar-item">
-							<div class="placeholder-empty bottom-bar-item-icon" style="text-align: center;"><i class="icon ph ${icon}"></i></div>
-							<div class="placeholder-empty bottom-bar-item-text" style="text-align: center;">${label}</div>
-						</div>
-					</div>`
-						)
-						.join('')}
-				</div>
+	const bar = `
+		<div class="${cls('bottom-bar-wrapper', extendedClass)}">
+			<div class="bottom-bar" style="height: 100%;">
+				${items
+					.map(
+						([label, icon], i) => `
+				<div class="${cls(i === activeIndex && 'active')}">
+					<div class="bottom-bar-item">
+						<div class="placeholder-empty bottom-bar-item-icon" style="text-align: center;"><i class="icon ph ${icon}"></i></div>
+						<div class="placeholder-empty bottom-bar-item-text" style="text-align: center;">${label}</div>
+					</div>
+				</div>`
+					)
+					.join('')}
 			</div>
 		</div>`;
+	return phoneFrame({
+		title: items[activeIndex]?.[0] ?? 'Home',
+		content: phoneList(SCREEN_ROWS),
+		footer: bar,
+		height: 420,
+	});
 }
 
 const meta: Meta<BottomBarArgs> = {

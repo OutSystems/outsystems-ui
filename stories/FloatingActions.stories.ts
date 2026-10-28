@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic, uid } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
+import { phoneFrame, phoneList } from './_helpers/phone';
 
 /**
  * Floating Actions (parent) + Floating Actions Item (children).
@@ -24,8 +25,9 @@ import { labeledBoard } from './_helpers/showcase';
  *
  * The story wires the old runtime's behavior (toggle on click / hover, Esc and
  * overlay close) inline, mirroring the block's IsExpanded / IsHover parameters.
- * The demo box is a transformed containing block so `position: fixed` anchors to
- * it instead of the viewport.
+ * Every example renders in a phone-sized app screen (`_helpers/phone.ts`): the
+ * frame is the containing block that anchors the fixed stack and overlay, and
+ * it restores the overlay that the desktop body class hides.
  */
 
 interface FloatingActionsArgs {
@@ -72,8 +74,17 @@ export default meta;
 
 type Story = StoryObj<FloatingActionsArgs>;
 
+/** The screen under the stack — a contacts list. */
+const CONTACT_ROWS: Array<[title: string, meta: string]> = [
+	['Ana Martins', 'Product design'],
+	['Bruno Costa', 'Engineering'],
+	['Carla Nunes', 'Customer success'],
+	['Diogo Reis', 'Sales'],
+	['Eva Lopes', 'Finance'],
+];
+
 /**
- * The transformed demo box with the FAB stack inside, open or closed.
+ * The phone screen with the FAB stack over it, open or closed.
  * `hover` marks the main FAB or the first item button with a `data-pseudo`
  * attribute, which the OpenStates `pseudo` parameter forces into `:hover`
  * (storybook-addon-pseudo-states).
@@ -81,7 +92,7 @@ type Story = StoryObj<FloatingActionsArgs>;
 function floatingActionsMarkup(
 	isExpanded: boolean,
 	extendedClass: string,
-	size = 420,
+	frame: { width: number; height: number } = { width: 390, height: 560 },
 	hover?: 'button' | 'item'
 ): string {
 	// Items animate bottom→top: the item closest to the FAB gets --delay: 1.
@@ -89,16 +100,15 @@ function floatingActionsMarkup(
 		itemMarkup(label, icon, ACTIONS.length - i, hover === 'item' && i === 0 ? ' data-pseudo="item-hover"' : '')
 	).join('');
 	const fabPseudo = hover === 'button' ? ' data-pseudo="fab-hover"' : '';
-	return `
-		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${size}px; width: ${size}px; max-width: 100%; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-			<div class="floating-overlay"></div>
-			<div id="${uid('floating-actions')}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
-				<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
-				<div class="floating-button"${fabPseudo} role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
-					<i class="icon ph ph-plus"></i>
-				</div>
+	const stack = `
+		<div class="floating-overlay"></div>
+		<div id="${uid('floating-actions')}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
+			<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
+			<div class="floating-button"${fabPseudo} role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
+				<i class="icon ph ph-plus"></i>
 			</div>
 		</div>`;
+	return phoneFrame({ title: 'Contacts', content: phoneList(CONTACT_ROWS), overlay: stack, ...frame });
 }
 
 /**
@@ -157,7 +167,7 @@ export const BasicUsage: Story = {
 			},
 		},
 	},
-	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '', 360)), false),
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '')), false),
 };
 
 export const StartsExpanded: Story = {
@@ -171,7 +181,7 @@ export const StartsExpanded: Story = {
 			},
 		},
 	},
-	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(true, '', 360)), false),
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(true, '')), false),
 };
 
 export const HoverTrigger: Story = {
@@ -185,7 +195,7 @@ export const HoverTrigger: Story = {
 			},
 		},
 	},
-	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '', 360)), true),
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '')), true),
 };
 
 /**
@@ -193,6 +203,8 @@ export const HoverTrigger: Story = {
  * hover states (forced via storybook-addon-pseudo-states): the main FAB
  * hovered, and an expanded item button hovered.
  */
+const SMALL = { width: 260, height: 340 };
+
 export const OpenStates: Story = {
 	parameters: {
 		controls: { disable: true },
@@ -202,10 +214,10 @@ export const OpenStates: Story = {
 		renderStatic(
 			labeledBoard(
 				[
-					{ label: 'closed', html: floatingActionsMarkup(false, '', 300) },
-					{ label: 'hover (button)', html: floatingActionsMarkup(false, '', 300, 'button') },
-					{ label: 'open (is--open)', html: floatingActionsMarkup(true, '', 300) },
-					{ label: 'open + item hover', html: floatingActionsMarkup(true, '', 300, 'item') },
+					{ label: 'closed', html: floatingActionsMarkup(false, '', SMALL) },
+					{ label: 'hover (button)', html: floatingActionsMarkup(false, '', SMALL, 'button') },
+					{ label: 'open (is--open)', html: floatingActionsMarkup(true, '', SMALL) },
+					{ label: 'open + item hover', html: floatingActionsMarkup(true, '', SMALL, 'item') },
 				],
 				{ direction: 'row', wrap: true }
 			).outerHTML

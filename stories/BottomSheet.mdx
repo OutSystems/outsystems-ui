@@ -22,14 +22,14 @@ import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
 		<>
 			<PdExample
 				title="Basic usage"
-				description="Block defaults — `Shape` SoftRounded and `ShowHandler` True. The sheet is fixed to the bottom of the viewport: the button opens it, the confirm button inside closes it, and focus is trapped in between."
+				description="Block defaults — `Shape` SoftRounded and `ShowHandler` True. The sheet is fixed to the bottom of the screen: the button opens it over the dimmed page, the confirm button inside closes it, and focus is trapped in between."
 				implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.basicUsage} />}
 			>
 				<Canvas of={BottomSheetStories.BasicUsage} />
 			</PdExample>
 			<PdExample
 				title="Shapes"
-				description="`Shape` controls the corner radius of the top edge: SoftRounded (the default, also the fallback for an unknown value), Rounded and Sharp. The sheets are pinned open in the page so the corners are visible."
+				description="`Shape` controls the corner radius of the top edge: SoftRounded (the default, also the fallback for an unknown value), Rounded and Sharp. Each sheet is shown open on a small phone screen so the corners are visible."
 				implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.shapes} />}
 			>
 				<Canvas of={BottomSheetStories.Shapes} />
