@@ -42,15 +42,16 @@ html.sb-app-dark .sbdocs-wrapper .sbdocs-content {
   color: var(--docs-ink);
 }
 
-html.sb-app-dark .sbdocs-wrapper :is(h1, h2, h3, h4, h5, h6, p, li, td, th, label, span) {
+/* `:not(…)` keeps the embedded story canvases (app viewports) on the pattern colours. */
+html.sb-app-dark .sbdocs-wrapper :is(h1, h2, h3, h4, h5, h6, p, li, td, th, label, span):not(.pd-example__canvas *, .pd-preview *) {
   color: var(--docs-ink);
 }
 
-html.sb-app-dark .sbdocs-wrapper a {
+html.sb-app-dark .sbdocs-wrapper a:not(.pd-example__canvas *, .pd-preview *) {
   color: var(--docs-primary-700);
 }
 
-html.sb-app-dark .sbdocs-wrapper code:not(pre code):not(.ca-hop-form) {
+html.sb-app-dark .sbdocs-wrapper code:not(pre code):not(.ca-hop-form):not(.pd-example__canvas *, .pd-preview *) {
   background: var(--docs-surface-2);
   color: var(--docs-ink-2);
   border: 1px solid var(--docs-border-subtle);
@@ -1036,18 +1037,13 @@ html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-ap
     border-bottom-color: var(--docs-border-subtle);
   }
 
-  .pd-preview .innerZoomElementWrapper {
-    border-color: var(--docs-border-subtle);
-    background: var(--docs-surface);
-  }
-
+  /* Canvas background/colour stay the OUI body roles (pattern-docs.scss). */
+  .pd-preview .innerZoomElementWrapper,
   .pd-example__canvas .innerZoomElementWrapper {
     border-color: var(--docs-border-subtle);
-    background: var(--docs-surface);
   }
 
   .pd-example__frame {
-    background: var(--docs-surface);
     border-color: var(--docs-border-subtle);
   }
 

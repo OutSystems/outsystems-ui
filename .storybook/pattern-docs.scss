@@ -168,11 +168,14 @@
   margin: 0;
 }
 
+/* Story canvases are app viewports: they take the OUI body colours (which the
+   "Appearance" toolbar global flips via `.os-dark-theme`), never the docs chrome. */
 .osui-pattern-doc .pd-preview .innerZoomElementWrapper {
   overflow: hidden;
   border: 1px solid var(--pd-n-300);
   border-radius: var(--pd-r-200);
-  background: #fff;
+  background: var(--color-background-body, #fff);
+  color: var(--color-text, #242424);
 }
 
 /* Example canvases inside the Examples section */
@@ -207,16 +210,26 @@
   margin: 0;
 }
 
+/* Storybook's Preview block also carries `.sbdocs`, so the docs-chrome background and
+   text colour (light and docs-dark alike) would land inside the canvas. Inside an
+   example it is a transparent pass-through; the frame supplies the OUI body colours. */
+.sbdocs-wrapper .osui-pattern-doc :is(.pd-example__canvas, .pd-preview) .sbdocs-preview {
+  background: transparent;
+  color: inherit;
+}
+
 .osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper {
   overflow: hidden;
   border: 1px solid var(--pd-n-300);
   border-radius: var(--pd-r-200);
-  background: #fff;
+  background: var(--color-background-body, #fff);
+  color: var(--color-text, #242424);
 }
 
-/* Story canvases must keep pattern/theme colours — docs prose must not bleed in. */
+/* Docs prose margins must not bleed into the canvases. Colour is left to the pattern
+   CSS (inheriting the wrapper's OUI text colour); docs-dark.scss excludes the canvases
+   from its element-level colour rules for the same reason. */
 .osui-pattern-doc .pd-example__canvas :is(p, span, h1, h2, h3, h4, h5, h6) {
-  color: inherit;
   margin: 0;
 }
 
@@ -253,7 +266,8 @@
 
 /* Canvas + “How to implement” share one frame when both are present. */
 .osui-pattern-doc .pd-example__frame {
-  background: #fff;
+  background: var(--color-background-body, #fff);
+  color: var(--color-text, #242424);
   border: 1px solid var(--pd-n-300);
   border-radius: var(--pd-r-200);
   overflow: hidden;
