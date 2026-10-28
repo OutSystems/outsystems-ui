@@ -21,6 +21,10 @@
 	&.large {
 		height: 100%;
 
+		& {
+			-servicestudio-height: 100vh;
+		}
+
 		& .blank-slate-icon {
 			font-size: 120px;
 		}

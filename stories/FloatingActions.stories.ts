@@ -42,7 +42,7 @@ const ACTIONS: Array<[label: string, icon: string]> = [
 function itemMarkup(label: string, icon: string, delay: number): string {
 	return `
 		<div class="floating-actions-item" style="--delay: ${delay}">
-			<span >${label}</span>
+			<div class="floating-actions-item-label"><label data-label>${label}</label></div>
 			<div class="floating-actions-item-button" role="button" tabindex="0" aria-label="${label}">
 				<i class="icon ph ${icon}"></i>
 			</div>

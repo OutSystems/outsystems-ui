@@ -39,6 +39,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0010   | Border-radius theme layer and shape tier slots                                        | Accepted                           | 2026-09-04 |
 | ADR-0011   | Generated agent documentation, typed pattern configs and the TSDoc comment standard   | Proposed                           | 2026-10-09 |
 | ADR-0013   | Physical horizontal positions in FloatingContent                                      | Proposed                           | 2026-10-23 |
+| ADR-0018   | Dropdown search focus ring shown only on keyboard interaction                         | Proposed                           | 2026-10-22 |
 | ADR-0019   | Removing redundant `.has-accessible-features` declarations only after a browser check | Proposed                           | 2026-10-23 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
