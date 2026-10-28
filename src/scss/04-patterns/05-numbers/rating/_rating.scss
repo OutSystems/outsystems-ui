@@ -329,14 +329,12 @@
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
-	.has-accessible-features {
-		.rating {
-			&.is-half input:focus + .rating-item .rating-item-half,
-			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
-				&,
-				* {
-					@include a11y-high-contrast-outline;
-				}
+	.rating {
+		&.is-half input:focus-visible + .rating-item .rating-item-half,
+		&:not(.is-half) input:focus-visible + .rating-item .rating-item-filled {
+			&,
+			* {
+				@include a11y-high-contrast-outline;
 			}
 		}
 	}

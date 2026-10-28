@@ -94,11 +94,12 @@
 .os-high-contrast {
 	.osui-dropdown-serverside-item {
 		&:hover,
-		&:focus {
+		&:focus-visible {
 			outline: none;
 
 			&:before {
-				box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--osui-focus-shadow-color);
+				@include a11y-focus-shadow($isInner: true);
+
 				bottom: 0;
 				content: '';
 				display: block;

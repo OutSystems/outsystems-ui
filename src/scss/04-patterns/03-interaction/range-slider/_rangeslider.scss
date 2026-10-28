@@ -320,6 +320,8 @@
 ///
 .os-high-contrast {
 	.osui-range-slider {
+		border: 0;
+
 		.noUi-horizontal {
 			height: calc(2 * var(--range-slider-thickness));
 		}
@@ -332,10 +334,6 @@
 		.noUi-base {
 			border: variables.$token-border-size-050 solid var(--color-border-input);
 		}
-	}
-
-	.has-accessible-features .osui-range-slider {
-		border: 0;
 	}
 }
 

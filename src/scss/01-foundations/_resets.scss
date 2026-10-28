@@ -84,9 +84,8 @@ body {
 }
 
 ///
-.os-high-contrast .has-accessible-features :focus {
-	box-shadow: none;
-	outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+.os-high-contrast :focus-visible {
+	@include a11y-focus-outline;
 }
 
 /* ============================================================================ */
