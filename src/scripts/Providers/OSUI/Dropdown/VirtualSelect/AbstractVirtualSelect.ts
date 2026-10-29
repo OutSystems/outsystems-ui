@@ -231,6 +231,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown,
 				this._eventOnMouseDown
 			);
+			// Capture phase, so a screen reader click at the search is detected even if the provider stops its propagation
+			this.provider.$dropboxContainer.addEventListener(
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.Click,
+				this._eventOnClick,
+				true
+			);
 			// Keep the focus ring state after a redraw
 			this._setKeyboardInteraction(this._isKeyboardInteraction);
 
@@ -492,7 +498,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public open(): void {
 			// When opened from outside (e.g. through a button), keep the focus ring if that element was used with keyboard
-			this._setKeyboardInteraction(document.activeElement?.matches(':focus-visible') ?? false);
+			if (this.provider.isOpened() === false) {
+				const activeElem = document.activeElement;
+				// Text fields always match :focus-visible, so they cannot tell keyboard from pointer
+				const isTextField = activeElem?.matches(OSFramework.OSUI.GlobalEnum.CSSSelectors.TextField) ?? false;
+				this._setKeyboardInteraction(isTextField === false && (activeElem?.matches(':focus-visible') ?? false));
+			}
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
 			OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.open.bind(this.virtualselectConfigs));
 		}
