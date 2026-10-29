@@ -246,10 +246,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Used to apply the logic when user click to open the Dropdown
 		private _onSelectValuesWrapperClicked(event: MouseEvent): void {
-			// A click with detail 0 is triggered by keyboard (see _onKeyboardPressed) or by a screen reader, so only a pointer click unsets the keyboard interaction
-			if (event.detail > 0) {
-				this._setKeyboardInteraction(false);
-			}
+			// A click with detail 0 is triggered by keyboard (see _onKeyboardPressed) or by a screen reader, only a pointer click hides the focus ring
+			this._setKeyboardInteraction(event.detail === 0);
 
 			// Ensure that dropdown can open or close
 			this._isOpen ? this._close() : this._open();
@@ -417,9 +415,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._isKeyboardInteraction = isKeyboard;
 
 			if (this._isKeyboardInteraction) {
-				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.FocusVisible);
+				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.BalloonFocusVisible);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.FocusVisible);
+				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.BalloonFocusVisible);
 			}
 		}
 
