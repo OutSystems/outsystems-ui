@@ -29,6 +29,17 @@
 	max-height: 100%;
 }
 
+/* Phones draw overlay scrollbars that vanish when idle; a desktop track inside a 220px
+   sheet (or the native layout's scrolling content) reads as a defect. Hide them. */
+.osui-phone-frame,
+.osui-phone-frame * {
+	scrollbar-width: none;
+}
+
+.osui-phone-frame ::-webkit-scrollbar {
+	display: none;
+}
+
 /* The sheet and the overlays size themselves in viewport units (`min-height: 50vh`,
    `100vw × 100vh`). Inside the frame the frame is the viewport: the fixed elements'
    containing block is the transformed frame, so percentages resolve against it. */
