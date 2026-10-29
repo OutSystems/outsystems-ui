@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Floating Content — CSS-only. Anchors a block to a fixed position over the
@@ -38,6 +39,14 @@ interface FloatingContentArgs {
 	extendedClass: string;
 }
 
+const baseArgs: FloatingContentArgs = {
+	position: 'bottom-right',
+	useMargin: true,
+	fullWidth: false,
+	fullHeight: false,
+	extendedClass: '',
+};
+
 const meta: Meta<FloatingContentArgs> = {
 	title: 'Patterns/Content/FloatingContent',
 	argTypes: {
@@ -60,26 +69,53 @@ const meta: Meta<FloatingContentArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	args: { position: 'bottom-right', useMargin: true, fullWidth: false, fullHeight: false, extendedClass: '' },
+	args: { ...baseArgs },
 };
 export default meta;
 
 type Story = StoryObj<FloatingContentArgs>;
 
+/** The transformed demo box (fixed-position containing block) with the floating block inside. */
+function floatingContentMarkup(
+	{ position, useMargin, fullWidth, fullHeight, extendedClass }: FloatingContentArgs,
+	boxStyle = 'height: 360px;',
+	label = 'Floating content'
+): string {
+	return `
+		<div style="position: relative; transform: translateZ(0); overflow: hidden; ${boxStyle} --header-size: 0px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
+			<div style="padding: 16px; color: var(--color-text-subtle);">Screen content scrolls behind the floating block.</div>
+			<div class="${cls(
+				'floating-content',
+				`floating-content-${position}`,
+				useMargin && 'floating-content-margin',
+				fullWidth && 'floating-content-full-width',
+				fullHeight && 'floating-content-full-height',
+				extendedClass
+			)}">
+				<div class="card" style="padding: 12px 16px;">${label}</div>
+			</div>
+		</div>`;
+}
+
 export const Default: Story = {
-	render: ({ position, useMargin, fullWidth, fullHeight, extendedClass }) =>
-		renderStatic(`
-			<div style="position: relative; transform: translateZ(0); overflow: hidden; height: 360px; --header-size: 0px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-				<div style="padding: 16px; color: var(--color-text-subtle);">Screen content scrolls behind the floating block.</div>
-				<div class="${cls(
-					'floating-content',
-					`floating-content-${position}`,
-					useMargin && 'floating-content-margin',
-					fullWidth && 'floating-content-full-width',
-					fullHeight && 'floating-content-full-height',
-					extendedClass
-				)}">
-					<div class="card" style="padding: 12px 16px;">Floating content</div>
-				</div>
-			</div>`),
+	render: (args) => renderStatic(floatingContentMarkup(args)),
+};
+
+/** All nine anchor positions in a grid of compact demo boxes. */
+export const Positions: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				POSITION_OPTIONS.map((position) => ({
+					label: position,
+					html: `<div style="width: 240px;">${floatingContentMarkup(
+						{ ...baseArgs, position },
+						'height: 180px;',
+						position
+					)}</div>`,
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };

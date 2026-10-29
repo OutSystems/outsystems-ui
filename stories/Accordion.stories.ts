@@ -33,14 +33,14 @@ const FAQ: Array<[string, string]> = [
 // uniqueId (name) + class. The accordion's divider CSS targets
 // `:not(:first-child) > .osui-accordion-item` (border-top between items), so the
 // wrapper must be a real element — collapsing it onto the item kills the dividers.
-function itemMarkup(id: string, title: string, body: string): string {
+function itemMarkup(id: string, title: string, body: string, customIcon = ''): string {
 	return `
 		<div id="${id}" data-block="osui">
 			<div name="${id}" class="osui-accordion-item">
 				<div class="osui-accordion-item__title" id="${id}-title">
+					<div class="osui-accordion-item__title__placeholder">${title}</div>
 					<div class="osui-accordion-item__icon"></div>
-					<div class="osui-accordion-item__icon placeholder-empty"></div>
-					<span>${title}</span>
+					<div class="osui-accordion-item__icon placeholder-empty">${customIcon}</div>
 				</div>
 				<div class="osui-accordion-item__content"><div id="${id}-content">${body}</div></div>
 			</div>
@@ -56,7 +56,7 @@ const meta: Meta<AccordionArgs> = {
 		iconPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'Item.IconPosition' },
 		startsExpanded: { control: 'boolean', name: 'Item.StartsExpanded' },
 	},
-	args: { multipleItems: false, icon: 'Caret', iconPosition: 'left', startsExpanded: false },
+	args: { multipleItems: false, icon: 'Caret', iconPosition: 'right', startsExpanded: false },
 };
 export default meta;
 
@@ -118,4 +118,75 @@ export const SingleDisabledItem: Story = {
 			)
 		);
 	},
+};
+
+const labelStyle = 'color:var(--color-text-subtle);font-family:monospace;font-size:0.8125rem;margin-bottom:8px;';
+
+function renderItems(entries: Array<{ label: string; icon: string; iconPosition: string; customIcon?: string }>) {
+	const board = document.createElement('div');
+	board.style.cssText = 'align-items:flex-start;display:flex;flex-direction:column;gap:24px;';
+	const pending: Array<(register: (dispose: () => void) => void) => void> = [];
+	for (const entry of entries) {
+		const accId = uid('accordion');
+		const itemId = uid('accordion-item');
+		const item = document.createElement('div');
+		const label = document.createElement('div');
+		label.textContent = entry.label;
+		label.style.cssText = labelStyle;
+		item.append(label);
+		item.insertAdjacentHTML(
+			'beforeend',
+			`<div ${osuiRoot(accId)} class="osui-accordion" style="width:420px;">${itemMarkup(itemId, 'Section', 'Item content.', entry.customIcon ?? '')}</div>`
+		);
+		board.append(item);
+		pending.push((register) => {
+			const P = Patterns();
+			P.AccordionAPI.Create(accId, cfg({ MultipleItems: false }));
+			P.AccordionItemAPI.Create(
+				itemId,
+				cfg({
+					Icon: entry.icon,
+					IconPosition: entry.iconPosition,
+					IsDisabled: false,
+					StartsExpanded: false,
+					ToggleWithIcon: false,
+				})
+			);
+			P.AccordionAPI.Initialize(accId);
+			P.AccordionItemAPI.Initialize(itemId);
+			register(() => {
+				P.AccordionItemAPI.Dispose?.(itemId);
+				P.AccordionAPI.Dispose?.(accId);
+			});
+		});
+	}
+	return renderPattern(board.outerHTML, (_root, register) => {
+		for (const start of pending) start(register);
+	});
+}
+
+/** Caret, plus/minus, and a developer-supplied icon in the custom placeholder. */
+export const Icons: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderItems([
+			{ label: 'Caret', icon: 'Caret', iconPosition: 'right' },
+			{ label: 'PlusMinus', icon: 'PlusMinus', iconPosition: 'right' },
+			{
+				label: 'Custom',
+				icon: 'Custom',
+				iconPosition: 'right',
+				customIcon: '<i class="icon ph ph-star" aria-hidden="true"></i>',
+			},
+		]),
+};
+
+/** `right` (the platform default) keeps the icon at the end of the title. `left` reverses the row, placing it at the start. */
+export const IconPosition: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderItems([
+			{ label: 'Right', icon: 'Caret', iconPosition: 'right' },
+			{ label: 'Left', icon: 'Caret', iconPosition: 'left' },
+		]),
 };

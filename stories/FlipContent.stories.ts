@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
+import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
+import { labeledBoard } from './_helpers/showcase';
 
 interface FlipContentArgs {
 	flipSelf: boolean;
@@ -18,19 +19,45 @@ export default meta;
 
 type Story = StoryObj<FlipContentArgs>;
 
+function flipContentMarkup(id: string): string {
+	const face = 'display:flex;align-items:center;justify-content:center;min-height:160px;border-radius:8px;';
+	return `
+		<div ${osuiRoot(id)} class="osui-flip-content" style="max-width:280px;">
+			<div class="osui-flip-content__container">
+				<div class="osui-flip-content__container__front" style="${face}background:var(--osui-bg-surface-hover,#eef);">Front — click to flip</div>
+				<div class="osui-flip-content__container__back" style="${face}background:var(--osui-bg-surface-active,#dde);">Back side</div>
+			</div>
+		</div>`;
+}
+
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('flip');
-		const face = 'display:flex;align-items:center;justify-content:center;min-height:160px;border-radius:8px;';
-		const template = `
-			<div ${osuiRoot(id)} class="osui-flip-content" style="max-width:280px;">
-				<div class="osui-flip-content__container">
-					<div class="osui-flip-content__container__front" style="${face}background:var(--osui-bg-surface-hover,#eef);">Front — click to flip</div>
-					<div class="osui-flip-content__container__back" style="${face}background:var(--osui-bg-surface-active,#dde);">Back side</div>
-				</div>
-			</div>`;
-		return renderPattern(template, (_root, register) =>
+		return renderPattern(flipContentMarkup(id), (_root, register) =>
 			createAndInit('FlipContentAPI', id, { FlipSelf: args.flipSelf, IsFlipped: args.isFlipped }, register)
 		);
+	},
+};
+
+/** Front face next to the flipped (`IsFlipped: true`) back face. */
+export const Faces: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 600 } },
+	render: () => {
+		const entries = [
+			{ label: 'front', isFlipped: false, id: uid('flip') },
+			{ label: 'flipped (IsFlipped)', isFlipped: true, id: uid('flip') },
+		];
+		const board = labeledBoard(
+			entries.map(({ label, id }) => ({
+				label,
+				html: `<div style="width:280px;">${flipContentMarkup(id)}</div>`,
+			})),
+			{ direction: 'row', wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, isFlipped } of entries) {
+				createAndInit('FlipContentAPI', id, { FlipSelf: false, IsFlipped: isFlipped }, register);
+			}
+		});
 	},
 };
