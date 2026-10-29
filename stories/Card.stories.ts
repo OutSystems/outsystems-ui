@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, COLOR_OPTIONS, extendedClassArgType, usePaddingArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Card family. Each story's controls mirror the low-code input parameters of the
@@ -43,6 +44,22 @@ export const Basic: StoryObj<CardArgs> = {
 //  • UsePadding=False removes all padding, including the image's, regardless of
 //    ImagePadding's own value — enforced by `.card-sectioned.padding-none` in the SCSS.
 type SectionedArgs = { usePadding: boolean; isVertical: boolean; imagePadding: boolean; extendedClass: string };
+
+function sectionedCardMarkup({ usePadding, isVertical, imagePadding, extendedClass }: SectionedArgs): string {
+	// Vertical → image is a full-width banner with a fixed height.
+	// Horizontal → image is a fixed-width column that stretches to the card's full height.
+	const cardStyle = `max-width:${isVertical ? 320 : 480}px;`;
+	return `
+		<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="${cardStyle}">
+			<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" /></div>
+			<div class="card-sectioned-top flex-direction-column">
+				<div class="card-title">Hire our personal plan</div>
+				<div class="card-content">Take control with a plan made for you — manage everything in one place.</div>
+				<div class="card-bottom"><a href="#">Simulate Loan</a></div>
+			</div>
+		</div>`;
+}
+
 export const Sectioned: StoryObj<SectionedArgs> = {
 	args: { usePadding: true, isVertical: true, imagePadding: true, extendedClass: '' },
 	argTypes: {
@@ -55,19 +72,33 @@ export const Sectioned: StoryObj<SectionedArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ usePadding, isVertical, imagePadding, extendedClass }) => {
-		// Vertical → image is a full-width banner with a fixed height.
-		// Horizontal → image is a fixed-width column that stretches to the card's full height.
-		const cardStyle = `max-width:${isVertical ? 320 : 480}px;`;
-		return renderStatic(`
-			<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="${cardStyle}">
-				<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" /></div>
-				<div class="card-sectioned-top flex-direction-column">
-					<div class="card-title">Hire our personal plan</div>
-					<div class="card-content">Take control with a plan made for you — manage everything in one place.</div>
-					<div class="card-bottom"><a href="#">Simulate Loan</a></div>
-				</div>
-			</div>`);
+	render: (args) => renderStatic(sectionedCardMarkup(args)),
+};
+
+/**
+ * One Sectioned card per low-code control, each flipped from the defaults:
+ * the baseline (vertical, padded, padded image), `IsVertical: false`,
+ * `UsePadding: false` (removes ALL padding, including the image's), and
+ * `ImagePadding: false`. ExtendedClass has no visual of its own.
+ */
+export const SectionedVariants: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const defaults: SectionedArgs = { usePadding: true, isVertical: true, imagePadding: true, extendedClass: '' };
+		const variants: Array<{ label: string; overrides: Partial<SectionedArgs> }> = [
+			{ label: 'default (vertical)', overrides: {} },
+			{ label: 'IsVertical: false', overrides: { isVertical: false } },
+			{ label: 'UsePadding: false', overrides: { usePadding: false } },
+			{ label: 'ImagePadding: false', overrides: { imagePadding: false } },
+		];
+		const board = labeledBoard(
+			variants.map(({ label, overrides }) => ({
+				label,
+				html: sectionedCardMarkup({ ...defaults, ...overrides }),
+			})),
+			{ direction: 'row', gap: 24, wrap: true }
+		);
+		return renderStatic(board.outerHTML);
 	},
 };
 

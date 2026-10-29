@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard, SWATCH_COLORS } from './_helpers/showcase';
 
 /**
  * Timeline family. Controls mirror the low-code input parameters of the
@@ -48,37 +49,48 @@ const timelineItemArgTypes: StoryObj<TimelineItemArgs>['argTypes'] = {
 	extendedClass: extendedClassArgType,
 };
 
+interface TimelineItemOptions {
+	left: string;
+	icon: string;
+	title: string;
+	desc: string;
+	active?: boolean;
+	color?: string;
+	extra?: string;
+	showIcon?: boolean;
+}
+
+const timelineItem = ({
+	left,
+	icon,
+	title,
+	desc,
+	active = false,
+	color = 'primary',
+	extra = '',
+	showIcon = true,
+}: TimelineItemOptions) => `
+	<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
+		<div class="timeline-left OSInline">${left}</div>
+		<div class="timeline-icon OSInline">
+			<div class="timeline-icon-line OSInline"></div>
+			<div class="${cls('timeline-icon-container', color && `background-${color}`, 'OSInline')}">${showIcon ? `<i class="icon ph ${icon}"></i>` : ''}</div>
+		</div>
+		<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
+	</div>`;
+
 const renderTimeline: NonNullable<StoryObj<TimelineItemArgs>['render']> = ({
 	isActive,
 	color,
 	showIcon,
 	extendedClass,
-}) => {
-	const item = (
-		left: string,
-		icon: string,
-		title: string,
-		desc: string,
-		active: boolean,
-		itemColor: string,
-		extra: string
-	) => `
-		<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
-			<div class="timeline-left OSInline">${left}</div>
-			<div class="timeline-icon OSInline">
-				<div class="timeline-icon-line OSInline"></div>
-				<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}">${showIcon ? `<i class="icon ph ${icon}"></i>` : ''}</div>
-			</div>
-			<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
-		</div>`;
-
-	return renderStatic(`
+}) =>
+	renderStatic(`
 		<div class="timeline" role="list" style="max-width:480px;">
-			${item('2019', 'ph-archive', 'Pending approval', 'This request requires your approval.', false, 'primary', '')}
-			${item('2020', 'ph-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass)}
-			${item('2021', 'ph-flag', 'Closed', 'The request lifecycle is complete.', false, 'primary', '')}
+			${timelineItem({ left: '2019', icon: 'ph-archive', title: 'Pending approval', desc: 'This request requires your approval.', showIcon })}
+			${timelineItem({ left: '2020', icon: 'ph-check', title: 'Approved', desc: 'The request was approved by the manager.', active: isActive, color, extra: extendedClass, showIcon })}
+			${timelineItem({ left: '2021', icon: 'ph-flag', title: 'Closed', desc: 'The request lifecycle is complete.', showIcon })}
 		</div>`);
-};
 
 export const Default: StoryObj<TimelineItemArgs> = {
 	args: {
@@ -100,4 +112,22 @@ export const Default: StoryObj<TimelineItemArgs> = {
 export const NoIcon: StoryObj<TimelineItemArgs> = {
 	...Default,
 	args: { ...Default.args, showIcon: false },
+};
+
+/** Every Color swatch painted on the icon circle (`background-{value}` on `.timeline-icon-container`). */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SWATCH_COLORS.map((color) => ({
+					label: color,
+					html: `
+						<div class="timeline" role="list" style="width:220px;">
+							${timelineItem({ left: '2020', icon: 'ph-check', title: 'Approved', desc: `background-${color}`, color })}
+						</div>`,
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };

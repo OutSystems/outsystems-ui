@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Action Sheet — CSS-only mobile pattern (the low-code block toggles the
@@ -41,25 +42,32 @@ export default meta;
 
 type Story = StoryObj<ActionSheetArgs>;
 
-export const Default: Story = {
-	render: ({ showCancel, extendedClass }) => {
-		const root = renderStatic(`
-			<div style="position: relative; transform: translateZ(0); overflow: hidden; height: 420px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-				<div style="padding: 16px;">
-					<button type="button" class="btn btn-primary" data-open>Open action sheet</button>
-				</div>
-				<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', extendedClass)}">
-					<div class="action-sheet">
-						<div class="action-sheet-buttons">
-							${ACTIONS.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
-						</div>
-						${showCancel ? '<div class="action-sheet-cancel"><button type="button" class="btn" data-cancel>Cancel</button></div>' : ''}
+/** The demo box with the (optionally pre-opened) sheet inside. */
+function actionSheetMarkup({ showCancel, extendedClass }: ActionSheetArgs, visible = false, height = 420): string {
+	return `
+		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${height}px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
+			<div style="padding: 16px;">
+				<button type="button" class="btn btn-primary" data-open>Open action sheet</button>
+			</div>
+			<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', visible && 'action-sheet-container--visible', extendedClass)}">
+				<div class="action-sheet">
+					<div class="action-sheet-buttons">
+						${ACTIONS.map((a) => `<div class="action-sheet-actions"><button type="button" class="btn">${a}</button></div>`).join('')}
 					</div>
+					${showCancel ? '<div class="action-sheet-cancel"><button type="button" class="btn" data-cancel>Cancel</button></div>' : ''}
 				</div>
-			</div>`);
+			</div>
+		</div>`;
+}
+
+export const Default: Story = {
+	render: (args) => {
+		const root = renderStatic(actionSheetMarkup(args));
 
 		const container = root.querySelector<HTMLElement>('.action-sheet-container')!;
-		const setOpen = (open: boolean): void => container.classList.toggle('action-sheet-container--visible', open);
+		const setOpen = (open: boolean): void => {
+			container.classList.toggle('action-sheet-container--visible', open);
+		};
 		root.querySelector('[data-open]')?.addEventListener('click', () => setOpen(true));
 		root.querySelector('[data-cancel]')?.addEventListener('click', () => setOpen(false));
 		// backdrop click: the ::after overlay is the container itself
@@ -68,4 +76,25 @@ export const Default: Story = {
 		});
 		return root;
 	},
+};
+
+/** Sheet pinned open (`--visible`), with and without the cancel row. */
+export const OpenStates: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{
+						label: 'with cancel',
+						html: `<div style="width:320px;">${actionSheetMarkup({ showCancel: true, extendedClass: '' }, true, 320)}</div>`,
+					},
+					{
+						label: 'without cancel',
+						html: `<div style="width:320px;">${actionSheetMarkup({ showCancel: false, extendedClass: '' }, true, 320)}</div>`,
+					},
+				],
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };

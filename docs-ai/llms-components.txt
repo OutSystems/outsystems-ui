@@ -20,7 +20,7 @@ CSS classes: osui-accordion
 CSS API: --osui-accordion-border-radius
 Configs schema: schema/configs/Accordion.schema.json
 Docs: content/accordion
-[runtime-only] Markup skeleton (from stories/Accordion.stories.ts): <div class="osui-accordion"><div id="" data-block="osui"><div name="" class="osui-accordion-item"><div class="osui-accordion-item__title" id="-title"><div class="osui-accordion-item__icon"></div><div class="osui-accordion-item__icon placeholder-empty"></div><span></span></div><div class="osui-accordion-item__content"><div id="-content"></div></div></div></div></div>
+[runtime-only] Markup skeleton (from stories/Accordion.stories.ts): <div class="osui-accordion"><div id="" data-block="osui"><div name="" class="osui-accordion-item"><div class="osui-accordion-item__title" id="-title"><div class="osui-accordion-item__title__placeholder"></div><div class="osui-accordion-item__icon"></div><div class="osui-accordion-item__icon placeholder-empty"></div></div><div class="osui-accordion-item__content"><div id="-content"></div></div></div></div></div>
 
 ## AccordionItem
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · child pattern: Create after its parent, Initialize after the parent, Dispose before it
@@ -263,7 +263,7 @@ API (OutSystems.OSUI.Patterns.FlipContentAPI):
 CSS classes: osui-flip-content__container__back osui-flip-content__container data-flipped osui-flip-content--flip-self osui-flip-content__container__front osui-flip-content--flipped
 Configs schema: schema/configs/FlipContent.schema.json
 Docs: content/flip_content
-[runtime-only] Markup skeleton (from stories/FlipContent.stories.ts): <div class="osui-flip-content"><div class="osui-flip-content__container"><div class="osui-flip-content__container__front">Front — click to flip</div><div class="osui-flip-content__container__back">Back side</div></div></div>
+[runtime-only] Markup skeleton (from stories/FlipContent.stories.ts): <div><div class="osui-flip-content"><div class="osui-flip-content__container"><div class="osui-flip-content__container__front">Front — click to flip</div><div class="osui-flip-content__container__back">Back side</div></div></div></div>
 
 ## Gallery
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -282,7 +282,7 @@ API (OutSystems.OSUI.Patterns.GalleryAPI):
 - RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 Configs schema: schema/configs/Gallery.schema.json
 Docs: adaptive/gallery
-[runtime-only] Markup skeleton (from stories/Gallery.stories.ts): <div class="osui-gallery"><div class="list"></div></div>
+[runtime-only] Markup skeleton (from stories/Gallery.stories.ts): <div><div class="osui-gallery"><div class="list"></div></div></div>
 
 ## InlineSvg
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -332,10 +332,9 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string
 - UpdatePrompt(monthPickerId: string, promptMessage: string): string
 CSS classes: osui-monthpicker__dropdown osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
-CSS API: --osui-monthpicker-popup-border-radius --osui-monthpicker-disabled-background --osui-monthpicker-disabled-border-color --osui-monthpicker-disabled-color --osui-monthpicker-input-border-radius --osui-input-border-radius
 Configs schema: schema/configs/MonthPicker.schema.json
 Docs: interaction/month_picker
-[runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div>
+[runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div><div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div></div>
 
 ## Notification
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -384,7 +383,7 @@ API (OutSystems.OSUI.Patterns.OverflowMenuAPI):
 CSS classes: osui-overflow-menu--is-open osui-overflow-menu__trigger osui-overflow-menu__balloon
 CSS API: --osui-overflow-menu-background --osui-overflow-menu-shadow --osui-overflow-menu-color --osui-overflow-menu-trigger-active-bg --osui-overflow-menu-min-width --osui-overflow-menu-border-radius --osui-btn-background --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-floating-offset --osui-balloon-background --osui-balloon-border-radius --osui-balloon-shadow
 Configs schema: schema/configs/OverflowMenu.schema.json
-[runtime-only] Markup skeleton (from stories/OverflowMenu.stories.ts): <div class="separator separator-horizontal"></div><a href="#"><span class="display-flex align-items-center gap-s"><i class="icon ph "></i><span></span></span></a>
+[runtime-only] Markup skeleton (from stories/OverflowMenu.stories.ts): <div><div class="osui-overflow-menu"><button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph "></i></button><div class="osui-overflow-menu__balloon osui-balloon" id="-balloon"><nav class="display-flex flex-direction-column"><span class="text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s" aria-hidden="true"> Title </span></nav></div></div></div>
 
 ## Progress
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -412,7 +411,7 @@ CSS classes: osui-progress-circle__container__progress-path svg-wrapper osui-pro
 CSS API: --osui-focus-shadow-gap
 Configs schema: schema/configs/Progress.schema.json
 Docs: numbers/progress_bar · numbers/progress_circle
-[runtime-only] Markup skeleton (from stories/Progress.stories.ts): <div class="osui-progress-circle" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="osui-progress-circle__container"><div class="svg-wrapper"><svg><defs></defs><circle class="osui-progress-circle__container__trail-path"></circle><circle class="osui-progress-circle__container__progress-path"></circle></svg></div></div><div class="osui-progress-circle__content" id="-label"></div></div>
+[runtime-only] Markup skeleton (from stories/Progress.stories.ts): <div class="osui-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="osui-progress-bar__container"><div class="osui-progress-bar__value"></div></div><div class="osui-progress-bar__content" id="-label"></div></div>
 
 ## RangeSlider
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
@@ -488,7 +487,7 @@ API (OutSystems.OSUI.Patterns.SearchAPI):
 - RegisterCallback(searchId: string, eventName: EventName, callback: OSGeneric): string
 Configs schema: schema/configs/Search.schema.json
 Docs: interaction/search
-[runtime-only] Markup skeleton (from stories/Search.stories.ts): <div class="osui-search"><input class="form-control" type="search" placeholder="Search…" data-input /></div>
+[runtime-only] Markup skeleton (from stories/Search.stories.ts): <div class="osui-search"><div class="osui-search__input"><span class="input-text"><input class="form-control" type="search" placeholder="Search…" data-input /></span></div></div>
 
 ## SectionIndex
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id) · parent pattern: Create before its children, Initialize before them, Dispose after them
@@ -688,7 +687,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 CSS classes: osui-timepicker__dropdown osui-timepicker
 Configs schema: schema/configs/TimePicker.schema.json
 Docs: interaction/time_picker
-[runtime-only] Markup skeleton (from stories/TimePicker.stories.ts): <div class="osui-timepicker"><label for="-input">Pick a time</label><input id="-input" class="form-control" type="text" placeholder="Select a time" /></div>
+[runtime-only] Markup skeleton (from stories/TimePicker.stories.ts): <div><div class="osui-timepicker"><label for="-input">Pick a time</label><input id="-input" class="form-control" type="text" placeholder="Select a time" /></div></div>
 
 ## Tooltip
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

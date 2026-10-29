@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Master Detail — controls mirror the low-code input parameters of the `MasterDetail`
@@ -28,6 +29,40 @@ type MasterDetailArgs = {
 const li = (selected: boolean, label: string) =>
 	`<div data-list-item class="list-item ${selected ? 'list-item-selected' : ''}"><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title">${label}</div></div></div></div>`;
 
+function masterDetailMarkup(
+	{ leftPercentage, openedOnPhone, height }: MasterDetailArgs,
+	phone = openedOnPhone
+): string {
+	const pct = `${leftPercentage}%`;
+	const rightClass = cls('split-right', openedOnPhone && 'open');
+	const wrapperStyle = [
+		`--left-percentage:${pct}`,
+		'display:flex',
+		'border:1px solid #eee',
+		'border-radius:8px',
+		'overflow:hidden',
+		height ? `height:${height}` : 'min-height:280px',
+	].join(';');
+
+	const markup = `
+		<div class="${cls('split-screen-wrapper', 'is--full-height')}" style="${wrapperStyle}">
+			<div class="split-left OSInline" style="flex:0 0 ${pct};border-right:1px solid #eee;">
+				<div class="list list-group">${li(true, 'Inbox')}${li(false, 'Drafts')}${li(false, 'Sent')}</div>
+			</div>
+			<div class="${rightClass}" style="flex:1;">
+				<div class="split-right-content" style="padding:24px;"><h2 style="margin:0;">Inbox</h2><p>Select an item from the list.</p></div>
+			</div>
+		</div>`;
+
+	// Wrap in .phone context when OpenedOnPhone is active so the CSS transition
+	// (.phone .split-right.open { transform: translateX(0) }) takes effect.
+	// The wrapper is a transformed containing block: on phone `.split-right` is
+	// `position: fixed`, so without the transform it would cover the whole viewport.
+	return phone
+		? `<div class="phone" style="position:relative;transform:translateZ(0);overflow:hidden;--header-size:0px;">${markup}</div>`
+		: markup;
+}
+
 export const Default: StoryObj<MasterDetailArgs> = {
 	args: {
 		leftPercentage: 40,
@@ -53,33 +88,34 @@ export const Default: StoryObj<MasterDetailArgs> = {
 				'Height of the pattern (any valid CSS value, e.g. "400px", "60vh"). Applied as an inline height style.',
 		},
 	},
-	render: ({ leftPercentage, openedOnPhone, height }) => {
-		const pct = `${leftPercentage}%`;
-		const rightClass = cls('split-right', openedOnPhone && 'open');
-		const wrapperStyle = [
-			`--left-percentage:${pct}`,
-			'display:flex',
-			'border:1px solid #eee',
-			'border-radius:8px',
-			'overflow:hidden',
-			height ? `height:${height}` : 'min-height:280px',
-		].join(';');
+	render: (args) => renderStatic(masterDetailMarkup(args)),
+};
 
-		const markup = `
-			<div class="${cls('split-screen-wrapper', 'is--full-height')}" style="${wrapperStyle}">
-				<div class="split-left OSInline" style="flex:0 0 ${pct};border-right:1px solid #eee;">
-					<div class="list list-group">${li(true, 'Inbox')}${li(false, 'Drafts')}${li(false, 'Sent')}</div>
-				</div>
-				<div class="${rightClass}" style="flex:1;">
-					<div class="split-right-content" style="padding:24px;"><h2 style="margin:0;">Inbox</h2><p>Select an item from the list.</p></div>
-				</div>
-			</div>`;
+/** LeftPercentage at 30 / 50 / 70. */
+export const SplitRatios: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[30, 50, 70].map((leftPercentage) => ({
+					label: `${leftPercentage}%`,
+					html: `<div style="width:480px;">${masterDetailMarkup({ leftPercentage, openedOnPhone: false, height: '220px' })}</div>`,
+				}))
+			).outerHTML
+		),
+};
 
-		// Wrap in .phone context when OpenedOnPhone is active so the CSS transition
-		// (.phone .split-right.open { transform: translateX(0) }) takes effect.
-		if (openedOnPhone) {
-			return renderStatic(`<div class="phone" style="position:relative;overflow:hidden;">${markup}</div>`);
-		}
-		return renderStatic(markup);
-	},
+/** Phone context with the detail pane closed vs slid in (`.split-right.open`). */
+export const PhoneOpen: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[false, true].map((openedOnPhone) => ({
+					label: openedOnPhone ? 'open' : 'closed',
+					html: `<div style="width:280px;">${masterDetailMarkup({ leftPercentage: 100, openedOnPhone, height: '280px' }, true)}</div>`,
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };

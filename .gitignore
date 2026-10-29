@@ -132,3 +132,6 @@ specs/
 
 # A local OutSystemsUI.oml to export the block snapshot from (npm run docs:ai:blocks reads it first)
 scripts/docs-ai-generator/snapshot/local/
+
+# Local clone of the component tests repo (npm run test / test:classic, see scripts/run-e2e.mjs)
+.osui-tests/

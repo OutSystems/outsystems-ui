@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { colorBoard } from './_helpers/showcase';
 
 /**
  * IconBadge — low-code input parameters from the library OML wired as Storybook controls.
@@ -20,13 +21,19 @@ type IconBadgeArgs = {
 	extendedClass: string;
 };
 
+function iconBadgeMarkup({ number, color, isLight, extendedClass }: IconBadgeArgs): string {
+	const bgClass = backgroundClass(color, isLight);
+	return `
+		<div class="${cls('icon-badge', extendedClass)}">
+			<div><i class="icon ph ph-bell" style="font-size: 2em;"></i></div>
+			<div class="${cls('badge', 'border-radius-rounded', bgClass, 'OSInline')}"><span class="OSFillParent">${number}</span></div>
+		</div>`;
+}
+
+const baseArgs: IconBadgeArgs = { number: 3, color: 'primary', isLight: false, extendedClass: '' };
+
 export const Default: StoryObj<IconBadgeArgs> = {
-	args: {
-		number: 3,
-		color: 'primary',
-		isLight: false,
-		extendedClass: '',
-	},
+	args: { ...baseArgs },
 	argTypes: {
 		number: {
 			name: 'Number',
@@ -46,12 +53,12 @@ export const Default: StoryObj<IconBadgeArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ number, color, isLight, extendedClass }) => {
-		const bgClass = backgroundClass(color, isLight);
-		return renderStatic(`
-			<div class="${cls('icon-badge', extendedClass)}">
-				<div><i class="icon ph ph-bell" style="font-size: 2em;"></i></div>
-				<div class="${cls('badge', 'border-radius-rounded', bgClass, 'OSInline')}"><span class="OSFillParent">${number}</span></div>
-			</div>`);
-	},
+	render: (args) => renderStatic(iconBadgeMarkup(args)),
+};
+
+/** Every Color swatch on the inner badge, solid and IsLight. */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(colorBoard((color, isLight) => iconBadgeMarkup({ ...baseArgs, color, isLight })).outerHTML),
 };
