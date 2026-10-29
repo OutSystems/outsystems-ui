@@ -51,14 +51,16 @@ The search ring rules only paint while that class is present.
 
 -   ServerSide: class `osui-dropdown-serverside--focus-visible` on the balloon element. It is set by the existing
     keyboard handlers (open keys on the trigger, any key on the options wrapper, navigation keys in the search
-    input, option-item keypresses) and by a trigger click with `event.detail === 0` (the keyboard's synthetic
-    `.click()` and screen-reader activations). It is cleared by a pointer click on the trigger
-    (`event.detail > 0`), a click on the search input, and close.
+    input, option-item keypresses) and by a trigger or search input click with `event.detail === 0` (the
+    keyboard's synthetic `.click()` and screen-reader activations). It is cleared by a pointer click on the
+    trigger or the search input (`event.detail > 0`), and close.
 -   Search/Tags (VirtualSelect): class `osui-dropdown--focus-visible` on `provider.$dropboxContainer`, because OSUI
     renders the dropbox under `<body>` (`dropboxWrapper: body`). `keydown` and `mousedown` are listened to on the
     pattern element and on the dropbox container, and `click` on the pattern element. Navigation keys and clicks
     with `detail === 0` (screen-reader activation) set the class; typing in the search input does not. Any
     pointer `mousedown` clears it. The state is re-applied after a redraw.
+-   Both: the public `open()` (e.g. `DropdownAPI.Open`) sets the flag from whether the focused element matches
+    `:focus-visible`, so a keyboard-operated external button keeps the ring and a mouse click does not.
 
 Positive consequences:
 

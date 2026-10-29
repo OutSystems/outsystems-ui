@@ -236,7 +236,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Used to set a stopPropagation when click at search input
 		private _onSearchInputClicked(event: MouseEvent): void {
 			event.stopPropagation();
-			this._setKeyboardInteraction(false);
+			// A click with detail 0 is triggered by a screen reader, only a pointer click hides the focus ring
+			this._setKeyboardInteraction(event.detail === 0);
 		}
 
 		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
@@ -927,6 +928,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Method used to open the Dropdown
 		 */
 		public open(): void {
+			// When opened from outside (e.g. through a button), keep the focus ring if that element was used with keyboard
+			this._setKeyboardInteraction(document.activeElement?.matches(':focus-visible') ?? false);
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
 			OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
 		}
