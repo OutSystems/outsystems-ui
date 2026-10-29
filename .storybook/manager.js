@@ -50,31 +50,6 @@ addons.register('osui/sidebar-layout', (api) => {
 	requestAnimationFrame(applyNavWidth);
 });
 
-/**
- * Sidebar nesting for Docs-page examples. Stories tagged `docs-example` (the ones a
- * pattern's Docs page embeds via <Canvas>) are indented one level deeper than the Docs
- * row, so the tree reads "Docs → its examples", with the other stories (Playground,
- * variants) at the component root. The base indents live in manager-head.html; the tag
- * is only in the index, so the per-id rules are generated here from index.json.
- */
-addons.register('osui/docs-example-nesting', () => {
-	fetch('./index.json')
-		.then((response) => (response.ok ? response.json() : null))
-		.then((index) => {
-			const ids = Object.values(index?.entries ?? {})
-				.filter((entry) => entry.type === 'story' && entry.tags?.includes('docs-example'))
-				.map((entry) => entry.id);
-			if (ids.length === 0) return;
-			const selector = (suffix) =>
-				ids.map((id) => `.sidebar-item[data-nodetype="story"][data-item-id="${id}"]${suffix}`).join(',\n');
-			const style = document.createElement('style');
-			style.id = 'osui-docs-example-nesting';
-			style.textContent = `${selector('::before')} { left: 52px; }\n${selector(' a')} { padding-left: 72px !important; }`;
-			document.head.append(style);
-		})
-		.catch(() => {});
-});
-
 function ThemeResetTool() {
 	const [count, setCount] = React.useState(0);
 	const emit = useChannel({ [CH_OVERRIDES_CHANGED]: (next) => setCount(Number(next) || 0) });

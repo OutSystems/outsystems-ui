@@ -99,6 +99,12 @@ const config: StorybookConfig = {
 	features: {
 		changeDetection: false,
 	},
+	// The stories a pattern's Docs page embeds (tagged `docs-example`) are docs-only: they
+	// stay out of the sidebar, like on Mobile UI, but are still built, snapshotted by
+	// Chromatic and reachable by URL. The sidebar shows Docs, Playground and the variants.
+	tags: {
+		'docs-example': { excludeFromSidebar: true },
+	},
 	// Widget stories are static transcriptions (ADR-0009) — always include the full tree.
 	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [

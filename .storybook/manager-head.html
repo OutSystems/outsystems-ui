@@ -220,7 +220,7 @@
   /* Nested docs/stories — icon on the row (::before), not the link. Storybook emotion
      injects `background` on the selected <a> and wipes background-image.
      Docs and stories sit at the same level under the component; the stories a Docs page
-     embeds (tag `docs-example`) are nested one indent deeper by manager.js. */
+     embeds (tag `docs-example`) are kept out of the sidebar by main.ts. */
   .sidebar-item[data-nodetype="document"][data-parent-id],
   .sidebar-item[data-nodetype="story"][data-parent-id] {
     position: relative;

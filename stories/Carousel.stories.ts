@@ -84,7 +84,6 @@ function initCarousel(id: string, overrides: Record<string, unknown>, register: 
 }
 
 export const Playground: Story = {
-	tags: ['docs-example'],
 	render: (args) => {
 		const id = uid('carousel');
 		return renderPattern(carouselMarkup(id), (_root, register) =>
@@ -140,6 +139,13 @@ function renderCarouselDoc(args: CarouselArgs, demoClass = '', extendedClass = '
 		register(() => P.CarouselAPI.Dispose?.(id));
 	});
 }
+
+/** The Playground as the page's first example — tagged, so it is docs-only like the others. */
+export const BasicUsage: Story = {
+	...Playground,
+	tags: ['docs-example'],
+	name: 'Basic usage',
+};
 
 export const TwoItemsInfinite: Story = {
 	tags: ['docs-example'],

@@ -371,8 +371,8 @@ const preview: Preview = {
 			// Plain JavaScript and self-contained on purpose — Storybook evaluates this
 			// function from the preview SOURCE (no TypeScript syntax, no outer references). Same algorithm as
 			// the built-in `order` sort; within one component, the Docs page comes first, then
-			// the stories its page embeds (tagged `docs-example`, nested under Docs in the
-			// sidebar by manager.js), then the remaining stories in file order.
+			// the stories its page embeds (tagged `docs-example` — hidden from the sidebar by
+			// main.ts, so this only orders the index), then the remaining stories in file order.
 			storySort: (a, b) => {
 				const ORDER = [
 					'Welcome',
