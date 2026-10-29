@@ -56,11 +56,13 @@ The search ring rules only paint while that class is present.
     trigger or the search input (`event.detail > 0`), and close.
 -   Search/Tags (VirtualSelect): class `osui-dropdown--focus-visible` on `provider.$dropboxContainer`, because OSUI
     renders the dropbox under `<body>` (`dropboxWrapper: body`). `keydown` and `mousedown` are listened to on the
-    pattern element and on the dropbox container, and `click` on the pattern element. Navigation keys and clicks
-    with `detail === 0` (screen-reader activation) set the class; typing in the search input does not. Any
-    pointer `mousedown` clears it. The state is re-applied after a redraw.
--   Both: the public `open()` (e.g. `DropdownAPI.Open`) sets the flag from whether the focused element matches
-    `:focus-visible`, so a keyboard-operated external button keeps the ring and a mouse click does not.
+    pattern element and on the dropbox container, and `click` on both (capture phase on the dropbox container).
+    Navigation keys and clicks with `detail === 0` (screen-reader activation) set the class; typing in the
+    search input does not. Any pointer `mousedown` clears it. The state is re-applied after a redraw.
+-   Both: the public `open()` (e.g. `DropdownAPI.Open`) of a closed Dropdown sets the flag from whether the
+    focused element matches `:focus-visible`, so a keyboard-operated external button keeps the ring and a mouse
+    click does not. Text fields (`GlobalEnum.CSSSelectors.TextField`) always match `:focus-visible`, so they
+    never set it. An already open Dropdown keeps its current state.
 
 Positive consequences:
 
@@ -71,6 +73,8 @@ Positive consequences:
 Negative consequences:
 
 -   The navigation-key lists must stay complete. A missed keyboard path hides the ring for keyboard users.
+-   A keyboard user in a text field whose action opens the Dropdown through the API gets no ring; telling
+    keyboard from pointer there would need the global modality tracker of Option 2.
 -   Two implementations to keep in sync, and the VirtualSelect side depends on `provider.$dropboxContainer`
     staying the container of the search input in future library versions.
 
