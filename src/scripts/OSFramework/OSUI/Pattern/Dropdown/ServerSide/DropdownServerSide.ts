@@ -929,7 +929,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		public open(): void {
 			// When opened from outside (e.g. through a button), keep the focus ring if that element was used with keyboard
-			this._setKeyboardInteraction(document.activeElement?.matches(':focus-visible') ?? false);
+			if (this._isOpen === false) {
+				const activeElem = document.activeElement;
+				// Text fields always match :focus-visible, so they cannot tell keyboard from pointer
+				const isTextField = activeElem?.matches(GlobalEnum.CSSSelectors.TextField) ?? false;
+				this._setKeyboardInteraction(isTextField === false && (activeElem?.matches(':focus-visible') ?? false));
+			}
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
 			OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
 		}
