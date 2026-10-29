@@ -211,13 +211,11 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-bottom-sheet {
-		&:focus-visible {
-			--osui-focus-inner-shadow-gap: #{variables.$token-scale-050};
+.osui-bottom-sheet {
+	&:focus-visible {
+		--osui-focus-gap-inner: #{variables.$token-scale-050};
 
-			@include a11y-focus-shadow($isInner: true);
-		}
+		@include a11y-focus-shadow($isInner: true);
 	}
 }
 

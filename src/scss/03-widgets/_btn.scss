@@ -268,10 +268,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	& .btn:focus {
-		border-color: var(--color-background-surface);
-	}
+.btn:focus-visible {
+	border-color: var(--color-background-surface);
 }
 
 // Layout Native Context ---------------------------------------------------------

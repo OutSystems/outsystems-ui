@@ -48,12 +48,6 @@
 			border-color: var(--osui-input-hover-border-color);
 		}
 
-		&:focus {
-			border-color: var(--osui-input-focus-border-color);
-			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-input-focus-ring-color);
-			outline: none;
-		}
-
 		&[disabled] {
 			--osui-input-background: var(--color-background-input-disabled);
 			--osui-input-border-color: var(--color-border-input);
@@ -146,6 +140,7 @@ span.validation-message {
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-300;
 }
+
 /* Responsive ----------------------------------------------------------------- */
 ///
 .tablet,
@@ -184,10 +179,6 @@ span.validation-message {
 				border: 0;
 				border-block-end: variables.$token-border-size-025 solid transparent;
 				border-radius: 0;
-
-				&:focus {
-					border-block-end: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
-				}
 			}
 		}
 	}
@@ -195,28 +186,18 @@ span.validation-message {
 
 /* Accessibility -------------------------------------------------------------- */
 ///
-.has-accessible-features {
-	.form-control {
-		&[data-input],
-		&[data-textarea] {
-			border-color: var(--color-border-input);
+.form-control {
+	&[data-input],
+	&[data-textarea] {
+		&:focus-visible {
+			@include a11y-focus-shadow;
 
-			&:hover {
-				border-color: var(--osui-input-hover-border-color);
-			}
+			border-color: variables.$token-semantics-primary-base;
+		}
 
+		&.not-valid {
 			&:focus-visible {
-				@include a11y-focus-shadow;
-
-				border-color: variables.$token-semantics-primary-base;
-			}
-
-			&.not-valid {
-				&,
-				&:hover,
-				&:focus-visible {
-					border-color: var(--osui-input-error-border-color);
-				}
+				border-color: var(--osui-input-error-border-color);
 			}
 		}
 	}
