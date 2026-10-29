@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
+import { colorBoard, labeledBoard } from './_helpers/showcase';
 
 /**
  * UserAvatar — low-code input parameters from the library OML wired as Storybook controls.
@@ -40,16 +41,38 @@ function initials(name: string): string {
 		.toUpperCase();
 }
 
+function avatarMarkup({ name, image, color, size, shape, isLight, extendedClass }: UserAvatarArgs): string {
+	const bgClass = backgroundClass(color, isLight);
+	const textClass = isLight ? lightTextClass(color) : '';
+	const shapeClass = shape ? `border-radius-${shape}` : '';
+	const sizeClass = size ? `avatar-${size}` : '';
+	const label = `user initials, ${initials(name)}`;
+	// Image sizing/fit/radius is owned by the pattern SCSS (Type=Image in Figma).
+	const inner = image
+		? `<img src="${image}" alt="${name}" />`
+		: `<span class="OSFillParent">${initials(name)}</span>`;
+	return `<div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`;
+}
+
+const baseArgs: UserAvatarArgs = {
+	name: 'John Doe',
+	image: '',
+	color: 'primary',
+	size: 'medium',
+	shape: 'rounded',
+	isLight: false,
+	extendedClass: '',
+};
+
+// Deterministic placeholder photo (inline SVG) so the Image variant needs no network.
+const AVATAR_IMAGE =
+	'data:image/svg+xml,' +
+	encodeURIComponent(
+		'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" fill="#94a3b8"/><circle cx="24" cy="18" r="8" fill="#e2e8f0"/><path d="M8 44c0-9 7-14 16-14s16 5 16 14" fill="#e2e8f0"/></svg>'
+	);
+
 export const Default: StoryObj<UserAvatarArgs> = {
-	args: {
-		name: 'John Doe',
-		image: '',
-		color: 'primary',
-		size: 'medium',
-		shape: 'rounded',
-		isLight: false,
-		extendedClass: '',
-	},
+	args: { ...baseArgs },
 	argTypes: {
 		name: {
 			name: 'Name',
@@ -86,18 +109,50 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ name, image, color, size, shape, isLight, extendedClass }) => {
-		const bgClass = backgroundClass(color, isLight);
-		const textClass = isLight ? lightTextClass(color) : '';
-		const shapeClass = shape ? `border-radius-${shape}` : '';
-		const sizeClass = size ? `avatar-${size}` : '';
-		const label = `user initials, ${initials(name)}`;
-		// Image sizing/fit/radius is owned by the pattern SCSS (Type=Image in Figma).
-		const inner = image
-			? `<img src="${image}" alt="${name}" />`
-			: `<span class="OSFillParent">${initials(name)}</span>`;
-		return renderStatic(
-			`<div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`
-		);
-	},
+	render: (args) => renderStatic(avatarMarkup(args)),
+};
+
+/** Every Color swatch as a solid and an IsLight avatar (initials type). */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () => renderStatic(colorBoard((color, isLight) => avatarMarkup({ ...baseArgs, color, isLight })).outerHTML),
+};
+
+/** Default (32px), small and medium sizes side by side. */
+export const Sizes: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SIZE_OPTIONS.map((size) => ({ label: size || 'default', html: avatarMarkup({ ...baseArgs, size }) })),
+				{ direction: 'row' }
+			).outerHTML
+		),
+};
+
+/** The four border-radius shapes at the same size and color. */
+export const Shapes: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SHAPE_OPTIONS.map((shape) => ({ label: shape, html: avatarMarkup({ ...baseArgs, shape }) })),
+				{ direction: 'row' }
+			).outerHTML
+		),
+};
+
+/** Initials type next to Image type (inline placeholder photo). */
+export const Types: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{ label: 'initials', html: avatarMarkup({ ...baseArgs }) },
+					{ label: 'image', html: avatarMarkup({ ...baseArgs, image: AVATAR_IMAGE }) },
+				],
+				{ direction: 'row' }
+			).outerHTML
+		),
 };

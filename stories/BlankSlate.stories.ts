@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Blank Slate — shipped: `.blank-slate[.large]` > div > `.blank-slate-icon` + `.blank-slate-description` + `.blank-slate-actions`.
@@ -15,6 +16,17 @@ export default meta;
 
 type BlankSlateArgs = { fullHeight: boolean; extendedClass: string };
 
+function blankSlateMarkup({ fullHeight, extendedClass }: BlankSlateArgs): string {
+	return `
+		<div class="${cls('blank-slate', fullHeight && 'large', extendedClass)}" style="max-width:420px;text-align:center;">
+			<div>
+				<div class="blank-slate-icon"><i class="icon ph ph-tray"></i></div>
+				<div class="blank-slate-description">No records have been added yet.</div>
+				<div class="blank-slate-actions"><button class="btn btn-primary"><span>Create item</span></button></div>
+			</div>
+		</div>`;
+}
+
 export const Default: StoryObj<BlankSlateArgs> = {
 	args: { fullHeight: true, extendedClass: '' },
 	argTypes: {
@@ -26,13 +38,20 @@ export const Default: StoryObj<BlankSlateArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ fullHeight, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('blank-slate', fullHeight && 'large', extendedClass)}" style="max-width:420px;text-align:center;">
-				<div>
-					<div class="blank-slate-icon"><i class="icon ph ph-tray"></i></div>
-					<div class="blank-slate-description">No records have been added yet.</div>
-					<div class="blank-slate-actions"><button class="btn btn-primary"><span>Create item</span></button></div>
-				</div>
-			</div>`),
+	render: (args) => renderStatic(blankSlateMarkup(args)),
+};
+
+/** Compact (FullHeight off) next to the `.large` full-height variant. */
+export const Sizes: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				[
+					{ label: 'default', html: blankSlateMarkup({ fullHeight: false, extendedClass: '' }) },
+					{ label: 'large (FullHeight)', html: blankSlateMarkup({ fullHeight: true, extendedClass: '' }) },
+				],
+				{ direction: 'row', gap: 48 }
+			).outerHTML
+		),
 };

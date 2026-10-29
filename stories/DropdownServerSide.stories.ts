@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
+import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Dropdown Server Side (+ DropdownServerSideItem) — the "Advanced" dropdown
@@ -76,56 +77,134 @@ function mirrorSelectionToTrigger(root: HTMLElement, textEl: HTMLElement, placeh
 	);
 }
 
+function serverSideMarkup(id: string, itemIds: string[]): string {
+	const items = OPTIONS.map(
+		(o, i) => `
+			<div ${osuiRoot(itemIds[i])} class="osui-dropdown-serverside-item" tabindex="0">
+				<div class="osui-dropdown-serverside-item__content">${o.label}</div>
+			</div>`
+	).join('');
+
+	return `
+		<div style="max-width: 280px; min-height: 320px;">
+			<div ${osuiRoot(id)} class="osui-dropdown-serverside">
+				<div class="osui-dropdown-serverside__selected-values-wrapper" tabindex="0">
+					<div class="osui-dropdown-serverside__selected-values">
+						<span class="osui-dropdown-serverside__text">${PLACEHOLDER}</span>
+					</div>
+				</div>
+				<div class="osui-dropdown-serverside__balloon osui-balloon" data-uniqueid="${id}">
+					<div class="osui-dropdown-serverside__balloon-container">
+						<div class="osui-dropdown-serverside__balloon-search">
+							<input type="text" class="form-control" placeholder="Search…" />
+						</div>
+						<div class="osui-dropdown-serverside__balloon-content">${items}</div>
+						<div class="osui-dropdown-serverside__balloon-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>`;
+}
+
+/**
+ * Create parent → create items → initialize parent → items (the runtime call
+ * order). `selected` pre-selects options by value via the items' `IsSelected`.
+ */
+function initServerSide(
+	id: string,
+	itemIds: string[],
+	args: DropdownServerSideArgs,
+	register: Register,
+	selected: string[] = []
+): void {
+	const P = Patterns();
+	P.DropdownAPI.Create(
+		id,
+		'server-side',
+		'osui-components',
+		cfg({ AllowMultipleSelection: args.allowMultipleSelection, IsDisabled: args.isDisabled })
+	);
+	itemIds.forEach((itemId, i) =>
+		P.DropdownServerSideItemAPI.Create(
+			itemId,
+			cfg({ ItemId: OPTIONS[i].value, IsSelected: selected.includes(OPTIONS[i].value) })
+		)
+	);
+	P.DropdownAPI.Initialize(id);
+	itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Initialize(itemId));
+	register(() => {
+		itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Dispose?.(itemId));
+		P.DropdownAPI.Dispose?.(id);
+	});
+}
+
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('dropdown-ss');
 		const itemIds = OPTIONS.map(() => uid('dropdown-ss-item'));
-		const items = OPTIONS.map(
-			(o, i) => `
-				<div ${osuiRoot(itemIds[i])} class="osui-dropdown-serverside-item" tabindex="0">
-					<div class="osui-dropdown-serverside-item__content">${o.label}</div>
-				</div>`
-		).join('');
+		return renderPattern(serverSideMarkup(id, itemIds), (root, register) => {
+			initServerSide(id, itemIds, args, register);
+			const textEl = root.querySelector('.osui-dropdown-serverside__text') as HTMLElement;
+			mirrorSelectionToTrigger(root, textEl, PLACEHOLDER);
+		});
+	},
+};
 
-		const template = `
-			<div style="max-width: 280px; min-height: 320px;">
-				<div ${osuiRoot(id)} class="osui-dropdown-serverside">
-					<div class="osui-dropdown-serverside__selected-values-wrapper" tabindex="0">
-						<div class="osui-dropdown-serverside__selected-values">
-							<span class="osui-dropdown-serverside__text">${PLACEHOLDER}</span>
-						</div>
-					</div>
-					<div class="osui-dropdown-serverside__balloon osui-balloon" data-uniqueid="${id}">
-						<div class="osui-dropdown-serverside__balloon-container">
-							<div class="osui-dropdown-serverside__balloon-search">
-								<input type="text" class="form-control" placeholder="Search…" />
-							</div>
-							<div class="osui-dropdown-serverside__balloon-content">${items}</div>
-							<div class="osui-dropdown-serverside__balloon-footer"></div>
-						</div>
-					</div>
-				</div>
-			</div>`;
-
-		return renderPattern(template, (_root, register) => {
+/**
+ * Selection states: single mode with one option selected next to
+ * `AllowMultipleSelection` with two selected. The items are pre-selected via
+ * their `IsSelected` config, the trigger text mirrors the selection (the
+ * platform's OnSelected action would do this), and the balloons are opened so
+ * the `--is-selected` highlight is visible.
+ */
+export const Selection: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 300 } },
+	render: () => {
+		const entries = [
+			{ label: 'single (one selected)', multiple: false, selected: ['banana'] },
+			{ label: 'multiple (two selected)', multiple: true, selected: ['apple', 'cherry'] },
+		].map((v) => ({ ...v, id: uid('dropdown-ss'), itemIds: OPTIONS.map(() => uid('dropdown-ss-item')) }));
+		const board = labeledBoard(
+			entries.map(({ label, id, itemIds }) => ({ label, html: serverSideMarkup(id, itemIds) })),
+			{ direction: 'row', wrap: true }
+		);
+		return renderPattern(board.outerHTML, (root, register) => {
 			const P = Patterns();
-			P.DropdownAPI.Create(
-				id,
-				'server-side',
-				'osui-components',
-				cfg({ AllowMultipleSelection: args.allowMultipleSelection, IsDisabled: args.isDisabled })
-			);
-			itemIds.forEach((itemId, i) =>
-				P.DropdownServerSideItemAPI.Create(itemId, cfg({ ItemId: OPTIONS[i].value, IsSelected: false }))
-			);
-			P.DropdownAPI.Initialize(id);
-			itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Initialize(itemId));
-			const textEl = _root.querySelector('.osui-dropdown-serverside__text') as HTMLElement;
-			mirrorSelectionToTrigger(_root, textEl, PLACEHOLDER);
-			register(() => {
-				itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Dispose?.(itemId));
-				P.DropdownAPI.Dispose?.(id);
-			});
+			for (const { id, itemIds, multiple, selected } of entries) {
+				initServerSide(
+					id,
+					itemIds,
+					{ allowMultipleSelection: multiple, isDisabled: false },
+					register,
+					selected
+				);
+			}
+			for (const { id, selected } of entries) {
+				const labels = OPTIONS.filter((o) => selected.includes(o.value)).map((o) => o.label);
+				const textEl = root.querySelector<HTMLElement>(`[name="${id}"] .osui-dropdown-serverside__text`);
+				if (textEl) textEl.textContent = labels.join(', ');
+				P.DropdownAPI.Open(id);
+			}
+		});
+	},
+};
+
+/** Enabled trigger next to the disabled (`IsDisabled: true`) one. */
+export const States: Story = {
+	parameters: { controls: { disable: true } },
+	render: () => {
+		const entries = [
+			{ label: 'enabled', isDisabled: false },
+			{ label: 'disabled', isDisabled: true },
+		].map((v) => ({ ...v, id: uid('dropdown-ss'), itemIds: OPTIONS.map(() => uid('dropdown-ss-item')) }));
+		const board = labeledBoard(
+			entries.map(({ label, id, itemIds }) => ({ label, html: serverSideMarkup(id, itemIds) })),
+			{ direction: 'row', wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, itemIds, isDisabled } of entries) {
+				initServerSide(id, itemIds, { allowMultipleSelection: false, isDisabled }, register);
+			}
 		});
 	},
 };

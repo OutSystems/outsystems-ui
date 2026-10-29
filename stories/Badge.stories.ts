@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
+import { colorBoard, labeledBoard } from './_helpers/showcase';
 
 /**
  * Badge — low-code input parameters from the library OML wired as Storybook controls.
@@ -27,15 +28,25 @@ type BadgeArgs = {
 const SIZE_OPTIONS = ['', 'small', 'medium'];
 const SHAPE_OPTIONS = ['none', 'soft', 'rounded', 'circle'];
 
+function badgeMarkup({ number, color, size, shape, isLight, extendedClass }: BadgeArgs): string {
+	const bgClass = backgroundClass(color, isLight);
+	const textClass = isLight ? lightTextClass(color) : '';
+	const shapeClass = shape ? `border-radius-${shape}` : '';
+	const sizeClass = size ? `badge-${size}` : '';
+	return `<div class="${cls('badge', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}"><span class="OSFillParent">${number}</span></div>`;
+}
+
+const baseArgs: BadgeArgs = {
+	number: 3,
+	color: 'primary',
+	size: 'medium',
+	shape: 'rounded',
+	isLight: false,
+	extendedClass: '',
+};
+
 export const Default: StoryObj<BadgeArgs> = {
-	args: {
-		number: 3,
-		color: 'primary',
-		size: 'medium',
-		shape: 'rounded',
-		isLight: false,
-		extendedClass: '',
-	},
+	args: { ...baseArgs },
 	argTypes: {
 		number: {
 			name: 'Number',
@@ -67,13 +78,35 @@ export const Default: StoryObj<BadgeArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ number, color, size, shape, isLight, extendedClass }) => {
-		const bgClass = backgroundClass(color, isLight);
-		const textClass = isLight ? lightTextClass(color) : '';
-		const shapeClass = shape ? `border-radius-${shape}` : '';
-		const sizeClass = size ? `badge-${size}` : '';
-		return renderStatic(
-			`<div class="${cls('badge', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}"><span class="OSFillParent">${number}</span></div>`
-		);
-	},
+	render: (args) => renderStatic(badgeMarkup(args)),
+};
+
+/** Every Color swatch as a solid and an IsLight badge. */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () => renderStatic(colorBoard((color, isLight) => badgeMarkup({ ...baseArgs, color, isLight })).outerHTML),
+};
+
+/** Default (compact), small and medium sizes side by side. */
+export const Sizes: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SIZE_OPTIONS.map((size) => ({ label: size || 'default', html: badgeMarkup({ ...baseArgs, size }) })),
+				{ direction: 'row' }
+			).outerHTML
+		),
+};
+
+/** The four border-radius shapes at the same size and color. */
+export const Shapes: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				SHAPE_OPTIONS.map((shape) => ({ label: shape, html: badgeMarkup({ ...baseArgs, shape }) })),
+				{ direction: 'row' }
+			).outerHTML
+		),
 };

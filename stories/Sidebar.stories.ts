@@ -81,3 +81,30 @@ export const Default: Story = {
 		});
 	},
 };
+
+/**
+ * Pinned open from the right (`StartsOpen` + `Direction: 'right'`) so the
+ * slid-in panel gets photographed. The aside is a fixed overlay covering the
+ * preview, so one open sidebar per story.
+ */
+export const OpenRight: Story = {
+	...Default,
+	args: { direction: 'right', startsOpen: true },
+	parameters: {
+		controls: { disable: true },
+		// Slide-in transition; wait it out so the snapshot is not mid-animation.
+		chromatic: { delay: 500 },
+	},
+};
+
+/** Pinned open from the left (`StartsOpen` + `Direction: 'left'`). */
+export const OpenLeft: Story = {
+	...OpenRight,
+	args: { direction: 'left', startsOpen: true },
+};
+
+/** Pinned open without the backdrop (`HasOverlay: false`) — the page behind stays fully visible. */
+export const OpenNoOverlay: Story = {
+	...OpenRight,
+	args: { direction: 'left', startsOpen: true, hasOverlay: false },
+};

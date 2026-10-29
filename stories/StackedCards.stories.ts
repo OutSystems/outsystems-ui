@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Stacked Cards — Tinder-style swipeable card stack. The TS behavior was
@@ -51,27 +52,44 @@ export default meta;
 
 type Story = StoryObj<StackedCardsArgs>;
 
+function stackedCardsMarkup({ overlay, extendedClass }: StackedCardsArgs): string {
+	const cards = CARDS.map(
+		([title, img], i) => `
+			<div style="${STACK_TRANSFORMS[i]} z-index: ${CARDS.length - i};">
+				<div class="card padding-none" style="overflow: hidden;">
+					<img src="${img}" alt="${title}" style="width: 100%; display: block;" />
+					<div style="padding: 12px 16px;">${title}</div>
+					${
+						overlay !== 'none' && i === 0
+							? `<div class="stackedcards-overlay ${overlay}" style="opacity: 0.85;"><div>${
+									overlay === 'right' ? 'Like' : overlay === 'left' ? 'Pass' : 'Info'
+								}</div></div>`
+							: ''
+					}
+				</div>
+			</div>`
+	).join('');
+	return `
+		<div class="${cls('stackedcards', 'stackedcards-origin-bottom', extendedClass)}" style="max-width: 320px; padding-bottom: 24px;">
+			<div class="stackedcards-container">${cards}</div>
+		</div>`;
+}
+
 export const Default: Story = {
-	render: ({ overlay, extendedClass }) => {
-		const cards = CARDS.map(
-			([title, img], i) => `
-				<div style="${STACK_TRANSFORMS[i]} z-index: ${CARDS.length - i};">
-					<div class="card padding-none" style="overflow: hidden;">
-						<img src="${img}" alt="${title}" style="width: 100%; display: block;" />
-						<div style="padding: 12px 16px;">${title}</div>
-						${
-							overlay !== 'none' && i === 0
-								? `<div class="stackedcards-overlay ${overlay}" style="opacity: 0.85;"><div>${
-										overlay === 'right' ? 'Like' : overlay === 'left' ? 'Pass' : 'Info'
-									}</div></div>`
-								: ''
-						}
-					</div>
-				</div>`
-		).join('');
-		return renderStatic(`
-			<div class="${cls('stackedcards', 'stackedcards-origin-bottom', extendedClass)}" style="max-width: 320px; padding-bottom: 24px;">
-				<div class="stackedcards-container">${cards}</div>
-			</div>`);
-	},
+	render: (args) => renderStatic(stackedCardsMarkup(args)),
+};
+
+/** The three swipe-feedback overlays: left = reject, right = accept, top = info. */
+export const Overlays: Story = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				(['left', 'right', 'top'] as const).map((overlay) => ({
+					label: overlay,
+					html: `<div style="width: 280px;">${stackedCardsMarkup({ overlay, extendedClass: '' })}</div>`,
+				})),
+				{ direction: 'row', wrap: true }
+			).outerHTML
+		),
 };
