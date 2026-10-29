@@ -689,6 +689,16 @@ export const MIGRATION_DATA = {
 						'`--token-backdrop`',
 						'Same `rgba(0, 0, 0, 0.25)`. Write it as `var(--token-backdrop, rgba(0, 0, 0, 0.25))` — the token is not declared at `:root`',
 					],
+					[
+						'`--color-focus-outer`',
+						'`--osui-color-focus`',
+						'Classic yellow `#ffd337` wash. The focus ring now reads `--osui-color-focus` (primary-tinted); set it at `:root` to recolor every focus ring and outline',
+					],
+					[
+						'`--color-focus-inner`',
+						'`--token-border-boldest`',
+						'Classic `var(--color-neutral-10)` line under a focused link. Write it as `var(--token-border-boldest, #242528)` — the token is not declared at `:root`',
+					],
 				],
 			},
 		],
@@ -1429,8 +1439,8 @@ export const MIGRATION_DATA = {
 	computed: {
 		counts: {
 			classicRoot: 201,
-			retired: 105,
-			revalued: 52,
+			retired: 107,
+			revalued: 50,
 			unchanged: 44,
 			added: 36,
 			hooksRetired: 232,
@@ -1858,6 +1868,14 @@ export const MIGRATION_DATA = {
 				old: 'rgba(0, 0, 0, 0.25)',
 				now: 'rgba(0, 0, 0, 0.25098039215686274)',
 			},
+			'--color-focus-outer': {
+				old: '#ffd337',
+				now: '#b5c0f7',
+			},
+			'--color-focus-inner': {
+				old: '#101213',
+				now: '#242528',
+			},
 			'--background-color-primary': {
 				old: null,
 				now: '#105cef',
@@ -1997,14 +2015,6 @@ export const MIGRATION_DATA = {
 			'--color-cyan': {
 				old: '#0d8091',
 				now: '#127f98',
-			},
-			'--color-focus-inner': {
-				old: '#101213',
-				now: '#242528',
-			},
-			'--color-focus-outer': {
-				old: '#ffd337',
-				now: 'color-mix(in srgb, var(--token-semantics-primary-base, var(--token-semantics-primary-700, var(--token-primitives-blue-700, #105cef))) 22%, transparent)',
 			},
 			'--color-grape': {
 				old: '#ae3ec9',
@@ -2800,6 +2810,18 @@ export const MIGRATION_DATA = {
 						to: '--token-backdrop',
 						now: 'rgba(0, 0, 0, 0.25098039215686274)',
 					},
+					{
+						name: '--color-focus-outer',
+						old: '#ffd337',
+						to: '--osui-color-focus',
+						now: '#b5c0f7',
+					},
+					{
+						name: '--color-focus-inner',
+						old: '#101213',
+						to: '--token-border-boldest',
+						now: '#242528',
+					},
 				],
 			},
 		],
@@ -3074,18 +3096,6 @@ export const MIGRATION_DATA = {
 					expr: 'var(--token-semantics-danger-base, var(--token-semantics-danger-700, var(--token-primitives-red-700, #e0243a)))',
 				},
 				{
-					name: '--color-focus-inner',
-					old: '#101213',
-					now: '#242528',
-					expr: 'var(--token-border-boldest, var(--token-primitives-neutral-1200, #242528))',
-				},
-				{
-					name: '--color-focus-outer',
-					old: '#ffd337',
-					now: 'color-mix(in srgb, var(--token-semantics-primary-base, var(--token-semantics-primary-700, var(--token-primitives-blue-700, #105cef))) 22%, transparent)',
-					expr: 'color-mix(in srgb, var(--token-semantics-primary-base, var(--token-semantics-primary-700, var(--token-primitives-blue-700, #105cef))) 22%, transparent)',
-				},
-				{
 					name: '--color-info',
 					old: '#017aad',
 					now: '#105cef',
@@ -3253,6 +3263,6 @@ export const MIGRATION_DATA = {
 			fontSize: '14px',
 		},
 		snippet:
-			':root {\n\t/* Shadows */\n\t--shadow-none: none;\n\t--shadow-xs: var(--token-elevation-1, 0px 3px 9px 0px rgba(0, 0, 0, 0.07058823529411765), 0px 0px 4px 0px rgba(0, 0, 0, 0.0392156862745098));\n\t--shadow-s: var(--token-elevation-1, 0px 3px 9px 0px rgba(0, 0, 0, 0.07058823529411765), 0px 0px 4px 0px rgba(0, 0, 0, 0.0392156862745098));\n\t--shadow-m: var(--token-elevation-2, 0px 8px 25px 0px rgba(0, 0, 0, 0.0784313725490196), 0px 1px 5px 0px rgba(0, 0, 0, 0.050980392156862744));\n\t--shadow-l: var(--token-elevation-3, 0px 6px 32px 0px rgba(0, 0, 0, 0.1607843137254902), 0px 2px 7px 0px rgba(0, 0, 0, 0.050980392156862744));\n\t--shadow-xl: var(--token-elevation-4, 0px 15px 48px 0px rgba(0, 0, 0, 0.1803921568627451), 0px 3px 12px 0px rgba(0, 0, 0, 0.12156862745098039));\n\n\t/* Font sizes */\n\t--font-size-display: var(--token-font-size-900, 2.25rem);\n\t--font-size-h1: var(--token-font-size-700, 1.75rem);\n\t--font-size-h2: var(--token-font-size-650, 1.625rem);\n\t--font-size-h3: var(--token-font-size-600, 1.5rem);\n\t--font-size-h4: var(--token-font-size-550, 1.375rem);\n\t--font-size-h5: var(--token-font-size-500, 1.25rem);\n\t--font-size-h6: var(--token-font-size-450, 1.125rem);\n\t--font-size-base: var(--token-font-size-400, 1rem);\n\t--font-size-s: var(--token-font-size-350, 0.875rem);\n\t--font-size-xs: var(--token-font-size-300, 0.75rem);\n\t--font-size-label: var(--token-font-size-275, 0.6875rem);\n\n\t/* Border sizes */\n\t--border-size-none: var(--token-border-size-0, 0px);\n\t--border-size-s: var(--token-border-size-025, 1px);\n\t--border-size-m: var(--token-border-size-050, 2px);\n\t--border-size-l: var(--token-border-size-075, 3px);\n\n\t/* Font weights */\n\t--font-light: var(--token-font-weight-light, 300);\n\t--font-regular: var(--token-font-weight-regular, 400);\n\t--font-semi-bold: var(--token-font-weight-semi-bold, 600);\n\t--font-bold: var(--token-font-weight-bold, 700);\n\n\t/* Extended palette shades */\n\t--color-red-lightest: var(--token-bg-danger-subtle-default, #ffeff1);\n\t--color-red-lighter: var(--token-primitives-red-300, #fab1b9);\n\t--color-red-light: var(--token-primitives-red-500, #ec7382);\n\t--color-red-dark: var(--token-primitives-red-800, #d2002b);\n\t--color-red-darker: var(--token-primitives-red-900, #ab0224);\n\t--color-red-darkest: var(--token-primitives-red-1000, #89031f);\n\t--color-orange-lightest: var(--token-bg-extended-orange-subtle-default, #fdf0ea);\n\t--color-orange-lighter: var(--token-primitives-orange-300, #ffd7be);\n\t--color-orange-light: var(--token-primitives-orange-500, #f9aa84);\n\t--color-orange-dark: var(--token-primitives-orange-800, #d9711d);\n\t--color-orange-darker: var(--token-primitives-orange-900, #c15700);\n\t--color-orange-darkest: var(--token-primitives-orange-1000, #9f4904);\n\t--color-yellow-lightest: var(--token-bg-warning-subtle-default, #fff5db);\n\t--color-yellow-lighter: var(--token-primitives-yellow-300, #f9e2a1);\n\t--color-yellow-light: var(--token-primitives-yellow-500, #ffd600);\n\t--color-yellow-dark: var(--token-primitives-yellow-800, #ba8200);\n\t--color-yellow-darker: var(--token-primitives-yellow-900, #a57107);\n\t--color-yellow-darkest: var(--token-primitives-yellow-1000, #925f00);\n\t--color-lime-lightest: var(--token-bg-extended-lime-subtle-default, #f3fecd);\n\t--color-lime-lighter: var(--token-primitives-lime-300, #deeeaa);\n\t--color-lime-light: var(--token-primitives-lime-500, #c7d981);\n\t--color-lime-dark: var(--token-primitives-lime-800, #6d7d05);\n\t--color-lime-darker: var(--token-primitives-lime-900, #606f00);\n\t--color-lime-darkest: var(--token-primitives-lime-1000, #4f5b01);\n\t--color-green-lightest: var(--token-bg-success-subtle-default, #edfff7);\n\t--color-green-lighter: var(--token-primitives-green-300, #cef4e4);\n\t--color-green-light: var(--token-primitives-green-500, #94d9bb);\n\t--color-green-dark: var(--token-primitives-green-800, #038855);\n\t--color-green-darker: var(--token-primitives-green-900, #037046);\n\t--color-green-darkest: var(--token-primitives-green-1000, #055637);\n\t--color-teal-lightest: var(--token-bg-extended-teal-subtle-default, #d5f9f1);\n\t--color-teal-lighter: var(--token-primitives-teal-300, #b1e7dd);\n\t--color-teal-light: var(--token-primitives-teal-500, #00cfb7);\n\t--color-teal-dark: var(--token-primitives-teal-800, #008576);\n\t--color-teal-darker: var(--token-primitives-teal-900, #006b5f);\n\t--color-teal-darkest: var(--token-primitives-teal-1000, #005147);\n\t--color-cyan-lightest: var(--token-primitives-aqua-100, #d9f5ff);\n\t--color-cyan-lighter: var(--token-primitives-teal-300, #b1e7dd);\n\t--color-cyan-light: var(--token-primitives-teal-500, #00cfb7);\n\t--color-cyan-dark: var(--token-primitives-teal-800, #008576);\n\t--color-cyan-darker: var(--token-primitives-teal-900, #006b5f);\n\t--color-cyan-darkest: var(--token-primitives-teal-1000, #005147);\n\t--color-blue-lightest: var(--token-bg-info-subtle-default, #f0f2ff);\n\t--color-blue-lighter: var(--token-primitives-blue-300, #d0d7fa);\n\t--color-blue-light: var(--token-primitives-blue-500, #94a5f4);\n\t--color-blue-dark: var(--token-primitives-blue-800, #0f54da);\n\t--color-blue-darker: var(--token-primitives-blue-900, #0d4bc3);\n\t--color-blue-darkest: var(--token-primitives-blue-1000, #0b41a9);\n\t--color-indigo-lightest: var(--token-bg-extended-indigo-subtle-default, #ebe8ff);\n\t--color-indigo-lighter: var(--token-primitives-indigo-300, #d3d1f2);\n\t--color-indigo-light: var(--token-primitives-indigo-500, #9d95e4);\n\t--color-indigo-dark: var(--token-primitives-indigo-800, #3b19c3);\n\t--color-indigo-darker: var(--token-primitives-indigo-900, #3516ae);\n\t--color-indigo-darkest: var(--token-primitives-indigo-1000, #2e1397);\n\t--color-violet-lightest: var(--token-bg-extended-violet-subtle-default, #ece6ff);\n\t--color-violet-lighter: var(--token-primitives-violet-300, #dcd1fb);\n\t--color-violet-light: var(--token-primitives-violet-500, #b396f6);\n\t--color-violet-dark: var(--token-primitives-violet-800, #711ddd);\n\t--color-violet-darker: var(--token-primitives-violet-900, #651ac5);\n\t--color-violet-darkest: var(--token-primitives-violet-1000, #5817ab);\n\t--color-grape-lightest: var(--token-primitives-purple-100, #f5eafd);\n\t--color-grape-lighter: var(--token-primitives-purple-300, #e9d3fa);\n\t--color-grape-light: var(--token-primitives-purple-500, #d29bf6);\n\t--color-grape-dark: var(--token-primitives-purple-800, #a737dc);\n\t--color-grape-darker: var(--token-primitives-purple-900, #9531c5);\n\t--color-grape-darkest: var(--token-primitives-purple-1000, #812aaa);\n\t--color-pink-lightest: var(--token-bg-extended-pink-subtle-default, #ffedf4);\n\t--color-pink-lighter: var(--token-primitives-pink-300, #fdccde);\n\t--color-pink-light: var(--token-primitives-pink-500, #f0a8c3);\n\t--color-pink-dark: var(--token-primitives-pink-800, #df1b87);\n\t--color-pink-darker: var(--token-primitives-pink-900, #cc0d7e);\n\t--color-pink-darkest: var(--token-primitives-pink-1000, #a70565);\n\n\t/* Semantic light shades */\n\t--color-error-light: var(--token-semantics-danger-100, #ffeff1);\n\t--color-warning-light: var(--token-semantics-warning-100, #fff5db);\n\t--color-success-light: var(--token-semantics-success-100, #edfff7);\n\t--color-info-light: var(--token-semantics-info-100, #f0f2ff);\n\t--color-primary-lightest: var(--token-bg-primary-subtle-default, #f0f2ff);\n\n\t/* Border radius */\n\t--border-radius-circle: 50%;\n\n\t/* Other retired names */\n\t--header-color: var(--color-background-header);\n\t--overlay-background: var(--token-backdrop, rgba(0, 0, 0, 0.25098039215686274));\n}',
+			':root {\n\t/* Shadows */\n\t--shadow-none: none;\n\t--shadow-xs: var(--token-elevation-1, 0px 3px 9px 0px rgba(0, 0, 0, 0.07058823529411765), 0px 0px 4px 0px rgba(0, 0, 0, 0.0392156862745098));\n\t--shadow-s: var(--token-elevation-1, 0px 3px 9px 0px rgba(0, 0, 0, 0.07058823529411765), 0px 0px 4px 0px rgba(0, 0, 0, 0.0392156862745098));\n\t--shadow-m: var(--token-elevation-2, 0px 8px 25px 0px rgba(0, 0, 0, 0.0784313725490196), 0px 1px 5px 0px rgba(0, 0, 0, 0.050980392156862744));\n\t--shadow-l: var(--token-elevation-3, 0px 6px 32px 0px rgba(0, 0, 0, 0.1607843137254902), 0px 2px 7px 0px rgba(0, 0, 0, 0.050980392156862744));\n\t--shadow-xl: var(--token-elevation-4, 0px 15px 48px 0px rgba(0, 0, 0, 0.1803921568627451), 0px 3px 12px 0px rgba(0, 0, 0, 0.12156862745098039));\n\n\t/* Font sizes */\n\t--font-size-display: var(--token-font-size-900, 2.25rem);\n\t--font-size-h1: var(--token-font-size-700, 1.75rem);\n\t--font-size-h2: var(--token-font-size-650, 1.625rem);\n\t--font-size-h3: var(--token-font-size-600, 1.5rem);\n\t--font-size-h4: var(--token-font-size-550, 1.375rem);\n\t--font-size-h5: var(--token-font-size-500, 1.25rem);\n\t--font-size-h6: var(--token-font-size-450, 1.125rem);\n\t--font-size-base: var(--token-font-size-400, 1rem);\n\t--font-size-s: var(--token-font-size-350, 0.875rem);\n\t--font-size-xs: var(--token-font-size-300, 0.75rem);\n\t--font-size-label: var(--token-font-size-275, 0.6875rem);\n\n\t/* Border sizes */\n\t--border-size-none: var(--token-border-size-0, 0px);\n\t--border-size-s: var(--token-border-size-025, 1px);\n\t--border-size-m: var(--token-border-size-050, 2px);\n\t--border-size-l: var(--token-border-size-075, 3px);\n\n\t/* Font weights */\n\t--font-light: var(--token-font-weight-light, 300);\n\t--font-regular: var(--token-font-weight-regular, 400);\n\t--font-semi-bold: var(--token-font-weight-semi-bold, 600);\n\t--font-bold: var(--token-font-weight-bold, 700);\n\n\t/* Extended palette shades */\n\t--color-red-lightest: var(--token-bg-danger-subtle-default, #ffeff1);\n\t--color-red-lighter: var(--token-primitives-red-300, #fab1b9);\n\t--color-red-light: var(--token-primitives-red-500, #ec7382);\n\t--color-red-dark: var(--token-primitives-red-800, #d2002b);\n\t--color-red-darker: var(--token-primitives-red-900, #ab0224);\n\t--color-red-darkest: var(--token-primitives-red-1000, #89031f);\n\t--color-orange-lightest: var(--token-bg-extended-orange-subtle-default, #fdf0ea);\n\t--color-orange-lighter: var(--token-primitives-orange-300, #ffd7be);\n\t--color-orange-light: var(--token-primitives-orange-500, #f9aa84);\n\t--color-orange-dark: var(--token-primitives-orange-800, #d9711d);\n\t--color-orange-darker: var(--token-primitives-orange-900, #c15700);\n\t--color-orange-darkest: var(--token-primitives-orange-1000, #9f4904);\n\t--color-yellow-lightest: var(--token-bg-warning-subtle-default, #fff5db);\n\t--color-yellow-lighter: var(--token-primitives-yellow-300, #f9e2a1);\n\t--color-yellow-light: var(--token-primitives-yellow-500, #ffd600);\n\t--color-yellow-dark: var(--token-primitives-yellow-800, #ba8200);\n\t--color-yellow-darker: var(--token-primitives-yellow-900, #a57107);\n\t--color-yellow-darkest: var(--token-primitives-yellow-1000, #925f00);\n\t--color-lime-lightest: var(--token-bg-extended-lime-subtle-default, #f3fecd);\n\t--color-lime-lighter: var(--token-primitives-lime-300, #deeeaa);\n\t--color-lime-light: var(--token-primitives-lime-500, #c7d981);\n\t--color-lime-dark: var(--token-primitives-lime-800, #6d7d05);\n\t--color-lime-darker: var(--token-primitives-lime-900, #606f00);\n\t--color-lime-darkest: var(--token-primitives-lime-1000, #4f5b01);\n\t--color-green-lightest: var(--token-bg-success-subtle-default, #edfff7);\n\t--color-green-lighter: var(--token-primitives-green-300, #cef4e4);\n\t--color-green-light: var(--token-primitives-green-500, #94d9bb);\n\t--color-green-dark: var(--token-primitives-green-800, #038855);\n\t--color-green-darker: var(--token-primitives-green-900, #037046);\n\t--color-green-darkest: var(--token-primitives-green-1000, #055637);\n\t--color-teal-lightest: var(--token-bg-extended-teal-subtle-default, #d5f9f1);\n\t--color-teal-lighter: var(--token-primitives-teal-300, #b1e7dd);\n\t--color-teal-light: var(--token-primitives-teal-500, #00cfb7);\n\t--color-teal-dark: var(--token-primitives-teal-800, #008576);\n\t--color-teal-darker: var(--token-primitives-teal-900, #006b5f);\n\t--color-teal-darkest: var(--token-primitives-teal-1000, #005147);\n\t--color-cyan-lightest: var(--token-primitives-aqua-100, #d9f5ff);\n\t--color-cyan-lighter: var(--token-primitives-teal-300, #b1e7dd);\n\t--color-cyan-light: var(--token-primitives-teal-500, #00cfb7);\n\t--color-cyan-dark: var(--token-primitives-teal-800, #008576);\n\t--color-cyan-darker: var(--token-primitives-teal-900, #006b5f);\n\t--color-cyan-darkest: var(--token-primitives-teal-1000, #005147);\n\t--color-blue-lightest: var(--token-bg-info-subtle-default, #f0f2ff);\n\t--color-blue-lighter: var(--token-primitives-blue-300, #d0d7fa);\n\t--color-blue-light: var(--token-primitives-blue-500, #94a5f4);\n\t--color-blue-dark: var(--token-primitives-blue-800, #0f54da);\n\t--color-blue-darker: var(--token-primitives-blue-900, #0d4bc3);\n\t--color-blue-darkest: var(--token-primitives-blue-1000, #0b41a9);\n\t--color-indigo-lightest: var(--token-bg-extended-indigo-subtle-default, #ebe8ff);\n\t--color-indigo-lighter: var(--token-primitives-indigo-300, #d3d1f2);\n\t--color-indigo-light: var(--token-primitives-indigo-500, #9d95e4);\n\t--color-indigo-dark: var(--token-primitives-indigo-800, #3b19c3);\n\t--color-indigo-darker: var(--token-primitives-indigo-900, #3516ae);\n\t--color-indigo-darkest: var(--token-primitives-indigo-1000, #2e1397);\n\t--color-violet-lightest: var(--token-bg-extended-violet-subtle-default, #ece6ff);\n\t--color-violet-lighter: var(--token-primitives-violet-300, #dcd1fb);\n\t--color-violet-light: var(--token-primitives-violet-500, #b396f6);\n\t--color-violet-dark: var(--token-primitives-violet-800, #711ddd);\n\t--color-violet-darker: var(--token-primitives-violet-900, #651ac5);\n\t--color-violet-darkest: var(--token-primitives-violet-1000, #5817ab);\n\t--color-grape-lightest: var(--token-primitives-purple-100, #f5eafd);\n\t--color-grape-lighter: var(--token-primitives-purple-300, #e9d3fa);\n\t--color-grape-light: var(--token-primitives-purple-500, #d29bf6);\n\t--color-grape-dark: var(--token-primitives-purple-800, #a737dc);\n\t--color-grape-darker: var(--token-primitives-purple-900, #9531c5);\n\t--color-grape-darkest: var(--token-primitives-purple-1000, #812aaa);\n\t--color-pink-lightest: var(--token-bg-extended-pink-subtle-default, #ffedf4);\n\t--color-pink-lighter: var(--token-primitives-pink-300, #fdccde);\n\t--color-pink-light: var(--token-primitives-pink-500, #f0a8c3);\n\t--color-pink-dark: var(--token-primitives-pink-800, #df1b87);\n\t--color-pink-darker: var(--token-primitives-pink-900, #cc0d7e);\n\t--color-pink-darkest: var(--token-primitives-pink-1000, #a70565);\n\n\t/* Semantic light shades */\n\t--color-error-light: var(--token-semantics-danger-100, #ffeff1);\n\t--color-warning-light: var(--token-semantics-warning-100, #fff5db);\n\t--color-success-light: var(--token-semantics-success-100, #edfff7);\n\t--color-info-light: var(--token-semantics-info-100, #f0f2ff);\n\t--color-primary-lightest: var(--token-bg-primary-subtle-default, #f0f2ff);\n\n\t/* Border radius */\n\t--border-radius-circle: 50%;\n\n\t/* Other retired names */\n\t--header-color: var(--color-background-header);\n\t--overlay-background: var(--token-backdrop, rgba(0, 0, 0, 0.25098039215686274));\n\t--color-focus-outer: var(--osui-color-focus);\n\t--color-focus-inner: var(--token-border-boldest, #242528);\n}',
 	},
 } as const;

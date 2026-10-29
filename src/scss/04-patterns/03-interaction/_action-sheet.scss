@@ -203,17 +203,15 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.action-sheet-actions,
-	.action-sheet-cancel {
-		& > .btn:focus-visible {
-			--osui-focus-inner-shadow-gap: #{variables.$token-scale-050};
+.action-sheet-actions,
+.action-sheet-cancel {
+	& > .btn:focus-visible {
+		--osui-focus-gap-inner: #{variables.$token-scale-050};
 
-			@include a11y-focus-shadow($isInner: true);
+		@include a11y-focus-shadow($isInner: true);
 
-			border: variables.$token-border-size-025 solid var(--color-background-surface);
-			z-index: var(--layer-local-tier-1);
-		}
+		border: variables.$token-border-size-025 solid var(--color-background-surface);
+		z-index: var(--layer-local-tier-1);
 	}
 }
 
@@ -222,7 +220,7 @@
 .os-high-contrast {
 	.action-sheet-container--visible .action-sheet {
 		background-color: var(--osui-action-sheet-background);
-		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--osui-color-focus);
 	}
 
 	.action-sheet-actions {

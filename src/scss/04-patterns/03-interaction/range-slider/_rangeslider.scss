@@ -304,17 +304,15 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-range-slider {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+.osui-range-slider {
+	--osui-focus-gap: #{variables.$token-scale-050};
 
-		.osui-range-slider__provider:focus-within:has(:focus-visible) {
-			@include a11y-focus-shadow;
-		}
+	.osui-range-slider__provider:focus-within:has(:focus-visible) {
+		@include a11y-focus-shadow;
+	}
 
-		.noUi-handle:focus-visible {
-			@include a11y-focus-shadow;
-		}
+	.noUi-handle:focus-visible {
+		@include a11y-focus-shadow;
 	}
 }
 
@@ -322,6 +320,8 @@
 ///
 .os-high-contrast {
 	.osui-range-slider {
+		border: 0;
+
 		.noUi-horizontal {
 			height: calc(2 * var(--range-slider-thickness));
 		}
@@ -334,10 +334,6 @@
 		.noUi-base {
 			border: variables.$token-border-size-050 solid var(--color-border-input);
 		}
-	}
-
-	.has-accessible-features .osui-range-slider {
-		border: 0;
 	}
 }
 

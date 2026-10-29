@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Page Layout - Menu - App Menu Link */
 ////
@@ -174,17 +174,5 @@ body {
 
 	.layout:not(.layout-side) .app-menu-links a.active {
 		border-block-end: 0;
-	}
-}
-
-// Accessibility -----------------------------------------------------------------
-.has-accessible-features {
-	.header a.active:focus {
-		color: var(--color-primary);
-	}
-
-	.app-menu-links a:focus {
-		background-color: transparent;
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }

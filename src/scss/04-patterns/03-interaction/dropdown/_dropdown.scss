@@ -73,25 +73,23 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-body:has(.has-accessible-features) {
-	.osui-dropdown {
-		&-search,
-		&-tags {
-			.vscomp-wrapper {
-				&:focus-visible {
-					box-shadow: none;
+.osui-dropdown {
+	&-search,
+	&-tags {
+		.vscomp-wrapper {
+			&:focus-visible {
+				box-shadow: none;
 
-					.vscomp-toggle-button {
-						@include a11y-focus-shadow;
-					}
+				.vscomp-toggle-button {
+					@include a11y-focus-shadow;
 				}
 			}
 		}
 	}
+}
 
-	.vscomp-search-clear {
-		&:focus-visible {
-			@include a11y-focus-shadow;
-		}
+.vscomp-search-clear {
+	&:focus-visible {
+		@include a11y-focus-shadow;
 	}
 }

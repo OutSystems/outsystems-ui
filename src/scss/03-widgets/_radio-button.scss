@@ -51,14 +51,6 @@
 		border-color: var(--osui-radio-hover-border-color);
 	}
 
-	&:focus-visible:before {
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
-	}
-
-	&:focus:not(:focus-visible):before {
-		box-shadow: none;
-	}
-
 	&:checked {
 		&:before {
 			background-color: var(--osui-radio-background);
@@ -144,18 +136,12 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-.has-accessible-features {
-	.radio-button:focus-visible {
-		--osui-focus-shadow-gap: #{variables.$token-scale-050};
+.radio-button:focus-visible {
+	--osui-focus-gap: #{variables.$token-scale-050};
 
-		@include a11y-focus-shadow;
+	border-radius: var(--border-radius-rounded);
 
-		border-radius: var(--border-radius-rounded);
-
-		&:before {
-			background-color: variables.$token-semantics-primary-base;
-			border-color: var(--color-text);
-			box-shadow: none;
-		}
+	&:before {
+		box-shadow: none;
 	}
 }

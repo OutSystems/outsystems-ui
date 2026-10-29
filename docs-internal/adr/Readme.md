@@ -41,6 +41,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0013   | Physical horizontal positions in FloatingContent                                      | Proposed                           | 2026-10-23 |
 | ADR-0018   | Dropdown search focus ring shown only on keyboard interaction                         | Proposed                           | 2026-10-22 |
 | ADR-0019   | Removing redundant `.has-accessible-features` declarations only after a browser check | Proposed                           | 2026-10-23 |
+| ADR-0020   | Removing the `.has-accessible-features` scope from component styles                   | Proposed                           | 2026-10-27 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the
