@@ -80,12 +80,16 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .osui-dropdown-serverside-item {
-	&:hover {
-		background-color: variables.$token-bg-neutral-subtle-press;
-	}
-
 	&:focus-visible {
 		@include a11y-focus-shadow($isInner: true);
+	}
+}
+
+.has-accesible-features {
+	.osui-dropdown-serverside-item {
+		&:hover {
+			background-color: variables.$token-bg-neutral-subtle-press;
+		}
 	}
 }
 
