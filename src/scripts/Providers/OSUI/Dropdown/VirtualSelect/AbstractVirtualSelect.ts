@@ -4,6 +4,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onClick event
+		private _eventOnClick: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onKeyDown event
 		private _eventOnKeyDown: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onMouseDown event
@@ -54,6 +56,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.provider.$ele.disable();
 			} else {
 				this.provider.$ele.enable();
+			}
+		}
+
+		// Set the keyboard interaction when the click is not made by a pointer (e.g. screen reader activation, detail 0)
+		private _onClick(event: MouseEvent): void {
+			if (event.detail === 0) {
+				this._setKeyboardInteraction(true);
 			}
 		}
 
@@ -138,6 +147,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Add the events that will manage the focus ring visibility (keyboard vs pointer interaction)
 			this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
 			this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown, this._eventOnMouseDown);
+			this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 
 			if (OSFramework.OSUI.Helper.DeviceInfo.GetBrowser() === OSFramework.OSUI.GlobalEnum.Browser.edge) {
 				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
@@ -171,6 +181,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseDown,
 				this._eventOnMouseDown
 			);
+			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -290,6 +301,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
+			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnKeyDown = this._onKeyDown.bind(this);
 			this._eventOnMouseDown = this._onMouseDown.bind(this);
 			this._onMouseUpEvent = this._onMouseUp.bind(this);
@@ -311,6 +323,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @protected
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnClick = undefined;
 			this._eventOnKeyDown = undefined;
 			this._eventOnMouseDown = undefined;
 			this._eventOnWindowResize = undefined;
