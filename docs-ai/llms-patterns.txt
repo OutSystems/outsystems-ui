@@ -7,7 +7,7 @@ Three kinds of styles without TypeScript behaviour, each with a different contra
 CSS-only components: no TypeScript behaviour. Emit the markup and classes below and the compiled stylesheet does the rest. Skeletons come from the Storybook stories; `--osui-*` knobs are the per-instance overrides. A component marked **host-styled** is a layer another pattern creates (a balloon): adjust it through its knobs only.
 
 ### action-sheet (src/scss/04-patterns/03-interaction/_action-sheet.scss)
-[runtime-only] Skeleton (from stories/ActionSheet.stories.ts): <div><div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div></div>
+[runtime-only] Skeleton (from stories/ActionSheet.stories.ts): <div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div>
 CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-focus-inner-shadow-gap --osui-action-sheet-actions-layer
 Docs: interaction/action_sheet
 
@@ -17,7 +17,7 @@ CSS API: --osui-alert-background --osui-alert-color --osui-alert-accent-color --
 Docs: content/alert
 
 ### badge (src/scss/04-patterns/05-numbers/_badge.scss)
-[runtime-only] Skeleton (from stories/Badge.stories.ts): <div><span class="OSFillParent"></span></div>
+[runtime-only] Skeleton (from stories/Badge.stories.ts): <div><div><span class="OSFillParent"></span></div><div><span class="OSFillParent"></span></div></div>
 CSS API: --osui-badge-color --osui-badge-on-light-color
 Docs: numbers/badge
 
@@ -31,12 +31,12 @@ CSS API: --osui-blank-slate-description-color --osui-blank-slate-icon-color
 Docs: content/blank_slate
 
 ### bottom-bar-item (src/scss/04-patterns/04-navigation/_bottom-bar-item.scss)
-[runtime-only] Skeleton (from stories/BottomBar.stories.ts): <div><div><div class="bottom-bar"><div><div class="bottom-bar-item"><div class="placeholder-empty bottom-bar-item-icon"><i class="icon ph "></i></div><div class="placeholder-empty bottom-bar-item-text"></div></div></div></div></div></div>
+[runtime-only] Skeleton (from stories/BottomBar.stories.ts): <div><div class="bottom-bar"><div><div class="bottom-bar-item"><div class="placeholder-empty bottom-bar-item-icon"><i class="icon ph "></i></div><div class="placeholder-empty bottom-bar-item-text"></div></div></div></div></div>
 CSS API: --osui-bottom-bar-background --osui-bottom-bar-border-color --osui-bottom-bar-item-color --osui-bottom-bar-item-active-color --osui-bottom-bar-item-icon-color --osui-bottom-bar-item-icon-active-color
 Docs: navigation/bottom_bar_item
 
 ### breadcrumbs (src/scss/04-patterns/04-navigation/_breadcrumbs.scss)
-[runtime-only] Skeleton (from stories/Breadcrumbs.stories.ts): <nav aria-label="breadcrumb"><div class="breadcrumbs-content"><div class="breadcrumbs-item"><div class="title"><a href="#dashboard">Dashboard</a></div></div><div class="breadcrumbs-item"><div class="title"><a href="#list">List</a></div></div><div class="breadcrumbs-item"><div class="title"><span>Detail</span></div></div></div></nav>
+[runtime-only] Skeleton (from stories/Breadcrumbs.stories.ts): <div class="breadcrumbs-item"><div class="title"></div><div aria-hidden="true"><i class="icon ph "></i></div></div>
 CSS API: --osui-breadcrumbs-item-color --osui-breadcrumbs-separator-color
 Docs: navigation/breadcrumbs
 
@@ -53,12 +53,26 @@ CSS API: --osui-checkbox-size
 CSS API: --osui-button-group-container-background --osui-button-group-container-padding --osui-button-group-container-gap --osui-button-group-container-border-radius --osui-button-group-background --osui-button-group-border-color --osui-button-group-border-width --osui-button-group-color --osui-button-group-border-radius --osui-button-group-font-size --osui-button-group-height --osui-button-group-min-width --osui-button-group-padding-inline --osui-button-group-selected-background --osui-button-group-selected-border-color --osui-button-group-selected-color --osui-button-group-hover-background --osui-button-group-disabled-color --osui-button-group-disabled-overlay
 
 ### card (src/scss/04-patterns/02-content/_card.scss)
-[runtime-only] Skeleton (from stories/Card.stories.ts): <div><div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div><div class="card-detail-center"><div class="card-detail-title">Jane Doe</div><div class="card-detail-text">Product designer</div></div><div class="card-detail-right"><div class="badge border-radius-rounded background-primary OSInline"><span class="OSFillParent">3</span></div></div></div>
+[runtime-only] Skeleton (from stories/Card.stories.ts): <div>A simple card surface with border, radius, shadow and padding.</div>
 CSS API: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-color --osui-card-padding --osui-card-shadow
 Docs: content/card
 
+### card-background (src/scss/04-patterns/02-content/_card-background.scss)
+[runtime-only] Skeleton (from stories/CardBackground.stories.ts): <div><div class="card-background-content"><div><span class="heading2 text-neutral-0">Take control with a plan made for you</span></div></div><div class="card-background-image"><div></div></div><div></div></div>
+CSS API: --osui-card-background-color-rgb --osui-card-background-border-color --osui-card-background-border-width --osui-card-background-border-radius
+Docs: content/card_background
+
+### card-item (src/scss/04-patterns/02-content/_card-item.scss)
+[runtime-only] Skeleton (from stories/CardItem.stories.ts): <div><div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div><div class="card-detail-center"><div class="card-detail-title">Jane Doe</div><div class="card-detail-text">Product designer</div></div><div class="card-detail-right"><div class="badge border-radius-rounded background-primary OSInline"><span class="OSFillParent">3</span></div></div></div>
+CSS API: --osui-card-detail-title-color --osui-card-detail-text-color
+Docs: content/card_item
+
+### card-sectioned (src/scss/04-patterns/02-content/_card-sectioned.scss)
+[runtime-only] Skeleton (from stories/CardSectioned.stories.ts): <div><div><img src="" alt="Personal plan" /></div><div class="card-sectioned-top flex-direction-column"><div class="card-title">Hire our personal plan</div><div class="card-content">Take control with a plan made for you — manage everything in one place.</div><div class="card-bottom"><a href="#">Simulate Loan</a></div></div></div>
+Docs: content/card_sectioned
+
 ### chat-message (src/scss/04-patterns/02-content/_chat-message.scss)
-[runtime-only] Skeleton (from stories/ChatMessage.stories.ts): <div><div><div class="chat-photo OSInline"><div class="avatar border-radius-rounded " role="img" aria-label="user initials, "><span class="OSFillParent"></span></div></div><div class="chat-message-wrapper OSInline"><div class="chat-message padding OSInline" role="button" tabindex="0"><span></span></div><div class="chat-message-status"><span class="chat-message-status_icon"></span></div></div></div></div>
+[runtime-only] Skeleton (from stories/ChatMessage.stories.ts): <div><div><div><div class="chat-photo OSInline"><div class="avatar border-radius-rounded " role="img" aria-label="user initials, "><span class="OSFillParent"></span></div></div><div class="chat-message-wrapper OSInline"><div class="chat-message padding OSInline" role="button" tabindex="0"><span></span></div><div class="chat-message-status"><span class="chat-message-status_icon"></span></div></div></div></div></div>
 CSS API: --osui-chat-message-background --osui-chat-message-border-radius --osui-chat-message-sent-background --osui-chat-message-sent-color --osui-chat-message-status-color --osui-chat-message-status-line-height
 Docs: content/chat_message
 
@@ -83,7 +97,7 @@ CSS API: --osui-dropdown-ss-arrow-color --osui-dropdown-ss-arrow-size --osui-dro
 CSS API: --osui-feedback-message-background --osui-feedback-message-color --osui-feedback-message-icon-color --osui-feedback-message-border-radius --osui-feedback-message-box-shadow --osui-feedback-message-max-width --osui-feedback-message-min-width --osui-feedback-message-border-color
 
 ### floating-actions (src/scss/04-patterns/03-interaction/_floating-actions.scss)
-[runtime-only] Skeleton (from stories/FloatingActions.stories.ts): <div><div class="floating-overlay"></div><div id=""><div class="floating-items" aria-hidden=""></div><div class="floating-button" role="button" tabindex="0" aria-expanded="" aria-label="Toggle actions"><i class="icon ph ph-plus"></i></div></div></div>
+[runtime-only] Skeleton (from stories/FloatingActions.stories.ts): <div class="floating-overlay"></div><div id=""><div class="floating-items" aria-hidden=""></div><div class="floating-button" role="button" tabindex="0" aria-expanded="" aria-label="Toggle actions"><i class="icon ph ph-plus"></i></div></div>
 CSS API: --osui-floating-actions-layer --osui-floating-actions-button-background --osui-floating-actions-button-background-hover --osui-floating-actions-button-background-press --osui-floating-actions-button-border-radius --osui-floating-actions-button-color --osui-floating-actions-button-shadow --osui-floating-actions-item-background --osui-floating-actions-item-background-hover --osui-floating-actions-item-background-press --osui-floating-actions-item-border-radius --osui-floating-actions-item-color --osui-floating-actions-item-icon-color --osui-floating-actions-item-shadow --osui-focus-shadow-gap
 Docs: interaction/floating_actions
 
@@ -117,7 +131,7 @@ Docs: interaction/lightbox_image
 [runtime-only] Skeleton (from stories/widgets/List.stories.ts): <div data-list="" class="list list-group"><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-left"><div class="avatar avatar-medium border-radius-rounded background-indigo" role="img" aria-label="user initials, "><span class="OSFillParent"></span></div></div><div class="list-item-content-center"><div class="list-item-content-title"></div><div class="list-item-content-text"></div></div><div class="list-item-content-right"></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-left"><div class="avatar avatar-medium border-radius-rounded background-indigo" role="img" aria-label="user 
 
 ### list-item-content (src/scss/04-patterns/02-content/_list-item-content.scss)
-[runtime-only] Skeleton (from stories/ListItemContent.stories.ts): <div> List Item Content is used inside a List Item, within a List widget. See the composed example: <a href="./?path=/story/widgets-list--default" target="_top">Widgets/List →</a></div>
+[runtime-only] Skeleton (from stories/ListItemContent.stories.ts): <div><div class="list list-group"><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-left"><div class="avatar avatar-medium border-radius-rounded background-indigo" role="img" aria-label="user initials, "><span class="OSFillParent"></span></div></div><div class="list-item-content-center"><div class="list-item-content-title"></div><div class="list-item-content-text"></div></div><div class="list-item-content-right"></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-left"><div class="avatar avatar-medium border-radius-rounded background-indigo" role="img" aria-label="user initials
 CSS API: --osui-list-item-content-title-color --osui-list-item-content-text-color --osui-list-item-content-text-line-height --osui-list-item-content-icon-size --osui-list-item-content-icon-color
 Docs: content/list_item_content
 
@@ -155,7 +169,7 @@ CSS API: --osui-radio-size --osui-radio-background --osui-radio-border-color --o
 Docs: interaction/scrollable_area
 
 ### section (src/scss/04-patterns/02-content/_section.scss)
-[runtime-only] Skeleton (from stories/Section.stories.ts): <div><div><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div></div></div>
+[runtime-only] Skeleton (from stories/Section.stories.ts): <div><div><div class="section-group is--sticky"><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div><div class="section" role="region"><div class="section-title dividers"></div><div class="section-content"></div></div></div></div></div>
 CSS API: --osui-section-title-color --osui-section-title-border-color --osui-section-content-color --osui-section-title-line-height --osui-section-content-line-height --osui-section-group-gap
 Docs: content/section · content/section_group
 
@@ -173,7 +187,7 @@ CSS API: --osui-switch-height --osui-switch-width --osui-switch-thumb-size --osu
 CSS API: --osui-table-border-color --osui-table-border-radius --osui-table-header-background --osui-table-header-color --osui-table-cell-background --osui-table-row-hover-background --osui-table-row-stripe-background --osui-table-sorted-color --osui-table-row-selected-background
 
 ### tag (src/scss/04-patterns/02-content/_tag.scss)
-[runtime-only] Skeleton (from stories/Tag.stories.ts): <div>Label</div>
+[runtime-only] Skeleton (from stories/Tag.stories.ts): <div><div></div></div>
 CSS API: --osui-tag-color --osui-tag-on-light-color --osui-tag-soft-border-radius --osui-tag-medium-soft-border-radius
 Docs: content/tag
 
@@ -187,7 +201,7 @@ Docs: navigation/timeline_item
 CSS API: --osui-upload-background --osui-upload-border-color --osui-upload-border-width --osui-upload-color --osui-upload-border-radius --osui-upload-padding --osui-upload-icon-color --osui-upload-image-border-radius
 
 ### user-avatar (src/scss/04-patterns/02-content/_user-avatar.scss)
-[runtime-only] Skeleton (from stories/UserAvatar.stories.ts): <span class="OSFillParent"></span>
+[runtime-only] Skeleton (from stories/UserAvatar.stories.ts): <div><div role="img" aria-label=""></div></div>
 CSS API: --osui-avatar-color --osui-avatar-on-light-color --osui-avatar-soft-border-radius
 Docs: content/user_avatar
 

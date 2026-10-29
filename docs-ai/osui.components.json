@@ -138,7 +138,7 @@
 			"cssApi": [
 				"--osui-accordion-border-radius"
 			],
-			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__title__placeholder\"></div><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"markup": "<div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><div class=\"osui-accordion-item__title__placeholder\"><span></span></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div>",
 			"usage": {
 				"configs": {
 					"MultipleItems": false,
@@ -381,7 +381,7 @@
 				"--osui-accordion-item-title-padding-inline",
 				"--osui-accordion-item-plus-minus-size"
 			],
-			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__title__placeholder\"></div><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"markup": "<div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><div class=\"osui-accordion-item__title__placeholder\"><span></span></div></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div>",
 			"usage": {
 				"configs": {
 					"Icon": "Caret",
@@ -724,7 +724,7 @@
 				"--osui-bottom-sheet-transition-function",
 				"--osui-focus-inner-shadow-gap"
 			],
-			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Open bottom sheet</button><div class=\"osui-bottom-sheet\" aria-hidden=\"true\" tabindex=\"-1\"><div class=\"osui-bottom-sheet__header\"><div class=\"osui-bottom-sheet__header__top-bar\"><strong>Sheet title</strong></div></div><div class=\"osui-bottom-sheet__content\"><p>Bottom-sheet content slides up from the bottom edge.</p><button class=\"btn\" data-close type=\"button\">Close</button></div></div></div>",
+			"markup": "<div class=\"osui-bottom-sheet\" aria-hidden=\"\" tabindex=\"-1\"><div class=\"osui-bottom-sheet__header\"><div class=\"osui-bottom-sheet__header__top-bar\"><strong></strong></div></div><div class=\"osui-bottom-sheet__content\"></div></div><div class=\"osui-bottom-sheet-overlay\"></div>",
 			"usage": {
 				"configs": {
 					"Shape": "soft",
@@ -883,7 +883,7 @@
 				"Spinner": "osui-btn-loading__spinner-animation"
 			},
 			"cssApi": [],
-			"markup": "<div class=\"osui-btn-loading\"><button class=\"btn btn-primary\" type=\"button\"><span class=\"osui-btn-loading__spinner-animation\"></span> Save changes </button></div>",
+			"markup": "<div class=\"osui-btn-loading\"><button class=\"btn btn-primary\" type=\"button\"><span class=\"osui-btn-loading__spinner-animation\"></span></button></div>",
 			"usage": {
 				"configs": {
 					"IsLoading": false,
@@ -1254,7 +1254,7 @@
 				"--osui-carousel-pagination-margin",
 				"--osui-focus-shadow-gap"
 			],
-			"markup": "<div><div class=\"osui-carousel\" ><div class=\"osui-carousel__track\"><div class=\"osui-carousel__content\"></div></div></div></div>",
+			"markup": "<div class=\"carousel-demo\"><div class=\"osui-carousel\"><div class=\"osui-carousel__track\"><div class=\"osui-carousel__content\"></div></div></div></div>",
 			"usage": {
 				"configs": {
 					"AutoPlay": false,
@@ -2635,7 +2635,7 @@
 			"events": [],
 			"cssClasses": {},
 			"cssApi": [],
-			"markup": "<div><div class=\"osui-gallery\"><div class=\"list\"></div></div></div>",
+			"markup": "<div data-container=\"\"><div class=\"card card-sectioned flex-direction-column\"><div class=\"card-image\"><img data-image=\"\" src=\"\" alt=\"\"></div><div class=\"card-sectioned-top flex-direction-column\"><div class=\"card-title\"></div><div class=\"card-content\"> · </div></div></div></div>",
 			"usage": {
 				"configs": {
 					"ItemsGap": "base",
@@ -3569,7 +3569,7 @@
 				"--osui-balloon-border-radius",
 				"--osui-balloon-shadow"
 			],
-			"markup": "<div><div class=\"osui-overflow-menu\"><button class=\"osui-overflow-menu__trigger btn\" type=\"button\" aria-label=\"More actions\"><i class=\"icon ph \"></i></button><div class=\"osui-overflow-menu__balloon osui-balloon\" id=\"-balloon\"><nav class=\"display-flex flex-direction-column\"><span class=\"text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s\" aria-hidden=\"true\"> Title </span></nav></div></div></div>",
+			"markup": "<div><div class=\"osui-overflow-menu\"><button class=\"osui-overflow-menu__trigger btn\" type=\"button\" aria-label=\"More actions\"><i class=\"icon ph \"></i></button><div class=\"osui-overflow-menu__balloon osui-balloon\" id=\"-balloon\"><nav class=\"display-flex flex-direction-column\"><span class=\"text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s\" aria-hidden=\"true\"></span></nav></div></div></div>",
 			"usage": {
 				"configs": {
 					"Position": "auto",
@@ -4635,7 +4635,7 @@
 				"--osui-section-index-active-indicator-width",
 				"--osui-section-index-active-indicator-offset"
 			],
-			"markup": "<section id=\"\"><h3></h3><p>Content for .</p></section>",
+			"markup": "<div class=\"osui-main-content\"><div><div></div></div></div>",
 			"usage": {
 				"configs": {
 					"IsFixed": false,
@@ -4771,7 +4771,7 @@
 				"ItemTarget": "osui-section-index-item__target"
 			},
 			"cssApi": [],
-			"markup": "<section id=\"\"><h3></h3><p>Content for .</p></section>",
+			"markup": "<div class=\"osui-main-content\"><div><div></div></div></div>",
 			"usage": {
 				"configs": {
 					"ScrollToWidgetId": "",
@@ -5397,7 +5397,7 @@
 			],
 			"cssClasses": {},
 			"cssApi": [],
-			"markup": "<div><span data-output>Swipe inside this box (touch device / emulation)</span></div>",
+			"markup": "<div><div><span data-arrow aria-hidden=\"true\">☝</span><strong data-output>Swipe in any direction</strong><span>Touch device or device emulation</span></div><ol data-log aria-live=\"polite\"></ol></div>",
 			"usage": {
 				"configs": {
 					"WidgetId": "",
@@ -6622,7 +6622,7 @@
 			],
 			"cssClasses": {},
 			"cssApi": [],
-			"markup": "<div><span data-output>Touch &amp; drag inside this box (touch device / emulation)</span></div>",
+			"markup": "<div><div><span>Touch and drag inside this box</span></div><dl aria-live=\"polite\"><div><dt></dt><dd data->—</dd></div><div><dt></dt><dd data->—</dd></div><div><dt></dt><dd data->—</dd></div></dl></div>",
 			"usage": {
 				"configs": {
 					"WidgetId": "",
@@ -6838,7 +6838,7 @@
 				"VideoTrack": "osui-video-track"
 			},
 			"cssApi": [],
-			"markup": "<video class=\"osui-video\"></video>",
+			"markup": "<div><video class=\"osui-video\"></video><span data-state aria-live=\"polite\">State: Unstarted</span></div>",
 			"usage": {
 				"configs": {
 					"Autoplay": false,
