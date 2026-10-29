@@ -7,6 +7,20 @@ interface TooltipArgs {
 	startVisible: boolean;
 }
 
+// GlobalEnum.Position values — TooltipConfig.validateInRange silently
+// falls back to 'right' for anything outside this list.
+const POSITION_OPTIONS = [
+	'top',
+	'top-left',
+	'top-right',
+	'bottom',
+	'bottom-left',
+	'bottom-right',
+	'left',
+	'right',
+	'center',
+];
+
 const meta: Meta<TooltipArgs> = {
 	title: 'Patterns/Interaction/Tooltip',
 	tags: ['!ui-pending', 'ui-reviewed'],
@@ -14,19 +28,7 @@ const meta: Meta<TooltipArgs> = {
 		isHover: { control: 'boolean', name: 'IsHover' },
 		position: {
 			control: 'select',
-			// GlobalEnum.Position values — TooltipConfig.validateInRange silently
-			// falls back to 'right' for anything outside this list.
-			options: [
-				'top',
-				'top-left',
-				'top-right',
-				'bottom',
-				'bottom-left',
-				'bottom-right',
-				'left',
-				'right',
-				'center',
-			],
+			options: POSITION_OPTIONS,
 			name: 'Position',
 		},
 		startVisible: { control: 'boolean', name: 'StartVisible' },
@@ -88,5 +90,36 @@ export const Visible: Story = {
 	parameters: {
 		// Entrance animation is 150ms; wait it out so the snapshot is not mid-fade.
 		chromatic: { delay: 300 },
+	},
+};
+
+/** Every Position value pinned open on a spaced grid so the balloons don't collide. */
+export const Positions: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 300 } },
+	render: () => {
+		const entries = POSITION_OPTIONS.map((position) => ({ position, id: uid('tooltip') }));
+		const template = `
+			<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:140px 60px;padding:120px 100px;justify-items:center;">
+				${entries
+					.map(
+						({ position, id }) => `
+					<div ${osuiRoot(id)} class="osui-tooltip" style="display:inline-block;">
+						<div class="osui-tooltip__content" role="button" tabindex="0"><span class="btn">${position}</span></div>
+						<div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip">
+							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id}-balloon">${position}</div>
+							<div class="osui-tooltip__balloon-arrow"></div>
+						</div>
+					</div>`
+					)
+					.join('')}
+			</div>`;
+		return renderPattern(template, (_root, register) => {
+			const P = Patterns();
+			for (const { position, id } of entries) {
+				P.TooltipAPI.Create(id, cfg({ IsHover: true, Position: position, StartVisible: true }));
+				P.TooltipAPI.Initialize(id);
+				register(() => P.TooltipAPI.Dispose?.(id));
+			}
+		});
 	},
 };

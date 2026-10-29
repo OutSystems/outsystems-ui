@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Columns family. Each story's controls mirror the low-code input parameters of the
@@ -66,7 +67,7 @@ function colItem(label: string): string {
 	return `<div class="columns-item"><div class="card" style="padding:16px;text-align:center;">${label}</div></div>`;
 }
 
-// ─── Story factory (one per low-code Columns block) ──────────────────────────
+// ─── Board stories (one row per low-code Columns block) ───────────────────────
 
 type ColumnsArgs = {
 	gutterSize: GutterOption;
@@ -75,35 +76,68 @@ type ColumnsArgs = {
 	extendedClass: string;
 };
 
-function columnsStory(
-	variantClass: string,
-	labels: string[],
-	defaults: Partial<ColumnsArgs> = {}
-): StoryObj<ColumnsArgs> {
-	return {
-		args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '', ...defaults },
-		argTypes: {
-			gutterSize: gutterArgType,
-			tabletBehavior: tabletBehaviorArgType,
-			phoneBehavior: phoneBehaviorArgType,
-			extendedClass: extendedClassArgType,
-		},
-		render: ({ gutterSize, tabletBehavior, phoneBehavior, extendedClass }) =>
-			renderStatic(`
-				<div class="${cls('columns', variantClass, `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
-					${labels.map(colItem).join('')}
-				</div>`),
-	};
+function columnsMarkup(variantClass: string, labels: string[], args: ColumnsArgs): string {
+	const { gutterSize, tabletBehavior, phoneBehavior, extendedClass } = args;
+	return `
+		<div class="${cls('columns', variantClass, `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
+			${labels.map(colItem).join('')}
+		</div>`;
+}
+
+/** One labeled full-width row per variant; the controls apply to every row. */
+function columnsBoard(
+	variants: ReadonlyArray<[variantClass: string, labels: string[]]>,
+	args: ColumnsArgs
+): HTMLElement {
+	return renderStatic(
+		labeledBoard(
+			variants.map(([variantClass, labels]) => ({
+				label: variantClass,
+				html: `<div style="width:720px;max-width:100%;">${columnsMarkup(variantClass, labels, args)}</div>`,
+			}))
+		).outerHTML
+	);
 }
 
 const equalCols = (n: number): string[] => Array.from({ length: n }, (_, i) => `Column ${i + 1}`);
 
-export const Columns2 = columnsStory('columns2', equalCols(2));
-export const Columns3 = columnsStory('columns3', equalCols(3));
-export const Columns4 = columnsStory('columns4', equalCols(4), { tabletBehavior: 'middle' });
-export const Columns5 = columnsStory('columns5', equalCols(5), { tabletBehavior: 'middle' });
-export const Columns6 = columnsStory('columns6', equalCols(6), { tabletBehavior: 'middle' });
-export const ColumnsMediumLeft = columnsStory('columns-medium-left', ['Medium column', 'Wide column']);
-export const ColumnsMediumRight = columnsStory('columns-medium-right', ['Wide column', 'Medium column']);
-export const ColumnsSmallLeft = columnsStory('columns-small-left', ['Small column', 'Wide column']);
-export const ColumnsSmallRight = columnsStory('columns-small-right', ['Wide column', 'Small column']);
+const SHARED_ARG_CONFIG = {
+	args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '' },
+	argTypes: {
+		gutterSize: gutterArgType,
+		tabletBehavior: tabletBehaviorArgType,
+		phoneBehavior: phoneBehaviorArgType,
+		extendedClass: extendedClassArgType,
+	},
+} satisfies Pick<StoryObj<ColumnsArgs>, 'args' | 'argTypes'>;
+
+/** Columns2 through Columns6, one per line. */
+export const ColumnCounts: StoryObj<ColumnsArgs> = {
+	...SHARED_ARG_CONFIG,
+	render: (args) =>
+		columnsBoard(
+			[
+				['columns2', equalCols(2)],
+				['columns3', equalCols(3)],
+				['columns4', equalCols(4)],
+				['columns5', equalCols(5)],
+				['columns6', equalCols(6)],
+			],
+			args
+		),
+};
+
+/** The four asymmetric splits (medium = 1/3 + 2/3, small = 1/4 + 3/4), one per line. */
+export const AsymmetricSplits: StoryObj<ColumnsArgs> = {
+	...SHARED_ARG_CONFIG,
+	render: (args) =>
+		columnsBoard(
+			[
+				['columns-medium-left', ['Medium column', 'Wide column']],
+				['columns-medium-right', ['Wide column', 'Medium column']],
+				['columns-small-left', ['Small column', 'Wide column']],
+				['columns-small-right', ['Wide column', 'Small column']],
+			],
+			args
+		),
+};
