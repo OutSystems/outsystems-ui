@@ -77,14 +77,15 @@ body {
 }
 
 ///
-.has-accessible-features :focus-visible {
+// Doubled on purpose: keeps the (0,2,0) specificity this ring had as `.has-accessible-features :focus-visible`,
+// so later single-class rules that set box-shadow/outline (components, shadow utilities) do not hide it.
+:focus-visible:focus-visible {
 	@include a11y-focus-shadow;
 }
 
 ///
-.os-high-contrast .has-accessible-features :focus {
-	box-shadow: none;
-	outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+.os-high-contrast :focus-visible {
+	@include a11y-focus-outline;
 }
 
 /* ============================================================================ */

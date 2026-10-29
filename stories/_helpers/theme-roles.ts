@@ -112,18 +112,6 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 	]),
 	group(
 		{
-			id: 'focus',
-			title: 'Focus ring',
-			type: 'color',
-			blurb: 'Read by .has-accessible-features :focus — outer is the wash, inner the solid line on top.',
-		},
-		[
-			['--color-focus-outer', 'Outer (wash)'],
-			['--color-focus-inner', 'Inner (line)'],
-		]
-	),
-	group(
-		{
 			id: 'neutral',
 			title: 'Neutrals',
 			type: 'color',

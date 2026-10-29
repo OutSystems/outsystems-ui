@@ -17,6 +17,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 		Balloon = 'osui-dropdown-serverside__balloon',
 		BalloonContainer = 'osui-dropdown-serverside__balloon-container',
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
+		BalloonFocusVisible = 'osui-dropdown-serverside--focus-visible',
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
 		BalloonHasNotSearchInput = 'osui-dropdown-serverside__balloon--has-not-search',
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',

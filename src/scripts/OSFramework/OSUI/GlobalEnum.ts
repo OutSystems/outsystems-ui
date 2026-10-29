@@ -59,6 +59,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		InputFormControl = 'input.form-control',
 		IosBounceScroll = 'ios .ios-bounce:not(.hide-header-on-scroll) .content',
 		LayoutNativeHeader = 'layout-native:not(.hide-header-on-scroll) .header',
+		TextField = 'input:not([type=button],[type=checkbox],[type=radio],[type=submit],[type=reset]), textarea, [contenteditable]',
 	}
 
 	/**

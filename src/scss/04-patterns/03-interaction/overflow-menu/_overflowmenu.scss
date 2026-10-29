@@ -1,4 +1,5 @@
-@use "../../../tokens/variables";
+@use '../../../00-abstract/mixins' as *;
+@use '../../../tokens/variables';
 
 /* Patterns - Navigation - OverflowMenu */
 ////
@@ -7,9 +8,9 @@
 
 .osui-overflow-menu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-overflow-menu-background:        var(--color-background-surface);
-	--osui-overflow-menu-shadow:            #{variables.$token-elevation-2};
-	--osui-overflow-menu-color:             var(--color-text);
+	--osui-overflow-menu-background: var(--color-background-surface);
+	--osui-overflow-menu-shadow: #{variables.$token-elevation-2};
+	--osui-overflow-menu-color: var(--color-text);
 	--osui-overflow-menu-trigger-active-bg: #{variables.$token-bg-neutral-subtle-default};
 	--osui-overflow-menu-min-width: 170px;
 	--osui-overflow-menu-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
@@ -50,7 +51,7 @@
 	&__balloon {
 		--osui-balloon-background: var(--osui-overflow-menu-background);
 		--osui-balloon-border-radius: var(--osui-overflow-menu-border-radius);
-		--osui-balloon-shadow:     var(--osui-overflow-menu-shadow);
+		--osui-balloon-shadow: var(--osui-overflow-menu-shadow);
 
 		min-width: var(--osui-overflow-menu-min-width);
 		overflow: hidden;
@@ -114,7 +115,9 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 
 		a {
 			&:hover {
-				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+				--osui-focus-ring-width: #{variables.$token-border-size-075};
+
+				@include a11y-focus-outline;
 			}
 		}
 	}
