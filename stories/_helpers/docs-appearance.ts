@@ -1,8 +1,10 @@
+import { addons } from 'storybook/preview-api';
 import {
+	CH_APP_APPEARANCE,
 	isDarkAppearance,
 	isWindowsPlatform,
-	readSystemAppearance,
-	watchSystemAppearance,
+	resolveAppearance,
+	watchAppearance,
 } from './storybook-appearance.js';
 
 export const APP_DARK_CLASS = 'sb-app-dark';
@@ -12,6 +14,7 @@ export const DOCS_PAGE_SELECTOR =
 	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor, .osui-foundations, .osui-pattern-doc';
 
 let appearanceSyncReady = false;
+let channelReady = false;
 
 export function applyDocsPlatformClass(): void {
 	if (typeof document === 'undefined') return;
@@ -34,27 +37,46 @@ function nodeTouchesDocsPage(node: Node): boolean {
 	return node.querySelector(DOCS_PAGE_SELECTOR) !== null;
 }
 
-function syncFromSystem(): void {
-	applyAppAppearance(readSystemAppearance());
+function syncAppearance(): void {
+	applyAppAppearance(resolveAppearance());
+}
+
+/** The manager broadcasts the switch; the channel may not exist yet at module load. */
+function wireAppearanceChannel(): void {
+	if (channelReady) return;
+	let channel: ReturnType<typeof addons.getChannel> | undefined;
+	try {
+		channel = addons.getChannel();
+	} catch {
+		return;
+	}
+	if (!channel) return;
+	channelReady = true;
+	channel.on(CH_APP_APPEARANCE, (next: { scheme?: string } | undefined) => {
+		applyAppAppearance(next?.scheme ?? resolveAppearance());
+	});
 }
 
 /**
- * MDX docs pages skip preview decorators — apply the OS colour scheme at preview boot,
- * follow it live, and re-apply whenever a docs page root is mounted (the `.docs-dark`
- * class lives on the page root, which Storybook renders after this module ran).
+ * MDX docs pages skip preview decorators — apply the stored preference (or the OS colour
+ * scheme) at preview boot, follow the manager's switch and the OS live, and re-apply
+ * whenever a docs page root is mounted (the `.docs-dark` class lives on the page root,
+ * which Storybook renders after this module ran). Called again from the app-shell
+ * decorator, so the channel gets wired once it exists.
  */
 export function initDocsAppearanceSync(): void {
 	applyDocsPlatformClass();
+	wireAppearanceChannel();
 	if (appearanceSyncReady || typeof document === 'undefined') return;
 	appearanceSyncReady = true;
 
-	watchSystemAppearance(applyAppAppearance);
+	watchAppearance(applyAppAppearance);
 
 	const observer = new MutationObserver((mutations) => {
 		for (const mutation of mutations) {
 			for (const node of mutation.addedNodes) {
 				if (nodeTouchesDocsPage(node)) {
-					syncFromSystem();
+					syncAppearance();
 					return;
 				}
 			}
@@ -62,5 +84,5 @@ export function initDocsAppearanceSync(): void {
 	});
 	observer.observe(document.documentElement, { childList: true, subtree: true });
 
-	syncFromSystem();
+	syncAppearance();
 }

@@ -98,6 +98,66 @@
     display: none !important;
   }
 
+  /* Storybook appearance switch (light / dark / system) — canvas toolbar, see manager.js.
+     The toolbar rules below force button colours with !important, so these do too. */
+  .osui-appearance-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+    padding: 2px;
+    margin: 0 4px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .osui-appearance-switch__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none !important;
+    border-radius: 999px;
+    background: transparent;
+    color: #6b6b6b !important;
+    cursor: pointer;
+  }
+
+  .osui-appearance-switch__option svg {
+    display: block;
+    color: inherit !important;
+  }
+
+  .osui-appearance-switch__option:hover {
+    color: #242424 !important;
+  }
+
+  .osui-appearance-switch__option.is-active {
+    background: #ffffff;
+    color: #242424 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  html.osui-sb-dark .osui-appearance-switch {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option {
+    color: #9a9a9a !important;
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option:hover {
+    color: #ededed !important;
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option.is-active {
+    background: #333333;
+    color: #ededed !important;
+    box-shadow: none;
+  }
+
   /* Canvas toolbar globals (Theme, Icons, A11y, Direction, Appearance) */
   html:not(.osui-sb-dark) .sb-bar [role="toolbar"] button {
     color: #242424 !important;

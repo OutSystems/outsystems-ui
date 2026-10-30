@@ -32,7 +32,7 @@ import {
 	themeOverrideCount,
 } from '../stories/_helpers/theme-roles';
 import { initDocsAppearanceSync, applyAppAppearance } from '../stories/_helpers/docs-appearance';
-import { readSystemAppearance } from '../stories/_helpers/storybook-appearance.js';
+import { resolveAppearance } from '../stories/_helpers/storybook-appearance.js';
 import { waitForCanvasFonts } from '../stories/_helpers/fonts';
 import { setUidScope } from '../stories/_helpers/osui';
 
@@ -238,7 +238,7 @@ const withAppShell: Decorator = (storyFn, context) => {
 	// calls `uid()`.
 	setUidScope(context.id);
 	applyPreviewGlobals(context.globals);
-	applyAppAppearance(readSystemAppearance());
+	applyAppAppearance(resolveAppearance());
 	// Channel may not be ready at preview module load — wire docs sync from the decorator too.
 	initDocsAppearanceSync();
 	initPreviewToolbarSync();

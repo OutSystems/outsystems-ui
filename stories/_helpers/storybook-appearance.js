@@ -1,8 +1,16 @@
 /**
- * App-wide Storybook appearance (the docs/manager chrome, NOT the pattern dark theme
- * driven by the "Appearance" toolbar global). It follows the OS `prefers-color-scheme`
- * and is shared by manager.js and the preview sync; there is no manual toggle.
+ * App-wide Storybook appearance: the manager chrome and the docs pages (NOT the pattern
+ * dark theme, which is the preview's "Appearance" toolbar global / `.os-dark-theme`).
+ *
+ * The preference is `light`, `dark` or `system` (the default). It lives in localStorage,
+ * which the manager and the preview iframe share (same origin), so it survives reloads
+ * and direct iframe URLs. `system` resolves through `prefers-color-scheme` and follows it
+ * live. The manager owns the switch and broadcasts each change on the channel
+ * (`CH_APP_APPEARANCE`, payload `{ preference, scheme }`); the preview applies it.
  */
+export const CH_APP_APPEARANCE = 'osui/storybook-appearance';
+export const STORAGE_KEY = 'osui-storybook-appearance';
+export const APPEARANCE_PREFERENCES = ['light', 'dark', 'system'];
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)';
 
 function darkSchemeMedia() {
@@ -22,6 +30,36 @@ export function watchSystemAppearance(onChange) {
 	const handler = (event) => onChange(event.matches ? 'dark' : 'light');
 	media.addEventListener('change', handler);
 	return () => media.removeEventListener('change', handler);
+}
+
+/** The stored preference, `'system'` when nothing (or something unknown) is stored. */
+export function readAppearancePreference() {
+	try {
+		const stored = localStorage.getItem(STORAGE_KEY);
+		return APPEARANCE_PREFERENCES.includes(stored) ? stored : 'system';
+	} catch {
+		return 'system';
+	}
+}
+
+export function storeAppearancePreference(preference) {
+	try {
+		localStorage.setItem(STORAGE_KEY, preference);
+	} catch {
+		/* private mode / blocked storage: the preference just does not persist */
+	}
+}
+
+/** The scheme to show for a preference: the preference itself, or the OS one for `system`. */
+export function resolveAppearance(preference = readAppearancePreference()) {
+	return preference === 'system' ? readSystemAppearance() : preference;
+}
+
+/** Calls `onChange(scheme)` when the OS flips while the preference is `system`; returns the unsubscribe. */
+export function watchAppearance(onChange) {
+	return watchSystemAppearance((scheme) => {
+		if (readAppearancePreference() === 'system') onChange(scheme);
+	});
 }
 
 export function isDarkAppearance(scheme) {
