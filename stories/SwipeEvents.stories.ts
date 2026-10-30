@@ -76,6 +76,38 @@ function initSwipeEvents(targetId: string, register: Register, onSwipe: (evt: Sw
 	});
 }
 
+/** Slides `row` out of the inbox in the swiped direction, then shows the empty state once no row is left. */
+function archiveRow(
+	row: HTMLElement,
+	direction: 'SwipeLeft' | 'SwipeRight',
+	list: HTMLElement,
+	empty: HTMLElement
+): void {
+	row.style.transform = `translateX(${direction === 'SwipeLeft' ? '-110%' : '110%'})`;
+	row.style.opacity = '0';
+	setTimeout(() => {
+		row.hidden = true;
+		empty.hidden = list.querySelectorAll('[data-row]:not([hidden])').length > 0;
+	}, 250);
+}
+
+/** One Swipe Events instance per inbox row; horizontal swipes archive the row, the other two events are ignored. */
+function wireInboxRows(
+	root: HTMLElement,
+	ids: readonly string[],
+	register: Register,
+	list: HTMLElement,
+	empty: HTMLElement
+): void {
+	ids.forEach((id) => {
+		const row = root.querySelector<HTMLElement>(`#${id}`);
+		if (!row) return;
+		initSwipeEvents(id, register, (evt) => {
+			if (evt === 'SwipeLeft' || evt === 'SwipeRight') archiveRow(row, evt, list, empty);
+		});
+	});
+}
+
 const ARROWS: Record<SwipeEvent, string> = { SwipeUp: '↑', SwipeDown: '↓', SwipeLeft: '←', SwipeRight: '→' };
 
 export const BasicUsage: Story = {
@@ -164,26 +196,12 @@ export const SwipeToDismiss: Story = {
 			const list = root.querySelector<HTMLElement>('[data-list]')!;
 			const empty = root.querySelector<HTMLElement>('[data-empty]')!;
 			const initialRows = list.innerHTML;
-			const wire = () => {
-				rows.forEach(({ id }) => {
-					const row = root.querySelector<HTMLElement>(`#${id}`);
-					if (!row) return;
-					initSwipeEvents(id, register, (evt) => {
-						if (evt !== 'SwipeLeft' && evt !== 'SwipeRight') return;
-						row.style.transform = `translateX(${evt === 'SwipeLeft' ? '-110%' : '110%'})`;
-						row.style.opacity = '0';
-						setTimeout(() => {
-							row.hidden = true;
-							empty.hidden = list.querySelectorAll('[data-row]:not([hidden])').length > 0;
-						}, 250);
-					});
-				});
-			};
-			wire();
+			const ids = rows.map(({ id }) => id);
+			wireInboxRows(root, ids, register, list, empty);
 			root.querySelector('[data-reset]')!.addEventListener('click', () => {
 				list.innerHTML = initialRows;
 				empty.hidden = true;
-				wire();
+				wireInboxRows(root, ids, register, list, empty);
 			});
 		});
 	},

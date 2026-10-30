@@ -389,98 +389,90 @@ function CardHowTo({ recipe }: { recipe: StudioRecipe }) {
 	);
 }
 
-function CardPlaceholders({ item, variant }: { item: StudioRecipeItem; variant: CardVariant }) {
-	if (variant === 'basic') {
-		const contentSteps =
-			item.contentSteps ??
-			(item.content
-				? [
-						'Drag a Text widget into the Content placeholder.',
-						`Set Text to "${escapeText(stripHtml(item.content))}".`,
-					]
-				: undefined);
+/** The two steps that put a Text widget showing `text` into `placeholder`; nothing when there is no text. */
+function textSteps(placeholder: string, text: string | undefined, html = false): string[] | undefined {
+	if (!text) return undefined;
+	const value = html ? escapeText(stripHtml(text)) : escapeText(text);
+	return [`Drag a Text widget into the ${placeholder}.`, `Set Text to "${value}".`];
+}
 
-		return contentSteps ? <PlaceholderSteps label="Content placeholder" steps={contentSteps} /> : null;
-	}
+/** A placeholder's steps, or nothing for a placeholder the recipe leaves empty. */
+function OptionalSteps({ label, steps }: { label: string; steps: string[] | undefined }) {
+	return steps ? <PlaceholderSteps label={label} steps={steps} /> : null;
+}
 
-	if (variant === 'sectioned') {
-		const imageSteps = item.imageSteps ?? [
-			'Drag an Image widget into the Image placeholder.',
-			'Set the image to your product or illustration asset.',
-		];
-		const titleSteps =
-			item.titleSteps ??
-			(item.title
-				? ['Drag a Text widget into the Title placeholder.', `Set Text to "${escapeText(item.title)}".`]
-				: undefined);
-		const contentSteps =
-			item.contentSteps ??
-			(item.content
-				? [
-						'Drag a Text widget into the Content placeholder.',
-						`Set Text to "${escapeText(stripHtml(item.content))}".`,
-					]
-				: undefined);
-		const footerSteps = item.footerSteps ?? [
-			'Drag a Link widget into the Card Bottom placeholder.',
-			'Set Text to Simulate Loan.',
-		];
+function BasicCardPlaceholders({ item }: { item: StudioRecipeItem }) {
+	const contentSteps = item.contentSteps ?? textSteps('Content placeholder', item.content, true);
+	return <OptionalSteps label="Content placeholder" steps={contentSteps} />;
+}
 
-		return (
-			<>
-				{imageSteps ? <PlaceholderSteps label="Image placeholder" steps={imageSteps} /> : null}
-				{titleSteps ? <PlaceholderSteps label="Title placeholder" steps={titleSteps} /> : null}
-				{contentSteps ? <PlaceholderSteps label="Content placeholder" steps={contentSteps} /> : null}
-				<PlaceholderSteps label="Card Bottom placeholder" steps={footerSteps} />
-			</>
-		);
-	}
+function SectionedCardPlaceholders({ item }: { item: StudioRecipeItem }) {
+	const imageSteps = item.imageSteps ?? [
+		'Drag an Image widget into the Image placeholder.',
+		'Set the image to your product or illustration asset.',
+	];
+	const titleSteps = item.titleSteps ?? textSteps('Title placeholder', item.title);
+	const contentSteps = item.contentSteps ?? textSteps('Content placeholder', item.content, true);
+	const footerSteps = item.footerSteps ?? [
+		'Drag a Link widget into the Card Bottom placeholder.',
+		'Set Text to Simulate Loan.',
+	];
 
-	if (variant === 'background') {
-		const contentSteps = item.contentSteps ?? [
-			'Drag widgets into the Content placeholder.',
-			'Add a heading such as "Take control with a plan made for you".',
-		];
-		const imageSteps = item.imageSteps ?? [
-			'Drag an Image widget into the Image placeholder.',
-			'Set a background image or illustration.',
-		];
+	return (
+		<>
+			<PlaceholderSteps label="Image placeholder" steps={imageSteps} />
+			<OptionalSteps label="Title placeholder" steps={titleSteps} />
+			<OptionalSteps label="Content placeholder" steps={contentSteps} />
+			<PlaceholderSteps label="Card Bottom placeholder" steps={footerSteps} />
+		</>
+	);
+}
 
-		return (
-			<>
-				<PlaceholderSteps label="Content placeholder" steps={contentSteps} />
-				<PlaceholderSteps label="Image placeholder" steps={imageSteps} />
-			</>
-		);
-	}
+function BackgroundCardPlaceholders({ item }: { item: StudioRecipeItem }) {
+	const contentSteps = item.contentSteps ?? [
+		'Drag widgets into the Content placeholder.',
+		'Add a heading such as "Take control with a plan made for you".',
+	];
+	const imageSteps = item.imageSteps ?? [
+		'Drag an Image widget into the Image placeholder.',
+		'Set a background image or illustration.',
+	];
 
+	return (
+		<>
+			<PlaceholderSteps label="Content placeholder" steps={contentSteps} />
+			<PlaceholderSteps label="Image placeholder" steps={imageSteps} />
+		</>
+	);
+}
+
+function ItemCardPlaceholders({ item }: { item: StudioRecipeItem }) {
 	const leftSteps = item.leftSteps ?? ['Drag an Avatar widget into the Left placeholder.', 'Set initials to JD.'];
-	const titleSteps =
-		item.titleSteps ??
-		(item.title
-			? [
-					'Drag a Text widget into the Center placeholder for the title.',
-					`Set Text to "${escapeText(item.title)}".`,
-				]
-			: undefined);
-	const subtitleSteps =
-		item.contentSteps ??
-		(item.subtitle
-			? [
-					'Drag a Text widget into the Center placeholder for the subtitle.',
-					`Set Text to "${escapeText(item.subtitle)}".`,
-				]
-			: undefined);
+	const titleSteps = item.titleSteps ?? textSteps('Center placeholder for the title', item.title);
+	const subtitleSteps = item.contentSteps ?? textSteps('Center placeholder for the subtitle', item.subtitle);
 	const rightSteps = item.rightSteps ?? ['Drag a Badge widget into the Right placeholder.', 'Set the value to 3.'];
 
 	return (
 		<>
 			<PlaceholderSteps label="Left placeholder" steps={leftSteps} />
-			{titleSteps ? <PlaceholderSteps label="Center placeholder (title)" steps={titleSteps} /> : null}
-			{subtitleSteps ? <PlaceholderSteps label="Center placeholder (subtitle)" steps={subtitleSteps} /> : null}
+			<OptionalSteps label="Center placeholder (title)" steps={titleSteps} />
+			<OptionalSteps label="Center placeholder (subtitle)" steps={subtitleSteps} />
 			<PlaceholderSteps label="Right placeholder" steps={rightSteps} />
 		</>
 	);
+}
+
+function CardPlaceholders({ item, variant }: { item: StudioRecipeItem; variant: CardVariant }) {
+	switch (variant) {
+		case 'basic':
+			return <BasicCardPlaceholders item={item} />;
+		case 'sectioned':
+			return <SectionedCardPlaceholders item={item} />;
+		case 'background':
+			return <BackgroundCardPlaceholders item={item} />;
+		default:
+			return <ItemCardPlaceholders item={item} />;
+	}
 }
 
 function WidgetHowTo({ recipe }: { recipe: StudioRecipe }) {

@@ -5,72 +5,66 @@ type TokenKind = 'plain' | 'tag' | 'attr' | 'string' | 'comment' | 'punct';
 
 type Token = { kind: TokenKind; text: string };
 
+/** A token read at position `i`, and where the next one starts. */
+type Match = { token: Token; next: number };
+
+/** Tries to read one kind of token at `i`; `prev` is the token before it. */
+type Matcher = (line: string, i: number, prev: Token | undefined) => Match | null;
+
+const matchComment: Matcher = (line, i) => {
+	if (!line.startsWith('<!--', i)) return null;
+	const end = line.indexOf('-->', i);
+	const close = end === -1 ? line.length : end + 3;
+	return { token: { kind: 'comment', text: line.slice(i, close) }, next: close };
+};
+
+const matchSpace: Matcher = (line, i) => {
+	const space = /^\s+/.exec(line.slice(i));
+	return space ? { token: { kind: 'plain', text: space[0] }, next: i + space[0].length } : null;
+};
+
+const matchPunct: Matcher = (line, i) => {
+	let text = '';
+	if (line.startsWith('</', i)) text = '</';
+	else if ('<>=/'.includes(line[i])) text = line[i];
+	return text ? { token: { kind: 'punct', text }, next: i + text.length } : null;
+};
+
+const matchString: Matcher = (line, i) => {
+	if (line[i] !== '"') return null;
+	const end = line.indexOf('"', i + 1);
+	const close = end === -1 ? line.length : end + 1;
+	return { token: { kind: 'string', text: line.slice(i, close) }, next: close };
+};
+
+/** A word is an attribute name before `=`, a tag name after `<` / `</`, plain text otherwise. */
+function wordKind(after: string, prev: Token | undefined): TokenKind {
+	if (after.startsWith('=')) return 'attr';
+	if (prev?.kind === 'punct' && (prev.text === '<' || prev.text === '</')) return 'tag';
+	return 'plain';
+}
+
+const matchWord: Matcher = (line, i, prev) => {
+	const word = /^[\w.-]+/.exec(line.slice(i));
+	if (!word) return null;
+	const next = i + word[0].length;
+	return { token: { kind: wordKind(line.slice(next).trimStart(), prev), text: word[0] }, next };
+};
+
+/** In precedence order; anything none of them reads is a single plain character. */
+const MATCHERS: readonly Matcher[] = [matchComment, matchSpace, matchPunct, matchString, matchWord];
+
 function lexLine(line: string): Token[] {
 	const tokens: Token[] = [];
 	let i = 0;
 
 	while (i < line.length) {
-		if (line.startsWith('<!--', i)) {
-			const end = line.indexOf('-->', i);
-			const close = end === -1 ? line.length : end + 3;
-			tokens.push({ kind: 'comment', text: line.slice(i, close) });
-			i = close;
-			continue;
-		}
-
-		if (/[\s]/.test(line[i])) {
-			let j = i + 1;
-			while (j < line.length && /[\s]/.test(line[j])) j++;
-			tokens.push({ kind: 'plain', text: line.slice(i, j) });
-			i = j;
-			continue;
-		}
-
-		if (line.startsWith('</', i)) {
-			tokens.push({ kind: 'punct', text: '</' });
-			i += 2;
-			continue;
-		}
-
-		if (line[i] === '<' || line[i] === '>' || line[i] === '=') {
-			tokens.push({ kind: 'punct', text: line[i] });
-			i += 1;
-			continue;
-		}
-
-		if (line[i] === '/') {
-			tokens.push({ kind: 'punct', text: '/' });
-			i += 1;
-			continue;
-		}
-
-		if (line[i] === '"') {
-			let j = i + 1;
-			while (j < line.length && line[j] !== '"') j++;
-			tokens.push({ kind: 'string', text: line.slice(i, j + 1) });
-			i = j + 1;
-			continue;
-		}
-
-		const word = line.slice(i).match(/^[\w.-]+/);
-		if (word) {
-			const after = line.slice(i + word[0].length).trimStart();
-			const prev = tokens[tokens.length - 1];
-			let kind: TokenKind = 'plain';
-
-			if (after.startsWith('=')) {
-				kind = 'attr';
-			} else if (prev?.kind === 'punct' && (prev.text === '<' || prev.text === '</')) {
-				kind = 'tag';
-			}
-
-			tokens.push({ kind, text: word[0] });
-			i += word[0].length;
-			continue;
-		}
-
-		tokens.push({ kind: 'plain', text: line[i] });
-		i += 1;
+		const prev = tokens[tokens.length - 1];
+		const match =
+			MATCHERS.reduce<Match | null>((found, matcher) => found ?? matcher(line, i, prev), null) ??
+			({ token: { kind: 'plain', text: line[i] }, next: i + 1 } satisfies Match);
+		tokens.push(match.token);
+		i = match.next;
 	}
 
 	return tokens;
