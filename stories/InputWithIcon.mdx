@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InputWithIconStories from './InputWithIcon.stories';
+import { INPUT_WITH_ICON_RECIPES } from './_helpers/pattern-docs/input-with-icon-recipes';
+import { INPUT_WITH_ICON_DOC } from './_helpers/pattern-docs/input-with-icon-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={InputWithIconStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={INPUT_WITH_ICON_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="An Icon widget in the Icon placeholder and an Input widget in the Input placeholder. With `AlignIconRight` left at False the icon docks to the start edge and the input text is indented past it."
+				implement={<StudioHowTo recipe={INPUT_WITH_ICON_RECIPES.basicUsage} />}
+			>
+				<Canvas of={InputWithIconStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Icon on the right"
+				description="Set `AlignIconRight` to True to dock the icon to the end edge — the usual choice for calendar, clear or visibility toggles."
+				implement={<StudioHowTo recipe={INPUT_WITH_ICON_RECIPES.iconRight} />}
+			>
+				<Canvas of={InputWithIconStories.IconRight} />
+			</PdExample>
+			<PdExample
+				title="Error state"
+				description="The error look belongs to the Input widget: when its `Valid` property is False the platform adds `not-valid` and renders the `ValidationMessage` below the pattern."
+				implement={<StudioHowTo recipe={INPUT_WITH_ICON_RECIPES.errorState} />}
+			>
+				<Canvas of={InputWithIconStories.ErrorState} />
+			</PdExample>
+		</>
+	}
+/>

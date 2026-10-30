@@ -15,6 +15,27 @@ import { colorBoard, labeledBoard } from './_helpers/showcase';
  * The pattern SCSS now owns the IsLight text colors (per-family text tokens per the
  * Figma spec); the text-{color} classes below are kept only for platform markup parity.
  */
+// ─── Docs-page demos (ported from the docs stories) ─────────────────────────
+
+const DEMO_WRAP = 'display:flex;justify-content:center;width:100%;';
+
+function tagMarkupDoc(
+	color: string,
+	size: string,
+	shape: string,
+	isLight: boolean,
+	label: string,
+	extendedClass = ''
+): string {
+	const bgClass = backgroundClass(color, isLight);
+	const textClass = isLight ? lightTextClass(color) : '';
+	const shapeClass = shape ? `border-radius-${shape}` : '';
+	const sizeClass = size ? `tag-${size}` : '';
+	return `<div class="${cls('tag', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}">${label}</div>`;
+}
+
+type Story = StoryObj;
+
 const meta: Meta = { title: 'Patterns/Content/Tag' };
 export default meta;
 
@@ -39,7 +60,7 @@ function tagMarkup({ color, size, shape, isLight, extendedClass }: TagArgs): str
 
 const baseArgs: TagArgs = { color: 'primary', size: 'medium', shape: 'rounded', isLight: false, extendedClass: '' };
 
-export const Default: StoryObj<TagArgs> = {
+export const Playground: StoryObj<TagArgs> = {
 	args: { ...baseArgs },
 	argTypes: {
 		color: {
@@ -68,6 +89,40 @@ export const Default: StoryObj<TagArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: (args) => renderStatic(tagMarkup(args)),
+};
+
+export const DefaultStyle: Story = {
+	tags: ['docs-example'],
+	name: 'Default style',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(`<div style="${DEMO_WRAP}">${tagMarkupDoc('primary', 'medium', 'rounded', false, 'Label')}</div>`),
+};
+
+export const LightStyle: Story = {
+	tags: ['docs-example'],
+	name: 'Light style',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(`<div style="${DEMO_WRAP}">${tagMarkupDoc('primary', 'medium', 'rounded', true, 'Label')}</div>`),
+};
+
+export const ColourVariants: Story = {
+	tags: ['docs-example'],
+	name: 'Colour variants',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(
+			`<div style="${DEMO_WRAP}display:flex;flex-wrap:wrap;gap:8px;max-width:480px;">${[
+				'primary',
+				'success',
+				'warning',
+				'error',
+				'info',
+			]
+				.map((c) => tagMarkupDoc(c, 'medium', 'rounded', false, c))
+				.join('')}</div>`
+		),
 };
 
 /** Every Color swatch as a solid and an IsLight tag. */

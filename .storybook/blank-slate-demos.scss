@@ -1,0 +1,45 @@
+@use '../src/scss/tokens/variables';
+
+/* Storybook-only polish inside shipped Blank Slate slots (icon / description / actions). */
+
+.blank-slate-icon.sb-blank-slate-illust {
+	color: inherit;
+	font-size: inherit;
+	line-height: 1;
+}
+
+.blank-slate.large .blank-slate-icon.sb-blank-slate-illust {
+	font-size: inherit;
+}
+
+.sb-blank-slate-title {
+	font-weight: 650;
+	margin: 0;
+}
+
+.sb-blank-slate-lead {
+	color: var(--color-text-subtle);
+	margin: variables.$token-scale-200 0 0;
+}
+
+.blank-slate-actions.sb-blank-slate-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: variables.$token-scale-300;
+	justify-content: center;
+}
+
+/* ── Image illustration (Icon placeholder) ───────────────────── */
+
+.sb-bs-illust-img {
+	display: block;
+	height: auto;
+	margin: 0 auto;
+	max-width: 220px;
+	width: 100%;
+}
+
+.blank-slate.large .sb-bs-illust-img {
+	max-width: 280px;
+}
+

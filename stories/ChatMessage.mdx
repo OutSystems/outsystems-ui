@@ -1,0 +1,30 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChatMessageStories from './ChatMessage.stories';
+import { CHAT_MESSAGE_RECIPES } from './_helpers/pattern-docs/chat-message-recipes';
+import { CHAT_MESSAGE_DOC } from './_helpers/pattern-docs/chat-message-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={ChatMessageStories}
+	tags={['!ui-pending']}
+	parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }}
+/>
+
+<PatternDocPage
+	meta={CHAT_MESSAGE_DOC}
+	examples={
+		<>
+			<PdExample title="Received" description="DisplayOnRight is False — incoming message aligned left with avatar." implement={<StudioHowTo recipe={CHAT_MESSAGE_RECIPES.received} />}>
+				<Canvas of={ChatMessageStories.Received} />
+			</PdExample>
+			<PdExample title="Sent" description="DisplayOnRight is True with MessageStatus Sent — outgoing bubble on the right." implement={<StudioHowTo recipe={CHAT_MESSAGE_RECIPES.sent} />}>
+				<Canvas of={ChatMessageStories.Sent} />
+			</PdExample>
+			<PdExample title="Read status" description="MessageStatus Read shows the green read indicator on a sent message." implement={<StudioHowTo recipe={CHAT_MESSAGE_RECIPES.readStatus} />}>
+				<Canvas of={ChatMessageStories.ReadStatus} />
+			</PdExample>
+		</>
+	}
+/>

@@ -71,11 +71,15 @@ function itemMarkup(id: string, glyph: string, label: string): string {
 const meta: Meta<WizardArgs> = {
 	title: 'Patterns/Navigation/Wizard',
 	argTypes: {
-		isVertical: { control: 'boolean', name: 'Wizard.IsVertical' },
+		isVertical: {
+			control: 'boolean',
+			name: 'Wizard.IsVertical',
+			description: 'Set the orientation: stacks the steps vertically.',
+		},
 		stepBehavior: {
 			control: 'inline-radio',
 			options: ['ProgressOnly', 'Interactive'],
-			name: 'Wizard.StepBehavior',
+			name: 'Wizard.StepsBehaviour',
 			description: 'Interactive makes past steps clickable (role=tablist); ProgressOnly renders a plain list.',
 		},
 		reverseLabelPosition: {
@@ -118,29 +122,73 @@ function renderWizard(args: WizardArgs, statuses: Array<[WizardItemStatus, strin
 	});
 }
 
-export const WizardStory: Story = {
-	name: 'Wizard',
+export const Playground: Story = {
 	render: (args) => renderWizard(args, STEPS),
 };
 
+// ─── Docs examples ───────────────────────────────────────────────────────────
+
+/** Block defaults: horizontal, `StepsBehaviour` = Interactive (past steps clickable), numbered markers. */
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default Wizard: horizontal steps with `StepsBehaviour` = Interactive, so the completed (Past) step is clickable and the Active step is announced as selected.',
+			},
+		},
+	},
+	render: () => renderWizard({ isVertical: false, stepBehavior: 'Interactive', reverseLabelPosition: false }, STEPS),
+};
+
 export const Vertical: Story = {
+	tags: ['docs-example'],
+	name: 'Vertical',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '`IsVertical` = True stacks the steps top to bottom with the connector running down the markers.',
+			},
+		},
+	},
 	args: { isVertical: true },
 	render: (args) => renderWizard(args, STEPS),
+};
+
+export const MarkerIcon: Story = {
+	tags: ['docs-example'],
+	name: 'Marker: icon',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'An Icon widget in each Wizard Item Icon placeholder replaces the step number inside the marker.',
+			},
+		},
+	},
+	render: (args) => renderWizard(args, ICON_STEPS),
+};
+
+export const MarkerEmpty: Story = {
+	tags: ['docs-example'],
+	name: 'Marker: empty (dot)',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'An empty Icon placeholder collapses the marker to a small dot, keeping only the status colours and the connector.',
+			},
+		},
+	},
+	render: (args) => renderWizard(args, EMPTY_STEPS),
 };
 
 export const Interactive: Story = {
 	args: { stepBehavior: 'Interactive' },
 	render: (args) => renderWizard(args, STEPS),
-};
-
-export const MarkerIcon: Story = {
-	name: 'Marker: icon',
-	render: (args) => renderWizard(args, ICON_STEPS),
-};
-
-export const MarkerEmpty: Story = {
-	name: 'Marker: empty (dot)',
-	render: (args) => renderWizard(args, EMPTY_STEPS),
 };
 
 /** Label under the marker, then above it (`ReverseLabelPosition`). */

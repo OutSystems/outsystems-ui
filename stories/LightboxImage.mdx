@@ -1,0 +1,39 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LightboxImageStories from './LightboxImage.stories';
+import { LIGHTBOX_IMAGE_RECIPES } from './_helpers/pattern-docs/lightbox-image-recipes';
+import { LIGHTBOX_IMAGE_DOC } from './_helpers/pattern-docs/lightbox-image-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={LightboxImageStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={LIGHTBOX_IMAGE_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Four Lightbox Image blocks sharing the same `Group`. Clicking any thumbnail opens the viewer on that photo with prev/next arrows, the counter and each block's `Title` as caption."
+				implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={LightboxImageStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Single image with title"
+				description="One block with an empty `Group`: the viewer opens on that image alone — no arrows, no counter — and shows the `Title` as caption."
+				implement={<StudioHowTo recipe={LIGHTBOX_IMAGE_RECIPES.singleImage} />}
+			>
+				<Canvas of={LightboxImageStories.SingleImage} />
+			</PdExample>
+		</>
+	}
+/>

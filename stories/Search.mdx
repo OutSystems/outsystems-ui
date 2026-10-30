@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SearchStories from './Search.stories';
+import { SEARCH_RECIPES } from './_helpers/pattern-docs/search-recipes';
+import { SEARCH_DOC } from './_helpers/pattern-docs/search-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={SearchStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={SEARCH_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="An Input widget in the Input placeholder. The block paints the magnifying glass inside the field; bind the Input to a text variable and filter on its `OnChange`."
+				implement={<StudioHowTo recipe={SEARCH_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SearchStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Pre-filled value"
+				description="When the bound variable already holds a term the Input renders it next to the icon. Search adds no state class of its own — the filled look is the Input widget's."
+				implement={<StudioHowTo recipe={SEARCH_RECIPES.prefilledValue} />}
+			>
+				<Canvas of={SearchStories.PrefilledValue} />
+			</PdExample>
+			<PdExample
+				title="Round shape"
+				description="Set `ExtendedClass` to shape-round to apply the round border-radius profile to the field — the usual look for a header search."
+				implement={<StudioHowTo recipe={SEARCH_RECIPES.roundShape} />}
+			>
+				<Canvas of={SearchStories.RoundShape} />
+			</PdExample>
+		</>
+	}
+/>

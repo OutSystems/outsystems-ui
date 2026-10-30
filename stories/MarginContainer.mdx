@@ -1,0 +1,39 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MarginContainerStories from './MarginContainer.stories';
+import { MARGIN_CONTAINER_RECIPES } from './_helpers/pattern-docs/margin-container-recipes';
+import { MARGIN_CONTAINER_DOC } from './_helpers/pattern-docs/margin-container-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={MarginContainerStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={MARGIN_CONTAINER_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="A Card in the MarginContainer placeholder. The gap between the dashed frame (the screen edge) and the card is the theme screen padding; there are no properties to set beyond `ExtendedClass`."
+				implement={<StudioHowTo recipe={MARGIN_CONTAINER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={MarginContainerStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Inside a layout"
+				description="Edge-to-edge header and hero image outside, text and actions inside the Margin Container — the usual way to mix full-bleed and inset content on one screen."
+				implement={<StudioHowTo recipe={MARGIN_CONTAINER_RECIPES.insideLayout} />}
+			>
+				<Canvas of={MarginContainerStories.InsideLayout} />
+			</PdExample>
+		</>
+	}
+/>

@@ -63,7 +63,7 @@ function masterDetailMarkup(
 		: markup;
 }
 
-export const Default: StoryObj<MasterDetailArgs> = {
+export const Playground: StoryObj<MasterDetailArgs> = {
 	args: {
 		leftPercentage: 40,
 		openedOnPhone: false,
@@ -91,9 +91,103 @@ export const Default: StoryObj<MasterDetailArgs> = {
 	render: (args) => renderStatic(masterDetailMarkup(args)),
 };
 
+const EMPLOYEES = [
+	{ name: 'Carlton Turner', role: 'Data analyst', team: 'Analytics', email: 'carlton.turner@example.com' },
+	{ name: 'Diana Rossi', role: 'Software engineer', team: 'Payments', email: 'diana.rossi@example.com' },
+	{ name: 'Evelyn Chen', role: 'Project manager', team: 'Product', email: 'evelyn.chen@example.com' },
+	{ name: 'Hugo Almeida', role: 'UX designer', team: 'Design', email: 'hugo.almeida@example.com' },
+] as const;
+
+/**
+ * Docs-page markup with the block defaults (LeftPercentage 50, OpenedOnPhone False): a List of
+ * employees in LeftContent and the selected record in RightContent. The selection is switched
+ * in the story so the detail pane follows the list, the way a List OnClick would in the app.
+ */
+function employeeMasterDetailMarkup(leftPercentage: number, selected: number): string {
+	const pct = `${leftPercentage}%`;
+	const items = EMPLOYEES.map(
+		(employee, index) =>
+			`<div data-list-item data-index="${index}" class="list-item${index === selected ? ' list-item-selected' : ''}" tabindex="0" role="button" aria-pressed="${index === selected}">
+				<div class="list-item-content">
+					<div class="list-item-content-center">
+						<div class="list-item-content-title">${employee.name}</div>
+						<div class="list-item-content-text">${employee.role}</div>
+					</div>
+				</div>
+			</div>`
+	).join('');
+	return `
+		<div class="${cls('split-screen-wrapper', 'is--full-height')}" style="--left-percentage:${pct};display:flex;height:320px;border:1px solid var(--color-neutral-4, #eee);border-radius:8px;overflow:hidden;">
+			<div class="split-left OSInline" style="flex:0 0 ${pct};">
+				<div class="list list-group">${items}</div>
+			</div>
+			<div class="split-right" style="flex:1;">
+				<div class="split-right-content" data-detail></div>
+			</div>
+		</div>`;
+}
+
+function employeeDetail(index: number): string {
+	const employee = EMPLOYEES[index];
+	return `
+		<h3 style="margin:0 0 4px;">${employee.name}</h3>
+		<p style="margin:0 0 16px;color:var(--color-neutral-7, #667);">${employee.role} · ${employee.team}</p>
+		<dl style="display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:0;font-size:14px;">
+			<dt style="font-weight:600;">Email</dt><dd style="margin:0;">${employee.email}</dd>
+			<dt style="font-weight:600;">Team</dt><dd style="margin:0;">${employee.team}</dd>
+			<dt style="font-weight:600;">Status</dt><dd style="margin:0;">Active</dd>
+		</dl>`;
+}
+
+export const BasicUsage: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Block defaults — <code>LeftPercentage</code> 50 and <code>OpenedOnPhone</code> False. A List in LeftContent drives what RightContent shows; on desktop and tablet both panes stay side by side.',
+			},
+		},
+	},
+	render: () => {
+		const root = renderStatic(employeeMasterDetailMarkup(50, 0));
+		const detail = root.querySelector<HTMLElement>('[data-detail]')!;
+		detail.innerHTML = employeeDetail(0);
+		const select = (index: number) => {
+			root.querySelectorAll<HTMLElement>('[data-list-item]').forEach((item, i) => {
+				item.classList.toggle('list-item-selected', i === index);
+				item.setAttribute('aria-pressed', String(i === index));
+			});
+			detail.innerHTML = employeeDetail(index);
+		};
+		root.querySelectorAll<HTMLElement>('[data-list-item]').forEach((item) => {
+			const index = Number(item.dataset.index);
+			item.addEventListener('click', () => select(index));
+			item.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					select(index);
+				}
+			});
+		});
+		return root;
+	},
+};
+
 /** LeftPercentage at 30 / 50 / 70. */
 export const SplitRatios: StoryObj = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Left percentage',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>LeftPercentage</code> at 30, 50 and 70. The value becomes the <code>--left-percentage</code> variable: LeftContent takes that share of the width and RightContent the remainder.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
@@ -107,12 +201,22 @@ export const SplitRatios: StoryObj = {
 
 /** Phone context with the detail pane closed vs slid in (`.split-right.open`). */
 export const PhoneOpen: StoryObj = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Opened on phone',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'On phones the panes stack: the list fills the screen and RightContent slides in over it when <code>OpenedOnPhone</code> is True. Bind it to a Boolean variable set in the list item OnClick, and reset it on the <code>DetailClose</code> event.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
 				[false, true].map((openedOnPhone) => ({
-					label: openedOnPhone ? 'open' : 'closed',
+					label: openedOnPhone ? 'OpenedOnPhone = True' : 'OpenedOnPhone = False',
 					html: `<div style="width:280px;">${masterDetailMarkup({ leftPercentage: 100, openedOnPhone, height: '280px' }, true)}</div>`,
 				})),
 				{ direction: 'row', wrap: true }

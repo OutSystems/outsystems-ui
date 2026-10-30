@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BottomSheetStories from './BottomSheet.stories';
+import { BOTTOM_SHEET_RECIPES } from './_helpers/pattern-docs/bottom-sheet-recipes';
+import { BOTTOM_SHEET_DOC } from './_helpers/pattern-docs/bottom-sheet-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={BottomSheetStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={BOTTOM_SHEET_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `Shape` SoftRounded and `ShowHandler` True. The sheet is fixed to the bottom of the screen: the button opens it over the dimmed page, the confirm button inside closes it, and focus is trapped in between."
+				implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.basicUsage} />}
+			>
+				<Canvas of={BottomSheetStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Shapes"
+				description="`Shape` controls the corner radius of the top edge: SoftRounded (the default, also the fallback for an unknown value), Rounded and Sharp. Each sheet is shown open on a small phone screen so the corners are visible."
+				implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.shapes} />}
+			>
+				<Canvas of={BottomSheetStories.Shapes} />
+			</PdExample>
+			<PdExample
+				title="Drag handler"
+				description="`ShowHandler` True adds the drag bar above the header; False hides it. On touch devices the header stays a drag area either way, so a downward swipe still closes the sheet."
+				implement={<StudioHowTo recipe={BOTTOM_SHEET_RECIPES.dragHandler} />}
+			>
+				<Canvas of={BottomSheetStories.Handler} />
+			</PdExample>
+		</>
+	}
+/>

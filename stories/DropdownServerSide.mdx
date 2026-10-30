@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownServerSideStories from './DropdownServerSide.stories';
+import { DROPDOWN_SERVER_SIDE_RECIPES } from './_helpers/pattern-docs/dropdown-server-side-recipes';
+import { DROPDOWN_SERVER_SIDE_DOC } from './_helpers/pattern-docs/dropdown-server-side-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={DropdownServerSideStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={DROPDOWN_SERVER_SIDE_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Single selection. The balloon holds the `BalloonSearchInput` and one Dropdown Server Side Item per record in `BalloonContent`; picking an item fires its `OnSelected` event, your logic updates the `SelectedValues` expression, and the balloon closes."
+				implement={<StudioHowTo recipe={DROPDOWN_SERVER_SIDE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={DropdownServerSideStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Multiple selection"
+				description="Set `AllowMultipleSelection` to True. The balloon stays open after each pick and every item whose `IsSelected` is True keeps its highlight, so the user can build up a set before closing."
+				implement={<StudioHowTo recipe={DROPDOWN_SERVER_SIDE_RECIPES.multipleSelection} />}
+			>
+				<Canvas of={DropdownServerSideStories.MultipleSelection} />
+			</PdExample>
+			<PdExample
+				title="Disabled state"
+				description="Set `IsDisabled` to True. The trigger renders greyed out and the balloon never opens — shown next to the enabled default."
+				implement={<StudioHowTo recipe={DROPDOWN_SERVER_SIDE_RECIPES.disabled} />}
+			>
+				<Canvas of={DropdownServerSideStories.States} />
+			</PdExample>
+		</>
+	}
+/>

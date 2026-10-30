@@ -12,10 +12,14 @@ interface VideoArgs {
 const meta: Meta<VideoArgs> = {
 	title: 'Patterns/Utilities/Video',
 	argTypes: {
-		url: { control: 'text', name: 'URL' },
-		controls: { control: 'boolean', name: 'Controls' },
-		muted: { control: 'boolean', name: 'Muted' },
-		loop: { control: 'boolean', name: 'Loop' },
+		url: { control: 'text', name: 'URL', description: 'Video source: a URL or a base64 data URL.' },
+		controls: { control: 'boolean', name: 'Controls', description: 'Shows the native player controls.' },
+		muted: { control: 'boolean', name: 'OptionalConfigs.Muted', description: 'Starts muted.' },
+		loop: {
+			control: 'boolean',
+			name: 'OptionalConfigs.Loop',
+			description: 'Restarts playback when the video ends.',
+		},
 	},
 	args: {
 		url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
@@ -53,8 +57,106 @@ function renderVideo(args: VideoArgs): HTMLElement {
 	});
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: renderVideo,
+};
+
+const DEMO_VIDEO_URL = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
+const DEMO_POSTER_URL =
+	'https://fastly.picsum.photos/id/58/1280/853.jpg?hmac=YO3QnOm9TpyM5DqsJjoM4CHg8oIq4cMWLpd9ALoP908';
+
+/** The full runtime config with the block defaults (Controls True, everything else off/empty). */
+const VIDEO_DEFAULTS = {
+	URL: DEMO_VIDEO_URL,
+	Controls: true,
+	Muted: false,
+	Loop: false,
+	Autoplay: false,
+	Width: '',
+	Height: '',
+	PosterURL: '',
+	Captions: '[]',
+};
+
+/**
+ * Docs-page variant: same Create/Initialize/Dispose sequence as the Playground, with config
+ * overrides instead of args, and a status line fed by the `StateChanged` event.
+ */
+function renderVideoDoc(overrides: Record<string, unknown>, sizeStyle = 'max-width:480px;width:100%;'): HTMLElement {
+	const id = uid('video');
+	const template = `
+		<div style="display:grid;gap:8px;justify-items:start;">
+			<video ${osuiRoot(id)} class="osui-video" style="${sizeStyle}"></video>
+			<span data-state style="font-size:13px;color:var(--color-neutral-8, #445);" aria-live="polite">State: Unstarted</span>
+		</div>`;
+	return renderPattern(template, (root, register) => {
+		const P = Patterns();
+		const state = root.querySelector('[data-state]')!;
+		P.VideoAPI.Create(id, cfg({ ...VIDEO_DEFAULTS, ...overrides }));
+		// The platform callback receives (VideoId, VideoState); the state is always the last argument.
+		P.VideoAPI.RegisterCallback?.(id, 'StateChanged', (...args: unknown[]) => {
+			state.textContent = `State: ${String(args[args.length - 1])}`;
+		});
+		P.VideoAPI.Initialize(id);
+		register(() => P.VideoAPI.Dispose?.(id));
+	});
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Only <code>URL</code> is set; <code>Controls</code> keeps its default of True so the browser renders its native player. The line under the player follows the <code>StateChanged</code> event (Unstarted, Playing, Paused, Ended).',
+			},
+		},
+	},
+	render: () => renderVideoDoc({}),
+};
+
+export const PosterImage: Story = {
+	tags: ['docs-example'],
+	name: 'Poster image',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>OptionalConfigs.PosterURL</code> shows a still image until playback starts — useful when the first frame of the video is dark or blank.',
+			},
+		},
+	},
+	render: () => renderVideoDoc({ PosterURL: DEMO_POSTER_URL }),
+};
+
+export const AutoplayLoop: Story = {
+	tags: ['docs-example'],
+	name: 'Autoplay and loop',
+	parameters: {
+		layout: 'padded',
+		chromatic: { disableSnapshot: true },
+		docs: {
+			description: {
+				story: '<code>OptionalConfigs.Autoplay</code>, <code>OptionalConfigs.Muted</code> and <code>OptionalConfigs.Loop</code> set to True give a silent background-style clip that starts on its own and repeats. Browsers refuse to autoplay with sound, so Muted must accompany Autoplay.',
+			},
+		},
+	},
+	render: () => renderVideoDoc({ Autoplay: true, Muted: true, Loop: true }),
+};
+
+export const FixedSize: Story = {
+	tags: ['docs-example'],
+	name: 'Fixed size',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>Width</code> and <code>Height</code> accept pixels or percentages and are written to the <code>&lt;video&gt;</code> element; here the player is pinned to 320 × 180.',
+			},
+		},
+	},
+	render: () => renderVideoDoc({ Width: '320', Height: '180' }, ''),
 };
 
 /**

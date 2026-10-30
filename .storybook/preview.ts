@@ -1,6 +1,6 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
 import { addons } from 'storybook/preview-api';
-import { GLOBALS_UPDATED } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
 // Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
 // the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
 import './docs.scss';
@@ -13,6 +13,16 @@ import './css-api-reference.scss';
 import './migration.scss';
 import './theme-editor.scss';
 import './foundations.scss';
+import './pattern-docs.scss';
+import './phone-frame.scss';
+import './accordion-demos.scss';
+import './blank-slate-demos.scss';
+import './carousel-demos.scss';
+import './flip-content-demos.scss';
+import './floating-content-demos.scss';
+import './card-demos.scss';
+import './card-background-demos.scss';
+import './demo-icons.scss';
 import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
@@ -22,7 +32,7 @@ import {
 	themeOverrideCount,
 } from '../stories/_helpers/theme-roles';
 import { initDocsAppearanceSync, applyAppAppearance } from '../stories/_helpers/docs-appearance';
-import { readStoredAppearance } from '../stories/_helpers/storybook-appearance.js';
+import { resolveAppearance } from '../stories/_helpers/storybook-appearance.js';
 import { waitForCanvasFonts } from '../stories/_helpers/fonts';
 import { setUidScope } from '../stories/_helpers/osui';
 
@@ -164,8 +174,22 @@ function applyPreviewGlobals(globals: Record<string, unknown>): void {
 }
 
 /**
+ * Back to the top whenever the selection changes. Storybook resets the `<html>` offset
+ * on every story / docs switch, but a docs page scrolls on `<body>` (`overflow: auto`
+ * in preview-head.html; `<html>` is `overflow: hidden`), so a long page handed its
+ * scroll position to the next one. `STORY_CHANGED` fires on the same condition as
+ * Storybook's own reset (story id or view mode changed), before the next page renders;
+ * anchor links still win, as the docs container scrolls to the hash afterwards.
+ */
+function resetPreviewScroll(): void {
+	document.documentElement.scrollTop = 0;
+	document.body.scrollTop = 0;
+}
+
+/**
  * MDX docs pages skip preview story decorators — sync toolbar globals (icon font,
- * theme href, RTL, pattern dark mode, a11y body class) via the preview channel.
+ * theme href, RTL, pattern dark mode, a11y body class) via the preview channel, and
+ * reset the scroll position when the selection changes.
  */
 let previewToolbarSyncReady = false;
 
@@ -183,6 +207,7 @@ function wirePreviewToolbarSync(): boolean {
 			applyPreviewGlobals(globals);
 		}
 	});
+	channel.on(STORY_CHANGED, resetPreviewScroll);
 
 	applyPreviewGlobals(PREVIEW_GLOBAL_DEFAULTS);
 	return true;
@@ -227,7 +252,7 @@ const withAppShell: Decorator = (storyFn, context) => {
 	// calls `uid()`.
 	setUidScope(context.id);
 	applyPreviewGlobals(context.globals);
-	applyAppAppearance(readStoredAppearance());
+	applyAppAppearance(resolveAppearance());
 	// Channel may not be ready at preview module load — wire docs sync from the decorator too.
 	initDocsAppearanceSync();
 	initPreviewToolbarSync();
@@ -357,8 +382,13 @@ const preview: Preview = {
 			},
 		},
 		options: {
-			storySort: {
-				order: [
+			// Plain JavaScript and self-contained on purpose — Storybook evaluates this
+			// function from the preview SOURCE (no TypeScript syntax, no outer references). Same algorithm as
+			// the built-in `order` sort; within one component, the Docs page comes first, then
+			// the stories its page embeds (tagged `docs-example` — hidden from the sidebar by
+			// main.ts, so this only orders the index), then the remaining stories in file order.
+			storySort: (a, b) => {
+				const ORDER = [
 					'Welcome',
 					'Getting Started',
 					'Migration',
@@ -379,7 +409,32 @@ const preview: Preview = {
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',
-				],
+				];
+				if (a.title === b.title) {
+					const rank = (e) => (e.type === 'docs' ? 0 : e.tags?.includes('docs-example') ? 1 : 2);
+					return rank(a) - rank(b);
+				}
+				let order = ORDER;
+				const pathA = a.title.trim().split(/\s*\/\s*/);
+				const pathB = b.title.trim().split(/\s*\/\s*/);
+				for (let depth = 0; pathA[depth] || pathB[depth]; depth++) {
+					if (!pathA[depth]) return -1;
+					if (!pathB[depth]) return 1;
+					const nameA = pathA[depth];
+					const nameB = pathB[depth];
+					if (nameA !== nameB) {
+						let indexA = order.indexOf(nameA);
+						let indexB = order.indexOf(nameB);
+						if (indexA === -1 && indexB === -1) return 0;
+						if (indexA === -1) indexA = order.length;
+						if (indexB === -1) indexB = order.length;
+						return indexA - indexB;
+					}
+					const index = order.indexOf(nameA);
+					const next = index !== -1 ? order[index + 1] : undefined;
+					order = Array.isArray(next) ? next : [];
+				}
+				return 0;
 			},
 		},
 	},

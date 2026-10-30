@@ -62,7 +62,7 @@ type Story = StoryObj<Args>;
 
 const render = (args: Args) => renderLayout(layoutSideMenu(args), { device: args.device });
 
-export const Visible: Story = { render };
+export const Playground: Story = { render };
 
 export const Overlay: Story = {
 	args: { menuBehavior: 'Overlay' },

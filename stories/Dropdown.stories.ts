@@ -17,8 +17,16 @@ interface DropdownArgs {
 const meta: Meta<DropdownArgs> = {
 	title: 'Patterns/Interaction/Dropdown',
 	argTypes: {
-		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
-		isDisabled: { control: 'boolean', name: 'IsDisabled' },
+		allowMultipleSelection: {
+			control: 'boolean',
+			name: 'OptionalConfigs.AllowMultipleSelection',
+			description: 'Lets the user select more than one option.',
+		},
+		isDisabled: {
+			control: 'boolean',
+			name: 'OptionalConfigs.IsDisabled',
+			description: 'Renders the dropdown disabled.',
+		},
 	},
 	args: { allowMultipleSelection: false, isDisabled: false },
 };
@@ -26,7 +34,7 @@ export default meta;
 
 type Story = StoryObj<DropdownArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('dropdown');
 		return renderPattern(dropdownMarkup(id, 'search'), (_root, register) =>
@@ -40,9 +48,78 @@ export const Default: Story = {
 	},
 };
 
+/** Product-like option set for the docs examples (the Playground keeps the shared fruit list). */
+const TEAM_OPTIONS = [
+	{ label: 'Design', value: 'design' },
+	{ label: 'Engineering', value: 'engineering' },
+	{ label: 'Marketing', value: 'marketing' },
+	{ label: 'Sales', value: 'sales' },
+	{ label: 'Support', value: 'support' },
+];
+
+/** One search-mode dropdown over `TEAM_OPTIONS`, initialised exactly like the Playground. */
+function docsDropdown(configs: Record<string, unknown>): HTMLElement {
+	const id = uid('dropdown');
+	return renderPattern(dropdownMarkup(id, 'search'), (_root, register) =>
+		initDropdown(id, 'search', { OptionsList: TEAM_OPTIONS, Prompt: 'Assign to a team', ...configs }, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Single selection with the default search box: open the control, type to filter the OptionsList, pick one option and the dropbox closes.',
+			},
+		},
+	},
+	render: () => docsDropdown({}),
+};
+
+export const MultipleSelection: Story = {
+	tags: ['docs-example'],
+	name: 'Multiple selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'OptionalConfigs.AllowMultipleSelection set to True: every option gets a checkbox, the dropbox stays open while the user picks, and the control summarises the count once more than one option is selected.',
+			},
+		},
+	},
+	render: () => docsDropdown({ AllowMultipleSelection: true }),
+};
+
+export const StartingSelection: Story = {
+	tags: ['docs-example'],
+	name: 'Starting selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'StartingSelection pre-selects an option when the dropdown is built, so the control opens with a value instead of the Prompt.',
+			},
+		},
+	},
+	render: () => docsDropdown({ StartingSelection: [{ label: 'Engineering', value: 'engineering' }] }),
+};
+
 /** Enabled next to disabled (`IsDisabled: true`). */
 export const States: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Disabled state',
+	parameters: {
+		controls: { disable: true },
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'OptionalConfigs.IsDisabled set to True renders the control greyed out and non-interactive, next to the default enabled one.',
+			},
+		},
+	},
 	render: () => {
 		const entries = [
 			{ label: 'enabled', isDisabled: false },

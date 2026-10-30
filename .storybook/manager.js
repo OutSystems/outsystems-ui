@@ -5,33 +5,53 @@ import { CH_OVERRIDES_CHANGED, CH_RESET, CH_STATE_REQUEST } from '../stories/_he
 import {
 	CH_APP_APPEARANCE,
 	isDarkAppearance,
-	readStoredAppearance,
-	storeAppearance,
+	readAppearancePreference,
+	resolveAppearance,
+	storeAppearancePreference,
+	watchSystemAppearance,
 } from '../stories/_helpers/storybook-appearance.js';
 
 const MANAGER_DARK_CLASS = 'osui-sb-dark';
 /** Storybook default nav column is 300px — keep in sync with manager-head.html --nav-width */
 const SIDEBAR_NAV_SIZE = 240;
 
-let currentScheme = readStoredAppearance();
-
-function emitAppearance(scheme) {
-	addons.getChannel()?.emit(CH_APP_APPEARANCE, scheme);
-}
+/**
+ * Manager chrome appearance: light, dark or system (the default), picked with the
+ * toolbar switch below and kept in localStorage (storybook-appearance.js). The preview
+ * iframe gets every change over the channel and applies it to the docs pages
+ * (docs-appearance.ts); the pattern dark theme is a separate thing, the "Appearance"
+ * toolbar global. `addons.setConfig` re-emits SET_CONFIG, which the manager API folds
+ * into its theme state, so calling it again on a change re-themes the running UI.
+ */
+let currentPreference = readAppearancePreference();
 
 function applyManagerAppearance(scheme) {
 	const dark = isDarkAppearance(scheme);
-	currentScheme = scheme;
 	addons.setConfig({ theme: dark ? darkTheme : lightTheme });
 	document.documentElement.classList.toggle(MANAGER_DARK_CLASS, dark);
-	storeAppearance(scheme);
-	emitAppearance(scheme);
 }
 
-document.documentElement.classList.toggle(MANAGER_DARK_CLASS, isDarkAppearance(currentScheme));
+function broadcastAppearance() {
+	addons
+		.getChannel()
+		?.emit(CH_APP_APPEARANCE, { preference: currentPreference, scheme: resolveAppearance(currentPreference) });
+}
+
+function setAppearancePreference(preference) {
+	currentPreference = preference;
+	storeAppearancePreference(preference);
+	applyManagerAppearance(resolveAppearance(preference));
+	broadcastAppearance();
+}
+
+document.documentElement.classList.toggle(MANAGER_DARK_CLASS, isDarkAppearance(resolveAppearance(currentPreference)));
+// On `system`, follow the OS live.
+watchSystemAppearance(() => {
+	if (currentPreference === 'system') setAppearancePreference('system');
+});
 
 addons.setConfig({
-	theme: isDarkAppearance(currentScheme) ? darkTheme : lightTheme,
+	theme: isDarkAppearance(resolveAppearance(currentPreference)) ? darkTheme : lightTheme,
 	sidebar: { showRoots: false },
 	panelPosition: 'right',
 	layout: {
@@ -52,74 +72,82 @@ addons.register('osui/sidebar-layout', (api) => {
 	requestAnimationFrame(applyNavWidth);
 });
 
-const MOON_ICON = React.createElement(
-	'svg',
-	{
-		width: 14,
-		height: 14,
-		viewBox: '0 0 14 14',
-		fill: 'currentColor',
-		'aria-hidden': true,
-	},
-	React.createElement('path', {
-		d: 'M7 1.5a5.5 5.5 0 1 0 5.2 7.3A4.5 4.5 0 1 1 7 1.5Z',
-	})
-);
-
-const SUN_ICON = React.createElement(
-	'svg',
-	{
-		width: 14,
-		height: 14,
-		viewBox: '0 0 14 14',
-		fill: 'currentColor',
-		'aria-hidden': true,
-	},
-	React.createElement('path', {
-		d: 'M7 3.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm0-1.75a.75.75 0 0 1 .75.75v1.1a.75.75 0 0 1-1.5 0V2.25A.75.75 0 0 1 7 1.5ZM3.1 3.1a.75.75 0 0 1 1.06 0l.78.78a.75.75 0 1 1-1.06 1.06l-.78-.78a.75.75 0 0 1 0-1.06Zm7.04 0a.75.75 0 0 1 0 1.06l-.78.78a.75.75 0 1 1-1.06-1.06l.78-.78a.75.75 0 0 1 1.06 0ZM1.5 7a.75.75 0 0 1 .75-.75h1.1a.75.75 0 0 1 0 1.5H2.25A.75.75 0 0 1 1.5 7Zm9.65-.75a.75.75 0 0 1 0 1.5h-1.1a.75.75 0 0 1 0-1.5h1.1ZM4.16 9.84a.75.75 0 0 1 1.06 0l.78.78a.75.75 0 0 1-1.06 1.06l-.78-.78a.75.75 0 0 1 0-1.06Zm5.68 0a.75.75 0 0 1 0 1.06l-.78.78a.75.75 0 1 1-1.06-1.06l.78-.78a.75.75 0 0 1 1.06 0ZM7 10.65a.75.75 0 0 1 .75.75v1.1a.75.75 0 0 1-1.5 0v-1.1A.75.75 0 0 1 7 10.65Z',
-	})
-);
-
-function AppAppearanceTool() {
-	const [scheme, setScheme] = React.useState(currentScheme);
-
-	useChannel({
-		[CH_APP_APPEARANCE]: (next) => {
-			const value = next === 'dark' ? 'dark' : 'light';
-			currentScheme = value;
-			setScheme(value);
+function appearanceIcon(...paths) {
+	return React.createElement(
+		'svg',
+		{
+			width: 15,
+			height: 15,
+			viewBox: '0 0 24 24',
+			fill: 'none',
+			strokeWidth: 2,
+			strokeLinecap: 'round',
+			strokeLinejoin: 'round',
+			'aria-hidden': true,
 		},
-	});
+		paths.map((d, i) => React.createElement('path', { key: i, d }))
+	);
+}
 
-	const dark = isDarkAppearance(scheme);
+const APPEARANCE_OPTIONS = [
+	{
+		value: 'light',
+		label: 'Light',
+		icon: appearanceIcon(
+			'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z',
+			'M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'
+		),
+	},
+	{ value: 'dark', label: 'Dark', icon: appearanceIcon('M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z') },
+	{
+		value: 'system',
+		label: 'System',
+		icon: appearanceIcon(
+			'M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9',
+			'M20 16H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16'
+		),
+	},
+];
+
+/** Segmented light / dark / system switch for the Storybook chrome, in the canvas toolbar. */
+function AppAppearanceTool() {
+	const [preference, setPreference] = React.useState(currentPreference);
+	useChannel({ [CH_APP_APPEARANCE]: (next) => setPreference(next?.preference ?? 'system') });
 
 	return React.createElement(
-		'button',
-		{
-			type: 'button',
-			className: `osui-app-appearance-tool${dark ? ' is-dark' : ''}`,
-			title: dark ? 'Switch to light mode' : 'Switch to dark mode',
-			'aria-label': dark ? 'Switch to light mode' : 'Switch to dark mode',
-			'aria-pressed': dark ? 'true' : 'false',
-			onClick: () => {
-				const next = dark ? 'light' : 'dark';
-				applyManagerAppearance(next);
-				setScheme(next);
-			},
-		},
-		dark ? SUN_ICON : MOON_ICON
+		'div',
+		{ className: 'osui-appearance-switch', role: 'radiogroup', 'aria-label': 'Storybook appearance' },
+		APPEARANCE_OPTIONS.map((option) => {
+			const active = preference === option.value;
+			return React.createElement(
+				'button',
+				{
+					key: option.value,
+					type: 'button',
+					role: 'radio',
+					'aria-checked': active ? 'true' : 'false',
+					'aria-label': option.label,
+					title: `Storybook appearance: ${option.label}`,
+					className: `osui-appearance-switch__option${active ? ' is-active' : ''}`,
+					onClick: () => {
+						setAppearancePreference(option.value);
+						setPreference(option.value);
+					},
+				},
+				option.icon
+			);
+		})
 	);
 }
 
 addons.register('osui/app-appearance', () => {
 	addons.add('osui/app-appearance-tool', {
 		type: types.TOOL,
-		title: 'App appearance',
+		title: 'Storybook appearance',
 		match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
 		render: AppAppearanceTool,
 	});
-
-	emitAppearance(currentScheme);
+	broadcastAppearance();
 });
 
 function ThemeResetTool() {
@@ -148,7 +176,7 @@ function ThemeResetTool() {
 				border: 'none',
 				borderRadius: '4px',
 				background: 'transparent',
-				color: '#105cef',
+				color: '#00a2bb',
 				cursor: 'pointer',
 				font: '700 12px/1 "Inter", system-ui, sans-serif',
 			},

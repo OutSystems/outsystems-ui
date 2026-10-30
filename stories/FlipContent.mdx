@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FlipContentStories from './FlipContent.stories';
+import { FLIP_CONTENT_RECIPES } from './_helpers/pattern-docs/flip-content-recipes';
+import { FLIP_CONTENT_DOC } from './_helpers/pattern-docs/flip-content-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={FlipContentStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={FLIP_CONTENT_DOC}
+	examples={
+		<>
+			<PdExample title="Basic usage" description="Click the card to flip between front and back. FlipSelf is True." implement={<StudioHowTo recipe={FLIP_CONTENT_RECIPES.basicUsage} />}>
+				<Canvas of={FlipContentStories.BasicUsage} />
+			</PdExample>
+			<PdExample title="Starts flipped" description="IsFlipped is True — the back face is shown on first render." implement={<StudioHowTo recipe={FLIP_CONTENT_RECIPES.startsFlipped} />}>
+				<Canvas of={FlipContentStories.StartsFlipped} />
+			</PdExample>
+		</>
+	}
+/>

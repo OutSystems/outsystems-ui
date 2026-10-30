@@ -33,13 +33,32 @@ const meta: Meta<TabsArgs> = {
 	title: 'Patterns/Navigation/Tabs',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		startingTab: { control: { type: 'number', min: 0, max: 5 }, name: 'StartingTab' },
-		justifyHeaders: { control: 'boolean', name: 'JustifyHeaders' },
-		orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'], name: 'TabsOrientation' },
-		verticalPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'TabsVerticalPosition' },
+		startingTab: {
+			control: { type: 'number', min: 0, max: 5 },
+			name: 'StartingTab',
+			description: 'Zero-based index of the tab active when built.',
+		},
+		justifyHeaders: {
+			control: 'boolean',
+			name: 'OptionalConfigs.JustifyHeaders',
+			description: 'Stretches the header items to fill the available width.',
+		},
+		orientation: {
+			control: 'inline-radio',
+			options: ['horizontal', 'vertical'],
+			name: 'TabsOrientation',
+			description: 'Horizontal (headers above the content) or Vertical (headers beside it).',
+		},
+		verticalPosition: {
+			control: 'inline-radio',
+			options: ['left', 'right'],
+			name: 'TabsVerticalPosition',
+			description: 'Side of the content where vertical headers sit.',
+		},
 		disabledTab: {
 			control: { type: 'number', min: -1, max: 5 },
 			name: 'DisabledTab (story-only, -1 = none)',
+			description: 'Story-only: index of the TabsHeaderItem rendered disabled; -1 disables none.',
 		},
 	},
 	args: {
@@ -54,7 +73,7 @@ export default meta;
 
 type Story = StoryObj<TabsArgs>;
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const tabsId = uid('tabs');
 		const headerIds = TABS.map(() => uid('tabs-header'));
@@ -115,6 +134,115 @@ export const Default: Story = {
 			});
 		});
 	},
+};
+
+// ─── Docs examples ───────────────────────────────────────────────────────────
+
+const PRODUCT_TABS: Array<[string, string]> = [
+	[
+		'Overview',
+		'<p style="margin:0 0 8px;"><strong>Trail running shoes</strong> — lightweight, breathable upper with a rock plate for technical terrain.</p><p style="margin:0;">Available in sizes 36–47. Free returns within 30 days.</p>',
+	],
+	[
+		'Specifications',
+		'<ul style="margin:0;padding-left:20px;"><li>Weight: 265 g (size 42)</li><li>Drop: 6 mm</li><li>Lug depth: 4 mm</li><li>Upper: recycled mesh, 60% post-consumer content</li></ul>',
+	],
+	[
+		'Reviews',
+		'<p style="margin:0 0 8px;"><strong>4.6 / 5</strong> from 128 reviews.</p><p style="margin:0;">“Grippy on wet rock and still comfortable after 30 km.” — Marta P.</p>',
+	],
+];
+
+interface TabsDocOptions {
+	startingTab?: number;
+	justifyHeaders?: boolean;
+	orientation?: 'horizontal' | 'vertical';
+	verticalPosition?: 'left' | 'right';
+}
+
+/**
+ * Docs example: one Tabs instance with product-page content, initialised exactly
+ * like `Playground` (parent Create → children Create → parent Initialize → children
+ * Initialize) and disposed children-first.
+ */
+function renderTabsDoc(tabs: Array<[string, string]>, options: TabsDocOptions = {}): HTMLElement {
+	const tabsId = uid('tabs');
+	const headerIds = tabs.map(() => uid('tabs-header'));
+	const contentIds = tabs.map(() => uid('tabs-content'));
+	const headers = tabs
+		.map(
+			(t, i) =>
+				`<div id="${headerIds[i]}" data-block="osui"><button name="${headerIds[i]}" class="osui-tabs__header-item" data-tab="${i}" role="tab" type="button">${t[0]}</button></div>`
+		)
+		.join('');
+	const contents = tabs
+		.map(
+			(t, i) =>
+				`<div id="${contentIds[i]}" data-block="osui"><article name="${contentIds[i]}" class="osui-tabs__content-item" data-tab="${i}"><div style="padding:16px;">${t[1]}</div></article></div>`
+		)
+		.join('');
+	const template = `
+		<section ${osuiRoot(tabsId)} class="osui-tabs" style="max-width:640px;">
+			<header class="osui-tabs__header">
+				<div class="display-contents placeholder-empty">${headers}</div>
+				<div class="osui-tabs__header__indicator"></div>
+			</header>
+			<section class="osui-tabs__content">
+				<div class="display-contents placeholder-empty">${contents}</div>
+			</section>
+		</section>`;
+
+	return renderPattern(template, (_root, register) => {
+		const P = Patterns();
+		P.TabsAPI.Create(
+			tabsId,
+			cfg({
+				StartingTab: options.startingTab ?? 0,
+				JustifyHeaders: options.justifyHeaders ?? false,
+				TabsOrientation: options.orientation ?? 'horizontal',
+				TabsVerticalPosition: options.verticalPosition ?? 'left',
+				Height: 'auto',
+			})
+		);
+		headerIds.forEach((id) => P.TabsHeaderItemAPI.Create(id, cfg()));
+		contentIds.forEach((id) => P.TabsContentItemAPI.Create(id, cfg()));
+		P.TabsAPI.Initialize(tabsId);
+		headerIds.forEach((id) => P.TabsHeaderItemAPI.Initialize(id));
+		contentIds.forEach((id) => P.TabsContentItemAPI.Initialize(id));
+		register(() => {
+			headerIds.forEach((id) => P.TabsHeaderItemAPI.Dispose?.(id));
+			contentIds.forEach((id) => P.TabsContentItemAPI.Dispose?.(id));
+			P.TabsAPI.Dispose?.(tabsId);
+		});
+	});
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default Tabs: horizontal headers above the content, first tab active (`StartingTab` = 0), content height adjusting to the active pane (`Height` = auto).',
+			},
+		},
+	},
+	render: () => renderTabsDoc(PRODUCT_TABS),
+};
+
+export const StartingTab: Story = {
+	tags: ['docs-example'],
+	name: 'Starting tab',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '`StartingTab` = 1 builds the Tabs with the second header (Specifications) selected. The index is zero-based and is fixed at build time — use `SetActiveTab` to switch later.',
+			},
+		},
+	},
+	render: () => renderTabsDoc(PRODUCT_TABS, { startingTab: 1 }),
 };
 
 const labelStyle = 'color:var(--color-text-subtle);font-family:monospace;font-size:0.8125rem;margin-bottom:8px;';
@@ -231,23 +359,43 @@ const SAMPLE = {
 	width: '520px',
 };
 
-/** Headers packed to the start, then stretched to fill the row. */
-export const JustifyHeaders: Story = {
-	parameters: { controls: { disable: true } },
-	render: () =>
-		renderGallery([
-			{ label: 'Off', cell: { ...SAMPLE, justifyHeaders: false } },
-			{ label: 'Justified', cell: { ...SAMPLE, justifyHeaders: true } },
-		]),
-};
-
 /** Headers above the content, then beside it. */
 export const Orientation: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Orientation',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '`TabsOrientation` = Horizontal places the headers above the content; Vertical stacks them beside it, on the side chosen by `TabsVerticalPosition`.',
+			},
+		},
+	},
 	render: () =>
 		renderGallery([
 			{ label: 'Horizontal', cell: { ...SAMPLE, orientation: 'horizontal' } },
 			{ label: 'Vertical', cell: { ...SAMPLE, orientation: 'vertical', verticalPosition: 'left' } },
+		]),
+};
+
+/** Headers packed to the start, then stretched to fill the row. */
+export const JustifyHeaders: Story = {
+	tags: ['docs-example'],
+	name: 'Justify headers',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '`OptionalConfigs.JustifyHeaders` = True distributes the header items evenly across the available width instead of packing them to the start.',
+			},
+		},
+	},
+	render: () =>
+		renderGallery([
+			{ label: 'Off', cell: { ...SAMPLE, justifyHeaders: false } },
+			{ label: 'Justified', cell: { ...SAMPLE, justifyHeaders: true } },
 		]),
 };
 

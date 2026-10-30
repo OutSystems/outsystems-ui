@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimePickerStories from './TimePicker.stories';
+import { TIME_PICKER_RECIPES } from './_helpers/pattern-docs/time-picker-recipes';
+import { TIME_PICKER_DOC } from './_helpers/pattern-docs/time-picker-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={TimePickerStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={TIME_PICKER_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults: `Is24Hours` True and no `InitialTime`. The input starts empty and opens an hour:minute spinner on click or focus."
+				implement={<StudioHowTo recipe={TIME_PICKER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={TimePickerStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="12-hour clock"
+				description="Set `Is24Hours` to False for an AM/PM selector. `InitialTime` 09:30 preselects the value so the h:i K display shows on render."
+				implement={<StudioHowTo recipe={TIME_PICKER_RECIPES.twelveHour} />}
+			>
+				<Canvas of={TimePickerStories.TwelveHour} />
+			</PdExample>
+			<PdExample
+				title="Min and max time"
+				description="`OptionalConfigs.MinTime` and `MaxTime` clamp the selectable window — business hours 09:00 to 18:00 here. The spinner refuses values outside it."
+				implement={<StudioHowTo recipe={TIME_PICKER_RECIPES.minMaxTime} />}
+			>
+				<Canvas of={TimePickerStories.MinMaxTime} />
+			</PdExample>
+		</>
+	}
+/>

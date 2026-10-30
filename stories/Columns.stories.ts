@@ -101,6 +101,20 @@ function columnsBoard(
 
 const equalCols = (n: number): string[] => Array.from({ length: n }, (_, i) => `Column ${i + 1}`);
 
+/** The nine Columns blocks → their variant class and demo column labels. */
+const BLOCKS = {
+	Columns2: ['columns2', equalCols(2)],
+	Columns3: ['columns3', equalCols(3)],
+	Columns4: ['columns4', equalCols(4)],
+	Columns5: ['columns5', equalCols(5)],
+	Columns6: ['columns6', equalCols(6)],
+	ColumnsMediumLeft: ['columns-medium-left', ['Medium column', 'Wide column']],
+	ColumnsMediumRight: ['columns-medium-right', ['Wide column', 'Medium column']],
+	ColumnsSmallLeft: ['columns-small-left', ['Small column', 'Wide column']],
+	ColumnsSmallRight: ['columns-small-right', ['Wide column', 'Small column']],
+} as const satisfies Record<string, readonly [variantClass: string, labels: readonly string[]]>;
+type BlockName = keyof typeof BLOCKS;
+
 const SHARED_ARG_CONFIG = {
 	args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '' },
 	argTypes: {
@@ -110,6 +124,50 @@ const SHARED_ARG_CONFIG = {
 		extendedClass: extendedClassArgType,
 	},
 } satisfies Pick<StoryObj<ColumnsArgs>, 'args' | 'argTypes'>;
+
+type PlaygroundArgs = ColumnsArgs & { block: BlockName };
+
+/** One Columns block at a time, with every shared low-code parameter as a control. */
+export const Playground: StoryObj<PlaygroundArgs> = {
+	args: { block: 'Columns2', ...SHARED_ARG_CONFIG.args },
+	argTypes: {
+		block: {
+			name: 'Block',
+			control: 'select',
+			options: Object.keys(BLOCKS),
+			description: 'Story-only: which of the nine Columns blocks to render.',
+		},
+		...SHARED_ARG_CONFIG.argTypes,
+	},
+	render: ({ block, ...args }) => {
+		const [variantClass, labels] = BLOCKS[block];
+		return renderStatic(
+			`<div style="width:720px;max-width:100%;">${columnsMarkup(variantClass, [...labels], args)}</div>`
+		);
+	},
+};
+
+/** Docs-page examples: one fixed block each, same controls as the playground. */
+export const Columns2: StoryObj<PlaygroundArgs> = {
+	tags: ['docs-example'],
+	...Playground,
+	name: 'Two columns',
+	args: { ...Playground.args, block: 'Columns2' },
+};
+
+export const ColumnsMediumLeft: StoryObj<PlaygroundArgs> = {
+	tags: ['docs-example'],
+	...Playground,
+	name: 'Medium left',
+	args: { ...Playground.args, block: 'ColumnsMediumLeft' },
+};
+
+export const ColumnsSmallRight: StoryObj<PlaygroundArgs> = {
+	tags: ['docs-example'],
+	...Playground,
+	name: 'Small right',
+	args: { ...Playground.args, block: 'ColumnsSmallRight' },
+};
 
 /** Columns2 through Columns6, one per line. */
 export const ColumnCounts: StoryObj<ColumnsArgs> = {

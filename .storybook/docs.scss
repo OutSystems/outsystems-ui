@@ -9,6 +9,12 @@
     font-family: "Inter", sans-serif !important;
 }
 
+/* Show code — keep mono inside Prism tokens (Inter span rule above wins on specificity otherwise). */
+.sbdocs .docblock-source :is(span, code, pre),
+.sbdocs .docblock-source :is(pre, code) * {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+}
+
 .home-banner {
     display: flex;
     align-items: center;
@@ -159,7 +165,7 @@ p.body-medium {
             font-weight: 600;
         }
         a {
-            color: #105cef;
+            color: #00a2bb;
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
@@ -871,8 +877,8 @@ table.docs-table {
     }
 
     .lineheight {
-        border-top: 1px dashed #b5c0f7;
-        border-bottom: 1px dashed #b5c0f7;
+        border-top: 1px dashed #8dd4e0;
+        border-bottom: 1px dashed #8dd4e0;
         text-align: center;
     }
 }
@@ -1156,7 +1162,7 @@ span.tokens-table__copy:active::after {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #105cef;
+    background: #00a2bb;
     position: absolute;
     top: 50%;
     left: 8px;
@@ -1357,7 +1363,7 @@ span.tokens-table__copy:active::after {
         padding: 2px 6px;
         font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
         font-size: 13px;
-        color: #105cef;
+        color: #00a2bb;
     }
 
     pre code {
@@ -1408,7 +1414,7 @@ span.tokens-table__copy:active::after {
 
 .version-badge.minor{
     background-color: #e9ecfc;
-    color: #105cef;
+    color: #00a2bb;
 }
 
 .version-badge.patch{
@@ -1557,7 +1563,7 @@ p.body-medium ul li {
 
 /* Link styling in docs */
 .docs-link {
-    color: #105cef;
+    color: #00a2bb;
     text-decoration: none;
     font-weight: 500;
     

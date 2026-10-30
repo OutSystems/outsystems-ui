@@ -71,7 +71,7 @@ function horizontalCell(space: string, color: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: ({ isVertical, space, color, extendedClass }) => {
 		const separator = cls(
 			'separator',
@@ -104,9 +104,41 @@ export const Default: Story = {
 	},
 };
 
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The defaults from Studio: horizontal (<code>IsVertical</code> False), <code>Space</code> Base above and below, <code>Color</code> Neutral4 → <code>.background-neutral-4</code> on the rule.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(`
+			<div style="max-width: 420px;">
+				<p>Content above the separator.</p>
+				<div class="padding-top-base padding-bottom-base">
+					<div class="separator separator-horizontal background-neutral-4"></div>
+				</div>
+				<p>Content below the separator.</p>
+			</div>`),
+};
+
 /** Horizontal rule next to the vertical (wrapper + full-height) variant. */
 export const Orientation: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Orientation',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>IsVertical</code> False renders <code>.separator-horizontal</code>; True renders <code>.separator-vertical</code> inside a <code>.separator-wrapper.full-height</code> that stretches to the flex row.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
@@ -131,7 +163,17 @@ export const Orientation: Story = {
 
 /** Every Color swatch on the rule (empty = the SCSS neutral default). */
 export const Colors: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Colors',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Every <code>Color</code> record as a <code>background-*</code> class on the rule; the first cell has no class and shows the SCSS neutral border default.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
@@ -146,7 +188,17 @@ export const Colors: Story = {
 
 /** The Space scale: padding around the rule from none to xxl, side by side to avoid scrolling. */
 export const Spaces: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Spaces',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Space</code> from None to XXLarge as <code>padding-top-*</code> / <code>padding-bottom-*</code> on the wrapper around a horizontal rule.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(

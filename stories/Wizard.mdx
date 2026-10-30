@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as WizardStories from './Wizard.stories';
+import { WIZARD_RECIPES } from './_helpers/pattern-docs/wizard-recipes';
+import { WIZARD_DOC } from './_helpers/pattern-docs/wizard-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={WizardStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={WIZARD_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults: horizontal steps with `StepsBehaviour` = Interactive. Each Wizard Item sets its `Status` (Past, Active, Next) and shows the step number in the Icon placeholder; the Past step is clickable and raises OnClick."
+				implement={<StudioHowTo recipe={WIZARD_RECIPES.basicUsage} />}
+			>
+				<Canvas of={WizardStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Vertical"
+				description="Set `IsVertical` to True to stack the steps top to bottom — the connector runs down between the markers and labels sit beside them. Shown with `StepsBehaviour` = ProgressOnly."
+				implement={<StudioHowTo recipe={WIZARD_RECIPES.vertical} />}
+			>
+				<Canvas of={WizardStories.Vertical} />
+			</PdExample>
+			<PdExample
+				title="Marker: icon"
+				description="Drop an Icon widget into each Wizard Item's Icon placeholder to replace the step number; the status colours still apply to the marker."
+				implement={<StudioHowTo recipe={WIZARD_RECIPES.markerIcon} />}
+			>
+				<Canvas of={WizardStories.MarkerIcon} />
+			</PdExample>
+			<PdExample
+				title="Marker: empty (dot)"
+				description="Leave the Icon placeholder empty and the marker collapses to a small dot — a lighter look when the labels carry all the meaning."
+				implement={<StudioHowTo recipe={WIZARD_RECIPES.markerEmpty} />}
+			>
+				<Canvas of={WizardStories.MarkerEmpty} />
+			</PdExample>
+		</>
+	}
+/>

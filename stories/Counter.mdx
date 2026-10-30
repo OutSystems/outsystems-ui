@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CounterStories from './Counter.stories';
+import { COUNTER_RECIPES } from './_helpers/pattern-docs/counter-recipes';
+import { COUNTER_DOC } from './_helpers/pattern-docs/counter-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CounterStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={COUNTER_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="A Primary `BackgroundColor` tile with `Height` 150, holding the value, its label and an icon in a row inside the Content placeholder."
+				implement={<StudioHowTo recipe={COUNTER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={CounterStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Orientation"
+				description="`IsVertical` False spreads the content in a row with space between; True stacks it in a centred column (`flex-direction-column`)."
+				implement={<StudioHowTo recipe={COUNTER_RECIPES.orientation} />}
+			>
+				<Canvas of={CounterStories.Orientation} />
+			</PdExample>
+			<PdExample
+				title="Background colors"
+				description="`BackgroundColor` picks the `background-*` utility on the root — Primary, Green and Orange here — and the text switches to `text-neutral-0` for contrast."
+				implement={<StudioHowTo recipe={COUNTER_RECIPES.backgroundColors} />}
+			>
+				<Canvas of={CounterStories.BackgroundColors} />
+			</PdExample>
+		</>
+	}
+/>

@@ -121,8 +121,47 @@ function cards(count: number, orientation: Orientation): string {
  * Loose widgets dropped straight into the Content placeholder — styled by
  * `.horizontal-scroll > *:not(table)`.
  */
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => scrollableArea(args, cards(12, args.orientation)),
+};
+
+/** Product-like cards for the docs examples, sized to overflow the area on the scrolled axis. */
+function recentFiles(orientation: Orientation): string {
+	const files = [
+		['Q3 revenue report', 'Edited 2 hours ago'],
+		['Onboarding checklist', 'Edited yesterday'],
+		['Brand guidelines', 'Edited 3 days ago'],
+		['Roadmap 2026', 'Edited last week'],
+		['Customer interviews', 'Edited last week'],
+		['Pricing experiments', 'Edited 2 weeks ago'],
+		['Support playbook', 'Edited 3 weeks ago'],
+		['Hiring plan', 'Edited last month'],
+	];
+	const style = orientation === 'Horizontal' ? 'width: 180px;' : 'margin-block-end: 8px;';
+	return files
+		.map(
+			([title, meta]) =>
+				`<div class="card" style="${style}"><div class="font-semi-bold">${title}</div><div class="font-size-s text-neutral-7">${meta}</div></div>`
+		)
+		.join('');
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Orientation Horizontal with the Default scrollbar: the cards sit on one line and the area scrolls sideways within the Width you set.',
+			},
+		},
+	},
+	render: () =>
+		scrollableArea(
+			{ orientation: 'Horizontal', scrollbarStyle: 'Default', height: '', width: '360px', extendedClass: '' },
+			recentFiles('Horizontal')
+		),
 };
 
 /**
@@ -130,18 +169,18 @@ export const Default: Story = {
  * content height, so this story pins one.
  */
 export const Vertical: Story = {
-	args: { orientation: 'Vertical', height: '220px', width: '320px' },
+	tags: ['docs-example'],
+	name: 'Vertical orientation',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Orientation Vertical: the content stacks and scrolls up and down inside the Height you set — without a Height the area grows with its content and nothing scrolls.',
+			},
+		},
+	},
+	args: { orientation: 'Vertical', height: '320px', width: '320px' },
 	render: (args) => scrollableArea(args, cards(12, args.orientation)),
-};
-
-/**
- * Content wrapped in a List widget — the common shape, and a separate code path:
- * the scroll and the inline layout are handed down to `.list.list-group` and
- * `.horizontal-scroll > .list > *` rather than applying to the children directly.
- */
-export const HorizontalWithList: Story = {
-	args: { orientation: 'Horizontal', width: '360px' },
-	render: (args) => scrollableArea(args, `<div class="list list-group">${cards(12, args.orientation)}</div>`),
 };
 
 /**
@@ -149,6 +188,16 @@ export const HorizontalWithList: Story = {
  * `Compact` (slim, revealed on hover) and `None` (hidden, still scrollable).
  */
 export const ScrollbarStyles: Story = {
+	tags: ['docs-example'],
+	name: 'Scrollbar styles',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The three ScrollbarStyle values side by side: Default keeps the native scrollbar, Compact shows a slim thumb on hover, None hides it while the area still scrolls with gestures.',
+			},
+		},
+	},
 	args: { orientation: 'Horizontal', width: '320px' },
 	// Each area below pins its own style, so the shared control has nothing to drive.
 	argTypes: { scrollbarStyle: { control: false, table: { disable: true } } },
@@ -162,4 +211,14 @@ export const ScrollbarStyles: Story = {
 					</div>`
 			).join('')
 		),
+};
+
+/**
+ * Content wrapped in a List widget — the common shape, and a separate code path:
+ * the scroll and the inline layout are handed down to `.list.list-group` and
+ * `.horizontal-scroll > .list > *` rather than applying to the children directly.
+ */
+export const HorizontalWithList: Story = {
+	args: { orientation: 'Horizontal', width: '360px' },
+	render: (args) => scrollableArea(args, `<div class="list list-group">${cards(12, args.orientation)}</div>`),
 };

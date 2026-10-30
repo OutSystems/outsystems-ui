@@ -20,12 +20,29 @@ const meta: Meta<RangeSliderArgs> = {
 	title: 'Patterns/Interaction/RangeSlider',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'interval'] },
-		minValue: { control: 'number', name: 'MinValue' },
-		maxValue: { control: 'number', name: 'MaxValue' },
-		step: { control: 'number', name: 'Step' },
-		showFloatingLabel: { control: 'boolean', name: 'ShowFloatingLabel' },
-		showTickMarks: { control: 'boolean', name: 'ShowTickMarks' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'interval'],
+			description:
+				'Story-only: `single` renders the RangeSlider block, `interval` the RangeSliderInterval block.',
+		},
+		minValue: { control: 'number', name: 'MinValue', description: 'Lower bound of the range.' },
+		maxValue: { control: 'number', name: 'MaxValue', description: 'Upper bound of the range.' },
+		step: {
+			control: 'number',
+			name: 'OptionalConfigs.Step',
+			description: 'Increment between selectable values.',
+		},
+		showFloatingLabel: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowFloatingLabel',
+			description: 'Shows the current value in a floating label above the handle.',
+		},
+		showTickMarks: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowTickMarks',
+			description: 'Renders tick marks (pips) along the track.',
+		},
 	},
 	args: { mode: 'single', minValue: 0, maxValue: 100, step: 1, showFloatingLabel: true, showTickMarks: false },
 };
@@ -91,13 +108,77 @@ function renderRangeSlider(args: RangeSliderArgs): HTMLElement {
 	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: renderRangeSlider,
 };
 
+/** One single-handle slider for the docs page; `padding` leaves room for the label / pips outside the track. */
+function docsRangeSlider(configs: Record<string, unknown>, padding = '24px 8px'): HTMLElement {
+	const id = uid('range-slider');
+	return renderPattern(rangeSliderMarkup(id, `max-width:360px;padding:${padding};`), (_root, register) =>
+		initRangeSlider(id, 'single', configs, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A single handle between MinValue 0 and MaxValue 100, starting at StartingValue 40. Drag the handle or use the arrow keys; OnValueChange fires while dragging.',
+			},
+		},
+	},
+	render: () => docsRangeSlider({ StartingValueFrom: 40 }),
+};
+
 export const Interval: Story = {
+	tags: ['docs-example'],
+	name: 'Interval',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Range Slider Interval block: two handles pick a from/to pair (StartingValueFrom 25, StartingValueTo 75) and OnValueChange returns IntervalStart and IntervalEnd.',
+			},
+		},
+	},
 	args: { mode: 'interval' },
 	render: renderRangeSlider,
+};
+
+export const FloatingLabel: Story = {
+	tags: ['docs-example'],
+	name: 'Floating label',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set OptionalConfigs.ShowFloatingLabel to True to show the current value in a tooltip above the handle while it moves.',
+			},
+		},
+	},
+	render: () => docsRangeSlider({ StartingValueFrom: 65, ShowFloatingLabel: true }, '28px 8px 8px'),
+};
+
+export const TickMarks: Story = {
+	tags: ['docs-example'],
+	name: 'Steps and tick marks',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'OptionalConfigs.Step 25 snaps the handle to 0, 25, 50, 75, 100; ShowTickMarks True with TickMarksInterval 25 draws a pip at each snap point.',
+			},
+		},
+	},
+	render: () =>
+		docsRangeSlider(
+			{ StartingValueFrom: 50, Step: 25, ShowTickMarks: true, TickMarksInterval: 25 },
+			'24px 8px 48px'
+		),
 };
 
 /**

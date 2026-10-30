@@ -35,10 +35,14 @@ const meta: Meta<InputWithIconArgs> = {
 			name: 'IconPosition',
 			control: 'inline-radio',
 			options: ['left', 'right'],
-			description: 'Side of the input where the icon is rendered.',
+			description: 'Side of the input where the icon is rendered. Low-code parameter: `AlignIconRight`.',
 		},
 		icon: { name: 'Icon', control: 'text', description: 'Phosphor icon class (e.g. ph-magnifying-glass).' },
-		placeholder: { name: 'Placeholder', control: 'text' },
+		placeholder: {
+			name: 'Placeholder',
+			control: 'text',
+			description: 'Story-only: placeholder of the Input widget dropped in the Input placeholder.',
+		},
 		extendedClass: extendedClassArgType,
 	},
 	args: { iconPosition: 'left', icon: 'ph-magnifying-glass', placeholder: 'Search…', extendedClass: '' },
@@ -47,19 +51,82 @@ export default meta;
 
 type Story = StoryObj<InputWithIconArgs>;
 
-export const Default: Story = {
-	render: ({ iconPosition, icon, placeholder, extendedClass }) =>
-		renderStatic(`
-			<div style="max-width: 320px;">
-				<div class="${cls('input-with-icon', iconPosition === 'right' && 'input-with-icon-right', extendedClass)}">
-					<div class="input-with-icon-content-icon" style="align-items: center; justify-content: center;">
-						<i class="icon ph ${icon}"></i>
-					</div>
-					<div class="input-with-icon-input">
-						<input type="text" class="form-control" data-input placeholder="${placeholder}" />
-					</div>
+/** One Input With Icon block: the Icon placeholder, then the Input placeholder (+ optional validation message). */
+function inputWithIcon({
+	icon,
+	alignRight = false,
+	placeholder = '',
+	value = '',
+	invalid = false,
+	extendedClass = '',
+}: {
+	icon: string;
+	alignRight?: boolean;
+	placeholder?: string;
+	value?: string;
+	invalid?: boolean;
+	extendedClass?: string;
+}): string {
+	return `
+		<div style="max-width: 320px;">
+			<div class="${cls('input-with-icon', alignRight && 'input-with-icon-right', extendedClass)}">
+				<div class="input-with-icon-content-icon" style="align-items: center; justify-content: center;">
+					<i class="icon ph ${icon}"></i>
 				</div>
-			</div>`),
+				<div class="input-with-icon-input">
+					<input type="text" class="${cls('form-control', invalid && 'not-valid')}" data-input placeholder="${placeholder}"${value ? ` value="${value}"` : ''} />
+				</div>
+			</div>
+			${invalid ? '<span class="validation-message">Username must have at least 3 characters.</span>' : ''}
+		</div>`;
+}
+
+export const Playground: Story = {
+	render: ({ iconPosition, icon, placeholder, extendedClass }) =>
+		renderStatic(inputWithIcon({ icon, alignRight: iconPosition === 'right', placeholder, extendedClass })),
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'An Icon widget in the Icon placeholder and an Input widget in the Input placeholder. With AlignIconRight left at False the icon docks to the start edge and the input gains matching padding.',
+			},
+		},
+	},
+	render: () => renderStatic(inputWithIcon({ icon: 'ph-envelope', placeholder: 'you@example.com' })),
+};
+
+export const IconRight: Story = {
+	tags: ['docs-example'],
+	name: 'Icon on the right',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set AlignIconRight to True to dock the icon to the end edge — the usual choice for calendar, clear or visibility toggles.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(inputWithIcon({ icon: 'ph-calendar-blank', alignRight: true, placeholder: 'Delivery date' })),
+};
+
+export const ErrorState: Story = {
+	tags: ['docs-example'],
+	name: 'Error state',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The error look belongs to the Input widget: when its Valid property is False the platform adds `not-valid` and renders the validation message below the pattern.',
+			},
+		},
+	},
+	render: () => renderStatic(inputWithIcon({ icon: 'ph-user', placeholder: 'Username', value: 'jo', invalid: true })),
 };
 
 /* ── Spec matrix ────────────────────────────────────────────────────────────── */

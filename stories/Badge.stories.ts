@@ -45,7 +45,7 @@ const baseArgs: BadgeArgs = {
 	extendedClass: '',
 };
 
-export const Default: StoryObj<BadgeArgs> = {
+export const Playground: StoryObj<BadgeArgs> = {
 	args: { ...baseArgs },
 	argTypes: {
 		number: {
@@ -81,15 +81,61 @@ export const Default: StoryObj<BadgeArgs> = {
 	render: (args) => renderStatic(badgeMarkup(args)),
 };
 
-/** Every Color swatch as a solid and an IsLight badge. */
-export const Colors: StoryObj = {
-	parameters: { controls: { disable: true } },
-	render: () => renderStatic(colorBoard((color, isLight) => badgeMarkup({ ...baseArgs, color, isLight })).outerHTML),
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+/** The docs examples pair each colour family with its `IsLight` counterpart. */
+const DOC_COLORS = ['primary', 'green', 'orange', 'red'] as const;
+
+export const BasicUsage: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Studio defaults — <code>Number</code> 3, <code>Color</code> Primary, <code>Shape</code> Rounded and no <code>Size</code> (the compact 20px pill).',
+			},
+		},
+	},
+	render: () => renderStatic(badgeMarkup({ ...baseArgs, size: '' })),
+};
+
+export const LightStyle: StoryObj = {
+	tags: ['docs-example'],
+	name: 'Light style',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Solid colour above, <code>IsLight</code> True below: the background switches to the <code>-lightest</code> tint and the text to the darker tone of the same family.',
+			},
+		},
+	},
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				DOC_COLORS.map((color) => ({
+					label: color,
+					html: `<div style="display:flex;gap:8px;align-items:center;">${badgeMarkup({ ...baseArgs, size: '', color })}${badgeMarkup({ ...baseArgs, size: '', color, isLight: true })}</div>`,
+				})),
+				{ direction: 'row' }
+			).outerHTML
+		),
 };
 
 /** Default (compact), small and medium sizes side by side. */
 export const Sizes: StoryObj = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Sizes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'The three <code>Size</code> values: empty (default, 20px), Small (<code>.badge-small</code>, 16px) and Medium (<code>.badge-medium</code>, 28px).',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
@@ -101,7 +147,17 @@ export const Sizes: StoryObj = {
 
 /** The four border-radius shapes at the same size and color. */
 export const Shapes: StoryObj = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Shapes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Shape</code> Sharp, SoftRounded and Rounded map to <code>border-radius-none</code>, <code>-soft</code> and <code>-rounded</code>; the last cell adds <code>border-radius-circle</code> through <code>ExtendedClass</code>.',
+			},
+		},
+	},
 	render: () =>
 		renderStatic(
 			labeledBoard(
@@ -109,4 +165,10 @@ export const Shapes: StoryObj = {
 				{ direction: 'row' }
 			).outerHTML
 		),
+};
+
+/** Every Color swatch as a solid and an IsLight badge. */
+export const Colors: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () => renderStatic(colorBoard((color, isLight) => badgeMarkup({ ...baseArgs, color, isLight })).outerHTML),
 };

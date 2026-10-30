@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic, uid } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
+import { phoneFrame, phoneList, PHONE_WIDTH } from './_helpers/phone';
 
 /**
  * Floating Actions (parent) + Floating Actions Item (children).
@@ -24,8 +25,9 @@ import { labeledBoard } from './_helpers/showcase';
  *
  * The story wires the old runtime's behavior (toggle on click / hover, Esc and
  * overlay close) inline, mirroring the block's IsExpanded / IsHover parameters.
- * The demo box is a transformed containing block so `position: fixed` anchors to
- * it instead of the viewport.
+ * Every example renders in a phone-sized app screen (`_helpers/phone.ts`): the
+ * frame is the containing block that anchors the fixed stack and overlay, and
+ * it restores the overlay that the desktop body class hides.
  */
 
 interface FloatingActionsArgs {
@@ -33,6 +35,9 @@ interface FloatingActionsArgs {
 	isHover: boolean;
 	extendedClass: string;
 }
+
+/** The phone screen of the Playground and the docs examples, cropped below the 700px default. */
+const DEFAULT_FRAME = { width: PHONE_WIDTH, height: 560 };
 
 const ACTIONS: Array<[label: string, icon: string]> = [
 	['New message', 'ph-envelope'],
@@ -72,8 +77,17 @@ export default meta;
 
 type Story = StoryObj<FloatingActionsArgs>;
 
+/** The screen under the stack — a contacts list. */
+const CONTACT_ROWS: Array<[title: string, meta: string]> = [
+	['Ana Martins', 'Product design'],
+	['Bruno Costa', 'Engineering'],
+	['Carla Nunes', 'Customer success'],
+	['Diogo Reis', 'Sales'],
+	['Eva Lopes', 'Finance'],
+];
+
 /**
- * The transformed demo box with the FAB stack inside, open or closed.
+ * The phone screen with the FAB stack over it, open or closed.
  * `hover` marks the main FAB or the first item button with a `data-pseudo`
  * attribute, which the OpenStates `pseudo` parameter forces into `:hover`
  * (storybook-addon-pseudo-states).
@@ -81,7 +95,7 @@ type Story = StoryObj<FloatingActionsArgs>;
 function floatingActionsMarkup(
 	isExpanded: boolean,
 	extendedClass: string,
-	size = 420,
+	frame: { width: number; height: number } = DEFAULT_FRAME,
 	hover?: 'button' | 'item'
 ): string {
 	// Items animate bottom→top: the item closest to the FAB gets --delay: 1.
@@ -89,53 +103,102 @@ function floatingActionsMarkup(
 		itemMarkup(label, icon, ACTIONS.length - i, hover === 'item' && i === 0 ? ' data-pseudo="item-hover"' : '')
 	).join('');
 	const fabPseudo = hover === 'button' ? ' data-pseudo="fab-hover"' : '';
-	return `
-		<div style="position: relative; transform: translateZ(0); overflow: hidden; height: ${size}px; width: ${size}px; max-width: 100%; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
-			<div class="floating-overlay"></div>
-			<div id="${uid('floating-actions')}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
-				<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
-				<div class="floating-button"${fabPseudo} role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
-					<i class="icon ph ph-plus"></i>
-				</div>
+	const stack = `
+		<div class="floating-overlay"></div>
+		<div id="${uid('floating-actions')}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
+			<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
+			<div class="floating-button"${fabPseudo} role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
+				<i class="icon ph ph-plus"></i>
 			</div>
 		</div>`;
+	return phoneFrame({ title: 'Contacts', content: phoneList(CONTACT_ROWS), overlay: stack, ...frame });
 }
 
-export const Default: Story = {
-	render: ({ isExpanded, isHover, extendedClass }) => {
-		const root = renderStatic(floatingActionsMarkup(isExpanded, extendedClass));
+/**
+ * Mirrors the block's IsHover / IsExpanded behaviour (what the removed runtime
+ * did): click or hover toggles `.is--open` on the wrapper and the overlay,
+ * Esc and an overlay click close, Enter / Space toggle from the keyboard.
+ */
+function wireFloatingActions(root: HTMLElement, isHover: boolean): HTMLElement {
+	const wrapper = root.querySelector<HTMLElement>('.floating-actions-wrapper')!;
+	const overlay = root.querySelector<HTMLElement>('.floating-overlay')!;
+	const itemsEl = root.querySelector<HTMLElement>('.floating-items')!;
+	const button = root.querySelector<HTMLElement>('.floating-button')!;
 
-		const wrapper = root.querySelector<HTMLElement>('.floating-actions-wrapper')!;
-		const overlay = root.querySelector<HTMLElement>('.floating-overlay')!;
-		const itemsEl = root.querySelector<HTMLElement>('.floating-items')!;
-		const button = root.querySelector<HTMLElement>('.floating-button')!;
+	const setOpen = (open: boolean): void => {
+		wrapper.classList.toggle('is--open', open);
+		overlay.classList.toggle('is--open', open);
+		button.setAttribute('aria-expanded', String(open));
+		itemsEl.setAttribute('aria-hidden', String(!open));
+	};
+	const toggle = (): void => setOpen(!wrapper.classList.contains('is--open'));
 
-		const setOpen = (open: boolean): void => {
-			wrapper.classList.toggle('is--open', open);
-			overlay.classList.toggle('is--open', open);
-			button.setAttribute('aria-expanded', String(open));
-			itemsEl.setAttribute('aria-hidden', String(!open));
-		};
-		const toggle = (): void => setOpen(!wrapper.classList.contains('is--open'));
-
-		if (isHover) {
-			wrapper.addEventListener('mouseenter', () => setOpen(true));
-			wrapper.addEventListener('mouseleave', () => setOpen(false));
-			button.addEventListener('focus', () => setOpen(true));
-		} else {
-			button.addEventListener('click', toggle);
+	if (isHover) {
+		wrapper.addEventListener('mouseenter', () => setOpen(true));
+		wrapper.addEventListener('mouseleave', () => setOpen(false));
+		button.addEventListener('focus', () => setOpen(true));
+	} else {
+		button.addEventListener('click', toggle);
+	}
+	overlay.addEventListener('click', () => setOpen(false));
+	wrapper.addEventListener('keydown', (e: KeyboardEvent) => {
+		if (e.key === 'Escape') setOpen(false);
+		if ((e.key === 'Enter' || e.key === ' ') && e.target === button) {
+			e.preventDefault();
+			toggle();
 		}
-		overlay.addEventListener('click', () => setOpen(false));
-		wrapper.addEventListener('keydown', (e: KeyboardEvent) => {
-			if (e.key === 'Escape') setOpen(false);
-			if ((e.key === 'Enter' || e.key === ' ') && e.target === button) {
-				e.preventDefault();
-				toggle();
-			}
-		});
+	});
 
-		return root;
+	return root;
+}
+
+export const Playground: Story = {
+	render: ({ isExpanded, isHover, extendedClass }) =>
+		wireFloatingActions(renderStatic(floatingActionsMarkup(isExpanded, extendedClass)), isHover),
+};
+
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Block defaults — <code>IsExpanded</code> False and <code>IsHover</code> False. The main button toggles the three Floating Actions Items on click; Esc or a click on the overlay closes them.',
+			},
+		},
 	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '')), false),
+};
+
+export const StartsExpanded: Story = {
+	tags: ['docs-example'],
+	name: 'Starts expanded',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsExpanded</code> True — the items are visible as soon as the screen renders (<code>.is--open</code>) and the main button shows the close rotation.',
+			},
+		},
+	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(true, '')), false),
+};
+
+export const HoverTrigger: Story = {
+	tags: ['docs-example'],
+	name: 'Hover trigger',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsHover</code> True — moving the pointer over the stack (or focusing the main button) opens it, leaving closes it. No click is needed.',
+			},
+		},
+	},
+	render: () => wireFloatingActions(renderStatic(floatingActionsMarkup(false, '')), true),
 };
 
 /**
@@ -143,6 +206,8 @@ export const Default: Story = {
  * hover states (forced via storybook-addon-pseudo-states): the main FAB
  * hovered, and an expanded item button hovered.
  */
+const SMALL = { width: 260, height: 340 };
+
 export const OpenStates: Story = {
 	parameters: {
 		controls: { disable: true },
@@ -152,10 +217,10 @@ export const OpenStates: Story = {
 		renderStatic(
 			labeledBoard(
 				[
-					{ label: 'closed', html: floatingActionsMarkup(false, '', 300) },
-					{ label: 'hover (button)', html: floatingActionsMarkup(false, '', 300, 'button') },
-					{ label: 'open (is--open)', html: floatingActionsMarkup(true, '', 300) },
-					{ label: 'open + item hover', html: floatingActionsMarkup(true, '', 300, 'item') },
+					{ label: 'closed', html: floatingActionsMarkup(false, '', SMALL) },
+					{ label: 'hover (button)', html: floatingActionsMarkup(false, '', SMALL, 'button') },
+					{ label: 'open (is--open)', html: floatingActionsMarkup(true, '', SMALL) },
+					{ label: 'open + item hover', html: floatingActionsMarkup(true, '', SMALL, 'item') },
 				],
 				{ direction: 'row', wrap: true }
 			).outerHTML

@@ -5,7 +5,7 @@ const brandBase = {
 	brandTitle: '',
 	brandUrl: 'https://github.com/OutSystems/outsystems-ui',
 	brandTarget: '_self',
-	colorPrimary: '#6986f2',
+	colorPrimary: '#00a2bb',
 	appBorderRadius: 4,
 };
 
@@ -14,7 +14,7 @@ export const lightTheme = create({
 	...brandBase,
 	// Globals toolbar — dark labels on light chrome
 	colorSecondary: '#242424',
-	brandImage: './assets/logo_outsystems-ui.svg',
+	brandImage: './assets/logo_outsystems-ui-light.svg',
 	appBg: '#ffffff',
 	appContentBg: '#ffffff',
 	appPreviewBg: '#ffffff',
@@ -31,14 +31,14 @@ export const darkTheme = create({
 	// Globals toolbar labels — must stay light on dark chrome (sidebar selected
 	// state is overridden in manager-head.html, not via this token).
 	colorSecondary: '#c8c8c8',
-	brandImage: './assets/logo_outsystems-ui-dark.png',
+	brandImage: './assets/logo_outsystems-ui-dark.svg',
 	appBg: '#141414',
 	appContentBg: '#141414',
 	appPreviewBg: '#141414',
 	appBorderColor: '#333333',
 	barBg: '#1c1c1c',
 	barTextColor: '#ededed',
-	barSelectedColor: '#6986f2',
+	barSelectedColor: '#00a2bb',
 	barHoverColor: '#2a2a2a',
 	textColor: '#ededed',
 	textMutedColor: '#9a9a9a',

@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TooltipStories from './Tooltip.stories';
+import { TOOLTIP_RECIPES } from './_helpers/pattern-docs/tooltip-recipes';
+import { TOOLTIP_DOC } from './_helpers/pattern-docs/tooltip-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={TooltipStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={TOOLTIP_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `Trigger` OnHover, `Position` Right, `StartsOpen` False. Hover or focus the help icon next to the field label to read the hint."
+				implement={<StudioHowTo recipe={TOOLTIP_RECIPES.basicUsage} />}
+			>
+				<Canvas of={TooltipStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Starts open"
+				description="`StartsOpen` True shows the balloon as soon as it is built, with no hover needed — useful to point first-time users at a control. It still closes on Esc and reopens on hover."
+				implement={<StudioHowTo recipe={TOOLTIP_RECIPES.startsOpen} />}
+			>
+				<Canvas of={TooltipStories.Visible} />
+			</PdExample>
+			<PdExample
+				title="Click trigger"
+				description="`Trigger` OnClick opens the balloon on click or keyboard focus and keeps it open until Esc, Tab or a click elsewhere. `Position` is Bottom here."
+				implement={<StudioHowTo recipe={TOOLTIP_RECIPES.clickTrigger} />}
+			>
+				<Canvas of={TooltipStories.ClickTrigger} />
+			</PdExample>
+			<PdExample
+				title="Positions"
+				description="Every `Position` value pinned open with `StartsOpen` True: Top, TopLeft, TopRight, Bottom, BottomLeft, BottomRight, Left, Right and Center. The balloon flips automatically when it would overflow the viewport."
+				implement={<StudioHowTo recipe={TOOLTIP_RECIPES.positions} />}
+			>
+				<Canvas of={TooltipStories.Positions} />
+			</PdExample>
+		</>
+	}
+/>

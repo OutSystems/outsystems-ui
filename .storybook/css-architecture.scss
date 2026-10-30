@@ -25,8 +25,8 @@
 }
 
 .osui-css-architecture {
-  --ca-primary-100: #f0f2ff;
-  --ca-primary-700: #105cef;
+  --ca-primary-100: #e6f7fa;
+  --ca-primary-700: #00a2bb;
   --ca-n-100: #f9f9f9;
   --ca-n-200: #f2f2f2;
   --ca-n-300: #e8e8e8;
@@ -35,12 +35,12 @@
   --ca-ink: #242424;
   --ca-ink-2: #454545;
   --ca-ink-3: #6b6b6b;
-  --ca-brand-a: #ff5e3e;
-  --ca-brand-b: #d8161e;
+  --ca-brand-a: #007a8f;
+  --ca-brand-b: #00a2bb;
   --ca-r-200: 8px;
   --ca-r-300: 12px;
   --ca-r-full: 999px;
-  --ca-hop-api: #105cef;
+  --ca-hop-api: #00a2bb;
   --ca-hop-theme: #0d9488;
   --ca-hop-scss: #0e7490;
   --ca-hop-token: #15803d;
@@ -74,9 +74,9 @@
   height: 460px;
   pointer-events: none;
   background:
-    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
-    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%),
-    radial-gradient(38% 40% at 52% 66%, rgba(150, 8, 44, 0.09), transparent 70%);
+    radial-gradient(50% 46% at 18% 34%, rgba(0, 162, 187, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(0, 162, 187, 0.18), transparent 68%),
+    radial-gradient(38% 40% at 52% 66%, rgba(0, 122, 143, 0.09), transparent 70%);
   filter: blur(6px);
 }
 
@@ -126,7 +126,7 @@
   color: var(--ca-ink-2);
 }
 
-/* Beat Storybook .sbdocs-content code { color: #105cef } — body + lede inline code */
+/* Beat Storybook .sbdocs-content code { color: #00a2bb } — body + lede inline code */
 .sbdocs-wrapper .sbdocs-content .osui-css-architecture code:not(pre code):not(.ca-hop-form),
 .sbdocs-wrapper .osui-css-architecture code:not(pre code):not(.ca-hop-form),
 .osui-css-architecture code:not(pre code):not(.ca-hop-form) {
@@ -261,7 +261,7 @@
 }
 
 .osui-css-architecture .code .c { color: #6b7280; }
-.osui-css-architecture .code .f { color: #7cb3ff; }
+.osui-css-architecture .code .f { color: #6ecfe0; }
 .osui-css-architecture .code .s { color: #8ad6a0; }
 
 .osui-css-architecture .code button {

@@ -44,7 +44,7 @@
 
   .css-wkfnut:hover a,
   .css-wkfnut:focus a {
-    color: #105cef;
+    color: #00a2bb;
   }
 
   /* Sidebar column — Storybook default is 300px */
@@ -56,12 +56,34 @@
     font-size: 13px !important;
   }
 
-  /* Match light SVG intrinsic size (190×45) — dark PNG is 493×97 and scales wider otherwise */
+  /* Brand header — logo + collapse button share one row (nav is 240px) */
+  .sidebar-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar-header > a,
+  .sidebar-header a:has(img) {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    margin-right: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .sidebar-header button {
+    flex: 0 0 auto !important;
+  }
+
+  /* Brand logos — SVG 1292×350 */
   .sidebar-header img {
-    width: 160px !important;
-    height: 38px !important;
-    max-width: 160px !important;
-    max-height: 38px !important;
+    width: auto !important;
+    height: 47px !important;
+    max-width: 100% !important;
+    max-height: 47px !important;
+    margin-right: 0 !important;
     object-fit: contain;
     object-position: left center;
   }
@@ -76,36 +98,70 @@
     display: none !important;
   }
 
-  /* App appearance toggle — canvas toolbar (next to viewport controls) */
-  .osui-app-appearance-tool {
+  /* Storybook appearance switch (light / dark / system) — canvas toolbar, see manager.js.
+     The toolbar rules below force `color` on buttons and their svg with !important, so the
+     icons are coloured through `stroke` (they are stroked paths) via a custom property. */
+  .osui-appearance-switch {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 28px;
+    gap: 2px;
     height: 28px;
-    padding: 0;
-    margin: 0 2px;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .osui-app-appearance-tool.is-dark {
-    color: #ededed;
-  }
-
-  .osui-app-appearance-tool svg {
-    display: block;
-  }
-
-  .osui-app-appearance-tool:hover {
+    padding: 2px;
+    margin: 0 4px;
+    border-radius: 999px;
     background: rgba(0, 0, 0, 0.06);
   }
 
-  html.osui-sb-dark .osui-app-appearance-tool:hover {
+  .osui-appearance-switch__option {
+    --osui-switch-ink: #6b6b6b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none !important;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+
+  .osui-appearance-switch__option svg {
+    display: block;
+    stroke: var(--osui-switch-ink);
+  }
+
+  .osui-appearance-switch__option:hover {
+    --osui-switch-ink: #242424;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .osui-appearance-switch__option.is-active,
+  .osui-appearance-switch__option.is-active:hover {
+    --osui-switch-ink: #242424;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+  }
+
+  html.osui-sb-dark .osui-appearance-switch {
     background: rgba(255, 255, 255, 0.08);
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option {
+    --osui-switch-ink: #9a9a9a;
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option:hover {
+    --osui-switch-ink: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  html.osui-sb-dark .osui-appearance-switch__option.is-active,
+  html.osui-sb-dark .osui-appearance-switch__option.is-active:hover {
+    --osui-switch-ink: #ffffff;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: none;
   }
 
   /* Canvas toolbar globals (Theme, Icons, A11y, Direction, Appearance) */
@@ -228,7 +284,9 @@
   }
 
   /* Nested docs/stories — icon on the row (::before), not the link. Storybook emotion
-     injects `background` on the selected <a> and wipes background-image. */
+     injects `background` on the selected <a> and wipes background-image.
+     Docs and stories sit at the same level under the component; the stories a Docs page
+     embeds (tag `docs-example`) are kept out of the sidebar by main.ts. */
   .sidebar-item[data-nodetype="document"][data-parent-id],
   .sidebar-item[data-nodetype="story"][data-parent-id] {
     position: relative;
@@ -237,7 +295,7 @@
   .sidebar-item[data-nodetype="document"][data-parent-id]::before {
     content: "";
     position: absolute;
-    left: 24px;
+    left: 36px;
     top: 50%;
     transform: translateY(-50%);
     width: 15px;
@@ -252,7 +310,7 @@
   .sidebar-item[data-nodetype="story"][data-parent-id]::before {
     content: "";
     position: absolute;
-    left: 24px;
+    left: 36px;
     top: 50%;
     transform: translateY(-50%);
     width: 15px;
@@ -264,10 +322,14 @@
     z-index: 1;
   }
 
-  .sidebar-item[data-nodetype="document"][data-parent-id] a,
+  .sidebar-item[data-nodetype="document"][data-parent-id] a {
+    background-image: none !important;
+    padding: 0 8px 0 56px !important;
+  }
+
   .sidebar-item[data-nodetype="story"][data-parent-id] a {
     background-image: none !important;
-    padding: 0 8px 0 40px !important;
+    padding: 0 8px 0 56px !important;
   }
 
   /* Selected row — beat Storybook LeafNodeStyleWrapper (emotion injects after manager-head) */
@@ -333,7 +395,6 @@
   }
 
   /* App appearance — sidebar overrides for Storybook light-theme hardcodes */
-  html.osui-sb-dark .sidebar-header,
   html.osui-sb-dark .sidebar-header a {
     color: #ededed !important;
   }
@@ -392,6 +453,6 @@
 
   html.osui-sb-dark .css-wkfnut:hover a,
   html.osui-sb-dark .css-wkfnut:focus a {
-    color: #7cb3ff;
+    color: #6ecfe0;
   }
 </style>

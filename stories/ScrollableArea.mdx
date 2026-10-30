@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ScrollableAreaStories from './ScrollableArea.stories';
+import { SCROLLABLE_AREA_RECIPES } from './_helpers/pattern-docs/scrollable-area-recipes';
+import { SCROLLABLE_AREA_DOC } from './_helpers/pattern-docs/scrollable-area-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={ScrollableAreaStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={SCROLLABLE_AREA_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="`Orientation` Horizontal with the Default `ScrollbarStyle`. The cards in the Content placeholder sit on one line and the area scrolls sideways within the `Width` you set."
+				implement={<StudioHowTo recipe={SCROLLABLE_AREA_RECIPES.basicUsage} />}
+			>
+				<Canvas of={ScrollableAreaStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Vertical orientation"
+				description="Set `Orientation` to Vertical and give the area a `Height`. The content stacks and scrolls up and down inside that height — without one the area grows with its content and nothing scrolls."
+				implement={<StudioHowTo recipe={SCROLLABLE_AREA_RECIPES.vertical} />}
+			>
+				<Canvas of={ScrollableAreaStories.Vertical} />
+			</PdExample>
+			<PdExample
+				title="Scrollbar styles"
+				description="The three `ScrollbarStyle` values side by side: Default keeps the native scrollbar, Compact shows a slim thumb on hover, and None hides the scrollbar while the area still scrolls with touch and trackpad gestures."
+				implement={<StudioHowTo recipe={SCROLLABLE_AREA_RECIPES.scrollbarStyles} />}
+			>
+				<Canvas of={ScrollableAreaStories.ScrollbarStyles} />
+			</PdExample>
+		</>
+	}
+/>

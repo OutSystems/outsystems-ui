@@ -28,15 +28,36 @@ interface DatePickerArgs {
 const meta: Meta<DatePickerArgs> = {
 	title: 'Patterns/Interaction/DatePicker',
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'range'] },
-		dateFormat: { control: 'text', name: 'DateFormat' },
-		firstWeekDay: { control: { type: 'number', min: 0, max: 6 }, name: 'FirstWeekDay' },
-		showTodayButton: { control: 'boolean', name: 'ShowTodayButton' },
-		showWeekNumbers: { control: 'boolean', name: 'ShowWeekNumbers' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'range'],
+			description: 'Story-only: `single` renders the DatePicker block, `range` the DatePickerRange block.',
+		},
+		dateFormat: {
+			control: 'text',
+			name: 'DateFormat',
+			description: 'Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format.',
+		},
+		firstWeekDay: {
+			control: { type: 'number', min: 0, max: 6 },
+			name: 'OptionalConfigs.FirstWeekDay',
+			description: 'First day of the week in the calendar (0 = Sunday … 6 = Saturday).',
+		},
+		showTodayButton: {
+			control: 'boolean',
+			name: 'ShowTodayButton',
+			description: 'Renders a Today button in the calendar footer.',
+		},
+		showWeekNumbers: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowWeekNumbers',
+			description: 'Shows the week-number column in the calendar.',
+		},
 		timeFormat: {
 			control: 'inline-radio',
 			options: ['disabled', '12', '24'],
 			name: 'TimeFormat',
+			description: 'Time selection appended to the calendar: Disabled (date only), 12 or 24 hour format.',
 		},
 	},
 	args: {
@@ -107,13 +128,79 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: renderDatePicker,
 };
 
+/** One closed picker in `mode`, with `configs` merged over the block defaults. */
+function docsDatePicker(mode: 'single' | 'range', configs: Record<string, unknown>): HTMLElement {
+	const id = uid('datepicker');
+	return renderPattern(datePickerMarkup(id, mode === 'range'), (_root, register) =>
+		initDatePicker(id, mode, configs, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A single-date picker with DateFormat set to DD/MM/YYYY. Click or focus the input and press the down arrow to open the calendar; the selected day is written back in that format.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: false }),
+};
+
 export const Range: Story = {
+	tags: ['docs-example'],
+	name: 'Date range',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Date Picker Range block: two clicks in the same calendar pick a start and an end date, and OnSelected returns SelectedStartDate and SelectedEndDate.',
+			},
+		},
+	},
 	args: { mode: 'range' },
 	render: renderDatePicker,
+};
+
+export const WithTime: Story = {
+	tags: ['docs-example'],
+	name: 'With time selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set TimeFormat to Time24hFormat (or Time12hFormat) to append an hour and minute spinner to the calendar. DateFormat stays date-only — the runtime adds the time part itself.',
+			},
+		},
+	},
+	render: () =>
+		docsDatePicker('single', {
+			DateFormat: 'DD/MM/YYYY',
+			ShowTodayButton: false,
+			TimeFormat: '24',
+			InitialDate: '2024-03-15 09:30:00',
+		}),
+};
+
+export const TodayButton: Story = {
+	tags: ['docs-example'],
+	name: 'Today button',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set ShowTodayButton to True to add a Today shortcut under the calendar that selects the current day and closes the picker.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: true }),
 };
 
 /**

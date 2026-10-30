@@ -24,9 +24,21 @@ const ICON_STATES = `
 const meta: Meta<RatingArgs> = {
 	title: 'Patterns/Numbers/Rating',
 	argTypes: {
-		ratingValue: { control: { type: 'number', min: 0, max: 5, step: 0.5 }, name: 'RatingValue' },
-		ratingScale: { control: { type: 'number', min: 1, max: 10 }, name: 'RatingScale' },
-		isEdit: { control: 'boolean', name: 'IsEdit' },
+		ratingValue: {
+			control: { type: 'number', min: 0, max: 5, step: 0.5 },
+			name: 'RatingValue',
+			description: 'Current rating; a fractional part from 0.3 to 0.7 renders a half-filled item.',
+		},
+		ratingScale: {
+			control: { type: 'number', min: 1, max: 10 },
+			name: 'RatingScale',
+			description: 'Number of rating items.',
+		},
+		isEdit: {
+			control: 'boolean',
+			name: 'IsEdit',
+			description: 'Lets the user change the rating; when False it is read-only.',
+		},
 	},
 	args: { ratingValue: 3, ratingScale: 5, isEdit: true },
 };
@@ -43,7 +55,7 @@ function ratingMarkup(id: string, pseudo = ''): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('rating');
 		return renderPattern(ratingMarkup(id), (_root, register) =>
@@ -57,6 +69,46 @@ export const Default: Story = {
 	},
 };
 
+// ─── Docs-page examples ──────────────────────────────────────────────────────
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Read-only (<code>IsEdit</code> False) with <code>RatingValue</code> 3.5 on the default <code>RatingScale</code> of 5 — the fractional part renders the fourth star half-filled.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('rating');
+		return renderPattern(ratingMarkup(id), (_root, register) =>
+			createAndInit('RatingAPI', id, { RatingValue: 3.5, RatingScale: 5, IsEdit: false, Size: '' }, register)
+		);
+	},
+};
+
+export const Editable: Story = {
+	tags: ['docs-example'],
+	name: 'Editable',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>IsEdit</code> True — hover previews the score, a click or keyboard selection updates <code>RatingValue</code> and fires <code>OnSelect</code> with the new value.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('rating');
+		return renderPattern(ratingMarkup(id), (_root, register) =>
+			createAndInit('RatingAPI', id, { RatingValue: 4, RatingScale: 5, IsEdit: true, Size: '' }, register)
+		);
+	},
+};
+
 /**
  * Default (no size class, 16px), Small (`.rating-small`, 12px) and Medium
  * (`.rating-medium`, 24px) at the same value, so the size difference is the only
@@ -64,7 +116,17 @@ export const Default: Story = {
  * `rating-` plus `small` or `medium`.
  */
 export const Sizes: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Sizes',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: '<code>Size</code> Small (12px), empty (default, 16px) and Medium (24px) — the modifier becomes <code>.rating-small</code> / <code>.rating-medium</code> on the root.',
+			},
+		},
+	},
 	render: () => {
 		const sizes = [
 			{ label: 'Small', size: 'small' },
@@ -94,6 +156,25 @@ export const Sizes: Story = {
 				);
 			}
 		});
+	},
+};
+
+export const Scale: Story = {
+	tags: ['docs-example'],
+	name: 'Scale',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>RatingScale</code> 10 with <code>RatingValue</code> 7 — one item per point, up to 100; a scale of 1 is always read-only.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('rating');
+		return renderPattern(ratingMarkup(id), (_root, register) =>
+			createAndInit('RatingAPI', id, { RatingValue: 7, RatingScale: 10, IsEdit: false, Size: '' }, register)
+		);
 	},
 };
 

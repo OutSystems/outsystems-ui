@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as VideoStories from './Video.stories';
+import { VIDEO_RECIPES } from './_helpers/pattern-docs/video-recipes';
+import { VIDEO_DOC } from './_helpers/pattern-docs/video-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={VideoStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={VIDEO_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Only `URL` is set; `Controls` keeps its default of True so the browser renders its native player. The line under the player follows the `StateChanged` event (Unstarted, Playing, Paused, Ended)."
+				implement={<StudioHowTo recipe={VIDEO_RECIPES.basicUsage} />}
+			>
+				<Canvas of={VideoStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Poster image"
+				description="`OptionalConfigs.PosterURL` shows a still image until playback starts — useful when the first frame of the video is dark or blank."
+				implement={<StudioHowTo recipe={VIDEO_RECIPES.posterImage} />}
+			>
+				<Canvas of={VideoStories.PosterImage} />
+			</PdExample>
+			<PdExample
+				title="Autoplay and loop"
+				description="`OptionalConfigs.Autoplay`, `OptionalConfigs.Muted` and `OptionalConfigs.Loop` set to True give a silent clip that starts on its own and repeats. Browsers refuse to autoplay with sound, so Muted must accompany Autoplay."
+				implement={<StudioHowTo recipe={VIDEO_RECIPES.autoplayLoop} />}
+			>
+				<Canvas of={VideoStories.AutoplayLoop} />
+			</PdExample>
+			<PdExample
+				title="Fixed size"
+				description="`Width` and `Height` accept pixels or percentages and are written to the video element; here the player is pinned to 320 × 180."
+				implement={<StudioHowTo recipe={VIDEO_RECIPES.fixedSize} />}
+			>
+				<Canvas of={VideoStories.FixedSize} />
+			</PdExample>
+		</>
+	}
+/>

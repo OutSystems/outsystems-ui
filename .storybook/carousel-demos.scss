@@ -1,0 +1,91 @@
+.carousel-demo {
+	margin-inline: auto;
+	max-width: 360px;
+	width: 100%;
+
+	&--two {
+		max-width: 480px;
+	}
+}
+
+.carousel-demo-slide {
+	border-radius: 6px;
+	height: 120px;
+	overflow: hidden;
+	width: 100%;
+
+	img {
+		display: block;
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
+}
+
+.osui-carousel.shape-round {
+	.osui-carousel__track {
+		border-radius: var(--border-radius-md);
+		overflow: hidden;
+	}
+
+	.carousel-demo-slide {
+		border-radius: var(--border-radius-md);
+	}
+}
+
+/* Docs canvas only — isolated stories use OUI as-is.
+   `.sbdocs-content ul` typography bleeds into Splide’s `<ul class="splide__pagination">`.
+   Storybook fixes docs-story / sbdocs-preview height to ~198px, clipping the carousel
+   pagination row and the space reserved below it. */
+
+.osui-pattern-doc .pd-example__frame:has(.osui-carousel) {
+	overflow: visible;
+}
+
+/* Let every Storybook docs wrapper grow with the carousel (Emotion divs included). */
+.osui-pattern-doc .pd-example__canvas:has(.osui-carousel) :is(.docs-story, .sb-story, .sbdocs-preview, .docs-story > div) {
+	height: auto !important;
+	min-height: unset !important;
+	overflow: visible !important;
+}
+
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper:has(.osui-carousel),
+.osui-pattern-doc .pd-preview .innerZoomElementWrapper:has(.osui-carousel) {
+	height: auto !important;
+	min-height: unset !important;
+	overflow: visible !important;
+	/* Small buffer below the dots, inside the preview (story canvas uses 16px body padding). */
+	padding-block: 16px;
+	width: 100%;
+}
+
+.osui-pattern-doc .osui-carousel .splide__pagination {
+	display: flex !important;
+	flex-wrap: wrap;
+	gap: 8px !important;
+	justify-content: center;
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 1em !important;
+}
+
+.osui-pattern-doc .osui-carousel .splide__pagination li {
+	align-items: center;
+	display: flex !important;
+	font-size: inherit !important;
+	height: 24px;
+	justify-content: center;
+	line-height: normal !important;
+	list-style: none !important;
+	margin: 0 !important;
+	width: 24px;
+}
+
+.osui-pattern-doc .osui-carousel .splide__pagination__page {
+	margin: 0 !important;
+	transform: none;
+}
+
+.osui-pattern-doc .osui-carousel .splide__pagination__page.is-active {
+	transform: none;
+}

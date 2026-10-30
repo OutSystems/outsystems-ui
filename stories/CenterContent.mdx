@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CenterContentStories from './CenterContent.stories';
+import { CENTER_CONTENT_RECIPES } from './_helpers/pattern-docs/center-content-recipes';
+import { CENTER_CONTENT_DOC } from './_helpers/pattern-docs/center-content-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CenterContentStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={CENTER_CONTENT_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Only the Center placeholder is filled. The block takes the parent height (the dashed frame stands in for the screen) and centres the empty-state copy on both axes."
+				implement={<StudioHowTo recipe={CENTER_CONTENT_RECIPES.basicUsage} />}
+			>
+				<Canvas of={CenterContentStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Top and Bottom slots"
+				description="Content in the Top and Bottom placeholders is pinned to the edges, while the Center placeholder keeps whatever space is left and stays centred inside it."
+				implement={<StudioHowTo recipe={CENTER_CONTENT_RECIPES.topAndBottom} />}
+			>
+				<Canvas of={CenterContentStories.TopAndBottom} />
+			</PdExample>
+			<PdExample
+				title="Fixed height"
+				description="Set `Height` in pixels when there is no sized parent to fill; leave it at 0 to adjust to the parent instead."
+				implement={<StudioHowTo recipe={CENTER_CONTENT_RECIPES.fixedHeight} />}
+			>
+				<Canvas of={CenterContentStories.FixedHeight} />
+			</PdExample>
+		</>
+	}
+/>

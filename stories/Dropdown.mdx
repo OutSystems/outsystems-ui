@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownStories from './Dropdown.stories';
+import { DROPDOWN_RECIPES } from './_helpers/pattern-docs/dropdown-recipes';
+import { DROPDOWN_DOC } from './_helpers/pattern-docs/dropdown-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={DropdownStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={DROPDOWN_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Single selection over an `OptionsList`. Open the control, type in the search box to filter, pick an option and the dropbox closes with the label in the trigger."
+				implement={<StudioHowTo recipe={DROPDOWN_RECIPES.basicUsage} />}
+			>
+				<Canvas of={DropdownStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Multiple selection"
+				description="Set `OptionalConfigs.AllowMultipleSelection` to True. Options get checkboxes, the dropbox stays open while the user picks, and the trigger summarises the count once more than one option is selected."
+				implement={<StudioHowTo recipe={DROPDOWN_RECIPES.multipleSelection} />}
+			>
+				<Canvas of={DropdownStories.MultipleSelection} />
+			</PdExample>
+			<PdExample
+				title="Starting selection"
+				description="Fill `StartingSelection` with the option to pre-select. The dropdown is built with that value instead of the `Prompt`; `OnChanged` is not fired for it."
+				implement={<StudioHowTo recipe={DROPDOWN_RECIPES.startingSelection} />}
+			>
+				<Canvas of={DropdownStories.StartingSelection} />
+			</PdExample>
+			<PdExample
+				title="Disabled state"
+				description="Set `OptionalConfigs.IsDisabled` to True. The control renders greyed out and cannot be opened — shown next to the enabled default."
+				implement={<StudioHowTo recipe={DROPDOWN_RECIPES.disabled} />}
+			>
+				<Canvas of={DropdownStories.States} />
+			</PdExample>
+		</>
+	}
+/>

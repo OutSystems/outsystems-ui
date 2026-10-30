@@ -15,7 +15,13 @@ interface DropdownTagsArgs {
 
 const meta: Meta<DropdownTagsArgs> = {
 	title: 'Patterns/Interaction/Dropdown Tags',
-	argTypes: { isDisabled: { control: 'boolean', name: 'IsDisabled' } },
+	argTypes: {
+		isDisabled: {
+			control: 'boolean',
+			name: 'OptionalConfigs.IsDisabled',
+			description: 'Renders the dropdown disabled.',
+		},
+	},
 	args: { isDisabled: false },
 };
 export default meta;
@@ -27,7 +33,7 @@ const TAGS_SELECTION = [
 	{ label: 'Banana', value: 'banana' },
 ];
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('dropdown-tags');
 		return renderPattern(dropdownMarkup(id, 'tags'), (_root, register) =>
@@ -36,9 +42,70 @@ export const Default: Story = {
 	},
 };
 
+/** Product-like option set for the docs examples (the Playground keeps the shared fruit list). */
+const SKILL_OPTIONS = [
+	{ label: 'Accessibility', value: 'a11y' },
+	{ label: 'Design systems', value: 'design-systems' },
+	{ label: 'Prototyping', value: 'prototyping' },
+	{ label: 'User research', value: 'user-research' },
+	{ label: 'Visual design', value: 'visual-design' },
+];
+
+/** One tags-mode dropdown over `SKILL_OPTIONS`, initialised exactly like the Playground. */
+function docsDropdownTags(configs: Record<string, unknown>): HTMLElement {
+	const id = uid('dropdown-tags');
+	return renderPattern(dropdownMarkup(id, 'tags'), (_root, register) =>
+		initDropdown(id, 'tags', { OptionsList: SKILL_OPTIONS, Prompt: 'Add skills', ...configs }, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Always multi-select: tick options in the dropbox and each one becomes a chip in the control, removable from its own clear button.',
+			},
+		},
+	},
+	render: () => docsDropdownTags({}),
+};
+
+export const StartingSelection: Story = {
+	tags: ['docs-example'],
+	name: 'Starting selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'StartingSelection pre-selects options when the dropdown is built, so the control opens with chips instead of the Prompt.',
+			},
+		},
+	},
+	render: () =>
+		docsDropdownTags({
+			StartingSelection: [
+				{ label: 'Accessibility', value: 'a11y' },
+				{ label: 'Prototyping', value: 'prototyping' },
+			],
+		}),
+};
+
 /** Enabled next to disabled (`IsDisabled: true`). */
 export const States: Story = {
-	parameters: { controls: { disable: true } },
+	tags: ['docs-example'],
+	name: 'Disabled state',
+	parameters: {
+		controls: { disable: true },
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'OptionalConfigs.IsDisabled set to True renders the control greyed out and non-interactive, next to the default enabled one.',
+			},
+		},
+	},
 	render: () => {
 		const entries = [
 			{ label: 'enabled', isDisabled: false },

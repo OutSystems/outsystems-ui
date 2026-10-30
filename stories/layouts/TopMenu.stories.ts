@@ -55,7 +55,7 @@ type Story = StoryObj<Args>;
 
 const render = (args: Args) => renderLayout(layoutTopMenu(args), { device: args.device });
 
-export const Default: Story = { render };
+export const Playground: Story = { render };
 
 export const Tablet: Story = {
 	args: { device: 'tablet' },

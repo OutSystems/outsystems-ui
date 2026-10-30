@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { flipContentMarkup as flipContentMarkupDoc } from './_helpers/flip-content-markup';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 import { labeledBoard } from './_helpers/showcase';
 
@@ -10,8 +11,17 @@ interface FlipContentArgs {
 const meta: Meta<FlipContentArgs> = {
 	title: 'Patterns/Content/FlipContent',
 	argTypes: {
-		flipSelf: { control: 'boolean', name: 'FlipSelf (click to flip)' },
-		isFlipped: { control: 'boolean', name: 'IsFlipped' },
+		flipSelf: {
+			control: 'boolean',
+			name: 'FlipOnClick',
+			description:
+				'Flips the content when it is clicked; otherwise flipping happens only through the API. Runtime config: `FlipSelf`.',
+		},
+		isFlipped: {
+			control: 'boolean',
+			name: 'StartsFlipped',
+			description: 'Starts with the back face visible. Runtime config: `IsFlipped`.',
+		},
 	},
 	args: { flipSelf: true, isFlipped: false },
 };
@@ -30,11 +40,35 @@ function flipContentMarkup(id: string): string {
 		</div>`;
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('flip');
 		return renderPattern(flipContentMarkup(id), (_root, register) =>
 			createAndInit('FlipContentAPI', id, { FlipSelf: args.flipSelf, IsFlipped: args.isFlipped }, register)
+		);
+	},
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: { layout: 'padded' },
+	render: () => {
+		const id = uid('flip');
+		return renderPattern(flipContentMarkupDoc(osuiRoot(id)), (_root, register) =>
+			createAndInit('FlipContentAPI', id, { FlipSelf: true, IsFlipped: false }, register)
+		);
+	},
+};
+
+export const StartsFlipped: Story = {
+	tags: ['docs-example'],
+	name: 'Starts flipped',
+	parameters: { layout: 'padded' },
+	render: () => {
+		const id = uid('flip');
+		return renderPattern(flipContentMarkupDoc(osuiRoot(id)), (_root, register) =>
+			createAndInit('FlipContentAPI', id, { FlipSelf: true, IsFlipped: true }, register)
 		);
 	},
 };

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createAndInit, osuiRoot, renderPattern, renderStatic, uid } from './_helpers/osui';
+import { extendedClassArgType } from './_helpers/lowcode';
 
 /**
  * Search — a lightweight wrapper; its build() is a no-op stub, the markup is the search input itself.
@@ -7,6 +8,9 @@ import { createAndInit, osuiRoot, renderPattern, renderStatic, uid } from './_he
  * The icon is painted by `.osui-search .osui-search__input > span::after` (ODC) and by a
  * background image on `.osui-search__input input` (O11), so the Input widget has to sit in
  * that span. Hover is the input widget's `:hover` border (`--osui-input-hover-border-color`).
+ *
+ * Controls mirror the low-code input parameters of the `Search` block:
+ *   ExtendedClass → extra classes on the `.osui-search` root (applied by the pattern at build)
  */
 const meta: Meta = {
 	title: 'Patterns/Interaction/Search',
@@ -14,6 +18,8 @@ const meta: Meta = {
 export default meta;
 
 type Story = StoryObj;
+
+type SearchArgs = { extendedClass: string };
 
 function searchField(id: string, value = '', pseudo = ''): string {
 	const valueAttr = value ? ` value="${value}"` : '';
@@ -28,11 +34,60 @@ function searchField(id: string, value = '', pseudo = ''): string {
 		</div>`;
 }
 
-export const Default: Story = {
-	render: () => {
-		const id = uid('search');
-		return renderPattern(searchField(id), (_root, register) => createAndInit('SearchAPI', id, {}, register));
+/** One Search instance: Create → Initialize → register Dispose, with the given ExtendedClass. */
+function renderSearch(value = '', extendedClass = ''): HTMLElement {
+	const id = uid('search');
+	return renderPattern(searchField(id, value), (_root, register) =>
+		createAndInit('SearchAPI', id, { ExtendedClass: extendedClass }, register)
+	);
+}
+
+export const Playground: StoryObj<SearchArgs> = {
+	args: { extendedClass: '' },
+	argTypes: { extendedClass: extendedClassArgType },
+	render: ({ extendedClass }) => renderSearch('', extendedClass),
+};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Search block wraps an Input widget and paints the magnifying-glass icon inside it. Bind the Input to a text variable and filter on its OnChange.',
+			},
+		},
 	},
+	render: () => renderSearch(),
+};
+
+export const PrefilledValue: Story = {
+	tags: ['docs-example'],
+	name: 'Pre-filled value',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'When the bound variable already holds a term, the Input renders it next to the icon — the pattern adds no state class of its own, so the filled look is the Input widget’s.',
+			},
+		},
+	},
+	render: () => renderSearch('Quarterly invoices'),
+};
+
+export const RoundShape: Story = {
+	tags: ['docs-example'],
+	name: 'Round shape',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set ExtendedClass to `shape-round` to apply the round border-radius profile to the search field, the usual look for a header search.',
+			},
+		},
+	},
+	render: () => renderSearch('', 'shape-round'),
 };
 
 /**
