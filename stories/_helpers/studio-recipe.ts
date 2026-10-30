@@ -46,13 +46,30 @@ function formatStudioValue(value: string | boolean | number): string {
 	return String(value);
 }
 
-function escapeText(value: string): string {
+/** Quotes a value for a `Set Text to "…"` step: escaped quotes, whitespace collapsed. */
+export function escapeText(value: string): string {
 	return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
 }
 
-function stripHtml(value: string): string {
-	return value
-		.replace(/<[^>]+>/g, ' ')
+/**
+ * The text of an HTML snippet, tags replaced by a space. A scan rather than `<[^>]+>`:
+ * that regex backtracks super-linearly on a run of unclosed `<` (SonarCloud S5852).
+ * A `<` with no `>` after it, or an empty `<>`, stays literal, as it did with the regex.
+ */
+export function stripHtml(value: string): string {
+	let text = '';
+	let i = 0;
+	while (i < value.length) {
+		const close = value[i] === '<' ? value.indexOf('>', i + 1) : -1;
+		if (close > i + 1) {
+			text += ' ';
+			i = close + 1;
+		} else {
+			text += value[i];
+			i += 1;
+		}
+	}
+	return text
 		.replace(/&nbsp;/g, ' ')
 		.replace(/\s+/g, ' ')
 		.trim();

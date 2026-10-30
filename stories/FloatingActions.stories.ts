@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic, uid } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
-import { phoneFrame, phoneList } from './_helpers/phone';
+import { phoneFrame, phoneList, PHONE_WIDTH } from './_helpers/phone';
 
 /**
  * Floating Actions (parent) + Floating Actions Item (children).
@@ -35,6 +35,9 @@ interface FloatingActionsArgs {
 	isHover: boolean;
 	extendedClass: string;
 }
+
+/** The phone screen of the Playground and the docs examples, cropped below the 700px default. */
+const DEFAULT_FRAME = { width: PHONE_WIDTH, height: 560 };
 
 const ACTIONS: Array<[label: string, icon: string]> = [
 	['New message', 'ph-envelope'],
@@ -92,7 +95,7 @@ const CONTACT_ROWS: Array<[title: string, meta: string]> = [
 function floatingActionsMarkup(
 	isExpanded: boolean,
 	extendedClass: string,
-	frame: { width: number; height: number } = { width: 390, height: 560 },
+	frame: { width: number; height: number } = DEFAULT_FRAME,
 	hover?: 'button' | 'item'
 ): string {
 	// Items animate bottom→top: the item closest to the FAB gets --delay: 1.

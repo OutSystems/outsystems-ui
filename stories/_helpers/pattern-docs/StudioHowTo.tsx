@@ -1,4 +1,5 @@
 import React from 'react';
+import { escapeText, stripHtml } from '../studio-recipe';
 import type { CardVariant, StudioRecipe, StudioRecipeItem } from '../studio-recipe';
 
 function formatStudioValue(value: string | boolean | number): string {
@@ -6,18 +7,6 @@ function formatStudioValue(value: string | boolean | number): string {
 		return value ? 'True' : 'False';
 	}
 	return String(value);
-}
-
-function escapeText(value: string): string {
-	return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
-}
-
-function stripHtml(value: string): string {
-	return value
-		.replace(/<[^>]+>/g, ' ')
-		.replace(/&nbsp;/g, ' ')
-		.replace(/\s+/g, ' ')
-		.trim();
 }
 
 function PropertyList({ props }: { props: Record<string, string | boolean | number> }) {

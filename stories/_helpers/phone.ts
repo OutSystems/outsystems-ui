@@ -71,7 +71,7 @@ export function phoneList(rows: ReadonlyArray<readonly [title: string, meta: str
  * @param options screen title, placeholders and frame size
  * @returns the frame markup (callers pass it to `renderPattern` / `renderStatic`)
  */
-export function phoneFrame(options: PhoneFrameOptions = {}): string {
+export function phoneFrame(options?: PhoneFrameOptions): string {
 	const {
 		title = 'Northwind',
 		content = phoneList(),
@@ -79,7 +79,7 @@ export function phoneFrame(options: PhoneFrameOptions = {}): string {
 		overlay = '',
 		width = PHONE_WIDTH,
 		height = PHONE_HEIGHT,
-	} = options;
+	} = options ?? {};
 	const header = title
 		? `
 			<div class="header">

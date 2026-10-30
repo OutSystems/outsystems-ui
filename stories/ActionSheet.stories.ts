@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard } from './_helpers/showcase';
-import { phoneFrame } from './_helpers/phone';
+import { phoneFrame, PHONE_WIDTH } from './_helpers/phone';
 
 /**
  * Action Sheet — CSS-only mobile pattern (the low-code block toggles the
@@ -26,6 +26,9 @@ interface ActionSheetArgs {
 }
 
 const ACTIONS = ['Share', 'Add to favorites', 'Delete'];
+
+/** The phone screen of the Playground and the docs examples, cropped below the 700px default. */
+const DEFAULT_FRAME = { width: PHONE_WIDTH, height: 560 };
 
 const meta: Meta<ActionSheetArgs> = {
 	title: 'Patterns/Interaction/ActionSheet',
@@ -60,7 +63,7 @@ function actionSheetMarkup(
 	{ showCancel, extendedClass }: ActionSheetArgs,
 	visible = false,
 	actions: readonly string[] = ACTIONS,
-	frame: { width: number; height: number } = { width: 390, height: 560 }
+	frame: { width: number; height: number } = DEFAULT_FRAME
 ): string {
 	const sheet = `
 		<div class="${cls('action-sheet-container', 'action-sheet-container--animatable', visible && 'action-sheet-container--visible', extendedClass)}">
