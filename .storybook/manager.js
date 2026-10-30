@@ -72,11 +72,20 @@ addons.register('osui/sidebar-layout', (api) => {
 	requestAnimationFrame(applyNavWidth);
 });
 
-function appearanceIcon(path) {
+function appearanceIcon(...paths) {
 	return React.createElement(
 		'svg',
-		{ width: 14, height: 14, viewBox: '0 0 14 14', fill: 'currentColor', fillRule: 'evenodd', 'aria-hidden': true },
-		React.createElement('path', { d: path })
+		{
+			width: 15,
+			height: 15,
+			viewBox: '0 0 24 24',
+			fill: 'none',
+			strokeWidth: 2,
+			strokeLinecap: 'round',
+			strokeLinejoin: 'round',
+			'aria-hidden': true,
+		},
+		paths.map((d, i) => React.createElement('path', { key: i, d }))
 	);
 }
 
@@ -85,15 +94,17 @@ const APPEARANCE_OPTIONS = [
 		value: 'light',
 		label: 'Light',
 		icon: appearanceIcon(
-			'M7 3.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm0-1.75a.75.75 0 0 1 .75.75v1.1a.75.75 0 0 1-1.5 0V2.25A.75.75 0 0 1 7 1.5ZM3.1 3.1a.75.75 0 0 1 1.06 0l.78.78a.75.75 0 1 1-1.06 1.06l-.78-.78a.75.75 0 0 1 0-1.06Zm7.04 0a.75.75 0 0 1 0 1.06l-.78.78a.75.75 0 1 1-1.06-1.06l.78-.78a.75.75 0 0 1 1.06 0ZM1.5 7a.75.75 0 0 1 .75-.75h1.1a.75.75 0 0 1 0 1.5H2.25A.75.75 0 0 1 1.5 7Zm9.65-.75a.75.75 0 0 1 0 1.5h-1.1a.75.75 0 0 1 0-1.5h1.1ZM4.16 9.84a.75.75 0 0 1 1.06 0l.78.78a.75.75 0 0 1-1.06 1.06l-.78-.78a.75.75 0 0 1 0-1.06Zm5.68 0a.75.75 0 0 1 0 1.06l-.78.78a.75.75 0 1 1-1.06-1.06l.78-.78a.75.75 0 0 1 1.06 0ZM7 10.65a.75.75 0 0 1 .75.75v1.1a.75.75 0 0 1-1.5 0v-1.1A.75.75 0 0 1 7 10.65Z'
+			'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z',
+			'M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'
 		),
 	},
-	{ value: 'dark', label: 'Dark', icon: appearanceIcon('M7 1.5a5.5 5.5 0 1 0 5.2 7.3A4.5 4.5 0 1 1 7 1.5Z') },
+	{ value: 'dark', label: 'Dark', icon: appearanceIcon('M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z') },
 	{
 		value: 'system',
 		label: 'System',
 		icon: appearanceIcon(
-			'M3 2.5h8c.69 0 1.25.56 1.25 1.25V9.5H1.75V3.75C1.75 3.06 2.31 2.5 3 2.5Zm.25 1.5v4h7.5V4h-7.5ZM1 10.25h12v.5c0 .69-.56 1.25-1.25 1.25h-9.5C1.56 12 1 11.44 1 10.75v-.5Z'
+			'M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9',
+			'M20 16H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16'
 		),
 	},
 ];

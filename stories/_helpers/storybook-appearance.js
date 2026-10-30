@@ -9,7 +9,9 @@
  * (`CH_APP_APPEARANCE`, payload `{ preference, scheme }`); the preview applies it.
  */
 export const CH_APP_APPEARANCE = 'osui/storybook-appearance';
-export const STORAGE_KEY = 'osui-storybook-appearance';
+// Not `osui-storybook-appearance`: the retired light/dark toggle stored under that key,
+// and its stale value would pin returning browsers to light instead of `system`.
+export const STORAGE_KEY = 'osui-storybook-appearance-preference';
 export const APPEARANCE_PREFERENCES = ['light', 'dark', 'system'];
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)';
 

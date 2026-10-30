@@ -99,7 +99,8 @@
   }
 
   /* Storybook appearance switch (light / dark / system) — canvas toolbar, see manager.js.
-     The toolbar rules below force button colours with !important, so these do too. */
+     The toolbar rules below force `color` on buttons and their svg with !important, so the
+     icons are coloured through `stroke` (they are stroked paths) via a custom property. */
   .osui-appearance-switch {
     display: inline-flex;
     align-items: center;
@@ -108,10 +109,11 @@
     padding: 2px;
     margin: 0 4px;
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.06);
   }
 
   .osui-appearance-switch__option {
+    --osui-switch-ink: #6b6b6b;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -121,23 +123,25 @@
     border: none !important;
     border-radius: 999px;
     background: transparent;
-    color: #6b6b6b !important;
     cursor: pointer;
+    transition: background 0.12s;
   }
 
   .osui-appearance-switch__option svg {
     display: block;
-    color: inherit !important;
+    stroke: var(--osui-switch-ink);
   }
 
   .osui-appearance-switch__option:hover {
-    color: #242424 !important;
+    --osui-switch-ink: #242424;
+    background: rgba(0, 0, 0, 0.06);
   }
 
-  .osui-appearance-switch__option.is-active {
+  .osui-appearance-switch__option.is-active,
+  .osui-appearance-switch__option.is-active:hover {
+    --osui-switch-ink: #242424;
     background: #ffffff;
-    color: #242424 !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
   }
 
   html.osui-sb-dark .osui-appearance-switch {
@@ -145,16 +149,18 @@
   }
 
   html.osui-sb-dark .osui-appearance-switch__option {
-    color: #9a9a9a !important;
+    --osui-switch-ink: #9a9a9a;
   }
 
   html.osui-sb-dark .osui-appearance-switch__option:hover {
-    color: #ededed !important;
+    --osui-switch-ink: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
   }
 
-  html.osui-sb-dark .osui-appearance-switch__option.is-active {
-    background: #333333;
-    color: #ededed !important;
+  html.osui-sb-dark .osui-appearance-switch__option.is-active,
+  html.osui-sb-dark .osui-appearance-switch__option.is-active:hover {
+    --osui-switch-ink: #ffffff;
+    background: rgba(255, 255, 255, 0.22);
     box-shadow: none;
   }
 
