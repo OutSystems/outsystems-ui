@@ -4,7 +4,7 @@ import { GettingStartedArticle } from './GettingStartedArticle';
 
 const TOC_ITEMS = [
 	{ id: 'prerequisites', label: 'Prerequisites' },
-	{ id: 'steps', label: 'Four steps' },
+	{ id: 'steps', label: 'Three steps' },
 	{ id: 'patterns-detail', label: 'Working with patterns' },
 	{ id: 'technical', label: 'Technical notes' },
 ];
@@ -14,7 +14,7 @@ const HEAD = `
   <div class="head-in">
     <span class="eyebrow">Overview · Getting Started</span>
     <h1>From empty workspace<br />to <em>a themed app.</em></h1>
-    <p class="lede">Four steps in ODC Studio, with no code to write and nothing to install. The same steps apply whether you are building a web app or a mobile app.</p>
+    <p class="lede">Three steps in ODC Studio, with no code to write and nothing to install. The same steps apply whether you are building a web app or a mobile app.</p>
   </div>
 </header>
 `;
