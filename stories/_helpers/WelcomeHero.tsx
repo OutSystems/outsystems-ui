@@ -62,10 +62,10 @@ const WELCOME_SECTIONS = `
       <p>From an empty workspace to a themed, data-bound app. Each step hands off to the next.</p>
     </div>
     <div class="pieces">
-      <a class="piece" href="#"><span class="k">Step 1</span><b>App templates</b><span>Two starting points, optimised per device and adaptive from the first screen.</span></a>
-      <a class="piece" href="#"><span class="k">Step 2</span><b>Screen templates</b><span>Whole screens with layout, logic and sample data. Swap in your entities.</span></a>
-      <a class="piece" href="?path=/docs/component-library--docs"><span class="k">Step 3</span><b>Patterns</b><span>The building blocks. Configure properties, bind data and actions.</span></a>
-      <a class="piece" href="?path=/docs/design-system-css-architecture--docs"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></a>
+      <div class="piece"><span class="k">Step 1</span><b>App templates</b><span>Two starting points, optimised per device and adaptive from the first screen.</span></div>
+      <div class="piece"><span class="k">Step 2</span><b>Screen templates</b><span>Whole screens with layout, logic and sample data. Swap in your entities.</span></div>
+      <div class="piece"><span class="k">Step 3</span><b>Patterns</b><span>The building blocks. Configure properties, bind data and actions.</span></div>
+      <div class="piece"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></div>
     </div>
   </div>
 `;
