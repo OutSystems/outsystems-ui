@@ -47,7 +47,7 @@ function formatStudioValue(value: string | boolean | number): string {
 }
 
 function escapeText(value: string): string {
-	return value.replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
+	return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
 }
 
 function stripHtml(value: string): string {
