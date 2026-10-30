@@ -114,45 +114,6 @@ const WELCOME_TAIL = `
     </div>
   </div>
 
-  <!-- TEMPLATES -->
-  <div class="sec" id="templates">
-    <div class="sec-head">
-      <div class="sec-kicker">Screen templates</div>
-      <h2>Start from a screen, not a blank canvas</h2>
-      <p>Dashboards, lists, detail views, forms, galleries and onboardings, with structure and sample data already in place.</p>
-    </div>
-    <div class="grid-4">
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="height:28px"><div class="blk accent"></div><div class="blk accent"></div><div class="blk accent"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Admin dashboard</b><span>Dashboards</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="flex:1"><div class="blk tall" style="max-width:38%"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Employees list &amp; detail</b><span>Lists · Details</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="height:22px"><div class="blk"></div></div>
-          <div class="s-row" style="height:22px"><div class="blk"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall accent" style="max-width:40%"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Request form</b><span>Forms</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="flex:1"><div class="blk tall accent"></div><div class="blk tall"></div><div class="blk tall"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall"></div><div class="blk tall accent"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Product catalog</b><span>Galleries</span></div>
-      </a>
-    </div>
-  </div>
-
   <!-- RESOURCES -->
   <div class="sec" id="resources">
     <div class="sec-head">

@@ -619,7 +619,7 @@ html.sb-app-dark .sbdocs-wrapper .divider {
 @include dark-page(".osui-welcome") {
   @include dark-pattern-browser;
 
-  :is(.w-card, .preview, .tabs-demo, .card-demo, .piece, .pat, .tpl, .tpl .shot .blk) {
+  :is(.w-card, .preview, .tabs-demo, .card-demo, .piece, .pat) {
     background: var(--w-n-0);
   }
 
