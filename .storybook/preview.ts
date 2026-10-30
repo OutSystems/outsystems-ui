@@ -1,6 +1,6 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
 import { addons } from 'storybook/preview-api';
-import { GLOBALS_UPDATED } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
 // Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
 // the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
 import './docs.scss';
@@ -174,8 +174,22 @@ function applyPreviewGlobals(globals: Record<string, unknown>): void {
 }
 
 /**
+ * Back to the top whenever the selection changes. Storybook resets the `<html>` offset
+ * on every story / docs switch, but a docs page scrolls on `<body>` (`overflow: auto`
+ * in preview-head.html; `<html>` is `overflow: hidden`), so a long page handed its
+ * scroll position to the next one. `STORY_CHANGED` fires on the same condition as
+ * Storybook's own reset (story id or view mode changed), before the next page renders;
+ * anchor links still win, as the docs container scrolls to the hash afterwards.
+ */
+function resetPreviewScroll(): void {
+	document.documentElement.scrollTop = 0;
+	document.body.scrollTop = 0;
+}
+
+/**
  * MDX docs pages skip preview story decorators — sync toolbar globals (icon font,
- * theme href, RTL, pattern dark mode, a11y body class) via the preview channel.
+ * theme href, RTL, pattern dark mode, a11y body class) via the preview channel, and
+ * reset the scroll position when the selection changes.
  */
 let previewToolbarSyncReady = false;
 
@@ -193,6 +207,7 @@ function wirePreviewToolbarSync(): boolean {
 			applyPreviewGlobals(globals);
 		}
 	});
+	channel.on(STORY_CHANGED, resetPreviewScroll);
 
 	applyPreviewGlobals(PREVIEW_GLOBAL_DEFAULTS);
 	return true;
