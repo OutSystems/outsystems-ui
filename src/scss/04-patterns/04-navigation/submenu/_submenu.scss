@@ -1,3 +1,4 @@
+@use '../../../00-abstract/_mixins.scss' as *;
 @use '../../../tokens/variables';
 
 /* Patterns - Navigation - Submenu */
@@ -668,22 +669,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-submenu:focus-visible:focus-within {
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
-		outline: 0;
-	}
-}
-
-// Ported from dev: re-asserts the focus ring over the tablet/phone link styles.
-.tablet,
-.phone {
-	.has-accessible-features {
-		.osui-submenu:focus-visible:focus-within {
-			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
-			outline: 0;
-		}
-	}
+.osui-submenu:focus-visible:focus-within {
+	@include a11y-focus-shadow;
 }
 
 // OS HighContrast Enabled -------------------------------------------------------

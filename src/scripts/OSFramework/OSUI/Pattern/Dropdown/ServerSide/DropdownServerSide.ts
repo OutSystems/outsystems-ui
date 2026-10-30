@@ -43,6 +43,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _eventOnTouchMove: GlobalCallbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
+		// Store a Flag property to know if the last user interaction was made by keyboard, in order to show the focus ring
+		private _isKeyboardInteraction = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
 		// Platform OnClose Callback
@@ -168,6 +170,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						event.key === GlobalEnum.Keycodes.ArrowDown ||
 						event.key === GlobalEnum.Keycodes.Home
 					) {
+						// Dropdown is being opened by keyboard, focus ring must be visible
+						this._setKeyboardInteraction(true);
 						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
 						this._selectValuesWrapper.click();
 					}
@@ -176,6 +180,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 				// Check if the Balloon Options container has been pressed!
 				case this._balloonOptionsWrapperElement:
+					this._setKeyboardInteraction(true);
+
 					// If Escape Key
 					if (event.key === GlobalEnum.Keycodes.Escape) {
 						this._close();
@@ -202,6 +208,18 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 				// Check if the input Search has been pressed!
 				case this._balloonSearchInputElement:
+					// Only navigation keys count as keyboard interaction, typing at the search input does not
+					if (
+						event.key === GlobalEnum.Keycodes.Tab ||
+						event.key === GlobalEnum.Keycodes.ArrowUp ||
+						event.key === GlobalEnum.Keycodes.ArrowDown ||
+						event.key === GlobalEnum.Keycodes.PageUp ||
+						event.key === GlobalEnum.Keycodes.PageDown ||
+						event.key === GlobalEnum.Keycodes.Enter
+					) {
+						this._setKeyboardInteraction(true);
+					}
+
 					// If Escape Key
 					if (event.key === GlobalEnum.Keycodes.Escape) {
 						this._close();
@@ -218,6 +236,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Used to set a stopPropagation when click at search input
 		private _onSearchInputClicked(event: MouseEvent): void {
 			event.stopPropagation();
+			// A click with detail 0 is triggered by a screen reader, only a pointer click hides the focus ring
+			this._setKeyboardInteraction(event.detail === 0);
 		}
 
 		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
@@ -226,7 +246,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
-		private _onSelectValuesWrapperClicked(): void {
+		private _onSelectValuesWrapperClicked(event: MouseEvent): void {
+			// A click with detail 0 is triggered by keyboard (see _onKeyboardPressed) or by a screen reader, only a pointer click hides the focus ring
+			this._setKeyboardInteraction(event.detail === 0);
+
 			// Ensure that dropdown can open or close
 			this._isOpen ? this._close() : this._open();
 		}
@@ -300,6 +323,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				if (optionItem.keyboardTriggeredKey === undefined) {
 					return;
 				}
+
+				// Set the keyboard interaction flag to true
+				this._setKeyboardInteraction(true);
 
 				// Check which Keyboard key has been pressed
 				switch (optionItem.keyboardTriggeredKey) {
@@ -382,6 +408,17 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _setInitialOptions(): void {
 			if (this.configs.IsDisabled) {
 				this.disable();
+			}
+		}
+
+		// Method to (un)set the keyboard interaction flag and the class that allows the focus ring to be visible
+		private _setKeyboardInteraction(isKeyboard: boolean): void {
+			this._isKeyboardInteraction = isKeyboard;
+
+			if (this._isKeyboardInteraction) {
+				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.BalloonFocusVisible);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.BalloonFocusVisible);
 			}
 		}
 
@@ -637,6 +674,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			} else {
 				// Remove IsOpened Class
 				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.IsOpened);
+				// Reset the keyboard interaction, it will be set again at the next open
+				this._setKeyboardInteraction(false);
 
 				// Check if the close will be done by logic instead of user interaction
 				if (this._closeDynamically === false) {
@@ -889,6 +928,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Method used to open the Dropdown
 		 */
 		public open(): void {
+			// When opened from outside (e.g. through a button), keep the focus ring if that element was used with keyboard
+			if (this._isOpen === false) {
+				const activeElem = document.activeElement;
+				// Text fields always match :focus-visible, so they cannot tell keyboard from pointer
+				const isTextField = activeElem?.matches(GlobalEnum.CSSSelectors.TextField) ?? false;
+				this._setKeyboardInteraction(isTextField === false && (activeElem?.matches(':focus-visible') ?? false));
+			}
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
 			OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
 		}

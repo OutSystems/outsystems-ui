@@ -228,11 +228,9 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-sidebar {
-		&--is-open:focus-visible {
-			@include a11y-focus-shadow($isInner: true);
-		}
+.osui-sidebar {
+	&--is-open:focus-visible {
+		@include a11y-focus-shadow($isInner: true);
 	}
 }
 
@@ -242,8 +240,8 @@
 	.active-screen {
 		.osui-sidebar {
 			&--is-open {
-				border-inline-start: variables.$token-border-size-050 solid var(--color-focus-outer);
-				border-inline-end: variables.$token-border-size-050 solid var(--color-focus-outer);
+				border-inline-start: variables.$token-border-size-050 solid var(--osui-color-focus);
+				border-inline-end: variables.$token-border-size-050 solid var(--osui-color-focus);
 			}
 		}
 	}
@@ -252,7 +250,7 @@
 ///
 .is-rtl {
 	.osui-sidebar--has-overlay {
-		&.osui-sidebar{
+		&.osui-sidebar {
 			&--is-right {
 				&::before {
 					inset-inline-end: unset;

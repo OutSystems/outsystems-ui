@@ -300,13 +300,11 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-accordion-item__title {
-		&:focus-visible {
-			position: relative;
-			z-index: var(--layer-local-tier-1);
+.osui-accordion-item__title {
+	&:focus-visible {
+		position: relative;
+		z-index: var(--layer-local-tier-1);
 
-			@include a11y-focus-shadow;
-		}
+		@include a11y-focus-shadow;
 	}
 }

@@ -722,7 +722,7 @@
 				"--osui-bottom-sheet-handler-width",
 				"--osui-bottom-sheet-draggable-area",
 				"--osui-bottom-sheet-transition-function",
-				"--osui-focus-inner-shadow-gap"
+				"--osui-focus-gap-inner"
 			],
 			"markup": "<div class=\"osui-bottom-sheet\" aria-hidden=\"\" tabindex=\"-1\"><div class=\"osui-bottom-sheet__header\"><div class=\"osui-bottom-sheet__header__top-bar\"><strong></strong></div></div><div class=\"osui-bottom-sheet__content\"></div></div><div class=\"osui-bottom-sheet-overlay\"></div>",
 			"usage": {
@@ -1252,7 +1252,7 @@
 				"--osui-carousel-pagination-active-color",
 				"--osui-carousel-track-width",
 				"--osui-carousel-pagination-margin",
-				"--osui-focus-shadow-gap"
+				"--osui-focus-gap"
 			],
 			"markup": "<div class=\"carousel-demo\"><div class=\"osui-carousel\"><div class=\"osui-carousel__track\"><div class=\"osui-carousel__content\"></div></div></div></div>",
 			"usage": {
@@ -2100,6 +2100,7 @@
 				"Balloon": "osui-dropdown-serverside__balloon",
 				"BalloonContainer": "osui-dropdown-serverside__balloon-container",
 				"BalloonContent": "osui-dropdown-serverside__balloon-content",
+				"BalloonFocusVisible": "osui-dropdown-serverside--focus-visible",
 				"BalloonFooter": "osui-dropdown-serverside__balloon-footer",
 				"BalloonHasNotSearchInput": "osui-dropdown-serverside__balloon--has-not-search",
 				"BalloonSearch": "osui-dropdown-serverside__balloon-search",
@@ -2114,6 +2115,7 @@
 				"SearchInputIsFocused": "osui-dropdown-serverside__search-input--is-focused",
 				"SelectText": "osui-dropdown-serverside__text",
 				"SelectValuesWrapper": "osui-dropdown-serverside__selected-values-wrapper",
+				"FocusVisible": "osui-dropdown--focus-visible",
 				"OptionItemIcon": "osui-dropdown-option-icon",
 				"OptionItemImage": "osui-dropdown-option-image"
 			},
@@ -3567,7 +3569,8 @@
 				"--osui-floating-offset",
 				"--osui-balloon-background",
 				"--osui-balloon-border-radius",
-				"--osui-balloon-shadow"
+				"--osui-balloon-shadow",
+				"--osui-focus-ring-width"
 			],
 			"markup": "<div><div class=\"osui-overflow-menu\"><button class=\"osui-overflow-menu__trigger btn\" type=\"button\" aria-label=\"More actions\"><i class=\"icon ph \"></i></button><div class=\"osui-overflow-menu__balloon osui-balloon\" id=\"-balloon\"><nav class=\"display-flex flex-direction-column\"><span class=\"text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s\" aria-hidden=\"true\"></span></nav></div></div></div>",
 			"usage": {
@@ -3788,7 +3791,7 @@
 				"ProgressCircleContent": "osui-progress-circle__content"
 			},
 			"cssApi": [
-				"--osui-focus-shadow-gap"
+				"--osui-focus-gap"
 			],
 			"markup": "<div class=\"osui-progress-bar\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-bar__container\"><div class=\"osui-progress-bar__value\"></div></div><div class=\"osui-progress-bar__content\" id=\"-label\"></div></div>",
 			"usage": {
@@ -4140,7 +4143,7 @@
 				"--osui-range-slider-disabled-track-color",
 				"--osui-range-slider-disabled-connect-color",
 				"--osui-range-slider-disabled-color",
-				"--osui-focus-shadow-gap"
+				"--osui-focus-gap"
 			],
 			"markup": "<style> .osui-rs-matrix { align-items: center; display: grid; gap: 24px 40px; grid-template-columns: max-content repeat(2, minmax(240px, 1fr)); } .osui-rs-matrix__head { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; } /* Room for the floating label above and the pips below, which both sit outside the track's own box. */ .osui-rs-cell { padding: 28px 8px 8px; } </style><div class=\"osui-rs-matrix\"><div></div><div class=\"osui-rs-matrix__head\">Default</div><div class=\"osui-rs-matrix__head\">Disabled</div><div class=\"osui-rs-matrix__head\"></div><div class=\"osui-rs-cell\"><div class=\"osui-range-slider\"><div class=\"osui-range-slider__provider\"></div></div></div></div>",
 			"usage": {
@@ -4349,7 +4352,7 @@
 				"--osui-rating-empty-color",
 				"--osui-rating-disabled-color",
 				"--osui-rating-disabled-empty-color",
-				"--osui-focus-shadow-gap"
+				"--osui-focus-gap"
 			],
 			"markup": "<div class=\"icon-states\"><div class=\"rating-item-filled\"><i class=\"icon ph-fill ph-star\"></i></div><div class=\"rating-item-half\"><i class=\"icon ph ph-star-half\"></i></div><div class=\"rating-item-empty\"><i class=\"icon ph ph-star\"></i></div></div>",
 			"usage": {
@@ -7172,7 +7175,7 @@
 				"--osui-wizard-connector-size",
 				"--osui-wizard-focus-halo-color",
 				"--osui-wizard-focus-halo-width",
-				"--osui-focus-shadow-gap"
+				"--osui-focus-gap"
 			],
 			"markup": "<div class=\"osui-wizard\"><div class=\"list\"><div id=\"\" data-block=\"WizardItem.WizardItem\"><div name=\"\" class=\"osui-wizard-item\"><div class=\"osui-wizard-item-icon-wrapper\"><div class=\"osui-wizard-item-icon\"></div></div><div class=\"osui-wizard-item-label\"></div></div></div></div></div>",
 			"usage": {

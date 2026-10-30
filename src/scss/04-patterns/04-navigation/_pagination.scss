@@ -163,11 +163,9 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.pagination-button {
-		&:focus-visible {
-			@include a11y-focus-shadow;
-		}
+.pagination-button {
+	&:focus-visible {
+		@include a11y-focus-shadow;
 	}
 }
 
@@ -175,6 +173,9 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		outline: variables.$token-border-size-075 solid var(--color-primary);
+		--osui-focus-ring-width: #{variables.$token-border-size-075};
+		--osui-color-focus: var(--color-primary);
+
+		@include a11y-focus-outline;
 	}
 }

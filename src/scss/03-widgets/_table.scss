@@ -206,11 +206,9 @@
 
 // Accessibility ------------------------------------------------------------------
 ///
-.has-accessible-features {
-	th.sortable:focus-visible {
-		@include a11y-focus-shadow;
+th.sortable:focus-visible {
+	@include a11y-focus-shadow;
 
-		position: relative;
-		z-index: var(--layer-global-screen);
-	}
+	position: relative;
+	z-index: var(--layer-global-screen);
 }

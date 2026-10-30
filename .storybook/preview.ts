@@ -138,9 +138,8 @@ function applyDirection(rtl: boolean): void {
  * declaration applies to — so overriding `--token-*` on `<body>` comes too late:
  * `--color-background-surface` has already resolved to its light fallback on
  * `<html>` and inherits down as that literal. Put the class on `<html>` and the
- * tokens are defined on the very element the roles resolve on, so 43 of the 44
- * `--color-*` knobs (~488 reads across the bundle) flip to dark for free.
- * `--color-focus-outer` is a deliberate hardcoded yellow and stays put.
+ * tokens are defined on the very element the roles resolve on, so every
+ * `--color-*` knob flips to dark for free.
  *
  * `.os-dark-theme` is an element-agnostic class selector, so no CSS change was
  * needed for this — only the choice of element. Light is the default and has no

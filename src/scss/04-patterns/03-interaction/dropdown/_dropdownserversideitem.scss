@@ -79,14 +79,16 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
+.osui-dropdown-serverside-item {
+	&:focus-visible {
+		@include a11y-focus-shadow($isInner: true);
+	}
+}
+
+.has-accesible-features {
 	.osui-dropdown-serverside-item {
 		&:hover {
 			background-color: variables.$token-bg-neutral-subtle-press;
-		}
-
-		&:focus-visible {
-			@include a11y-focus-shadow($isInner: true);
 		}
 	}
 }
@@ -96,11 +98,12 @@
 .os-high-contrast {
 	.osui-dropdown-serverside-item {
 		&:hover,
-		&:focus {
+		&:focus-visible {
 			outline: none;
 
 			&:before {
-				box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+				@include a11y-focus-shadow($isInner: true);
+
 				bottom: 0;
 				content: '';
 				display: block;

@@ -39,10 +39,6 @@
 	--color-border-input-hover: #{variables.$token-border-input-hover};
 	--color-border-input-press: #{variables.$token-border-input-press};
 	--color-border-primary: #{variables.$token-border-primary};
-	// Focus ring pair (dev's $osui-colors-focus), read by .has-accessible-features
-	// :focus — `outer` is the translucent wash, `inner` the solid line on top.
-	--color-focus-outer: color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
-	--color-focus-inner: #{variables.$token-border-boldest};
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
 	--color-primary: #{variables.$token-semantics-primary-base};
@@ -144,9 +140,9 @@
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 
-	// A11Y focus shadow vars
-	--osui-focus-shadow-width: #{variables.$token-border-size-050};
-	--osui-focus-shadow-gap: #{variables.$token-scale-0};
-	--osui-focus-inner-shadow-gap: #{variables.$token-scale-0};
-	--osui-focus-shadow-color: #{variables.$token-border-focus-default};
+	// A11Y outline focus
+	--osui-color-focus: #{variables.$token-border-focus-default};
+	--osui-focus-gap: #{variables.$token-scale-0};
+	--osui-focus-gap-inner: #{variables.$token-scale-0};
+	--osui-focus-ring-width: #{variables.$token-border-size-050};
 }

@@ -71,6 +71,10 @@
 		}
 
 		&:checked {
+			&:before {
+				border-color: var(--color-border);
+			}
+
 			&:after {
 				border: variables.$token-border-size-075 solid var(--color-text-disabled);
 			}
@@ -96,38 +100,16 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	[data-checkbox] {
-		border-radius: var(--osui-checkbox-border-radius);
+[data-checkbox]:focus-visible {
+	@include a11y-focus-shadow();
 
-		&:hover {
-			&:before {
-				border-color: var(--osui-checkbox-hover-border-color);
-			}
-		}
+	border-radius: var(--osui-checkbox-border-radius);
 
-		&[disabled]:checked {
-			&:before {
-				border-color: var(--color-border);
-			}
-		}
+	&:before {
+		border-color: var(--osui-checkbox-border-color);
+	}
 
-		&:checked {
-			&:before {
-				border-color: var(--osui-checkbox-checked-color);
-			}
-		}
-
-		&:focus-visible {
-			@include a11y-focus-shadow();
-
-			&:before {
-				border-color: var(--osui-checkbox-border-color);
-			}
-
-			&:checked:before {
-				border-color: var(--osui-checkbox-checked-color);
-			}
-		}
+	&:checked:before {
+		border-color: var(--osui-checkbox-checked-color);
 	}
 }
