@@ -23,7 +23,7 @@ import { renderStatic } from '../_helpers/osui';
  *
  * CSS contract: src/scss/03-widgets/_radio-button.scss.
  */
-const meta: Meta = { title: 'Widgets/RadioGroup', tags: ['!ui-pending', 'ui-reviewed'] };
+const meta: Meta = { title: 'Widgets/Radio Group', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 type Story = StoryObj;
 

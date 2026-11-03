@@ -125,6 +125,6 @@ export const PROGRESS_DOC: PatternDocMeta = {
 		{ name: 'Progress Circle', storyId: 'patterns-numbers-progress-circle--docs' },
 		{ name: 'Wizard', storyId: 'patterns-navigation-wizard--docs' },
 		{ name: 'Counter', storyId: 'patterns-numbers-counter--docs' },
-		{ name: 'Button Loading', storyId: 'patterns-utilities-buttonloading--docs' },
+		{ name: 'Button Loading', storyId: 'patterns-utilities-button-loading--docs' },
 	],
 };

@@ -222,10 +222,10 @@ const WIDGET_STORY_SLUG = {
 	table: 'table',
 	textarea: 'textarea',
 	upload: 'upload',
-	'feedback-message': 'feedbackmessage',
+	'feedback-message': 'feedback-message',
 	'button-group': 'button',
 	'bulk-actions': 'table',
-	radio: 'radiogroup',
+	radio: 'radio-group',
 };
 
 function inferStoryId(name, file, patternStories) {

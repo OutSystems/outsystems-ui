@@ -140,7 +140,7 @@ export const PROGRESS_CIRCLE_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Progress Bar', storyId: 'patterns-numbers-progress-bar--docs' },
 		{ name: 'Counter', storyId: 'patterns-numbers-counter--docs' },
-		{ name: 'User Avatar', storyId: 'patterns-content-useravatar--docs' },
+		{ name: 'User Avatar', storyId: 'patterns-content-user-avatar--docs' },
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
 	],
 };

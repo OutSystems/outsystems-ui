@@ -9,7 +9,7 @@ export const BLANK_SLATE_DOC: PatternDocMeta = {
 	stylingSelector: '.blank-slate',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/blank_slate/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/blank_slate/',
-	liveStoryId: 'patterns-content-blankslate--basic-usage',
+	liveStoryId: 'patterns-content-blank-slate--basic-usage',
 	cssApiSlug: 'patterns-content-blank-slate',
 	whenToUse: [
 		'A list or table is empty on first use or after filters return no results.',

@@ -169,7 +169,7 @@ interface ThumbnailArgs extends PswpChrome {
 	extendedClass: string;
 }
 
-const meta: Meta = { title: 'Patterns/Interaction/LightboxImage' };
+const meta: Meta = { title: 'Patterns/Interaction/Lightbox Image' };
 export default meta;
 
 /**

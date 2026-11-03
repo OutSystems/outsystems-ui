@@ -17,7 +17,7 @@ import { renderPattern, renderStatic } from '../_helpers/osui';
  * platform base layer puts on `[data-button-group] > div`.
  */
 const meta: Meta = {
-	title: 'Widgets/ButtonGroup',
+	title: 'Widgets/Button Group',
 	tags: ['!ui-pending', 'ui-reviewed'],
 };
 export default meta;

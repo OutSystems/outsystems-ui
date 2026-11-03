@@ -7,7 +7,7 @@ export const PASSWORD_POLICY_DOC: PatternDocMeta = {
 	overview:
 		'Bind Password to the value of your password Input. The block reads the app password policy from the platform at runtime (minimum length, upper and lower case, number, special character) and, while the value is not compliant, lists each active rule with a check or cross icon; once every rule is met it collapses to a single success row. The Compliant event reports IsValid on every change so the form can gate its submit button. ODC only.',
 	stylingSelector: '[data-block="Utilities.PasswordPolicy"]',
-	liveStoryId: 'patterns-utilities-passwordpolicy--basic-usage',
+	liveStoryId: 'patterns-utilities-password-policy--basic-usage',
 	whenToUse: [
 		'Sign-up, "set your password" and "change password" screens backed by the built-in ODC identity provider.',
 		'Any password field where failing server-side validation after submit would be a poor experience.',
@@ -61,8 +61,8 @@ export const PASSWORD_POLICY_DOC: PatternDocMeta = {
 		'The green success text relies on the text-green-darker utility for contrast — do not override it with a lighter green in a custom theme.',
 	],
 	related: [
-		{ name: 'Provider Login Button', storyId: 'patterns-utilities-providerloginbutton--docs' },
-		{ name: 'Input With Icon', storyId: 'patterns-interaction-inputwithicon--docs' },
-		{ name: 'Animated Label', storyId: 'patterns-interaction-animatedlabel--docs' },
+		{ name: 'Provider Login Button', storyId: 'patterns-utilities-provider-login-button--docs' },
+		{ name: 'Input With Icon', storyId: 'patterns-interaction-input-with-icon--docs' },
+		{ name: 'Animated Label', storyId: 'patterns-interaction-animated-label--docs' },
 	],
 };

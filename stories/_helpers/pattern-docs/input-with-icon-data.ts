@@ -9,7 +9,7 @@ export const INPUT_WITH_ICON_DOC: PatternDocMeta = {
 	stylingSelector: '.input-with-icon',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/input_with_icon/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/input_with_icon/',
-	liveStoryId: 'patterns-interaction-inputwithicon--basic-usage',
+	liveStoryId: 'patterns-interaction-input-with-icon--basic-usage',
 	cssApiSlug: 'patterns-interaction-input-with-icon',
 	whenToUse: [
 		'Fields whose type is instantly recognisable from a glyph: e-mail, phone, username, amount, location.',
@@ -60,7 +60,7 @@ export const INPUT_WITH_ICON_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Search', storyId: 'patterns-interaction-search--docs' },
-		{ name: 'Animated Label', storyId: 'patterns-interaction-animatedlabel--docs' },
+		{ name: 'Animated Label', storyId: 'patterns-interaction-animated-label--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 	],
 };

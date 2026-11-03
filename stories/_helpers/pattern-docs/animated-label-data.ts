@@ -9,7 +9,7 @@ export const ANIMATED_LABEL_DOC: PatternDocMeta = {
 	stylingSelector: '.animated-label',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/animated_label/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/animated_label/',
-	liveStoryId: 'patterns-interaction-animatedlabel--basic-usage',
+	liveStoryId: 'patterns-interaction-animated-label--basic-usage',
 	cssApiSlug: 'patterns-interaction-animated-label',
 	whenToUse: [
 		'Dense forms (sign-up, checkout, settings) where a label above every field would double the height.',
@@ -73,8 +73,8 @@ export const ANIMATED_LABEL_DOC: PatternDocMeta = {
 		'The floating transition respects the input’s contrast tokens; disabled fields mute both the surface and the label together.',
 	],
 	related: [
-		{ name: 'Input With Icon', storyId: 'patterns-interaction-inputwithicon--docs' },
+		{ name: 'Input With Icon', storyId: 'patterns-interaction-input-with-icon--docs' },
 		{ name: 'Search', storyId: 'patterns-interaction-search--docs' },
-		{ name: 'Date Picker', storyId: 'patterns-interaction-datepicker--docs' },
+		{ name: 'Date Picker', storyId: 'patterns-interaction-date-picker--docs' },
 	],
 };

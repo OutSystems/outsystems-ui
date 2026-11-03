@@ -7,7 +7,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_h
  * device / device-emulation; here we wire it to the demo box and log swipes.
  */
 const meta: Meta = {
-	title: 'Patterns/Utilities/SwipeEvents',
+	title: 'Patterns/Utilities/Swipe Events',
 };
 export default meta;
 

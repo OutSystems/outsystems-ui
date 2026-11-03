@@ -13,7 +13,7 @@ interface MarginContainerArgs {
 }
 
 const meta: Meta<MarginContainerArgs> = {
-	title: 'Patterns/Utilities/MarginContainer',
+	title: 'Patterns/Utilities/Margin Container',
 	argTypes: { extendedClass: extendedClassArgType },
 	args: { extendedClass: '' },
 };

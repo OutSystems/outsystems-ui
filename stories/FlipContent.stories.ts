@@ -9,7 +9,7 @@ interface FlipContentArgs {
 }
 
 const meta: Meta<FlipContentArgs> = {
-	title: 'Patterns/Content/FlipContent',
+	title: 'Patterns/Content/Flip Content',
 	argTypes: {
 		flipSelf: {
 			control: 'boolean',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from '../_helpers/osui';
 
-const meta: Meta = { title: 'Widgets/FeedbackMessage' };
+const meta: Meta = { title: 'Widgets/Feedback Message' };
 export default meta;
 type Story = StoryObj;
 

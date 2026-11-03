@@ -40,7 +40,7 @@ const STACK_TRANSFORMS = {
 type StackOrigin = keyof typeof STACK_TRANSFORMS;
 
 const meta: Meta<StackedCardsArgs> = {
-	title: 'Patterns/Interaction/StackedCards',
+	title: 'Patterns/Interaction/Stacked Cards',
 	argTypes: {
 		overlay: {
 			name: 'Overlay preview',

@@ -11,7 +11,7 @@ export const SECTION_INDEX_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-section-index',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/navigation/section_index/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/navigation/section_index/',
-	liveStoryId: 'patterns-navigation-sectionindex--basic-usage',
+	liveStoryId: 'patterns-navigation-section-index--basic-usage',
 	cssApiSlug: 'patterns-navigation-sectionindex',
 	whenToUse: [
 		'Long single-page screens with named sections — settings, profiles, product detail, documentation.',

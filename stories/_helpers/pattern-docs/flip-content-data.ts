@@ -9,7 +9,7 @@ export const FLIP_CONTENT_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-flip-content',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/flip_content/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/flip_content/',
-	liveStoryId: 'patterns-content-flipcontent--basic-usage',
+	liveStoryId: 'patterns-content-flip-content--basic-usage',
 	whenToUse: [
 		'Product tiles that reveal specs on the back.',
 		'Flashcards or quiz items.',

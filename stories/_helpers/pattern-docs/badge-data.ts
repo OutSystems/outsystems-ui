@@ -78,7 +78,7 @@ export const BADGE_DOC: PatternDocMeta = {
 		'Colour reinforces meaning but must not carry it — the Number is the content; do not rely on Color alone to signal severity.',
 	],
 	related: [
-		{ name: 'Icon Badge', storyId: 'patterns-numbers-iconbadge--docs' },
+		{ name: 'Icon Badge', storyId: 'patterns-numbers-icon-badge--docs' },
 		{ name: 'Counter', storyId: 'patterns-numbers-counter--docs' },
 		{ name: 'Tag', storyId: 'patterns-content-tag--docs' },
 		{ name: 'List Item Content', storyId: 'patterns-content-list-item-content--docs' },

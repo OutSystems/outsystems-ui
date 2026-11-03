@@ -87,7 +87,7 @@ function bottomBarMarkup(items: readonly BarItem[], activeIndex: number, extende
 }
 
 const meta: Meta<BottomBarArgs> = {
-	title: 'Patterns/Navigation/BottomBar',
+	title: 'Patterns/Navigation/Bottom Bar',
 	argTypes: {
 		activeIndex: {
 			name: 'Active item',

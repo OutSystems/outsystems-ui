@@ -11,7 +11,7 @@ export const MONTH_PICKER_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-monthpicker',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/month_picker/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/month_picker/',
-	liveStoryId: 'patterns-interaction-monthpicker--basic-usage',
+	liveStoryId: 'patterns-interaction-month-picker--basic-usage',
 	cssApiSlug: 'patterns-interaction-monthpicker',
 	whenToUse: [
 		'Billing or statement periods, payroll months and subscription renewals.',
@@ -131,8 +131,8 @@ export const MONTH_PICKER_DOC: PatternDocMeta = {
 		'The Flatpickr input mirrors the platform Input’s disabled state through tabindex and aria-hidden, so a disabled field is not reachable twice.',
 	],
 	related: [
-		{ name: 'Date Picker', storyId: 'patterns-interaction-datepicker--docs' },
-		{ name: 'Time Picker', storyId: 'patterns-interaction-timepicker--docs' },
+		{ name: 'Date Picker', storyId: 'patterns-interaction-date-picker--docs' },
+		{ name: 'Time Picker', storyId: 'patterns-interaction-time-picker--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 	],
 };

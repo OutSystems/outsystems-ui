@@ -51,7 +51,7 @@ export const COLUMNS_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Gallery', storyId: 'patterns-adaptive-gallery--docs' },
-		{ name: 'MasterDetail', storyId: 'patterns-adaptive-masterdetail--docs' },
+		{ name: 'MasterDetail', storyId: 'patterns-adaptive-master-detail--docs' },
 		{ name: 'Section', storyId: 'patterns-content-section--docs' },
 	],
 };

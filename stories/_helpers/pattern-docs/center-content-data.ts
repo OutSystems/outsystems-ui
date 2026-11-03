@@ -9,7 +9,7 @@ export const CENTER_CONTENT_DOC: PatternDocMeta = {
 	stylingSelector: '.center-content',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/center_content/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/center_content/',
-	liveStoryId: 'patterns-utilities-centercontent--basic-usage',
+	liveStoryId: 'patterns-utilities-center-content--basic-usage',
 	whenToUse: [
 		'Full-height screens with little content — a welcome message, an empty list, a confirmation — that would otherwise sit at the top of a blank page.',
 		'Login and onboarding layouts where a logo belongs at the top, the form in the middle, and a footer link at the bottom.',
@@ -58,8 +58,8 @@ export const CENTER_CONTENT_DOC: PatternDocMeta = {
 		'A fixed Height clips nothing by itself, but content taller than it will overflow; prefer the parent-height default on small screens.',
 	],
 	related: [
-		{ name: 'Blank Slate', storyId: 'patterns-content-blankslate--docs' },
-		{ name: 'Margin Container', storyId: 'patterns-utilities-margincontainer--docs' },
+		{ name: 'Blank Slate', storyId: 'patterns-content-blank-slate--docs' },
+		{ name: 'Margin Container', storyId: 'patterns-utilities-margin-container--docs' },
 		{ name: 'Columns', storyId: 'patterns-adaptive-columns--docs' },
 	],
 };

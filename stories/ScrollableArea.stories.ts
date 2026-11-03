@@ -78,7 +78,7 @@ const argTypes = {
 } as const;
 
 const meta: Meta<ScrollableAreaArgs> = {
-	title: 'Patterns/Interaction/ScrollableArea',
+	title: 'Patterns/Interaction/Scrollable Area',
 	argTypes,
 	args: { orientation: 'Horizontal', scrollbarStyle: 'Compact', height: '', width: '360px', extendedClass: '' },
 };

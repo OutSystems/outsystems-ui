@@ -11,7 +11,7 @@ export const LIGHTBOX_IMAGE_DOC: PatternDocMeta = {
 	stylingSelector: '.lightbox-item',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/lightbox_image/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/lightbox_image/',
-	liveStoryId: 'patterns-interaction-lightboximage--basic-usage',
+	liveStoryId: 'patterns-interaction-lightbox-image--basic-usage',
 	cssApiSlug: 'patterns-interaction-lightbox-image',
 	whenToUse: [
 		'Product or property photos where users want to inspect detail at full size.',

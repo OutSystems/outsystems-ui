@@ -99,7 +99,7 @@ export const GALLERY_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Columns', storyId: 'patterns-adaptive-columns--docs' },
-		{ name: 'Master Detail', storyId: 'patterns-adaptive-masterdetail--docs' },
+		{ name: 'Master Detail', storyId: 'patterns-adaptive-master-detail--docs' },
 		{ name: 'Card Sectioned', storyId: 'patterns-content-card-sectioned--docs' },
 		{ name: 'Carousel', storyId: 'patterns-content-carousel--docs' },
 	],

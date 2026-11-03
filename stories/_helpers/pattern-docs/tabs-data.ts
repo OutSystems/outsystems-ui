@@ -192,7 +192,7 @@ export const TABS_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Accordion', storyId: 'patterns-content-accordion--docs' },
-		{ name: 'Section Index', storyId: 'patterns-navigation-sectionindex--docs' },
+		{ name: 'Section Index', storyId: 'patterns-navigation-section-index--docs' },
 		{ name: 'Wizard', storyId: 'patterns-navigation-wizard--docs' },
 	],
 };

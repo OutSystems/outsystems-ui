@@ -9,7 +9,7 @@ export const STACKED_CARDS_DOC: PatternDocMeta = {
 	stylingSelector: '.stackedcards',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/stacked_cards/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/stacked_cards/',
-	liveStoryId: 'patterns-interaction-stackedcards--basic-usage',
+	liveStoryId: 'patterns-interaction-stacked-cards--basic-usage',
 	cssApiSlug: 'patterns-interaction-stacked-cards',
 	whenToUse: [
 		'Triage flows on mobile: approve or reject expenses, candidates, or leads one record at a time.',

@@ -16,7 +16,7 @@ import { renderStatic } from '../_helpers/osui';
  * styles `[data-input]` but not `[data-textarea]`, so this control's look is
  * entirely OUI's.
  */
-const meta: Meta = { title: 'Widgets/TextArea' };
+const meta: Meta = { title: 'Widgets/Text Area' };
 export default meta;
 type Story = StoryObj;
 

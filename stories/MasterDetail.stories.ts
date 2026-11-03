@@ -17,7 +17,7 @@ import { labeledBoard } from './_helpers/showcase';
  * height via `--master-detail-height`; Height is a free-form CSS value wired here as
  * inline `height`.
  */
-const meta: Meta = { title: 'Patterns/Adaptive/MasterDetail' };
+const meta: Meta = { title: 'Patterns/Adaptive/Master Detail' };
 export default meta;
 
 type MasterDetailArgs = {

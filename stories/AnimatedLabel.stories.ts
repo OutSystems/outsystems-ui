@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 const meta: Meta = {
-	title: 'Patterns/Interaction/AnimatedLabel',
+	title: 'Patterns/Interaction/Animated Label',
 };
 export default meta;
 

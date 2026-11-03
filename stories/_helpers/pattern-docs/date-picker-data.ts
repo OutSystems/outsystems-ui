@@ -44,7 +44,7 @@ export const DATE_PICKER_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-datepicker',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/date_picker/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/date_picker/',
-	liveStoryId: 'patterns-interaction-datepicker--basic-usage',
+	liveStoryId: 'patterns-interaction-date-picker--basic-usage',
 	cssApiSlug: 'patterns-interaction-datepicker',
 	whenToUse: [
 		'Booking, scheduling and deadline fields where users think in calendar days (delivery date, due date, appointment).',
@@ -200,8 +200,8 @@ export const DATE_PICKER_DOC: PatternDocMeta = {
 		'The Today button carries a localised aria-label, and the Flatpickr input mirrors the platform Input’s disabled state through tabindex and aria-hidden.',
 	],
 	related: [
-		{ name: 'Month Picker', storyId: 'patterns-interaction-monthpicker--docs' },
-		{ name: 'Time Picker', storyId: 'patterns-interaction-timepicker--docs' },
-		{ name: 'Animated Label', storyId: 'patterns-interaction-animatedlabel--docs' },
+		{ name: 'Month Picker', storyId: 'patterns-interaction-month-picker--docs' },
+		{ name: 'Time Picker', storyId: 'patterns-interaction-time-picker--docs' },
+		{ name: 'Animated Label', storyId: 'patterns-interaction-animated-label--docs' },
 	],
 };
