@@ -8,7 +8,7 @@ export const TOUCH_EVENTS_DOC: PatternDocMeta = {
 		'Touch Events has no markup of its own. Point it at a widget through WidgetId and it attaches touchstart, touchmove and touchend listeners to that element. Start reports where the finger lands, Move fires continuously with the current position and the offset from the start point, and End adds how long the gesture took. PreventDefaults (True by default) stops the browser from scrolling or zooming while the gesture runs.',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/touch_events/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/touch_events/',
-	liveStoryId: 'patterns-utilities-touchevents--basic-usage',
+	liveStoryId: 'patterns-utilities-touch-events--basic-usage',
 	whenToUse: [
 		'Dragging an element with the finger — reorder handles, sliders, signature or drawing pads, image pan.',
 		'Custom gestures that need distance or speed: pull-to-refresh thresholds, swipe-to-reveal with a live preview.',
@@ -80,8 +80,8 @@ export const TOUCH_EVENTS_DOC: PatternDocMeta = {
 		'Set touch-action: none on the target to stop browser pan and zoom gestures from competing with yours.',
 	],
 	related: [
-		{ name: 'Swipe Events', storyId: 'patterns-utilities-swipeevents--docs' },
-		{ name: 'Range Slider', storyId: 'patterns-interaction-rangeslider--docs' },
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
+		{ name: 'Swipe Events', storyId: 'patterns-utilities-swipe-events--docs' },
+		{ name: 'Range Slider', storyId: 'patterns-interaction-range-slider--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
 	],
 };

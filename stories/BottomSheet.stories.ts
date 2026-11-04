@@ -23,7 +23,7 @@ interface BottomSheetArgs {
 }
 
 const meta: Meta<BottomSheetArgs> = {
-	title: 'Patterns/Interaction/BottomSheet',
+	title: 'Patterns/Interaction/Bottom Sheet',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		showHandler: {

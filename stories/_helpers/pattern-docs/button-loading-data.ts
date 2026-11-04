@@ -9,7 +9,7 @@ export const BUTTON_LOADING_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-btn-loading',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/button_loading/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/button_loading/',
-	liveStoryId: 'patterns-utilities-buttonloading--basic-usage',
+	liveStoryId: 'patterns-utilities-button-loading--basic-usage',
 	whenToUse: [
 		'Form submits, saves, or payments whose server action takes long enough for the user to wonder whether the click registered.',
 		'Any action that must not be triggered twice — the button is disabled for as long as IsLoading is True.',
@@ -95,7 +95,7 @@ export const BUTTON_LOADING_DOC: PatternDocMeta = {
 		'In high-contrast mode the spinner border thickens, and on phones the wrapper stretches to full width to match the button.',
 	],
 	related: [
-		{ name: 'Provider Login Button', storyId: 'patterns-utilities-providerloginbutton--docs' },
+		{ name: 'Provider Login Button', storyId: 'patterns-utilities-provider-login-button--docs' },
 		{ name: 'Progress Bar', storyId: 'patterns-numbers-progress-bar--docs' },
 		{ name: 'Notification', storyId: 'patterns-interaction-notification--docs' },
 	],

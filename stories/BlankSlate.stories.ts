@@ -93,7 +93,7 @@ const SEARCH_EMPTY = {
 
 type Story = StoryObj;
 
-const meta: Meta = { title: 'Patterns/Content/BlankSlate' };
+const meta: Meta = { title: 'Patterns/Content/Blank Slate' };
 export default meta;
 
 type BlankSlateArgs = { fullHeight: boolean; extendedClass: string };

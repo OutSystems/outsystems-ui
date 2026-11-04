@@ -10,7 +10,7 @@ export const DROPDOWN_SERVER_SIDE_DOC: PatternDocMeta = {
 		'Dropdown Server Side ships only the shell: a trigger (SelectedValues placeholder), and a balloon with a search input, a footer and a BalloonContent placeholder where you drop a List of Dropdown Server Side Item blocks. The runtime positions the balloon, handles keyboard navigation and open/close state, and each item reports its ItemId through OnSelected so your screen logic decides what "selected" means and re-renders the trigger.',
 	stylingSelector: '.osui-dropdown-serverside',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/dropdown_server_side/',
-	liveStoryId: 'patterns-advanced-dropdownserverside--basic-usage',
+	liveStoryId: 'patterns-advanced-dropdown-server-side--basic-usage',
 	cssApiSlug: 'patterns-interaction-dropdown-serverside',
 	whenToUse: [
 		'Option lists too large to ship to the client at once — paginate or infinite-scroll the List inside BalloonContent.',
@@ -172,6 +172,6 @@ export const DROPDOWN_SERVER_SIDE_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 		{ name: 'Dropdown Tags', storyId: 'patterns-interaction-dropdown-tags--docs' },
-		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflowmenu--docs' },
+		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflow-menu--docs' },
 	],
 };

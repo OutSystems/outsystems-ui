@@ -63,7 +63,7 @@ export const BREADCRUMBS_DOC: PatternDocMeta = {
 		'Links rely on the global focus styles; the hover colour change is reinforced by the bold weight on the last item, and the separator mirrors automatically under .is-rtl.',
 	],
 	related: [
-		{ name: 'Section Index', storyId: 'patterns-navigation-sectionindex--docs' },
+		{ name: 'Section Index', storyId: 'patterns-navigation-section-index--docs' },
 		{ name: 'Tabs', storyId: 'patterns-navigation-tabs--docs' },
 		{ name: 'Sidebar', storyId: 'patterns-navigation-sidebar--docs' },
 	],

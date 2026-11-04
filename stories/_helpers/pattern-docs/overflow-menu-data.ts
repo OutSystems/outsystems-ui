@@ -10,7 +10,7 @@ export const OVERFLOW_MENU_DOC: PatternDocMeta = {
 		'The block renders a trigger button from its TriggerContent placeholder and a balloon from its Menu placeholder. The runtime wires the click and keyboard handlers, positions the balloon with Floating UI according to BalloonPosition, applies BalloonShape to its corners, closes it on outside click or Esc, and raises OnMenuToggle with the new state. Open, Close, Enable and Disable are also available through the client actions.',
 	stylingSelector: '.osui-overflow-menu',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/navigation/overflow_menu/',
-	liveStoryId: 'patterns-navigation-overflowmenu--basic-usage',
+	liveStoryId: 'patterns-navigation-overflow-menu--basic-usage',
 	cssApiSlug: 'patterns-interaction-overflowmenu',
 	whenToUse: [
 		'Row or card actions (edit, duplicate, delete) that would clutter a list if shown as buttons.',
@@ -106,9 +106,9 @@ export const OVERFLOW_MENU_DOC: PatternDocMeta = {
 		'Under .os-high-contrast the balloon gains a visible border and hovered items an outline in --color-focus-outer, so the menu stays legible without colour.',
 	],
 	related: [
-		{ name: 'Action Sheet', storyId: 'patterns-interaction-actionsheet--docs' },
+		{ name: 'Action Sheet', storyId: 'patterns-interaction-action-sheet--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
-		{ name: 'Floating Actions', storyId: 'patterns-interaction-floatingactions--docs' },
+		{ name: 'Floating Actions', storyId: 'patterns-interaction-floating-actions--docs' },
 		{ name: 'Submenu', storyId: 'patterns-navigation-submenu--docs' },
 	],
 };

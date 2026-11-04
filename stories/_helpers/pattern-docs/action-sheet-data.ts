@@ -11,7 +11,7 @@ export const ACTION_SHEET_DOC: PatternDocMeta = {
 	stylingSelector: '.action-sheet',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/action_sheet/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/action_sheet/',
-	liveStoryId: 'patterns-interaction-actionsheet--basic-usage',
+	liveStoryId: 'patterns-interaction-action-sheet--basic-usage',
 	cssApiSlug: 'patterns-interaction-action-sheet',
 	whenToUse: [
 		'Three to five actions on a selected item on a phone (share, duplicate, delete).',
@@ -77,8 +77,8 @@ export const ACTION_SHEET_DOC: PatternDocMeta = {
 		'The slide-up transition only runs with the --animatable modifier; drop it (ExtendedClass) for a motion-free variant.',
 	],
 	related: [
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
-		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflowmenu--docs' },
-		{ name: 'Floating Actions', storyId: 'patterns-interaction-floatingactions--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
+		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflow-menu--docs' },
+		{ name: 'Floating Actions', storyId: 'patterns-interaction-floating-actions--docs' },
 	],
 };

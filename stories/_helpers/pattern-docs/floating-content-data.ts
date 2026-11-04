@@ -9,7 +9,7 @@ export const FLOATING_CONTENT_DOC: PatternDocMeta = {
 	stylingSelector: '.floating-content',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/floating_content/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/floating_content/',
-	liveStoryId: 'patterns-content-floatingcontent--bottom-right',
+	liveStoryId: 'patterns-content-floating-content--bottom-right',
 	whenToUse: [
 		'Persistent action bars or chat widgets over scrolling content.',
 		'Contextual panels pinned to a corner.',
@@ -47,7 +47,7 @@ export const FLOATING_CONTENT_DOC: PatternDocMeta = {
 		'Do not cover essential page controls without a way to dismiss or move the panel.',
 	],
 	related: [
-		{ name: 'FloatingActions', storyId: 'patterns-interaction-floatingactions--docs' },
+		{ name: 'FloatingActions', storyId: 'patterns-interaction-floating-actions--docs' },
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
 		{ name: 'Sidebar', storyId: 'patterns-navigation-sidebar--docs' },
 	],

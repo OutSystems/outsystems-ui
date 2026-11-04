@@ -22,7 +22,7 @@ interface CenterContentArgs {
 }
 
 const meta: Meta<CenterContentArgs> = {
-	title: 'Patterns/Utilities/CenterContent',
+	title: 'Patterns/Utilities/Center Content',
 	argTypes: {
 		showHeader: {
 			name: 'Header slot',

@@ -7,7 +7,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_h
  * raw coordinates/deltas. Best exercised on a touch device / device emulation.
  */
 const meta: Meta = {
-	title: 'Patterns/Utilities/TouchEvents',
+	title: 'Patterns/Utilities/Touch Events',
 };
 export default meta;
 

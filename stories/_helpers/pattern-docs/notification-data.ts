@@ -115,7 +115,7 @@ export const NOTIFICATION_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Alert', storyId: 'patterns-content-alert--docs' },
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
 		{ name: 'Tooltip', storyId: 'patterns-interaction-tooltip--docs' },
 	],
 };

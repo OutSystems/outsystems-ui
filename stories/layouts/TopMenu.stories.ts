@@ -33,7 +33,7 @@ interface Args {
 }
 
 const meta: Meta<Args> = {
-	title: 'Layouts/TopMenu',
+	title: 'Layouts/Top Menu',
 	argTypes: {
 		device: deviceArgType,
 		menuVisible: menuVisibleArgType,

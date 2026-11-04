@@ -45,7 +45,7 @@ function itemMarkup(label: string, icon: string): string {
 }
 
 const meta: Meta<OverflowMenuArgs> = {
-	title: 'Patterns/Navigation/OverflowMenu',
+	title: 'Patterns/Navigation/Overflow Menu',
 	argTypes: {
 		position: {
 			control: 'select',

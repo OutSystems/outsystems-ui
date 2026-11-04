@@ -26,7 +26,7 @@ interface DatePickerArgs {
 }
 
 const meta: Meta<DatePickerArgs> = {
-	title: 'Patterns/Interaction/DatePicker',
+	title: 'Patterns/Interaction/Date Picker',
 	argTypes: {
 		mode: {
 			control: 'inline-radio',

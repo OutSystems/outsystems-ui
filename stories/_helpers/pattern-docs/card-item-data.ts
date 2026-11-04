@@ -49,7 +49,7 @@ export const CARD_ITEM_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
 		{ name: 'List Item Content', storyId: 'patterns-content-list-item-content--docs' },
-		{ name: 'UserAvatar', storyId: 'patterns-content-useravatar--docs' },
+		{ name: 'UserAvatar', storyId: 'patterns-content-user-avatar--docs' },
 		{ name: 'Tag', storyId: 'patterns-content-tag--docs' },
 	],
 };

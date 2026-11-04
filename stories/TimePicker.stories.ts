@@ -12,7 +12,7 @@ interface TimePickerArgs {
 }
 
 const meta: Meta<TimePickerArgs> = {
-	title: 'Patterns/Interaction/TimePicker',
+	title: 'Patterns/Interaction/Time Picker',
 	argTypes: {
 		is24Hours: {
 			control: 'boolean',

@@ -31,7 +31,7 @@ const ACTIONS = ['Share', 'Add to favorites', 'Delete'];
 const DEFAULT_FRAME = { width: PHONE_WIDTH, height: 560 };
 
 const meta: Meta<ActionSheetArgs> = {
-	title: 'Patterns/Interaction/ActionSheet',
+	title: 'Patterns/Interaction/Action Sheet',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		showCancel: {

@@ -38,7 +38,7 @@ const OPTIONS = [
 ];
 
 const meta: Meta<DropdownServerSideArgs> = {
-	title: 'Patterns/Advanced/DropdownServerSide',
+	title: 'Patterns/Advanced/Dropdown Server Side',
 	argTypes: {
 		allowMultipleSelection: {
 			control: 'boolean',

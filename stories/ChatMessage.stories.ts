@@ -17,7 +17,7 @@ import { labeledBoard } from './_helpers/showcase';
  *     Hidden   → `.chat-message-status.hidden` (display:none)
  *     (none)   → plain timestamp text node
  */
-const meta: Meta = { title: 'Patterns/Content/ChatMessage' };
+const meta: Meta = { title: 'Patterns/Content/Chat Message' };
 export default meta;
 
 // ─── Shared status markup ─────────────────────────────────────────────────────

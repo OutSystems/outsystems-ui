@@ -99,7 +99,7 @@ export const PAGINATION_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Table', storyId: 'patterns-content-table--docs' },
-		{ name: 'Scrollable Area', storyId: 'patterns-interaction-scrollablearea--docs' },
+		{ name: 'Scrollable Area', storyId: 'patterns-interaction-scrollable-area--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 	],
 };

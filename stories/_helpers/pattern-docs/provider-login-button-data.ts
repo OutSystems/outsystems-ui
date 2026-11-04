@@ -7,7 +7,7 @@ export const PROVIDER_LOGIN_BUTTON_DOC: PatternDocMeta = {
 	overview:
 		'The block renders a .btn.btn-provider-login with the provider class (apple, facebook or google), the brand mark as an inline SVG and the "Continue with <Provider>" label. Shape picks the corner radius, IconOnly drops the label for a square mark-only button, and OnClick is where you start the external login flow. The block is CSS-only and ODC only.',
 	stylingSelector: '.btn.btn-provider-login',
-	liveStoryId: 'patterns-utilities-providerloginbutton--basic-usage',
+	liveStoryId: 'patterns-utilities-provider-login-button--basic-usage',
 	cssApiSlug: 'patterns-utilities-provider-login-button',
 	whenToUse: [
 		'Login and sign-up screens that offer Apple, Facebook or Google as external identity providers.',
@@ -78,8 +78,8 @@ export const PROVIDER_LOGIN_BUTTON_DOC: PatternDocMeta = {
 		"Keep the provider colours as shipped: the button background and border are CSS API knobs, but the marks must stay on a contrasting surface to meet the providers' guidelines.",
 	],
 	related: [
-		{ name: 'Password Policy', storyId: 'patterns-utilities-passwordpolicy--docs' },
-		{ name: 'Button Loading', storyId: 'patterns-utilities-buttonloading--docs' },
-		{ name: 'Inline SVG', storyId: 'patterns-utilities-inlinesvg--docs' },
+		{ name: 'Password Policy', storyId: 'patterns-utilities-password-policy--docs' },
+		{ name: 'Button Loading', storyId: 'patterns-utilities-button-loading--docs' },
+		{ name: 'Inline SVG', storyId: 'patterns-utilities-inline-svg--docs' },
 	],
 };

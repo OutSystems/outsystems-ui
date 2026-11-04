@@ -18,7 +18,7 @@ interface Args {
 }
 
 const meta: Meta<Args> = {
-	title: 'Layouts/LayoutBlank',
+	title: 'Layouts/Layout Blank',
 	argTypes: {
 		device: deviceArgType,
 		enableAccessibilityFeatures: enableA11yArgType,

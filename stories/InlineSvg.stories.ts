@@ -10,7 +10,7 @@ const CLOUD_UPLOAD_SVG =
 	'<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4 4 0 0 1-.5 8"/><path d="M12 12v9"/><path d="m8.5 15.5 3.5-3.5 3.5 3.5"/></svg>';
 
 const meta: Meta<{ svgCode: string }> = {
-	title: 'Patterns/Utilities/InlineSvg',
+	title: 'Patterns/Utilities/Inline SVG',
 	argTypes: {
 		svgCode: {
 			control: 'text',

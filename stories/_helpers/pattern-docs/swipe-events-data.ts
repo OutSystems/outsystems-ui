@@ -8,7 +8,7 @@ export const SWIPE_EVENTS_DOC: PatternDocMeta = {
 		'Swipe Events has no markup of its own. Point it at a widget through WidgetId and the block tracks the touch gesture on that element; when the finger lifts after moving more than 10px at swipe speed, it raises SwipeUp, SwipeDown, SwipeLeft or SwipeRight. Mouse and keyboard interactions never trigger it, so always pair a swipe with a visible control.',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/swipe_events/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/swipe_events/',
-	liveStoryId: 'patterns-utilities-swipeevents--basic-usage',
+	liveStoryId: 'patterns-utilities-swipe-events--basic-usage',
 	whenToUse: [
 		'Swipe-to-dismiss or swipe-to-archive gestures on list rows, cards and notifications in a mobile app.',
 		'Moving between steps, photos or days with a horizontal swipe when the content is not already a Carousel or Tabs.',
@@ -75,9 +75,9 @@ export const SWIPE_EVENTS_DOC: PatternDocMeta = {
 		'Respect reduced-motion preferences on the animation that follows the swipe; the event fires the same way either way.',
 	],
 	related: [
-		{ name: 'Touch Events', storyId: 'patterns-utilities-touchevents--docs' },
+		{ name: 'Touch Events', storyId: 'patterns-utilities-touch-events--docs' },
 		{ name: 'Carousel', storyId: 'patterns-content-carousel--docs' },
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
 		{ name: 'Tabs', storyId: 'patterns-navigation-tabs--docs' },
 	],
 };

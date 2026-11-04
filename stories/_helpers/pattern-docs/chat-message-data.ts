@@ -9,7 +9,7 @@ export const CHAT_MESSAGE_DOC: PatternDocMeta = {
 	stylingSelector: '.chat',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/chat_message/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/chat_message/',
-	liveStoryId: 'patterns-content-chatmessage--received',
+	liveStoryId: 'patterns-content-chat-message--received',
 	cssApiSlug: 'patterns-content-chat-message',
 	whenToUse: [
 		'One-to-one or group chat threads.',
@@ -55,7 +55,7 @@ export const CHAT_MESSAGE_DOC: PatternDocMeta = {
 		'Interactive bubbles need a visible focus indicator when focusable.',
 	],
 	related: [
-		{ name: 'UserAvatar', storyId: 'patterns-content-useravatar--docs' },
+		{ name: 'UserAvatar', storyId: 'patterns-content-user-avatar--docs' },
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
 		{ name: 'Notification', storyId: 'patterns-interaction-notification--docs' },
 	],

@@ -49,7 +49,7 @@ const baseArgs: FloatingContentArgs = {
 };
 
 const meta: Meta<FloatingContentArgs> = {
-	title: 'Patterns/Content/FloatingContent',
+	title: 'Patterns/Content/Floating Content',
 	argTypes: {
 		position: {
 			name: 'Position',

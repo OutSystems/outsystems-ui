@@ -141,7 +141,7 @@ const render = ({ password, ...policy }: PasswordPolicyArgs): HTMLElement => {
 };
 
 const meta: Meta<PasswordPolicyArgs> = {
-	title: 'Patterns/Utilities/PasswordPolicy',
+	title: 'Patterns/Utilities/Password Policy',
 	args: {
 		password: '',
 		minimumLength: 12,

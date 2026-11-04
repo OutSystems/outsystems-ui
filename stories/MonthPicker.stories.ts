@@ -12,7 +12,7 @@ interface MonthPickerArgs {
 }
 
 const meta: Meta<MonthPickerArgs> = {
-	title: 'Patterns/Interaction/MonthPicker',
+	title: 'Patterns/Interaction/Month Picker',
 	argTypes: {
 		dateFormat: {
 			control: 'text',

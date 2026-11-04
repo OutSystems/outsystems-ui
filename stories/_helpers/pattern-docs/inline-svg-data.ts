@@ -9,7 +9,7 @@ export const INLINE_SVG_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-inline-svg',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/inline_svg/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/inline_svg/',
-	liveStoryId: 'patterns-utilities-inlinesvg--basic-usage',
+	liveStoryId: 'patterns-utilities-inline-svg--basic-usage',
 	whenToUse: [
 		'Logos and illustrations that must follow the theme colour — write fill="currentColor" and recolour with text-* utility classes or CSS.',
 		'Icons that are not in the icon library, or multi-colour artwork a single-glyph Icon widget cannot express.',
@@ -75,8 +75,8 @@ export const INLINE_SVG_DOC: PatternDocMeta = {
 		'Keep contrast in mind when recolouring with currentColor: a fill that follows text-neutral-* on a dark surface may drop below 3:1 for graphical objects.',
 	],
 	related: [
-		{ name: 'Icon Badge', storyId: 'patterns-numbers-iconbadge--docs' },
-		{ name: 'Button Loading', storyId: 'patterns-utilities-buttonloading--docs' },
-		{ name: 'Lightbox Image', storyId: 'patterns-interaction-lightboximage--docs' },
+		{ name: 'Icon Badge', storyId: 'patterns-numbers-icon-badge--docs' },
+		{ name: 'Button Loading', storyId: 'patterns-utilities-button-loading--docs' },
+		{ name: 'Lightbox Image', storyId: 'patterns-interaction-lightbox-image--docs' },
 	],
 };

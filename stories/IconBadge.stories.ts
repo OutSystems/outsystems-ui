@@ -11,7 +11,7 @@ import { colorBoard, labeledBoard } from './_helpers/showcase';
  *   Color    → background-{value} on the inner .badge (or background-{value}-lightest when IsLight=true)
  *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
-const meta: Meta = { title: 'Patterns/Numbers/IconBadge' };
+const meta: Meta = { title: 'Patterns/Numbers/Icon Badge' };
 export default meta;
 
 type IconBadgeArgs = {

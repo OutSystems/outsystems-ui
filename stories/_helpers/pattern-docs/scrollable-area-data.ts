@@ -9,7 +9,7 @@ export const SCROLLABLE_AREA_DOC: PatternDocMeta = {
 	stylingSelector: '.scrollable-area-content',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/scrollable_area/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/scrollable_area/',
-	liveStoryId: 'patterns-interaction-scrollablearea--basic-usage',
+	liveStoryId: 'patterns-interaction-scrollable-area--basic-usage',
 	whenToUse: [
 		'A horizontal strip of cards, thumbnails or filter chips on a phone, where the page should keep scrolling vertically.',
 		'A tall list (chat history, activity log) that must stay inside a fixed-height panel next to other content.',

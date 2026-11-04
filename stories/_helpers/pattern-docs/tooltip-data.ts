@@ -107,7 +107,7 @@ export const TOOLTIP_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Notification', storyId: 'patterns-interaction-notification--docs' },
-		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflowmenu--docs' },
-		{ name: 'Floating Content', storyId: 'patterns-content-floatingcontent--docs' },
+		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflow-menu--docs' },
+		{ name: 'Floating Content', storyId: 'patterns-content-floating-content--docs' },
 	],
 };

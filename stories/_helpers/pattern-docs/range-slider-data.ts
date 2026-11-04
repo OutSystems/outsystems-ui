@@ -64,7 +64,7 @@ export const RANGE_SLIDER_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-range-slider',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/range_slider/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/range_slider/',
-	liveStoryId: 'patterns-interaction-rangeslider--basic-usage',
+	liveStoryId: 'patterns-interaction-range-slider--basic-usage',
 	cssApiSlug: 'patterns-interaction-rangeslider',
 	whenToUse: [
 		'Approximate numeric settings where the feel matters more than the exact digit: volume, brightness, zoom, opacity.',

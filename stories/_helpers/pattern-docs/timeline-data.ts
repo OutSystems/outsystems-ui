@@ -83,6 +83,6 @@ export const TIMELINE_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Wizard', storyId: 'patterns-navigation-wizard--docs' },
 		{ name: 'List Item Content', storyId: 'patterns-content-list-item-content--docs' },
-		{ name: 'Icon Badge', storyId: 'patterns-numbers-iconbadge--docs' },
+		{ name: 'Icon Badge', storyId: 'patterns-numbers-icon-badge--docs' },
 	],
 };

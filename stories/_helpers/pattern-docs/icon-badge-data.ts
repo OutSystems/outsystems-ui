@@ -9,7 +9,7 @@ export const ICON_BADGE_DOC: PatternDocMeta = {
 	stylingSelector: '.icon-badge',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/numbers/icon_badge/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/numbers/icon_badge/',
-	liveStoryId: 'patterns-numbers-iconbadge--basic-usage',
+	liveStoryId: 'patterns-numbers-icon-badge--basic-usage',
 	cssApiSlug: 'patterns-numbers-icon-badge',
 	whenToUse: [
 		'Notification, inbox or cart icons in the header that carry an unread or item count.',
@@ -69,6 +69,6 @@ export const ICON_BADGE_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Badge', storyId: 'patterns-numbers-badge--docs' },
 		{ name: 'Counter', storyId: 'patterns-numbers-counter--docs' },
-		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottombar--docs' },
+		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottom-bar--docs' },
 	],
 };

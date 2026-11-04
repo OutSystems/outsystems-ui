@@ -59,7 +59,7 @@ const button = ({ identityProvider, iconOnly, shape, extendedClass }: ProviderLo
 	</div>`;
 
 const meta: Meta<ProviderLoginButtonArgs> = {
-	title: 'Patterns/Utilities/ProviderLoginButton',
+	title: 'Patterns/Utilities/Provider Login Button',
 	args: {
 		identityProvider: 'google',
 		iconOnly: false,

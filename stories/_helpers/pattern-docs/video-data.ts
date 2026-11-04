@@ -142,7 +142,7 @@ export const VIDEO_DOC: PatternDocMeta = {
 		'Add a descriptive Text or aria-label near the player and set a PosterURL so the purpose of the video is clear before it plays.',
 	],
 	related: [
-		{ name: 'Lightbox Image', storyId: 'patterns-interaction-lightboximage--docs' },
+		{ name: 'Lightbox Image', storyId: 'patterns-interaction-lightbox-image--docs' },
 		{ name: 'Carousel', storyId: 'patterns-content-carousel--docs' },
 		{ name: 'Card Background', storyId: 'patterns-content-card-background--docs' },
 	],

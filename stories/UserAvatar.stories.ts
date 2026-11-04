@@ -41,7 +41,7 @@ function avatarMarkupDoc(
 
 type Story = StoryObj;
 
-const meta: Meta = { title: 'Patterns/Content/UserAvatar' };
+const meta: Meta = { title: 'Patterns/Content/User Avatar' };
 export default meta;
 
 type UserAvatarArgs = {

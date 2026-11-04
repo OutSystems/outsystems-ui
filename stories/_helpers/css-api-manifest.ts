@@ -39,7 +39,7 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-10-28T15:43:10.374Z',
+	generatedAt: '2026-11-03T14:09:32.726Z',
 	totals: {
 		properties: 633,
 		components: 71,
@@ -1021,7 +1021,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Dropdown',
 					slug: 'widgets-dropdown',
 					file: 'src/scss/03-widgets/_dropdown.scss',
-					storyId: 'patterns-interaction-dropdown--default',
+					storyId: 'patterns-interaction-dropdown--docs',
 					variants: [
 						{
 							selector: '.dropdown',
@@ -1167,7 +1167,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Feedback Message',
 					slug: 'widgets-feedback-message',
 					file: 'src/scss/03-widgets/_feedback-message.scss',
-					storyId: 'widgets-feedbackmessage--default',
+					storyId: 'widgets-feedback-message--default',
 					variants: [
 						{
 							selector: '.feedback-message',
@@ -1750,7 +1750,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Table',
 					slug: 'widgets-table',
 					file: 'src/scss/03-widgets/_table.scss',
-					storyId: 'patterns-content-table--default',
+					storyId: 'patterns-content-table--docs',
 					variants: [
 						{
 							selector: '.table',
@@ -1978,7 +1978,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Master Detail',
 					slug: 'patterns-adaptive-master-detail',
 					file: 'src/scss/04-patterns/01-adaptive/_master-detail.scss',
-					storyId: null,
+					storyId: 'patterns-adaptive-master-detail--docs',
 					variants: [
 						{
 							selector: '.split-screen-wrapper',
@@ -2019,7 +2019,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Accordion',
 					slug: 'patterns-content-accordion',
 					file: 'src/scss/04-patterns/02-content/accordion/_accordion.scss',
-					storyId: 'patterns-content-accordion--default',
+					storyId: 'patterns-content-accordion--docs',
 					variants: [
 						{
 							selector: '.osui-accordion',
@@ -2157,7 +2157,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Alert',
 					slug: 'patterns-content-alert',
 					file: 'src/scss/04-patterns/02-content/_alert.scss',
-					storyId: 'patterns-content-alert--default',
+					storyId: 'patterns-content-alert--docs',
 					variants: [
 						{
 							selector: '.alert',
@@ -2224,7 +2224,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Blank Slate',
 					slug: 'patterns-content-blank-slate',
 					file: 'src/scss/04-patterns/02-content/_blank-slate.scss',
-					storyId: null,
+					storyId: 'patterns-content-blank-slate--docs',
 					variants: [
 						{
 							selector: '.blank-slate',
@@ -2251,7 +2251,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Card',
 					slug: 'patterns-content-card',
 					file: 'src/scss/04-patterns/02-content/_card.scss',
-					storyId: 'patterns-content-card--basic',
+					storyId: 'patterns-content-card--docs',
 					variants: [
 						{
 							selector: '.card',
@@ -2313,7 +2313,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Card Background',
 					slug: 'patterns-content-card-background',
 					file: 'src/scss/04-patterns/02-content/_card-background.scss',
-					storyId: null,
+					storyId: 'patterns-content-card-background--docs',
 					variants: [
 						{
 							selector: '.card-background',
@@ -2354,7 +2354,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Card Item',
 					slug: 'patterns-content-card-item',
 					file: 'src/scss/04-patterns/02-content/_card-item.scss',
-					storyId: null,
+					storyId: 'patterns-content-card-item--docs',
 					variants: [
 						{
 							selector: '.card-detail',
@@ -2381,7 +2381,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Carousel',
 					slug: 'patterns-content-carousel',
 					file: 'src/scss/04-patterns/02-content/carousel/_carousel.scss',
-					storyId: 'patterns-content-carousel--default',
+					storyId: 'patterns-content-carousel--docs',
 					variants: [
 						{
 							selector: '.osui-carousel',
@@ -2464,7 +2464,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Chat Message',
 					slug: 'patterns-content-chat-message',
 					file: 'src/scss/04-patterns/02-content/_chat-message.scss',
-					storyId: null,
+					storyId: 'patterns-content-chat-message--docs',
 					variants: [
 						{
 							selector: '.chat',
@@ -2519,7 +2519,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'List Item Content',
 					slug: 'patterns-content-list-item-content',
 					file: 'src/scss/04-patterns/02-content/_list-item-content.scss',
-					storyId: 'patterns-content-list-item-content--default',
+					storyId: 'patterns-content-list-item-content--docs',
 					variants: [
 						{
 							selector: '.list-item-content',
@@ -2567,7 +2567,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Section',
 					slug: 'patterns-content-section',
 					file: 'src/scss/04-patterns/02-content/_section.scss',
-					storyId: 'patterns-content-section--default',
+					storyId: 'patterns-content-section--docs',
 					variants: [
 						{
 							selector: '.section',
@@ -2622,7 +2622,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Tag',
 					slug: 'patterns-content-tag',
 					file: 'src/scss/04-patterns/02-content/_tag.scss',
-					storyId: 'patterns-content-tag--default',
+					storyId: 'patterns-content-tag--docs',
 					variants: [
 						{
 							selector: '.tag',
@@ -2663,7 +2663,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'User Avatar',
 					slug: 'patterns-content-user-avatar',
 					file: 'src/scss/04-patterns/02-content/_user-avatar.scss',
-					storyId: null,
+					storyId: 'patterns-content-user-avatar--docs',
 					variants: [
 						{
 							selector: '.avatar',
@@ -2883,7 +2883,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Action Sheet',
 					slug: 'patterns-interaction-action-sheet',
 					file: 'src/scss/04-patterns/03-interaction/_action-sheet.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-action-sheet--docs',
 					variants: [
 						{
 							selector: '.action-sheet',
@@ -2997,7 +2997,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Animated Label',
 					slug: 'patterns-interaction-animated-label',
 					file: 'src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-animated-label--docs',
 					variants: [
 						{
 							selector: '.animated-label',
@@ -3183,7 +3183,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Dropdown',
 					slug: 'patterns-interaction-dropdown',
 					file: 'src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss',
-					storyId: 'patterns-interaction-dropdown--default',
+					storyId: 'patterns-interaction-dropdown--docs',
 					variants: [
 						{
 							selector: '.osui-dropdown',
@@ -3489,7 +3489,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Dropdown Tags',
 					slug: 'patterns-interaction-dropdown-tags',
 					file: 'src/scss/04-patterns/03-interaction/dropdown/_dropdown-tags.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-dropdown-tags--docs',
 					variants: [
 						{
 							selector: '.osui-dropdown-tags',
@@ -3765,7 +3765,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Floating Actions',
 					slug: 'patterns-interaction-floating-actions',
 					file: 'src/scss/04-patterns/03-interaction/_floating-actions.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-floating-actions--docs',
 					variants: [
 						{
 							selector: '.floating',
@@ -3883,7 +3883,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Input With Icon',
 					slug: 'patterns-interaction-input-with-icon',
 					file: 'src/scss/04-patterns/03-interaction/_input-with-icon.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-input-with-icon--docs',
 					variants: [
 						{
 							selector: '.input-with-icon',
@@ -3910,7 +3910,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Lightbox Image',
 					slug: 'patterns-interaction-lightbox-image',
 					file: 'src/scss/04-patterns/03-interaction/_lightbox-image.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-lightbox-image--docs',
 					variants: [
 						{
 							selector: '.lightbox-item',
@@ -3978,7 +3978,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Notification',
 					slug: 'patterns-interaction-notification',
 					file: 'src/scss/04-patterns/03-interaction/notification/_notification.scss',
-					storyId: 'patterns-interaction-notification--default',
+					storyId: 'patterns-interaction-notification--docs',
 					variants: [
 						{
 							selector: '.osui-notification',
@@ -4284,7 +4284,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Stacked Cards',
 					slug: 'patterns-interaction-stacked-cards',
 					file: 'src/scss/04-patterns/03-interaction/_stacked-cards.scss',
-					storyId: null,
+					storyId: 'patterns-interaction-stacked-cards--docs',
 					variants: [
 						{
 							selector: '.stackedcards',
@@ -4380,7 +4380,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Tooltip',
 					slug: 'patterns-interaction-tooltip',
 					file: 'src/scss/04-patterns/03-interaction/tooltip/_tooltip.scss',
-					storyId: 'patterns-interaction-tooltip--default',
+					storyId: 'patterns-interaction-tooltip--docs',
 					variants: [
 						{
 							selector: '.osui-tooltip',
@@ -4564,7 +4564,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Breadcrumbs',
 					slug: 'patterns-navigation-breadcrumbs',
 					file: 'src/scss/04-patterns/04-navigation/_breadcrumbs.scss',
-					storyId: 'patterns-navigation-breadcrumbs--default',
+					storyId: 'patterns-navigation-breadcrumbs--docs',
 					variants: [
 						{
 							selector: '.breadcrumbs',
@@ -4591,7 +4591,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Pagination',
 					slug: 'patterns-navigation-pagination',
 					file: 'src/scss/04-patterns/04-navigation/_pagination.scss',
-					storyId: 'patterns-navigation-pagination--default',
+					storyId: 'patterns-navigation-pagination--docs',
 					variants: [
 						{
 							selector: '.pagination',
@@ -4809,7 +4809,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Sidebar',
 					slug: 'patterns-navigation-sidebar',
 					file: 'src/scss/04-patterns/04-navigation/sidebar/_sidebar.scss',
-					storyId: 'patterns-navigation-sidebar--default',
+					storyId: 'patterns-navigation-sidebar--docs',
 					variants: [
 						{
 							selector: '.osui-sidebar',
@@ -4857,7 +4857,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Submenu',
 					slug: 'patterns-navigation-submenu',
 					file: 'src/scss/04-patterns/04-navigation/submenu/_submenu.scss',
-					storyId: 'patterns-navigation-submenu--default',
+					storyId: 'patterns-navigation-submenu--docs',
 					variants: [
 						{
 							selector: '.osui-submenu',
@@ -5015,7 +5015,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Tabs',
 					slug: 'patterns-navigation-tabs',
 					file: 'src/scss/04-patterns/04-navigation/tabs/_tabs.scss',
-					storyId: 'patterns-navigation-tabs--default',
+					storyId: 'patterns-navigation-tabs--docs',
 					variants: [
 						{
 							selector: '.osui-tabs',
@@ -5119,7 +5119,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Timeline',
 					slug: 'patterns-navigation-timeline',
 					file: 'src/scss/04-patterns/04-navigation/_timeline.scss',
-					storyId: 'patterns-navigation-timeline--default',
+					storyId: 'patterns-navigation-timeline--docs',
 					variants: [
 						{
 							selector: '.timeline',
@@ -5230,7 +5230,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Badge',
 					slug: 'patterns-numbers-badge',
 					file: 'src/scss/04-patterns/05-numbers/_badge.scss',
-					storyId: 'patterns-numbers-badge--default',
+					storyId: 'patterns-numbers-badge--docs',
 					variants: [
 						{
 							selector: '.badge',
@@ -5257,7 +5257,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Icon Badge',
 					slug: 'patterns-numbers-icon-badge',
 					file: 'src/scss/04-patterns/05-numbers/_icon-badge.scss',
-					storyId: null,
+					storyId: 'patterns-numbers-icon-badge--docs',
 					variants: [
 						{
 							selector: '.icon-badge',
@@ -5304,7 +5304,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Rating',
 					slug: 'patterns-numbers-rating',
 					file: 'src/scss/04-patterns/05-numbers/rating/_rating.scss',
-					storyId: 'patterns-numbers-rating--default',
+					storyId: 'patterns-numbers-rating--docs',
 					variants: [
 						{
 							selector: '.rating',
@@ -5386,7 +5386,7 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 					name: 'Provider Login Button',
 					slug: 'patterns-utilities-provider-login-button',
 					file: 'src/scss/04-patterns/06-utilities/_provider-login-button.scss',
-					storyId: null,
+					storyId: 'patterns-utilities-provider-login-button--docs',
 					variants: [
 						{
 							selector: '.btn.btn-provider-login',

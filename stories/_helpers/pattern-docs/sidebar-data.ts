@@ -118,8 +118,8 @@ export const SIDEBAR_DOC: PatternDocMeta = {
 		'Put a visible close control in the Header placeholder — on touch devices without HasOverlay, the swipe gesture is the only other way out.',
 	],
 	related: [
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
-		{ name: 'Action Sheet', storyId: 'patterns-interaction-actionsheet--docs' },
-		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottombar--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
+		{ name: 'Action Sheet', storyId: 'patterns-interaction-action-sheet--docs' },
+		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottom-bar--docs' },
 	],
 };

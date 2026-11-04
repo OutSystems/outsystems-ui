@@ -126,7 +126,7 @@ export const RATING_DOC: PatternDocMeta = {
 		'Filled, empty and disabled colours come from `--osui-rating-filled-color`, `--osui-rating-empty-color` and `--osui-rating-disabled-*`; check their contrast against your theme background when you override them.',
 	],
 	related: [
-		{ name: 'Range Slider', storyId: 'patterns-interaction-rangeslider--docs' },
+		{ name: 'Range Slider', storyId: 'patterns-interaction-range-slider--docs' },
 		{ name: 'Progress Bar', storyId: 'patterns-numbers-progress-bar--docs' },
 		{ name: 'Badge', storyId: 'patterns-numbers-badge--docs' },
 	],

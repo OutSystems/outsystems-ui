@@ -63,8 +63,8 @@ export const SEARCH_DOC: PatternDocMeta = {
 		'When the search filters a list live, announce the result count in an aria-live region so screen-reader users know the list changed.',
 	],
 	related: [
-		{ name: 'Input With Icon', storyId: 'patterns-interaction-inputwithicon--docs' },
+		{ name: 'Input With Icon', storyId: 'patterns-interaction-input-with-icon--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
-		{ name: 'Animated Label', storyId: 'patterns-interaction-animatedlabel--docs' },
+		{ name: 'Animated Label', storyId: 'patterns-interaction-animated-label--docs' },
 	],
 };

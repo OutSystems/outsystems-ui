@@ -45,6 +45,6 @@ export const TAG_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Badge', storyId: 'patterns-numbers-badge--docs' },
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
-		{ name: 'UserAvatar', storyId: 'patterns-content-useravatar--docs' },
+		{ name: 'UserAvatar', storyId: 'patterns-content-user-avatar--docs' },
 	],
 };

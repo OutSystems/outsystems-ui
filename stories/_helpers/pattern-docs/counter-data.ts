@@ -70,7 +70,7 @@ export const COUNTER_DOC: PatternDocMeta = {
 	],
 	related: [
 		{ name: 'Badge', storyId: 'patterns-numbers-badge--docs' },
-		{ name: 'Icon Badge', storyId: 'patterns-numbers-iconbadge--docs' },
+		{ name: 'Icon Badge', storyId: 'patterns-numbers-icon-badge--docs' },
 		{ name: 'Card', storyId: 'patterns-content-card--docs' },
 		{ name: 'Progress Bar', storyId: 'patterns-numbers-progress-bar--docs' },
 	],

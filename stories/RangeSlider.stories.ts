@@ -17,7 +17,7 @@ interface RangeSliderArgs {
 }
 
 const meta: Meta<RangeSliderArgs> = {
-	title: 'Patterns/Interaction/RangeSlider',
+	title: 'Patterns/Interaction/Range Slider',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		mode: {

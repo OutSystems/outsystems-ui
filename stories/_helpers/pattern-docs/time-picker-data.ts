@@ -11,7 +11,7 @@ export const TIME_PICKER_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-timepicker',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/time_picker/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/time_picker/',
-	liveStoryId: 'patterns-interaction-timepicker--basic-usage',
+	liveStoryId: 'patterns-interaction-time-picker--basic-usage',
 	cssApiSlug: 'patterns-interaction-timepicker',
 	whenToUse: [
 		'Time-only fields: reminders, shift start and end, store opening hours.',
@@ -136,8 +136,8 @@ export const TIME_PICKER_DOC: PatternDocMeta = {
 		'Values outside MinTime / MaxTime are rejected rather than silently clamped, so what is announced is what was stored.',
 	],
 	related: [
-		{ name: 'Date Picker', storyId: 'patterns-interaction-datepicker--docs' },
-		{ name: 'Month Picker', storyId: 'patterns-interaction-monthpicker--docs' },
+		{ name: 'Date Picker', storyId: 'patterns-interaction-date-picker--docs' },
+		{ name: 'Month Picker', storyId: 'patterns-interaction-month-picker--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 	],
 };

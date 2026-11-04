@@ -11,7 +11,7 @@ export const FLOATING_ACTIONS_DOC: PatternDocMeta = {
 	stylingSelector: '.floating-actions-wrapper',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/floating_actions/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/floating_actions/',
-	liveStoryId: 'patterns-interaction-floatingactions--basic-usage',
+	liveStoryId: 'patterns-interaction-floating-actions--basic-usage',
 	cssApiSlug: 'patterns-interaction-floating-actions',
 	whenToUse: [
 		'One primary "create" action per screen with two to four related shortcuts (new message, add contact, schedule).',
@@ -93,8 +93,8 @@ export const FLOATING_ACTIONS_DOC: PatternDocMeta = {
 		'Under .has-accessible-features the main button shows a focus ring in both states; the fan-out animation is driven by --delay and is short enough not to need a reduced-motion variant.',
 	],
 	related: [
-		{ name: 'Action Sheet', storyId: 'patterns-interaction-actionsheet--docs' },
-		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottomsheet--docs' },
-		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflowmenu--docs' },
+		{ name: 'Action Sheet', storyId: 'patterns-interaction-action-sheet--docs' },
+		{ name: 'Bottom Sheet', storyId: 'patterns-interaction-bottom-sheet--docs' },
+		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflow-menu--docs' },
 	],
 };

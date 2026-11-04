@@ -40,7 +40,7 @@ export const LIST_ITEM_CONTENT_DOC: PatternDocMeta = {
 		'Trailing icons need accessible names when they are actionable.',
 	],
 	related: [
-		{ name: 'UserAvatar', storyId: 'patterns-content-useravatar--docs' },
+		{ name: 'UserAvatar', storyId: 'patterns-content-user-avatar--docs' },
 		{ name: 'Card Item', storyId: 'patterns-content-card-item--docs' },
 		{ name: 'Table', storyId: 'patterns-content-table--docs' },
 	],

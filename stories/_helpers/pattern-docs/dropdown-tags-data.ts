@@ -180,6 +180,6 @@ export const DROPDOWN_TAGS_DOC: PatternDocMeta = {
 	related: [
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
 		{ name: 'Tag', storyId: 'patterns-content-tag--docs' },
-		{ name: 'Dropdown Server Side', storyId: 'patterns-advanced-dropdownserverside--docs' },
+		{ name: 'Dropdown Server Side', storyId: 'patterns-advanced-dropdown-server-side--docs' },
 	],
 };

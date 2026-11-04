@@ -9,7 +9,7 @@ export const USER_AVATAR_DOC: PatternDocMeta = {
 	stylingSelector: '.avatar',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/content/user_avatar/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/content/user_avatar/',
-	liveStoryId: 'patterns-content-useravatar--initials',
+	liveStoryId: 'patterns-content-user-avatar--initials',
 	cssApiSlug: 'patterns-content-user-avatar',
 	whenToUse: [
 		'Representing a person in a list row or chat message.',
@@ -49,7 +49,7 @@ export const USER_AVATAR_DOC: PatternDocMeta = {
 		'Photos need meaningful alt text derived from Name.',
 	],
 	related: [
-		{ name: 'Chat Message', storyId: 'patterns-content-chatmessage--docs' },
+		{ name: 'Chat Message', storyId: 'patterns-content-chat-message--docs' },
 		{ name: 'List Item Content', storyId: 'patterns-content-list-item-content--docs' },
 		{ name: 'Tag', storyId: 'patterns-content-tag--docs' },
 	],

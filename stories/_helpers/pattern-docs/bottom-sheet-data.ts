@@ -11,7 +11,7 @@ export const BOTTOM_SHEET_DOC: PatternDocMeta = {
 	stylingSelector: '.osui-bottom-sheet',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/interaction/bottom_sheet/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/interaction/bottom_sheet/',
-	liveStoryId: 'patterns-interaction-bottomsheet--basic-usage',
+	liveStoryId: 'patterns-interaction-bottom-sheet--basic-usage',
 	cssApiSlug: 'patterns-adaptive-bottomsheet',
 	whenToUse: [
 		'Option pickers on mobile (delivery slot, sort order, filters) that need more than a plain list of buttons.',
@@ -101,7 +101,7 @@ export const BOTTOM_SHEET_DOC: PatternDocMeta = {
 		'Under .has-accessible-features the sheet gets a visible focus ring; .os-high-contrast adds a solid border to the sheet edge.',
 	],
 	related: [
-		{ name: 'Action Sheet', storyId: 'patterns-interaction-actionsheet--docs' },
+		{ name: 'Action Sheet', storyId: 'patterns-interaction-action-sheet--docs' },
 		{ name: 'Sidebar', storyId: 'patterns-navigation-sidebar--docs' },
 		{ name: 'Notification', storyId: 'patterns-interaction-notification--docs' },
 	],

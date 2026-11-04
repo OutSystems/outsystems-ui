@@ -108,8 +108,8 @@ export const SUBMENU_DOC: PatternDocMeta = {
 		'A link with the CSS-only .is-disabled state keeps its tabindex — pair it with aria-disabled="true" so assistive tech reports it as unavailable.',
 	],
 	related: [
-		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflowmenu--docs' },
+		{ name: 'Overflow Menu', storyId: 'patterns-navigation-overflow-menu--docs' },
 		{ name: 'Dropdown', storyId: 'patterns-interaction-dropdown--docs' },
-		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottombar--docs' },
+		{ name: 'Bottom Bar', storyId: 'patterns-navigation-bottom-bar--docs' },
 	],
 };

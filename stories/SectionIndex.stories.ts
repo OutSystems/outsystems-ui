@@ -94,7 +94,7 @@ function sectionIndexDemo(sections: readonly SectionCopy[], configs: SectionInde
 }
 
 const meta: Meta<SectionIndexArgs> = {
-	title: 'Patterns/Navigation/SectionIndex',
+	title: 'Patterns/Navigation/Section Index',
 	argTypes: {
 		smoothScrolling: {
 			control: 'boolean',

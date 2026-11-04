@@ -29,7 +29,7 @@ interface InputWithIconArgs {
 }
 
 const meta: Meta<InputWithIconArgs> = {
-	title: 'Patterns/Interaction/InputWithIcon',
+	title: 'Patterns/Interaction/Input With Icon',
 	argTypes: {
 		iconPosition: {
 			name: 'IconPosition',

@@ -9,7 +9,7 @@ export const MARGIN_CONTAINER_DOC: PatternDocMeta = {
 	stylingSelector: '.margin-container',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/utilities/margin_container/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/utilities/margin_container/',
-	liveStoryId: 'patterns-utilities-margincontainer--basic-usage',
+	liveStoryId: 'patterns-utilities-margin-container--basic-usage',
 	whenToUse: [
 		'Screens whose layout content area is edge-to-edge (full-bleed images, maps, lists) but whose text and forms need the standard inset.',
 		'Keeping the same screen padding across screens without repeating padding utility classes on every container.',
@@ -43,7 +43,7 @@ export const MARGIN_CONTAINER_DOC: PatternDocMeta = {
 		'Do not rely on it for layout landmarks; add a heading or a Section inside when the content is a distinct region.',
 	],
 	related: [
-		{ name: 'Center Content', storyId: 'patterns-utilities-centercontent--docs' },
+		{ name: 'Center Content', storyId: 'patterns-utilities-center-content--docs' },
 		{ name: 'Section', storyId: 'patterns-content-section--docs' },
 		{ name: 'Columns', storyId: 'patterns-adaptive-columns--docs' },
 	],

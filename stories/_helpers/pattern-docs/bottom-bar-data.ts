@@ -9,7 +9,7 @@ export const BOTTOM_BAR_DOC: PatternDocMeta = {
 	stylingSelector: '.bottom-bar-wrapper',
 	odcUrl: 'https://success.outsystems.com/documentation/outsystems_developer_cloud/building_apps/user_interface/patterns/navigation/bottom_bar_item/',
 	o11Url: 'https://success.outsystems.com/documentation/11/building_apps/user_interface/patterns/using_mobile_and_reactive_patterns/navigation/bottom_bar_item/',
-	liveStoryId: 'patterns-navigation-bottombar--basic-usage',
+	liveStoryId: 'patterns-navigation-bottom-bar--basic-usage',
 	cssApiSlug: 'patterns-navigation-bottom-bar-item',
 	whenToUse: [
 		'Mobile apps with three to five top-level destinations that users switch between often.',
