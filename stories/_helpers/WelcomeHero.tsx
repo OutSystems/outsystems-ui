@@ -122,11 +122,11 @@ const WELCOME_TAIL = `
       <p>Design files, plugins and a reference sheet, so design and delivery stay on the same system.</p>
     </div>
     <div class="grid-3">
-      <a class="w-card" href="https://outsystemsui.outsystems.com/OutsystemsUiWebsite/" target="_blank" rel="noopener">
+      <a class="w-card" href="https://www.figma.com/community/file/1700209434010403595/outsystems-ui-v3-0-0" target="_blank" rel="noopener">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0-4-4m4 4 4-4M4 19h16"/></svg></div>
-        <h3>Design kits</h3>
-        <p>Styles, patterns, widgets and layouts for Figma, Sketch and Adobe XD, mirroring the token layer.</p>
-        <div class="arrow">Open kits →</div>
+        <h3>Figma kit</h3>
+        <p>The OutSystems UI v3.0.0 kit: styles, patterns, widgets and layouts, mirroring the token layer.</p>
+        <div class="arrow">Open in Figma →</div>
       </a>
       <a class="w-card" href="?path=/docs/design-system-css-architecture--docs">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>
