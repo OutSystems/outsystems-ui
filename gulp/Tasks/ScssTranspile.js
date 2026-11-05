@@ -12,7 +12,6 @@ const removeEmptyLines = require('gulp-remove-empty-lines');
 const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
-const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { Transform } = require('stream');
@@ -27,6 +26,43 @@ let watchScssThemes = 'src/scss/*.scss';
 // it was built from (ROU-13182). It is added here, not in the generated SCSS entry files, because those are
 // committed and a SHA or a date there would dirty them on every build. Production only: in development it would
 // shift every sourcemap line by one, and the dev bundle never reaches a module.
+// The commit HEAD points at, read from the .git directory rather than by spawning `git`, so the build does not
+// run whatever `git` the PATH resolves to. Handles a detached HEAD, a branch ref (loose or packed) and a
+// worktree / submodule checkout, where `.git` is a file pointing at the real git directory. Returns '' when it
+// cannot tell; CI passes GITHUB_SHA instead.
+function readHeadCommit() {
+	try {
+		let gitDir = path.join(process.cwd(), '.git');
+		if (fs.statSync(gitDir).isFile()) {
+			const pointer = fs.readFileSync(gitDir, 'utf8').match(/^gitdir: (.+)$/m);
+			if (pointer === null) return '';
+			gitDir = path.resolve(process.cwd(), pointer[1].trim());
+		}
+		// A linked worktree keeps HEAD in its own directory and refs in the common one.
+		const commonDirFile = path.join(gitDir, 'commondir');
+		const commonDir = fs.existsSync(commonDirFile)
+			? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim())
+			: gitDir;
+
+		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
+		if (head.startsWith('ref: ') === false) return head;
+
+		const ref = head.slice('ref: '.length);
+		const looseRef = path.join(commonDir, ref);
+		if (fs.existsSync(looseRef)) return fs.readFileSync(looseRef, 'utf8').trim();
+
+		const packedRefs = path.join(commonDir, 'packed-refs');
+		if (fs.existsSync(packedRefs) === false) return '';
+		const packed = fs
+			.readFileSync(packedRefs, 'utf8')
+			.split('\n')
+			.find((line) => line.endsWith(` ${ref}`));
+		return packed === undefined ? '' : packed.split(' ')[0];
+	} catch (e) {
+		return '';
+	}
+}
+
 function getBuildInfoLine() {
 	let tokensVersion = 'unknown';
 	try {
@@ -37,16 +73,7 @@ function getBuildInfoLine() {
 		// Not installed: build:tokens has already failed with a clearer message.
 	}
 
-	let commit = (process.env.GITHUB_SHA || '').slice(0, 9);
-	if (commit === '') {
-		try {
-			commit = execSync('git rev-parse --short=9 HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
-				.toString()
-				.trim();
-		} catch (e) {
-			commit = 'unknown';
-		}
-	}
+	const commit = (process.env.GITHUB_SHA || readHeadCommit() || 'unknown').slice(0, 9);
 
 	const built = new Date().toISOString().slice(0, 16).replace('T', ' ');
 

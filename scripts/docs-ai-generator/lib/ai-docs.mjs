@@ -1300,6 +1300,17 @@ export function buildUtilitiesManifest(ctx) {
 }
 
 /**
+ * The text with its trailing newlines collapsed to exactly one. A loop, not a regex: `/\n*$/` backtracks
+ * quadratically on a long run of newlines.
+ * @param {string} text
+ */
+function withOneFinalNewline(text) {
+	let end = text.length;
+	while (end > 0 && text[end - 1] === '\n') end--;
+	return `${text.slice(0, end)}\n`;
+}
+
+/**
  * Write the whole docs set.
  * @param {import('./context.mjs').EvalContext} ctx
  * @param {string} outDir
@@ -1335,6 +1346,6 @@ export function writeDocs(ctx, outDir) {
 	// Exactly one final newline: editors that trim a trailing blank line would otherwise make the committed copy
 	// differ from a fresh run, and the CI drift gate (`npm run docs:check`) would fail on it.
 	for (const [name, text] of Object.entries(files))
-		fs.writeFileSync(insideDir(outDir, ...name.split('/')), text.replace(/\n*$/, '\n'));
+		fs.writeFileSync(insideDir(outDir, ...name.split('/')), withOneFinalNewline(text));
 	return Object.keys(files).map((f) => path.join(outDir, ...f.split('/')));
 }
