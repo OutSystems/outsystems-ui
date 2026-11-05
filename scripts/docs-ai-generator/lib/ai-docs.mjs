@@ -1332,6 +1332,9 @@ export function writeDocs(ctx, outDir) {
 		)}\n`,
 	};
 	fs.mkdirSync(insideDir(outDir, 'schema', 'configs'), { recursive: true });
-	for (const [name, text] of Object.entries(files)) fs.writeFileSync(insideDir(outDir, ...name.split('/')), text);
+	// Exactly one final newline: editors that trim a trailing blank line would otherwise make the committed copy
+	// differ from a fresh run, and the CI drift gate (`npm run docs:check`) would fail on it.
+	for (const [name, text] of Object.entries(files))
+		fs.writeFileSync(insideDir(outDir, ...name.split('/')), text.replace(/\n*$/, '\n'));
 	return Object.keys(files).map((f) => path.join(outDir, ...f.split('/')));
 }

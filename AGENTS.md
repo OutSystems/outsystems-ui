@@ -25,6 +25,8 @@ conventions; this file is the short path to the right context.
 | `npm run docs:ai`                  | Regenerate `docs-ai/` from the source; `npm run docs:ai:check` fails when the committed copy is stale     |
 | `npm run docs:ai:types`            | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                       |
 | `npm run docs:ai:blocks`           | Re-export the OML block snapshot from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored) |
+| `npm run docs:regen`               | Build, then every generator in dependency order; commit the result                                        |
+| `npm run docs:check`               | Fails when a committed generated file is stale (the PR build runs it)                                     |
 
 ## Rules that matter most
 
@@ -37,6 +39,6 @@ conventions; this file is the short path to the right context.
 - Styling goes through `--osui-*` knobs and `$token-*` variables, never literals; utilities follow
   `<property>[-<side>][-<value>]`.
 - A pull request that touches a pattern's configuration, API, story or SCSS regenerates `docs-ai/` and
-  `PatternTypes.ts` (`npm run docs:ai:types && npm run docs:ai`); `npm run docs:ai:test` fails while they are stale.
+  `PatternTypes.ts` (`npm run docs:regen`); `npm run docs:check` (run by the PR build) fails while they are stale.
 - Nothing here changes runtime behaviour without a documented decision: a breaking change is described with
   its impact, never applied silently.

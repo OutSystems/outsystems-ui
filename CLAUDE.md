@@ -20,7 +20,7 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run dev -- --target O11`                         | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                       |
 | `npm run build`                                       | Production build for all targets, then `lintfix` + `lint`                                                                                                                       |
 | `npm run lint` / `lintfix` / `prettier`               | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                    |
-| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`)                                                                     |
+| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`); fails first if the installed version differs from the `package.json` pin |
 | `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                    |
 | `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                       |
 | `npm run update-version`                              | Interactive version bump across project files                                                                                                                                   |
@@ -30,7 +30,9 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 | `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
 | `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
 | `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed)       |
-| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale                                                                 |
+| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); of the generated files it checks only `PatternTypes.ts` |
+| `npm run docs:regen` / `docs:check`                   | Build, then every generator in dependency order / the PR drift gate: fails when a committed generated file is stale |
+| `npm run tokens:update`                               | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`; the only way the pin moves |
 
 There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm run docs:ai:test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
 
@@ -46,7 +48,7 @@ module OML), `osui.blocks.json`, `osui.enums.json` and `osui.icons.json`; lines 
 browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc (see
 `.claude/rules/typescript.md` §7): the generator reads them, so a new function or prop needs its comment before
 `docs-ai/` regenerates. A change to a pattern's configs, API, story or SCSS is followed by
-`npm run docs:ai:types && npm run docs:ai`; `npm run docs:ai:test` fails while the generated files are stale. See
+`npm run docs:regen` (or `npm run docs:ai:types && npm run docs:ai` for `docs-ai/` alone); `npm run docs:check`, which the PR build runs, fails while any generated file is stale. See
 `scripts/docs-ai-generator/README.md` for the generators and the snapshot refresh procedure.
 
 ## Domain Terminology
@@ -64,6 +66,8 @@ browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments ar
 - **Platform differences belong in `gulp/ProjectSpecs/DefaultSpecs.js`** (per-target file exclusions and placeholder tokens), not in runtime `if (platform === …)` branches.
 - **E2E coverage is path-derived.** `pipelines/pr-pipeline.yaml` builds Cucumber tags from changed folders under `src/scripts/OSFramework/OSUI/Pattern`, `src/scripts/OutSystems/OSUI/Patterns`, `src/scripts/Providers/OSUI`, and `src/scss/04-patterns`. Changes elsewhere trigger **no** tests — say so explicitly and describe manual verification.
 - **`.npmrc` carries the supply-chain policy `min-release-age=7`** plus a `min-release-age-exclude[]=outsystems-design-tokens` exemption. The exemption is load-bearing: this repo tracks the tokens package within days of publication, and without it `npm i` fails with `ETARGET` for a week after every tokens release. **Needs npm >= 11.17** — older npm warns `Unknown project config` and silently ignores the exclude, so the install fails; `volta` pins a supported npm.
+- **The build refuses a stale tokens install.** `build:tokens` (so every `dev` / `build`) first runs `scripts/check-tokens-version.mjs` and exits 1 when `node_modules/outsystems-design-tokens` is not the exact version pinned in `package.json` — run `npm i`. The pin must stay exact (no `^`). The production CSS has a second banner line `/*! Tokens x.y.z • Commit <sha> • Built <date> UTC */`.
+- **The O11 / ODC modules are updated only from the `dev-latest` pre-release** (`.github/workflows/dev-build.yaml`, rebuilt on every push to `dev`), never from a local `dist/`. See ADR-0021.
 - **`src/scss/tokens/` is generated and gitignored.** A fresh clone has no tokens until `npm run build:tokens` (or any `dev`/`build`) has run — SCSS referencing `$token-*` will not compile before that.
 - **`src/scripts/osui.ts` is a deprecated shim.** Never add entries; new surface goes in `OutSystems.OSUI.*`.
 - Public API functions must return the serialized envelope from `OutSystems/OSUI/Utils/CreateApiResponse.ts` with a code from `OutSystems/OSUI/ErrorCodes.ts` — do not let exceptions escape (only `Create` throws).

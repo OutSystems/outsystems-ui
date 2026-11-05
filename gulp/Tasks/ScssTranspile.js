@@ -12,10 +12,66 @@ const removeEmptyLines = require('gulp-remove-empty-lines');
 const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const { Transform } = require('stream');
 
 const project = require('../ProjectSpecs/DefaultSpecs');
 const distFolder = './dist';
 let watchScssThemes = 'src/scss/*.scss';
+
+// Build provenance line written under the main banner of the production CSS:
+//   /*! Tokens 2.6.0 • Commit fe093aecc • Built 2026-11-05 14:08 UTC */
+// The compiled CSS is pasted into the O11 / ODC modules, so it has to say which tokens release and which commit
+// it was built from (ROU-13182). It is added here, not in the generated SCSS entry files, because those are
+// committed and a SHA or a date there would dirty them on every build. Production only: in development it would
+// shift every sourcemap line by one, and the dev bundle never reaches a module.
+function getBuildInfoLine() {
+	let tokensVersion = 'unknown';
+	try {
+		// Read from disk: a package `exports` map can refuse `require('<pkg>/package.json')`.
+		const manifest = path.join(process.cwd(), 'node_modules', 'outsystems-design-tokens', 'package.json');
+		tokensVersion = JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
+	} catch (e) {
+		// Not installed: build:tokens has already failed with a clearer message.
+	}
+
+	let commit = (process.env.GITHUB_SHA || '').slice(0, 9);
+	if (commit === '') {
+		try {
+			commit = execSync('git rev-parse --short=9 HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+				.toString()
+				.trim();
+		} catch (e) {
+			commit = 'unknown';
+		}
+	}
+
+	const built = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+	return `/*! Tokens ${tokensVersion} • Commit ${commit} • Built ${built} UTC */\n`;
+}
+
+// Inserts the build provenance line right after the first `/*! … */` banner of each compiled file.
+function addBuildInfo() {
+	const line = getBuildInfoLine();
+
+	return new Transform({
+		objectMode: true,
+		transform(file, _encoding, callback) {
+			if (file.isBuffer()) {
+				const css = file.contents.toString();
+				const bannerEnd = css.indexOf('*/');
+				if (bannerEnd !== -1) {
+					const insertAt = css.indexOf('\n', bannerEnd) + 1 || css.length;
+					file.contents = Buffer.from(css.slice(0, insertAt) + line + css.slice(insertAt));
+				}
+			}
+			callback(null, file);
+		},
+	});
+}
 
 // Check if a platformType has been defined through npm script, if so, compile it's own SCSS theme only, otherwise it will compile all.
 function checkForScssThemeToBeCompiled() {
@@ -64,7 +120,8 @@ function scssTranspile(cb, envMode) {
                 overrideBrowserslist: ['last 10 versions']
             }))
             .pipe(removeEmptyLines())
-            .pipe(gulp.dest(distFolder));    
+            .pipe(addBuildInfo())
+            .pipe(gulp.dest(distFolder));
     }
 
     cb();

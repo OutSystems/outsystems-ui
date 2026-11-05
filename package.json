@@ -8,7 +8,7 @@
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
 		"prebuild:osui": "npm run build:tokens",
 		"build:osui": "gulp createProduction --target",
-		"build:tokens": "npx build-tokens --dest src/scss/tokens/ --prefix token --utilities true --utilities-css-vars false --root false",
+		"build:tokens": "node scripts/check-tokens-version.mjs && build-tokens --dest src/scss/tokens/ --prefix token --utilities true --utilities-css-vars false --root false",
 		"create-osui-scss": "gulp updateScssFile",
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
@@ -43,7 +43,7 @@
 		"chromatic": "chromatic --build-script-name=build-storybook",
 		"update-version": "gulp updateVersion",
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
-		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
+		"tokens:update": "npm install --save-dev --save-exact outsystems-design-tokens@latest && npm run docs:regen",
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:migration": "node scripts/sync-migration-guide.mjs",
@@ -52,7 +52,10 @@
 		"docs:ai:check": "node scripts/docs-ai-generator/check-ai-docs-fresh.mjs",
 		"docs:ai:types": "node scripts/docs-ai-generator/generate-pattern-types.mjs",
 		"docs:ai:blocks": "node scripts/docs-ai-generator/export-snapshot.mjs",
-		"docs:ai:test": "node --test \"tests/*.test.mjs\""
+		"docs:ai:test": "node --test \"tests/*.test.mjs\"",
+		"docs:generate": "npm run docs:tokens && npm run docs:css-api && npm run docs:migration && npm run docs:migration-page && npm run docs:ai:types && npm run docs:ai",
+		"docs:regen": "npm run build:osui && npm run docs:generate",
+		"docs:check": "node scripts/check-generated-fresh.mjs"
 	},
 	"repository": {
 		"type": "git",

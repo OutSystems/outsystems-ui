@@ -55,6 +55,8 @@ npm run dev -- --target ODC    # ODC only
 
 Gulp cleans `dist/`, generates the platform SCSS entry files, transpiles TS and SCSS in dev mode (with sourcemaps), then serves `dist/` with browser-sync and watches `src/**/*.ts` and `src/**/*.scss`. The generated `dist/index.html` links the per-platform bundles (`dev.O11.OutSystemsUI.js`, `dev.ODC.OutSystemsUI.css`, etc.).
 
+Every `dev` and `build` starts with `build:tokens`, which first checks that the installed `outsystems-design-tokens` is the version pinned in `package.json` and **fails with a message** when it is not (`installed 2.5.0, package.json pins 2.6.0. Run npm i`). It never installs for you; run `npm i` after a pull or a branch switch that moved the pin. The production CSS carries a second banner line with the tokens version, commit and build date, e.g. `/*! Tokens 2.6.0 • Commit fe093aecc • Built 2026-11-05 14:11 UTC */`.
+
 Platform targets, per-platform file exclusions, and compile-time placeholder tokens are declared in `gulp/ProjectSpecs/DefaultSpecs.js`. Add new platform-specific exclusions there rather than with runtime checks. See `gulp/README.md` for build system details.
 
 ### Before opening a PR
@@ -63,7 +65,7 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 2. `npm run lint` reports zero errors and zero warnings.
 3. Public APIs and public config props carry TSDoc comments (`.claude/rules/typescript.md` §7); the jsdoc lint rules are part of the zero-warnings gate.
 4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
-5. `npm run docs:ai:types && npm run docs:ai` re-run and the result committed whenever a pattern's configs, API, story or SCSS changed; `npm run docs:ai:test` passes.
+5. Committed generated files are fresh: `npm run docs:regen` re-run and the result committed whenever a pattern's configs, API, story or SCSS, a skill mapping table or the tokens pin changed. The PR build runs `npm run docs:check` after the build and fails on any stale file (ROU-13182).
 
 ## Building and Testing
 
@@ -81,6 +83,9 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 | `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`) |
 | `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`) |
 | `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
+| `npm run docs:regen`       | Production build, then every generator in dependency order (tokens data, CSS API, migration guide and page, `PatternTypes.ts`, `docs-ai/`) |
+| `npm run docs:check`       | Drift gate the PR build runs after `npm run build`: fails when a committed generated file is stale |
+| `npm run tokens:update`    | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen` |
 | `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
 | `npm run update-version`   | Interactive version bump across project files                         |
 
@@ -165,7 +170,7 @@ on every build — register new partials in `gulp/ProjectSpecs/ScssStructure/*.j
 ### Documentation
 
 - TSDoc on every public API and public config prop: a description, `@param name text` per argument and `@returns text` when a value is returned; types stay in the signature (no `{type}` braces, no `@export` / `@memberof`). The docs generator reads these comments (`.claude/rules/typescript.md` §7).
-- Agent documentation (`docs-ai/`) and the generated pattern types are regenerated, never edited: `npm run docs:ai:types && npm run docs:ai`, then commit the result. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/docs-ai-generator/snapshot/local/` and run `npm run docs:ai:blocks` (see `scripts/docs-ai-generator/README.md`).
+- Generated files are regenerated, never edited: `npm run docs:regen` rebuilds and runs every generator in dependency order (Storybook token data, CSS API reference, migration guide tables and page, `PatternTypes.ts`, `docs-ai/`); commit the result. `npm run docs:check` is the same check the PR build runs. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/docs-ai-generator/snapshot/local/` and run `npm run docs:ai:blocks` (see `scripts/docs-ai-generator/README.md`).
 - Significant design decisions are recorded as ADRs in `docs-internal/adr/` — copy `ADR-0000-Title-of-ADR.md`, number it sequentially, and update the ADR log table in `docs-internal/adr/Readme.md`.
 
 ## Pull Request Process
@@ -183,7 +188,7 @@ Target `dev`. Three checks gate every PR:
 | `revert`, `perf`, `test`, `refactor`, `fix`, `bugfix`, `patch`, `chore` | Patch version (0.0.X+1) |
 | `ci`, `none`, `docs`, `style`, `skip`                                   | No version change       |
 
-**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
+**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. Its second job, **Check generated files are fresh**, builds and runs `npm run docs:check`: it regenerates every committed generated file and fails when one changed, naming the file and the fix (`npm run docs:regen`, then commit). It blocks merges from day one. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
 
 Fill in the template from `.github/pull_request_template.md`: sample page link, what was happening, what was done, test steps, screenshots (animated GIF preferred), and the checklist — including whether the change requires an accompanying OutSystems module or a new sample page.
 
@@ -193,13 +198,26 @@ Workflows prefixed `template-` are vendored copies of shared reusable workflows 
 
 ## Releases
 
+### Dev build (`dev-latest`)
+
+`dev-build.yaml` runs on every push to `dev` (merge commits whose message holds `[skip ci]` are skipped). It installs from the exact pins, runs `npm run build:osui`, and replaces the files of one rolling GitHub **pre-release** tagged `dev-latest`, titled "Dev build (unreleased)":
+
+| File | Source |
+| --- | --- |
+| `O11.OutSystemsUI.css` / `.js` / `.d.ts`, `ODC.OutSystemsUI.css` / `.js` / `.d.ts` | `dist/` |
+| `Classic.O11.OutSystemsUI.css`, `Classic.ODC.OutSystemsUI.css` | `classic-theme/` (committed snapshot, copied) |
+
+**The O11 and ODC modules are updated only from these files, never from a local build.** The URLs never change: `https://github.com/OutSystems/outsystems-ui/releases/download/dev-latest/<file>`. The second banner line of each new-theme CSS file and the release notes name the tokens version, commit and build date. A manual run from another branch builds and keeps the files as a run artifact, without touching `dev-latest`. It is not a release: the release-candidate flow below is unchanged. See ADR-0021.
+
+### Release candidates and releases
+
 Releases are manual `workflow_dispatch` GitHub Actions:
 
 - `pre-release.yaml` — creates a release candidate branch and version (inputs: new version, release date, optional next dev version).
 - `release.yaml` — promotes a release candidate to latest and optionally deletes the `rc*` branch.
 - `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site from a given branch.
 
-Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand.
+Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand. Bump the design tokens with `npm run tokens:update` (exact pin, then `docs:regen`); refresh the OML block snapshot with `npm run docs:ai:blocks`. Both stay manual.
 
 ## Getting Help
 

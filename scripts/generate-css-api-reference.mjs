@@ -359,7 +359,8 @@ const manifestCategories = sortedCats.map((cat) => {
 	return { id: cat.id, label: cat.label, order: cat.order, components };
 });
 
-const generatedAt = new Date().toISOString();
+// No generation timestamp: the output must be byte-identical for identical input, or the CI drift gate
+// (`npm run docs:check`) would fail on every run. Git history already records when it changed.
 
 // ── TypeScript manifest ────────────────────────────────────────────────────
 function emitProp(p, indent) {
@@ -411,13 +412,11 @@ const manifestLines = [
 	'};',
 	'',
 	'export type CssApiManifest = {',
-	'\tgeneratedAt: string;',
 	'\ttotals: { properties: number; components: number; categories: number };',
 	'\tcategories: CssApiCategory[];',
 	'};',
 	'',
 	'export const CSS_API_MANIFEST: CssApiManifest = {',
-	`\tgeneratedAt: '${generatedAt}',`,
 	'\ttotals: {',
 	`\t\tproperties: ${totalProps},`,
 	`\t\tcomponents: ${totalComponents},`,
