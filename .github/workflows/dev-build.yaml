@@ -1,0 +1,149 @@
+#
+# Dev build: after every merge to `dev`, build in CI and publish the result to a single rolling GitHub
+# pre-release under the `dev-latest` tag (ROU-13182, plan in ROU-13169 / ADR-0021).
+#
+# The O11 and ODC modules are updated only from these files, never from a local build: CI installs from the
+# exact tokens pin, and the CSS banner names the tokens version, commit and build date.
+#
+# This is not a release. It is separate from the release-candidate flow (`pre-release.yaml` creates `vX.Y.Z`
+# on an `rcX.Y.Z` branch), and the pre-release flag keeps it out of "Latest". Download URLs never change:
+#   https://github.com/OutSystems/outsystems-ui/releases/download/dev-latest/<file>
+#
+# Commits whose message contains `[skip ci]` do not trigger it (GitHub skips push workflows for them).
+#
+name: Dev build (dev-latest)
+
+on:
+    push:
+        branches: ['dev']
+    workflow_dispatch:
+
+# One publish at a time, in merge order. A newer run waits instead of cancelling the one that is uploading,
+# so the release is never left half-replaced.
+concurrency:
+    group: dev-build
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+
+env:
+    RELEASE_TAG: dev-latest
+    RELEASE_TITLE: Dev build (unreleased)
+
+jobs:
+    build-n-publish:
+        name: Build and publish dev-latest
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            - name: ⬆️ Match the npm the repo pins
+              # Only npm >= 11.17 understands `.npmrc`'s `min-release-age-exclude[]`; see chromatic.yaml.
+              run: npm install -g npm@11.18.0 --ignore-scripts
+
+            - name: 🕸️ Install dependencies
+              # --ignore-scripts as in chromatic.yaml (githubactions:S6505); no install script is needed to build.
+              run: npm install --ignore-scripts
+
+            - name: 🏗️ Build
+              # `prebuild:osui` runs `build:tokens`, which fails if the installed tokens differ from the pin.
+              # Lint already ran on the PR, so the production bundle is all this needs.
+              run: npm run build:osui
+
+            - name: 🗂️ Collect the files
+              id: collect
+              run: |
+                  set -euo pipefail
+                  mkdir -p release-assets
+                  for platform in O11 ODC; do
+                      for ext in css js d.ts; do
+                          cp "dist/${platform}.OutSystemsUI.${ext}" release-assets/
+                      done
+                      # The classic theme is a committed, hand-ported snapshot: copied, not built. Renamed so it
+                      # cannot collide with the new-theme CSS of the same name in the flat list of release files.
+                      cp "classic-theme/${platform}.OutSystemsUI.css" "release-assets/Classic.${platform}.OutSystemsUI.css"
+                  done
+                  ls -l release-assets
+
+                  {
+                      echo "osui-version=$(node -p "require('./package.json').version")"
+                      echo "tokens-version=$(node -p "require('./node_modules/outsystems-design-tokens/package.json').version")"
+                      echo "short-sha=${GITHUB_SHA::9}"
+                      echo "built=$(date -u '+%Y-%m-%d %H:%M UTC')"
+                  } >> "$GITHUB_OUTPUT"
+
+            - name: 📝 Write the release notes
+              env:
+                  OSUI_VERSION: ${{ steps.collect.outputs.osui-version }}
+                  TOKENS_VERSION: ${{ steps.collect.outputs.tokens-version }}
+                  SHORT_SHA: ${{ steps.collect.outputs.short-sha }}
+                  BUILT: ${{ steps.collect.outputs.built }}
+                  REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+              run: |
+                  set -euo pipefail
+                  base="${REPO_URL}/releases/download/${RELEASE_TAG}"
+                  {
+                      echo "> [!WARNING]"
+                      echo "> Unreleased build of the \`dev\` branch, replaced after every merge. Not a release; for released versions use the \`vX.Y.Z\` releases."
+                      echo
+                      echo "| | |"
+                      echo "|---|---|"
+                      echo "| OutSystems UI | ${OSUI_VERSION} (unreleased) |"
+                      echo "| Design tokens | ${TOKENS_VERSION} |"
+                      echo "| Commit | [\`${SHORT_SHA}\`](${REPO_URL}/commit/${GITHUB_SHA}) |"
+                      echo "| Built | ${BUILT} |"
+                      echo
+                      echo "Update the O11 and ODC modules from these files only, never from a local build. The first lines of each CSS file repeat the tokens version, commit and build date."
+                      echo
+                      echo "| File | Contents |"
+                      echo "|---|---|"
+                      for platform in O11 ODC; do
+                          echo "| [${platform}.OutSystemsUI.css](${base}/${platform}.OutSystemsUI.css) | ${platform} styles, new theme |"
+                          echo "| [Classic.${platform}.OutSystemsUI.css](${base}/Classic.${platform}.OutSystemsUI.css) | ${platform} styles, classic theme (\`classic-theme/${platform}.OutSystemsUI.css\`) |"
+                          echo "| [${platform}.OutSystemsUI.js](${base}/${platform}.OutSystemsUI.js) | ${platform} scripts |"
+                          echo "| [${platform}.OutSystemsUI.d.ts](${base}/${platform}.OutSystemsUI.d.ts) | ${platform} type declarations |"
+                      done
+                  } > release-notes.md
+                  cat release-notes.md
+
+            - name: 🧳 Keep the files on the run (manual runs off dev)
+              # A manual run from any other branch builds but must not overwrite dev-latest.
+              if: ${{ github.ref != 'refs/heads/dev' }}
+              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: dev-build-${{ steps.collect.outputs.short-sha }}
+                  path: release-assets/
+                  retention-days: 7
+
+            - name: 🏷️ Move the dev-latest tag to this commit
+              if: ${{ github.ref == 'refs/heads/dev' && github.repository == 'OutSystems/outsystems-ui' }}
+              run: |
+                  set -euo pipefail
+                  git tag --force "${RELEASE_TAG}" "${GITHUB_SHA}"
+                  git push --force origin "refs/tags/${RELEASE_TAG}"
+
+            - name: 🚀 Publish the dev-latest pre-release
+              if: ${{ github.ref == 'refs/heads/dev' && github.repository == 'OutSystems/outsystems-ui' }}
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  set -euo pipefail
+                  if gh release view "${RELEASE_TAG}" > /dev/null 2>&1; then
+                      # Re-asserting --prerelease and --latest=false on every run undoes an accidental
+                      # "Set as latest" made by hand in the UI.
+                      gh release edit "${RELEASE_TAG}" --title "${RELEASE_TITLE}" --notes-file release-notes.md \
+                          --prerelease --latest=false
+                  else
+                      gh release create "${RELEASE_TAG}" --verify-tag --title "${RELEASE_TITLE}" \
+                          --notes-file release-notes.md --prerelease --latest=false
+                  fi
+                  gh release upload "${RELEASE_TAG}" release-assets/* --clobber

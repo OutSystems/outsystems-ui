@@ -33,13 +33,11 @@ export type CssApiCategory = {
 };
 
 export type CssApiManifest = {
-	generatedAt: string;
 	totals: { properties: number; components: number; categories: number };
 	categories: CssApiCategory[];
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-11-03T14:09:32.726Z',
 	totals: {
 		properties: 633,
 		components: 71,

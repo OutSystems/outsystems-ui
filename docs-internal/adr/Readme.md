@@ -42,6 +42,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0018   | Dropdown search focus ring shown only on keyboard interaction                         | Proposed                           | 2026-10-22 |
 | ADR-0019   | Removing redundant `.has-accessible-features` declarations only after a browser check | Proposed                           | 2026-10-23 |
 | ADR-0020   | Removing the `.has-accessible-features` scope from component styles                   | Proposed                           | 2026-10-27 |
+| ADR-0021   | Pinned-tokens builds, the `dev-latest` dev build and the generated-files drift gate   | Accepted                           | 2026-11-05 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the
