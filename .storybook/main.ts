@@ -128,6 +128,10 @@ const config: StorybookConfig = {
 	staticDirs: [
 		// Manager-chrome assets (brand logo referenced by Theme.js) → /assets/*
 		{ from: path.join(__dirname, 'assets'), to: '/assets' },
+		// Favicon set → site root. Storybook's `favicon` preset picks up `favicon.ico` from a
+		// staticDir mapped to `/` (so `/favicon.ico` is ours); the <link> tags that select the
+		// right size per browser live in manager-head.html.
+		{ from: path.join(__dirname, 'favicon'), to: '/' },
 		// OutSystems core platform base CSS (vendored, loaded BEFORE the OUI theme) → /platform/*
 		{ from: path.join(__dirname, 'platform'), to: '/platform' },
 		// Compiled OUI bundle (built by gulp) → served at /osui/*
