@@ -12,9 +12,9 @@ const removeEmptyLines = require('gulp-remove-empty-lines');
 const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
-const fs = require('fs');
-const path = require('path');
-const { Transform } = require('stream');
+const fs = require('node:fs');
+const path = require('node:path');
+const { Transform } = require('node:stream');
 
 const project = require('../ProjectSpecs/DefaultSpecs');
 const distFolder = './dist';
@@ -59,6 +59,8 @@ function readHeadCommit() {
 			.find((line) => line.endsWith(` ${ref}`));
 		return packed === undefined ? '' : packed.split(' ')[0];
 	} catch (e) {
+		// Unreadable or unexpected git layout: the line is provenance only, so it says 'unknown' rather than
+		// failing the build.
 		return '';
 	}
 }

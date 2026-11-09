@@ -54,12 +54,9 @@ jobs:
               # --ignore-scripts as in chromatic.yaml (githubactions:S6505); no install script is needed to build.
               run: npm install --ignore-scripts
 
-            - name: 🏗️ Build
-              # The migration page generator reads dist/, so the gate runs after a production build. Lint runs
-              # in the build job above.
-              run: npm run build:osui
-
             - name: 🔍 Check committed generated files are fresh
-              # Regenerates docs-ai/, the Storybook data, the migration guide tables, PatternTypes.ts and the
-              # SCSS entry files, and fails if any changed. Fix locally: `npm run docs:regen`, then commit.
+              # Runs the production build itself (it rewrites the SCSS entry files, so the gate snapshots them
+              # first), then regenerates docs-ai/, the Storybook data, the migration guide tables and
+              # PatternTypes.ts, and fails if any committed file changed. Lint runs in the build job above.
+              # Fix locally: `npm run docs:regen`, then commit.
               run: npm run docs:check

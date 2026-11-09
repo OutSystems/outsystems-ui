@@ -65,7 +65,7 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 2. `npm run lint` reports zero errors and zero warnings.
 3. Public APIs and public config props carry TSDoc comments (`.claude/rules/typescript.md` §7); the jsdoc lint rules are part of the zero-warnings gate.
 4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
-5. Committed generated files are fresh: `npm run docs:regen` re-run and the result committed whenever a pattern's configs, API, story or SCSS, a skill mapping table or the tokens pin changed. The PR build runs `npm run docs:check` after the build and fails on any stale file (ROU-13182).
+5. Committed generated files are fresh: `npm run docs:regen` re-run and the result committed whenever a pattern's configs, API, story or SCSS, a skill mapping table or the tokens pin changed. The PR build runs `npm run docs:check` and fails on any stale file (ROU-13182).
 
 ## Building and Testing
 
@@ -84,7 +84,7 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 | `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`) |
 | `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
 | `npm run docs:regen`       | Production build, then every generator in dependency order (tokens data, CSS API, migration guide and page, `PatternTypes.ts`, `docs-ai/`) |
-| `npm run docs:check`       | Drift gate the PR build runs after `npm run build`: fails when a committed generated file is stale |
+| `npm run docs:check`       | Drift gate the PR build runs: builds, regenerates, fails when a committed generated file is stale  |
 | `npm run tokens:update`    | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen` |
 | `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
 | `npm run update-version`   | Interactive version bump across project files                         |
@@ -188,7 +188,7 @@ Target `dev`. Three checks gate every PR:
 | `revert`, `perf`, `test`, `refactor`, `fix`, `bugfix`, `patch`, `chore` | Patch version (0.0.X+1) |
 | `ci`, `none`, `docs`, `style`, `skip`                                   | No version change       |
 
-**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. Its second job, **Check generated files are fresh**, builds and runs `npm run docs:check`: it regenerates every committed generated file and fails when one changed, naming the file and the fix (`npm run docs:regen`, then commit). It blocks merges from day one. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
+**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. Its second job, **Check generated files are fresh**, runs `npm run docs:check`: it builds, regenerates every committed generated file and fails when one changed, naming the file and the fix (`npm run docs:regen`, then commit). It blocks merges from day one. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
 
 Fill in the template from `.github/pull_request_template.md`: sample page link, what was happening, what was done, test steps, screenshots (animated GIF preferred), and the checklist — including whether the change requires an accompanying OutSystems module or a new sample page.
 

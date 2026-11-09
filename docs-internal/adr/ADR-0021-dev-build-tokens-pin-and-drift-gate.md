@@ -41,9 +41,9 @@ workflows are vendored copies that are not edited here.
     Key Vault token), **rolling `dev-latest` pre-release**. Chosen: the rolling pre-release.
 -   **Drift gate: warn first vs block from day one.** Blocking chosen; the fix is one command.
 -   **Drift gate: per-script `--check` flags only vs regenerate-and-compare.** Regenerate-and-compare chosen as the
-    gate (covers generators without a check); the existing per-script checks still run first for their precise
-    messages. The SCSS entry files are the exception: the build has already rewritten them before the gate runs, so
-    a before/after snapshot cannot see them drift, and they are compared with the git index instead.
+    gate (covers generators without a check, and the SCSS entry files); the existing per-script checks still run
+    for their precise messages. The gate runs the build itself so it can snapshot before it: the build rewrites the
+    SCSS entry files, and a snapshot taken after it would already hold the repaired files.
 -   **Local git hooks, self-healing bot commits, `postbuild` chaining.** Deferred until data shows they are needed.
 
 ## Decision Outcome
@@ -64,8 +64,8 @@ workflows are vendored copies that are not edited here.
 4. **The O11 and ODC modules are updated only from the `dev-latest` files**, never from a local build. Updating
    them automatically through ModelAPI may be revisited later, especially for ODC.
 5. **Drift gate.** `npm run docs:regen` = `build:osui` + `docs:generate` (every generator in dependency order).
-   `npm run docs:check` runs the per-script checks, then `docs:generate`, and fails when any committed generated
-   file changed. It runs as its own job in `build.yaml` and blocks merges from day one. Generators were made
+   `npm run docs:check` hashes every committed generated file, runs `build:osui`, the per-script checks and
+   `docs:generate`, hashes again, and fails when any file changed or a check failed. It runs as its own job in `build.yaml` and blocks merges from day one. Generators were made
    deterministic for it: the CSS API manifest lost its `generatedAt` timestamp, and `docs-ai/` files end in
    exactly one newline.
 6. **Manual by decision:** bumping the tokens pin (`npm run tokens:update`, now exact-pinned and followed by
