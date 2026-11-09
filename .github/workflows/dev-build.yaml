@@ -18,10 +18,11 @@ on:
         branches: ['dev']
     workflow_dispatch:
 
-# One publish at a time, in merge order. A newer run waits instead of cancelling the one that is uploading,
-# so the release is never left half-replaced.
+# One publish at a time. A newer run waits instead of cancelling the one that is uploading, so the release is
+# never left half-replaced. GitHub keeps one pending run per group and a newer one replaces it, so the group is
+# per ref: a manual run from another branch must not displace the pending build of the newest dev commit.
 concurrency:
-    group: dev-build
+    group: dev-build-${{ github.ref }}
     cancel-in-progress: false
 
 permissions:
