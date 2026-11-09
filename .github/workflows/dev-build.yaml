@@ -128,6 +128,11 @@ jobs:
               if: ${{ github.ref == 'refs/heads/dev' && github.repository == 'OutSystems/outsystems-ui' }}
               run: |
                   set -euo pipefail
+                  current_dev_sha="$(git ls-remote --exit-code origin refs/heads/dev | cut -f1)"
+                  if [ "${current_dev_sha}" != "${GITHUB_SHA}" ]; then
+                      echo "::error::This run no longer targets the current dev commit; refusing to replace dev-latest."
+                      exit 1
+                  fi
                   git tag --force "${RELEASE_TAG}" "${GITHUB_SHA}"
                   git push --force origin "refs/tags/${RELEASE_TAG}"
 
