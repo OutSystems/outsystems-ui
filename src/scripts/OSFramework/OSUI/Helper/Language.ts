@@ -1,17 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Helper {
 	export abstract class Language {
-
 		/**
 		 * Getter that allows to obtain the App Language based on SetLocale Action from platform!
 		 *
 		 * @readonly
-		 * @static
-		 * @type {string}
-		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get Lang(): string {
-
 			if (document.documentElement.lang === undefined) {
 				return Constants.Language.code;
 			} else {
@@ -23,9 +18,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that allows to obtain the App Language with 2 characters only
 		 *
 		 * @readonly
-		 * @static
-		 * @type {string}
-		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get ShortLang(): string {
 			if (document.documentElement.lang === undefined) {

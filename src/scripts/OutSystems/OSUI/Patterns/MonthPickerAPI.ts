@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will change the property of a given MonthPicker Id.
 	 *
-	 * @export
-	 * @param {string} monthPickerId ID of the MonthPicker where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param monthPickerId ID of the MonthPicker where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,8 +26,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function used to Resets the selected month (if any) and clears the input from a Given Id monthpicker
 	 *
-	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 * @param monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Clear(monthPickerId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -45,8 +45,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function used to Close the monthpicker with the Given Id
 	 *
-	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 * @param monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(monthPickerId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -64,15 +64,14 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Create the new MonthPickerItem instance and add it to the monthPickerItemsMap
 	 *
-	 * @export
-	 * @param {string} monthPickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} provider Set which provider should be used to create the monthPicker instance.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 * @param monthPickerId ID of the Pattern that a new instance will be created.
+	 * @param configs Set which provider should be used to create the monthPicker instance.
+	 * @param provider Configurations for the Pattern in JSON format.
+	 * @returns the MonthPicker instance
 	 */
 	export function Create(
 		monthPickerId: string,
-		configs: string,
+		configs: string | Configs,
 		provider: string
 	): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
 		if (_monthPickerItemsMap.has(monthPickerId)) {
@@ -93,8 +92,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will dispose the instance of the given MonthPickerItem Id
 	 *
-	 * @export
-	 * @param {string} monthPickerId
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(monthPickerId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -114,8 +113,7 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will return the Map with all the MonthPicker instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllMonthPickerItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_monthPickerItemsMap);
@@ -124,9 +122,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that gets the instance of MonthPicker, by a given ID.
 	 *
-	 * @export
-	 * @param {string} monthPickerId ID of the MonthPicker that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker;}
+	 * @param monthPickerId ID of the MonthPicker that will be looked for.
+	 * @returns the MonthPicker instance
 	 */
 	export function GetMonthPickerItemById(monthPickerId: string): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -139,9 +136,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 * @param monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @returns the MonthPicker instance
 	 */
 	export function Initialize(monthPickerId: string): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
 		const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
@@ -154,8 +150,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function used to Open the monthpicker with the Given Id
 	 *
-	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 * @param monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(monthPickerId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -173,9 +169,8 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will be triggered everytime there is a render at MonthPicker
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function OnRender(monthPickerId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -193,14 +188,14 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.Callbacks.OSGeneric} callback
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		monthPickerId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -218,10 +213,9 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {MonthPickerProviderConfigs} providerConfigs
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param providerConfigs The provider configuration options as a JSON string or object
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderConfigs(monthPickerId: string, providerConfigs: MonthPickerProviderConfigs): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -239,11 +233,10 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
 		monthPickerId: string,
@@ -269,10 +262,9 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will set a different language to a given MonthPickerId
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {string} isoCode
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param isoCode The ISO language code
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetLanguage(monthPickerId: string, isoCode: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -290,17 +282,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will set the input as editable
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {boolean} IsEditable
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param isEditable Whether the input accepts typed values
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
-	export function SetEditableInput(monthPickerId: string, IsEditable: boolean): string {
+	export function SetEditableInput(monthPickerId: string, isEditable: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.MonthPicker.FailSetEditableInput,
 			callback: () => {
 				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
-				_monthPicker.setEditableInput(IsEditable);
+				_monthPicker.setEditableInput(isEditable);
 			},
 		});
 
@@ -310,10 +301,9 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {string} eventId
-	 * @return {*}  {string}
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param eventId The id of the provider event
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(monthPickerId: string, eventId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -329,8 +319,9 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 
 	/**
 	 * Function that will update the InitialMonth fot a given MonthpickerId
-	 * @param {string} monthPickerId
-	 * @param {string} monthYear The value for the InitialMonth
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param monthYear The value for the InitialMonth
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -347,9 +338,9 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	/**
 	 * Function that will update the prompt message for a given MonthPickerId
 	 *
-	 * @param {string} monthPickerId
-	 * @param {string} promptMessage The value for the prompt message
-	 * @return {*} Response Object as a JSON String
+	 * @param monthPickerId The id of the MonthPicker element
+	 * @param promptMessage The value for the prompt message
+	 * @returns Response Object as a JSON String
 	 */
 	export function UpdatePrompt(monthPickerId: string, promptMessage: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

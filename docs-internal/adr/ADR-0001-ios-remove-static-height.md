@@ -171,8 +171,6 @@ Negative consequences:
 - JIRA: [ROU-12349](https://outsystemsrd.atlassian.net/browse/ROU-12349) (Bug, High, In Progress)
 - Parent epic: [ROU-12922](https://outsystemsrd.atlassian.net/browse/ROU-12922) "OutSystems UI - MABS 13"
 - Cloned by: [ROU-12862](https://outsystemsrd.atlassian.net/browse/ROU-12862) (Mobile UI, out of scope, separate repo)
-- Spec: `specs/ROU-12349-ios-viewport-height/spec.md`
-- Plan: `specs/ROU-12349-ios-viewport-height/plan.md`
 - Confluence: "MABS 13 cordova-ios 8 Ensemble - 2026-06-16 - Plan" (finding #1, cites ROU-12349)
 - CSS reference: dynamic viewport units (`dvh`/`svh`/`lvh`) — MDN "Viewport-percentage lengths"
 

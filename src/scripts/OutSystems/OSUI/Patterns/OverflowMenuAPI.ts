@@ -5,11 +5,10 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will change the property of a given OverflowMenu pattern.
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
-	 * @return {*}  {string}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -27,14 +26,13 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Create the new OverflowMenu instance and add it to the OverflowMenu Map
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param configs The configuration options as a JSON string or object
+	 * @returns the OverflowMenu instance
 	 */
 	export function Create(
 		overflowMenuId: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
 		if (_overflowMenuMap.has(overflowMenuId)) {
 			throw new Error(
@@ -44,7 +42,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 
 		const _overflowMenuItem = new OSFramework.OSUI.Patterns.OverflowMenu.OverflowMenu(
 			overflowMenuId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_overflowMenuMap.set(overflowMenuId, _overflowMenuItem);
@@ -55,8 +53,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will disable the given OverflowMenu
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(overflowMenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -74,8 +72,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will dispose the instance of the given OverflowMenu
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(overflowMenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -95,8 +93,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will enable the given OverflowMenu
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(overflowMenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -114,8 +112,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will return the Map with all the OverflowMenu instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every OverflowMenu instance
 	 */
 	export function GetAllOverflowMenus(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_overflowMenuMap);
@@ -124,9 +121,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that gets the instance of OverflowMenu by a given Id.
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @return {*}  {OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the OverflowMenu instance
 	 */
 	export function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -139,9 +135,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} overflowMenuId ID of the OverflowMenu that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu}
+	 * @param overflowMenuId ID of the OverflowMenu that will be initialized.
+	 * @returns the OverflowMenu instance
 	 */
 	export function Initialize(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
 		const _overflowMenu = GetOverflowMenuById(overflowMenuId);
@@ -154,15 +149,14 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		overflowMenuId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -180,9 +174,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to open this pattern
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @return {*}  {string}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(overflowMenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -200,9 +193,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to close this pattern
 	 *
-	 * @export
-	 * @param {string} overflowMenuId
-	 * @return {*}  {string}
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(overflowMenuId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

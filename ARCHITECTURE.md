@@ -44,17 +44,17 @@ graph TB
 
 Provider libraries are **not bundled**. They are declared as browser globals in `src/scripts/Global.d.ts` (types only) and consumed at runtime via `window.*`; the host OutSystems application is responsible for loading the script. The version each provider is written against is declared in code as `ProviderInfo.Version`; `package.json` devDependencies exist only to supply typings and SCSS sources.
 
-| External Service                | Communication Type          | Purpose                                                                             |
-| ------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
-| OutSystems App Runtime          | Sync (in-process JS calls)  | Creates/configures/disposes patterns; receives callbacks for pattern events          |
-| Browser DOM / Web APIs          | Sync (DOM API)              | Rendering, listeners, `MutationObserver`/`IntersectionObserver`, gestures            |
-| Splide `4.1.3`                  | Sync (JS API on `window`)   | Carousel / Gallery slider provider                                                   |
-| Flatpickr `4.6.13`              | Sync (JS API on `window`)   | DatePicker, MonthPicker and TimePicker provider (incl. full calendar position set)    |
-| noUiSlider `15.8.1`             | Sync (JS API on `window`)   | RangeSlider provider (single and interval modes)                                     |
-| VirtualSelect `1.4.0`           | Sync (JS API on `window`)   | Dropdown provider (search and tags variants)                                         |
-| Floating UI DOM `1.6.5`         | Sync (JS API on `window`)   | Positioning engine behind the Balloon feature (Dropdown, Tooltip, OverflowMenu, …)   |
-| OutSystems Service Studio       | Sync (design-time import)   | Developers consume patterns from the imported component                              |
-| NPM Registry / OutSystems Forge | Async (release publication) | Distribution of versioned bundles (`gulp/Tasks/PrepareToDeployNpm.js`)               |
+| External Service                | Communication Type          | Purpose                                                                            |
+| ------------------------------- | --------------------------- | ---------------------------------------------------------------------------------- |
+| OutSystems App Runtime          | Sync (in-process JS calls)  | Creates/configures/disposes patterns; receives callbacks for pattern events        |
+| Browser DOM / Web APIs          | Sync (DOM API)              | Rendering, listeners, `MutationObserver`/`IntersectionObserver`, gestures          |
+| Splide `4.1.3`                  | Sync (JS API on `window`)   | Carousel / Gallery slider provider                                                 |
+| Flatpickr `4.6.13`              | Sync (JS API on `window`)   | DatePicker, MonthPicker and TimePicker provider (incl. full calendar position set) |
+| noUiSlider `15.8.1`             | Sync (JS API on `window`)   | RangeSlider provider (single and interval modes)                                   |
+| VirtualSelect `1.4.0`           | Sync (JS API on `window`)   | Dropdown provider (search and tags variants)                                       |
+| Floating UI DOM `1.8.0`         | Sync (JS API on `window`)   | Positioning engine behind the Balloon feature (Dropdown, Tooltip, OverflowMenu, …) |
+| OutSystems Service Studio       | Sync (design-time import)   | Developers consume patterns from the imported component                            |
+| NPM Registry / OutSystems Forge | Async (release publication) | Distribution of versioned bundles (`gulp/Tasks/PrepareToDeployNpm.js`)             |
 
 To re-check declared provider versions: `grep -rn "Version = " src/scripts/Providers --include=*.ts`.
 
@@ -66,7 +66,7 @@ The build (Gulp, see `gulp/README.md`) emits one AMD bundle plus one CSS bundle 
 - `dist/ODC.OutSystemsUI.js` / `.css` — OutSystems Developer Cloud
 - `.d.ts` declarations in production mode; `dev.<target>.*` names with sourcemaps in development mode
 
-There is no code splitting and no tree-shaking: the whole framework ships as one file, which keeps consumption in OutSystems apps a single script reference. Bundle content is trimmed at *build* time per platform (see T5), not at runtime. Commands live in [CLAUDE.md](./CLAUDE.md); setup and workflow in [CONTRIBUTING.md](./CONTRIBUTING.md).
+There is no code splitting and no tree-shaking: the whole framework ships as one file, which keeps consumption in OutSystems apps a single script reference. Bundle content is trimmed at _build_ time per platform (see T5), not at runtime. Commands live in [CLAUDE.md](./CLAUDE.md); setup and workflow in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Layering
 

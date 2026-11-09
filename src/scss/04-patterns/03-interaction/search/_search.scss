@@ -1,0 +1,83 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Interaction - Search */
+////
+/// @group Patterns-Search
+/// Patterns - Interaction - Search
+
+///
+.osui-search {
+	position: relative;
+
+	&:empty {
+		// Service Studio Preview
+		-servicestudio-height: 40px;
+	}
+
+	&__input {
+		position: relative;
+
+		&:empty {
+			// Service Studio Preview
+			-servicestudio-background-color: variables.$token-bg-surface-default;
+			-servicestudio-border-radius: 4px;
+			-servicestudio-height: 40px;
+		}
+	}
+
+	.form-control {
+		&[data-input] {
+			padding-inline-start: variables.$token-scale-1000;
+		}
+	}
+}
+
+.form {
+	.osui-search {
+		input[data-input] {
+			margin-block-end: variables.$token-scale-0;
+		}
+	}
+}
+
+// Layout Native ------------------------------------------------------------------
+///
+
+.layout-native {
+	.header {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border: variables.$token-border-size-0;
+					padding-inline-start: variables.$token-scale-1000;
+				}
+			}
+		}
+	}
+
+	.header-content {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border-radius: variables.$token-border-radius-0;
+				}
+			}
+		}
+	}
+}
+
+// Hide Search on page transitions
+.slide-from-left-enter .layout-native .header-right .osui-search__input,
+.slide-from-left-leave .layout-native .header-right .osui-search__input,
+.slide-from-right-enter .layout-native .header-right .osui-search__input,
+.slide-from-right-leave .layout-native .header-right .osui-search__input,
+.slide-from-top-enter .layout-native .header-right .osui-search__input,
+.slide-from-top-leave .layout-native .header-right .osui-search__input,
+.slide-from-bottom-enter .layout-native .header-right .osui-search__input,
+.slide-from-bottom-leave .layout-native .header-right .osui-search__input,
+.fade-enter .header-right .layout-native .osui-search__input,
+.fade-leave .header-right .layout-native .osui-search__input {
+	display: none;
+}

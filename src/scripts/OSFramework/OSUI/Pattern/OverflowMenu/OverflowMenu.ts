@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	/**
 	 * Class for the OverflowMenu Pattern
-	 *
-	 * @export
-	 * @class OverflowMenu
-	 * @extends {AbstractPattern<OverflowMenuConfig>}
-	 * @implements {IOverflowMenu}
 	 */
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		// Store the aria-label text used on the Trigger Element
@@ -115,7 +110,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Method that removes the event listeners
 		 *
 		 * @protected
-		 * @memberof OverflowMenu
 		 */
 		protected removeEventListeners(): void {
 			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
@@ -131,7 +125,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setA11YProperties(): void {
 			if (this.isBuilt === false) {
@@ -151,7 +144,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Set the callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setCallbacks(): void {
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
@@ -163,7 +155,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Method to set the event listeners
 		 *
 		 * @protected
-		 * @memberof OverflowMenu
 		 */
 		protected setEventListeners(): void {
 			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
@@ -179,7 +170,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setHtmlElements(): void {
 			this._triggerElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Trigger);
@@ -190,7 +180,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Method to unset the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetCallbacks(): void {
 			this._eventBalloonOnToggle = undefined;
@@ -201,7 +190,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetHtmlElements(): void {
 			this._balloonElem = undefined;
@@ -211,8 +199,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to build the OverflowMenu
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public build(): void {
 			super.build();
@@ -228,9 +214,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OverflowMenu
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -250,8 +235,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to close the Pattern
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public close(): void {
 			if (this._balloonFeature.isOpen) {
@@ -261,8 +244,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to disable the pattern
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public disable(): void {
 			this._isDisabled = true;
@@ -276,8 +257,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to destroy the Pattern
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public dispose(): void {
 			this._balloonFeature?.dispose();
@@ -289,8 +268,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to enable the pattern
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public enable(): void {
 			this._isDisabled = false;
@@ -299,8 +276,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		/**
 		 * Method to open the Pattern
-		 *
-		 * @memberof OverflowMenu
 		 */
 		public open(
 			isOpenedByApi: boolean,
@@ -315,9 +290,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Register the callbacks for the Pattern
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -337,8 +311,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Method to set the Balloon Feature options
 		 *
-		 * @param {Feature.Balloon.BalloonOptions} [balloonOptions]
-		 * @memberof OverflowMenu
+		 * @param [balloonOptions] Options of the balloon that renders the floating content
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
 			if (balloonOptions !== undefined) {
@@ -368,8 +341,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Method to set the aria-label text for the Trigger element
 		 *
-		 * @param {string} ariaLabelText
-		 * @memberof OverflowMenu
+		 * @param ariaLabelText Text set as the trigger aria-label
 		 */
 		public setTriggerAriaLabel(ariaLabelText: string): void {
 			if (ariaLabelText !== Constants.EmptyString) {

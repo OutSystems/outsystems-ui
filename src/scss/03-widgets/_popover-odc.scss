@@ -12,6 +12,9 @@
 ///
 .is-rtl {
 	[data-popover] > .popover-bottom.align-center {
+		// The base `margin-left: -50%` + `translateX(-50%)` pair lives in the PLATFORM
+		// stylesheet, not in OSUI, so it never became logical. Both halves of the mirror
+		// have to stay physical here.
 		margin-left: initial;
 		margin-right: -50%;
 		transform: translateX(50%);

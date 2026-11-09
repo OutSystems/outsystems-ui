@@ -32,16 +32,7 @@
         "@sealed",
         "@see",
         "@throws",
-        "@virtual",
-        "@memberof",
-        "@export",
-        "@static",
-        "@todo",
-        "@return",
-        "@extends",
-        "@template",
-        "@type",
-        "@implements"
+        "@virtual"
     ],
     "umlClassDiagram": {
         "type": "detailed",

@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 ////
 /// @group ServiceStudio_Preview
 /* 
@@ -17,7 +19,7 @@ body > .app-menu-content {
 
 	& .app-menu-links {
 		-servicestudio-align-items: flex-start;
-		-servicestudio-padding: var(--space-none);
+		-servicestudio-padding: variables.$token-scale-0;
 		-servicestudio-width: 100% !important;
 	}
 }
@@ -26,18 +28,25 @@ body > .app-menu-content {
 .phone {
 	.app-menu-links {
 		a {
-			-servicestudio-margin-left: var(--space-none);
-			-servicestudio-padding: var(--space-s) var(--space-m);
+			-servicestudio-margin-left: variables.$token-scale-0;
+			-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-600;
 			-servicestudio-width: 100%;
 		}
 	}
+}
+
+// The application name comes from the platform's ApplicationTitle block. Only
+// layout-side has room for it in the header, so hide it at design time for every
+// other layout. Runtime counterpart: the .desktop rule in 02-layout/_header.scss.
+.layout:not(.layout-side) .header-content > [data-block*='ApplicationTitle'] .application-name {
+	-servicestudio-display: none !important;
 }
 
 // ServiceStudio Hybrid
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: variables.$token-bg-surface-default;
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
@@ -47,20 +56,10 @@ html[data-uieditorversion^='1'] {
 
 		.app-menu {
 			&-content {
-				-servicestudio-align-items: flex-start;
 				-servicestudio-height: 100% !important;
 				-servicestudio-left: 0;
 				-servicestudio-position: relative;
 				-servicestudio-width: 100% !important;
-
-				& > * {
-					-servicestudio-align-items: flex-start;
-					-servicestudio-display: flex;
-				}
-
-				.app-login-info {
-					-servicestudio-display: flex;
-				}
 			}
 
 			&-links {
@@ -72,6 +71,41 @@ html[data-uieditorversion^='1'] {
 				& {
 					pointer-events: none !important;
 				}
+			}
+		}
+
+		// The drawer menu lays its children out as flex rows. The side layout's menu is
+		// the aside's own column (02-layout/_menu-layout-side.scss), where flex-start
+		// would shrink every child to its content instead of letting it span the menu,
+		// so it is excluded — same :not idiom as
+		// .desktop .layout:not(.layout-side) .app-menu-links in 02-layout/_menu-app-menu-links.scss.
+		// The first selector is the Menu block previewed on its own, outside any layout.
+		& > .app-menu-content,
+		.layout:not(.layout-side) .app-menu-content {
+			-servicestudio-align-items: flex-start;
+
+			& > * {
+				-servicestudio-align-items: flex-start;
+				-servicestudio-display: flex;
+			}
+
+			.app-login-info {
+				-servicestudio-display: flex;
+			}
+		}
+
+		// Side layout: the logo and the login info carry no width of their own
+		// (.app-menu-links does, from 02-layout/_menu-app-menu-links.scss), so pin them
+		// to the menu width for the logo's height and the login info's border-block-start
+		// to show.
+		&:not(.phone):not(.tablet) .layout-side .app-menu-content {
+			.header-logo {
+				-servicestudio-width: 100%;
+			}
+
+			.app-login-info {
+				-servicestudio-display: flex;
+				-servicestudio-width: 100%;
 			}
 		}
 	}
@@ -136,7 +170,7 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.phone {
-		.table:not(.table-responsive) {
+		.table {
 			display: block;
 		}
 
@@ -147,21 +181,15 @@ html[data-uieditorversion^='1'] {
 				td {
 					-servicestudio-min-width: 10vw;
 				}
+			}
 
-				&:not(.table-no-responsive) {
-					th {
-						-servicestudio-display: none;
-					}
+			
+			thead {
+				& > tr:not(:empty):before {
+					-servicestudio-display: none;
 				}
 			}
 
-			.table-no-responsive {
-				thead {
-					& > tr:not(:empty):before {
-						-servicestudio-display: none;
-					}
-				}
-			}
 		}
 	}
 
@@ -174,20 +202,14 @@ html[data-uieditorversion^='1'] {
 				& > tr {
 					-servicestudio-position: relative;
 				}
-			}
 
-			table.table > thead > tr {
-				display: none;
-
-				&:empty {
-					display: block;
-				}
-			}
-
-			.table-no-responsive {
-				thead {
+				& {
 					-servicestudio-display: table-header-group !important;
 				}
+			}
+
+			table.table > thead > tr:empty {
+				display: block;
 			}
 		}
 	}

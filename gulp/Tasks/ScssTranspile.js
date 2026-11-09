@@ -1,6 +1,10 @@
 const gulp = require('gulp');
 
-const autoprefixer = require('gulp-autoprefixer');
+// gulp-autoprefixer 9+ is ESM-only, so require() hands back the module namespace and the callable sits on
+// `.default`. Reading it with a fallback keeps this working on the CommonJS majors (8 and below) too.
+// The other ESM plugins below (postcss-discard-comments/-duplicates 9+) already unwrap to a function.
+const autoprefixerModule = require('gulp-autoprefixer');
+const autoprefixer = autoprefixerModule.default ?? autoprefixerModule;
 const postcss = require('gulp-postcss');
 const postcssdc = require('postcss-discard-comments');
 const postcssdd = require('postcss-discard-duplicates');
@@ -21,12 +25,12 @@ function checkForScssThemeToBeCompiled() {
     }
 
     if(process.env.npm_config_target !== undefined) {
-        if(project.globalConsts.platformTarget[process.env.npm_config_target] === undefined) {
+        if(project.globalConsts.scssPlatformTarget[process.env.npm_config_target] === undefined) {
             result.hasError = true;
-            result.errorMessage = `Given platform '${process.env.npm_config_target}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platformTarget).join("\n • ")}`
+            result.errorMessage = `Given platform '${process.env.npm_config_target}' does not have an SCSS bundle. Platforms available for SCSS:\n • ${Object.keys(project.globalConsts.scssPlatformTarget).join("\n • ")}`
             console.log(`\n⛔️ ERROR: ${result.errorMessage}\n`);
         } else {
-            watchScssThemes = `src/scss/${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.scss`;
+            watchScssThemes = `src/scss/${project.globalConsts.scssPlatformTarget[process.env.npm_config_target]}.OutSystemsUI.scss`;
         }
     }
 

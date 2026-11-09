@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Submenu",
     "inDevelopment": false,
     "name": "Submenu",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Submenu/scss/submenu",
+    "scss": "../scss/04-patterns/04-navigation/submenu/submenu",
     "section": "Navigation"
 };
 

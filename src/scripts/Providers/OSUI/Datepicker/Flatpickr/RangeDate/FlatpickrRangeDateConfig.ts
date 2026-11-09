@@ -4,15 +4,11 @@
 namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 	/**
 	 * Class that represents the custom configurations received by the Datepicker RangeDate mode.
-	 *
-	 * @export
-	 * @class FlatpickrRangeDateConfig
-	 * @extends {AbstractFlatpickrConfig}
 	 */
 	export class FlatpickrRangeDateConfig extends AbstractFlatpickrConfig {
-		// Set the property EndDate
+		/** Set the property EndDate */
 		public InitialEndDate: string;
-		// Set the property StartDate
+		/** Set the property StartDate */
 		public InitialStartDate: string;
 
 		constructor(config: JSON) {
@@ -48,7 +44,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * Method used to set all the config properties for the RangeDate mode type
 		 *
 		 * @returns [FlatpickrOptions]
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.FlatpickrRangeDateConfig
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrRangeDateOpts = {

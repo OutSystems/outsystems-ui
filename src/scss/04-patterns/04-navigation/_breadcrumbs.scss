@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Breadcrumbs */
 ////
 /// @group Patterns-Breadcrumbs
@@ -5,6 +7,11 @@
 
 ///
 .breadcrumbs {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-breadcrumbs-item-color: var(--color-text-subtlest);
+	--osui-breadcrumbs-separator-color: var(--color-text);
+	// ───────────────────────────────────────────────────────────────────
+
 	&-content {
 		align-items: center;
 		display: flex;
@@ -12,16 +19,57 @@
 
 	&-item {
 		align-items: center;
-		color: get-text-color('neutral-8');
+		color: var(--osui-breadcrumbs-item-color);
 		display: inline-flex;
+		font-size: variables.$token-font-size-350;
+		font-weight: variables.$token-font-weight-regular;
+		line-height: 1;
 
-		.icon {
-			color: get-text-color('neutral-7');
+		a,
+		a[data-link] {
+			align-items: center;
+			color: var(--osui-breadcrumbs-item-color);
 			display: inline-flex;
-			font-size: var(--font-size-xs);
+			line-height: 1;
+			text-decoration: none;
+			transition: color variables.$token-transition-time-100 variables.$token-transition-curve-base;
+
+			&:hover {
+				color: var(--color-text);
+				text-decoration: none;
+			}
+
+			.icon {
+				font-size: variables.$token-font-size-400;
+			}
+		}
+
+		> div > .icon {
+			align-items: center;
+			color: var(--osui-breadcrumbs-separator-color);
+			display: inline-flex;
+			font-size: variables.$token-font-size-300;
 			justify-content: center;
-			margin: var(--space-none) var(--space-s);
+			line-height: 1;
+			margin-block: variables.$token-scale-0;
+			margin-inline: variables.$token-scale-200;
 			width: auto;
+
+			i {
+				display: inline-block;
+				line-height: 1;
+			}
 		}
 	}
+
+	&-content > &-item:last-child,
+	&-content > *:last-child > &-item {
+		color: var(--color-text);
+		font-weight: variables.$token-font-weight-semi-bold;
+	}
+}
+
+///
+.is-rtl .breadcrumbs-item > div > .icon {
+	transform: scaleX(-1);
 }

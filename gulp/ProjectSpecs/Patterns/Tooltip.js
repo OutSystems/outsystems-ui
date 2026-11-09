@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Tooltip",
     "inDevelopment": false,
     "name": "Tooltip",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Tooltip/scss/tooltip",
+    "scss": "../scss/04-patterns/03-interaction/tooltip/tooltip",
     "section": "Content"
 };
 

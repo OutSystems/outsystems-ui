@@ -18,12 +18,12 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Method that will set the ApiResponse structure
-	 * - callback: the logic to run and ensure there is no error on it, otherwise, catch that error message
-	 * - errorCode: the error code to show when the given callback didn't perform
-	 * - hasValue: if the callback code will return a value
 	 *
 	 * @param APIHandler { callback, errorCode, hasValue = false }
-	 * @returns
+	 * @param APIHandler.callback the logic to run and ensure there is no error on it, otherwise, catch that error message
+	 * @param APIHandler.errorCode the error code to show when the given callback didn't perform
+	 * @param APIHandler.hasValue if the callback code will return a value
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function CreateApiResponse({ callback, errorCode, hasValue = false }: APIHandler): string {
 		// Create the response object, by default as a Success one

@@ -1,0 +1,110 @@
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
+
+/* Page Layout - Page Gutters */
+////
+/// @group Layout-PageGutters
+/// Page Layout - Page Gutters
+///
+/// Page gutters and content cap, both platforms. Replaces the ThemeGrid_Container rules;
+/// see docs-internal/themegrid-inventory.md
+
+.layout {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-layout-max-width: #{$layout-max-width};
+	--osui-layout-gutter: #{variables.$token-scale-1000};
+
+	// Inline sides stay physical: they add --os-safe-area-*, a physical env() (scss rules §15).
+	--osui-layout-header-padding-right: calc(var(--os-safe-area-right) + var(--osui-layout-gutter));
+	--osui-layout-header-padding-left: calc(var(--os-safe-area-left) + var(--osui-layout-gutter));
+
+	--osui-layout-content-padding-block-start: var(--osui-layout-gutter);
+	--osui-layout-content-padding-block-end: var(--osui-layout-gutter);
+	--osui-layout-content-padding-right: calc(var(--os-safe-area-right) + var(--osui-layout-gutter));
+	--osui-layout-content-padding-left: calc(var(--os-safe-area-left) + var(--osui-layout-gutter));
+
+	--osui-layout-footer-padding-block: #{variables.$token-scale-400};
+	--osui-layout-footer-padding-right: calc(var(--os-safe-area-right) + var(--osui-layout-gutter));
+	--osui-layout-footer-padding-left: calc(var(--os-safe-area-left) + var(--osui-layout-gutter));
+	// ───────────────────────────────────────────────────────────────────
+}
+
+// Content cap. margin-block 0 on purpose: .main-content is a flex item in a column flex container.
+///
+.layout .header-top,
+.layout .main-content,
+.layout .footer {
+	margin-block: variables.$token-scale-0;
+	margin-inline: auto;
+	max-width: var(--osui-layout-max-width);
+	width: 100%;
+}
+
+// Native header owns its padding in _header-layout-native.scss.
+///
+.layout:not(.layout-native) .header-top {
+	padding-block: variables.$token-scale-0;
+	padding-right: var(--osui-layout-header-padding-right);
+	padding-left: var(--osui-layout-header-padding-left);
+}
+
+///
+.layout .main-content {
+	padding-block-start: var(--osui-layout-content-padding-block-start);
+	padding-block-end: var(--osui-layout-content-padding-block-end);
+	padding-right: var(--osui-layout-content-padding-right);
+	padding-left: var(--osui-layout-content-padding-left);
+}
+
+///
+.layout .footer {
+	padding-block: var(--osui-layout-footer-padding-block);
+	padding-right: var(--osui-layout-footer-padding-right);
+	padding-left: var(--osui-layout-footer-padding-left);
+}
+
+// LayoutBaseSection wrapper, matched by position (.section-content belongs to the Section pattern).
+///
+.full-width-section > div:not(.section-background) {
+	margin-inline: auto;
+	max-width: var(--osui-layout-max-width);
+	padding-block: variables.$token-scale-0;
+	padding-inline: variables.$token-scale-1000;
+	width: 100%;
+}
+
+///
+.content-top-title,
+.content-top-actions {
+	& > div {
+		width: 100%;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+
+///
+.tablet .layout,
+.phone .layout {
+	--osui-layout-gutter: #{variables.$token-scale-400};
+}
+
+// Layout --------------------------------------------------------------------
+
+// Side menu layouts are full width.
+///
+.layout.layout-side {
+	--osui-layout-max-width: none;
+}
+
+// Native: no content or footer padding. Compound selector so it out-ranks the breakpoint blocks.
+///
+.layout.layout-native {
+	--osui-layout-content-padding-block-start: #{variables.$token-scale-0};
+	--osui-layout-content-padding-block-end: #{variables.$token-scale-0};
+	--osui-layout-content-padding-right: #{variables.$token-scale-0};
+	--osui-layout-content-padding-left: #{variables.$token-scale-0};
+	--osui-layout-footer-padding-block: #{variables.$token-scale-0};
+	--osui-layout-footer-padding-right: #{variables.$token-scale-0};
+	--osui-layout-footer-padding-left: #{variables.$token-scale-0};
+}

@@ -8,10 +8,20 @@
 	word-break: break-word;
 }
 
+/* The physical `align` attribute has always mirrored in RTL; `start`/`end` keeps that
+   behaviour without an .is-rtl duplicate. */
+[align='left'] {
+	text-align: start;
+}
+
+[align='right'] {
+	text-align: end;
+}
+
 ///
 .text-align {
 	&-left {
-		text-align: left;
+		text-align: start;
 	}
 
 	&-center {
@@ -19,24 +29,11 @@
 	}
 
 	&-right {
-		text-align: right;
+		text-align: end;
 	}
 }
 
 ///
 .white-space-nowrap {
 	white-space: nowrap;
-}
-
-// IsRTL -------------------------------------------------------------------------
-.is-rtl {
-	[align='right'],
-	.text-align-right {
-		text-align: left;
-	}
-
-	[align='left'],
-	.text-align-left {
-		text-align: right;
-	}
 }

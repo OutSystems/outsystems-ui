@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Utilities - Separator */
 ////
 /// @group Patterns-Separator
@@ -5,12 +7,16 @@
 
 ///
 .separator {
-	background-color: get-background-color('primary');
+	// No component CSS API for the colour: the low-code Separator block exposes a `Color`
+	// input parameter that emits a `background-*` utility class, and 05-useful is imported
+	// after 04-patterns, so the low-code value always wins. This is only the fallback for
+	// when no Color is passed.
+	background-color: variables.$token-border-default;
 
 	&-vertical {
 		display: inline-block;
 		height: 100%;
-		min-height: 20px;
+		min-height: variables.$token-scale-500;
 		min-width: 1px;
 		width: 1px;
 	}

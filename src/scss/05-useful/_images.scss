@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - Images */
 ////
 /// @group UsefullClasses-Image
@@ -17,13 +19,13 @@ img {
 		}
 
 		&-circle {
-			border-radius: var(--border-radius-circle);
+			border-radius: 50%;
 		}
 	}
 
 	&.thumbnail {
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-4');
-		padding: var(--space-xs);
+		background-color: variables.$token-bg-surface-default;
+		border: variables.$token-border-size-025 solid var(--color-border);
+		padding: variables.$token-scale-100;
 	}
 }

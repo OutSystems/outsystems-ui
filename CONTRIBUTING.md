@@ -61,8 +61,9 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 
 1. `npm run build` succeeds (production build for all targets, then `lintfix` + `lint`).
 2. `npm run lint` reports zero errors and zero warnings.
-3. Public APIs carry JSDoc comments.
+3. Public APIs and public config props carry TSDoc comments (`.claude/rules/typescript.md` §7); the jsdoc lint rules are part of the zero-warnings gate.
 4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
+5. `npm run docs:ai:types && npm run docs:ai` re-run and the result committed whenever a pattern's configs, API, story or SCSS changed; `npm run docs:ai:test` passes.
 
 ## Building and Testing
 
@@ -74,7 +75,12 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 | `npm run lint`             | ESLint over all `.ts` files                                          |
 | `npm run lintfix`          | ESLint with `--fix`                                                  |
 | `npm run prettier`         | Format all `js`, `ts`, and `css` files                               |
-| `npm run docs`             | Generate TypeDoc output into `docs/`                                 |
+| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root) |
+| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source  |
+| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                          |
+| `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`) |
+| `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`) |
+| `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
 | `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
 | `npm run update-version`   | Interactive version bump across project files                         |
 
@@ -84,9 +90,38 @@ There is no unit test suite in this repository (`run-vitest` is disabled in the 
 
 `pipelines/pr-pipeline.yaml` (Azure DevOps) drives those tests for a PR: it diffs against `origin/dev`, derives Cucumber tags from the changed pattern folders under `src/scripts/OSFramework/OSUI/Pattern`, `src/scripts/OutSystems/OSUI/Patterns`, `src/scripts/Providers/OSUI`, and `src/scss/04-patterns`, then runs the matching functional tests on Chrome and Safari against the PR source branch. Consequence: if a change touches files outside those paths, no E2E tests run — verify manually. Run and debug the suites from the tests repository; see the internal [UI End2End Testing](https://outsystemsrd.atlassian.net/wiki/spaces/EP/pages/1316586046/UI+End2End+Testing) documentation for setup.
 
+## Storybook and Visual Testing (Chromatic)
+
+The repo ships a Storybook that drives the **compiled** library bundle — each story renders a pattern's HTML skeleton and calls its public `Create(id, configs)` API, exactly as OutSystems Service Studio does at runtime.
+
+```bash
+npm run build            # prerequisite: Storybook serves the compiled dist/ bundle
+npm run storybook        # dev server on http://localhost:6006
+npm run build-storybook  # static build (what CI publishes to Chromatic)
+```
+
+### Story group: platform Widgets
+
+The `Widgets/` story group covers controls that are **not** part of this library — the platform's React widgets from `@outsystems/runtime-widgets-js`. This repo does **not** depend on those packages: every widget story is a static transcription of the DOM the real widget emits, captured from `@outsystems/runtime-widgets-js@6.25.4` under React 17 and recorded with its provenance in each story's doc comment. See `docs-internal/adr/ADR-0009` for the capture method and the refresh trigger.
+
+`/platform/platform-core.css` — the platform base layer that gives the data-attribute controls (`[data-checkbox]`, `[data-switch]`, `[data-upload]`, …) their structural pseudo-elements — is a tracked, Storybook-only copy at `.storybook/platform/platform-core.css`. It is not part of the library build and nothing in `dist/` reads it.
+
+The upshot: `git clone && npm i && npm run build && npm run build-storybook` produces the **complete** Storybook for anyone — no internal package feed, no Azure login, no scope mapping in `~/.npmrc`. External clones, fork PRs and CI all render the identical story set.
+
+If a widget's platform DOM changes, re-capture rather than hand-editing: the stories are meant to stay faithful to the package, not to be tuned until they look right.
+
+### Chromatic CI
+
+`.github/workflows/chromatic.yaml` publishes the Storybook to [Chromatic](https://www.chromatic.com/) on every PR into (and merge to) the long-living branches. PRs get a visual diff against the base-branch baseline plus a PR comment with the build/preview links; merges auto-accept the new baseline.
+
+The job needs no internal infrastructure — the only secret involved is the Chromatic token, and the Chromatic step is skipped (never failed) when it is absent, so fork PRs stay neutral while still proving the public build works. To run Chromatic against your own fork, create a free Chromatic project and run `npx chromatic --project-token=<your-token>` (see `npm run chromatic`).
+
+**TurboSnap is deliberately OFF.** Every build snapshots every story. Storybook here loads the **compiled** bundle from `dist/` through `<script>`/`<link>` tags rather than importing it, so nothing under `src/` is in Storybook's module graph — and TurboSnap silently ignores a changed file it cannot trace, which would make a SCSS-only PR (nearly every PR in the theme migration) snapshot nothing and still report green. An `externals` list was tried as a fix and was not enough: it only classifies files already in the changed-file list, and that list itself came back empty against this branch's squash-merged history. A `🛡️ Verify Chromatic actually captured snapshots` step now fails the build whenever the visual surface changed but zero snapshots were taken. **Do not re-enable `onlyChanged` without reading `docs-internal/adr/ADR-0008`** — and note `externals` is only accepted alongside `onlyChanged: true`, so the two must be added or removed together.
+
 ## Code Standards
 
-There is no `.claude/rules/` directory in this repository; standards are enforced by the config files below.
+Standards are enforced by the config files below. `.claude/rules/typescript.md` and `.claude/rules/scss.md`
+restate them as evergreen guidance for AI-assisted work — keep the two in sync when a config changes.
 
 ### TypeScript (`.eslintrc.json`)
 
@@ -114,9 +149,15 @@ Tabs with width 4, print width 120, single quotes, semicolons, ES5 trailing comm
 
 Properties in alphabetical order, declaration order `dollar-variables → at-rules → declarations → rules → custom-properties`, max line length 170.
 
+Styling also has an architecture, not just a formatter: read [CSS-ARCHITECTURE.md](./CSS-ARCHITECTURE.md) for the
+`--token-*` / `$token-*` design-token layer, the `--osui-{component}-{property}` component CSS API, the theme
+invariant, and the logical box model. `src/scss/O11.OutSystemsUI.scss` and `ODC.OutSystemsUI.scss` are generated
+on every build — register new partials in `gulp/ProjectSpecs/ScssStructure/*.js` instead of editing them.
+
 ### Documentation
 
-- JSDoc with `@param` and `@returns` on every public API. The Document This extension (`/**` above a declaration) generates the scaffold.
+- TSDoc on every public API and public config prop: a description, `@param name text` per argument and `@returns text` when a value is returned; types stay in the signature (no `{type}` braces, no `@export` / `@memberof`). The docs generator reads these comments (`.claude/rules/typescript.md` §7).
+- Agent documentation (`docs-ai/`) and the generated pattern types are regenerated, never edited: `npm run docs:ai:types && npm run docs:ai`, then commit the result. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/docs-ai-generator/snapshot/local/` and run `npm run docs:ai:blocks` (see `scripts/docs-ai-generator/README.md`).
 - Significant design decisions are recorded as ADRs in `docs-internal/adr/` — copy `ADR-0000-Title-of-ADR.md`, number it sequentially, and update the ADR log table in `docs-internal/adr/Readme.md`.
 
 ## Pull Request Process

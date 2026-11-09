@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="280" viewBox="0 0 480 280" role="img" aria-label="Cedar Valley placeholder image">
+	<defs>
+		<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#ffe8cc"/>
+			<stop offset="1" stop-color="#fff4e6"/>
+		</linearGradient>
+	</defs>
+	<rect width="480" height="280" fill="url(#sky)"/>
+	<circle cx="372" cy="72" r="34" fill="#ffc078"/>
+	<path d="M0 206 L110 118 L196 186 L272 132 L360 206 L480 162 V280 H0 Z" fill="#94d82d" opacity="0.85"/>
+	<path d="M0 246 L92 186 L212 238 L324 194 L480 232 V280 H0 Z" fill="#5c940d"/>
+</svg>

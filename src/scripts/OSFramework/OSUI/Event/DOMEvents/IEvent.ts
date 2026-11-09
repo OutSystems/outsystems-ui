@@ -2,15 +2,11 @@
 namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
 	 * This interface is the base to all events. All events need to implement it.
-	 *
-	 * @export
-	 * @interface IEvent
-	 * @template D this will the type of Data to be passed, by default to the handlers.
 	 */
 	export interface IEvent<D> {
 		handlers: GlobalCallbacks.OSGeneric[];
 		addEvent(): void;
-		addHandler(handler: GlobalCallbacks.OSGeneric, ...args): void;
+		addHandler(handler: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
 		hasHandler(handler: GlobalCallbacks.OSGeneric): boolean;
 		hasHandlers(): boolean;
 		removeEvent(): void;

@@ -1,0 +1,157 @@
+/* Component Library docs page — full pattern index.
+   Browser chrome is shared via `.osui-component-library` in welcome.scss. */
+
+.sbdocs-wrapper:has(.osui-component-library) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-component-library) .sbdocs-content {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-component-library) .sbdocs {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-component-library) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-component-library) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-component-library {
+  padding-bottom: 64px;
+}
+
+.osui-component-library .cl-head {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 36px 44px;
+  border-bottom: 1px solid var(--w-n-300);
+  margin-bottom: 52px;
+}
+
+.osui-component-library .cl-head::before {
+  content: "";
+  position: absolute;
+  inset: -70% -10% auto -10%;
+  height: 460px;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%),
+    radial-gradient(38% 40% at 52% 66%, rgba(150, 8, 44, 0.09), transparent 70%);
+  filter: blur(6px);
+}
+
+.osui-component-library .cl-head-in {
+  position: relative;
+}
+
+.osui-component-library .cl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: var(--w-r-full);
+  background: var(--w-primary-100);
+  color: var(--w-primary-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+.sbdocs-wrapper .osui-component-library .cl-head h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--w-ink) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.osui-component-library .cl-head h1 em {
+  font-style: normal;
+  background: linear-gradient(96deg, var(--w-brand-b), var(--w-brand-a));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.osui-component-library .cl-lede {
+  font-size: 15px !important;
+  color: var(--w-ink-3) !important;
+  margin: 0 !important;
+  line-height: 1.55 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+/* Page head already covers the catalogue intro */
+.osui-component-library .osui-pattern-browser .sec-head {
+  display: none;
+}
+
+.osui-component-library .osui-pattern-browser.sec {
+  padding-top: 0;
+}
+
+/* Unboxed catalogue — flush search, chips, and grid (Welcome keeps the card chrome) */
+.osui-component-library .browser {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
+}
+
+.osui-component-library .browser-top {
+  padding: 0 0 16px;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.osui-component-library .cats {
+  padding: 0 0 20px;
+  border-bottom: 0;
+}
+
+.osui-component-library .pat-grid {
+  gap: 12px;
+  background: transparent;
+  border: 0;
+}
+
+.osui-component-library .pat {
+  padding: 16px 18px;
+  border: 0;
+  border-radius: var(--w-r-300);
+  background: var(--w-n-100);
+}
+
+.osui-component-library .browser-foot {
+  padding: 16px 0 0;
+  border-top: 0;
+  background: transparent;
+}
+
+.sbdocs-wrapper .osui-component-library .osui-pattern-browser h2 {
+  font-size: 29px !important;
+}
+
+@media (max-width: 1080px) {
+  .osui-component-library .pat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sbdocs-wrapper .osui-component-library .cl-head h1 {
+    font-size: 28px !important;
+  }
+}

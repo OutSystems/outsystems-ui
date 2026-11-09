@@ -114,8 +114,21 @@ new-version-artf.txt
 # Distribution files folder
 dist/**
 
-# Local tool configuration
+# Generated design tokens (built by outsystems-design-tokens before each build)
+src/scss/tokens/
+
+# Per-developer Claude Code permission grants (local only)
 .claude/settings.local.json
+
+# Storybook build output
+storybook-static/
+
 
 # Generated TypeDoc output
 docs/
+
+# Local implementation plans and drafts (never committed)
+specs/
+
+# A local OutSystemsUI.oml to export the block snapshot from (npm run docs:ai:blocks reads it first)
+scripts/docs-ai-generator/snapshot/local/

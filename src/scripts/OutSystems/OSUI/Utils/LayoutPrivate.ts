@@ -11,8 +11,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
 	 * Function used to Fix Inputs for iOS devices
 	 *
-	 * @export
-	 *
 	 * ToDo:
 	 * 	- Check this function since this method is used at LayoutReady and LayoutReadyMobile but both of this
 	 * client actions are not in use by us!
@@ -68,7 +66,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
 	 * Function used to set HideHeader on Scroll
 	 *
-	 * @param HideHeader
+	 * @param HideHeader True to hide the header
 	 */
 	export function HideHeader(HideHeader: boolean): void {
 		if (HideHeader) {
@@ -84,26 +82,9 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	}
 
 	/**
-	 * Function used to set the RTL observer
-	 *
-	 * @param callback
-	 * @returns
-	 */
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
-		console.warn(
-			`This method is deprecated. Use instead the API OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler`
-		);
-		OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
-			OSFramework.OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL,
-			callback
-		);
-	}
-
-	/**
 	 * Function used to Set and Update the Device Classes and CSS inline variables to body
 	 *
-	 * @param IsWebApp
+	 * @param IsWebApp True when the application is a web app
 	 *
 	 */
 	export function SetDeviceClass(IsWebApp: boolean): void {

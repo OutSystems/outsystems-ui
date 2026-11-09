@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 	/**
 	 * Class that implements the AnimatedLabel pattern.
-	 *
-	 * @export
-	 * @class AnimatedLabel
-	 * @extends {AbstractPattern<AnimatedLabelConfig>}
-	 * @implements {IAnimatedLabel}
 	 */
 	export class AnimatedLabel extends AbstractPattern<AnimatedLabelConfig> implements IAnimatedLabel {
 		private _eventAnimationStart: GlobalCallbacks.Generic;
@@ -119,7 +114,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Method to set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
@@ -133,7 +127,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * method to update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setHtmlElements(): void {
 			this._labelPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.LabelPlaceholder);
@@ -165,7 +158,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Method to remove the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -179,7 +171,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Method to remove the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetHtmlElements(): void {
 			this._labelPhElement = undefined;
@@ -189,8 +180,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		/**
 		 * Method to build the animation label.
-		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public build(): void {
 			//OS takes a while to set the TextArea
@@ -210,8 +199,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		/**
 		 * Method to destroy the Animatedlabel.
-		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public dispose(): void {
 			this._isDisposed = true;
@@ -225,8 +212,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		/**
 		 * Method to update Label active status accordingly when the input info has changed.
-		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
 			Helper.AsyncInvocation(() => {

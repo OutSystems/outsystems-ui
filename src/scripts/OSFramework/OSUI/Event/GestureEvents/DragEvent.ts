@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.GestureEvent {
 	/**
 	 * Class that represents the gesture events.
-	 *
-	 * @export
-	 * @class GestureEvent
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class DragEvent extends AbstractGestureEvent {
 		constructor(target: HTMLElement) {
@@ -15,10 +11,9 @@ namespace OSFramework.OSUI.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Event.GestureEvent.Callbacks.GestureStart} onStartCallback
-		 * @param {Event.GestureEvent.Callbacks.GestureMove} onMoveCallback
-		 * @param {Event.GestureEvent.Callbacks.GestureEnd} [onEndCallback]
-		 * @memberof OSFramework.Event.GestureEvent.DragEvent
+		 * @param onStartCallback Function invoked when the gesture starts
+		 * @param onMoveCallback Function invoked while the gesture moves
+		 * @param [onEndCallback] Function invoked when the gesture ends
 		 */
 		public setSwipeEvents(
 			onStartCallback: Event.GestureEvent.Callbacks.GestureStart,

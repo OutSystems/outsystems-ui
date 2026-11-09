@@ -1,0 +1,700 @@
+@use '../../../tokens/variables';
+
+/* Patterns - Navigation - Submenu */
+////
+/// @group Patterns-Submenu
+/// Patterns - Navigation - Submenu
+
+///
+.osui-submenu {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-submenu-items-background: var(--color-background-panel);
+	--osui-submenu-items-border-color: var(--color-border);
+	--osui-submenu-items-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
+	--osui-submenu-item-color: var(--color-text);
+	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
+	--osui-submenu-item-border-radius: var(--border-radius-none, #{variables.$token-border-radius-0});
+	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
+	// Hover and pressed sit on the elevated items panel, so they step up from the
+	// `subtlest` ramp the header pills use (ROU-13151).
+	--osui-submenu-item-hover-background: #{variables.$token-bg-neutral-subtle-hover};
+	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
+	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtle-press};
+	--osui-submenu-item-color-disabled: var(--color-text-disabled);
+	--osui-submenu-header-color: var(--color-text);
+	// The header is a pill in every context (ROU-13132) — the same geometry and
+	// hover/open background it has inside the app header, not only there.
+	--osui-submenu-header-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-submenu-header-border-radius: #{variables.$token-border-radius-200};
+	--osui-submenu-header-padding-block: #{variables.$token-scale-200};
+	--osui-submenu-header-padding-inline: #{variables.$token-scale-300};
+	// Only paints text (the selected underline was dropped in ROU-13132); the name is
+	// kept because it is already part of the published CSS API.
+	--osui-submenu-active-border-color: var(--color-primary);
+	--osui-submenu-max-height: calc(100dvh - 80px); // design-spec: 80px header offset
+	// ───────────────────────────────────────────────────────────────────
+
+	cursor: pointer;
+	display: inline-flex;
+	position: relative;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-height: auto !important;
+	}
+
+	// Multi level menu
+	&:first-of-type:not(.osui-submenu--is-open) {
+		.osui-submenu {
+			&__items {
+				display: none;
+				opacity: 0;
+			}
+		}
+	}
+
+	&.active {
+		&--is-open {
+			.osui-submenu__header__item {
+				color: var(--osui-submenu-active-border-color);
+			}
+		}
+
+		.osui-submenu {
+			&__header {
+				&__item {
+					&,
+					a {
+						color: var(--osui-submenu-active-border-color);
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+
+	&--is-open {
+		.osui-submenu {
+			&__items {
+				opacity: 1;
+				pointer-events: auto;
+				transform: translateY(0px);
+			}
+		}
+	}
+
+	&--is-hover {
+		&.osui-submenu {
+			&--is-open {
+				.osui-submenu {
+					&__header {
+						position: relative;
+
+						// Needed for OpenOnHover — bridges the gap between header and items
+						&:after {
+							content: '';
+							height: 100%;
+							inset-inline-start: 0;
+							position: absolute;
+							inset-inline-end: 0;
+							top: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&__header {
+		align-items: center;
+		align-self: center;
+		border-radius: var(--osui-submenu-header-border-radius);
+		display: flex;
+		margin-block: 0;
+		margin-inline: variables.$token-scale-025;
+		padding-block: var(--osui-submenu-header-padding-block);
+		padding-inline: var(--osui-submenu-header-padding-inline);
+		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+
+		&__item {
+			align-items: center;
+			color: var(--osui-submenu-header-color);
+			display: inline-flex;
+			height: 100%;
+			position: relative;
+			transition: all variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+
+			-servicestudio-min-width: 100px;
+			-servicestudio-margin-left: calc(variables.$token-scale-200 * -1);
+
+			a {
+				align-items: center;
+				color: var(--color-text-subtlest);
+				display: flex;
+				height: 100%;
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+
+		&__icon {
+			margin-inline-start: variables.$token-scale-200;
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
+			transform-origin: center;
+
+			&:after {
+				content: var(--osui-icon-arrow-down);
+				font-family: var(--osui-icon-font-family);
+			}
+		}
+	}
+
+	&__items {
+		background-color: var(--osui-submenu-items-background);
+		border: variables.$token-border-size-025 solid var(--osui-submenu-items-border-color);
+		border-radius: var(--osui-submenu-items-border-radius);
+		box-shadow: var(--osui-submenu-items-shadow);
+		display: flex;
+		flex-direction: column;
+		inset-inline-start: 0;
+		max-height: var(--osui-submenu-max-height);
+		min-width: 100px;
+		opacity: 0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: variables.$token-space-0;
+		pointer-events: none;
+		position: absolute;
+		top: calc(100% + variables.$token-scale-100);
+		transform: translateY(-8px); // design-spec
+		transition: all variables.$token-transition-time-150 variables.$token-transition-curve-quick;
+		width: max-content;
+		z-index: var(--layer-global-elevated);
+
+		// Scrollbar
+		&::-webkit-scrollbar {
+			width: variables.$token-scale-100;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--color-border);
+			border-radius: var(--border-radius-rounded);
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1 !important;
+			-servicestudio-pointer-events: auto !important;
+			-servicestudio-top: 100% !important;
+			-servicestudio-transform: translateY(0px) !important;
+		}
+
+		a {
+			border-radius: var(--osui-submenu-item-border-radius);
+			color: var(--osui-submenu-item-color);
+			font-size: var(--osui-submenu-item-font-size);
+			line-height: var(--osui-submenu-item-line-height);
+			margin: 0;
+			padding-block: variables.$token-space-200;
+			padding-inline: variables.$token-space-400;
+			text-decoration: none;
+			transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+			white-space: nowrap;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: block !important;
+			}
+
+			&.active {
+				background-color: var(--osui-submenu-item-selected-background);
+				color: var(--osui-submenu-active-border-color);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-background-color: inherit !important;
+				}
+			}
+
+			// Pressed state — declared after `.active` so it wins on equal specificity.
+			// Context rules that also paint these items carry `:not(:active)` so they
+			// stop masking it.
+			&:active {
+				background-color: var(--osui-submenu-item-pressed-background);
+			}
+
+			// Disabled state — `pointer-events: none` is what keeps the hover and
+			// pressed rules from ever firing, so they need no `.is-disabled` guard.
+			// Declared last so its color wins over `.active`.
+			&[disabled],
+			&.is-disabled {
+				background-color: transparent;
+				color: var(--osui-submenu-item-color-disabled);
+				cursor: auto;
+				pointer-events: none;
+			}
+		}
+	}
+}
+
+// Header arrow visibility (ROU-12882) — platform-agnostic behaviour, so it lives here
+// rather than in either icon library: the arrow is hidden until Submenu's TS adds
+// .osui-submenu--is-dropdown (i.e. the submenu actually has child items). Only the
+// glyph itself (content/font-family) is icon-library territory.
+.osui-submenu__header__icon {
+	display: none;
+}
+
+.osui-submenu--is-dropdown .osui-submenu__header__icon {
+	display: inline-flex;
+}
+
+// Icon rotation on open
+.osui-submenu--is-open .osui-submenu__header__icon {
+	transform: rotate(180deg);
+}
+
+// Data-link reset
+.osui-submenu [data-link],
+.osui-submenu [data-link]:hover {
+	text-decoration: none;
+}
+
+///
+.layout {
+	&:not(.layout-side) {
+		.app-menu-links {
+			.osui-submenu a {
+				border-block-end: none;
+			}
+		}
+	}
+
+	.header .osui-submenu__items {
+		-servicestudio-display: none !important;
+	}
+}
+
+///
+.layout-side .app-menu-links .osui-submenu,
+.menu-visible .app-menu-links .osui-submenu {
+	--osui-submenu-items-background: var(--color-background-sidemenu, #{variables.$token-bg-surface-elevation-3});
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.layout-side .app-menu-links .osui-submenu {
+	a {
+		border-inline-start: none;
+	}
+
+	&.active .osui-submenu__header {
+		background-color: variables.$token-bg-primary-subtle-default;
+		border-radius: variables.$token-border-radius-200;
+	}
+
+	&--is-open > .osui-submenu__items {
+		border-radius: 0;
+		display: flex;
+		height: auto;
+		max-height: none;
+		overflow: hidden;
+		padding: 0;
+		width: 100%;
+	}
+
+	.osui-submenu__header {
+		border: none;
+		// The pill's side gutter would push the full-width side-menu row out of its column.
+		margin-inline: 0;
+		padding-block: variables.$token-scale-200;
+		padding-inline: variables.$token-scale-400;
+		width: 100%;
+
+		&__item {
+			flex: 1;
+		}
+	}
+
+	.osui-submenu__items {
+		border: none;
+		box-shadow: none;
+		display: none;
+		opacity: 1;
+		padding-block: variables.$token-scale-100;
+		padding-inline: variables.$token-scale-600;
+		pointer-events: auto;
+		position: relative;
+		top: 0;
+		transform: translateY(0);
+
+		a {
+			border-radius: variables.$token-border-radius-200;
+			padding-block: variables.$token-scale-200;
+			padding-inline-end: variables.$token-scale-400;
+			padding-inline-start: variables.$token-scale-600;
+
+			// `:not(:active)` — let the pressed background through
+			&:not(:active):hover {
+				background-color: var(--osui-submenu-item-hover-background);
+				color: var(--color-text);
+			}
+
+			&.active:not(:active) {
+				background-color: var(--osui-submenu-item-selected-background);
+			}
+
+			&.active {
+				color: var(--osui-submenu-active-border-color);
+			}
+		}
+	}
+}
+
+.layout-side .app-menu-links .osui-submenu__header a,
+.menu-visible .app-menu-links .osui-submenu__header a {
+	padding: variables.$token-scale-0;
+}
+
+// Columns inside submenu items collapse to single column
+.layout-side .app-menu-links .osui-submenu__items .columns,
+.menu-visible .app-menu-links .osui-submenu__items .columns,
+.tablet .app-menu-links .osui-submenu__items .columns,
+.phone .app-menu-links .osui-submenu__items .columns {
+	flex-direction: column;
+	width: 100%;
+
+	& > .columns-item {
+		flex: none;
+		width: 100%;
+	}
+}
+
+// Items white-space: normal in side/mobile contexts
+.layout-side .app-menu-links .osui-submenu__items a,
+.menu-visible .app-menu-links .osui-submenu__items a,
+.tablet .app-menu-links .osui-submenu__items a,
+.phone .app-menu-links .osui-submenu__items a {
+	white-space: normal;
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.osui-submenu {
+		&:hover {
+			.osui-submenu__header__item {
+				color: var(--osui-submenu-header-color);
+			}
+		}
+
+		&.active {
+			.osui-submenu__header:hover .osui-submenu__header__item {
+				color: var(--osui-submenu-active-border-color);
+			}
+		}
+
+		// Open keeps the hover background on the header, so the pill reads as the
+		// dropdown's anchor for as long as the panel is out.
+		&--is-open {
+			.osui-submenu__header {
+				background-color: var(--osui-submenu-header-hover-background);
+				color: var(--color-text);
+			}
+		}
+
+		&__header {
+			&:hover {
+				background-color: var(--osui-submenu-header-hover-background);
+				color: var(--color-text);
+			}
+
+			&__item {
+				a:hover {
+					color: var(--osui-submenu-header-color);
+				}
+			}
+		}
+
+		&__items {
+			a {
+				// `:not(:active)` — let the pressed background through
+				&:not(:active):hover {
+					background-color: var(--osui-submenu-item-hover-background);
+					color: var(--color-text);
+				}
+
+				&.active:hover {
+					color: var(--osui-submenu-active-border-color);
+				}
+			}
+		}
+	}
+
+	// Direct links in header navigation
+	.header-navigation .app-menu-links > a {
+		align-self: center;
+		border-block-end: none;
+		border-radius: variables.$token-border-radius-200;
+		border-block-start: none;
+		margin-block: 0;
+		margin-inline: variables.$token-scale-025;
+		padding-block: variables.$token-scale-200;
+		padding-inline: variables.$token-scale-300;
+		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+
+		&:hover {
+			background-color: variables.$token-bg-neutral-subtlest-hover;
+			color: var(--color-text);
+		}
+	}
+
+	// Force block on submenu items in app-menu-links
+	.app-menu-links .osui-submenu__items a {
+		display: block;
+	}
+
+	.layout:not(.layout-side) {
+		.app-menu-links {
+			.osui-submenu {
+				height: 100%;
+			}
+		}
+	}
+
+	.layout-side {
+		.app-menu-links {
+			.osui-submenu {
+				&__header {
+					&:hover {
+						background-color: var(--osui-submenu-header-hover-background);
+						border-radius: var(--osui-submenu-header-border-radius);
+					}
+				}
+			}
+		}
+
+		// Side menu: direct link hover
+		.app-menu-links > a:hover {
+			background-color: variables.$token-bg-neutral-subtlest-hover;
+			border-radius: variables.$token-border-radius-200;
+			color: var(--color-text);
+		}
+	}
+}
+
+// Force block in menu-visible context (overrides display:inline-flex from layout rules)
+.menu-visible .app-menu-links .osui-submenu__items a {
+	display: block;
+}
+
+// Active + hover states ---------------------------------------------------------
+///
+
+// Top menu: header navigation direct link
+.desktop .header-navigation .app-menu-links > a.active:hover {
+	background-color: variables.$token-bg-neutral-subtlest-hover;
+	color: var(--color-primary);
+}
+
+// Top menu: submenu items — `:not(:active)` lets the pressed background through
+.desktop .osui-submenu__items a.active:not(:active):hover {
+	background-color: var(--osui-submenu-item-hover-background);
+}
+
+// Side menu desktop: direct link
+.desktop .layout-side .app-menu-links > a.active:hover {
+	background-color: variables.$token-bg-neutral-subtlest-hover;
+	color: var(--color-primary);
+}
+
+// Side menu desktop: submenu header
+.desktop .layout-side .app-menu-links .osui-submenu.active .osui-submenu__header:hover {
+	background-color: variables.$token-bg-neutral-subtlest-hover;
+	color: var(--osui-submenu-active-border-color);
+}
+
+// Side menu desktop: submenu items — `:not(:active)` lets the pressed background through
+.desktop .layout-side .app-menu-links .osui-submenu__items a.active:not(:active):hover {
+	background-color: var(--osui-submenu-item-hover-background);
+	color: var(--color-primary);
+}
+
+.desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
+	color: var(--color-primary);
+}
+
+///
+.tablet,
+.phone {
+	.osui-submenu {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		&.active .osui-submenu__header {
+			background-color: transparent;
+			border-block-end: 0;
+			border-inline-start: none;
+		}
+
+		&--is-open .osui-submenu__items {
+			display: flex;
+			height: auto;
+			max-height: none;
+			overflow: hidden;
+			padding: 0;
+			width: 100%;
+		}
+
+		&__header {
+			border: none;
+			// The pill's side gutter would push the full-width stacked row out of its column.
+			margin-inline: 0;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
+
+			&__item {
+				flex: 1;
+			}
+
+			&:hover {
+				background-color: var(--osui-submenu-header-hover-background);
+				border-radius: var(--osui-submenu-header-border-radius);
+				color: var(--color-text);
+			}
+		}
+
+		&__items {
+			border: none;
+			border-radius: 0;
+			box-shadow: none;
+			display: none;
+			opacity: 1;
+			padding: 0;
+			pointer-events: auto;
+			position: relative;
+			top: 0;
+			transform: translateY(0);
+			width: 100%;
+
+			a {
+				border-radius: variables.$token-border-radius-200;
+				padding-block: variables.$token-scale-200;
+				padding-inline-end: variables.$token-scale-400;
+				padding-inline-start: variables.$token-scale-600;
+
+				// `:not(:active)` — let the pressed background through
+				&.active:not(:active) {
+					background-color: transparent;
+				}
+
+				&.active {
+					color: var(--color-primary);
+				}
+
+				&:not(:active):hover {
+					background-color: var(--osui-submenu-item-hover-background);
+					color: var(--color-text);
+				}
+			}
+		}
+	}
+
+	.app-menu-links > a {
+		&:hover {
+			background-color: variables.$token-bg-neutral-subtlest-hover;
+			border-radius: variables.$token-border-radius-200;
+			color: var(--color-text);
+		}
+	}
+
+	// Mobile/tablet: submenu header active hover
+	.osui-submenu.active .osui-submenu__header:hover {
+		background-color: variables.$token-bg-neutral-subtlest-hover;
+		border-radius: variables.$token-border-radius-200;
+		color: var(--osui-submenu-active-border-color);
+	}
+
+	// Mobile/tablet: submenu items active hover — `:not(:active)` lets the pressed background through
+	.osui-submenu__items a.active:not(:active):hover {
+		background-color: var(--osui-submenu-item-hover-background);
+		color: var(--color-primary);
+	}
+
+	.osui-submenu__items a.active:hover {
+		color: var(--color-primary);
+	}
+
+	// Mobile/tablet: direct link active hover
+	.app-menu-links > a.active:hover {
+		background-color: variables.$token-bg-neutral-subtlest-hover;
+		color: var(--color-primary);
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.layout-side {
+		.osui-submenu {
+			&.active .osui-submenu__header {
+				background-color: transparent;
+			}
+		}
+	}
+
+	&.tablet,
+	&.phone {
+		.osui-submenu {
+			&.active .osui-submenu__header {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-submenu:focus-visible:focus-within {
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		outline: 0;
+	}
+}
+
+// Ported from dev: re-asserts the focus ring over the tablet/phone link styles.
+.tablet,
+.phone {
+	.has-accessible-features {
+		.osui-submenu:focus-visible:focus-within {
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			outline: 0;
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.layout:not(.layout-side) .app-menu-links .osui-submenu a {
+		border-block-start: none;
+		border-block-end: none;
+	}
+
+	.osui-submenu__header {
+		border-block-start: none;
+	}
+}

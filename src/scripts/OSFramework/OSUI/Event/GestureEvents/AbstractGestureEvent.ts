@@ -2,8 +2,6 @@
 namespace OSFramework.OSUI.Event {
 	/**
 	 * Class that represents the gesture events information between start, move and end.
-	 *
-	 * @class GestureParams
 	 */
 	class GestureParams {
 		public currentX: number;
@@ -20,10 +18,6 @@ namespace OSFramework.OSUI.Event {
 
 	/**
 	 * Class that represents the gesture events.
-	 *
-	 * @export
-	 * @class GestureEvent
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export abstract class AbstractGestureEvent implements GestureEvent.IGestureEvent {
 		// Stores the end touch event with bind(this)
@@ -121,10 +115,9 @@ namespace OSFramework.OSUI.Event {
 		 * Method to set the callbacks
 		 *
 		 * @protected
-		 * @param {GlobalCallbacks.Generic} [onStartCallback]
-		 * @param {GlobalCallbacks.Generic} [onMoveCallback]
-		 * @param {GlobalCallbacks.Generic} [onEndCallback]
-		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
+		 * @param [onStartCallback] Function invoked when the gesture starts
+		 * @param [onMoveCallback] Function invoked while the gesture moves
+		 * @param [onEndCallback] Function invoked when the gesture ends
 		 */
 		protected setCallbacks(
 			onStartCallback?: GlobalCallbacks.Generic,
@@ -144,7 +137,6 @@ namespace OSFramework.OSUI.Event {
 		 * Method to add the event listeners to the targetElement, with the expected callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		protected setEventListeners(): void {
 			if (this._targetElement) {
@@ -158,8 +150,6 @@ namespace OSFramework.OSUI.Event {
 		 * Get the targetElement
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		public get targetElement(): HTMLElement {
 			return this._targetElement;
@@ -167,8 +157,6 @@ namespace OSFramework.OSUI.Event {
 
 		/**
 		 * Method to remove the event listeners added to the targetElement and unset the callback
-		 *
-		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		public unsetTouchEvents(): void {
 			this._removeEventListeners();

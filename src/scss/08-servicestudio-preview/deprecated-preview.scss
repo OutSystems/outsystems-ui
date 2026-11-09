@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Deprecated block preview */
 /* 
 	Notes:
@@ -9,11 +11,11 @@
 .osui-deprecated:before {
 	display: none;
 	-servicestudio-background: #fff1dc;
-	-servicestudio-background: get-background-color('yellow-lightest');
-	-servicestudio-border-radius: var(--border-radius-soft);
-	-servicestudio-color: get-text-color('neutral-9');
+	-servicestudio-background: #fef5e5;
+	-servicestudio-border-radius: variables.$token-border-radius-100;
+	-servicestudio-color: variables.$token-text-default;
 	-servicestudio-content: '⚠ DEPRECATED';
-	-servicestudio-font-weight: var(--font-semi-bold);
+	-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 	-servicestudio-display: block;
 	-servicestudio-font-size: 9px;
 	-servicestudio-line-height: 8px;

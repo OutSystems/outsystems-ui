@@ -5,9 +5,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will allow elements inside the title to be clicked without triggering the pattern toggle.
 	 *
-	 * @export
-	 * @param {string} accordionItemId
-	 * @return {*}  {string}
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function AllowTitleEvents(accordionItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,10 +24,10 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will change the property of a given Accordion Item pattern.
 	 *
-	 * @export
-	 * @param {string} accordionItemId ID of the Accordion Item where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param accordionItemId ID of the Accordion Item where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -46,8 +45,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to close the accordionItem
 	 *
-	 * @export
-	 * @param {string} accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Collapse(accordionItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -65,14 +64,13 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Create the new Accordion Item instance and add it to the accordionItem Map
 	 *
-	 * @export
-	 * @param {string} accordionItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AccordrionItem.IAccordionItem}
+	 * @param accordionItemId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the AccordionItem instance
 	 */
 	export function Create(
 		accordionItemId: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
@@ -82,7 +80,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
@@ -93,8 +91,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Accordrion Item
 	 *
-	 * @export
-	 * @param {string} accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(accordionItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -114,8 +112,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to open the accordionItem
 	 *
-	 * @export
-	 * @param {string} accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Expand(accordionItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -133,8 +131,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will return the Map with all the Accordion Item instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem>}
+	 * @returns the ids of every AccordionItem instance
 	 */
 	export function GetAllAccordionItems(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_accordionItemMap);
@@ -143,9 +140,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that gets the instance of an Accordion Item by a given ID.
 	 *
-	 * @export
-	 * @param {string} accodrionItemId ID of the AccordionItem that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem}
+	 * @param accordionItemId ID of the AccordionItem that will be looked for.
+	 * @returns the AccordionItem instance
 	 */
 	export function GetAccordionItemById(
 		accordionItemId: string
@@ -160,9 +156,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} accordionItemId ID of the Accordion Item pattern that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AccodrionItem.IAccordionItem}
+	 * @param accordionItemId ID of the Accordion Item pattern that will be initialized.
+	 * @returns the AccordionItem instance
 	 */
 	export function Initialize(accordionItemId: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
 		const accordionItem = GetAccordionItemById(accordionItemId);
@@ -175,15 +170,14 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @export
-	 * @param {string} accordionItemId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		accordionItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -201,10 +195,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that enables toggling the active area to expand and collapse the accordion item.
 	 *
-	 * @export
-	 * @param {string} accordionItemId
-	 * @param {boolean} isIconOnly
-	 * @return {*}  {string}
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @param isIconOnly Whether only the icon toggles the item
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleClickableZone(accordionItemId: string, isIconOnly: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

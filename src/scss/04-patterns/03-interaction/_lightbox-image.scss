@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use '../../tokens/variables';
+
 /* Patterns - Interaction - Lightbox Image */
 ////
 /// @group Patterns-Lightbox_Image
@@ -6,6 +9,8 @@
 ///
 .lightbox {
 	&-item {
+		display: inline-block;
+
 		// Service Studio Preview
 		& {
 			-servicestudio-position: relative;
@@ -26,8 +31,8 @@
 	&-image:after {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: rgba(0, 0, 0, 0.3);
-			-servicestudio-color: get-text-color('neutral-0');
+			-servicestudio-background-color: #{variables.$token-backdrop};
+			-servicestudio-color: var(--color-text-inverse);
 			-servicestudio-content: 'Image';
 			-servicestudio-font-size: 9px;
 			-servicestudio-left: 0;
@@ -56,8 +61,8 @@
 		&:after {
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: rgba(0, 0, 0, 0.3);
-				-servicestudio-color: get-text-color('neutral-0');
+				-servicestudio-background-color: #{variables.$token-backdrop};
+				-servicestudio-color: var(--color-text-inverse);
 				-servicestudio-content: 'Thumbnail';
 				-servicestudio-font-size: 9px;
 				-servicestudio-left: 0;
@@ -95,8 +100,8 @@
 .android {
 	.pswp__top-bar {
 		top: #{android-safe-area-top()};
-		padding-left: var(--safe-area-inset-left, 0px);
-		padding-right: var(--safe-area-inset-right, 0px);
+		padding-inline-start: var(--safe-area-inset-left, 0px);
+		padding-inline-end: var(--safe-area-inset-right, 0px);
 	}
 }
 
@@ -116,17 +121,24 @@
 ///
 .phone {
 	.pswp__caption__center {
-		padding-bottom: calc(var(--os-safe-area-bottom) + 10px);
+		padding-bottom: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
 	}
 }
 
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.lightbox-item a:focus {
-		background-color: get-background-color('transparent');
-		box-shadow: none;
-		outline: 3px solid get-border-color('focus-outer');
+	.lightbox-item {
+		&:focus-within {
+			--osui-focus-shadow-gap: #{variables.$token-border-size-050};
+
+			@include a11y-focus-shadow;
+		}
+
+		a:focus {
+			background-color: transparent;
+			box-shadow: none;
+		}
 	}
 }
 
@@ -134,11 +146,6 @@
 ///
 .is-rtl {
 	.pswp {
-		&__counter {
-			left: inherit;
-			right: 0;
-		}
-
 		&__top-bar {
 			display: flex;
 			flex-direction: row-reverse;

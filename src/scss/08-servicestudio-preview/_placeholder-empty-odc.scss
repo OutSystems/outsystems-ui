@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 .placeholder-empty:empty {
 	display: none;
 }
@@ -10,10 +12,9 @@
 			display: contents;
 		}
 	}
-
 	&__content-item {
 		.placeholder-empty:empty {
-			-servicestudio-padding: var(--space-m);
+			-servicestudio-padding: variables.$token-scale-600;
 		}
 	}
 }

@@ -52,6 +52,7 @@ namespace OSFramework.OSUI.Patterns.Video.Enum {
 	 */
 	export enum VideoAttributes {
 		Captions = 'captions',
+		DataUrlScheme = 'data:',
 		Default = 'default',
 		Height = 'height',
 		TypePath = 'video/',

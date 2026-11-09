@@ -28,7 +28,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Container = 'screen-container',
 		Content = 'content',
 		DarkMode = 'os-dark-mode',
-		DeprecatedSubmenu = 'submenu',
 		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
@@ -50,6 +49,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Placeholder = 'placeholder-empty',
 		Popup = 'popup-dialog',
 		SkipContent = 'skip-nav',
+		ThemeDark = 'os-dark-theme',
 	}
 
 	/**
@@ -460,9 +460,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 
 	/**
 	 * Events available for all provider based patterns.
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum ProviderEvents {
 		Initialized = 'Initialized',

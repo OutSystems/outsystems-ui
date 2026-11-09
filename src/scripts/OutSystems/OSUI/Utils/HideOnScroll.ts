@@ -3,7 +3,7 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	/**
 	 * Function responsible to add events that will manage the header accordingly
 	 *
-	 * @param {HTMLElement} header
+	 * @param header Header element that hides on scroll
 	 */
 	function addEvents(header: HTMLElement) {
 		const content: HTMLElement = document.querySelector('.active-screen .content');
@@ -52,8 +52,6 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 
 	/**
 	 * Function that will initialize the process of adding the events to manage the header behaviour
-	 *
-	 * @export
 	 */
 	export function Init(): void {
 		const header = OSFramework.OSUI.Helper.Dom.ClassSelector(

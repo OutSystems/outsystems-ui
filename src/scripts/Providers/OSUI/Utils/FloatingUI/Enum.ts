@@ -5,6 +5,6 @@ namespace Providers.OSUI.Utils.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'FloatingUI',
-		Version = '1.6.5',
+		Version = '1.8.0',
 	}
 }

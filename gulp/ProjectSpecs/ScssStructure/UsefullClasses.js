@@ -101,6 +101,20 @@ const sectionInfo = {
         {
             "name": "Miscellaneous",
             "path": "05-useful/miscellaneous"
+        },
+        {
+            // Generated `.token-*` utility classes (typography, spacing, colour,
+            // border, elevation) - written by `npm run build:tokens` into the
+            // gitignored src/scss/tokens/. Requires `--utilities true` on that
+            // command; without it this partial does not exist and the build fails.
+            //
+            // Last in the section on purpose: it is generated, so keeping it apart
+            // from the hand-written 05-useful/* partials makes the compiled output
+            // easy to locate. It declares no Sass members, so `@use ... as *` in the
+            // entry file cannot collide with anything; its own `@use "variables"`
+            // resolves to the same tokens module the rest of the tree already loads.
+            "name": "Design tokens - .token-* classes",
+            "path": "tokens/utilities"
         }
     ]
 };

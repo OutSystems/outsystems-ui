@@ -19,6 +19,8 @@
 #         with:
 #             new-version: ${{ inputs.new-version }}
 #             update-prerelease-into-latest: true
+#         secrets:
+#             OSUI_SLACK_WEBHOOK_URL: ${{ secrets.OSUI_SLACK_WEBHOOK_URL }} # Slack incoming webhook used to notify the channel when the release PR is created
 #
 # ======================================================================
 #
@@ -44,6 +46,9 @@ on:
                 required: true
             OSUI_AZURE_SUBSCRIPTION_ID:
                 description: 'Azure Subscription ID for authentication'
+                required: true
+            OSUI_SLACK_WEBHOOK_URL:
+                description: 'Slack incoming webhook URL for release notifications'
                 required: true
 
 jobs:
@@ -101,6 +106,7 @@ jobs:
                   key-name: o11odc-github-gitpersonal-token-prd
 
             - name: 🔄 Create release PR for rc${{ inputs.new-version }} into main
+              id: create-release-pr
               env:
                   GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
               run: |
@@ -132,9 +138,20 @@ jobs:
                       --title "${PR_TITLE}" \
                       --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")")
                     echo "Release PR: ${PR_URL}"
+                    echo "pr-created=true" >> "$GITHUB_OUTPUT"
+                    echo "pr-url=${PR_URL}" >> "$GITHUB_OUTPUT"
                   else
                     echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
                   fi
+
+            - name: 📢 Notify Slack about release PR
+              if: steps.create-release-pr.outputs.pr-created == 'true'
+              uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+              with:
+                  webhook: ${{ secrets.OSUI_SLACK_WEBHOOK_URL }}
+                  webhook-type: incoming-webhook
+                  payload: |
+                      text: "A release PR was created and is waiting to be merged! Please take the required actions. ${{ steps.create-release-pr.outputs.pr-url }}"
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS

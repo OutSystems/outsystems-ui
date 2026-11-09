@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Video {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
-	 *
-	 * @export
-	 * @class Video
-	 * @extends {AbstractPattern<VideoConfig>}
-	 * @implements {IVideo}
 	 */
 	export class Video extends AbstractPattern<VideoConfig> implements IVideo {
 		// Store the platform events
@@ -22,9 +17,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Creates an instance of Video.
-		 * @param {string} uniqueId
-		 * @param {JSON} configs
-		 * @memberof Video
+		 * @param uniqueId Unique id of the pattern instance (the widget id)
+		 * @param configs Configuration object received from the platform
 		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VideoConfig(configs));
@@ -102,19 +96,53 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		// Method to create the source element
 		private _setVideoSource(): void {
+			// A data URL ('data:video/mp4;base64,...') has no file extension to guess a type from and can be megabytes
+			// long, so it is neither scanned nor logged: the browser detects the media type from the data itself.
+			const _dataUrlScheme = Patterns.Video.Enum.VideoAttributes.DataUrlScheme;
+			const _isDataUrl = this.configs.URL.slice(0, _dataUrlScheme.length).toLowerCase() === _dataUrlScheme;
 			// Get the file extension from URL
-			const _urlFileExtension = OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
-
-			if (_urlFileExtension === null) {
-				console.warn(`The URL '${this.configs.URL}' is not a valid URL.`);
-			}
+			const _urlFileExtension = _isDataUrl ? null : OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
 
 			// Add class to video source element
 			OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
 
-			// Set the attributes to video source created
+			// Set the source URL
 			this._videoSourceElement.src = this.configs.URL;
-			this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
+
+			// Build the MIME type as 'video/<extension>' from the URL. The type attribute is only a pre-filter for
+			// the browser's resource selection: a <source> whose type the browser cannot play is skipped without
+			// any request. Since the value is guessed from the URL string it can be wrong (e.g. "video/null" when
+			// there is no extension, "video/0" for ".../GetVideo?v=1.0"), so canPlayType asks the browser the same
+			// question up front and the type is only written when the browser accepts it.
+			const _sourceType =
+				_urlFileExtension !== null
+					? Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension
+					: Constants.EmptyString;
+
+			if (
+				_sourceType !== Constants.EmptyString &&
+				this._videoElement.canPlayType(_sourceType) !== Constants.EmptyString
+			) {
+				OSUI.Helper.Dom.Attribute.Set(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type, _sourceType);
+			} else {
+				// Without type, the browser fetches the resource and detects the media type from the response
+				OSUI.Helper.Dom.Attribute.Remove(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type);
+
+				// Both cases below are supported and do play, but an omitted type is worth surfacing: it tells
+				// whoever inspects the DOM why this source carries no type attribute. An empty URL is skipped,
+				// since the text would be misleading for a video that has no source set yet, and so is a data URL,
+				// which is expected to carry no type.
+				if (this.configs.URL !== Constants.EmptyString && _isDataUrl === false) {
+					const _reason =
+						_sourceType === Constants.EmptyString
+							? `has no file extension`
+							: `has a file extension the browser does not report as playable ('${_sourceType}')`;
+
+					console.warn(
+						`${GlobalEnum.PatternName.Video} (${this.widgetId}): The URL '${this.configs.URL}' ${_reason}. The source type attribute was omitted, so the browser will detect the media type from the response.`
+					);
+				}
+			}
 		}
 
 		// Method create the track element
@@ -173,7 +201,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setA11YProperties(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -183,7 +210,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setCallbacks(): void {
 			// Check the video time and trigger the event if is 0 with the status Unstarted
@@ -211,7 +237,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setHtmlElements(): void {
 			// Set the video element
@@ -233,7 +258,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected unsetCallbacks(): void {
 			this._platformEventOnStateChanged = undefined;
@@ -247,7 +271,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected unsetHtmlElements(): void {
 			this._videoElement = undefined;
@@ -256,8 +279,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to build the Video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public build(): void {
 			super.build();
@@ -272,11 +293,13 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Video.Video
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// Keep the previous URL to only reload the media element when it actually changes
+			const _previousUrl = this.configs.URL;
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
@@ -298,7 +321,14 @@ namespace OSFramework.OSUI.Patterns.Video {
 						this._setPosterUrl();
 						break;
 					case Enum.Properties.URL:
-						this._setVideoSource();
+						// load() resets the media element, so only do it when the URL really changed
+						if (this.configs.URL !== _previousUrl) {
+							this._setVideoSource();
+							// A changed <source src> is only picked up by the media element after load()
+							this._videoElement.load();
+							// load() pauses the element without a pause event, so re-sync the state
+							this._triggerOnStateChangedEvent(Patterns.Video.Enum.VideoStates.Unstarted);
+						}
 						break;
 					case Enum.Properties.Width:
 						this._setWidth();
@@ -312,8 +342,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to destroy Video instance
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -326,8 +354,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to get video state
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public get getVideoState(): string {
 			return this._videoState;
@@ -336,9 +362,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Set callbacks for the pattern
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 @memberof OSFramework.Patterns.Video.Video
+		 * @param eventName Name of the event the callback listens to
+		 * @param callback Function invoked when the event fires
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -358,8 +383,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to set current time
 		 *
-		 * @param {number} currentTime value in seconds
-		 * @memberof Video
+		 * @param currentTime value in seconds
 		 */
 		public setVideoJumpToTime(currentTime: number): void {
 			this._videoElement.currentTime = currentTime;
@@ -367,8 +391,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to pause video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public setVideoPause(): void {
 			this._videoElement.pause();
@@ -376,8 +398,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to play video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public setVideoPlay(): void {
 			this._videoElement.play();

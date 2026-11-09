@@ -24,7 +24,8 @@ const sectionInfo = {
         },
         {
             "name": "",
-            "path": "08-servicestudio-preview/deprecated-preview"
+            "path": "08-servicestudio-preview/deprecated-preview",
+            "platform": project.globalConsts.platformTarget.o11
         }
     ]
 }

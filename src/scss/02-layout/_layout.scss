@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 ////
 /// @group Layout
 /// Layout
@@ -37,12 +39,35 @@ body,
 		}
 
 		&-side {
+			// ─── Component CSS API ─────────────────────────────────────────────
+			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
+			// ───────────────────────────────────────────────────────────────────
+
 			.main {
-				margin-left: var(--side-menu-size);
+				margin-inline-start: var(--side-menu-size);
 			}
 
 			&.aside-overlay .main {
-				margin-left: 0;
+				margin-inline-start: 0;
+			}
+
+			.app-menu-content {
+				border-inline-end: var(--osui-layout-aside-lines);
+			}
+
+			.app-menu-links {
+				gap: variables.$token-space-200;
+			}
+
+			.app-login-info {
+				border-block-start: var(--osui-layout-aside-lines);
+			}
+		}
+
+		&-side-no-header {
+			.menu-icon {
+				margin-block: variables.$token-space-400;
+				margin-inline: variables.$token-space-600;
 			}
 		}
 
@@ -60,7 +85,7 @@ body,
 
 	&.aside-expandable {
 		.main {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 	}
 
@@ -73,7 +98,7 @@ body,
 
 .main,
 .fixed-header .main {
-	padding-top: 0;
+	padding-block-start: 0;
 }
 
 ///
@@ -150,7 +175,7 @@ body,
 					&-visible,
 					&-expandable {
 						.main {
-							margin-left: var(--side-menu-size);
+							margin-inline-start: var(--side-menu-size);
 							width: calc(100% - var(--side-menu-size));
 						}
 					}
@@ -160,11 +185,11 @@ body,
 
 		.layout-side.layout-native.aside-expandable {
 			&.menu-visible .main {
-				margin-left: var(--side-menu-size);
+				margin-inline-start: var(--side-menu-size);
 			}
 
 			.main {
-				margin-right: 0;
+				margin-inline-end: 0;
 			}
 		}
 	}
@@ -174,83 +199,25 @@ body,
 .tablet,
 .phone {
 	.layout-side .main {
-		margin-left: 0;
+		margin-inline-start: 0;
 	}
 }
 
+// Follows the 16px page gutter.
 ///
-.phone {
-	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
-		margin: var(--space-none) var(--space-none) var(--space-base) var(--space-none);
-		width: 100%;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	&.tablet {
-		.layout-native {
-			&.aside {
-				&-visible,
-				&-expandable {
-					.main {
-						margin-left: 0;
-					}
-				}
-			}
-		}
-
-		.layout-side .main {
-			margin-right: 0;
-		}
-
-		&.landscape {
-			.layout-side.layout-native.aside-expandable {
-				&.menu-visible .main {
-					margin-left: 0;
-					margin-right: var(--side-menu-size);
-				}
-
-				.main {
-					margin-right: 0;
-				}
-			}
-		}
-	}
-
-	&.phone {
-		.layout-side .main {
-			margin-right: 0;
-		}
-	}
-
-	.layout-side {
-		.main {
-			margin-left: 0;
-			margin-right: var(--side-menu-size);
-		}
-
-		&.aside-overlay .main {
-			margin-right: 0;
-		}
-	}
-
-	.aside-expandable {
-		.main {
-			margin-right: 0;
-		}
-	}
+.tablet .layout-side-no-header .menu-icon,
+.phone .layout-side-no-header .menu-icon {
+	margin-inline: variables.$token-space-400;
 }
 
 // Nested layout SS preview
 ///
 .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+	-servicestudio-min-width: calc(100vw - (variables.$token-scale-1000 * 2));
 }
 
 .phone .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--space-base) * 2));
+	-servicestudio-min-width: calc(100vw - (variables.$token-scale-400 * 2));
 
 	&.layout-native {
 		-servicestudio-min-width: 100vw;

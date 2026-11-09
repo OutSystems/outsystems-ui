@@ -116,8 +116,6 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 
 		/**
 		 * Method to remove and destroy instance events and properties!
-		 *
-		 * @memberof Providers.OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll
 		 */
 		public dispose(): void {
 			this._unsetEvents();

@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "FlipContent",
     "inDevelopment": false,
     "name": "Flip Content",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/FlipContent/scss/flipcontent",
+    "scss": "../scss/04-patterns/02-content/flip-content/flipcontent",
     "section": "Content"
 };
 

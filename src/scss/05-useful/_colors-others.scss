@@ -6,9 +6,6 @@
 ///
 .background {
 	&-transparent {
-		&,
-		.ie11 & {
-			background-color: get-background-color('transparent');
-		}
+		background-color: transparent;
 	}
 }

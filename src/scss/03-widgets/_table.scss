@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
+
 /* Widgets - Table */
 ////
 /// @group Widgets-Table
@@ -5,8 +8,20 @@
 
 ///
 .table {
-	border: var(--border-size-s) solid get-border-color('neutral-4');
-	border-radius: var(--border-radius-soft);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-table-border-color: var(--color-border);
+	--osui-table-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	--osui-table-header-background: #{variables.$token-bg-neutral-subtle-default};
+	--osui-table-header-color: var(--color-text-subtlest);
+	--osui-table-cell-background: var(--color-background-surface);
+	--osui-table-row-hover-background: var(--color-background-input-disabled);
+	--osui-table-row-stripe-background: #{variables.$token-bg-neutral-subtle-default};
+	--osui-table-sorted-color: var(--color-text);
+	--osui-table-row-selected-background: var(--color-primary-selected);
+	// ───────────────────────────────────────────────────────────────────
+
+	border: variables.$token-border-size-025 solid var(--osui-table-border-color);
+	border-radius: var(--osui-table-border-radius);
 	border-spacing: 0;
 	empty-cells: show;
 	white-space: nowrap;
@@ -20,22 +35,22 @@
 		}
 
 		th {
-			background-color: get-background-color('neutral-0');
-			border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-			color: get-text-color('neutral-8');
-			font-weight: var(--font-semi-bold);
-			height: 48px;
-			padding: var(--space-none) var(--space-m);
-			text-align: left;
+			background-color: var(--osui-table-header-background);
+			border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
+			color: var(--osui-table-header-color);
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-regular;
+			height: variables.$token-scale-1200;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-600;
+			text-align: start;
 
 			&:first-child {
-				border-radius: var(--border-radius-soft) var(--border-radius-none) var(--border-radius-none)
-					var(--border-radius-none);
+				border-start-start-radius: var(--osui-table-border-radius);
 			}
 
 			&:last-child {
-				border-radius: var(--border-radius-none) var(--border-radius-soft) var(--border-radius-none)
-					var(--border-radius-none);
+				border-start-end-radius: var(--osui-table-border-radius);
 			}
 
 			&.sortable {
@@ -43,165 +58,105 @@
 			}
 
 			&.sorted {
-				color: get-text-color('primary');
+				color: var(--osui-table-sorted-color);
+				font-weight: variables.$token-font-weight-semi-bold;
 			}
 		}
 	}
 
 	&-row {
 		&:hover td {
-			background: get-background-color('neutral-2');
+			background: var(--osui-table-row-hover-background);
 		}
 
 		&.table-row-selected td {
-			background: get-background-color('primary') get-background-color('primary-lightest');
+			background: color-mix(
+				in srgb,
+				var(--osui-table-row-selected-background) 10%,
+				#{variables.$token-bg-surface-default}
+			);
 		}
 
 		td {
-			background: get-background-color('neutral-0');
-			border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-			height: 56px;
-			padding: var(--space-s) var(--space-m);
+			background: var(--osui-table-cell-background);
+			border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
+			color: var(--color-text);
+			font-size: variables.$token-font-size-350;
+			height: variables.$token-scale-1600;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-600;
+			transition: background-color variables.$token-transition-time-100 ease; // no token match for ease
 			vertical-align: inherit;
 		}
 
 		&-small {
 			td {
-				height: 48px;
+				height: variables.$token-scale-1000;
 			}
 		}
 
 		&-medium {
 			td {
-				height: 64px;
+				height: variables.$token-scale-1200;
 			}
 		}
 
 		&-stripping:nth-child(even) {
 			td {
-				background: get-background-color('neutral-1');
+				background: var(--osui-table-row-stripe-background);
 			}
 			&:hover td {
-				background: get-background-color('neutral-2');
+				background: var(--osui-table-row-hover-background);
 			}
 		}
 	}
 
 	.table-row:last-child {
 		& > td {
-			border-bottom: none;
-
-			&:last-child {
-				border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
-					var(--border-radius-none);
-			}
+			border-block-end: none;
 		}
 
 		& > td:first-child {
-			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-none)
-				var(--border-radius-soft);
+			border-end-start-radius: var(--osui-table-border-radius);
+		}
+
+		& > td:last-child {
+			border-end-end-radius: var(--osui-table-border-radius);
 		}
 	}
+}
+
+///
+.table-cell-secondary {
+	color: var(--color-text-subtle);
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
 	.table-header th.sortable:hover {
-		color: get-text-color('primary');
-	}
-}
-
-/* enable the horizontal scroll when has the utility class */
-///
-.tablet {
-	.overflow-horizontal {
-		.table {
-			overflow-x: auto;
-		}
+		color: var(--osui-table-sorted-color);
 	}
 }
 
 ///
 .phone,
 .tablet {
-	div:not(.overflow-horizontal) {
-		& > .table:not(.table-no-responsive) {
-			word-break: break-all;
-		}
-	}
-
 	.table {
 		th {
 			width: 100%;
 		}
 
-		&-no-responsive {
-			overflow-x: auto;
-			word-break: break-all;
+		overflow-x: auto;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-word-break: normal;
-			}
-		}
-
-		&:not(.table-no-responsive) {
-			overflow: hidden;
-
-			thead {
-				display: none;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-display: none;
-				}
-			}
-
-			tr,
-			td {
-				display: block;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-word-break: normal;
-				}
-			}
-
-			tr {
-				border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-			}
-
-			td {
-				border-bottom: 0;
-				display: flex;
-				height: auto;
-				position: relative;
-				text-align: left !important;
-				width: 100% !important;
-
-				&:before {
-					content: attr(data-header);
-					display: block;
-					font-weight: bold;
-					margin-right: 10px;
-					max-width: 110px;
-					min-width: 110px;
-					word-break: break-word;
-					white-space: normal;
-				}
-
-				&:not([data-header]) {
-					&:before {
-						display: none;
-					}
-				}
-			}
+		// Service Studio Preview
+		& {
+			-servicestudio-word-break: normal;
 		}
 	}
 
 	.layout-native {
-		.table:not(.table-responsive) {
+		.table {
 			thead {
 				display: table-header-group;
 			}
@@ -211,17 +166,13 @@
 			}
 
 			td {
-				background: get-background-color('neutral-0');
-				border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
+				background: var(--osui-table-cell-background);
+				border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
 				display: table-cell;
-				padding: var(--space-s) var(--space-m);
+				padding-block: variables.$token-scale-200;
+				padding-inline: variables.$token-scale-600;
 				vertical-align: inherit;
 				width: auto !important;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-word-break: break-all;
-				}
 			}
 
 			td:before {
@@ -229,77 +180,37 @@
 			}
 		}
 	}
-
-	.layout:not(.layout-native) .table:not(.table-no-responsive) tbody {
-		display: block;
-		width: 100%;
-	}
 }
 
 ///
 .phone {
 	.table {
-		&:not(.table-responsive) {
-			display: block;
-			overflow: auto;
-			position: relative;
+		display: block;
+		overflow: auto;
+		position: relative;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-display: table;
-			}
+		// Service Studio Preview
+		& {
+			-servicestudio-display: table;
 		}
 	}
 
 	.layout-native {
 		.table {
-			&:not(.table-responsive) {
-				td:before {
-					display: none;
-				}
+			td:before {
+				display: none;
 			}
 		}
 	}
 }
-
-/* ============================================================================= */
-/* Table > td */
-/* ============================================================================= */
-///td
 
 // Accessibility ------------------------------------------------------------------
 ///
 .has-accessible-features {
-	th.sortable:focus {
-		box-shadow: 0 0 0 3px get-background-color('focus-outer');
+	th.sortable:focus-visible {
+		@include a11y-focus-shadow;
+
 		position: relative;
 		z-index: var(--layer-global-screen);
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	&.phone,
-	&.tablet {
-		.table:not(.table-no-responsive) {
-			td {
-				text-align: right !important;
-			}
-
-			td:before {
-				margin-left: 10px;
-				margin-right: 0px;
-			}
-		}
-	}
-
-	.table-header th {
-		text-align: right;
-	}
-
-	.sortable-icon {
-		margin-left: var(--space-none);
-		right: var(--space-s);
 	}
 }

@@ -10,8 +10,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		 * Get the selected values options that will be used to pass into platform as a JSON string
 		 *
 		 * @protected
-		 * @return {*}  {DropDownOption[]}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
 		 */
 		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
@@ -34,9 +32,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);

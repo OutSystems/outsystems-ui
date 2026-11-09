@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - a11y (Accessibility) */
 ////
 /// @group Patterns-a11y
@@ -31,9 +33,10 @@
 /* Skip-nav link used on Accessibility*/
 ///
 .skip-nav {
-	left: var(--space-xl);
+	inset-inline-start: variables.$token-scale-1000;
 	opacity: 0;
-	padding: var(--space-s) var(--space-base);
+	padding-block: variables.$token-scale-200;
+	padding-inline: variables.$token-scale-400;
 	pointer-events: none;
 	position: absolute;
 	text-transform: uppercase;

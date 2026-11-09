@@ -2,7 +2,7 @@
 namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
 	export function NewNoUiSlider(
 		rangeSliderId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode
 	): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
 		let _rangeSliderItem = null;
@@ -11,7 +11,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
 			case OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Single:
 				_rangeSliderItem = new Providers.OSUI.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle(
 					rangeSliderId,
-					JSON.parse(configs)
+					OSFramework.OSUI.Helper.ParseConfigs(configs)
 				);
 
 				break;
@@ -19,7 +19,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
 			case OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval:
 				_rangeSliderItem = new Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval(
 					rangeSliderId,
-					JSON.parse(configs)
+					OSFramework.OSUI.Helper.ParseConfigs(configs)
 				);
 
 				break;

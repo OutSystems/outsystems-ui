@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Patterns.WizardItem {
 	/**
 	 * Class that represents the custom configurations received by WizardItem.
-	 *
-	 * @export
-	 * @class WizardItemConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class WizardItemConfig extends AbstractConfiguration {
 		/**
@@ -23,8 +19,6 @@ namespace OSFramework.OSUI.Patterns.WizardItem {
 		 *
 		 * @param key property name
 		 * @param value value to be set
-		 * @returns {*}
-		 * @memberof OSFramework.Patterns.WizardItem.WizardItemConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

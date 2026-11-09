@@ -309,6 +309,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailCheckIsRTL: 'OSUI-API-28026',
 		FailSetMenuOnReady: 'OSUI-API-28027',
 		FailSetMenuOnDestroy: 'OSUI-API-28028',
+		FailSetDarkTheme: 'OSUI-API-28029',
 	};
 
 	export const InlineSvg = {
@@ -348,6 +349,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-33001',
 		FailDispose: 'OSUI-API-33002',
 		FailRegisterCallback: 'OSUI-API-33003',
+	};
+
+	export const SwipeEvents = {
+		FailChangeProperty: 'OSUI-API-34001',
+	};
+
+	export const TouchEvents = {
+		FailChangeProperty: 'OSUI-API-35001',
 	};
 
 	// Error Codes used in Legacy Client Action

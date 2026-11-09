@@ -8,8 +8,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Getter that allows to obtain the IsOpen status.
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof ITooltip
 		 */
 		get IsOpen(): boolean;
 	}

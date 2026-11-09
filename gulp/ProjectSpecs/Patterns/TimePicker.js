@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "TimePicker",
     "inDevelopment": false,
     "name": "TimePicker",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/TimePicker/scss/timepicker",
+    "scss": "../scss/04-patterns/03-interaction/time-picker/timepicker",
     "section": "Interaction"
 };
 

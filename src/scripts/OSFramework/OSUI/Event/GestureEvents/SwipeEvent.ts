@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.GestureEvent {
 	/**
 	 * Class that represents the gesture events.
-	 *
-	 * @export
-	 * @class SwipeEvent
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class SwipeEvent extends AbstractGestureEvent {
 		// Store the swipe callbacks for each direction
@@ -53,11 +49,10 @@ namespace OSFramework.OSUI.Event.GestureEvent {
 		 * Method to set the expected callbacks
 		 *
 		 * @protected
-		 * @param {GlobalCallbacks.Generic} swipeDownCallback
-		 * @param {GlobalCallbacks.Generic} swipeLeftCallback
-		 * @param {GlobalCallbacks.Generic} swipeRightCallback
-		 * @param {GlobalCallbacks.Generic} swipeUpCallback
-		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
+		 * @param swipeDownCallback Function invoked on a swipe down
+		 * @param swipeLeftCallback Function invoked on a swipe left
+		 * @param swipeRightCallback Function invoked on a swipe right
+		 * @param swipeUpCallback Function invoked on a swipe up
 		 */
 		protected setSwipeCallbacks(
 			swipeDownCallback: GlobalCallbacks.Generic,
@@ -76,11 +71,10 @@ namespace OSFramework.OSUI.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Event.GestureEvent.swipeDown} swipeDownCallback
-		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
-		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
-		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
-		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
+		 * @param swipeDownCallback Function invoked on a swipe down
+		 * @param swipeLeftCallback Function invoked on a swipe left
+		 * @param swipeRightCallback Function invoked on a swipe right
+		 * @param swipeUpCallback Function invoked on a swipe up
 		 */
 		public setSwipeEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,

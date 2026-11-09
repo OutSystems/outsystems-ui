@@ -2,10 +2,6 @@
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Class that represents the mousedown on the body event.
-	 *
-	 * @export
-	 * @class BodyOnMouseDown
-	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class BodyOnMouseDown extends AbstractListener<string> {
 		constructor() {

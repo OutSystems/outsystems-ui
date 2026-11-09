@@ -1,0 +1,753 @@
+{
+	"AccordionIconPosition": {
+		"description": "Sets the position of the icon in a Accordion Item pattern.",
+		"values": [
+			{
+				"identifier": "Left",
+				"label": "left"
+			},
+			{
+				"identifier": "Right",
+				"label": "right"
+			}
+		],
+		"usedBy": [
+			"Content/AccordionItem.IconPosition"
+		]
+	},
+	"AccordionIconType": {
+		"description": "Set of icons shown in of the AccordionItem",
+		"values": [
+			{
+				"identifier": "Caret",
+				"label": "Caret"
+			},
+			{
+				"identifier": "Custom",
+				"label": "Custom"
+			},
+			{
+				"identifier": "PlusMinus",
+				"label": "PlusMinus"
+			}
+		],
+		"usedBy": [
+			"Content/AccordionItem.Icon"
+		]
+	},
+	"Alert": {
+		"description": "Different types of alert messages",
+		"values": [
+			{
+				"identifier": "Error",
+				"label": "Error"
+			},
+			{
+				"identifier": "Info",
+				"label": "Info"
+			},
+			{
+				"identifier": "Success",
+				"label": "Success"
+			},
+			{
+				"identifier": "Warning",
+				"label": "Warning"
+			}
+		],
+		"usedBy": [
+			"Content/Alert.AlertType"
+		]
+	},
+	"AnimationType": {
+		"description": "Contains different types of element animations.",
+		"values": [
+			{
+				"identifier": "BottomToTop",
+				"label": "BottomToTop"
+			},
+			{
+				"identifier": "Bounce",
+				"label": "Bounce"
+			},
+			{
+				"identifier": "FadeIn",
+				"label": "FadeIn"
+			},
+			{
+				"identifier": "LeftToRight",
+				"label": "LeftToRight"
+			},
+			{
+				"identifier": "RightToLeft",
+				"label": "RightToLeft"
+			},
+			{
+				"identifier": "Scale",
+				"label": "Scale"
+			},
+			{
+				"identifier": "ScaleDown",
+				"label": "ScaleDown"
+			},
+			{
+				"identifier": "Spinner",
+				"label": "Spinner"
+			},
+			{
+				"identifier": "TopToBottom",
+				"label": "TopToBottom"
+			}
+		],
+		"usedBy": [
+			"Interaction/Animate.AnimationType"
+		]
+	},
+	"BreakColumns": {
+		"description": "Different ways of breaking the columns.",
+		"values": [
+			{
+				"identifier": "All",
+				"label": "All"
+			},
+			{
+				"identifier": "First",
+				"label": "First"
+			},
+			{
+				"identifier": "Last",
+				"label": "Last"
+			},
+			{
+				"identifier": "Middle",
+				"label": "Middle"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			}
+		],
+		"usedBy": [
+			"Adaptive/Columns2.PhoneBehavior",
+			"Adaptive/Columns2.TabletBehavior",
+			"Adaptive/Columns3.PhoneBehavior",
+			"Adaptive/Columns3.TabletBehavior",
+			"Adaptive/Columns4.PhoneBehavior",
+			"Adaptive/Columns4.TabletBehavior",
+			"Adaptive/Columns5.PhoneBehavior",
+			"Adaptive/Columns5.TabletBehavior",
+			"Adaptive/Columns6.PhoneBehavior",
+			"Adaptive/Columns6.TabletBehavior",
+			"Adaptive/ColumnsMediumLeft.PhoneBehavior",
+			"Adaptive/ColumnsMediumLeft.TabletBehavior",
+			"Adaptive/ColumnsMediumRight.PhoneBehavior",
+			"Adaptive/ColumnsMediumRight.TabletBehavior",
+			"Adaptive/ColumnsSmallLeft.PhoneBehavior",
+			"Adaptive/ColumnsSmallLeft.TabletBehavior",
+			"Adaptive/ColumnsSmallRight.PhoneBehavior",
+			"Adaptive/ColumnsSmallRight.TabletBehavior"
+		]
+	},
+	"CarouselNavigation": {
+		"description": "Sets the navigation type of the Carousel. ",
+		"values": [
+			{
+				"identifier": "Arrows",
+				"label": "Arrows"
+			},
+			{
+				"identifier": "Both",
+				"label": "Both"
+			},
+			{
+				"identifier": "Dots",
+				"label": "Dots"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			}
+		],
+		"usedBy": [
+			"Interaction/Carousel.Navigation"
+		]
+	},
+	"Color": {
+		"description": "Different colors available.",
+		"values": [
+			{
+				"identifier": "Blue",
+				"label": "Blue"
+			},
+			{
+				"identifier": "Cyan",
+				"label": "Cyan"
+			},
+			{
+				"identifier": "Grape",
+				"label": "Grape"
+			},
+			{
+				"identifier": "Green",
+				"label": "Green"
+			},
+			{
+				"identifier": "Indigo",
+				"label": "Indigo"
+			},
+			{
+				"identifier": "Lime",
+				"label": "Lime"
+			},
+			{
+				"identifier": "Neutral0",
+				"label": "Neutral0"
+			},
+			{
+				"identifier": "Neutral1",
+				"label": "Neutral1"
+			},
+			{
+				"identifier": "Neutral10",
+				"label": "Neutral10"
+			},
+			{
+				"identifier": "Neutral2",
+				"label": "Neutral2"
+			},
+			{
+				"identifier": "Neutral3",
+				"label": "Neutral3"
+			},
+			{
+				"identifier": "Neutral4",
+				"label": "Neutral4"
+			},
+			{
+				"identifier": "Neutral5",
+				"label": "Neutral5"
+			},
+			{
+				"identifier": "Neutral6",
+				"label": "Neutral6"
+			},
+			{
+				"identifier": "Neutral7",
+				"label": "Neutral7"
+			},
+			{
+				"identifier": "Neutral8",
+				"label": "Neutral8"
+			},
+			{
+				"identifier": "Neutral9",
+				"label": "Neutral9"
+			},
+			{
+				"identifier": "Orange",
+				"label": "Orange"
+			},
+			{
+				"identifier": "Pink",
+				"label": "Pink"
+			},
+			{
+				"identifier": "Primary",
+				"label": "Primary"
+			},
+			{
+				"identifier": "Red",
+				"label": "Red"
+			},
+			{
+				"identifier": "Secondary",
+				"label": "Secondary"
+			},
+			{
+				"identifier": "Teal",
+				"label": "Teal"
+			},
+			{
+				"identifier": "Transparent",
+				"label": "Transparent"
+			},
+			{
+				"identifier": "Violet",
+				"label": "Violet"
+			},
+			{
+				"identifier": "Yellow",
+				"label": "Yellow"
+			}
+		],
+		"usedBy": [
+			"Content/CardBackground.Color",
+			"Content/Tag.Color",
+			"Content/UserAvatar.Color",
+			"Navigation/TimelineItem.Color",
+			"Numbers/Badge.Color",
+			"Numbers/Counter.BackgroundColor",
+			"Numbers/IconBadge.Color",
+			"Numbers/ProgressBar.ProgressColor",
+			"Numbers/ProgressBar.TrailColor",
+			"Numbers/ProgressCircle.ProgressColor",
+			"Numbers/ProgressCircle.TrailColor",
+			"Utilities/Separator.Color"
+		]
+	},
+	"DatePickerTimeFormat": {
+		"description": "Used to configure if the calendar is DateTime 12/24h type or if is Date type.",
+		"values": [
+			{
+				"identifier": "Disabled",
+				"label": "Disabled"
+			},
+			{
+				"identifier": "Time12hFormat",
+				"label": "Time12hFormat"
+			},
+			{
+				"identifier": "Time24hFormat",
+				"label": "Time24hFormat"
+			}
+		],
+		"usedBy": [
+			"Interaction/DatePicker.TimeFormat"
+		]
+	},
+	"Direction": {
+		"description": "Sets the direction: left or right.",
+		"values": [
+			{
+				"identifier": "Left",
+				"label": "Left"
+			},
+			{
+				"identifier": "Right",
+				"label": "Right"
+			}
+		],
+		"usedBy": [
+			"Interaction/Sidebar.Direction",
+			"Navigation/Tabs.TabsVerticalPosition"
+		]
+	},
+	"FloatingPosition": {
+		"description": "Contains different element position types.",
+		"values": [
+			{
+				"identifier": "Auto",
+				"label": "Auto"
+			},
+			{
+				"identifier": "Bottom",
+				"label": "Bottom"
+			},
+			{
+				"identifier": "BottomEnd",
+				"label": "BottomEnd"
+			},
+			{
+				"identifier": "BottomStart",
+				"label": "BottomStart"
+			},
+			{
+				"identifier": "Center",
+				"label": "Center"
+			},
+			{
+				"identifier": "Left",
+				"label": "Left"
+			},
+			{
+				"identifier": "LeftEnd",
+				"label": "LeftEnd"
+			},
+			{
+				"identifier": "LeftStart",
+				"label": "LeftStart"
+			},
+			{
+				"identifier": "Right",
+				"label": "Right"
+			},
+			{
+				"identifier": "RightEnd",
+				"label": "RightEnd"
+			},
+			{
+				"identifier": "RightStart",
+				"label": "RightStart"
+			},
+			{
+				"identifier": "Top",
+				"label": "Top"
+			},
+			{
+				"identifier": "TopEnd",
+				"label": "TopEnd"
+			},
+			{
+				"identifier": "TopStart",
+				"label": "TopStart"
+			}
+		],
+		"usedBy": [
+			"Navigation/OverflowMenu.BalloonPosition"
+		]
+	},
+	"GutterSize": {
+		"description": "Contains different sizes of gutter.",
+		"values": [
+			{
+				"identifier": "Base",
+				"label": "Base"
+			},
+			{
+				"identifier": "ExtraLarge",
+				"label": "ExtraLarge"
+			},
+			{
+				"identifier": "ExtraSmall",
+				"label": "ExtraSmall"
+			},
+			{
+				"identifier": "Large",
+				"label": "Large"
+			},
+			{
+				"identifier": "Medium",
+				"label": "Medium"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			},
+			{
+				"identifier": "Small",
+				"label": "Small"
+			},
+			{
+				"identifier": "XXLarge",
+				"label": "XXLarge"
+			}
+		],
+		"usedBy": [
+			"Adaptive/Columns2.GutterSize",
+			"Adaptive/Columns3.GutterSize",
+			"Adaptive/Columns4.GutterSize",
+			"Adaptive/Columns5.GutterSize",
+			"Adaptive/Columns6.GutterSize",
+			"Adaptive/ColumnsMediumLeft.GutterSize",
+			"Adaptive/ColumnsMediumRight.GutterSize",
+			"Adaptive/ColumnsSmallLeft.GutterSize",
+			"Adaptive/ColumnsSmallRight.GutterSize"
+		]
+	},
+	"IdentityProvider": {
+		"description": "Contains different identity providers.",
+		"values": [
+			{
+				"identifier": "Apple",
+				"label": "Apple"
+			},
+			{
+				"identifier": "Facebook",
+				"label": "Facebook"
+			},
+			{
+				"identifier": "Google",
+				"label": "Google"
+			}
+		],
+		"usedBy": [
+			"Utilities/ProviderLoginButton.IdentityProvider"
+		]
+	},
+	"MessageStatus": {
+		"description": "Identify if the message was Received, Sent or Read.",
+		"values": [
+			{
+				"identifier": "Hidden",
+				"label": "Hidden"
+			},
+			{
+				"identifier": "Read",
+				"label": "Read"
+			},
+			{
+				"identifier": "Received",
+				"label": "Received"
+			},
+			{
+				"identifier": "Sent",
+				"label": "Sent"
+			}
+		],
+		"usedBy": [
+			"Content/ChatMessage.MessageStatus"
+		]
+	},
+	"Orientation": {
+		"description": "Different orientations.",
+		"values": [
+			{
+				"identifier": "Horizontal",
+				"label": "Horizontal"
+			},
+			{
+				"identifier": "Vertical",
+				"label": "Vertical"
+			}
+		],
+		"usedBy": [
+			"Interaction/RangeSlider.Orientation",
+			"Interaction/RangeSliderInterval.Orientation",
+			"Interaction/ScrollableArea.Orientation",
+			"Navigation/Tabs.TabsOrientation"
+		]
+	},
+	"Position": {
+		"description": "Contains different element alignment types.",
+		"values": [
+			{
+				"identifier": "Bottom",
+				"label": "Bottom"
+			},
+			{
+				"identifier": "BottomLeft",
+				"label": "BottomLeft"
+			},
+			{
+				"identifier": "BottomRight",
+				"label": "BottomRight"
+			},
+			{
+				"identifier": "Center",
+				"label": "Center"
+			},
+			{
+				"identifier": "Left",
+				"label": "Left"
+			},
+			{
+				"identifier": "Right",
+				"label": "Right"
+			},
+			{
+				"identifier": "Top",
+				"label": "Top"
+			},
+			{
+				"identifier": "TopLeft",
+				"label": "TopLeft"
+			},
+			{
+				"identifier": "TopRight",
+				"label": "TopRight"
+			}
+		],
+		"usedBy": [
+			"Content/FloatingContent.Position",
+			"Content/Tooltip.Position",
+			"Interaction/Notification.Position"
+		]
+	},
+	"ScrollbarStyle": {
+		"description": "Contains different scrollbsr styles.",
+		"values": [
+			{
+				"identifier": "Compact",
+				"label": "Compact"
+			},
+			{
+				"identifier": "Default",
+				"label": "Default"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			}
+		],
+		"usedBy": [
+			"Interaction/ScrollableArea.ScrollbarStyle"
+		]
+	},
+	"Shape": {
+		"description": "Contains different types of shapes.",
+		"values": [
+			{
+				"identifier": "Rounded",
+				"label": "Rounded"
+			},
+			{
+				"identifier": "Sharp",
+				"label": "Sharp"
+			},
+			{
+				"identifier": "SoftRounded",
+				"label": "SoftRounded"
+			}
+		],
+		"usedBy": [
+			"Content/Tag.Shape",
+			"Content/UserAvatar.Shape",
+			"Interaction/BottomSheet.Shape",
+			"Navigation/OverflowMenu.BalloonShape",
+			"Numbers/Badge.Shape",
+			"Utilities/ProviderLoginButton.Shape"
+		]
+	},
+	"Size": {
+		"description": "Contains different type of sizes.",
+		"values": [
+			{
+				"identifier": "Medium",
+				"label": "Medium"
+			},
+			{
+				"identifier": "Small",
+				"label": "Small"
+			}
+		],
+		"usedBy": [
+			"Content/Tag.Size",
+			"Content/UserAvatar.Size",
+			"Numbers/Badge.Size",
+			"Numbers/Rating.Size"
+		]
+	},
+	"Space": {
+		"description": "Sets element spacing sizes.",
+		"values": [
+			{
+				"identifier": "Base",
+				"label": "Base"
+			},
+			{
+				"identifier": "ExtraLarge",
+				"label": "ExtraLarge"
+			},
+			{
+				"identifier": "ExtraSmall",
+				"label": "ExtraSmall"
+			},
+			{
+				"identifier": "Large",
+				"label": "Large"
+			},
+			{
+				"identifier": "Medium",
+				"label": "Medium"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			},
+			{
+				"identifier": "Small",
+				"label": "Small"
+			},
+			{
+				"identifier": "XXLarge",
+				"label": "XXLarge"
+			}
+		],
+		"usedBy": [
+			"Adaptive/Gallery.ItemsGap",
+			"Utilities/Separator.Space"
+		]
+	},
+	"Speed": {
+		"description": "Sets animation speed settings.",
+		"values": [
+			{
+				"identifier": "Fast",
+				"label": "Fast"
+			},
+			{
+				"identifier": "Normal",
+				"label": "Normal"
+			},
+			{
+				"identifier": "Slow",
+				"label": "Slow"
+			}
+		],
+		"usedBy": [
+			"Interaction/Animate.Speed"
+		]
+	},
+	"StackedCardsPosition": {
+		"description": "Sets the position of elements in a Stacked Cards pattern.",
+		"values": [
+			{
+				"identifier": "Bottom",
+				"label": "Bottom"
+			},
+			{
+				"identifier": "None",
+				"label": "None"
+			},
+			{
+				"identifier": "Top",
+				"label": "Top"
+			}
+		],
+		"usedBy": [
+			"Interaction/StackedCards.StackedOptions"
+		]
+	},
+	"Steps": {
+		"description": "Contains different types of status for steps in a sequential process.",
+		"values": [
+			{
+				"identifier": "Active",
+				"label": "Active"
+			},
+			{
+				"identifier": "Next",
+				"label": "Next"
+			},
+			{
+				"identifier": "Past",
+				"label": "Past"
+			}
+		],
+		"usedBy": [
+			"Navigation/WizardItem.Status"
+		]
+	},
+	"StepsBehaviour": {
+		"description": "Defines how the wizard steps behave in the user interface.",
+		"values": [
+			{
+				"identifier": "Interactive",
+				"label": "Interactive"
+			},
+			{
+				"identifier": "ProgressOnly",
+				"label": "ProgressOnly"
+			}
+		],
+		"usedBy": [
+			"Navigation/Wizard.StepsBehaviour"
+		]
+	},
+	"Trigger": {
+		"description": "Contains different triggers for the patterns behavior.",
+		"values": [
+			{
+				"identifier": "OnClick",
+				"label": "OnClick"
+			},
+			{
+				"identifier": "OnHover",
+				"label": "OnHover"
+			}
+		],
+		"usedBy": [
+			"Content/Tooltip.Trigger"
+		]
+	}
+}

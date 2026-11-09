@@ -6,9 +6,7 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Function that identifies the browser being used
 	 *
-	 * @export
-	 * @param {string} [useragent]
-	 * @return {*}  {string}
+	 * @param [useragent] User-agent string to inspect; defaults to the browser's
 	 */
 	export function GetBrowser(useragent = ''): string {
 		return OSFramework.OSUI.Helper.DeviceInfo.GetBrowser(useragent);

@@ -4,10 +4,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to convert a time in seconds
 		 *
-		 * @static
-		 * @param {string} time
-		 * @return {*}  {number}
-		 * @memberof Times
+		 * @param time Time to check or convert
 		 */
 		public static ConvertInSeconds(time: Date): number {
 			// Convert the time provided into seconds
@@ -23,9 +20,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function used to check if a given time is an OutSystems nullDate
 		 *
-		 * @export
-		 * @param {string} time
-		 * @memberof OSFramework.Helper.Times
+		 * @param time Time to check or convert
 		 */
 		public static IsNull(time: string): boolean {
 			if (Number.isNaN(Date.parse(time))) {

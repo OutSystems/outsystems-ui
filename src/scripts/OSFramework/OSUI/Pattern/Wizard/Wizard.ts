@@ -39,7 +39,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected setA11YProperties(): void {
 			// Clean up aria-* attributes
@@ -64,7 +63,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -74,7 +72,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * Manage HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected setHtmlElements(): void {
 			// Set CSS classes to the element
@@ -85,7 +82,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -95,7 +91,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -104,8 +99,7 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		/**
 		 * Method to add a new wizardItem
 		 *
-		 * @param {WizardItem.IWizardItem} childItem
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
+		 * @param childItem Wizard item to register
 		 */
 		public addWizardItem(childItem: WizardItem.IWizardItem): void {
 			if (this.getChild(childItem.uniqueId)) {
@@ -123,7 +117,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 *
 		 * @param childItem Child Item to be stored/managed
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		public beNotifiedByChild(childItem: WizardItem.IWizardItem, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
@@ -142,8 +135,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 
 		/**
 		 * Method to build the Wizard
-		 *
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		public build(): void {
 			super.build();
@@ -158,9 +149,8 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
+		 * @param propertyName Name of the configuration property to change
+		 * @param propertyValue New value for the property
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -174,8 +164,6 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 
 		/**
 		 * Method to destroy wizard instance
-		 *
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -184,8 +172,7 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		/**
 		 * Method to remove a wizardItem
 		 *
-		 * @param {string} childId
-		 * @memberof OSFramework.Patterns.Wizard.Wizard
+		 * @param childId Id of the child item
 		 */
 		public removeWizardItem(childId: string): void {
 			// Check if the given ChildId exist at childList

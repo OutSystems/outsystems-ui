@@ -11,10 +11,22 @@ const constants = {
         O11: [
             './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*',
             './src/scripts/OutSystems/OSUI/Utils/IconLibrary.ts'
+        ], 
+        ODC: [
+            './src/scripts/osui.ts',
+            './src/scripts/OutSystems/OSUI/Utils/LayoutPrivateCloseDeprecatedSubmenu.ts',
+            './src/scripts/OutSystems/OSUI/Utils/Deprecated_Utils.ts'
         ]
     },
-    // list of platforms to compile and create scss files.
+    // list of platforms to compile (TypeScript bundles).
     platformTarget: {
+        o11: 'O11',
+        odc: 'ODC',
+    },
+    // list of platforms for which to generate + compile SCSS bundles.
+    // Subset of platformTarget. O11 was disabled during the token migration
+    // (Phase 15b) and re-enabled once the new theme was ready to ship to O11 (ROU-12974).
+    scssPlatformTarget: {
         o11: 'O11',
         odc: 'ODC',
     },
@@ -27,7 +39,7 @@ const constants = {
 
 // Store the default project specifications
 const specs = {
-    "version": "2.30.0",
+    "version": "3.0.0",
     "name": "OutSystems UI",
     "description": "",
     "url": "Website:\n • https://www.outsystems.com/outsystems-ui",

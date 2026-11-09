@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will change the property of a given RangeSlider Id.
 	 *
-	 * @export
-	 * @param {string} rangeSliderId ID of the RangeSlider where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param rangeSliderId ID of the RangeSlider where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,16 +26,15 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Create the new RangeSliderItem instance and add it to the rangeSliderItemsMap
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {string} configs
-	 * @param {OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode} mode
-	 * @param {string} provider
-	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider}
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param configs The configuration options as a JSON string or object
+	 * @param mode The mode of the range slider: a single value or an interval
+	 * @param provider The provider name
+	 * @returns the RangeSlider instance
 	 */
 	export function Create(
 		rangeSliderId: string,
-		configs: string,
+		configs: string | Configs,
 		mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode,
 		provider: string
 	): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
@@ -60,8 +59,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will set RangeSlider with given ID as disabled
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(rangeSliderId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -79,8 +78,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will dispose the instance of the given RangeSliderItem Id
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(rangeSliderId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -100,8 +99,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will set RangeSlider with given ID as enabled
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(rangeSliderId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -119,8 +118,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Fucntion that will return the Map with all the RangeSlider instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllRangeSliderItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_rangeSliderItemsMap);
@@ -129,9 +127,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that gets the instance of RangeSlider, by a given ID.
 	 *
-	 * @export
-	 * @param {string} rangeSliderId ID of the RangeSlider that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider;}
+	 * @param rangeSliderId ID of the RangeSlider that will be looked for.
+	 * @returns the RangeSlider instance
 	 */
 	export function GetRangeSliderItemById(rangeSliderId: string): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -144,9 +141,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} rangeSliderId ID of the RangeSliderItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider}
+	 * @param rangeSliderId ID of the RangeSliderItem that will be initialized.
+	 * @returns the RangeSlider instance
 	 */
 	export function Initialize(rangeSliderId: string): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
 		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
@@ -159,14 +155,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		rangeSliderId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -184,8 +180,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to change the Range Slider trigger to on DragEnd
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -203,9 +199,10 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to set the Range Slider value
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {number} value
+	 * @param rangeSliderId ID of the RangeSlider pattern.
+	 * @param valueFrom Value of the (lower) handle.
+	 * @param [valueTo] Value of the upper handle (interval mode).
+	 * @returns Response object as a JSON string
 	 */
 	export function SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo?: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -222,8 +219,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to reset the Range Slider
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ResetRangeSliderValue(rangeSliderId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -240,10 +237,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {RangeSliderProviderConfigs} providerConfigs
-	 * @return {*}  {string}
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param configs Provider (noUiSlider) options to merge into the instance.
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -261,11 +257,10 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
 		rangeSliderId: string,
@@ -290,10 +285,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {string} eventId
-	 * @return {*}  {string}
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventId The id of the provider event
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(rangeSliderId: string, eventId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

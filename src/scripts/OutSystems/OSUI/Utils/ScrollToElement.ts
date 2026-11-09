@@ -3,13 +3,11 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Function to scroll to a given element
 	 *
-	 * @export
-	 * @param {string} ElementId
-	 * @param {boolean} [IsSmooth=true]
-	 * @param {number} [OffSet=0]
-	 * @param {string} [ElementParentClass]
-	 * @param {number} [ScrollDelay]
-	 * @return {*}  {string}
+	 * @param ElementId Id of the element to scroll to
+	 * @param [IsSmooth=true] True to scroll smoothly
+	 * @param [OffSet=0] Offset from the top of the element, in pixels
+	 * @param [ElementParentClass] Class of the scrollable parent, used to compute the scroll offset
+	 * @param [ScrollDelay] Delay before scrolling, in milliseconds
 	 */
 	export function ScrollToElement(
 		ElementId: string,

@@ -1,0 +1,58 @@
+/* Page Layout - Layout Native - Scroll */
+////
+/// @group Layout-Native_Scroll
+/// Page Layout - Layout Native - Scroll
+
+// The native layout pins the header and the bottom bar as grid rows and scrolls `.content`
+// alone, instead of scrolling the whole screen container.
+//
+// This started as an iOS-only workaround for the rubber-band scroll, gated behind an
+// `.ios-bounce` class the app template emitted. Both the platform scope and the class were
+// dropped in ROU-11511: the same scroll container is now used on every platform, so there is
+// deliberately no `.ios` / `.android` selector here.
+///
+.layout-native {
+	&:not(.hide-header-on-scroll) {
+		.main {
+			display: grid;
+			grid-template: auto 1fr auto / 1fr;
+			grid-template-areas: 'header' 'content' 'footer';
+			max-height: var(--viewport-height, 100vh);
+
+			// Service Studio Preview
+			& {
+				-servicestudio-max-height: 100% !important;
+			}
+		}
+
+		.header {
+			grid-area: header;
+			position: relative;
+		}
+
+		[data-block='Private.PullToRefresh'] {
+			display: contents;
+		}
+
+		.pull-to-refresh {
+			// The spinner sits right below the header, so it has to clear whichever top inset the
+			// header itself was padded with: `env()` / `--safe-area-inset-top` on iOS,
+			// `--status-bar-height` on Android (see `android-safe-area-top()` in 00-abstract/_mixins).
+			top: calc(
+				var(--header-size) + var(--header-size-content) +
+					max(var(--os-safe-area-top), var(--status-bar-height, 0px))
+			);
+		}
+
+		.content {
+			grid-area: content;
+			overflow-x: hidden;
+			overflow-y: auto;
+
+			&-bottom {
+				grid-area: footer;
+				position: relative;
+			}
+		}
+	}
+}

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 	// Store all TodayBtn text and aria-label translations
-	export const TodayBtn = {
+	export const TodayBtn: Record<string, { ariaLabel: string; title: string }> = {
 		ar: {
 			ariaLabel: 'انقر للانتقال إلى تاريخ اليوم',
 			title: 'اليوم',

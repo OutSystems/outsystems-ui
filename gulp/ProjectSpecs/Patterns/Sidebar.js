@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Sidebar",
     "inDevelopment": false,
     "name": "Sidebar",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar",
+    "scss": "../scss/04-patterns/04-navigation/sidebar/sidebar",
     "section": "Interaction"
 };
 

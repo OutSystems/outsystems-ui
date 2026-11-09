@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function that will change the property of a given Wizard Item pattern.
 	 *
-	 * @export
-	 * @param {string} wizardItemId ID of the Wizard Item where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param wizardItemId ID of the Wizard Item where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(wizardItemId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,19 +26,24 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Create the new Wizard Item instance and add it to the wizardItem Map
 	 *
-	 * @export
-	 * @param {string} wizardItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.WizardItem.IWizardItem}
+	 * @param wizardItemId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the WizardItem instance
 	 */
-	export function Create(wizardItemId: string, configs: string): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
+	export function Create(
+		wizardItemId: string,
+		configs: string | Configs
+	): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
 		if (_wizardItemMap.has(wizardItemId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.WizardItem} registered under id: ${wizardItemId}`
 			);
 		}
 
-		const _newWizardItem = new OSFramework.OSUI.Patterns.WizardItem.WizardItem(wizardItemId, JSON.parse(configs));
+		const _newWizardItem = new OSFramework.OSUI.Patterns.WizardItem.WizardItem(
+			wizardItemId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_wizardItemMap.set(wizardItemId, _newWizardItem);
 
@@ -48,8 +53,8 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Wizard Item
 	 *
-	 * @export
-	 * @param {string} wizardItemId
+	 * @param wizardItemId The id of the WizardItem element
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(wizardItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -69,8 +74,7 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function that will return the Map with all the Wizard Item instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every WizardItem instance
 	 */
 	export function GetAllWizardItems(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_wizardItemMap);
@@ -79,9 +83,8 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function that gets the instance of a Wizard Item by a given ID.
 	 *
-	 * @export
-	 * @param {string} wizardItemId ID of the WizardItem that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.WizardItem.IWizardItem}
+	 * @param wizardItemId ID of the WizardItem that will be looked for.
+	 * @returns the WizardItem instance
 	 */
 	export function GetWizardItemById(wizardItemId: string): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -94,9 +97,8 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} wizardItemId ID of the Wizard Item pattern that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.WizardItem.IWizardItem}
+	 * @param wizardItemId ID of the Wizard Item pattern that will be initialized.
+	 * @returns the WizardItem instance
 	 */
 	export function Initialize(wizardItemId: string): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
 		const wizardItem = GetWizardItemById(wizardItemId);
@@ -109,15 +111,14 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @export
-	 * @param {string} wizardItemId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param wizardItemId The id of the WizardItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		wizardItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

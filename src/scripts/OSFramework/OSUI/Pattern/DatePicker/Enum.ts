@@ -6,6 +6,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Enum {
 	export enum CssClass {
 		Calendar = 'osui-datepicker-calendar',
 		Pattern = 'osui-datepicker',
+		Redrawn = 'osui-datepicker--redrawn',
 	}
 
 	/**
