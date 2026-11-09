@@ -64,7 +64,10 @@ function snapshot() {
 		if (fs.statSync(abs).isDirectory()) {
 			for (const entry of fs.readdirSync(abs).sort()) visit(path.posix.join(rel, entry));
 		} else {
-			hashes.set(rel, crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex'));
+			// CRLF → LF: a Windows checkout with core.autocrlf may hold CRLF (`.md`, `.mdx`, `.txt` are not pinned
+			// to LF in .gitattributes), the generators write LF, and git normalizes both to the same commit.
+			const content = fs.readFileSync(abs, 'utf8').replaceAll('\r\n', '\n');
+			hashes.set(rel, crypto.createHash('sha256').update(content).digest('hex'));
 		}
 	};
 	GENERATED_PATHS.forEach(visit);
