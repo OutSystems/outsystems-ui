@@ -41,8 +41,9 @@ workflows are vendored copies that are not edited here.
     Key Vault token), **rolling `dev-latest` pre-release**. Chosen: the rolling pre-release.
 -   **Drift gate: warn first vs block from day one.** Blocking chosen; the fix is one command.
 -   **Drift gate: per-script `--check` flags only vs regenerate-and-compare.** Regenerate-and-compare chosen as the
-    gate (covers generators without a check, and the SCSS entry files); the existing per-script checks still run
-    first for their precise messages.
+    gate (covers generators without a check); the existing per-script checks still run first for their precise
+    messages. The SCSS entry files are the exception: the build has already rewritten them before the gate runs, so
+    a before/after snapshot cannot see them drift, and they are compared with the git index instead.
 -   **Local git hooks, self-healing bot commits, `postbuild` chaining.** Deferred until data shows they are needed.
 
 ## Decision Outcome
