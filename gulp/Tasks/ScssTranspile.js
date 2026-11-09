@@ -73,7 +73,7 @@ function getBuildInfoLine() {
 		// Not installed: build:tokens has already failed with a clearer message.
 	}
 
-	const commit = (process.env.GITHUB_SHA || readHeadCommit() || 'unknown').slice(0, 9);
+	const commit = (readHeadCommit() || process.env.GITHUB_SHA || 'unknown').slice(0, 9);
 
 	const built = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
