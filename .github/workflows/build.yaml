@@ -28,3 +28,35 @@ jobs:
             OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
             OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
             OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+
+    docs-check:
+        # Drift gate for committed generated files (ROU-13182). A separate job, not a step of the build above,
+        # because template-ts-build-project.yaml is a vendored copy of a shared workflow and is not edited here.
+        # Needs no secrets, so it runs on fork PRs too.
+        name: Check generated files are fresh
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            - name: ⬆️ Match the npm the repo pins
+              # Only npm >= 11.17 understands `.npmrc`'s `min-release-age-exclude[]`; see chromatic.yaml.
+              run: npm install -g npm@11.18.0 --ignore-scripts
+
+            - name: 🕸️ Install dependencies
+              # --ignore-scripts as in chromatic.yaml (githubactions:S6505); no install script is needed to build.
+              run: npm install --ignore-scripts
+
+            - name: 🔍 Check committed generated files are fresh
+              # Runs the production build itself (it rewrites the SCSS entry files, so the gate snapshots them
+              # first), then regenerates docs-ai/, the Storybook data, the migration guide tables and
+              # PatternTypes.ts, and fails if any committed file changed. Lint runs in the build job above.
+              # Fix locally: `npm run docs:regen`, then commit.
+              run: npm run docs:check
