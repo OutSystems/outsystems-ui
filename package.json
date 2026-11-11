@@ -13,6 +13,7 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
+		"docs:serve": "npm run docs && browser-sync start --server docs --files \"docs/**/*\"",
 		"postdocs": "node scripts/docs-ai-generator/publish-ai-docs.mjs",
 		"lint": "eslint . --ext .ts --max-warnings=0",
 		"lintfix": "eslint . --fix --ext .ts",
