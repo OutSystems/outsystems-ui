@@ -75,12 +75,12 @@ pre,
 	--color-icon-text: #ededed;
 }
 
+/* Logo only, like Storybook's sidebar: the "OutSystems UI - vX" text is redundant next to the logo (the sidebar,
+   tab title and hierarchy page still carry it). font-size: 0 hides it but keeps it as the link's accessible name. */
 .tsd-page-toolbar .tsd-toolbar-contents > .title {
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
-	color: #c8c8c8;
-	font-weight: 500;
+	font-size: 0;
 }
 
 .tsd-toolbar-contents > .title::before {
