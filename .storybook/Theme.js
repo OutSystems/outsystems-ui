@@ -3,7 +3,8 @@ import { create } from 'storybook/theming';
 const brandBase = {
 	fontBase: '"Inter", sans-serif',
 	brandTitle: '',
-	brandUrl: 'https://github.com/OutSystems/outsystems-ui',
+	// Relative, so it follows wherever Storybook is hosted; targets the Welcome page (stories/Welcome.mdx).
+	brandUrl: './?path=/docs/welcome--docs',
 	brandTarget: '_self',
 	colorPrimary: '#00a2bb',
 	appBorderRadius: 4,
