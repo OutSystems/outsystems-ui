@@ -14,26 +14,26 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 
 ## Command Quick Reference
 
-| Command                                               | Purpose                                                                                                                                                                         |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run setup`                                       | `npm i` + start dev server on `http://localhost:3000`                                                                                                                           |
-| `npm run dev -- --target O11`                         | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                       |
-| `npm run build`                                       | Production build for all targets, then `lintfix` + `lint`                                                                                                                       |
-| `npm run lint` / `lintfix` / `prettier`               | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                    |
-| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`); fails first if the installed version differs from the `package.json` pin |
-| `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                    |
-| `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                       |
-| `npm run update-version`                              | Interactive version bump across project files                                                                                                                                   |
-| `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                    |
-| `npm run docs:serve`                                  | Build the TypeDoc site, then serve `docs/` with live reload (browser-sync; next free port if 3000 is taken)                                                                     |
-| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                              |
+| Command                                               | Purpose                                                                                                                                                                                       |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run setup`                                       | `npm i` + start dev server on `http://localhost:3000`                                                                                                                                         |
+| `npm run dev -- --target O11`                         | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                                     |
+| `npm run build`                                       | Production build for all targets, then `lintfix` + `lint`                                                                                                                                     |
+| `npm run lint` / `lintfix` / `prettier`               | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                                  |
+| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`); fails first if the installed version differs from the `package.json` pin         |
+| `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                                  |
+| `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                                     |
+| `npm run update-version`                              | Interactive version bump across project files                                                                                                                                                 |
+| `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                                  |
+| `npm run docs:serve`                                  | Build the TypeDoc site, then serve `docs/` with live reload (browser-sync; next free port if 3000 is taken)                                                                                   |
+| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                                            |
 | `npm run docs:migration-page`                         | Regenerate the Storybook "Migration" page data (`stories/_helpers/migration-data.ts`) from the same skill plus a `classic-theme/` vs `dist/` diff; needs a build; `-- --check` fails on drift |
-| `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
-| `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
-| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed)       |
-| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); of the generated files it checks only `PatternTypes.ts` |
-| `npm run docs:regen` / `docs:check`                   | Build, then every generator in dependency order / the PR drift gate: fails when a committed generated file is stale |
-| `npm run tokens:update`                               | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`; the only way the pin moves |
+| `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale               |
+| `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                                      |
+| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed) |
+| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); of the generated files it checks only `PatternTypes.ts`                                                            |
+| `npm run docs:regen` / `docs:check`                   | Build, then every generator in dependency order / the PR drift gate: fails when a committed generated file is stale                                                                           |
+| `npm run tokens:update`                               | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`; the only way the pin moves                                                                              |
 
 There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm run docs:ai:test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
 
@@ -135,7 +135,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 
 ## Additional Resources
 
-- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) — live demos and documentation
+- [OutSystems UI Website](https://outsystems-ui.outsystems.com//) — live demos and documentation
 - [TypeDoc Generated Docs](https://outsystems-ui-docs.github.io/) — auto-generated API reference with UML diagrams
 - Forge: [O11](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) · [ODC](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc)
 - [Product Documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns) — OutSystems official docs

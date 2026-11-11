@@ -76,7 +76,7 @@
 		"Framework",
 		"UI Components"
 	],
-	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
+	"homepage": "https://outsystems-ui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
 		"@chromatic-com/storybook": "5.6.0",
 		"@floating-ui/dom": "1.8.0",
