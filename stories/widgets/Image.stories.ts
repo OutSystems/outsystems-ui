@@ -23,6 +23,6 @@ type Story = StoryObj;
 export const Default: Story = {
 	render: () =>
 		renderStatic(
-			`<img data-image="" class="" src="/assets/logo_outsystems-ui-light.svg" alt="" style="height: 80px;">`
+			`<img data-image="" class="" src="/assets/logo_outsystems-ui-opaque-bg.svg" alt="" style="height: 80px;">`
 		),
 };
