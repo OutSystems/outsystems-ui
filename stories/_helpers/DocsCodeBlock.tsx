@@ -1,7 +1,10 @@
 import React from 'react';
 
-/** Dark code panel with a Copy button; dims line and block comments. Styled by `.code` in the docs-page SCSS. */
-export function DocsCodeBlock({ code }: { code: string }) {
+/**
+ * Dark code panel with a Copy button; dims line and block comments. Styled by `.code` in the docs-page SCSS.
+ * `plain` skips the comment dimming, for text that is not code (a URL's `//` is not a comment).
+ */
+export function DocsCodeBlock({ code, plain = false }: { code: string; plain?: boolean }) {
 	const [label, setLabel] = React.useState('Copy');
 
 	const onCopy = React.useCallback(async () => {
@@ -16,7 +19,7 @@ export function DocsCodeBlock({ code }: { code: string }) {
 
 	return (
 		<div className="code">
-			<pre>{highlightLight(code)}</pre>
+			<pre>{plain ? code : highlightLight(code)}</pre>
 			<button type="button" onClick={onCopy}>
 				{label}
 			</button>
