@@ -32,7 +32,8 @@ function cleanOldFiles() {
 function initServer() {
     updateIndexTemplateFile();
     setTimeout(() => {
-        browser.init({server: distFolder, port: serverPort, cors: true});
+        // gulp/Template/ is served too, for the dev page's assets (hero.webp), so they never land in dist/.
+        browser.init({server: {baseDir: [distFolder, './gulp/Template']}, port: serverPort, cors: true});
     }, 0);
 }
 
