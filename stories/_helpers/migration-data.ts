@@ -71,7 +71,7 @@ export const MIGRATION_DATA = {
 		name: 'osui-theme-migration',
 		description:
 			'Migrate custom CSS from the classic OutSystems UI theme to the new token-based theme. Use this skill when a customer, app developer, or QE asks to "migrate CSS to the new theme", "fix my CSS for the new OSUI", "update my styles for the new OutSystems UI", "what changed in the new theme", "my app looks broken after the OSUI update", "adapt custom CSS", "theme migration", "new theme impact", "CSS broke after update", or any time someone\'s custom CSS needs updating because it targeted the old (pre-token-migration) OSUI vocabulary. Covers the eight breakage categories, the retired → replacement mapping, detection patterns, and fix guidance.',
-		dir: '.claude\\skills\\osui-theme-migration',
+		dir: '.claude/skills/osui-theme-migration',
 		references: {
 			header: ['Reference', 'Load it when'],
 			rows: [
