@@ -1,0 +1,115 @@
+/*
+ * Storybook look for the TypeDoc site (npm run docs). Wired through `customCss` in typedoc.json;
+ * fonts and logo files come from ./typedoc-theme.mjs.
+ *
+ * TypeDoc's own stylesheet sits in `@layer typedoc`, so these unlayered rules win without `!important`.
+ * Only the --light-* / --dark-* palette inputs are overridden: TypeDoc maps them onto --color-* for its
+ * OS / Light / Dark switch, so both themes follow it untouched.
+ * Values mirror .storybook/Theme.js, .storybook/docs-dark.scss and the sidebar rules in manager-head.html;
+ * the header copies the .osui-banner of https://outsystemsui.outsystems.com/OutSystemsUIWebsite.
+ */
+
+:root {
+	/* Light (Theme.js lightTheme) */
+	--light-color-background: #ffffff;
+	--light-color-background-secondary: #f3f3f3;
+	--light-color-background-active: #e8e8e8;
+	--light-color-active-menu-item: #f3f3f3;
+	--light-color-accent: #e8e8e8;
+	--light-color-text: #242424;
+	--light-color-contrast-text: #242424;
+	--light-color-text-aside: #6b6b6b;
+	--light-color-icon-background: #ffffff;
+	--light-color-comment-tag: #f3f3f3;
+	--light-color-link: #00a2bb;
+	--light-color-focus-outline: #00a2bb;
+	--light-color-ts-project: #00a2bb; /* logo accent; module + namespace inherit it */
+
+	/* Dark (Theme.js darkTheme + docs-dark.scss) */
+	--dark-color-background: #141414;
+	--dark-color-background-secondary: #1c1c1c;
+	--dark-color-background-active: #2a2a2a;
+	--dark-color-active-menu-item: #2a2a2a;
+	--dark-color-accent: #333333;
+	--dark-color-text: #ededed;
+	--dark-color-contrast-text: #ededed;
+	--dark-color-text-aside: #9a9a9a;
+	--dark-color-icon-background: #242424;
+	--dark-color-comment-tag: #242424;
+	--dark-color-link: #6ecfe0;
+	--dark-color-focus-outline: #00a2bb;
+	--dark-color-ts-project: #47def5; /* logo accent; module + namespace inherit it */
+
+	/* Taller header, matching the OutSystems UI website banner (18px padding + text line). TypeDoc derives
+	   its sticky offsets from this variable, so anchors and the sidebar still clear the header. */
+	--dim-toolbar-contents-height: 3.75rem;
+}
+
+/* ─── Typography ─── */
+body {
+	font-family: 'Inter', sans-serif;
+}
+
+code,
+pre {
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+code,
+pre,
+.tsd-signature {
+	border-radius: 4px;
+}
+
+/* ─── Header: the OutSystems UI website banner (.osui-banner), dark in both themes ─── */
+.tsd-page-toolbar {
+	background: linear-gradient(90deg, #14171c 0%, #16262d 40%, #173a43 75%, #1b4b57 100%);
+	border-bottom-color: rgba(64, 220, 245, 0.18);
+}
+
+/* Only the title and the two header buttons go light: the search dialog also lives in the header
+   and must keep the theme's colours. */
+#tsd-search-trigger,
+#tsd-toolbar-menu-trigger {
+	--color-text: #ededed;
+	--color-icon-text: #ededed;
+}
+
+/* Logo only, like Storybook's sidebar: the "OutSystems UI - vX" text is redundant next to the logo (the sidebar,
+   tab title and hierarchy page still carry it). font-size: 0 hides it but keeps it as the link's accessible name. */
+.tsd-page-toolbar .tsd-toolbar-contents > .title {
+	display: flex;
+	align-items: center;
+	font-size: 0;
+}
+
+.tsd-toolbar-contents > .title::before {
+	content: '';
+	flex: none;
+	width: 118px; /* 32px tall at the SVG's 1292 × 350 ratio */
+	height: 32px;
+	background: url('logo_outsystems-ui-dark.svg') no-repeat center / contain;
+}
+
+/* Home page: the README's own heading is the title, so drop TypeDoc's duplicate above it. Scoped to a
+   breadcrumb-less title followed by a README panel, which leaves hierarchy.html's title alone. */
+.tsd-page-title:has(> h1:first-child):has(+ .tsd-panel.tsd-typography > h1:first-child) {
+	display: none;
+}
+
+/* ─── Sidebar: Storybook's rounded selected / hover rows ─── */
+.tsd-navigation a,
+.tsd-page-navigation a {
+	border-radius: 8px;
+}
+
+.tsd-navigation a.current,
+.tsd-page-navigation a.current {
+	font-weight: 500;
+}
+
+.tsd-navigation a:hover,
+.tsd-page-navigation a:hover {
+	background: var(--color-active-menu-item);
+	text-decoration: none;
+}

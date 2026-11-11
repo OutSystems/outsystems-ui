@@ -5,10 +5,14 @@
         "./src/scripts/Providers/OSUI//*.ts"
     ],
     "entryPointStrategy": "expand",
+    "name": "OutSystems UI",
     "plugin": [
         "typedoc-umlclass",
-        "typedoc-plugin-merge-modules"
+        "typedoc-plugin-merge-modules",
+        "./scripts/typedoc-theme/typedoc-theme.mjs"
     ],
+    "customCss": "./scripts/typedoc-theme/typedoc-theme.css",
+    "favicon": "./.storybook/favicon/favicon.ico",
     "includeVersion": true,
     "hideGenerator": true,
     "out": "./docs",
