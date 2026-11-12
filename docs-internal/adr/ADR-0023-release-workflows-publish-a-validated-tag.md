@@ -41,7 +41,7 @@ The Azure federated credential only accepts `dev`. The workflow definition there
 
 ## Decision Outcome
 
-Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. Also: `npx gulp` instead of a global `gulp`, Node 24 set explicitly, `npm pack --dry-run` logged before publishing, and the `deploy-npm` cleanup runs after failures too.
+Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. Also: the project's local `gulp` binary (`./node_modules/.bin/gulp`) instead of a global `gulp`, Node 24 set explicitly, `npm pack --dry-run` logged before publishing, and the `deploy-npm` cleanup runs after failures too.
 
 Positive consequences:
 
