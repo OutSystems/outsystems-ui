@@ -105,11 +105,6 @@
 		border-color: variables.$token-semantics-danger-base;
 	}
 
-	// Typed text rejected by the provider (OnInvalidInput event)
-	&.osui-timepicker--invalid-input .input[aria-invalid='true'] {
-		border-color: variables.$token-semantics-danger-base;
-	}
-
 	.flatpickr-mobile ~ span.validation-message {
 		bottom: -40px;
 	}

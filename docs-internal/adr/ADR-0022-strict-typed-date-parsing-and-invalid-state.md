@@ -34,7 +34,7 @@ been reported in the community forum, by MVPs, and in a customer escalation with
 - Parsing of values that do not come from typing (InitialDate, MinDate, MaxDate, DisabledDays,
   `UpdateInitialDate`) does not change.
 - Applications that already pass their own `parseDate` keep working.
-- The same behaviour for all four pickers.
+- The same behaviour for DatePicker and DatePickerRange.
 - The platform keeps owning the `not-valid` class and the validation message (same principle as ADR-0002).
 
 ## Considered Options
@@ -70,9 +70,8 @@ The library side (parser rules, option names and defaults) is recorded in the fo
 (`OutSystems/flatpickr`, `docs/adr/ADR-0001`). This ADR records how OutSystems UI uses it.
 
 - **Off by default, turned on per picker.** New boolean config `StrictInputValidation` (default `False`) on
-  DatePicker, DatePickerRange, MonthPicker and TimePicker. In the modules it is a new field of the block's
-  `OptionalConfigs` structure (MonthPicker has no such structure yet, so it needs one or a new block
-  parameter). When it is off, typed input behaves exactly as before. Changing it at runtime redraws the
+  DatePicker and DatePickerRange. In the modules it is a new field of the block's `OptionalConfigs`
+  structure. When it is off, typed input behaves exactly as before. Changing it at runtime redraws the
   picker.
 - **One switch.** `StrictInputValidation` is the only parameter the developer sees. When it is on, the
   configs turn on `strictInputParsing`, `keepInvalidInput` and `autoCorrectInput` together;
@@ -89,8 +88,7 @@ The library side (parser rules, option names and defaults) is recorded in the fo
   accepted, so nothing is guessed. It only applies to full numeric dates (DatePicker and DatePickerRange,
   with or without time); the fork leaves month/year formats, time-only pickers, names and AM/PM alone.
 - **Invalid state.** On `onInvalidInput` the provider sets `aria-invalid="true"` on the input the user types
-  in and the modifier class `osui-datepicker--invalid-input` (`osui-monthpicker--…`, `osui-timepicker--…`)
-  on the pattern. The SCSS gives that input the danger border. The state is removed on the next `onChange`
+  in and the modifier class `osui-datepicker--invalid-input` on the pattern. The SCSS gives that input the danger border. The state is removed on the next `onChange`
   (a valid selection, or `Clear`) and when the provider is redrawn (for example after `UpdateInitialDate`
   or a parameter change). The `not-valid` class is not used, because the platform owns it and it is removed
   on redraw.
@@ -99,8 +97,10 @@ The library side (parser rules, option names and defaults) is recorded in the fo
   (`Providers.OSUI.Datepicker.Flatpickr.ErrorCodes.InvalidTypedInput`), without a message: OutSystems UI
   shows no message of its own, the developer sets the validation message. `onChange` with an empty value
   fires first, then `OnInvalidInput`.
-- **MonthPicker and TimePicker.** Not part of this change: their providers do not set the invalid state or
-  trigger `OnInvalidInput`.
+- **MonthPicker and TimePicker.** Not part of this change and left exactly as they were: no
+  `StrictInputValidation`, no fork options turned on (typed input keeps the previous behaviour), no
+  `OnInvalidInput` event. A month/year format has no day and the TimePicker is time-only, so the fork's
+  auto-correction would not apply to them anyway.
 - **After rejected input.** The typed text stays in the input so the user can correct it, and the value is
   empty. Blurring again without editing the text does not fire the event again.
 - **Range.** The typed text must contain both dates; a single date is rejected as `unparsable`.

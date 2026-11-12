@@ -18,8 +18,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		public OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 		/** Store the OnClose callback to be defined to the Flatpicker config instance */
 		public OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-		/** Store the OnInvalidInput callback to be defined to the Flatpicker config instance */
-		public OnInvalidInputEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 		/** Store the OnOpen callback to be defined to the Flatpicker config instance */
 		public OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
@@ -133,11 +131,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				onChange: this.OnChangeEventCallback,
 				onClose: this.OnCloseEventCallback,
 				onOpen: this.OnOpenEventCallback,
-				// Strict parsing of the typed text, reported through OnInvalidInput (OutSystems fork options)
-				...Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.GetProviderConfigs(
-					this.StrictInputValidation,
-					this.OnInvalidInputEventCallback
-				),
 				plugins: [
 					// Provider doesn't has the expected type difined
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment

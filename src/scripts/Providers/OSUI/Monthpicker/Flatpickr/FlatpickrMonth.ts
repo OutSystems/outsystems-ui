@@ -29,8 +29,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		protected flatpickrInputElem: HTMLInputElement;
 		// Store pattern input HTML element reference
 		protected monthPickerPlatformInputElem: HTMLInputElement;
-		// Platform OnInvalidInput event
-		protected onInvalidInputCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnInvalidInputEvent;
 		// Flatpickr onChange (SelectedMonth) event
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
 
@@ -38,8 +36,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			super(uniqueId, new FlatpickrMonthConfig(configs));
 
 			// Set the default library Event handler that will be used to set on the provider configs
-			this.configs.OnChangeEventCallback = this._onChange.bind(this);
-			this.configs.OnInvalidInputEventCallback = this._onInvalidInput.bind(this);
+			this.configs.OnChangeEventCallback = this.onMonthSelectedEvent.bind(this);
 			this.configs.OnCloseEventCallback = this.onClose.bind(this);
 			this.configs.OnOpenEventCallback = this.onOpen.bind(this);
 		}
@@ -50,26 +47,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 				);
-		}
-
-		// Method used to clear the invalid input state before handling any change
-		private _onChange(selectedDates: Array<Date>): void {
-			this._unsetInvalidInputState();
-			this.onMonthSelectedEvent(selectedDates);
-		}
-
-		// Method triggered by the library when the typed text is rejected (it fires onChange with no dates first)
-		private _onInvalidInput(
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_selectedDates: Array<Date>,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_dateStr: string,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_instance: Flatpickr,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			data: { reason: string; value: string }
-		): void {
-			// no code will be executed for invalid input in the month picker.
 		}
 
 		// Method used to set the year buttons HTML elements reference
@@ -165,15 +142,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 		}
 
-		// Method used to remove the invalid input state
-		private _unsetInvalidInputState(): void {
-			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Unset(
-				this.selfElement,
-				this.flatpickrInputElem,
-				OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.InvalidInput
-			);
-		}
-
 		// Update certain A11Y properties
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
@@ -208,9 +176,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			this.provider = window.flatpickr(this.monthPickerPlatformInputElem, this._flatpickrOpts);
 			// Set the needed HTML attributes
 			this._setAttributes();
-
-			// A new input has been created, so the invalid input state from a previous instance no longer applies
-			this._unsetInvalidInputState();
 
 			// Add our CSS classes to the input
 			if (this.provider.calendarContainer !== undefined) {
@@ -462,9 +427,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			this.configs.OnChangeEventCallback = undefined;
 			this.configs.OnCloseEventCallback = undefined;
 			this.configs.OnOpenEventCallback = undefined;
-			this.configs.OnInvalidInputEventCallback = undefined;
 
-			this.onInvalidInputCallbackEvent = undefined;
 			this.onSelectedCallbackEvent = undefined;
 			super.unsetCallbacks();
 		}
@@ -523,7 +486,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 					case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.DateFormat:
 					case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MaxMonth:
 					case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MinMonth:
-					case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.StrictInputValidation:
 						this.redraw();
 						break;
 					case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -608,10 +570,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			switch (eventName) {
 				case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
 					this.onSelectedCallbackEvent = callback;
-					break;
-
-				case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnInvalidInput:
-					this.onInvalidInputCallbackEvent = callback;
 					break;
 
 				default:

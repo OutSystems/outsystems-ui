@@ -19,8 +19,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		protected flatpickrInputElem: HTMLInputElement;
 		// Flatpickr onChange (SelectedTime) event
 		protected onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
-		// Platform OnInvalidInput event
-		protected onInvalidInputCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnInvalidInputEvent;
 		// Store pattern input HTML element reference
 		protected timePickerPlatformInputElem: HTMLInputElement;
 
@@ -28,8 +26,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			super(uniqueId, new FlatpickrTimeConfig(configs));
 
 			// Set the default library Event handlers that will be used to set on the provider configs
-			this.configs.OnChangeEventCallback = this._onChange.bind(this);
-			this.configs.OnInvalidInputEventCallback = this._onInvalidInput.bind(this);
+			this.configs.OnChangeEventCallback = this.onTimeSelectedEvent.bind(this);
 			this.configs.OnCloseEventCallback = this.onClose.bind(this);
 			this.configs.OnOpenEventCallback = this.onOpen.bind(this);
 		}
@@ -40,26 +37,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 				);
-		}
-
-		// Method used to clear the invalid input state before handling any change
-		private _onChange(selectedDates: Array<Date>): void {
-			this._unsetInvalidInputState();
-			this.onTimeSelectedEvent(selectedDates);
-		}
-
-		// Method triggered by the library when the typed text is rejected (it fires onChange with no dates first)
-		private _onInvalidInput(
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_selectedDates: Array<Date>,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_dateStr: string,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			_instance: Flatpickr,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			data: { reason: string; value: string }
-		): void {
-			// no code will be executed for invalid input in the time picker.
 		}
 
 		// Method used to set the needed HTML attributes
@@ -145,15 +122,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			}
 		}
 
-		// Method used to remove the invalid input state
-		private _unsetInvalidInputState(): void {
-			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Unset(
-				this.selfElement,
-				this.flatpickrInputElem,
-				OSFramework.OSUI.Patterns.TimePicker.Enum.CssClass.InvalidInput
-			);
-		}
-
 		// Update certain A11Y properties
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
@@ -188,9 +156,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.provider = window.flatpickr(this.timePickerPlatformInputElem, this._flatpickrOpts);
 			// Set the needed HTML attributes
 			this._setAttributes();
-
-			// A new input has been created, so the invalid input state from a previous instance no longer applies
-			this._unsetInvalidInputState();
 
 			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
 			if (this.provider.calendarContainer !== undefined) {
@@ -348,9 +313,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.configs.OnChangeEventCallback = undefined;
 			this.configs.OnCloseEventCallback = undefined;
 			this.configs.OnOpenEventCallback = undefined;
-			this.configs.OnInvalidInputEventCallback = undefined;
 
-			this.onInvalidInputCallbackEvent = undefined;
 			this.onChangeCallbackEvent = undefined;
 			super.unsetCallbacks();
 		}
@@ -406,7 +369,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.Is24Hours:
 					case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MaxTime:
 					case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MinTime:
-					case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.StrictInputValidation:
 					case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
@@ -492,10 +454,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			switch (eventName) {
 				case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
 					this.onChangeCallbackEvent = callback;
-					break;
-
-				case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnInvalidInput:
-					this.onInvalidInputCallbackEvent = callback;
 					break;
 
 				default:

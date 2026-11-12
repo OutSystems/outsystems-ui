@@ -3,8 +3,4 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Callbacks {
 	export type OSOnChangeEvent = {
 		(timepickerId: string, selectedTime: string): void;
 	};
-
-	export type OSOnInvalidInputEvent = {
-		(timepickerId: string, errorCode: string, inputText: string, reason: string): void;
-	};
 }

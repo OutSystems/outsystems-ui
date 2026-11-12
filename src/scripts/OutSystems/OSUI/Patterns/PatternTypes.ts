@@ -334,13 +334,10 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		MaxMonth: MonthYear;
 		/** Earliest selectable month ({ Month, Year }). */
 		MinMonth: MonthYear;
-		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
-		StrictInputValidation: boolean;
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName =
-		'OnInvalidInput' | 'OnSelected' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName = 'OnSelected' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -703,8 +700,6 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 		MaxTime: string;
 		/** Earliest selectable time (HH:mm). */
 		MinTime: string;
-		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
-		StrictInputValidation: boolean;
 		/** Display format of the selected time. */
 		TimeFormat: string;
 	};
