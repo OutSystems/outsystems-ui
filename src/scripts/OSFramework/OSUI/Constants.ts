@@ -36,6 +36,7 @@ namespace OSFramework.OSUI.Constants {
 				},
 			},
 			Hidden: 'aria-hidden',
+			Invalid: 'aria-invalid',
 			Label: 'aria-label',
 			Labelledby: 'aria-labelledby',
 			Multiselectable: 'aria-multiselectable',

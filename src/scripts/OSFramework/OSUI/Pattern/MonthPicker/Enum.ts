@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Enum {
 	 */
 	export enum CssClass {
 		Dropdown = 'osui-monthpicker__dropdown',
+		InvalidInput = 'osui-monthpicker--invalid-input',
 		Pattern = 'osui-monthpicker',
 	}
 
@@ -12,6 +13,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Enum {
 	 * MonthPicker Events
 	 */
 	export enum Events {
+		OnInvalidInput = 'OnInvalidInput',
 		OnSelected = 'OnSelected',
 	}
 
@@ -23,6 +25,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Enum {
 		InitialMonth = 'InitialMonth',
 		MinMonth = 'MinMonth',
 		MaxMonth = 'MaxMonth',
+		StrictInputValidation = 'StrictInputValidation',
 	}
 
 	/**

@@ -26,6 +26,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		protected flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected flatpickrOpts: FlatpickrOptions;
+		// Platform OnInvalidInput event
+		protected onInvalidInputCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnInvalidInputEvent;
 		// Flatpickr onChange (SelectedDate) event
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 		// Property to store a custom callback called on OnClose Flatpickr event
@@ -35,7 +37,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			super(uniqueId, configs);
 
 			// Set the default library Event handler that will be used to set on the provider configs
-			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+			this.configs.OnChange = this._onChange.bind(this);
+
+			// Set the library handler for typed text that has been rejected
+			this.configs.OnInvalidInput = this._onInvalidInput.bind(this);
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnClose = this.onDatePickerClose.bind(this);
@@ -61,6 +66,33 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			this._setCurrentMonthAcessibilityInformation();
+		}
+
+		// Method used to clear the invalid input state before handling any date change
+		private _onChange(selectedDates: Array<Date>): void {
+			this._unsetInvalidInputState();
+			this.onDateSelectedEvent(selectedDates);
+		}
+
+		// Method triggered by the library when the typed text is rejected (it fires onChange with no dates first)
+		private _onInvalidInput(
+			_selectedDates: Array<Date>,
+			_dateStr: string,
+			_instance: Flatpickr,
+			data: { reason: string; value: string }
+		): void {
+			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Set(
+				this.selfElement,
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput
+			);
+
+			this.triggerPlatformEventCallback(
+				this.onInvalidInputCallbackEvent,
+				OSFramework.OSUI.ErrorCodes.DateTimePickers.InvalidTypedInput,
+				data.value,
+				data.reason
+			);
 		}
 
 		private _onMonthChange(): void {
@@ -159,6 +191,15 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
+		// Method used to remove the invalid input state
+		private _unsetInvalidInputState(): void {
+			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Unset(
+				this.selfElement,
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput
+			);
+		}
+
 		// Method used to remove the clientHeight that has been assigned before the redraw process!
 		private _unsetParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
@@ -247,6 +288,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Set the needed HTML attributes
 			this._setAttributes();
+
+			// A new input has been created, so the invalid input state from a previous instance no longer applies
+			this._unsetInvalidInputState();
 
 			// Update the platform input attributes
 			this.updatePlatformInputAttrs();
@@ -481,6 +525,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
+			this.configs.OnInvalidInput = undefined;
+			this.onInvalidInputCallbackEvent = undefined;
 			this.onSelectedCallbackEvent = undefined;
 
 			super.unsetCallbacks();
@@ -525,6 +571,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.MinDate:
 					case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
 					case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
+					case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.StrictInputValidation:
 						this.prepareToAndRedraw();
 						break;
 					case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -642,6 +689,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			switch (eventName) {
 				case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this.onSelectedCallbackEvent = callback;
+					break;
+
+				case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnInvalidInput:
+					this.onInvalidInputCallbackEvent = callback;
 					break;
 
 				default:

@@ -11,6 +11,8 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 		public MaxTime: string;
 		/** Earliest selectable time (HH:mm). */
 		public MinTime: string;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		public StrictInputValidation: boolean;
 		/** Display format of the selected time. */
 		public TimeFormat: string;
 
@@ -37,6 +39,9 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 				case Enum.Properties.MaxTime:
 				case Enum.Properties.MinTime:
 					validatedValue = this.validateTime(value as string, undefined);
+					break;
+				case Enum.Properties.StrictInputValidation:
+					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

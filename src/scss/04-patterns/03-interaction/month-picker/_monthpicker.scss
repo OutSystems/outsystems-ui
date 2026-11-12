@@ -66,6 +66,11 @@
 		border-color: variables.$token-semantics-danger-base;
 	}
 
+	// Typed text rejected by the provider (OnInvalidInput event)
+	&.osui-monthpicker--invalid-input .input[aria-invalid='true'] {
+		border-color: variables.$token-semantics-danger-base;
+	}
+
 	input {
 		// Disable states for Datepicker
 		&[disabled] + input {

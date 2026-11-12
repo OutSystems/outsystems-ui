@@ -12,6 +12,8 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		public MaxMonth: MonthYear;
 		/** Earliest selectable month ({ Month, Year }). */
 		public MinMonth: MonthYear;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		public StrictInputValidation: boolean;
 
 		constructor(config: JSON) {
 			super(config);
@@ -35,6 +37,9 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 				case Enum.Properties.MinMonth:
 				case Enum.Properties.MaxMonth:
 					validatedValue = value as MonthYear;
+					break;
+				case Enum.Properties.StrictInputValidation:
+					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

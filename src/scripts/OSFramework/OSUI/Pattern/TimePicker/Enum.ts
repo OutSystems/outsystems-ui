@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Enum {
 	 */
 	export enum CssClass {
 		Dropdown = 'osui-timepicker__dropdown',
+		InvalidInput = 'osui-timepicker--invalid-input',
 		Pattern = 'osui-timepicker',
 	}
 
@@ -13,6 +14,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Enum {
 	 */
 	export enum TimePickerEvents {
 		OnChange = 'OnChange',
+		OnInvalidInput = 'OnInvalidInput',
 	}
 
 	/**
@@ -23,6 +25,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Enum {
 		Is24Hours = 'Is24Hours',
 		MaxTime = 'MaxTime',
 		MinTime = 'MinTime',
+		StrictInputValidation = 'StrictInputValidation',
 		TimeFormat = 'TimeFormat',
 	}
 

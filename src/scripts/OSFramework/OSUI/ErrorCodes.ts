@@ -90,4 +90,9 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailToSetChildItemAction: 'OSUI-GEN-13002',
 		FailUnsetNewChildItem: 'OSUI-GEN-13003',
 	};
+
+	// Shared by DatePicker, DatePickerRange, MonthPicker and TimePicker. No message: the developer sets it (OnInvalidInput)
+	export const DateTimePickers = {
+		InvalidTypedInput: 'OSUI-GEN-14001',
+	};
 }
