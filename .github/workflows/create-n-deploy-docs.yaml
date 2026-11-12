@@ -1,18 +1,16 @@
 name: Create and Deploy Docs
 
+# Run this workflow from dev (the Azure federated credential only accepts that ref)
+# and pass the release tag whose documentation should be published.
 on:
     workflow_dispatch:
         inputs:
-            branch-name:
-                description: 'Branch to be used as base to create a new one to generate and be published.'
+            tag:
+                description: 'Release tag to generate the documentation from (e.g. v3.0.0). Its package.json version must match.'
                 type: string
                 required: true
-            delete-branch:
-                description: 'Delete deploy-docs branch at the end of process.'
-                type: boolean
-                default: true
             run-lint:
-                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
+                description: 'Compile and perform lint tests to ensure there is no issues at the given tag.'
                 type: boolean
                 default: true
 
@@ -32,15 +30,47 @@ jobs:
               run: |
                   echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
 
-    run-lint:
+    validate-tag:
         runs-on: ubuntu-latest
         permissions:
             contents: read
+
         steps:
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 🏷️ Check the tag format
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      echo "::error::'$TAG' is not a release tag. Expected vX.Y.Z (e.g. v3.0.0)."
+                      exit 1
+                  fi
+
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
+                  ref: refs/tags/${{ inputs.tag }}
+
+            - name: 🔢 Check the tag matches the package version
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  packageVersion=$(node -p "require('./package.json').version")
+                  if [[ "v$packageVersion" != "$TAG" ]]; then
+                      echo "::error::Tag $TAG has package.json version $packageVersion. They must match."
+                      exit 1
+                  fi
+
+    run-lint:
+        needs: validate-tag
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            - name: 📥 Checkout tag ${{ inputs.tag }}
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              with:
+                  ref: refs/tags/${{ inputs.tag }}
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -55,75 +85,29 @@ jobs:
               if: ${{ inputs.run-lint == true }}
               run: npm run build
 
-    create-branch:
-        needs: run-lint
+    # Generates the docs from the tag and replaces the content of the docs site repository in one go.
+    # No intermediate branch: docs/ is gitignored here, so it can't be committed to this repository anyway.
+    publish-docs:
+        needs: [check-repo, run-lint]
         runs-on: ubuntu-latest
         permissions:
             id-token: write
-            contents: write
+            contents: read
+
+        env:
+            DOCS_REPOSITORY: outsystems-ui-docs/outsystems-ui-docs.github.io
+            SOURCE_DIR: source
 
         steps:
+            # The workflow's own ref (dev) provides the local composite actions.
             - name: 📥 Checkout repository
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-            - name: 🔐 Azure Login
-              uses: ./.github/actions/az-login
-              with:
-                client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
-                tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
-                subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
-
-            - name: 🔑 Get GitHub Token from Azure Key Vault
-              id: get-github-token
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-gitpersonal-token-prd
-
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 📥 Checkout tag ${{ inputs.tag }} into ${{ env.SOURCE_DIR }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
-                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
-
-            - name: 📦 Create new deploy-docs branch based on ${{ inputs.branch-name }}
-              run: |
-                  git checkout -b deploy-docs
-                  git push -u origin deploy-docs
-
-    create-doc:
-        needs: create-branch
-        runs-on: ubuntu-latest
-        permissions:
-            id-token: write
-            contents: write
-
-        steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
-            - name: 🔐 Azure Login
-              uses: ./.github/actions/az-login
-              with:
-                client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
-                tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
-                subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
-
-            - name: 🔑 Get GitHub Token from Azure Key Vault
-              id: get-github-token
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-gitpersonal-token-prd
-
-            - name: 🔧 Configure Git with the UiComponentsBot Token
-              run: |
-                  git config --global user.email "sa_git_uicomponents@outsystems.com"
-                  git config --global user.name "UiComponentsBot"
-
-            - name: 📥 Checkout into deploy-docs
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: deploy-docs
-                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+                  ref: refs/tags/${{ inputs.tag }}
+                  path: ${{ env.SOURCE_DIR }}
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -131,87 +115,59 @@ jobs:
                   node-version: 24
 
             - name: 🕸️ Install project dependencies
+              working-directory: ${{ env.SOURCE_DIR }}
               run: npm install
 
             - name: 📦 Install graphviz
-              run: sudo apt install -y graphviz
+              run: sudo apt-get install -y graphviz
 
             - name: 🏗️ Generate documentation
+              working-directory: ${{ env.SOURCE_DIR }}
               run: npm run docs
 
-            - name: 🔑 Get GPG Passphrase from Azure Key Vault
-              id: GetGPGPassphrase
-              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-gpg-passphrase-prd
-
-            - name: 🔏 Sign and commit documentation to branch deploy-docs
-              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/signed-commit@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
-              uses: ./.github/actions/signed-commit
-              with:
-                  commit-branch: deploy-docs
-                  commit-message: 'Update documentation [skip ci]'
-                  commit-new-files: true
-                  gpg-priv-key: ${{ secrets.GPG_SIGN_KEY }}
-                  # gpg-priv-key: ${{ steps.GetGPGKey.outputs.az-keyvault-value }}
-                  gpg-pass-phrase: ${{ steps.GetGPGPassphrase.outputs.az-keyvault-value }}
-
-    publish-doc:
-        needs: [check-repo, create-doc]
-        runs-on: ubuntu-latest
-        permissions:
-            id-token: write
-            contents: write
-
-        steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: 🔐 Azure Login
+              if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               uses: ./.github/actions/az-login
               with:
-                client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
-                tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
-                subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
             - name: 🔑 Get GitHub Token from Azure Key Vault
+              if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               id: get-github-token
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 📥 Checkout into deploy-docs
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: deploy-docs
-                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
-
-            - name: 📤 Push documentation files into github page
+            - name: 📤 Publish documentation to the docs site
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
-              uses: GuillaumeFalourd/copy-push-files@758ee05c45fbd682b62908f2373bf070077a1e43 # v1
-              with:
-                  source_files: docs/*
-                  remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
-                  access_token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
-                  target_branch: main
-                  commit_message: Deploy documentation.
-
-    delete-branch:
-        needs: publish-doc
-        runs-on: ubuntu-latest
-        permissions:
-            id-token: write
-            contents: write
-
-        if: ${{ inputs.delete-branch == true }}
-        steps:
-            - name: 📥 Checkout branch dev
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: dev
-
-            - name: 🗑️ Delete branch deploy-docs
-              shell: bash
+              env:
+                  GITHUB_TOKEN_FOR_DOCS: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+                  TAG: ${{ inputs.tag }}
               run: |
-                  git push origin -d deploy-docs
+                  set -euo pipefail
+
+                  siteDir="$RUNNER_TEMP/docs-site"
+                  sourceCommit=$(git -C "$SOURCE_DIR" rev-parse --short HEAD)
+
+                  git clone --depth 1 "https://x-access-token:${GITHUB_TOKEN_FOR_DOCS}@github.com/${DOCS_REPOSITORY}.git" "$siteDir"
+
+                  # Replace the whole site, so pages that no longer exist in the API are removed too.
+                  # .github (the Pages deploy workflow) and LICENSE belong to the docs repository itself.
+                  find "$siteDir" -mindepth 1 -maxdepth 1 ! -name .git ! -name .github ! -name LICENSE -exec rm -rf {} +
+                  # "docs/." (not "docs/*") so dotfiles such as .nojekyll are copied too.
+                  cp -a "$SOURCE_DIR/docs/." "$siteDir/"
+
+                  cd "$siteDir"
+                  git config user.email "sa_git_uicomponents@outsystems.com"
+                  git config user.name "UiComponentsBot"
+                  git add --all
+
+                  if git diff --cached --quiet; then
+                      echo "The docs site already matches $TAG. Nothing to publish."
+                      exit 0
+                  fi
+
+                  git commit -m "Deploy documentation $TAG (outsystems-ui $sourceCommit)"
+                  git push origin HEAD:main
