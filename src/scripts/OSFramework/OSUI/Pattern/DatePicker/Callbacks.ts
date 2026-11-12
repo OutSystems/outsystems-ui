@@ -5,6 +5,6 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Callbacks {
 	};
 
 	export type OSOnInvalidInputEvent = {
-		(datepickerId: string, errorCode: string, inputText: string, reason: string): void;
+		(datepickerId: string, errorCode: string, inputText: string): void;
 	};
 }

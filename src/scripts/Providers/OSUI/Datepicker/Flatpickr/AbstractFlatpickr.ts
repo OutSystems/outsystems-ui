@@ -87,12 +87,13 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput
 			);
 
-			this.triggerPlatformEventCallback(
-				this.onInvalidInputCallbackEvent,
-				ErrorCodes.InvalidTypedInput,
-				data.value,
-				data.reason
-			);
+			// One error code per reason: a disabled or out-of-range date, or text that can't be read as a date
+			const errorCode =
+				data.reason === Providers.OSUI.SharedProviderResources.Flatpickr.Enum.InvalidInputReason.Disabled
+					? ErrorCodes.DisabledTypedDate
+					: ErrorCodes.InvalidTypedInput;
+
+			this.triggerPlatformEventCallback(this.onInvalidInputCallbackEvent, errorCode, data.value);
 		}
 
 		private _onMonthChange(): void {
