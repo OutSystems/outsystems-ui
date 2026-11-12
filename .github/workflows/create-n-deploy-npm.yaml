@@ -1,10 +1,12 @@
 name: Create and Deploy NPM
 
+# Run this workflow from dev (the Azure federated credential only accepts that ref)
+# and pass the release tag to publish. Keep this file name: npm trusted publishing is bound to it.
 on:
     workflow_dispatch:
         inputs:
-            branch-name:
-                description: 'Branch to be used as base to create a new one and be published.'
+            tag:
+                description: 'Release tag to publish (e.g. v3.0.0). Its package.json version must match.'
                 type: string
                 required: true
             delete-branch:
@@ -12,7 +14,7 @@ on:
                 type: boolean
                 default: true
             run-lint:
-                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
+                description: 'Compile and perform lint tests to ensure there is no issues at the given tag.'
                 type: boolean
                 default: true
     
@@ -32,16 +34,52 @@ jobs:
               run: |
                   echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
 
-    run-lint:
+    validate-tag:
         runs-on: ubuntu-latest
         permissions:
             contents: read
 
         steps:
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 🏷️ Check the tag format
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      echo "::error::'$TAG' is not a release tag. Expected vX.Y.Z (e.g. v3.0.0)."
+                      exit 1
+                  fi
+
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
+                  ref: refs/tags/${{ inputs.tag }}
+
+            - name: 🔢 Check the tag matches the package version
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  packageVersion=$(node -p "require('./package.json').version")
+                  if [[ "v$packageVersion" != "$TAG" ]]; then
+                      echo "::error::Tag $TAG has package.json version $packageVersion. They must match."
+                      exit 1
+                  fi
+
+    run-lint:
+        needs: validate-tag
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            - name: 📥 Checkout tag ${{ inputs.tag }}
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              with:
+                  ref: refs/tags/${{ inputs.tag }}
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
 
             - name: 🕸️ Install project dependencies
               if: ${{ inputs.run-lint == true }}
@@ -77,13 +115,13 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
+                  ref: refs/tags/${{ inputs.tag }}
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: 📦 Create new deploy-npm branch based on ${{ inputs.branch-name }}
+            - name: 📦 Create new deploy-npm branch based on ${{ inputs.tag }}
               run: |
                   git checkout -b deploy-npm
                   git push -u origin deploy-npm
@@ -127,13 +165,19 @@ jobs:
                   ref: deploy-npm
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
             - name: 🕸️ Install project dependencies
               run: |
                   npm install
 
+            # gulp is a devDependency; runner images no longer install it globally (ubuntu-26.04).
             - name: 🗑️ Remove dist folder from .gitignore
               run: |
-                  gulp removeDistFromGitIgnore
+                  npx gulp removeDistFromGitIgnore
 
             - name: 🏗️ Compile into production mode
               run: |
@@ -141,7 +185,13 @@ jobs:
 
             - name: 🧹 Clean files and folders
               run: |
-                  gulp prepareToDeploy
+                  npx gulp prepareToDeploy
+
+            # Whitelist the package content here, not in package.json, so it also applies to tags
+            # created before this rule existed. The prepareToDeploy remove list alone misses new folders.
+            - name: 📋 Limit the package to dist and src
+              run: |
+                  npm pkg set 'files[]=dist' 'files[]=src'
 
             - name: 📤 Commit, remove gitignore and commit again!
               run: |
@@ -199,18 +249,22 @@ jobs:
               run: npm install -g npm@latest
               shell: bash
               
+            - name: 📋 List package content
+              run: npm pack --dry-run
+
             - name: 🚀 Publish new version to NPM
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               run: npm publish --provenance
 
+    # Runs after failures too, so a leftover deploy-npm branch doesn't block the next run.
     delete-branch:
-        needs: publish-npm
+        needs: [create-branch, publish-npm]
         runs-on: ubuntu-latest
         permissions:
             id-token: write
             contents: write
 
-        if: ${{ inputs.delete-branch == true }}
+        if: ${{ always() && inputs.delete-branch == true && needs.create-branch.result == 'success' }}
         steps:
             - name: 📥 Checkout branch dev
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
