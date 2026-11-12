@@ -17,6 +17,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput {
 			keepInvalidInput: isEnabled === true,
 			onInvalidInput: onInvalidInput,
 			strictInputParsing: isEnabled === true,
+			autoCorrectInput: isEnabled === true,
 		} as FlatpickrOptions;
 	}
 

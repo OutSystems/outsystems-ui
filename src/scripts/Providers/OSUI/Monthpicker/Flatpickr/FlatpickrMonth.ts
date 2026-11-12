@@ -60,23 +60,16 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		// Method triggered by the library when the typed text is rejected (it fires onChange with no dates first)
 		private _onInvalidInput(
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			_selectedDates: Array<Date>,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			_dateStr: string,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			_instance: Flatpickr,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			data: { reason: string; value: string }
 		): void {
-			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Set(
-				this.selfElement,
-				this.flatpickrInputElem,
-				OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.InvalidInput
-			);
-
-			this.triggerPlatformEventCallback(
-				this.onInvalidInputCallbackEvent,
-				OSFramework.OSUI.ErrorCodes.DateTimePickers.InvalidTypedInput,
-				data.value,
-				data.reason
-			);
+			// no code will be executed for invalid input in the month picker.
 		}
 
 		// Method used to set the year buttons HTML elements reference

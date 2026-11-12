@@ -89,7 +89,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			this.triggerPlatformEventCallback(
 				this.onInvalidInputCallbackEvent,
-				OSFramework.OSUI.ErrorCodes.DateTimePickers.InvalidTypedInput,
+				ErrorCodes.InvalidTypedInput,
 				data.value,
 				data.reason
 			);

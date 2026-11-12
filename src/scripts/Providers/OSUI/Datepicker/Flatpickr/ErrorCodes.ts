@@ -5,5 +5,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	 */
 	export const ErrorCodes = {
 		FailSetLocale: 'OSUI-PRO-02001',
+		InvalidTypedInput: 'OSUI-PRO-02002',
 	};
 }
