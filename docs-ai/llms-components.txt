@@ -157,6 +157,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - MinDate: string
 - ShowTodayButton: boolean = false
 - ShowWeekNumbers: boolean
+- StrictInputValidation: boolean = false
 - TimeFormat: 'disabled' | '12' | '24' = "disabled"
 API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - ChangeProperty(datePickerId: string, propertyName: string, propertyValue: unknown): string
@@ -181,7 +182,7 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - SetProviderEvent(datePickerId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(datePickerId: string, eventId: string): string
 - SetEditableInput(datePickerId: string, isEditable: boolean): string
-CSS classes: osui-datepicker-calendar osui-datepicker osui-datepicker--redrawn osui-datepicker-a11y flatpickr-today-button
+CSS classes: osui-datepicker-calendar osui-datepicker--invalid-input osui-datepicker osui-datepicker--redrawn osui-datepicker-a11y flatpickr-today-button
 Configs schema: schema/configs/DatePicker.schema.json
 Docs: interaction/date_picker · interaction/date_picker_range
 
@@ -311,7 +312,8 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - InitialMonth: MonthYear — Month selected when the picker is built ({ Month, Year }).
 - MaxMonth: MonthYear — Latest selectable month ({ Month, Year }).
 - MinMonth: MonthYear — Earliest selectable month ({ Month, Year }).
-Events (RegisterCallback eventName): OnSelected
+- StrictInputValidation: boolean = false — Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default).
+Events (RegisterCallback eventName): OnInvalidInput, OnSelected
 API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(monthPickerId: string): string
@@ -331,7 +333,7 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - UnsetProviderEvent(monthPickerId: string, eventId: string): string
 - UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string
 - UpdatePrompt(monthPickerId: string, promptMessage: string): string
-CSS classes: osui-monthpicker__dropdown osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
+CSS classes: osui-monthpicker__dropdown osui-monthpicker--invalid-input osui-monthpicker osui-monthpicker-a11y flatpickr-next-month flatpickr-prev-month cur-year
 Configs schema: schema/configs/MonthPicker.schema.json
 Docs: interaction/month_picker
 [runtime-only] Markup skeleton (from stories/MonthPicker.stories.ts): <div><div class="osui-monthpicker"><label for="-input">Pick a month</label><input id="-input" class="form-control" type="text" placeholder="Select a month" /></div><div class="osui-monthpicker-a11y"></div></div>
@@ -662,6 +664,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - Is24Hours: boolean = true — Uses a 24-hour clock; false shows an AM/PM selector.
 - MaxTime: string — Latest selectable time (HH:mm).
 - MinTime: string — Earliest selectable time (HH:mm).
+- StrictInputValidation: boolean = false — Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default).
 - TimeFormat: string — Display format of the selected time.
 API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
@@ -684,10 +687,9 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - SetProviderEvent(timePickerId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(timePickerId: string, eventId: string): string
 - SetEditableInput(timePickerId: string, isEditable: boolean): string
-CSS classes: osui-timepicker__dropdown osui-timepicker
+CSS classes: osui-timepicker__dropdown osui-timepicker--invalid-input osui-timepicker
 Configs schema: schema/configs/TimePicker.schema.json
 Docs: interaction/time_picker
-[runtime-only] Markup skeleton (from stories/TimePicker.stories.ts): <div><div class="osui-timepicker"><label for="-input">Pick a time</label><input id="-input" class="form-control" type="text" placeholder="Select a time" /></div></div>
 
 ## Tooltip
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)

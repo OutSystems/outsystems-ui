@@ -71,6 +71,11 @@
 			],
 			"additionalProperties": false
 		},
+		"StrictInputValidation": {
+			"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default).",
+			"default": false,
+			"type": "boolean"
+		},
 		"ExtendedClass": {
 			"type": "string",
 			"default": "",
@@ -84,6 +89,7 @@
 		"InitialMonth",
 		"MaxMonth",
 		"MinMonth",
+		"StrictInputValidation",
 		"ExtendedClass"
 	],
 	"additionalProperties": false

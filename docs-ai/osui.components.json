@@ -1666,6 +1666,11 @@
 					"type": "boolean",
 					"description": "Shows the week-number column in the calendar."
 				},
+				"StrictInputValidation": {
+					"type": "boolean",
+					"default": false,
+					"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default)."
+				},
 				"TimeFormat": {
 					"type": "'disabled' | '12' | '24'",
 					"allowed": [
@@ -1680,6 +1685,7 @@
 			"events": [],
 			"cssClasses": {
 				"Calendar": "osui-datepicker-calendar",
+				"InvalidInput": "osui-datepicker--invalid-input",
 				"Pattern": "osui-datepicker",
 				"Redrawn": "osui-datepicker--redrawn",
 				"AccessibilityContainerInfo": "osui-datepicker-a11y",
@@ -1718,10 +1724,11 @@
 					"MinDate": "",
 					"ShowTodayButton": false,
 					"ShowWeekNumbers": false,
+					"StrictInputValidation": false,
 					"TimeFormat": "disabled",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialDate\\\":\\\"\\\",\\\"InitialEndDate\\\":\\\"\\\",\\\"InitialStartDate\\\":\\\"\\\",\\\"MaxDate\\\":\\\"\\\",\\\"MinDate\\\":\\\"\\\",\\\"ShowTodayButton\\\":false,\\\"ShowWeekNumbers\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialDate\\\":\\\"\\\",\\\"InitialEndDate\\\":\\\"\\\",\\\"InitialStartDate\\\":\\\"\\\",\\\"MaxDate\\\":\\\"\\\",\\\"MinDate\\\":\\\"\\\",\\\"ShowTodayButton\\\":false,\\\"ShowWeekNumbers\\\":false,\\\"StrictInputValidation\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
 			},
 			"schema": "schema/configs/DatePicker.schema.json",
@@ -3099,13 +3106,20 @@
 				"MinMonth": {
 					"type": "MonthYear",
 					"description": "Earliest selectable month ({ Month, Year })."
+				},
+				"StrictInputValidation": {
+					"type": "boolean",
+					"default": false,
+					"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default)."
 				}
 			},
 			"events": [
+				"OnInvalidInput",
 				"OnSelected"
 			],
 			"cssClasses": {
 				"Dropdown": "osui-monthpicker__dropdown",
+				"InvalidInput": "osui-monthpicker--invalid-input",
 				"Pattern": "osui-monthpicker",
 				"AccessibilityContainerInfo": "osui-monthpicker-a11y",
 				"ButtonNextYear": "flatpickr-next-month",
@@ -3138,9 +3152,10 @@
 						"Month": "",
 						"Year": -1
 					},
+					"StrictInputValidation": false,
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"InitialMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MaxMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MinMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"InitialMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MaxMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"MinMonth\\\":{\\\"Month\\\":\\\"\\\",\\\"Year\\\":-1},\\\"StrictInputValidation\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.MonthPickerAPI.Initialize(\"monthPicker1\")"
 			},
 			"schema": "schema/configs/MonthPicker.schema.json",
@@ -6253,6 +6268,11 @@
 					"type": "string",
 					"description": "Earliest selectable time (HH:mm)."
 				},
+				"StrictInputValidation": {
+					"type": "boolean",
+					"default": false,
+					"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default)."
+				},
 				"TimeFormat": {
 					"type": "string",
 					"description": "Display format of the selected time."
@@ -6261,6 +6281,7 @@
 			"events": [],
 			"cssClasses": {
 				"Dropdown": "osui-timepicker__dropdown",
+				"InvalidInput": "osui-timepicker--invalid-input",
 				"Pattern": "osui-timepicker"
 			},
 			"cssApi": [
@@ -6281,10 +6302,11 @@
 					"Is24Hours": true,
 					"MaxTime": "",
 					"MinTime": "",
+					"StrictInputValidation": false,
 					"TimeFormat": "",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialTime\\\":\\\"\\\",\\\"Is24Hours\\\":true,\\\"MaxTime\\\":\\\"\\\",\\\"MinTime\\\":\\\"\\\",\\\"TimeFormat\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialTime\\\":\\\"\\\",\\\"Is24Hours\\\":true,\\\"MaxTime\\\":\\\"\\\",\\\"MinTime\\\":\\\"\\\",\\\"StrictInputValidation\\\":false,\\\"TimeFormat\\\":\\\"\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.TimePickerAPI.Initialize(\"timePicker1\")"
 			},
 			"schema": "schema/configs/TimePicker.schema.json",

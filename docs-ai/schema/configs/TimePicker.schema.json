@@ -36,6 +36,11 @@
 			"description": "Earliest selectable time (HH:mm).",
 			"type": "string"
 		},
+		"StrictInputValidation": {
+			"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default).",
+			"default": false,
+			"type": "boolean"
+		},
 		"TimeFormat": {
 			"description": "Display format of the selected time.",
 			"type": "string"
@@ -54,6 +59,7 @@
 		"Is24Hours",
 		"MaxTime",
 		"MinTime",
+		"StrictInputValidation",
 		"TimeFormat",
 		"ExtendedClass"
 	],

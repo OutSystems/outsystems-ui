@@ -174,6 +174,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		ShowTodayButton: boolean;
 		/** Shows the week-number column in the calendar. */
 		ShowWeekNumbers: boolean;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		StrictInputValidation: boolean;
 		/** Time selection appended to the calendar: disabled (date only), 12 or 24 (hour format). */
 		TimeFormat: 'disabled' | '12' | '24';
 	};
@@ -332,10 +334,13 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		MaxMonth: MonthYear;
 		/** Earliest selectable month ({ Month, Year }). */
 		MinMonth: MonthYear;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		StrictInputValidation: boolean;
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName = 'OnSelected' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName =
+		'OnInvalidInput' | 'OnSelected' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -698,6 +703,8 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 		MaxTime: string;
 		/** Earliest selectable time (HH:mm). */
 		MinTime: string;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		StrictInputValidation: boolean;
 		/** Display format of the selected time. */
 		TimeFormat: string;
 	};
