@@ -174,10 +174,11 @@ jobs:
               run: |
                   npm install
 
-            # gulp is a devDependency; runner images no longer install it globally (ubuntu-26.04).
             - name: 🗑️ Remove dist folder from .gitignore
               run: |
-                  npx gulp removeDistFromGitIgnore
+                  # Local binary on purpose: runner images no longer install gulp globally (ubuntu-26.04), and
+                  # npx could download an unverified gulp release from the registry (flagged by SonarCloud).
+                  ./node_modules/.bin/gulp removeDistFromGitIgnore
 
             - name: 🏗️ Compile into production mode
               run: |
@@ -185,7 +186,9 @@ jobs:
 
             - name: 🧹 Clean files and folders
               run: |
-                  npx gulp prepareToDeploy
+                  # Local binary on purpose: runner images no longer install gulp globally (ubuntu-26.04), and
+                  # npx could download an unverified gulp release from the registry (flagged by SonarCloud).
+                  ./node_modules/.bin/gulp prepareToDeploy
 
             # Whitelist the package content here, not in package.json, so it also applies to tags
             # created before this rule existed. The prepareToDeploy remove list alone misses new folders.
