@@ -7,10 +7,42 @@
 
 ///
 .counter {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-counter-color: inherit;
+	// ───────────────────────────────────────────────────────────────────
+
+	color: var(--osui-counter-color);
 	display: flex;
 	padding-block: variables.$token-scale-0;
 	padding-inline: variables.$token-scale-600;
 	word-break: keep-all;
+
+	// Text follows the fill, as on Tag and Badge: palette and status fills keep
+	// their color in dark, so they take light text; the bold neutrals flip, so
+	// they take inverse text; yellow and warning are light in both themes.
+	&[class*='background-']:not([class*='background-neutral']):not([class*='-lightest']):not(
+			.background-transparent,
+			.background-white,
+			.background-secondary,
+			.background-warning,
+			.background-yellow
+		) {
+		--osui-counter-color: var(--color-text-light);
+	}
+
+	&.background-warning,
+	&.background-yellow {
+		--osui-counter-color: var(--color-text-dark);
+	}
+
+	&.background-secondary,
+	&.background-neutral-6,
+	&.background-neutral-7,
+	&.background-neutral-8,
+	&.background-neutral-9,
+	&.background-neutral-10 {
+		--osui-counter-color: var(--color-text-inverse);
+	}
 
 	&.background-transparent {
 		border: none;
