@@ -42,9 +42,9 @@
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
 	--color-primary: #{variables.$token-semantics-primary-base};
-	--color-primary-hover: #{variables.$token-semantics-primary-800};
+	--color-primary-hover: #{variables.$token-bg-primary-base-hover};
 	--color-primary-selected: #{variables.$token-semantics-primary-900};
-	--color-primary-active: #{variables.$token-semantics-primary-900};
+	--color-primary-active: #{variables.$token-bg-primary-base-press};
 	--color-secondary: #{variables.$token-bg-neutral-bold-default};
 	--color-neutral: #{variables.$token-primitives-neutral-500};
 	--color-neutral-0: #{variables.$token-primitives-neutral-100};
