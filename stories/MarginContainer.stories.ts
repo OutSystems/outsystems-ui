@@ -74,8 +74,8 @@ export const InsideLayout: Story = {
 	render: () =>
 		renderStatic(`
 			<div style="max-width: 420px; border: 1px dashed var(--color-border); border-radius: var(--border-radius-soft); overflow: hidden;">
-				<div style="background: var(--color-primary); color: var(--color-neutral-0); padding: 12px 16px; font-weight: 600;">Trip details</div>
-				<div style="height: 120px; background: linear-gradient(135deg, var(--color-primary-lighter, #9fc3ff), var(--color-primary-lightest, #e3eeff));" aria-hidden="true"></div>
+				<div style="background: var(--color-primary); color: var(--color-text-light); padding: 12px 16px; font-weight: 600;">Trip details</div>
+				<div style="height: 120px; background: linear-gradient(135deg, var(--token-bg-primary-subtle-press, #d0d7fa), var(--token-bg-primary-subtle-default, #f0f2ff));" aria-hidden="true"></div>
 				<div class="margin-container">
 					<h5 style="margin: 0 0 4px;">Lisbon to Porto</h5>
 					<p style="margin: 0 0 12px; color: var(--color-text-subtle);">Friday, 14 Nov · 08:30 – 11:15 · Alfa Pendular</p>

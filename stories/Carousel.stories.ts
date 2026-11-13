@@ -51,7 +51,7 @@ type Story = StoryObj<CarouselArgs>;
 function carouselMarkup(id: string): string {
 	const slides = SLIDES.map(
 		(s) =>
-			`<div style="display:flex;align-items:center;justify-content:center;min-height:140px;width:100%;background:#eef;border-radius:8px;font-size:32px;">${s}</div>`
+			`<div style="display:flex;align-items:center;justify-content:center;min-height:140px;width:100%;background:var(--color-neutral-2);border-radius:8px;font-size:32px;">${s}</div>`
 	).join('');
 	return `
 		<div ${osuiRoot(id)} class="osui-carousel" >
