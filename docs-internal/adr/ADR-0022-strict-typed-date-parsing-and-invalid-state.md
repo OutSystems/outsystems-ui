@@ -108,9 +108,11 @@ The library side (parser and correction rules, option names and defaults) is rec
 ### Behaviour when it is on
 
 - **Auto-correction first.** A date typed without separators, with full-width values (`13122020` for
-  `DD-MM-YYYY`), or with other separators (`13/12/2020`), is rebuilt with the format's separators
-  (`13-12-2020`) before it is checked. Single-digit days or months typed without separators are not accepted
-  (`1312020` is not corrected), so nothing is guessed. Only for full numeric dates, with or without time.
+  `DD-MM-YYYY`), with other separators (`13/12/2020`), or a mix of both (`12122020 15:20` or
+  `12-12-2020 1520` for a date and time), is rebuilt with the format's separators (`13-12-2020`,
+  `12-12-2020 - 15:20`) before it is checked. Single-digit days or months typed without separators are not
+  accepted (`1312020` is not corrected), so nothing is guessed. Only for full numeric dates, with or without
+  time.
 - **Then strict validation.** Text that still does not match the format, or a date that is disabled or
   outside `MinDate`/`MaxDate`, is rejected.
 - **After rejected input.** The typed text stays in the input so the user can correct it, and the value is
