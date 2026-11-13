@@ -10,7 +10,7 @@
 .rating {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-rating-filled-color: var(--color-primary);
-	--osui-rating-empty-color: #{variables.$token-bg-neutral-base-default};
+	--osui-rating-empty-color: #{variables.$token-icon-subtlest};
 	--osui-rating-disabled-color: var(--color-text-disabled);
 	--osui-rating-disabled-empty-color: var(--color-border);
 	// ───────────────────────────────────────────────────────────────────
