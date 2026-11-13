@@ -6,7 +6,7 @@ const WELCOME_HERO = `<!-- HERO -->
   <div class="hero-grid">
     <div>
       <span class="eyebrow">The design system behind OutSystems apps</span>
-      <h1>Build interfaces that<br /><em>look great from the ground up</em></h1>
+      <h1>Build interfaces that<br /><em>look great from the ground up.</em></h1>
       <p class="lede">70+ UI patterns, a tokenised theme and ready-made screens. Drag them from the ODC Studio toolbox, set the properties, bind your data. One system for Reactive Web and Native Mobile.</p>
       <div class="hero-cta">
         <a class="w-btn w-btn-primary" href="https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc" target="_blank" rel="noopener">Get started in ODC Studio</a>
