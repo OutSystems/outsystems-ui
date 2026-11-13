@@ -9,12 +9,18 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-provider-login-button-background:    var(--color-background-surface);
 	--osui-provider-login-button-border-color:  var(--color-border-input);
-	--osui-provider-login-button-color:         #{variables.$token-primitives-neutral-700};
+	--osui-provider-login-button-color:         var(--color-text-subtle);
 	// ───────────────────────────────────────────────────────────────────
 
 	background: var(--osui-provider-login-button-background);
 	border-color: var(--osui-provider-login-button-border-color);
 	border-radius: 0;
+
+	// The Apple mark is monochrome and ships with fill="black" in the block's SVG,
+	// so it has to follow the text color or it disappears in dark mode.
+	&.apple .btn-provider-login-logo svg path {
+		fill: var(--color-text);
+	}
 	
 	&-logo-only {
 		padding: 10px;
