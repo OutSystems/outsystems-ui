@@ -87,7 +87,7 @@
 		&.background {
 			/* List of colors */
 			$colors: (
-				'primary': variables.$token-semantics-primary-700-rgb,
+				'primary': variables.$token-semantics-primary-base-rgb,
 				'red': variables.$token-primitives-red-700-rgb,
 				'orange': variables.$token-primitives-orange-700-rgb,
 				'yellow': variables.$token-primitives-yellow-700-rgb,
@@ -114,10 +114,10 @@
 				'neutral-1000': variables.$token-primitives-neutral-1000-rgb,
 				'neutral-1100': variables.$token-primitives-neutral-1100-rgb,
 				'neutral-1200': variables.$token-primitives-neutral-1200-rgb,
-				'info': variables.$token-semantics-info-700-rgb,
-				'success': variables.$token-semantics-success-700-rgb,
-				'danger': variables.$token-semantics-danger-700-rgb,
-				'warning': variables.$token-semantics-warning-700-rgb,
+				'info': variables.$token-bg-info-base-default-rgb,
+				'success': variables.$token-bg-success-base-default-rgb,
+				'danger': variables.$token-bg-danger-base-default-rgb,
+				'warning': variables.$token-bg-warning-base-default-rgb,
 			);
 
 			@each $name, $channels in $colors {

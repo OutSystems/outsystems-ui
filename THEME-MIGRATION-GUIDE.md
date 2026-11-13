@@ -824,6 +824,7 @@ a[data-link]:focus {
 
 - Replace hardcoded colour literals with `--color-*` roles or `--token-*` values where a match exists.
 - Prefer `--color-text` over `--color-neutral-9` for body text — the role flips in dark mode, the grey shade does not.
+- Text over an image or a colored scrim uses `--color-text-light`, never `.text-neutral-0` or `--color-neutral-0`. The neutral steps flip in dark mode, so "neutral-0" becomes near-black on a picture that stayed the same.
 - Blank-slate icons changed from primary to grey (`--color-text-disabled`). Override with `.blank-slate-icon { color: var(--color-primary); }` if needed.
 - Your own `.icon` elements don't read `--token-icon-subtlest`, so setting that token moves the framework's icons and leaves yours behind. Set `.icon { color: … }` as well, and `color: inherit` for icons inside buttons or coloured blocks that set their own text colour.
 
