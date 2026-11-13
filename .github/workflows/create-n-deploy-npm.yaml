@@ -1,7 +1,22 @@
+# Create and Deploy NPM
+#
+# Publishes a released version of outsystems-ui to npm, with provenance (npm trusted publishing).
+#
+# How to run: Actions > Create and Deploy NPM > Run workflow, keep "Use workflow from" = dev
+# (the Azure federated credential only accepts that ref) and enter the release tag, e.g. v3.0.0.
+# Keep this file name: npm trusted publishing is bound to it.
+#
+# Flow:
+#   validate-tag    vX.Y.Z format, published non-prerelease GitHub release, matches package.json
+#   run-lint        optional build of the tag, to catch compile and lint errors before publishing
+#   create-branch   creates the temporary deploy-npm branch from the tag
+#   prepare-branch  builds, removes development files, limits the package to dist and src, commits to deploy-npm
+#   publish-npm     publishes deploy-npm to npm
+#   delete-branch   removes deploy-npm, also after a failure
+#
+# Decisions: docs-internal/adr/ADR-0023-release-workflows-publish-a-validated-tag.md
 name: Create and Deploy NPM
 
-# Run this workflow from dev (the Azure federated credential only accepts that ref)
-# and pass the release tag to publish. Keep this file name: npm trusted publishing is bound to it.
 on:
     workflow_dispatch:
         inputs:
@@ -27,6 +42,7 @@ concurrency:
     cancel-in-progress: false
 
 jobs:
+    # Forks can run the workflow but never publish.
     check-repo:
         runs-on: ubuntu-latest
 
@@ -39,6 +55,7 @@ jobs:
               run: |
                   echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
 
+    # Stops the run before anything is built or published.
     validate-tag:
         runs-on: ubuntu-latest
         permissions:
@@ -63,12 +80,15 @@ jobs:
                   TAG: ${{ inputs.tag }}
               run: |
                   # Release candidates get a vX.Y.Z tag too, but their GitHub release is a prerelease.
-                  releaseState=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft --jq '"prerelease=\(.isPrerelease) draft=\(.isDraft)"') || {
+                  if ! releaseJson=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft); then
                       echo "::error::Tag $TAG has no GitHub release. Only published releases can be deployed."
                       exit 1
-                  }
-                  if [[ "$releaseState" != "prerelease=false draft=false" ]]; then
-                      echo "::error::Release $TAG is not a published final release ($releaseState)."
+                  fi
+
+                  isPrerelease=$(jq -r '.isPrerelease' <<< "$releaseJson")
+                  isDraft=$(jq -r '.isDraft' <<< "$releaseJson")
+                  if [[ "$isPrerelease" == "true" || "$isDraft" == "true" ]]; then
+                      echo "::error::Release $TAG is not a published final release (prerelease=$isPrerelease, draft=$isDraft)."
                       exit 1
                   fi
 
@@ -93,6 +113,7 @@ jobs:
               id: validated-commit
               run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+    # Builds the tag only when the run-lint input is true.
     run-lint:
         needs: validate-tag
         runs-on: ubuntu-latest
@@ -105,6 +126,8 @@ jobs:
               with:
                   ref: refs/tags/${{ inputs.tag }}
 
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
             - name: 📌 Check the tag still points to the validated commit
               env:
                   TAG: ${{ inputs.tag }}
@@ -122,6 +145,8 @@ jobs:
               with:
                   node-version: 24
 
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
             - name: ⬆️ Match the npm the tag pins
               # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
               run: |
@@ -142,6 +167,7 @@ jobs:
               run: |
                   npm run build
 
+    # Temporary branch: prepare-branch commits the build output to it and publish-npm publishes from it.
     create-branch:
         needs: [validate-tag, run-lint]
         runs-on: ubuntu-latest
@@ -189,6 +215,7 @@ jobs:
                   git checkout -b deploy-npm
                   git push -u origin deploy-npm
 
+    # Turns deploy-npm into the package content: build output committed, development files removed.
     prepare-branch:
         needs: create-branch
         runs-on: ubuntu-latest
@@ -269,6 +296,8 @@ jobs:
               run: |
                   npm pkg set 'files[]=dist' 'files[]=src'
 
+            # dist is committed so publish-npm, a fresh job, gets the build. .gitignore is removed because npm
+            # would otherwise use it to exclude files. Kept as is: the files whitelist now decides the content.
             - name: 📤 Commit, remove gitignore and commit again!
               run: |
                   git add .
@@ -281,6 +310,7 @@ jobs:
                   git commit -m 'OK to Deploy into NPM. [skip ci]'
                   git push origin deploy-npm
 
+    # Publishes deploy-npm with provenance; the publish step is skipped on forks.
     publish-npm:
         needs: [check-repo, prepare-branch]
         runs-on: ubuntu-latest
@@ -321,6 +351,7 @@ jobs:
                   node-version: 24
                   registry-url: https://registry.npmjs.org/
 
+            # npm trusted publishing (OIDC) needs a recent npm.
             - name: 🔄 Ensure Latest npm
               run: npm install -g npm@latest
               shell: bash
