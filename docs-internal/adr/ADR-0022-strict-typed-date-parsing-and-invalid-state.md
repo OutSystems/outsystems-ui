@@ -126,16 +126,23 @@ The library side (parser and correction rules, option names and defaults) is rec
 
 ### Event and error codes
 
-- **Block event `OnInvalidInput`** on DatePicker and DatePickerRange, with `DatePickerId` and `ErrorCode`.
+- **Block event `OnInvalidInput`** on DatePicker and DatePickerRange, with `DatePickerId`, `ErrorCode` and
+  `InputText` (the text the user typed, which the developer cannot read otherwise: the bound variable is empty
+  and the typed text lives in the provider's own input).
 - **One error code per case**, without a message (a default message would need translations; the developer
   sets the validation message), in `Providers.OSUI.Datepicker.Flatpickr.ErrorCodes`:
     - `OSUI-PRO-02002` (`InvalidTypedInput`): the text can't be read as a date in the input format, even after
       auto-correction (including a Range with only one date).
-    - `OSUI-PRO-02003` (`DisabledTypedDate`): the text is a valid date that the picker doesn't allow: a
-      disabled day (`DisabledDays`, `DisabledWeekDays`), or a date before `MinDate` / after `MaxDate`.
-- The fork's hook gives a `reason` (`unparsable` or `disabled`); OutSystems UI turns it into the error code and
-  does not pass the reason on. The JavaScript callback to the block is `(pickerId, errorCode, inputText)`; the
-  block event exposes the id and the error code.
+    - `OSUI-PRO-02003` (`DisabledTypedDate`): the text is a valid date that is disabled (`DisabledDays`,
+      `DisabledWeekDays`).
+    - `OSUI-PRO-02004` (`OutOfRangeTypedDate`): the text is a valid date before `MinDate` or after `MaxDate`.
+      Checked before the disabled days, so a date that is both gets this code.
+- Disabled and out-of-range dates have separate codes so the developer can write a specific message ("that
+  day isn't available" vs "choose a date between X and Y"); the event does not carry the date, so the
+  developer could not tell them apart otherwise.
+- The fork's hook gives a `reason` (`unparsable`, `outOfRange` or `disabled`); OutSystems UI turns it into the
+  error code and does not pass the reason on. The JavaScript callback to the block is
+  `(pickerId, errorCode, inputText)`.
 
 ### Delivery
 
@@ -180,15 +187,12 @@ Decisions taken so far, to confirm before the status changes to Accepted:
 - Rejected input keeps the typed text with an empty value (instead of clearing both, or going back to the
   previous date).
 - Disabled and out-of-range typed dates are reported as invalid.
-- The event carries an error code and no default message: `OSUI-PRO-02002` for text that can't be read,
-  `OSUI-PRO-02003` for a disabled or out-of-range date. No separate reason parameter.
+- The event carries an error code and the typed text, and no default message: `OSUI-PRO-02002` for text
+  that can't be read, `OSUI-PRO-02003` for a disabled date, `OSUI-PRO-02004` for a date outside
+  `MinDate`/`MaxDate`. No separate reason parameter.
 
 Open points:
 
-- Whether `OSUI-PRO-02003` should be split into a disabled day and a date outside `MinDate`/`MaxDate` (the
-  fork reports both as `disabled` today).
-- Whether the `OnInvalidInput` block event should also expose the typed text, which the JavaScript callback
-  already provides.
 - The Enter key behaviour on typed input is out of scope.
 
 ## Links

@@ -87,11 +87,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput
 			);
 
-			// One error code per reason: a disabled or out-of-range date, or text that can't be read as a date
-			const errorCode =
-				data.reason === Providers.OSUI.SharedProviderResources.Flatpickr.Enum.InvalidInputReason.Disabled
-					? ErrorCodes.DisabledTypedDate
-					: ErrorCodes.InvalidTypedInput;
+			// One error code per reason: a disabled date, a date out of range, or text that can't be read as a date
+			let errorCode = ErrorCodes.InvalidTypedInput;
+			switch (data.reason) {
+				case Providers.OSUI.SharedProviderResources.Flatpickr.Enum.InvalidInputReason.Disabled:
+					errorCode = ErrorCodes.DisabledTypedDate;
+					break;
+				case Providers.OSUI.SharedProviderResources.Flatpickr.Enum.InvalidInputReason.OutOfRange:
+					errorCode = ErrorCodes.OutOfRangeTypedDate;
+					break;
+			}
 
 			this.triggerPlatformEventCallback(this.onInvalidInputCallbackEvent, errorCode, data.value);
 		}
