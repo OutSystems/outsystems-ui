@@ -48,7 +48,7 @@ been reported in the community forum, by MVPs, and in a customer escalation with
       means writing it back after Flatpickr has cleared the input. An application's own `parseDate`
       replaces it completely.
 - Option 2 — Opt-in strict input parsing and an invalid-input hook in the Flatpickr fork, wired by OutSystems UI
-    - Pros: fixed in the library where the parsing happens, and only on the typing paths (blur, Enter). It
+    - Pros: fixed in the library where the parsing happens, and only on the typing paths (blur, Enter, clicking outside the open calendar). It
       knows both failure reasons (cannot be parsed, or disabled/out of range). Range input is accepted or
       rejected as a whole. The typed text is kept without a second write. The parser is covered by the
       fork's unit tests. New options are off by default, so the fork's other behaviour is unchanged.
