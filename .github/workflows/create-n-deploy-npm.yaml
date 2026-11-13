@@ -1,10 +1,27 @@
+# Create and Deploy NPM
+#
+# Publishes a released version of outsystems-ui to npm, with provenance (npm trusted publishing).
+#
+# How to run: Actions > Create and Deploy NPM > Run workflow, keep "Use workflow from" = dev
+# (the Azure federated credential only accepts that ref) and enter the release tag, e.g. v3.0.0.
+# Keep this file name: npm trusted publishing is bound to it.
+#
+# Flow:
+#   validate-tag    vX.Y.Z format, published non-prerelease GitHub release, matches package.json
+#   run-lint        optional build of the tag, to catch compile and lint errors before publishing
+#   create-branch   creates the temporary deploy-npm branch from the tag
+#   prepare-branch  builds, removes development files, limits the package to dist and src, commits to deploy-npm
+#   publish-npm     publishes deploy-npm to npm
+#   delete-branch   removes deploy-npm, also after a failure
+#
+# Decisions: docs-internal/adr/ADR-0023-release-workflows-publish-a-validated-tag.md
 name: Create and Deploy NPM
 
 on:
     workflow_dispatch:
         inputs:
-            branch-name:
-                description: 'Branch to be used as base to create a new one and be published.'
+            tag:
+                description: 'Release tag to publish (e.g. v3.0.0). Its package.json version must match.'
                 type: string
                 required: true
             delete-branch:
@@ -12,14 +29,20 @@ on:
                 type: boolean
                 default: true
             run-lint:
-                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
+                description: 'Compile and perform lint tests to ensure there is no issues at the given tag.'
                 type: boolean
                 default: true
     
 permissions:
     contents: read
 
+# One run at a time: parallel runs share the deploy-npm branch, and a failed run deletes it.
+concurrency:
+    group: deploy-npm
+    cancel-in-progress: false
+
 jobs:
+    # Forks can run the workflow but never publish.
     check-repo:
         runs-on: ubuntu-latest
 
@@ -32,16 +55,107 @@ jobs:
               run: |
                   echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
 
+    # Stops the run before anything is built or published.
+    validate-tag:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        outputs:
+            commit: ${{ steps.validated-commit.outputs.sha }}
+
+        steps:
+            - name: 🏷️ Check the tag format
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      echo "::error::'$TAG' is not a release tag. Expected vX.Y.Z (e.g. v3.0.0)."
+                      exit 1
+                  fi
+
+            - name: 🚀 Check the tag is a published release
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  # Release candidates get a vX.Y.Z tag too, but their GitHub release is a prerelease.
+                  if ! releaseJson=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft); then
+                      echo "::error::Tag $TAG has no GitHub release. Only published releases can be deployed."
+                      exit 1
+                  fi
+
+                  isPrerelease=$(jq -r '.isPrerelease' <<< "$releaseJson")
+                  isDraft=$(jq -r '.isDraft' <<< "$releaseJson")
+                  if [[ "$isPrerelease" == "true" || "$isDraft" == "true" ]]; then
+                      echo "::error::Release $TAG is not a published final release (prerelease=$isPrerelease, draft=$isDraft)."
+                      exit 1
+                  fi
+
+            - name: 📥 Checkout tag ${{ inputs.tag }}
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              with:
+                  ref: refs/tags/${{ inputs.tag }}
+
+            - name: 🔢 Check the tag matches the package version
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  packageVersion=$(node -p "require('./package.json').version")
+                  if [[ "v$packageVersion" != "$TAG" ]]; then
+                      echo "::error::Tag $TAG has package.json version $packageVersion. They must match."
+                      exit 1
+                  fi
+
+            # Later jobs check out the tag again and stop unless it still points to this commit:
+            # a release-candidate rerun deletes and recreates tags.
+            - name: 📌 Record the validated commit
+              id: validated-commit
+              run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+    # Builds the tag only when the run-lint input is true.
     run-lint:
+        needs: validate-tag
         runs-on: ubuntu-latest
         permissions:
             contents: read
 
         steps:
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
+                  ref: refs/tags/${{ inputs.tag }}
+
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
+            - name: 📌 Check the tag still points to the validated commit
+              env:
+                  TAG: ${{ inputs.tag }}
+                  VALIDATED_COMMIT: ${{ needs.validate-tag.outputs.commit }}
+              run: |
+                  # A release-candidate rerun deletes and recreates tags; stop if the tag moved after validate-tag.
+                  currentCommit=$(git rev-parse HEAD)
+                  if [[ "$currentCommit" != "$VALIDATED_COMMIT" ]]; then
+                      echo "::error::Tag $TAG moved after validation ($VALIDATED_COMMIT -> $currentCommit)."
+                      exit 1
+                  fi
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
+            - name: ⬆️ Match the npm the tag pins
+              # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
+              run: |
+                  pinnedNpmVersion=$(node -p "require('./package.json').volta?.npm ?? ''")
+                  if [[ -z "$pinnedNpmVersion" ]]; then
+                      echo "The tag pins no npm version. Keeping the npm bundled with Node."
+                      exit 0
+                  fi
+                  npm install -g "npm@$pinnedNpmVersion" --ignore-scripts
 
             - name: 🕸️ Install project dependencies
               if: ${{ inputs.run-lint == true }}
@@ -53,8 +167,9 @@ jobs:
               run: |
                   npm run build
 
+    # Temporary branch: prepare-branch commits the build output to it and publish-npm publishes from it.
     create-branch:
-        needs: run-lint
+        needs: [validate-tag, run-lint]
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -77,17 +192,30 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 📥 Checkout into ${{ inputs.branch-name }}
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ inputs.branch-name }}
+                  ref: refs/tags/${{ inputs.tag }}
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: 📦 Create new deploy-npm branch based on ${{ inputs.branch-name }}
+            - name: 📌 Check the tag still points to the validated commit
+              env:
+                  TAG: ${{ inputs.tag }}
+                  VALIDATED_COMMIT: ${{ needs.validate-tag.outputs.commit }}
+              run: |
+                  # A release-candidate rerun deletes and recreates tags; stop if the tag moved after validate-tag.
+                  currentCommit=$(git rev-parse HEAD)
+                  if [[ "$currentCommit" != "$VALIDATED_COMMIT" ]]; then
+                      echo "::error::Tag $TAG moved after validation ($VALIDATED_COMMIT -> $currentCommit)."
+                      exit 1
+                  fi
+
+            - name: 📦 Create new deploy-npm branch based on ${{ inputs.tag }}
               run: |
                   git checkout -b deploy-npm
                   git push -u origin deploy-npm
 
+    # Turns deploy-npm into the package content: build output committed, development files removed.
     prepare-branch:
         needs: create-branch
         runs-on: ubuntu-latest
@@ -127,13 +255,30 @@ jobs:
                   ref: deploy-npm
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            - name: ⬆️ Match the npm the tag pins
+              # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
+              run: |
+                  pinnedNpmVersion=$(node -p "require('./package.json').volta?.npm ?? ''")
+                  if [[ -z "$pinnedNpmVersion" ]]; then
+                      echo "The tag pins no npm version. Keeping the npm bundled with Node."
+                      exit 0
+                  fi
+                  npm install -g "npm@$pinnedNpmVersion" --ignore-scripts
+
             - name: 🕸️ Install project dependencies
               run: |
                   npm install
 
             - name: 🗑️ Remove dist folder from .gitignore
               run: |
-                  gulp removeDistFromGitIgnore
+                  # Local binary on purpose: runner images no longer install gulp globally (ubuntu-26.04), and
+                  # npx could download an unverified gulp release from the registry (flagged by SonarCloud).
+                  ./node_modules/.bin/gulp removeDistFromGitIgnore
 
             - name: 🏗️ Compile into production mode
               run: |
@@ -141,8 +286,18 @@ jobs:
 
             - name: 🧹 Clean files and folders
               run: |
-                  gulp prepareToDeploy
+                  # Local binary on purpose: runner images no longer install gulp globally (ubuntu-26.04), and
+                  # npx could download an unverified gulp release from the registry (flagged by SonarCloud).
+                  ./node_modules/.bin/gulp prepareToDeploy
 
+            # Whitelist the package content here, not in package.json, so it also applies to tags
+            # created before this rule existed. The prepareToDeploy remove list alone misses new folders.
+            - name: 📋 Limit the package to dist and src
+              run: |
+                  npm pkg set 'files[]=dist' 'files[]=src'
+
+            # dist is committed so publish-npm, a fresh job, gets the build. .gitignore is removed because npm
+            # would otherwise use it to exclude files. Kept as is: the files whitelist now decides the content.
             - name: 📤 Commit, remove gitignore and commit again!
               run: |
                   git add .
@@ -155,6 +310,7 @@ jobs:
                   git commit -m 'OK to Deploy into NPM. [skip ci]'
                   git push origin deploy-npm
 
+    # Publishes deploy-npm with provenance; the publish step is skipped on forks.
     publish-npm:
         needs: [check-repo, prepare-branch]
         runs-on: ubuntu-latest
@@ -195,22 +351,27 @@ jobs:
                   node-version: 24
                   registry-url: https://registry.npmjs.org/
 
+            # npm trusted publishing (OIDC) needs a recent npm.
             - name: 🔄 Ensure Latest npm
               run: npm install -g npm@latest
               shell: bash
               
+            - name: 📋 List package content
+              run: npm pack --dry-run
+
             - name: 🚀 Publish new version to NPM
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               run: npm publish --provenance
 
+    # Runs after failures too, so a leftover deploy-npm branch doesn't block the next run.
     delete-branch:
-        needs: publish-npm
+        needs: [create-branch, publish-npm]
         runs-on: ubuntu-latest
         permissions:
             id-token: write
             contents: write
 
-        if: ${{ inputs.delete-branch == true }}
+        if: ${{ always() && inputs.delete-branch == true && needs.create-branch.result == 'success' }}
         steps:
             - name: 📥 Checkout branch dev
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
