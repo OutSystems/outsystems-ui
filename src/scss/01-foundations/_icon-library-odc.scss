@@ -360,7 +360,7 @@ body.iconLibrary-phosphor {
 	border: none;
 	content: var(--osui-icon-checkbox-checked);
 	font-family: var(--osui-icon-font-family);
-	color: var(--color-text-inverse);
+	color: var(--color-text-light);
 	transform: none !important; // !important required to override the element from provider
 	position: absolute;
 	width: 100%;
@@ -582,7 +582,7 @@ body.iconLibrary-phosphor {
 // which is what these absolute glyphs are positioned against.
 .pswp__button.pswp__button--close:before,
 .pswp__button.pswp__button--zoom:before {
-	color: variables.$token-icon-inverse;
+	color: variables.$token-icon-light;
 	font-family: var(--osui-icon-font-family);
 	font-size: variables.$token-font-size-700;
 	position: absolute;
@@ -613,7 +613,7 @@ body.iconLibrary-phosphor {
 	align-items: center;
 	background-color: variables.$token-backdrop;
 	background-image: none !important;
-	color: variables.$token-icon-inverse;
+	color: variables.$token-icon-light;
 	display: flex;
 	font-family: var(--osui-icon-font-family);
 	font-size: variables.$token-font-size-450;

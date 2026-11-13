@@ -28,7 +28,7 @@ $osui-avatar-lightest-text-colors: (
 ///
 .avatar {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-avatar-color: var(--color-text-inverse);
+	--osui-avatar-color: var(--color-text-light);
 	--osui-avatar-on-light-color: var(--color-text);
 	--osui-avatar-soft-border-radius: #{variables.$token-border-radius-100};
 	// ───────────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ $osui-avatar-lightest-text-colors: (
 			--osui-avatar-color: var(--color-primary);
 
 			&-lightest {
-				--osui-avatar-color: var(--color-text-inverse);
+				--osui-avatar-color: var(--color-text-light);
 			}
 		}
 
@@ -122,6 +122,14 @@ $osui-avatar-lightest-text-colors: (
 		&-secondary {
 			background-color: variables.$token-bg-neutral-base-default;
 			--osui-avatar-color: var(--color-secondary);
+		}
+
+		// The status backgrounds read semantics-*-base, which lightens in dark,
+		// so they keep inverse text.
+		&-error,
+		&-success,
+		&-info {
+			--osui-avatar-color: var(--color-text-inverse);
 		}
 
 		&-primary,

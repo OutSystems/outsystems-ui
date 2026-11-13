@@ -60,7 +60,7 @@ export const Playground: Story = {
 		const template = `
 			<div style="min-height: 360px;">
 				<button class="btn btn-primary" data-open type="button" style="cursor:pointer;">Open sidebar</button>
-				<p style="margin-top: 12px; color: var(--osui-color-text-subtle, #666);">
+				<p style="margin-top: 12px; color: var(--color-text-subtle);">
 					The sidebar is <code>position: fixed</code>; it slides in over the preview from the ${args.direction}.
 				</p>
 

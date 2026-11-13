@@ -79,6 +79,24 @@
 		border: var(--osui-btn-border-width) solid transparent;
 		color: var(--color-text-inverse);
 
+		// Inverse text suits fills that lighten or flip in dark (the status, warning,
+		// secondary and neutral backgrounds). Primary and the palette keep their
+		// color in dark, so their label stays light.
+		&.background-primary,
+		&.background-red,
+		&.background-orange,
+		&.background-lime,
+		&.background-green,
+		&.background-teal,
+		&.background-cyan,
+		&.background-blue,
+		&.background-indigo,
+		&.background-violet,
+		&.background-grape,
+		&.background-pink {
+			color: var(--color-text-light);
+		}
+
 		&:active {
 			filter: brightness(0.8);
 		}

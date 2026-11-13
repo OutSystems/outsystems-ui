@@ -21,7 +21,7 @@ export const Playground: Story = {
 	render: () => {
 		const id = uid('swipe');
 		const template = `
-			<div ${osuiRoot(id)} style="display:flex;align-items:center;justify-content:center;min-height:200px;background:#eef;border-radius:8px;user-select:none;touch-action:none;">
+			<div ${osuiRoot(id)} style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--color-neutral-2);border-radius:8px;user-select:none;touch-action:none;">
 				<span data-output>Swipe inside this box (touch device / emulation)</span>
 			</div>`;
 		return renderPattern(template, (root, register) => {

@@ -353,7 +353,7 @@ These variables still exist — your overrides still apply — but without an ov
 
 The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable, so they moved with it. Everything that named neutral-0 shifted together.
 
-If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
+If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — pick by what the background does in dark mode. On primary and the palette colors, which keep their color, use `--color-text-light` (white in both themes). On the status colors (`--color-error`, `--color-success`, `--color-info`), which lighten in dark, use `--color-text-inverse`, which turns near-black there.
 
 **The grey shades** are the eleven greys the whole UI is built from — `--color-neutral-0` (lightest) through `--color-neutral-10` (darkest). Page backgrounds, card surfaces, borders, body text and muted labels each take one of them. **Flipping** them means redefining shade 0 as the darkest and shade 10 as the lightest, which before `.os-dark-theme` existed was the cheapest way to build a dark mode: one block of eleven declarations and every grey in the app inverts at once.
 
@@ -820,10 +820,17 @@ a[data-link]:focus {
 }
 ```
 
+### Neutral palette colors follow the theme; saturated ones don't
+
+In `.os-dark-theme` the neutral steps flip: `background-neutral-0` is still "the surface" and `background-neutral-10` is still "furthest from the surface", so a Neutral 7 Tag or Badge turns into a light chip on a dark page. The saturated palette and the status colors (`background-blue`, `background-red`, `background-primary`, …) keep their color. This is by design: "Neutral N" means "N steps away from the surface", which is the meaning that survives a theme change.
+
+The framework pairs each fill with matching text. Tag, Badge, User Avatar and Counter put inverse text on Neutral 6–10, which flips along with the fill, and white text (`--color-text-light`) on saturated fills, which don't flip. Do the same in your own CSS. If you need a grey that stays dark in both themes, don't use a neutral step: use a color of your own.
+
 ### General dark-mode hygiene
 
 - Replace hardcoded colour literals with `--color-*` roles or `--token-*` values where a match exists.
 - Prefer `--color-text` over `--color-neutral-9` for body text — the role flips in dark mode, the grey shade does not.
+- Text over an image or a colored scrim uses `--color-text-light`, never `.text-neutral-0` or `--color-neutral-0`. The neutral steps flip in dark mode, so "neutral-0" becomes near-black on a picture that stayed the same.
 - Blank-slate icons changed from primary to grey (`--color-text-disabled`). Override with `.blank-slate-icon { color: var(--color-primary); }` if needed.
 - Your own `.icon` elements don't read `--token-icon-subtlest`, so setting that token moves the framework's icons and leaves yours behind. Set `.icon { color: … }` as well, and `color: inherit` for icons inside buttons or coloured blocks that set their own text colour.
 

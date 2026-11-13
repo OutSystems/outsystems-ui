@@ -26,7 +26,7 @@
 			#{variables.$token-bg-primary-base-press}
 		);
 		--osui-floating-actions-button-border-radius: var(--border-radius-md, #{variables.$token-shape-soft-md});
-		--osui-floating-actions-button-color: var(--color-text-inverse);
+		--osui-floating-actions-button-color: var(--color-text-light);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
 		--osui-floating-actions-item-background: var(--color-background-surface);
 		--osui-floating-actions-item-background-hover: #{variables.$token-bg-neutral-subtlest-hover};

@@ -296,8 +296,14 @@ export const MIGRATION_DATA = {
 				['`--color-text-subtle`', 'Secondary/muted text'],
 				['`--color-text-subtlest`', 'Hint/placeholder text'],
 				['`--color-text-disabled`', 'Disabled state text'],
-				['`--color-text-inverse`', 'Text on inverted backgrounds'],
-				['`--color-text-light`', 'Light text on dark/primary backgrounds'],
+				[
+					'`--color-text-inverse`',
+					'Text on backgrounds that flip or lighten in dark: `bg-neutral-bold` and the status colors',
+				],
+				[
+					'`--color-text-light`',
+					'White in both themes: text on primary and palette fills, which keep their color in dark',
+				],
 				['`--color-text-dark`', 'Dark text on light/accent backgrounds'],
 				['`--color-background-body`', 'Page background'],
 				['`--color-background-surface`', 'Card, list and control background'],
@@ -3111,7 +3117,7 @@ export const MIGRATION_DATA = {
 					name: '--color-primary-hover',
 					old: '#295fd6',
 					now: '#0f54da',
-					expr: 'var(--token-semantics-primary-800, var(--token-primitives-blue-800, #0f54da))',
+					expr: 'var(--token-bg-primary-base-hover, var(--token-semantics-primary-800, var(--token-primitives-blue-800, #0f54da)))',
 				},
 				{
 					name: '--color-primary-selected',

@@ -60,7 +60,7 @@ function sectionIndexDemo(sections: readonly SectionCopy[], configs: SectionInde
 	const targets = sections
 		.map(
 			({ title, body }, i) =>
-				`<section id="${targetIds[i]}" style="min-height:160px;padding:12px;border-bottom:1px solid #eee;"><h3>${title}</h3><p>${body}</p></section>`
+				`<section id="${targetIds[i]}" style="min-height:160px;padding:12px;border-bottom:1px solid var(--color-border-subtle);"><h3>${title}</h3><p>${body}</p></section>`
 		)
 		.join('');
 

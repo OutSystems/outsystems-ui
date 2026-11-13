@@ -496,8 +496,8 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 | `--color-text-subtle` | Secondary/muted text |
 | `--color-text-subtlest` | Hint/placeholder text |
 | `--color-text-disabled` | Disabled state text |
-| `--color-text-inverse` | Text on inverted backgrounds |
-| `--color-text-light` | Light text on dark/primary backgrounds |
+| `--color-text-inverse` | Text on backgrounds that flip or lighten in dark: `bg-neutral-bold` and the status colors |
+| `--color-text-light` | White in both themes: text on primary and palette fills, which keep their color in dark |
 | `--color-text-dark` | Dark text on light/accent backgrounds |
 | `--color-background-body` | Page background |
 | `--color-background-surface` | Card, list and control background |
@@ -952,7 +952,7 @@ Key changes:
 
 The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable (`color: var(--color-neutral-0)` and `background-color: var(--color-neutral-0)` in the shipped bundle), so they moved with it. There is no divergence between the variable and the classes to work around — everything that named neutral-0 shifted together.
 
-If the customer used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
+If the customer used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — pick by what the background does in dark mode. On primary and the palette colors, which keep their color, use `--color-text-light` (white in both themes). On the status colors (`--color-error`, `--color-success`, `--color-info`), which lighten in dark, use `--color-text-inverse`, which turns near-black there.
 
 **The root text color moved off the grey shades.** `html` was `color: var(--text-color-neutral-9, var(--color-neutral-9))` and is now `color: var(--color-text)`, which resolves through tokens that never reference a neutral. That single line is why re-pointing `--color-neutral-9` no longer moves body text, and it is the mechanism behind Category H. When the customer wants body text to move, set `--color-text`.
 
