@@ -277,7 +277,7 @@ span.flatpickr-weekday {
 
 	&.prevMonthDay,
 	&.nextMonthDay {
-		color: var(--color-text-disabled);
+		color: var(--color-text-subtlest);
 
 		&:hover:not(.selected) {
 			color: variables.$token-primitives-neutral-400;
