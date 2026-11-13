@@ -41,7 +41,7 @@ The Azure federated credential only accepts `dev`. The workflow definition there
 
 ## Decision Outcome
 
-Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. The tag must have a published, non-prerelease GitHub release, because release candidates also get `vX.Y.Z` tags. Every job checks out the commit validated in `validate-tag` instead of resolving the tag again, because a release-candidate rerun deletes and recreates tags. Also: the project's local `gulp` binary (`./node_modules/.bin/gulp`) instead of a global `gulp`, Node 24 with the npm version pinned in the tag's `volta` block, `npm pack --dry-run` logged before publishing, the `deploy-npm` cleanup runs after failures too, and runs of each workflow are serialised.
+Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. The tag must have a published, non-prerelease GitHub release, because release candidates also get `vX.Y.Z` tags. Every job checks out the tag again and stops if it no longer points to the commit validated in `validate-tag`, because a release-candidate rerun deletes and recreates tags. Also: the project's local `gulp` binary (`./node_modules/.bin/gulp`) instead of a global `gulp`, Node 24 with the npm version pinned in the tag's `volta` block, `npm pack --dry-run` logged before publishing, the `deploy-npm` cleanup runs after failures too, and runs of each workflow are serialised.
 
 Positive consequences:
 

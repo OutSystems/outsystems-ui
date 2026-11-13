@@ -83,7 +83,8 @@ jobs:
                       exit 1
                   fi
 
-            # Later jobs check out this exact commit, not the tag: a release-candidate rerun deletes and recreates tags.
+            # Later jobs check out the tag again and stop unless it still points to this commit:
+            # a release-candidate rerun deletes and recreates tags.
             - name: 📌 Record the validated commit
               id: validated-commit
               run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -95,10 +96,22 @@ jobs:
             contents: read
 
         steps:
-            - name: 📥 Checkout the validated commit of ${{ inputs.tag }}
+            - name: 📥 Checkout tag ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ needs.validate-tag.outputs.commit }}
+                  ref: refs/tags/${{ inputs.tag }}
+
+            - name: 📌 Check the tag still points to the validated commit
+              env:
+                  TAG: ${{ inputs.tag }}
+                  VALIDATED_COMMIT: ${{ needs.validate-tag.outputs.commit }}
+              run: |
+                  # A release-candidate rerun deletes and recreates tags; stop if the tag moved after validate-tag.
+                  currentCommit=$(git rev-parse HEAD)
+                  if [[ "$currentCommit" != "$VALIDATED_COMMIT" ]]; then
+                      echo "::error::Tag $TAG moved after validation ($VALIDATED_COMMIT -> $currentCommit)."
+                      exit 1
+                  fi
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -141,11 +154,24 @@ jobs:
             - name: 📥 Checkout repository
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-            - name: 📥 Checkout the validated commit of ${{ inputs.tag }} into ${{ env.SOURCE_DIR }}
+            - name: 📥 Checkout tag ${{ inputs.tag }} into ${{ env.SOURCE_DIR }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: ${{ needs.validate-tag.outputs.commit }}
+                  ref: refs/tags/${{ inputs.tag }}
                   path: ${{ env.SOURCE_DIR }}
+
+            - name: 📌 Check the tag still points to the validated commit
+              working-directory: ${{ env.SOURCE_DIR }}
+              env:
+                  TAG: ${{ inputs.tag }}
+                  VALIDATED_COMMIT: ${{ needs.validate-tag.outputs.commit }}
+              run: |
+                  # A release-candidate rerun deletes and recreates tags; stop if the tag moved after validate-tag.
+                  currentCommit=$(git rev-parse HEAD)
+                  if [[ "$currentCommit" != "$VALIDATED_COMMIT" ]]; then
+                      echo "::error::Tag $TAG moved after validation ($VALIDATED_COMMIT -> $currentCommit)."
+                      exit 1
+                  fi
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
