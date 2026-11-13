@@ -81,7 +81,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			_instance: Flatpickr,
 			data: { reason: string; value: string }
 		): void {
-			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Set(
+			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.AddInvalidState(
 				this.selfElement,
 				this.flatpickrInputElem,
 				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput
@@ -199,7 +199,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		// Method used to remove the invalid input state
 		private _unsetInvalidInputState(): void {
-			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.Unset(
+			Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.RemoveInvalidState(
 				this.selfElement,
 				this.flatpickrInputElem,
 				OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.InvalidInput

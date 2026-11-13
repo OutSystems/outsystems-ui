@@ -29,7 +29,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput {
 	 * @param inputElem The Flatpickr input element (the one the user types in)
 	 * @param cssClass The pattern modifier class for the invalid state
 	 */
-	export function Set(patternElem: HTMLElement, inputElem: HTMLInputElement, cssClass: string): void {
+	export function AddInvalidState(patternElem: HTMLElement, inputElem: HTMLInputElement, cssClass: string): void {
 		if (patternElem) {
 			OSFramework.OSUI.Helper.Dom.Styles.AddClass(patternElem, cssClass);
 		}
@@ -44,13 +44,13 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput {
 	}
 
 	/**
-	 * Remove the invalid state set by Set()
+	 * Remove the invalid state added by AddInvalidState()
 	 *
 	 * @param patternElem The pattern root element
 	 * @param inputElem The Flatpickr input element (the one the user types in)
 	 * @param cssClass The pattern modifier class for the invalid state
 	 */
-	export function Unset(patternElem: HTMLElement, inputElem: HTMLInputElement, cssClass: string): void {
+	export function RemoveInvalidState(patternElem: HTMLElement, inputElem: HTMLInputElement, cssClass: string): void {
 		if (patternElem) {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(patternElem, cssClass);
 		}
