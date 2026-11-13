@@ -7,7 +7,8 @@ Proposed
 ## Context
 
 DatePicker, DatePickerRange, MonthPicker and TimePicker can accept typed input (`SetEditableInput`). The typed
-text is parsed by Flatpickr against `altFormat` when the input loses focus or Enter is pressed. OutSystems UI
+text is parsed by Flatpickr against `altFormat` when the input loses focus, Enter is pressed, or the user clicks
+outside the open calendar. OutSystems UI
 loads Flatpickr from the OutSystems fork (`OutSystems/flatpickr`, based on 4.6.13), which already carries
 OutSystems UI fixes in this code (ROU-10854: case-insensitive month and weekday names and the Enter key;
 ROU-12898: change detection on blur).
@@ -48,8 +49,9 @@ been reported in the community forum, by MVPs, and in a customer escalation with
       means writing it back after Flatpickr has cleared the input. An application's own `parseDate`
       replaces it completely.
 - Option 2 — Opt-in strict input parsing and an invalid-input hook in the Flatpickr fork, wired by OutSystems UI
-    - Pros: fixed in the library where the parsing happens, and only on the typing paths (blur, Enter, clicking outside the open calendar). It
-      knows both failure reasons (cannot be parsed, or disabled/out of range). Range input is accepted or
+    - Pros: fixed in the library where the parsing happens, and only on the typing paths (blur, Enter,
+      clicking outside the open calendar). It knows every failure reason (cannot be parsed, out of range,
+      disabled). Range input is accepted or
       rejected as a whole. The typed text is kept without a second write. The parser is covered by the
       fork's unit tests. New options are off by default, so the fork's other behaviour is unchanged.
     - Cons: one more delivery step (fork release, and a new Flatpickr script in the O11 and ODC modules).
@@ -62,8 +64,9 @@ been reported in the community forum, by MVPs, and in a customer escalation with
     - Pros: no code change.
     - Cons: the default behaviour still saves wrong dates without telling the user.
 - Option 5 — Auto-correct typed input before rejecting it (complement to Option 2)
-    - Pros: dates typed without separators (`13122020`) or with other ones (`13/12/2020`) are accepted when
-      they can only be read one way, so fewer users meet the error at all. No mask and no second provider.
+    - Pros: dates typed without separators (`13122020`), with other ones (`13/12/2020`) or a mix of both
+      (`12122020 15:20`) are accepted when they can only be read one way, so fewer users meet the error at
+      all. No mask and no second provider.
     - Cons: one more rule set in the fork; a correction that guessed would recreate the original problem, so
       the rules must stay strict (see below).
 
@@ -107,6 +110,8 @@ The library side (parser and correction rules, option names and defaults) is rec
 
 ### Behaviour when it is on
 
+- **When it runs.** When the input loses focus, Enter is pressed, or the user clicks outside the open
+  calendar (the calendar of a date-and-time picker stays open while the user types).
 - **Auto-correction first.** A date typed without separators, with full-width values (`13122020` for
   `DD-MM-YYYY`), with other separators (`13/12/2020`), or a mix of both (`12122020 15:20` or
   `12-12-2020 1520` for a date and time), is rebuilt with the format's separators (`13-12-2020`,
@@ -205,4 +210,4 @@ Open points:
 
 ## Date
 
-2026-11-12
+2026-11-13
