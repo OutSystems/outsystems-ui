@@ -129,6 +129,23 @@ The library side (parser and correction rules, option names and defaults) is rec
   state is removed on the next change (a valid selection, or `Clear`) and when the provider is redrawn. The
   `not-valid` class is not used, because the platform owns it and it is removed on redraw.
 
+### Change compared with the previous behaviour
+
+What the user sees after leaving the input, before (and still with `StrictInputValidation` off) and now (with
+it on):
+
+| Typed text                                           | Before                                                                           | Now                                                                                                                                                           |
+| :--------------------------------------------------- | :------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Text that can't be read as a date (`abc`, `1312020`) | The input was emptied, or went back to the previous value. Nothing was reported. | The input **keeps the typed text** so the user can correct it; the value is empty; the input is marked invalid and `OnInvalidInput` reports `OSUI-PRO-02002`. |
+| Text read leniently (`23062024` for `DD-MM-YYYY`)    | Saved as another date (23-02-2029).                                              | Corrected when it can only be read one way (23-06-2024); otherwise rejected as above.                                                                         |
+| A disabled or out-of-range date                      | The value was cleared silently.                                                  | The text is kept, marked invalid, and `OnInvalidInput` reports `OSUI-PRO-02003` / `OSUI-PRO-02004`.                                                           |
+
+The main change for developers: after a rejection the input shows text that is **not** the bound variable's
+value. The variable is empty (NullDate, and `OnSelected` reports no date), while the field still shows what the
+user typed until it is corrected. Before, the field never showed text that wasn't a date. A form that reads the
+variable must not assume the field is empty: handle `OnInvalidInput` (for example set `Valid = False` and a
+`ValidationMessage`).
+
 ### Event and error codes
 
 - **Block event `OnInvalidInput`** on DatePicker and DatePickerRange, with `DatePickerId`, `ErrorCode` and
@@ -178,6 +195,8 @@ Negative consequences:
 - The OutSystems UI JavaScript and the Flatpickr script must ship together in the same module version. With
   an older Flatpickr script the new options are ignored and the pickers behave as before.
 - MonthPicker and TimePicker keep the lenient parsing.
+- After a rejection the input shows the typed text while the bound variable is empty. Before, the field was
+  emptied or went back to the previous value. Apps that relied on that must handle `OnInvalidInput`.
 - Further divergence of the fork from upstream Flatpickr.
 
 Decisions taken so far, to confirm before the status changes to Accepted:
