@@ -1,7 +1,19 @@
+# Create and Deploy Docs
+#
+# Publishes the TypeDoc API documentation of a released version to the docs site
+# (outsystems-ui-docs/outsystems-ui-docs.github.io, served by its own Pages workflow).
+#
+# How to run: Actions > Create and Deploy Docs > Run workflow, keep "Use workflow from" = dev
+# (the Azure federated credential only accepts that ref) and enter the release tag, e.g. v3.0.0.
+#
+# Flow:
+#   validate-tag  vX.Y.Z format, published non-prerelease GitHub release, matches package.json
+#   run-lint      optional build of the tag, to catch compile and lint errors before publishing
+#   publish-docs  generates the docs from the tag and replaces the docs site content in one commit
+#
+# Decisions: docs-internal/adr/ADR-0023-release-workflows-publish-a-validated-tag.md
 name: Create and Deploy Docs
 
-# Run this workflow from dev (the Azure federated credential only accepts that ref)
-# and pass the release tag whose documentation should be published.
 on:
     workflow_dispatch:
         inputs:
@@ -23,6 +35,7 @@ concurrency:
     cancel-in-progress: false
 
 jobs:
+    # Forks can run the workflow but never publish.
     check-repo:
         runs-on: ubuntu-latest
 
@@ -35,6 +48,7 @@ jobs:
               run: |
                   echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
 
+    # Stops the run before anything is built or published.
     validate-tag:
         runs-on: ubuntu-latest
         permissions:
@@ -59,12 +73,15 @@ jobs:
                   TAG: ${{ inputs.tag }}
               run: |
                   # Release candidates get a vX.Y.Z tag too, but their GitHub release is a prerelease.
-                  releaseState=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft --jq '"prerelease=\(.isPrerelease) draft=\(.isDraft)"') || {
+                  if ! releaseJson=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft); then
                       echo "::error::Tag $TAG has no GitHub release. Only published releases can be deployed."
                       exit 1
-                  }
-                  if [[ "$releaseState" != "prerelease=false draft=false" ]]; then
-                      echo "::error::Release $TAG is not a published final release ($releaseState)."
+                  fi
+
+                  isPrerelease=$(jq -r '.isPrerelease' <<< "$releaseJson")
+                  isDraft=$(jq -r '.isDraft' <<< "$releaseJson")
+                  if [[ "$isPrerelease" == "true" || "$isDraft" == "true" ]]; then
+                      echo "::error::Release $TAG is not a published final release (prerelease=$isPrerelease, draft=$isDraft)."
                       exit 1
                   fi
 
@@ -89,6 +106,7 @@ jobs:
               id: validated-commit
               run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+    # Builds the tag only when the run-lint input is true.
     run-lint:
         needs: validate-tag
         runs-on: ubuntu-latest
@@ -101,6 +119,8 @@ jobs:
               with:
                   ref: refs/tags/${{ inputs.tag }}
 
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
             - name: 📌 Check the tag still points to the validated commit
               env:
                   TAG: ${{ inputs.tag }}
@@ -118,6 +138,8 @@ jobs:
               with:
                   node-version: 24
 
+            # Repeated in each job that checks out the tag: a composite action can't be used there,
+            # because older tags don't have it.
             - name: ⬆️ Match the npm the tag pins
               # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
               run: |
