@@ -19,13 +19,17 @@
 
 	// Text follows the fill, as on Tag and Badge: palette and status fills keep
 	// their color in dark, so they take light text; the bold neutrals flip, so
-	// they take inverse text; yellow and warning are light in both themes.
+	// they take inverse text, as do the status fills, which lighten in dark;
+	// yellow and warning are light in both themes.
 	&[class*='background-']:not([class*='background-neutral']):not([class*='-lightest']):not(
 			.background-transparent,
 			.background-white,
 			.background-secondary,
 			.background-warning,
-			.background-yellow
+			.background-yellow,
+			.background-error,
+			.background-success,
+			.background-info
 		) {
 		--osui-counter-color: var(--color-text-light);
 	}
@@ -35,6 +39,9 @@
 		--osui-counter-color: var(--color-text-dark);
 	}
 
+	&.background-error,
+	&.background-success,
+	&.background-info,
 	&.background-secondary,
 	&.background-neutral-6,
 	&.background-neutral-7,

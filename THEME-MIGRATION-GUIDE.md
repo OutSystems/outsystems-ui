@@ -353,7 +353,7 @@ These variables still exist — your overrides still apply — but without an ov
 
 The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable, so they moved with it. Everything that named neutral-0 shifted together.
 
-If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-light`, which stays white in dark mode too (`--color-text-inverse` turns near-black there).
+If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — pick by what the background does in dark mode. On primary and the palette colors, which keep their color, use `--color-text-light` (white in both themes). On the status colors (`--color-error`, `--color-success`, `--color-info`), which lighten in dark, use `--color-text-inverse`, which turns near-black there.
 
 **The grey shades** are the eleven greys the whole UI is built from — `--color-neutral-0` (lightest) through `--color-neutral-10` (darkest). Page backgrounds, card surfaces, borders, body text and muted labels each take one of them. **Flipping** them means redefining shade 0 as the darkest and shade 10 as the lightest, which before `.os-dark-theme` existed was the cheapest way to build a dark mode: one block of eleven declarations and every grey in the app inverts at once.
 

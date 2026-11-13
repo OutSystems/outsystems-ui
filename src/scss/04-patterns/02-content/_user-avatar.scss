@@ -124,6 +124,14 @@ $osui-avatar-lightest-text-colors: (
 			--osui-avatar-color: var(--color-secondary);
 		}
 
+		// The status backgrounds read semantics-*-base, which lightens in dark,
+		// so they keep inverse text.
+		&-error,
+		&-success,
+		&-info {
+			--osui-avatar-color: var(--color-text-inverse);
+		}
+
 		&-primary,
 		&-blue,
 		&-green,
