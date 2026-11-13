@@ -29,7 +29,7 @@ $osui-badge-lightest-text-colors: (
 ///
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-badge-color: var(--color-text-inverse);
+	--osui-badge-color: var(--color-text-light);
 	--osui-badge-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -147,7 +147,7 @@ $osui-badge-lightest-text-colors: (
 	}
 
 	&.background-transparent-lightest {
-		--osui-badge-color: var(--color-text-inverse);
+		--osui-badge-color: var(--color-text-light);
 	}
 
 	// Extended palette colors (red, orange, yellow, etc.)

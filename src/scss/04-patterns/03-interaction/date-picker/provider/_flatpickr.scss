@@ -360,7 +360,7 @@ span.flatpickr-weekday {
 		border-radius: variables.$token-border-radius-100;
 
 		&.today {
-			color: var(--color-text-inverse);
+			color: var(--color-text-light);
 		}
 	}
 	// InRange Styles
@@ -473,7 +473,7 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm {
 		background-color: var(--color-primary);
 		border-radius: variables.$token-border-radius-100;
-		color: var(--color-text-inverse);
+		color: var(--color-text-light);
 		font-size: variables.$token-font-size-300;
 		font-weight: variables.$token-font-weight-semi-bold;
 		height: 18px;

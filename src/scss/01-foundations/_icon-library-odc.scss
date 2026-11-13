@@ -360,7 +360,7 @@ body.iconLibrary-phosphor {
 	border: none;
 	content: var(--osui-icon-checkbox-checked);
 	font-family: var(--osui-icon-font-family);
-	color: var(--color-text-inverse);
+	color: var(--color-text-light);
 	transform: none !important; // !important required to override the element from provider
 	position: absolute;
 	width: 100%;

@@ -77,7 +77,7 @@
 
 	&[class*='background-']:not(.background-white) {
 		border: var(--osui-btn-border-width) solid transparent;
-		color: var(--color-text-inverse);
+		color: var(--color-text-light);
 
 		&:active {
 			filter: brightness(0.8);

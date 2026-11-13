@@ -126,7 +126,7 @@
 					border-color: var(--color-primary);
 
 					&:after {
-						border-color: var(--color-text-inverse);
+						border-color: var(--color-text-light);
 						// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
 						border-left-color: transparent;
 						border-top-color: transparent;
@@ -328,7 +328,7 @@
 			border-color: var(--color-primary);
 
 			&:after {
-				border-color: var(--color-text-inverse);
+				border-color: var(--color-text-light);
 				// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
 				border-left-color: transparent;
 				border-top-color: transparent;
