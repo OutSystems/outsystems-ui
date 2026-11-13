@@ -82,6 +82,7 @@ CSS API: --osui-checkbox-size --osui-checkbox-background --osui-checkbox-border-
 
 ### counter (src/scss/04-patterns/05-numbers/_counter.scss)
 [runtime-only] Skeleton (from stories/Counter.stories.ts): <div><div><div class="font-size-display text-neutral-0">26</div><div>Completed requests</div><div><i class="icon ph ph-check"></i></div></div></div>
+CSS API: --osui-counter-color
 Docs: numbers/counter
 
 ### dropdown (src/scss/03-widgets/_dropdown.scss)
