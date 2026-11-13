@@ -21,37 +21,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 						OSFramework.OSUI.Helper.Dom.Styles.AddClass(body, OSFramework.OSUI.GlobalEnum.DeviceType.phone);
 					}
 
-					// Add the desktop class if not phone/tablet
-					if (
-						OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.phone
-						) === false &&
-						OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.tablet
-						) === false
-					) {
-						OSFramework.OSUI.Helper.Dom.Styles.AddClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.desktop
-						);
-					} else if (
-						OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.desktop
-						) &&
-						OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.tablet
-						)
-					) {
-						OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
-							body,
-							OSFramework.OSUI.GlobalEnum.DeviceType.desktop
-						);
-					}
-
 					// Update the CSS body variables
 					LayoutPrivate.CssBodyVariables.Set();
 				}, 500);
