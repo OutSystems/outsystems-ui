@@ -6,7 +6,7 @@
  * Only the --light-* / --dark-* palette inputs are overridden: TypeDoc maps them onto --color-* for its
  * OS / Light / Dark switch, so both themes follow it untouched.
  * Values mirror .storybook/Theme.js, .storybook/docs-dark.scss and the sidebar rules in manager-head.html;
- * the header copies the .osui-banner of https://outsystemsui.outsystems.com/OutSystemsUIWebsite.
+ * the header copies the .osui-banner of https://outsystems-ui.outsystems.com/.
  */
 
 :root {

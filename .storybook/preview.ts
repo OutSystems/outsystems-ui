@@ -11,6 +11,7 @@ import './component-library.scss';
 import './css-architecture.scss';
 import './css-api-reference.scss';
 import './migration.scss';
+import './llms.scss';
 import './theme-editor.scss';
 import './foundations.scss';
 import './pattern-docs.scss';
@@ -392,6 +393,7 @@ const preview: Preview = {
 					'Welcome',
 					'Getting Started',
 					'Migration',
+					'llms.txt',
 					'Component Library',
 					'Design system',
 					[

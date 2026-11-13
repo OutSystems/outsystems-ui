@@ -69,25 +69,25 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 
 ## Building and Testing
 
-| Command                    | Description                                                          |
-| -------------------------- | -------------------------------------------------------------------- |
-| `npm run setup`            | Install dependencies and start the dev server                        |
-| `npm run dev`              | Dev build + browser-sync server on port 3000 with file watching       |
-| `npm run build`            | Production build for all platforms, then `lintfix` and `lint`         |
-| `npm run lint`             | ESLint over all `.ts` files                                          |
-| `npm run lintfix`          | ESLint with `--fix`                                                  |
-| `npm run prettier`         | Format all `js`, `ts`, and `css` files                               |
-| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root) |
-| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source  |
-| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                          |
-| `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`) |
-| `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`) |
-| `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
+| Command                    | Description                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm run setup`            | Install dependencies and start the dev server                                                                                              |
+| `npm run dev`              | Dev build + browser-sync server on port 3000 with file watching                                                                            |
+| `npm run build`            | Production build for all platforms, then `lintfix` and `lint`                                                                              |
+| `npm run lint`             | ESLint over all `.ts` files                                                                                                                |
+| `npm run lintfix`          | ESLint with `--fix`                                                                                                                        |
+| `npm run prettier`         | Format all `js`, `ts`, and `css` files                                                                                                     |
+| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root)                                                                  |
+| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source                                                                        |
+| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                                                                                                |
+| `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`)                                                               |
+| `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`)                                         |
+| `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`)                                                                  |
 | `npm run docs:regen`       | Production build, then every generator in dependency order (tokens data, CSS API, migration guide and page, `PatternTypes.ts`, `docs-ai/`) |
-| `npm run docs:check`       | Drift gate the PR build runs: builds, regenerates, fails when a committed generated file is stale  |
-| `npm run tokens:update`    | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen` |
-| `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
-| `npm run update-version`   | Interactive version bump across project files                         |
+| `npm run docs:check`       | Drift gate the PR build runs: builds, regenerates, fails when a committed generated file is stale                                          |
+| `npm run tokens:update`    | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`                                                       |
+| `npm run create-osui-scss` | Regenerate the platform SCSS entry files                                                                                                   |
+| `npm run update-version`   | Interactive version bump across project files                                                                                              |
 
 ### Automated tests
 
@@ -140,13 +140,13 @@ restate them as evergreen guidance for AI-assisted work — keep the two in sync
 
 Naming (`@typescript-eslint/naming-convention`, error level):
 
-| Selector                     | Format                          | Underscore |
-| ---------------------------- | ------------------------------- | ---------- |
-| Class                        | `StrictPascalCase`              | —          |
-| Exported function            | `StrictPascalCase`              | —          |
-| Interface                    | `StrictPascalCase`/`UPPER_CASE` with `I` prefix | — |
-| Private property / method    | `strictCamelCase`               | required   |
-| Public / protected property / method | `strictCamelCase`       | forbidden  |
+| Selector                             | Format                                          | Underscore |
+| ------------------------------------ | ----------------------------------------------- | ---------- |
+| Class                                | `StrictPascalCase`                              | —          |
+| Exported function                    | `StrictPascalCase`                              | —          |
+| Interface                            | `StrictPascalCase`/`UPPER_CASE` with `I` prefix | —          |
+| Private property / method            | `strictCamelCase`                               | required   |
+| Public / protected property / method | `strictCamelCase`                               | forbidden  |
 
 Class member ordering (`member-ordering`, warn): signature → private fields → protected fields → public fields → constructor → private methods → protected methods → public methods → abstract methods, alphabetical within each group. Explicit accessibility modifiers are required on members other than the constructor.
 
@@ -202,10 +202,10 @@ Workflows prefixed `template-` are vendored copies of shared reusable workflows 
 
 `dev-build.yaml` runs on every push to `dev` (merge commits whose message holds `[skip ci]` are skipped). It installs from the exact pins, runs `npm run build:osui`, and replaces the files of one rolling GitHub **pre-release** tagged `dev-latest`, titled "Dev build (unreleased)":
 
-| File | Source |
-| --- | --- |
-| `O11.OutSystemsUI.css` / `.js` / `.d.ts`, `ODC.OutSystemsUI.css` / `.js` / `.d.ts` | `dist/` |
-| `Classic.O11.OutSystemsUI.css`, `Classic.ODC.OutSystemsUI.css` | `classic-theme/` (committed snapshot, copied) |
+| File                                                                               | Source                                        |
+| ---------------------------------------------------------------------------------- | --------------------------------------------- |
+| `O11.OutSystemsUI.css` / `.js` / `.d.ts`, `ODC.OutSystemsUI.css` / `.js` / `.d.ts` | `dist/`                                       |
+| `Classic.O11.OutSystemsUI.css`, `Classic.ODC.OutSystemsUI.css`                     | `classic-theme/` (committed snapshot, copied) |
 
 **The O11 and ODC modules are updated only from these files, never from a local build.** The URLs never change: `https://github.com/OutSystems/outsystems-ui/releases/download/dev-latest/<file>`. The second banner line of each new-theme CSS file and the release notes name the tokens version, commit and build date. A manual run from another branch builds and keeps the files as a run artifact, without touching `dev-latest`. It is not a release: the release-candidate flow below is unchanged. See ADR-0021.
 
@@ -226,7 +226,7 @@ Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgra
 
 ## Additional Resources
 
-- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) — live demos
+- [OutSystems UI Website](https://outsystems-ui.outsystems.com/) — live demos
 - [TypeDoc API reference](https://outsystems-ui-docs.github.io/)
 - [Pattern documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns)
 - Forge: [O11](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) · [ODC](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc) · [npm package](https://www.npmjs.com/package/outsystems-ui)
