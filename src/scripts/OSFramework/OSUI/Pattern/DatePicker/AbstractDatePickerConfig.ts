@@ -13,6 +13,8 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 		public ShowTodayButton: boolean;
 		/** Shows the week-number column in the calendar. */
 		public ShowWeekNumbers: boolean;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		public StrictInputValidation: boolean;
 		/** Time selection appended to the calendar: disabled (date only), 12 or 24 (hour format). */
 		public TimeFormat: string;
 
@@ -45,6 +47,9 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 					validatedValue = this.validateDate(value as string, undefined);
 					break;
 				case Enum.Properties.ShowTodayButton:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				case Enum.Properties.StrictInputValidation:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.TimeFormat:

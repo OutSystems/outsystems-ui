@@ -184,6 +184,10 @@ declare global {
 
 	// Temporary Fork Flatpickr Repository new Options
 	type Temp_FlatpickrForkNewOpts = {
+		autoCorrectInput?: boolean;
+		keepInvalidInput?: boolean;
+		onInvalidInput?: flatpickrOpts['onChange'];
+		strictInputParsing?: boolean;
 		updateInputVal: boolean;
 	};
 	// Merge Flatpickr default configs with the new ones

@@ -174,6 +174,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		ShowTodayButton: boolean;
 		/** Shows the week-number column in the calendar. */
 		ShowWeekNumbers: boolean;
+		/** Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default). */
+		StrictInputValidation: boolean;
 		/** Time selection appended to the calendar: disabled (date only), 12 or 24 (hour format). */
 		TimeFormat: 'disabled' | '12' | '24';
 	};

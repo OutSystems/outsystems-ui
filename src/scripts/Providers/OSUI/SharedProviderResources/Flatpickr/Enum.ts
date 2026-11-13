@@ -29,4 +29,11 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 	export enum AriaDateFormat {
 		WeekdayDayMonthYear = 'l, j F, Y',
 	}
+
+	// Reasons sent by the fork's onInvalidInput hook ({ value, reason })
+	export enum InvalidInputReason {
+		Disabled = 'disabled',
+		OutOfRange = 'outOfRange',
+		Unparsable = 'unparsable',
+	}
 }

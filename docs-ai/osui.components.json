@@ -1666,6 +1666,11 @@
 					"type": "boolean",
 					"description": "Shows the week-number column in the calendar."
 				},
+				"StrictInputValidation": {
+					"type": "boolean",
+					"default": false,
+					"description": "Validates typed text strictly against the format and reports rejected text through OnInvalidInput (off by default)."
+				},
 				"TimeFormat": {
 					"type": "'disabled' | '12' | '24'",
 					"allowed": [
@@ -1680,6 +1685,7 @@
 			"events": [],
 			"cssClasses": {
 				"Calendar": "osui-datepicker-calendar",
+				"InvalidInput": "osui-datepicker--invalid-input",
 				"Pattern": "osui-datepicker",
 				"Redrawn": "osui-datepicker--redrawn",
 				"AccessibilityContainerInfo": "osui-datepicker-a11y",
@@ -1718,10 +1724,11 @@
 					"MinDate": "",
 					"ShowTodayButton": false,
 					"ShowWeekNumbers": false,
+					"StrictInputValidation": false,
 					"TimeFormat": "disabled",
 					"ExtendedClass": ""
 				},
-				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialDate\\\":\\\"\\\",\\\"InitialEndDate\\\":\\\"\\\",\\\"InitialStartDate\\\":\\\"\\\",\\\"MaxDate\\\":\\\"\\\",\\\"MinDate\\\":\\\"\\\",\\\"ShowTodayButton\\\":false,\\\"ShowWeekNumbers\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"InitialDate\\\":\\\"\\\",\\\"InitialEndDate\\\":\\\"\\\",\\\"InitialStartDate\\\":\\\"\\\",\\\"MaxDate\\\":\\\"\\\",\\\"MinDate\\\":\\\"\\\",\\\"ShowTodayButton\\\":false,\\\"ShowWeekNumbers\\\":false,\\\"StrictInputValidation\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\", \"single\", \"flatpickr\")",
 				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
 			},
 			"schema": "schema/configs/DatePicker.schema.json",
