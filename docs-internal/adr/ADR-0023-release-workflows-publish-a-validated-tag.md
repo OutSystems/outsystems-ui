@@ -30,7 +30,7 @@ The Azure federated credential only accepts `dev`. The workflow definition there
 
 - **Input**
     - Any ref (as before). Pros: flexible. Cons: can publish unreleased code; branch-name collisions.
-    - A release tag, validated (`vX.Y.Z`, equal to `package.json` `version` at that tag). Pros: what is published is what was released. Cons: no publishing from `rc*` branches (never used; npm has no pre-release versions).
+    - A release tag, validated (`vX.Y.Z`, equal to `package.json` `version` at that tag, with a published non-prerelease GitHub release). Pros: what is published is what was released. Cons: no publishing from `rc*` branches (never used; npm has no pre-release versions).
 - **Docs publishing**
     - Repair the existing chain (force-add `docs/`, replace the copy action). Cons: keeps the intermediate branch and a third-party action with the token.
     - One job: generate from the tag, clone the docs repository, replace its content, push. Pros: no intermediate branch; stale pages are removed; `.nojekyll` is kept. Cons: the docs-site commit is an unsigned bot commit.
@@ -41,7 +41,7 @@ The Azure federated credential only accepts `dev`. The workflow definition there
 
 ## Decision Outcome
 
-Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. Also: the project's local `gulp` binary (`./node_modules/.bin/gulp`) instead of a global `gulp`, Node 24 set explicitly, `npm pack --dry-run` logged before publishing, and the `deploy-npm` cleanup runs after failures too.
+Chosen: validated release tag, single-job docs publishing, and the workflow-level whitelist. The tag must have a published, non-prerelease GitHub release, because release candidates also get `vX.Y.Z` tags. Every job checks out the commit validated in `validate-tag` instead of resolving the tag again, because a release-candidate rerun deletes and recreates tags. Also: the project's local `gulp` binary (`./node_modules/.bin/gulp`) instead of a global `gulp`, Node 24 with the npm version pinned in the tag's `volta` block, `npm pack --dry-run` logged before publishing, the `deploy-npm` cleanup runs after failures too, and runs of each workflow are serialised.
 
 Positive consequences:
 

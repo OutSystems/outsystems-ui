@@ -17,6 +17,11 @@ on:
 permissions:
     contents: read
 
+# One run at a time: parallel runs would race to push to the docs site.
+concurrency:
+    group: deploy-docs
+    cancel-in-progress: false
+
 jobs:
     check-repo:
         runs-on: ubuntu-latest
@@ -35,6 +40,9 @@ jobs:
         permissions:
             contents: read
 
+        outputs:
+            commit: ${{ steps.validated-commit.outputs.sha }}
+
         steps:
             - name: 🏷️ Check the tag format
               env:
@@ -42,6 +50,21 @@ jobs:
               run: |
                   if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
                       echo "::error::'$TAG' is not a release tag. Expected vX.Y.Z (e.g. v3.0.0)."
+                      exit 1
+                  fi
+
+            - name: 🚀 Check the tag is a published release
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  # Release candidates get a vX.Y.Z tag too, but their GitHub release is a prerelease.
+                  releaseState=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease,isDraft --jq '"prerelease=\(.isPrerelease) draft=\(.isDraft)"') || {
+                      echo "::error::Tag $TAG has no GitHub release. Only published releases can be deployed."
+                      exit 1
+                  }
+                  if [[ "$releaseState" != "prerelease=false draft=false" ]]; then
+                      echo "::error::Release $TAG is not a published final release ($releaseState)."
                       exit 1
                   fi
 
@@ -60,6 +83,11 @@ jobs:
                       exit 1
                   fi
 
+            # Later jobs check out this exact commit, not the tag: a release-candidate rerun deletes and recreates tags.
+            - name: 📌 Record the validated commit
+              id: validated-commit
+              run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
     run-lint:
         needs: validate-tag
         runs-on: ubuntu-latest
@@ -67,15 +95,25 @@ jobs:
             contents: read
 
         steps:
-            - name: 📥 Checkout tag ${{ inputs.tag }}
+            - name: 📥 Checkout the validated commit of ${{ inputs.tag }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: refs/tags/${{ inputs.tag }}
+                  ref: ${{ needs.validate-tag.outputs.commit }}
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
               with:
                   node-version: 24
+
+            - name: ⬆️ Match the npm the tag pins
+              # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
+              run: |
+                  pinnedNpmVersion=$(node -p "require('./package.json').volta?.npm ?? ''")
+                  if [[ -z "$pinnedNpmVersion" ]]; then
+                      echo "The tag pins no npm version. Keeping the npm bundled with Node."
+                      exit 0
+                  fi
+                  npm install -g "npm@$pinnedNpmVersion" --ignore-scripts
 
             - name: 🕸️ Install project dependencies
               if: ${{ inputs.run-lint == true }}
@@ -88,7 +126,7 @@ jobs:
     # Generates the docs from the tag and replaces the content of the docs site repository in one go.
     # No intermediate branch: docs/ is gitignored here, so it can't be committed to this repository anyway.
     publish-docs:
-        needs: [check-repo, run-lint]
+        needs: [check-repo, validate-tag, run-lint]
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -103,16 +141,27 @@ jobs:
             - name: 📥 Checkout repository
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-            - name: 📥 Checkout tag ${{ inputs.tag }} into ${{ env.SOURCE_DIR }}
+            - name: 📥 Checkout the validated commit of ${{ inputs.tag }} into ${{ env.SOURCE_DIR }}
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  ref: refs/tags/${{ inputs.tag }}
+                  ref: ${{ needs.validate-tag.outputs.commit }}
                   path: ${{ env.SOURCE_DIR }}
 
             - name: 📦 Setup Node
               uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
               with:
                   node-version: 24
+
+            - name: ⬆️ Match the npm the tag pins
+              # Only npm >= 11.17 understands .npmrc's min-release-age-exclude[]; the tag's volta block pins the npm to use.
+              working-directory: ${{ env.SOURCE_DIR }}
+              run: |
+                  pinnedNpmVersion=$(node -p "require('./package.json').volta?.npm ?? ''")
+                  if [[ -z "$pinnedNpmVersion" ]]; then
+                      echo "The tag pins no npm version. Keeping the npm bundled with Node."
+                      exit 0
+                  fi
+                  npm install -g "npm@$pinnedNpmVersion" --ignore-scripts
 
             - name: 🕸️ Install project dependencies
               working-directory: ${{ env.SOURCE_DIR }}
