@@ -81,7 +81,7 @@ Docs: content/chat_message
 CSS API: --osui-checkbox-size --osui-checkbox-background --osui-checkbox-border-color --osui-checkbox-hover-border-color --osui-checkbox-border-radius --osui-checkbox-checked-color
 
 ### counter (src/scss/04-patterns/05-numbers/_counter.scss)
-[runtime-only] Skeleton (from stories/Counter.stories.ts): <div><div><div class="font-size-display text-neutral-0">26</div><div>Completed requests</div><div><i class="icon ph ph-check"></i></div></div></div>
+[runtime-only] Skeleton (from stories/Counter.stories.ts): <div><div><div class="font-size-display">26</div><div>Completed requests</div><div><i class="icon ph ph-check"></i></div></div></div>
 CSS API: --osui-counter-color
 Docs: numbers/counter
 
