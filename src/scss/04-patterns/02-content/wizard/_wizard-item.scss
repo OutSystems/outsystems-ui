@@ -30,7 +30,7 @@
 	--osui-wizard-active-icon-color: #{variables.$token-text-subtle};
 	--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
 	--osui-wizard-past-background: var(--color-primary);
-	--osui-wizard-past-color: var(--color-text-inverse);
+	--osui-wizard-past-color: var(--color-text-light);
 	// Figma spec is primitives/neutral/600 — the token set has no semantic role for a
 	// progress-track neutral yet, so the primitive is cited directly (design-system gap).
 	--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};

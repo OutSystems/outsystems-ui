@@ -296,8 +296,14 @@ export const MIGRATION_DATA = {
 				['`--color-text-subtle`', 'Secondary/muted text'],
 				['`--color-text-subtlest`', 'Hint/placeholder text'],
 				['`--color-text-disabled`', 'Disabled state text'],
-				['`--color-text-inverse`', 'Text on inverted backgrounds'],
-				['`--color-text-light`', 'Light text on dark/primary backgrounds'],
+				[
+					'`--color-text-inverse`',
+					'Text on bold fills that flip or lighten in dark: `bg-neutral-bold`, the status colors and most palette colors',
+				],
+				[
+					'`--color-text-light`',
+					'White in both themes: text on the fills that stay dark in dark: primary, red, green and blue',
+				],
 				['`--color-text-dark`', 'Dark text on light/accent backgrounds'],
 				['`--color-background-body`', 'Page background'],
 				['`--color-background-surface`', 'Card, list and control background'],
@@ -1034,7 +1040,7 @@ export const MIGRATION_DATA = {
 				{
 					type: 'code',
 					lang: 'css',
-					code: ':root {\n  --color-primary: #7c20f2;\n  --color-primary-hover: #651ac5;\n  --color-primary-active: #5817ab;\n  --color-border-primary: #7c20f2;\n}',
+					code: ':root {\n  --color-primary: #7c20f2;\n  --color-primary-hover: #651ac5;\n  --color-primary-active: #5817ab;\n  --color-border-primary: #7c20f2;\n  --token-text-select: #7c20f2; /* active side-menu link */\n}',
 				},
 				{
 					type: 'paragraph',
@@ -1043,7 +1049,7 @@ export const MIGRATION_DATA = {
 				{
 					type: 'code',
 					lang: 'css',
-					code: ':root {\n  --token-semantics-primary-base: #7c20f2;\n  --token-semantics-primary-800: #651ac5;\n  --token-semantics-primary-900: #5817ab;\n}',
+					code: ':root {\n  --token-semantics-primary-base: #7c20f2;\n  --token-semantics-primary-800: #651ac5;\n  --token-semantics-primary-900: #5817ab;\n  --token-text-select: #7c20f2; /* active side-menu link */\n}',
 				},
 			],
 		},
@@ -3111,7 +3117,7 @@ export const MIGRATION_DATA = {
 					name: '--color-primary-hover',
 					old: '#295fd6',
 					now: '#0f54da',
-					expr: 'var(--token-semantics-primary-800, var(--token-primitives-blue-800, #0f54da))',
+					expr: 'var(--token-bg-primary-base-hover, var(--token-semantics-primary-800, var(--token-primitives-blue-800, #0f54da)))',
 				},
 				{
 					name: '--color-primary-selected',

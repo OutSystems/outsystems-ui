@@ -7,10 +7,51 @@
 
 ///
 .counter {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-counter-color: inherit;
+	// ───────────────────────────────────────────────────────────────────
+
+	color: var(--osui-counter-color);
 	display: flex;
 	padding-block: variables.$token-scale-0;
 	padding-inline: variables.$token-scale-600;
 	word-break: keep-all;
+
+	// Text follows the fill, as on Tag and Badge: primary, red, green and blue stay
+	// dark in dark mode, so they take light text; yellow, warning and success are
+	// light enough in both themes to need dark text; every other bold fill lightens
+	// or flips in dark and takes inverse.
+	&.background-primary,
+	&.background-red,
+	&.background-green,
+	&.background-blue {
+		--osui-counter-color: var(--color-text-light);
+	}
+
+	&.background-warning,
+	&.background-yellow,
+	&.background-success {
+		--osui-counter-color: var(--color-text-dark);
+	}
+
+	&.background-error,
+	&.background-info,
+	&.background-secondary,
+	&.background-orange,
+	&.background-lime,
+	&.background-teal,
+	&.background-cyan,
+	&.background-indigo,
+	&.background-violet,
+	&.background-grape,
+	&.background-pink,
+	&.background-neutral-6,
+	&.background-neutral-7,
+	&.background-neutral-8,
+	&.background-neutral-9,
+	&.background-neutral-10 {
+		--osui-counter-color: var(--color-text-inverse);
+	}
 
 	&.background-transparent {
 		border: none;

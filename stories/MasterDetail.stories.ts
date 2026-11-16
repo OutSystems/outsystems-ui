@@ -38,7 +38,7 @@ function masterDetailMarkup(
 	const wrapperStyle = [
 		`--left-percentage:${pct}`,
 		'display:flex',
-		'border:1px solid #eee',
+		'border:1px solid var(--color-border-subtle)',
 		'border-radius:8px',
 		'overflow:hidden',
 		height ? `height:${height}` : 'min-height:280px',
@@ -46,7 +46,7 @@ function masterDetailMarkup(
 
 	const markup = `
 		<div class="${cls('split-screen-wrapper', 'is--full-height')}" style="${wrapperStyle}">
-			<div class="split-left OSInline" style="flex:0 0 ${pct};border-right:1px solid #eee;">
+			<div class="split-left OSInline" style="flex:0 0 ${pct};border-right:1px solid var(--color-border-subtle);">
 				<div class="list list-group">${li(true, 'Inbox')}${li(false, 'Drafts')}${li(false, 'Sent')}</div>
 			</div>
 			<div class="${rightClass}" style="flex:1;">

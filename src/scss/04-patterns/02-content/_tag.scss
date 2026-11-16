@@ -152,10 +152,15 @@ $osui-tag-lightest-text-colors: (
 			--osui-tag-color: var(--color-secondary);
 		}
 
+		// These fills stay dark in dark mode, so their text stays white. Every other
+		// fill lightens or flips there and keeps the inverse default.
 		&-primary,
 		&-blue,
 		&-green,
-		&-red {
+		&-red,
+		&-error,
+		&-success,
+		&-info {
 			--osui-tag-color: var(--color-text-light);
 		}
 	}

@@ -4,10 +4,10 @@ import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
 import { labeledBoard, SWATCH_COLORS } from './_helpers/showcase';
 
 /**
- * Counter — shipped: `.counter.card.background-{color}.text-neutral-0` > `.center-align.flex-direction-{row|column}` > value + label + icon.
+ * Counter — shipped: `.counter.card.background-{color}` > `.center-align.flex-direction-{row|column}` > value + label + icon.
  *
  * Controls mirror the low-code input parameters of the `Counter` block:
- *   BackgroundColor → `background-{value}` utility class on the root (+ `text-neutral-0` for contrast)
+ *   BackgroundColor → `background-{value}` utility class on the root; the Counter picks a text color that suits the fill
  *   IsVertical      → `flex-direction-column` (True) vs `flex-direction-row` (False) on `.center-align`
  *   Height          → inline style `height:{n}px` on the root
  *   ExtendedClass   → extra classes on the root
@@ -20,9 +20,9 @@ type CounterArgs = { backgroundColor: string; isVertical: boolean; height: numbe
 
 function counterMarkup({ backgroundColor, isVertical, height, extendedClass }: CounterArgs): string {
 	return `
-		<div class="${cls('counter', 'card', backgroundColor && `background-${backgroundColor}`, backgroundColor && 'text-neutral-0', extendedClass)}" style="max-width:240px;height:${height}px;">
+		<div class="${cls('counter', 'card', backgroundColor && `background-${backgroundColor}`, extendedClass)}" style="max-width:240px;height:${height}px;">
 			<div class="${cls('center-align', isVertical ? 'flex-direction-column' : 'flex-direction-row')}" style="gap:12px;">
-				<div class="font-size-display text-neutral-0">26</div>
+				<div class="font-size-display">26</div>
 				<div>Completed requests</div>
 				<div><i class="icon ph ph-check" style="font-size: 3em;"></i></div>
 			</div>
@@ -104,7 +104,7 @@ export const BackgroundColors: StoryObj = {
 		layout: 'padded',
 		docs: {
 			description: {
-				story: '<code>BackgroundColor</code> picks the <code>background-*</code> utility on the root; the text switches to <code>text-neutral-0</code> for contrast.',
+				story: '<code>BackgroundColor</code> picks the <code>background-*</code> utility on the root; the Counter picks a text color that suits the fill (<code>--osui-counter-color</code>).',
 			},
 		},
 	},
