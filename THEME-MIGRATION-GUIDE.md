@@ -820,11 +820,11 @@ a[data-link]:focus {
 }
 ```
 
-### Neutral palette colors follow the theme; saturated ones don't
+### Neutral palette colors flip in dark; saturated ones keep their hue
 
-In `.os-dark-theme` the neutral steps flip: `background-neutral-0` is still "the surface" and `background-neutral-10` is still "furthest from the surface", so a Neutral 7 Tag or Badge turns into a light chip on a dark page. The saturated palette and the status colors (`background-blue`, `background-red`, `background-primary`, …) keep their color. This is by design: "Neutral N" means "N steps away from the surface", which is the meaning that survives a theme change.
+In `.os-dark-theme` the neutral steps flip: `background-neutral-0` is still "the surface" and `background-neutral-10` is still "furthest from the surface", so a Neutral 7 Tag or Badge turns into a light chip on a dark page. The saturated palette and the status colors keep their hue, and most get lighter in dark; only primary, red, green and blue stay dark. This is by design: "Neutral N" means "N steps away from the surface", which is the meaning that survives a theme change.
 
-The framework pairs each fill with matching text. Tag, Badge, User Avatar and Counter put inverse text on Neutral 6–10, which flips along with the fill, and white text (`--color-text-light`) on saturated fills, which don't flip. Do the same in your own CSS. If you need a grey that stays dark in both themes, don't use a neutral step: use a color of your own.
+The framework pairs each fill with matching text. Tag, Badge, User Avatar and Counter put inverse text on Neutral 6–10 and on the saturated fills that lighten, so it turns near-black in dark along with them, and white text (`--color-text-light`) on primary, red, green and blue, which stay dark. Do the same in your own CSS. If you need a grey that stays dark in both themes, don't use a neutral step: use a color of your own.
 
 ### General dark-mode hygiene
 

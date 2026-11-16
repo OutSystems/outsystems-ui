@@ -18,8 +18,9 @@
 	word-break: keep-all;
 
 	// Text follows the fill, as on Tag and Badge: primary, red, green and blue stay
-	// dark in dark mode, so they take light text; yellow and warning are light in
-	// both themes; every other bold fill lightens or flips in dark and takes inverse.
+	// dark in dark mode, so they take light text; yellow, warning and success are
+	// light enough in both themes to need dark text; every other bold fill lightens
+	// or flips in dark and takes inverse.
 	&.background-primary,
 	&.background-red,
 	&.background-green,
@@ -28,12 +29,12 @@
 	}
 
 	&.background-warning,
-	&.background-yellow {
+	&.background-yellow,
+	&.background-success {
 		--osui-counter-color: var(--color-text-dark);
 	}
 
 	&.background-error,
-	&.background-success,
 	&.background-info,
 	&.background-secondary,
 	&.background-orange,

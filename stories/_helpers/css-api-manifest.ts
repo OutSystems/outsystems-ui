@@ -3798,10 +3798,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-floating-actions-button-color',
-								default: 'var(--color-text-light)',
+								default: 'var(--color-text-inverse)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-light)',
+								hint: 'var(--color-text-inverse)',
 							},
 							{
 								name: '--osui-floating-actions-button-shadow',
@@ -5425,10 +5425,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-provider-login-button-color',
-								default: 'var(--color-text-subtle)',
+								default: 'var(--color-text-subtlest)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-subtle)',
+								hint: 'var(--color-text-subtlest)',
 							},
 						],
 					},

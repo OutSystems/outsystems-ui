@@ -79,11 +79,8 @@
 				width: variables.$token-scale-200; // 8px dot
 			}
 
-			// Primary, red, green and blue stay dark in dark mode, so their glyph stays
-			// white. Every other fill lightens or flips there and keeps inverse text.
-			&.background-primary,
-			&.background-red,
-			&.background-green,
+			// Blue stays dark in dark mode, where inverse turns near-black: 2.45:1, under
+			// the 3:1 AA minimum for icons. Every other fill reaches 3:1 with inverse.
 			&.background-blue {
 				--osui-timeline-icon-color: var(--color-text-light);
 			}
