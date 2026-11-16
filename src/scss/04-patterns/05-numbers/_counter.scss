@@ -17,20 +17,13 @@
 	padding-inline: variables.$token-scale-600;
 	word-break: keep-all;
 
-	// Text follows the fill, as on Tag and Badge: palette and status fills keep
-	// their color in dark, so they take light text; the bold neutrals flip, so
-	// they take inverse text, as do the status fills, which lighten in dark;
-	// yellow and warning are light in both themes.
-	&[class*='background-']:not([class*='background-neutral']):not([class*='-lightest']):not(
-			.background-transparent,
-			.background-white,
-			.background-secondary,
-			.background-warning,
-			.background-yellow,
-			.background-error,
-			.background-success,
-			.background-info
-		) {
+	// Text follows the fill, as on Tag and Badge: primary, red, green and blue stay
+	// dark in dark mode, so they take light text; yellow and warning are light in
+	// both themes; every other bold fill lightens or flips in dark and takes inverse.
+	&.background-primary,
+	&.background-red,
+	&.background-green,
+	&.background-blue {
 		--osui-counter-color: var(--color-text-light);
 	}
 
@@ -43,6 +36,14 @@
 	&.background-success,
 	&.background-info,
 	&.background-secondary,
+	&.background-orange,
+	&.background-lime,
+	&.background-teal,
+	&.background-cyan,
+	&.background-indigo,
+	&.background-violet,
+	&.background-grape,
+	&.background-pink,
 	&.background-neutral-6,
 	&.background-neutral-7,
 	&.background-neutral-8,

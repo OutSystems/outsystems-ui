@@ -29,7 +29,7 @@ $osui-badge-lightest-text-colors: (
 ///
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-badge-color: var(--color-text-light);
+	--osui-badge-color: var(--color-text-inverse);
 	--osui-badge-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -100,14 +100,6 @@ $osui-badge-lightest-text-colors: (
 			--osui-badge-color: var(--color-secondary);
 		}
 
-		// The status backgrounds read semantics-*-base, which lightens in dark,
-		// so they keep inverse text.
-		&-error,
-		&-success,
-		&-info {
-			--osui-badge-color: var(--color-text-inverse);
-		}
-
 		&-primary,
 		&-blue,
 		&-green,
@@ -155,7 +147,7 @@ $osui-badge-lightest-text-colors: (
 	}
 
 	&.background-transparent-lightest {
-		--osui-badge-color: var(--color-text-light);
+		--osui-badge-color: var(--color-text-inverse);
 	}
 
 	// Extended palette colors (red, orange, yellow, etc.)

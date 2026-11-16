@@ -79,18 +79,12 @@
 				width: variables.$token-scale-200; // 8px dot
 			}
 
-			// Primary and the palette keep their color in dark, so their glyph stays light.
-			// The default neutral-bold fill flips and the status fills lighten in dark,
-			// so those keep inverse text.
-			&[class*='background-']:not([class*='background-neutral']):not([class*='-lightest']):not(
-					.background-transparent,
-					.background-secondary,
-					.background-error,
-					.background-success,
-					.background-info,
-					.background-warning,
-					.background-yellow
-				) {
+			// Primary, red, green and blue stay dark in dark mode, so their glyph stays
+			// white. Every other fill lightens or flips there and keeps inverse text.
+			&.background-primary,
+			&.background-red,
+			&.background-green,
+			&.background-blue {
 				--osui-timeline-icon-color: var(--color-text-light);
 			}
 		}

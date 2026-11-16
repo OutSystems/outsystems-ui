@@ -298,11 +298,11 @@ export const MIGRATION_DATA = {
 				['`--color-text-disabled`', 'Disabled state text'],
 				[
 					'`--color-text-inverse`',
-					'Text on backgrounds that flip or lighten in dark: `bg-neutral-bold` and the status colors',
+					'Text on bold fills that flip or lighten in dark: `bg-neutral-bold`, the status colors and most palette colors',
 				],
 				[
 					'`--color-text-light`',
-					'White in both themes: text on primary and palette fills, which keep their color in dark',
+					'White in both themes: text on the fills that stay dark in dark: primary, red, green and blue',
 				],
 				['`--color-text-dark`', 'Dark text on light/accent backgrounds'],
 				['`--color-background-body`', 'Page background'],

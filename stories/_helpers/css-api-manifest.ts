@@ -2627,10 +2627,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-tag-color',
-								default: 'var(--color-text-light)',
+								default: 'var(--color-text-inverse)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-light)',
+								hint: 'var(--color-text-inverse)',
 							},
 							{
 								name: '--osui-tag-medium-soft-border-radius',
@@ -2668,10 +2668,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-avatar-color',
-								default: 'var(--color-text-light)',
+								default: 'var(--color-text-inverse)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-light)',
+								hint: 'var(--color-text-inverse)',
 							},
 							{
 								name: '--osui-avatar-on-light-color',
@@ -5235,10 +5235,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-badge-color',
-								default: 'var(--color-text-light)',
+								default: 'var(--color-text-inverse)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-light)',
+								hint: 'var(--color-text-inverse)',
 							},
 							{
 								name: '--osui-badge-on-light-color',
