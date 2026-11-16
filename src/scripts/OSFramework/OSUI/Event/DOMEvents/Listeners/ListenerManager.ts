@@ -30,9 +30,22 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * Class to create and store the ListenerManager Class
 	 */
 	export class GlobalListenerManager {
-		private static _listenerManager = new ListenerManager();
+		private static _listenerManager: ListenerManager;
 
+		/**
+		 * The page-wide ListenerManager. Read lazily from the shared state of the running major, so a second
+		 * copy of the bundle adopts the manager (and the listeners) the first copy created.
+		 *
+		 * @readonly
+		 */
 		public static get Instance(): ListenerManager {
+			if (GlobalListenerManager._listenerManager === undefined) {
+				GlobalListenerManager._listenerManager = Helper.SharedState.Get(
+					'GlobalListenerManager',
+					() => new ListenerManager()
+				);
+			}
+
 			return GlobalListenerManager._listenerManager;
 		}
 	}

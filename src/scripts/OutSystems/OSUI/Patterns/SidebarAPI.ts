@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SidebarAPI {
-	const _sidebarMap = new Map<string, OSFramework.OSUI.Patterns.Sidebar.ISidebar>();
+	// Shared by every copy of this major on the page (see Helper.SharedState).
+	const _sidebarMap = OSFramework.OSUI.Helper.SharedState.Get(
+		'SidebarAPI.map',
+		() => new Map<string, OSFramework.OSUI.Patterns.Sidebar.ISidebar>()
+	);
 	/**
 	 * Function that will change the property of a given Sidebar.
 	 *

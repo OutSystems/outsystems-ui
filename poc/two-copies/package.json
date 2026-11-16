@@ -1,0 +1,15 @@
+{
+	"name": "osui-poc-two-copies",
+	"private": true,
+	"version": "0.0.0",
+	"description": "ROU-13176 level-1 PoC: two OutSystems UI bundles on one page, today vs the S1 design",
+	"type": "module",
+	"scripts": {
+		"variants": "node build-variants.mjs",
+		"serve": "node serve.mjs",
+		"test": "node build-variants.mjs && playwright test"
+	},
+	"devDependencies": {
+		"@playwright/test": "1.65.1"
+	}
+}

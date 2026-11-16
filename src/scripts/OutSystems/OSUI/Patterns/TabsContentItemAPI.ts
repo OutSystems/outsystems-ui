@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
-	const _tabsContentItemMap = new Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>();
+	// Shared by every copy of this major on the page (see Helper.SharedState).
+	const _tabsContentItemMap = OSFramework.OSUI.Helper.SharedState.Get(
+		'TabsContentItemAPI.map',
+		() => new Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>()
+	);
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.

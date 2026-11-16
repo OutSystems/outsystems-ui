@@ -20,9 +20,22 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 	 * Class to create and store the ObserverManager Class
 	 */
 	export class GlobalObserverManager {
-		private static _observerManager = new ObserverManager();
+		private static _observerManager: ObserverManager;
 
+		/**
+		 * The page-wide ObserverManager. Read lazily from the shared state of the running major, so a second
+		 * copy of the bundle adopts the manager (and the observers) the first copy created.
+		 *
+		 * @readonly
+		 */
 		public static get Instance(): ObserverManager {
+			if (GlobalObserverManager._observerManager === undefined) {
+				GlobalObserverManager._observerManager = Helper.SharedState.Get(
+					'GlobalObserverManager',
+					() => new ObserverManager()
+				);
+			}
+
 			return GlobalObserverManager._observerManager;
 		}
 	}

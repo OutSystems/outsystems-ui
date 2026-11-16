@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
-	const _tabsHeaderItemMap = new Map<string, OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem>();
+	// Shared by every copy of this major on the page (see Helper.SharedState).
+	const _tabsHeaderItemMap = OSFramework.OSUI.Helper.SharedState.Get(
+		'TabsHeaderItemAPI.map',
+		() => new Map<string, OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem>()
+	);
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.

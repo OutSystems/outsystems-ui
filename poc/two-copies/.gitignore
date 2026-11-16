@@ -1,0 +1,5 @@
+node_modules/
+variants/
+baseline/
+test-results/
+playwright-report/

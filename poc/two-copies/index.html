@@ -1,0 +1,446 @@
+<!doctype html>
+<!--
+	ROU-13176 level-1 PoC: two OutSystems UI bundles on one page.
+
+	Query parameters:
+	  mode       today | s1 | pristine   which variant family to load (see build-variants.mjs)      default today
+	  host       x.y.z                   the Host App's OSUI revision                               default 3.0.0
+	  embedded   x.y.z | none            the Embedded App's OSUI revision; none = no bundle of its own default 3.2.0
+	  rerunHost  1                       on Back, the Host Layout's RequireScript executes its bundle again
+	                                     (by default the runtime skips a URL it already loaded)
+
+	The page simulates ODC screen lifecycles without the platform:
+	  OnInitialize = <Pattern>API.Create, then the screen's DOM is inserted, OnReady = <Pattern>API.Initialize,
+	  OnDestroy = <Pattern>API.Dispose. Navigating creates and initializes the next screen BEFORE the previous
+	  screen's OnDestroy runs (the transition overlap). All page state is exposed on window.__poc.
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>OSUI two copies PoC</title>
+		<link rel="stylesheet" href="/dist/ODC.OutSystemsUI.css" />
+		<script>
+			// ─── Instrumentation, installed before any bundle runs ─────────────────────────────────────────
+			(function () {
+				'use strict';
+				const registrations = { body: [], document: [], window: [] };
+				const keyOf = (target) =>
+					target === window
+						? 'window'
+						: target === document
+							? 'document'
+							: target === document.body
+								? 'body'
+								: null;
+				const captureOf = (options) =>
+					typeof options === 'boolean' ? options : Boolean(options && options.capture);
+				const nativeAdd = EventTarget.prototype.addEventListener;
+				const nativeRemove = EventTarget.prototype.removeEventListener;
+
+				EventTarget.prototype.addEventListener = function (type, listener, options) {
+					const key = keyOf(this);
+					if (key !== null && listener) {
+						const capture = captureOf(options);
+						const list = registrations[key];
+						// The browser ignores an identical (type, listener, capture) registration: so do we.
+						if (!list.some((r) => r.type === type && r.listener === listener && r.capture === capture)) {
+							list.push({ type, listener, capture });
+						}
+					}
+					return nativeAdd.call(this, type, listener, options);
+				};
+				EventTarget.prototype.removeEventListener = function (type, listener, options) {
+					const key = keyOf(this);
+					if (key !== null && listener) {
+						const capture = captureOf(options);
+						const list = registrations[key];
+						const index = list.findIndex(
+							(r) => r.type === type && r.listener === listener && r.capture === capture
+						);
+						if (index >= 0) {
+							list.splice(index, 1);
+						}
+					}
+					return nativeRemove.call(this, type, listener, options);
+				};
+
+				const warnings = [];
+				const nativeWarn = console.warn;
+				console.warn = function (...args) {
+					warnings.push(args.map(String).join(' '));
+					return nativeWarn.apply(this, args);
+				};
+
+				window.__pocInstrumentation = {
+					warnings,
+					listenerCounts: () => ({
+						body: registrations.body.length,
+						document: registrations.document.length,
+						window: registrations.window.length,
+					}),
+					listenerTypes: () =>
+						Object.fromEntries(
+							Object.entries(registrations).map(([k, list]) => [k, list.map((r) => r.type)])
+						),
+				};
+			})();
+		</script>
+		<style>
+			body {
+				font-family: system-ui, sans-serif;
+			}
+			.poc-bar {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				padding: 12px;
+				border-block-end: 1px solid #ccc;
+			}
+			.poc-screen {
+				padding: 12px;
+				border: 2px dashed #999;
+				margin: 12px;
+			}
+			.poc-screen[data-app='Host'] {
+				border-color: #1d4ed8;
+			}
+			.poc-screen[data-app='Embedded'] {
+				border-color: #15803d;
+			}
+			#poc-log {
+				font: 12px/1.4 monospace;
+				white-space: pre-wrap;
+				margin: 12px;
+				max-height: 320px;
+				overflow: auto;
+				background: #f4f4f4;
+				padding: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="poc-bar">
+			<strong id="poc-title">OSUI two copies</strong>
+			<button type="button" class="btn" data-go="Home">Home (Host App)</button>
+			<button type="button" class="btn" data-go="AccountDetail">AccountDetail (Embedded App)</button>
+			<span id="poc-serving"></span>
+		</div>
+		<main id="poc-screens"></main>
+		<pre id="poc-log"></pre>
+
+		<script>
+			(function () {
+				'use strict';
+				const params = new URLSearchParams(location.search);
+				const MODE = params.get('mode') || 'today';
+				const VERSIONS = { Host: params.get('host') || '3.0.0', Embedded: params.get('embedded') || '3.2.0' };
+				const RERUN_HOST = params.get('rerunHost') === '1';
+				const instrumentation = window.__pocInstrumentation;
+
+				// ─── Bundles: one per app, deduplicated by URL like the runtime's RequireScript ──────────────
+				const loadedUrls = new Set();
+				const scripts = [];
+				let hostLoads = 0;
+				// Pattern class reference → the OSUI version that was serving when that class first appeared.
+				const classVersions = new Map();
+
+				function bundleUrl(app) {
+					const version = VERSIONS[app];
+					if (version === 'none') {
+						return null;
+					}
+					let url = `variants/${MODE}-${version}.js?app=${app}`;
+					if (app === 'Host' && RERUN_HOST && hostLoads > 0) {
+						url += `&run=${hostLoads + 1}`;
+					}
+					return url;
+				}
+
+				function recordClassVersions() {
+					const P = window.OSFramework && window.OSFramework.OSUI && window.OSFramework.OSUI.Patterns;
+					if (!P) {
+						return;
+					}
+					const version = window.OutSystems.OSUI.GetVersion();
+					for (const cls of [P.Sidebar.Sidebar, P.Tabs.Tabs]) {
+						if (!classVersions.has(cls)) {
+							classVersions.set(cls, version);
+						}
+					}
+				}
+
+				function requireScript(app) {
+					const url = bundleUrl(app);
+					if (url === null || loadedUrls.has(url)) {
+						return Promise.resolve(false);
+					}
+					loadedUrls.add(url);
+					if (app === 'Host') {
+						hostLoads++;
+					}
+					return new Promise((resolve, reject) => {
+						const el = document.createElement('script');
+						el.src = url;
+						el.onload = () => {
+							recordClassVersions();
+							scripts.push({ app, url, servingAfterLoad: window.OutSystems.OSUI.GetVersion() });
+							log(`loaded ${url}; serving ${window.OutSystems.OSUI.GetVersion()}`);
+							resolve(true);
+						};
+						el.onerror = () => reject(new Error(`Could not load ${url}`));
+						document.head.appendChild(el);
+					});
+				}
+
+				// ─── API calls through the globals, resolved at call time like the module's JS nodes ─────────
+				const envelopes = [];
+				const instances = [];
+
+				function api(screen, apiName, fn, id, ...args) {
+					const entry = { screen, api: apiName, fn, id };
+					try {
+						const result = window.OutSystems.OSUI.Patterns[apiName][fn](id, ...args);
+						if (fn === 'Create') {
+							entry.isSuccess = true;
+						}
+						if (fn === 'Create' && (apiName === 'SidebarAPI' || apiName === 'TabsAPI')) {
+							const P = window.OSFramework.OSUI.Patterns;
+							const cls = result && result.constructor;
+							instances.push({
+								screen,
+								id,
+								codeVersion: classVersions.get(cls) || 'unknown',
+								servingAtCreate: window.OutSystems.OSUI.GetVersion(),
+								sameClassAsCurrentGlobal: cls === P.Sidebar.Sidebar || cls === P.Tabs.Tabs,
+							});
+						} else if (fn !== 'Create' && typeof result === 'string') {
+							const envelope = JSON.parse(result);
+							Object.assign(entry, {
+								isSuccess: envelope.isSuccess,
+								code: envelope.code,
+								message: envelope.message,
+							});
+						} else if (fn !== 'Create') {
+							entry.isSuccess = true;
+						}
+					} catch (error) {
+						entry.isSuccess = false;
+						entry.message = String(error && error.message ? error.message : error);
+					}
+					envelopes.push(entry);
+					log(
+						`${screen}: ${apiName}.${fn}(${id}) → isSuccess=${entry.isSuccess}${entry.message ? ' ' + entry.message : ''}`
+					);
+					return entry;
+				}
+
+				const cfg = (configs) => JSON.stringify(Object.assign({ ExtendedClass: '' }, configs));
+
+				// ─── Screens ───────────────────────────────────────────────────────────────────────────────
+				// Both screens use the same two patterns, so the Host screen's ids are the same every time it is
+				// shown (as OutSystems widget ids are): a Create on Back fails if the previous Dispose did not run.
+				const SCREENS = {
+					Home: { app: 'Host', prefix: 'Home', openSidebar: true },
+					AccountDetail: { app: 'Embedded', prefix: 'Acct', openSidebar: false },
+				};
+
+				function idsFor(prefix) {
+					return {
+						sidebar: `${prefix}Sidebar`,
+						tabs: `${prefix}Tabs`,
+						headers: [`${prefix}TabsH0`, `${prefix}TabsH1`],
+						contents: [`${prefix}TabsC0`, `${prefix}TabsC1`],
+					};
+				}
+
+				function markup(screenName, ids) {
+					const headers = ids.headers
+						.map(
+							(id, i) =>
+								`<div id="${id}" data-block="osui"><button name="${id}" class="osui-tabs__header-item" data-tab="${i}" role="tab" type="button">Tab ${i + 1}</button></div>`
+						)
+						.join('');
+					const contents = ids.contents
+						.map(
+							(id, i) =>
+								`<div id="${id}" data-block="osui"><article name="${id}" class="osui-tabs__content-item" data-tab="${i}"><div style="padding:16px;">${screenName} pane ${i + 1}</div></article></div>`
+						)
+						.join('');
+					return `
+						<h2>${screenName}</h2>
+						<div id="${ids.sidebar}" data-block="osui">
+							<aside name="${ids.sidebar}" class="osui-sidebar" role="complementary" aria-haspopup="true" tabindex="-1" aria-hidden="true">
+								<div class="osui-sidebar__header" style="padding:16px;"><strong>${screenName} menu</strong></div>
+								<div class="osui-sidebar__content" style="padding:16px;">Menu items</div>
+							</aside>
+						</div>
+						<div id="${ids.tabs}" data-block="osui">
+							<section name="${ids.tabs}" class="osui-tabs">
+								<header class="osui-tabs__header">
+									<div class="display-contents placeholder-empty">${headers}</div>
+									<div class="osui-tabs__header__indicator"></div>
+								</header>
+								<section class="osui-tabs__content">
+									<div class="display-contents placeholder-empty">${contents}</div>
+								</section>
+							</section>
+						</div>`;
+				}
+
+				function createScreen(screenName) {
+					const def = SCREENS[screenName];
+					const ids = idsFor(def.prefix);
+					// OnInitialize
+					api(
+						screenName,
+						'SidebarAPI',
+						'Create',
+						ids.sidebar,
+						cfg({ Direction: 'right', Width: '300px', HasOverlay: true, StartsOpen: false })
+					);
+					api(
+						screenName,
+						'TabsAPI',
+						'Create',
+						ids.tabs,
+						cfg({
+							StartingTab: 0,
+							Height: 'auto',
+							JustifyHeaders: false,
+							TabsOrientation: 'horizontal',
+							TabsVerticalPosition: 'left',
+						})
+					);
+					ids.headers.forEach((id) => api(screenName, 'TabsHeaderItemAPI', 'Create', id, cfg({})));
+					ids.contents.forEach((id) => api(screenName, 'TabsContentItemAPI', 'Create', id, cfg({})));
+					// The DOM is rendered
+					const container = document.createElement('section');
+					container.className = 'poc-screen';
+					container.dataset.screen = screenName;
+					container.dataset.app = def.app;
+					container.innerHTML = markup(screenName, ids);
+					document.getElementById('poc-screens').appendChild(container);
+					// OnReady
+					api(screenName, 'SidebarAPI', 'Initialize', ids.sidebar);
+					api(screenName, 'TabsAPI', 'Initialize', ids.tabs);
+					ids.headers.forEach((id) => api(screenName, 'TabsHeaderItemAPI', 'Initialize', id));
+					ids.contents.forEach((id) => api(screenName, 'TabsContentItemAPI', 'Initialize', id));
+					if (def.openSidebar) {
+						// An open Sidebar with an overlay registers mousedown and click on body.
+						api(screenName, 'SidebarAPI', 'Open', ids.sidebar);
+					}
+				}
+
+				function destroyScreen(screenName) {
+					const ids = idsFor(SCREENS[screenName].prefix);
+					// OnDestroy (child blocks first, as Storybook's teardown does)
+					ids.headers.forEach((id) => api(screenName, 'TabsHeaderItemAPI', 'Dispose', id));
+					ids.contents.forEach((id) => api(screenName, 'TabsContentItemAPI', 'Dispose', id));
+					api(screenName, 'TabsAPI', 'Dispose', ids.tabs);
+					api(screenName, 'SidebarAPI', 'Dispose', ids.sidebar);
+					const container = document.querySelector(`.poc-screen[data-screen="${screenName}"]`);
+					if (container) {
+						container.remove();
+					}
+				}
+
+				// ─── Navigation ────────────────────────────────────────────────────────────────────────────
+				const settle = () => new Promise((resolve) => setTimeout(resolve, 50));
+				const snapshots = [];
+				let currentScreen = null;
+				let baseline = null;
+
+				function sharedStore() {
+					const lib = window.__osLibs && window.__osLibs.osui;
+					if (!lib) {
+						return null;
+					}
+					const majors = {};
+					for (const [major, slot] of Object.entries(lib.majors)) {
+						const maps = {};
+						for (const [key, value] of Object.entries(slot.state)) {
+							if (value instanceof Map) {
+								maps[key] = Array.from(value.keys());
+							}
+						}
+						majors[major] = { version: slot.version, stateKeys: Object.keys(slot.state).sort(), maps };
+					}
+					return { majors };
+				}
+
+				function snapshot(label) {
+					const P = window.OutSystems.OSUI.Patterns;
+					const s = {
+						label,
+						screen: currentScreen,
+						serving: window.OutSystems.OSUI.GetVersion(),
+						listeners: instrumentation.listenerCounts(),
+						listenerTypes: instrumentation.listenerTypes(),
+						registries: { Sidebar: P.SidebarAPI.GetAllSidebars(), Tabs: P.TabsAPI.GetAllTabs() },
+						sharedStore: sharedStore(),
+					};
+					snapshots.push(s);
+					document.getElementById('poc-serving').textContent = `serving ${s.serving}`;
+					return s;
+				}
+
+				async function goTo(screenName, bundleAlreadyLoaded = false) {
+					const previous = currentScreen;
+					// The next screen's Layout asks for its app's OSUI bundle (the first screen's was loaded by start()).
+					if (!bundleAlreadyLoaded) {
+						await requireScript(SCREENS[screenName].app);
+					}
+					createScreen(screenName);
+					currentScreen = screenName;
+					await settle();
+					const overlap = snapshot(`${screenName} ready, ${previous || 'nothing'} still alive`);
+					if (previous !== null) {
+						destroyScreen(previous);
+						await settle();
+					}
+					return { overlap, after: snapshot(`on ${screenName}`) };
+				}
+
+				function log(line) {
+					const el = document.getElementById('poc-log');
+					el.textContent += line + '\n';
+				}
+
+				async function start() {
+					await requireScript('Host');
+					await settle();
+					baseline = instrumentation.listenerCounts();
+					snapshot('Host bundle loaded, no screen');
+					document.getElementById('poc-title').textContent =
+						`mode=${MODE} host=${VERSIONS.Host} embedded=${VERSIONS.Embedded}${RERUN_HOST ? ' rerunHost' : ''}`;
+					return goTo('Home', true);
+				}
+
+				document.querySelectorAll('[data-go]').forEach((button) =>
+					button.addEventListener('click', () => {
+						if (currentScreen !== button.dataset.go) {
+							goTo(button.dataset.go);
+						}
+					})
+				);
+
+				window.__poc = {
+					mode: MODE,
+					versions: VERSIONS,
+					ready: start(),
+					goTo: (screenName) => goTo(screenName),
+					baseline: () => baseline,
+					state: () => ({
+						baseline,
+						envelopes,
+						instances,
+						scripts,
+						snapshots,
+						warnings: instrumentation.warnings.slice(),
+						osLibs: sharedStore(),
+					}),
+				};
+			})();
+		</script>
+	</body>
+</html>
