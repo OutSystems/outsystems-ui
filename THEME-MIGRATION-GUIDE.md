@@ -864,6 +864,7 @@ Still works, but add the interaction tiers:
 	--color-primary-hover: #651ac5;
 	--color-primary-active: #5817ab;
 	--color-border-primary: #7c20f2;
+	--token-text-select: #7c20f2; /* active side-menu link */
 }
 ```
 
@@ -874,6 +875,7 @@ Or go one level deeper for a full re-brand (focus halos recolour automatically):
 	--token-semantics-primary-base: #7c20f2;
 	--token-semantics-primary-800: #651ac5;
 	--token-semantics-primary-900: #5817ab;
+	--token-text-select: #7c20f2; /* active side-menu link */
 }
 ```
 

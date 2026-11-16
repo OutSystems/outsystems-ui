@@ -39,8 +39,8 @@ export type CssApiManifest = {
 
 export const CSS_API_MANIFEST: CssApiManifest = {
 	totals: {
-		properties: 634,
-		components: 72,
+		properties: 635,
+		components: 73,
 		categories: 9,
 	},
 	categories: [
@@ -5456,6 +5456,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'other',
 								chain: 'token',
 								hint: '#{$token-border-size-025} solid #{$token-border-subtle}',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Menu App Menu Links',
+					slug: 'layout-menu-app-menu-links',
+					file: 'src/scss/02-layout/_menu-app-menu-links.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.layout-side .app-menu-links, .menu-visible .app-menu-links',
+							properties: [
+							{
+								name: '--osui-app-menu-link-active-color',
+								default: '#{$token-text-select}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-text-select}',
 							},
 						],
 					},

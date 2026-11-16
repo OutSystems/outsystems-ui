@@ -1040,7 +1040,7 @@ export const MIGRATION_DATA = {
 				{
 					type: 'code',
 					lang: 'css',
-					code: ':root {\n  --color-primary: #7c20f2;\n  --color-primary-hover: #651ac5;\n  --color-primary-active: #5817ab;\n  --color-border-primary: #7c20f2;\n}',
+					code: ':root {\n  --color-primary: #7c20f2;\n  --color-primary-hover: #651ac5;\n  --color-primary-active: #5817ab;\n  --color-border-primary: #7c20f2;\n  --token-text-select: #7c20f2; /* active side-menu link */\n}',
 				},
 				{
 					type: 'paragraph',
@@ -1049,7 +1049,7 @@ export const MIGRATION_DATA = {
 				{
 					type: 'code',
 					lang: 'css',
-					code: ':root {\n  --token-semantics-primary-base: #7c20f2;\n  --token-semantics-primary-800: #651ac5;\n  --token-semantics-primary-900: #5817ab;\n}',
+					code: ':root {\n  --token-semantics-primary-base: #7c20f2;\n  --token-semantics-primary-800: #651ac5;\n  --token-semantics-primary-900: #5817ab;\n  --token-text-select: #7c20f2; /* active side-menu link */\n}',
 				},
 			],
 		},
