@@ -59,9 +59,16 @@ buttons and read `window.__poc.state()` in the console.
 
 `today` variants are built from the modified source and rely on the `SharedState` fallback. To show that the
 fallback changes nothing, `build-variants.mjs` also writes `pristine-*` variants from
-`baseline/ODC.OutSystemsUI.js` when that file exists. The file is git-ignored. Produce it by building the source
-without this branch's `src/` change, then copying `dist/ODC.OutSystemsUI.js` there. The `pristine` test fails if
-the file is missing.
+`baseline/ODC.OutSystemsUI.js` when that file exists. The file is git-ignored, and the `pristine` test fails if it
+is missing. Produce it from the repository root, with a clean working tree, before step "npm test":
+
+```bash
+git checkout dc1ff1847 -- src && rm src/scripts/OSFramework/OSUI/Helper/SharedState.ts && npm run build:osui --target=odc && mkdir -p poc/two-copies/baseline && cp dist/ODC.OutSystemsUI.js poc/two-copies/baseline/ && git checkout HEAD -- src && npm run build:osui --target=odc
+```
+
+`dc1ff1847` is the commit before the PoC. `git checkout <commit> -- src` does not delete files that commit lacks,
+so `SharedState.ts` has to be removed by hand. Afterwards `grep -c SharedState poc/two-copies/baseline/ODC.OutSystemsUI.js`
+prints 0. The last two commands restore the branch's `src/` and rebuild `dist/` with the S1 change.
 
 ## The harness
 

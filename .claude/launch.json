@@ -1,0 +1,11 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "poc-two-copies",
+			"runtimeExecutable": "node",
+			"runtimeArgs": ["poc/two-copies/serve.mjs", "4173"],
+			"port": 4173
+		}
+	]
+}
