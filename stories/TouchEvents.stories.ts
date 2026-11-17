@@ -22,7 +22,7 @@ export const Playground: Story = {
 	render: () => {
 		const id = uid('touch');
 		const template = `
-			<div ${osuiRoot(id)} style="display:flex;align-items:center;justify-content:center;min-height:200px;background:#efe;border-radius:8px;user-select:none;touch-action:none;">
+			<div ${osuiRoot(id)} style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--color-neutral-2);border-radius:8px;user-select:none;touch-action:none;">
 				<span data-output>Touch &amp; drag inside this box (touch device / emulation)</span>
 			</div>`;
 		return renderPattern(template, (root, register) => {
@@ -123,7 +123,7 @@ export const DragToReorder: Story = {
 		const template = `
 			<div style="display:grid;gap:12px;max-width:480px;">
 				<div style="position:relative;min-height:220px;background:var(--color-neutral-2, #efe);border:1px dashed var(--color-neutral-5, #ccd);border-radius:8px;overflow:hidden;">
-					<div ${osuiRoot(id)} style="position:absolute;left:calc(50% - 32px);top:calc(50% - 32px);width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:var(--color-primary, #1d63ff);color:#fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.2);user-select:none;touch-action:none;transition:transform .2s ease;" aria-label="Drag handle">
+					<div ${osuiRoot(id)} style="position:absolute;left:calc(50% - 32px);top:calc(50% - 32px);width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:var(--color-primary, #1d63ff);color:var(--color-text-light);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.2);user-select:none;touch-action:none;transition:transform .2s ease;" aria-label="Drag handle">
 						<span aria-hidden="true" style="font-size:22px;">⠿</span>
 					</div>
 				</div>

@@ -118,6 +118,14 @@ body {
 
 .layout-side .app-menu-links,
 .menu-visible .app-menu-links {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// text-select is primary in light and a lighter primary in dark, where
+	// --color-primary on bg-primary-subtle is 2.63:1. It reads the primary
+	// tokens, not --color-primary: an app rebranded through --color-primary
+	// sets this knob (or --token-text-select) as well.
+	--osui-app-menu-link-active-color: #{variables.$token-text-select};
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	flex-direction: column;
 
@@ -129,6 +137,7 @@ body {
 	> a.active {
 		background-color: variables.$token-bg-primary-subtle-default;
 		border-inline-start: 0;
+		color: var(--osui-app-menu-link-active-color);
 		border-radius: variables.$token-border-radius-200;
 	}
 }

@@ -139,8 +139,11 @@
 	overflow: visible;
 	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
-	&:has(.input-with-icon-content-icon:not(:empty)) {
-		.animated-label-text {
+	// Icon at the start: the resting label clears it. Once `.active` the label floats onto the top border and
+	// lines up with the fields that have no icon. With the icon at the end (`-right`) the label keeps the
+	// default start inset; both flip with the direction, so RTL mirrors them.
+	&:not(.active):not(:has(.input-with-icon-right)) {
+		&:has(.input-with-icon-content-icon:not(:empty)) .animated-label-text {
 			inset-inline-start: variables.$token-scale-1000;
 		}
 	}

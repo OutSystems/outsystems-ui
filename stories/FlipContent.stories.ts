@@ -34,8 +34,8 @@ function flipContentMarkup(id: string): string {
 	return `
 		<div ${osuiRoot(id)} class="osui-flip-content" style="max-width:280px;">
 			<div class="osui-flip-content__container">
-				<div class="osui-flip-content__container__front" style="${face}background:var(--osui-bg-surface-hover,#eef);">Front — click to flip</div>
-				<div class="osui-flip-content__container__back" style="${face}background:var(--osui-bg-surface-active,#dde);">Back side</div>
+				<div class="osui-flip-content__container__front" style="${face}background:var(--color-neutral-2);">Front — click to flip</div>
+				<div class="osui-flip-content__container__back" style="${face}background:var(--color-neutral-3);">Back side</div>
 			</div>
 		</div>`;
 }

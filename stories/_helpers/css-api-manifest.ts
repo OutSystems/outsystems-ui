@@ -39,8 +39,8 @@ export type CssApiManifest = {
 
 export const CSS_API_MANIFEST: CssApiManifest = {
 	totals: {
-		properties: 633,
-		components: 71,
+		properties: 635,
+		components: 73,
 		categories: 9,
 	},
 	categories: [
@@ -2849,10 +2849,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-wizard-past-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text-light)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text-light)',
 							},
 						],
 					},
@@ -5252,6 +5252,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 				],
 				},
 				{
+					name: 'Counter',
+					slug: 'patterns-numbers-counter',
+					file: 'src/scss/04-patterns/05-numbers/_counter.scss',
+					storyId: 'patterns-numbers-counter--docs',
+					variants: [
+						{
+							selector: '.counter',
+							properties: [
+							{
+								name: '--osui-counter-color',
+								default: 'inherit',
+								kind: 'color',
+								chain: 'other',
+								hint: 'inherit',
+							},
+						],
+					},
+				],
+				},
+				{
 					name: 'Icon Badge',
 					slug: 'patterns-numbers-icon-badge',
 					file: 'src/scss/04-patterns/05-numbers/_icon-badge.scss',
@@ -5330,10 +5350,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-rating-empty-color',
-								default: '#{$token-bg-neutral-base-default}',
+								default: '#{$token-icon-subtlest}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-bg-neutral-base-default}',
+								hint: '#{$token-icon-subtlest}',
 							},
 							{
 								name: '--osui-rating-filled-color',
@@ -5405,10 +5425,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-provider-login-button-color',
-								default: '#{$token-primitives-neutral-700}',
+								default: 'var(--color-text-subtlest)',
 								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-primitives-neutral-700}',
+								chain: 'theme-role',
+								hint: 'var(--color-text-subtlest)',
 							},
 						],
 					},
@@ -5436,6 +5456,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'other',
 								chain: 'token',
 								hint: '#{$token-border-size-025} solid #{$token-border-subtle}',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Menu App Menu Links',
+					slug: 'layout-menu-app-menu-links',
+					file: 'src/scss/02-layout/_menu-app-menu-links.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.layout-side .app-menu-links, .menu-visible .app-menu-links',
+							properties: [
+							{
+								name: '--osui-app-menu-link-active-color',
+								default: '#{$token-text-select}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-text-select}',
 							},
 						],
 					},
