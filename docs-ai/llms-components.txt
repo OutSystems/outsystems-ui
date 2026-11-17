@@ -381,7 +381,7 @@ API (OutSystems.OSUI.Patterns.OverflowMenuAPI):
 - Open(overflowMenuId: string): string
 - Close(overflowMenuId: string): string
 CSS classes: osui-overflow-menu--is-open osui-overflow-menu__trigger osui-overflow-menu__balloon
-CSS API: --osui-overflow-menu-background --osui-overflow-menu-shadow --osui-overflow-menu-color --osui-overflow-menu-trigger-active-bg --osui-overflow-menu-min-width --osui-overflow-menu-border-radius --osui-btn-background --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-floating-offset --osui-balloon-background --osui-balloon-border-radius --osui-balloon-shadow --osui-focus-ring-width
+CSS API: --osui-overflow-menu-background --osui-overflow-menu-border-color --osui-overflow-menu-shadow --osui-overflow-menu-color --osui-overflow-menu-trigger-active-bg --osui-overflow-menu-min-width --osui-overflow-menu-border-radius --osui-btn-background --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-floating-offset --osui-balloon-background --osui-balloon-border-radius --osui-balloon-shadow --osui-focus-ring-width
 Configs schema: schema/configs/OverflowMenu.schema.json
 [runtime-only] Markup skeleton (from stories/OverflowMenu.stories.ts): <div><div class="osui-overflow-menu"><button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph "></i></button><div class="osui-overflow-menu__balloon osui-balloon" id="-balloon"><nav class="display-flex flex-direction-column"><span class="text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s" aria-hidden="true"></span></nav></div></div></div>
 

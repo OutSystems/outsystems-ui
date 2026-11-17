@@ -39,7 +39,7 @@ export type CssApiManifest = {
 
 export const CSS_API_MANIFEST: CssApiManifest = {
 	totals: {
-		properties: 635,
+		properties: 637,
 		components: 73,
 		categories: 9,
 	},
@@ -1475,11 +1475,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-background-panel)',
 							},
 							{
+								name: '--osui-popover-border-color',
+								default: 'var(--color-border)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-border)',
+							},
+							{
 								name: '--osui-popover-border-radius',
-								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-popover-color',
@@ -4113,10 +4120,17 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-overflow-menu-background',
-								default: 'var(--color-background-surface)',
+								default: 'var(--color-background-panel)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-background-surface)',
+								hint: 'var(--color-background-panel)',
+							},
+							{
+								name: '--osui-overflow-menu-border-color',
+								default: 'var(--color-border)',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--color-border)',
 							},
 							{
 								name: '--osui-overflow-menu-border-radius',
@@ -4141,10 +4155,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-overflow-menu-shadow',
-								default: '#{$token-elevation-2}',
+								default: '#{$token-elevation-3}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-elevation-2}',
+								hint: '#{$token-elevation-3}',
 							},
 							{
 								name: '--osui-overflow-menu-trigger-active-bg',
@@ -4738,10 +4752,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-section-index-active-indicator-color',
-								default: 'var(--color-primary-selected)',
+								default: 'var(--osui-section-index-item-active-color)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-primary-selected)',
+								hint: 'var(--osui-section-index-item-active-color)',
 							},
 							{
 								name: '--osui-section-index-active-indicator-offset',
@@ -4759,10 +4773,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-section-index-item-active-color',
-								default: 'var(--color-primary-selected)',
+								default: '#{$token-text-select}',
 								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary-selected)',
+								chain: 'token',
+								hint: '#{$token-text-select}',
 							},
 							{
 								name: '--osui-section-index-item-border-radius',
@@ -5055,10 +5069,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-header-item-color-active-hover',
-								default: 'var(--color-primary-selected)',
+								default: 'var(--osui-tabs-header-item-color-active)',
 								kind: 'other',
 								chain: 'theme-role',
-								hint: 'var(--color-primary-selected)',
+								hint: 'var(--osui-tabs-header-item-color-active)',
 							},
 							{
 								name: '--osui-tabs-header-item-color-disabled',
@@ -5104,10 +5118,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-indicator-color',
-								default: 'var(--color-primary)',
+								default: 'var(--osui-tabs-header-item-color-active)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-primary)',
+								hint: 'var(--osui-tabs-header-item-color-active)',
 							},
 						],
 					},

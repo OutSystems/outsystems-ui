@@ -148,7 +148,7 @@ Docs: navigation/pagination
 
 ### popover (src/scss/03-widgets/_popover.scss)
 [runtime-only] Skeleton (from stories/widgets/Popover.stories.ts): <div class="popover-bottom align-center"><div><div class="dropdown-item">Edit</div><div class="dropdown-item">Duplicate</div><div class="dropdown-item">Delete</div></div></div>
-CSS API: --osui-popover-background --osui-popover-color --osui-popover-border-radius --osui-popover-shadow --osui-popover-max-width
+CSS API: --osui-popover-background --osui-popover-border-color --osui-popover-color --osui-popover-border-radius --osui-popover-shadow --osui-popover-max-width
 
 ### popup (src/scss/03-widgets/_popup.scss)
 [runtime-only] Skeleton (from stories/widgets/Popup.stories.ts): <div class="portal-class"><div><div class="popup-backdrop" data-popup-backdrop=""><div data-popup="" class="popup-dialog " role="dialog" aria-modal="true"><div class="popup-content"><h2>Confirm action</h2><p>The platform Popup widget renders a centered dialog over a backdrop.</p></div></div></div></div></div>
