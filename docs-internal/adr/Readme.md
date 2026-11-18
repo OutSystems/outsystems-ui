@@ -27,7 +27,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR Number | Title                                                                                 | Status                             | Date       |
 | :--------- | :------------------------------------------------------------------------------------ | :--------------------------------- | :--------- |
 | ADR-0000   | Template for ADRs                                                                     | Meta                               | 2026-07-29 |
-| ADR-0001   | Replace JS-forced pixel viewport height with CSS viewport units on iOS                | Proposed                           | 2026-07-29 |
+| ADR-0001   | Replace JS-forced pixel viewport height with CSS viewport units on iOS                | Accepted                           | 2026-07-29 |
 | ADR-0002   | VirtualSelect 1.4.0 upgrade and OSUI validation ownership                             | Accepted                           | 2026-08-11 |
 | ADR-0003   | Public-repo readiness for the Storybook harness                                       | Superseded by ADR-0009             | 2026-08-12 |
 | ADR-0004   | Chromatic visual testing on a long-living branch                                      | Accepted                           | 2026-08-12 |
@@ -37,13 +37,14 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0008   | Chromatic baseline builds on `ROU-12714` and the widget-story dependency              | Accepted (§C resolved by ADR-0009) | 2026-08-13 |
 | ADR-0009   | Static widget stories and zero private dependencies                                   | Accepted                           | 2026-08-21 |
 | ADR-0010   | Border-radius theme layer and shape tier slots                                        | Accepted                           | 2026-09-04 |
-| ADR-0011   | Generated agent documentation, typed pattern configs and the TSDoc comment standard   | Proposed                           | 2026-10-09 |
-| ADR-0013   | Physical horizontal positions in FloatingContent                                      | Proposed                           | 2026-10-23 |
-| ADR-0018   | Dropdown search focus ring shown only on keyboard interaction                         | Proposed                           | 2026-10-22 |
-| ADR-0019   | Removing redundant `.has-accessible-features` declarations only after a browser check | Proposed                           | 2026-10-23 |
-| ADR-0020   | Removing the `.has-accessible-features` scope from component styles                   | Proposed                           | 2026-10-27 |
+| ADR-0011   | Generated agent documentation, typed pattern configs and the TSDoc comment standard   | Accepted                           | 2026-10-09 |
+| ADR-0013   | Physical horizontal positions in FloatingContent                                      | Accepted                           | 2026-10-23 |
+| ADR-0018   | Dropdown search focus ring shown only on keyboard interaction                         | Accepted                           | 2026-10-22 |
+| ADR-0019   | Removing redundant `.has-accessible-features` declarations only after a browser check | Accepted                           | 2026-10-23 |
+| ADR-0020   | Removing the `.has-accessible-features` scope from component styles                   | Accepted                           | 2026-10-27 |
 | ADR-0021   | Pinned-tokens builds, the `dev-latest` dev build and the generated-files drift gate   | Accepted                           | 2026-11-05 |
-| ADR-0023   | Release workflows publish a validated tag                                             | Proposed                           | 2026-11-12 |
+| ADR-0022   | Strict parsing and a visible invalid state for typed dates in the Date/Time pickers   | Accepted                           | 2026-11-13 |
+| ADR-0023   | Release workflows publish a validated tag                                             | Accepted                           | 2026-11-12 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the

@@ -45,6 +45,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/** Set the OnClose callback to be used whenever the Flatpickr close */
 		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
 
+		/** Set the OnInvalidInput callback to be used whenever the typed text is rejected by Flatpickr */
+		public OnInvalidInput: OSFramework.OSUI.GlobalCallbacks.Generic;
+
 		/** Set the OnMonthChange callback to be used whenever the Flatpickr month changes */
 		public OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 
@@ -208,6 +211,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
+				// Strict parsing of the typed text, reported through OnInvalidInput (OutSystems fork options)
+				...Providers.OSUI.SharedProviderResources.Flatpickr.InvalidInput.GetProviderConfigs(
+					this.StrictInputValidation,
+					this.OnInvalidInput
+				),
 				ariaDateFormat:
 					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayDayMonthYear,
 				position: OutSystems.OSUI.Utils.GetIsRTL()
