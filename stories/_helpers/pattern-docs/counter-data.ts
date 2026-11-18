@@ -20,7 +20,7 @@ export const COUNTER_DOC: PatternDocMeta = {
 		'Progress toward a target — use Progress Bar or Progress Circle, which show the ratio.',
 	],
 	anatomy: {
-		tree: `<div class="counter card background-primary text-neutral-0" style="height:150px;"> <!-- BackgroundColor, Height -->
+		tree: `<div class="counter card background-primary" style="height:150px;"> <!-- BackgroundColor, Height -->
   <div class="center-align flex-direction-row"> <!-- IsVertical → flex-direction-column -->
     <!-- Content placeholder -->
     <div class="font-size-display">26</div>
@@ -64,7 +64,7 @@ export const COUNTER_DOC: PatternDocMeta = {
 	],
 	accessibility: [
 		'Value and label are plain text — keep the label inside the Content placeholder so the number is announced with its meaning, not on its own.',
-		'A coloured BackgroundColor switches the text to `text-neutral-0`; check contrast for the lighter families (Yellow, Lime, Cyan) and the low neutrals before shipping.',
+		'A colored BackgroundColor sets a matching text color through `--osui-counter-color` (light, dark or inverse by fill); override it per instance if your content needs another.',
 		'The icon is decorative — give it no accessible name so screen readers announce only the value and label.',
 		'Height is a fixed pixel value: make sure the label still fits at 200% zoom or larger font sizes, or leave Height generous.',
 	],

@@ -215,7 +215,7 @@ Releases are manual `workflow_dispatch` GitHub Actions:
 
 - `pre-release.yaml` — creates a release candidate branch and version (inputs: new version, release date, optional next dev version).
 - `release.yaml` — promotes a release candidate to latest and optionally deletes the `rc*` branch.
-- `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site from a given branch.
+- `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site for a release tag (`vX.Y.Z`, must match `package.json`). Run them from `dev`. See ADR-0023.
 
 Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand. Bump the design tokens with `npm run tokens:update` (exact pin, then `docs:regen`); refresh the OML block snapshot with `npm run docs:ai:blocks`. Both stay manual.
 
