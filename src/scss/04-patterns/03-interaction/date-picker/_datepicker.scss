@@ -183,7 +183,7 @@
 
 	// Typed text rejected by the provider (OnInvalidInput event)
 	&.osui-datepicker--invalid-input .input[aria-invalid='true'] {
-		border-color: variables.$token-semantics-danger-base;
+		border-color: var(--osui-input-error-border-color);
 	}
 
 	.flatpickr-mobile ~ span.validation-message {
