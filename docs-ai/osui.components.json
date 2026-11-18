@@ -3564,6 +3564,7 @@
 			},
 			"cssApi": [
 				"--osui-overflow-menu-background",
+				"--osui-overflow-menu-border-color",
 				"--osui-overflow-menu-shadow",
 				"--osui-overflow-menu-color",
 				"--osui-overflow-menu-trigger-active-bg",

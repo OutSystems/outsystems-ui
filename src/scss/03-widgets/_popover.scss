@@ -25,13 +25,15 @@
 		&-bottom {
 			// ─── Component CSS API ─────────────────────────────────────────────
 			--osui-popover-background: var(--color-background-panel);
+			--osui-popover-border-color: var(--color-border);
 			--osui-popover-color: var(--color-text);
-			--osui-popover-border-radius: var(--border-radius-xl, #{variables.$token-shape-soft-xl});
+			--osui-popover-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 			--osui-popover-shadow: #{variables.$token-elevation-3};
 			--osui-popover-max-width: 350px;
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
+			border: variables.$token-border-size-025 solid var(--osui-popover-border-color);
 			border-radius: var(--osui-popover-border-radius);
 			box-shadow: var(--osui-popover-shadow);
 			color: var(--osui-popover-color);
