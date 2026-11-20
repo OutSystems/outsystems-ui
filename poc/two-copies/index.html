@@ -70,8 +70,15 @@
 					warnings.push(args.map(String).join(' '));
 					return nativeWarn.apply(this, args);
 				};
+				const infos = [];
+				const nativeInfo = console.info;
+				console.info = function (...args) {
+					infos.push(args.map(String).join(' '));
+					return nativeInfo.apply(this, args);
+				};
 
 				window.__pocInstrumentation = {
+					infos,
 					warnings,
 					listenerCounts: () => ({
 						body: registrations.body.length,
@@ -437,6 +444,7 @@
 						scripts,
 						snapshots,
 						warnings: instrumentation.warnings.slice(),
+						infos: instrumentation.infos.slice(),
 						osLibs: sharedStore(),
 					}),
 				};

@@ -81,6 +81,7 @@ test('s1: Host 3.0.0 → Embedded 3.2.0, Home Dispose succeeds and body listener
 	expect(after.listeners.window).toBe(1);
 	expect(after.sharedStore.majors['3'].maps['SidebarAPI.map']).toEqual(['AcctSidebar']);
 	expect(prologueWarnings(s)).toEqual([]);
+	expect(s.infos).toEqual(['[OutSystems UI] 3.0.0 → 3.2.0']);
 	// Home's instances were created by 3.0.0 code, AccountDetail's by 3.2.0 code.
 	expect(s.instances.map((i) => `${i.id}@${i.codeVersion}`)).toEqual([
 		'HomeSidebar@3.0.0',
@@ -105,7 +106,9 @@ test('today: Back to Host, listeners keep accumulating', async ({ page }) => {
 	expect(after.listeners.window).toBeGreaterThan(firstHome.listeners.window);
 });
 
-test('s1: Back to Host keeps the shared state and creates with 3.2.0 code', async ({ page }) => {
+// The runtime skips a URL it already ran, so the Host bundle does not run again and 3.2.0 keeps serving.
+// This is the Q11/Q12 case of §8.2: under "last loaded wins" the Host App silently runs the Embedded App's revision.
+test('s1: Back to Host (Host URL skipped) keeps the shared state and creates with 3.2.0 code', async ({ page }) => {
 	await openHome(page, { mode: 's1', host: '3.0.0', embedded: '3.2.0' });
 	const firstHome = (await state(page)).snapshots.at(-1);
 	await page.evaluate(() => {
@@ -129,18 +132,42 @@ test('s1: Back to Host keeps the shared state and creates with 3.2.0 code', asyn
 	expect(after.sharedStore.majors['3'].maps['SidebarAPI.map']).toEqual(['HomeSidebar']);
 });
 
-test('s1: Back to Host when the Host bundle executes again, 3.0.0 is a no-op', async ({ page }) => {
+test('s1: Back to Host when the Host bundle executes again, 3.0.0 takes over again (last loaded wins)', async ({
+	page,
+}) => {
 	await openHome(page, { mode: 's1', host: '3.0.0', embedded: '3.2.0', rerunHost: true });
 	const firstHome = (await state(page)).snapshots.at(-1);
+	await page.evaluate(() => {
+		window.__pocStateRef = window.__osLibs.osui.majors['3'].state;
+	});
 	await goTo(page, 'AccountDetail');
-	const { after } = await goTo(page, 'Home');
+	const { overlap, after } = await goTo(page, 'Home');
 	const s = await state(page);
 
 	expect(s.scripts.map((x) => x.url)).toHaveLength(3);
-	expect(prologueWarnings(s)).toEqual(['[OutSystems UI] 3.0.0 not applied; 3.2.0 serves this page.']);
-	expect(after.serving).toBe('3.2.0');
-	expect(s.envelopes.every((e) => e.isSuccess)).toBe(true);
+	expect(prologueWarnings(s)).toEqual([]);
+	expect(s.infos).toEqual(['[OutSystems UI] 3.0.0 → 3.2.0', '[OutSystems UI] 3.2.0 → 3.0.0']);
+	expect(await page.evaluate(() => window.__pocStateRef === window.__osLibs.osui.majors['3'].state)).toBe(true);
+	// Overlap: the shared maps hold AccountDetail's 3.2.0 instances and the new Home's 3.0.0 instances.
+	expect(overlap.serving).toBe('3.0.0');
+	expect(overlap.sharedStore.majors['3'].maps['SidebarAPI.map']).toEqual(['AcctSidebar', 'HomeSidebar']);
+	// The reverse direction: 3.0.0 API functions dispose instances built by 3.2.0 code.
+	expect(
+		s.envelopes.every((e) => e.isSuccess),
+		JSON.stringify(s.envelopes.filter((e) => !e.isSuccess))
+	).toBe(true);
+	expect(disposesOf(s, 'AccountDetail')).toHaveLength(6);
+	expect(s.instances.map((i) => `${i.id}@${i.codeVersion}`)).toEqual([
+		'HomeSidebar@3.0.0',
+		'HomeTabs@3.0.0',
+		'AcctSidebar@3.2.0',
+		'AcctTabs@3.2.0',
+		'HomeSidebar@3.0.0',
+		'HomeTabs@3.0.0',
+	]);
+	expect(after.serving).toBe('3.0.0');
 	expect(after.listeners).toEqual(firstHome.listeners);
+	expect(after.sharedStore.majors['3'].maps['SidebarAPI.map']).toEqual(['HomeSidebar']);
 });
 
 test('today: Back to Host when the Host bundle executes again, the Embedded screen cannot be disposed', async ({
@@ -157,19 +184,25 @@ test('today: Back to Host when the Host bundle executes again, the Embedded scre
 });
 
 for (const mode of ['today', 's1']) {
-	test(`${mode}: Host 3.2.0 → Embedded 3.0.0 (Host ahead)`, async ({ page }) => {
+	test(`${mode}: Host 3.2.0 → Embedded 3.0.0 (Host ahead, the older copy loads last)`, async ({ page }) => {
 		await openHome(page, { mode, host: '3.2.0', embedded: '3.0.0' });
 		const { overlap, after } = await goTo(page, 'AccountDetail');
 		const s = await state(page);
 		const embedded = s.instances.filter((i) => i.screen === 'AccountDetail');
 
 		if (mode === 's1') {
-			expect(prologueWarnings(s)).toEqual(['[OutSystems UI] 3.0.0 not applied; 3.2.0 serves this page.']);
-			expect(overlap.serving).toBe('3.2.0');
-			expect(embedded.map((i) => i.codeVersion)).toEqual(['3.2.0', '3.2.0']);
+			// Last loaded wins: 3.0.0 takes over in place and keeps the store, so 3.0.0 API functions dispose
+			// Home's 3.2.0 instances.
+			expect(prologueWarnings(s)).toEqual([]);
+			expect(s.infos).toEqual(['[OutSystems UI] 3.2.0 → 3.0.0']);
+			expect(overlap.serving).toBe('3.0.0');
+			expect(overlap.sharedStore.majors['3'].maps['SidebarAPI.map']).toEqual(['HomeSidebar', 'AcctSidebar']);
+			expect(embedded.map((i) => i.codeVersion)).toEqual(['3.0.0', '3.0.0']);
+			expect(disposesOf(s, 'Home')).toHaveLength(6);
 			expect(disposesOf(s, 'Home').every((d) => d.isSuccess)).toBe(true);
 			expect(after.listeners.body).toBe(s.baseline.body);
-			expect(after.sharedStore.majors['3'].version).toBe('3.2.0');
+			expect(after.listeners.window).toBe(1);
+			expect(after.sharedStore.majors['3'].version).toBe('3.0.0');
 		} else {
 			// The older copy overwrites the newer one: a downgrade, and Home is lost as before.
 			expect(overlap.serving).toBe('3.0.0');
@@ -238,16 +271,22 @@ for (const mode of ['today', 's1']) {
 // OutSystems/OSUI/Utils/ButtonsEffect.ts registers `_bodyClick` on the BodyOnClick listener when the bundle runs.
 // A second copy registers its own `_bodyClick`, so a click on a .btn renders the ripple twice. In S1 both handlers
 // sit on the one shared listener; today they sit on two listeners. Expected by §8.2: one ripple in S1.
-for (const [mode, embedded, ripples] of [
-	['s1', 'none', 1],
-	['today', '3.2.0', 2],
-	['s1', '3.2.0', 2],
+// Under "last loaded wins" every takeover re-runs the file, so the duplicates grow with each switch (rerunHost row).
+for (const [mode, embedded, rerunHost, ripples] of [
+	['s1', 'none', false, 1],
+	['today', '3.2.0', false, 2],
+	['s1', '3.2.0', false, 2],
+	['s1', '3.2.0', true, 3],
 ]) {
-	test(`finding (${mode}, embedded ${embedded}): ButtonsEffect ripple count after a click is ${ripples}`, async ({
+	const path = rerunHost ? 'Home → AccountDetail → Home (Host bundle re-runs)' : 'Home → AccountDetail';
+	test(`finding (${mode}, embedded ${embedded}, ${path}): ButtonsEffect ripple count is ${ripples}`, async ({
 		page,
 	}) => {
-		await openHome(page, { mode, host: '3.0.0', embedded });
+		await openHome(page, { mode, host: '3.0.0', embedded, rerunHost });
 		await goTo(page, 'AccountDetail');
+		if (rerunHost) {
+			await goTo(page, 'Home');
+		}
 		await page.evaluate(() => {
 			const button = document.createElement('button');
 			button.className = 'btn';

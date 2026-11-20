@@ -7,7 +7,7 @@
  * Modes:
  *   today  Rewrites `Constants.OSUIVersion = '<x>'` to the label. Nothing else: this is the bundle as it ships.
  *   s1     Also wraps the tsc output in the version-guarded prologue of ROU-13176 §8.2 (seed and publish the
- *          three globals, semver compare, one slot per major under window.__osLibs.osui.majors).
+ *          three globals, "last loaded revision of a major wins", one slot per major under window.__osLibs.osui.majors).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,17 +49,6 @@ function wrapWithPrologue(version, tscOutput) {
 	var VERSION = '${version}';
 	var MAJOR = VERSION.split('.')[0];
 
-	function compareSemver(a, b) {
-		var pa = a.split('.').map(Number);
-		var pb = b.split('.').map(Number);
-		for (var i = 0; i < 3; i++) {
-			if (pa[i] !== pb[i]) {
-				return pa[i] > pb[i] ? 1 : -1;
-			}
-		}
-		return 0;
-	}
-
 	var root = (window.__osLibs = window.__osLibs || {});
 	var lib = (root.osui = root.osui || { majors: {} });
 	var current = lib.majors[MAJOR];
@@ -67,7 +56,9 @@ function wrapWithPrologue(version, tscOutput) {
 		return m !== MAJOR;
 	});
 
-	if (otherMajor || (current && compareSemver(VERSION, current.version) <= 0)) {
+	// Last loaded wins: only the revision already serving (or another major) is a no-op; any other revision of
+	// this major, older or newer, takes over in place and adopts the shared store.
+	if (otherMajor || (current && current.version === VERSION)) {
 		console.warn(
 			'[OutSystems UI] ' +
 				VERSION +
@@ -76,6 +67,9 @@ function wrapWithPrologue(version, tscOutput) {
 				' serves this page.'
 		);
 		return; // never touches the globals or the state
+	}
+	if (current) {
+		console.info('[OutSystems UI] ' + current.version + ' → ' + VERSION); // last loaded wins
 	}
 	lib.majors[MAJOR] = { version: VERSION, state: current ? current.state : {} };
 

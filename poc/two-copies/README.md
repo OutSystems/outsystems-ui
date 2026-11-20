@@ -5,6 +5,12 @@ that already has one. That is the ODC Modular Apps case: a Host App screen and a
 in one document. It then shows that the S1 design in §8.2 of the impacts document fixes it. S1 is one live copy
 per major: a version-guarded prologue, plus module state moved into a per-major shared store.
 
+**Policy implemented: "the last loaded revision of a major wins"** (the revised §8.2). Any other revision of the
+same major, older or newer, takes over in place, keeps the shared store and logs the switch with `console.info`
+(`[OutSystems UI] 3.2.0 → 3.0.0`). Only the revision already serving, or another major, is a no-op with a
+`console.warn`. The first version of this PoC (commit `52902aecd`) implemented the earlier "newest wins" draft,
+where an older revision was a no-op.
+
 Level 1 means no ODC platform. Screen lifecycles are simulated in [index.html](index.html). Level 2 (a real ODC
 app through `os-model-script` preview) and level 3 (real composition with the client runtime's Native Federation
 PoC) are out of scope.
@@ -13,7 +19,7 @@ PoC) are out of scope.
 
 | File                                                   | Role                                                                                                                                                                                             |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [make-variant.mjs](make-variant.mjs)                   | Takes a compiled bundle and a version label. `today` only rewrites `Constants.OSUIVersion`. `s1` also wraps the `tsc` output in the §8.2 prologue (seed and publish the three globals, semver compare, one slot per major). |
+| [make-variant.mjs](make-variant.mjs)                   | Takes a compiled bundle and a version label. `today` only rewrites `Constants.OSUIVersion`. `s1` also wraps the `tsc` output in the §8.2 prologue (seed and publish the three globals, last loaded revision wins, one slot per major). |
 | [build-variants.mjs](build-variants.mjs)               | Writes `variants/{today,s1,pristine}-{3.0.0,3.2.0,4.0.0}.js`                                                                                                                                     |
 | [index.html](index.html)                               | The harness (see below)                                                                                                                                                                          |
 | [tests/two-copies.spec.mjs](tests/two-copies.spec.mjs) | The Playwright matrix                                                                                                                                                                            |
@@ -93,20 +99,25 @@ Query parameters: `mode` (`today`, `s1` or `pristine`), `host`, `embedded` (a ve
 
 ## Results
 
-18 tests, all passing (Chromium 1243; stable over `--repeat-each=3`). "Baseline" is the listener count after the
+19 tests, all passing (Chromium 1243; stable over `--repeat-each=2`). "Baseline" is the listener count after the
 Host bundle loaded and before any screen: `body` = 1 (the ButtonsEffect click listener, see finding 1),
 `window` = 0.
 
 | #   | Scenario                                                    | Expected (§8.2)                                        | `today` (actual)                                                                                                                       | `s1` (actual)                                                                                                                                       |
 | --- | ----------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Host 3.0.0 → Embedded 3.2.0, Home's OnDestroy               | today fails; S1 disposes, listeners back to baseline   | All 6 `Dispose` → `isSuccess:false`, "…was not found". `body` 3, `window` 2 after Home is gone. `pristine` identical.                  | All 6 `Dispose` → `isSuccess:true`. `body` 1 (baseline), `window` 1 (AccountDetail's Tabs). Overlap: shared maps hold Home + Acct; 3.0.0 instances disposed by 3.2.0 API code. |
-| 2   | … then Back to Home (runtime skips the loaded Host URL)     | S1 keeps the shared store, creates with 3.2.0 code     | 3.2.0 serves. Create succeeds only because the new maps never saw Home. Listeners accumulate: `body` 4, `window` 2 (first Home: 2, 1). | Same `state` object. All envelopes succeed. Home's Sidebar and Tabs are built by 3.2.0 classes. Listeners equal to the first Home (`body` 2, `window` 1). |
-| 2b  | … Back to Home, the Host bundle executes again              | 3.0.0 is a no-op                                       | 3.0.0 resets everything again: serving downgrades to 3.0.0 and AccountDetail's 6 `Dispose` fail.                                       | Warning `[OutSystems UI] 3.0.0 not applied; 3.2.0 serves this page.` 3.2.0 keeps serving, all succeed.                                              |
-| 3   | Host 3.2.0 → Embedded 3.0.0 (Host ahead)                    | Incoming no-op with a warning                          | Downgrade: 3.0.0 serves, AccountDetail is built by 3.0.0 classes, Home's `Dispose` fail, `body` above baseline.                       | Warning `3.0.0 not applied; 3.2.0 serves this page.` AccountDetail is built by 3.2.0 classes. Disposes succeed, `body` at baseline.                   |
+| 2   | … then Back to Home (runtime skips the loaded Host URL)     | The Q11/Q12 case: no switch, 3.2.0 keeps serving       | 3.2.0 serves. Create succeeds only because the new maps never saw Home. Listeners accumulate: `body` 4, `window` 2 (first Home: 2, 1). | Same `state` object. All envelopes succeed. Home's Sidebar and Tabs are built by 3.2.0 classes. Listeners equal to the first Home (`body` 2, `window` 1). |
+| 2b  | … Back to Home, the Host bundle executes again              | 3.0.0 takes over again, keeps the store                | 3.0.0 resets everything again: serving downgrades to 3.0.0 and AccountDetail's 6 `Dispose` fail.                                       | Info `3.2.0 → 3.0.0`. Same `state` object. 3.0.0 API functions dispose AccountDetail's 3.2.0 instances (6 of 6 succeed). The new Home is built by 3.0.0 classes. Listeners equal to the first Home. |
+| 3   | Host 3.2.0 → Embedded 3.0.0 (Host ahead, older loads last)  | 3.0.0 takes over, keeps the store                      | Downgrade: 3.0.0 serves, AccountDetail is built by 3.0.0 classes, Home's `Dispose` fail, `body` above baseline.                       | Info `3.2.0 → 3.0.0`. AccountDetail is built by 3.0.0 classes. 3.0.0 API functions dispose Home's 3.2.0 instances (6 of 6). `body` at baseline, `window` 1. |
 | 4   | Same revision twice (3.0.0 from two apps, two URLs)         | No-op                                                  | The bundle runs again and resets: Home's `Dispose` fail, `body` above baseline.                                                       | Warning `3.0.0 not applied; 3.0.0 serves this page.` Disposes succeed, `body` at baseline.                                                          |
 | 5   | Another major (3.0.0 → 4.0.0)                               | No-op with a warning                                   | 4.0.0 takes over the globals, Home's `Dispose` fail.                                                                                   | Warning `4.0.0 not applied; another major serves this page.` 3.0.0 serves, `majors` has only `3`, disposes succeed.                                 |
 | 6   | Single bundle (Embedded App brings none), Home → Acct → Home | Same as today                                         | All succeed, listeners at baseline after Home, equal on Back.                                                                         | Identical; the only difference is that `window.__osLibs.osui.majors['3']` exists.                                                                   |
-| F1  | Click a `.btn` after a second copy loaded (finding 1)       | One ripple in S1                                       | 2 ripples (two body click listeners)                                                                                                    | **2 ripples** (two `_bodyClick` handlers on the one shared listener). Single bundle: 1.                                                            |
+| F1  | Click a `.btn` after a second copy loaded (finding 1)       | One ripple in S1                                       | 2 ripples (two body click listeners)                                                                                                    | **2 ripples** (two `_bodyClick` handlers on the one shared listener). After Home → AccountDetail → Home with the Host bundle re-running: **3**. Single bundle: 1. |
+
+Rows 2b and 3 are the reverse direction that the revised §8.2 lists as "not yet tested": an older copy takes
+over and its API functions dispose instances that a newer copy built. It works for Sidebar and the Tabs family.
+That only shows those two patterns' 3.0.0 and 3.2.0 builds are compatible both ways, which is trivially true here
+because the variants share one source and differ only in their version label.
 
 The console also shows `OSUI-GEN-09007` warnings for Tabs. They are harness noise: `TabsAPI.Initialize` runs
 before the items' `Initialize`, the same order the Tabs story uses. They are not related to the second copy.
@@ -117,9 +128,10 @@ before the items' `Initialize`, the same order the Tabs story uses. They are not
    `OnPostMessage.Set()` is the one exception to lazy listeners. But
    [`OutSystems/OSUI/Utils/ButtonsEffect.ts:67`](../../src/scripts/OutSystems/OSUI/Utils/ButtonsEffect.ts) calls
    `GlobalListenerManager.Instance.addHandler(BodyOnClick, _bodyClick)` when the bundle runs. That is the `body`
-   click listener in the baseline. Today, a second copy adds a second `body` listener. Under S1, the upgrade re-runs
+   click listener in the baseline. Today, a second copy adds a second `body` listener. Under S1, the takeover re-runs
    the file, and the shared manager ends up with two `_bodyClick` handlers. Either way every `.btn` click renders
-   the ripple twice (test F1). The fix follows the §8.2 rule for module-level handlers: keep `_bodyClick` in
+   the ripple twice (test F1). "Last loaded wins" makes it worse: every takeover adds one more handler, so the
+   count grows with each switch between apps (3 after one round trip). The fix follows the §8.2 rule for module-level handlers: keep `_bodyClick` in
    shared state and register it once per major, through the same initializer that §8.2 proposes for
    `OnPostMessage.Set()`. The §4 inventory should add ButtonsEffect, and the "state to move" list should add it. A
    sweep for other statements that run at namespace level (not only `const _x =` state) is worth doing before
@@ -137,24 +149,30 @@ before the items' `Initialize`, the same order the Tabs story uses. They are not
    covers.
 4. **"Same revision: the runtime already skips identical files" holds only for an identical URL.** Two apps
    serving the same OSUI revision from different URLs run it twice. Today that resets state just like a
-   different revision does (row 4). S1 covers it because the prologue's check is `<= 0`, not `< 0`. Whether ODC
-   serves one URL or one per app is for level 2/3 to confirm.
+   different revision does (row 4). S1 covers it because the prologue treats the revision already serving as a
+   no-op. Whether ODC serves one URL or one per app is for level 2/3 to confirm. (The revised §8.2 now states
+   this.)
 5. **Two sources for the version.** The prologue takes `__OSUI_VERSION__` from `package.json`, while
    `SharedState` derives the major from `Constants.OSUIVersion`. The two must agree, or the store is looked up
    under the wrong major and silently falls back to per-copy state. `make-variant.mjs` rewrites both. The real
    build should use one placeholder for both. Also, `Constants.OSUIVersion` is `'3.0.1'` today, not the
-   `'3.0.0'` that §4 quotes.
+   `'3.0.0'` that §4 quotes. (The revised §8.2 now states the one-source rule.)
 6. **The `"use strict"` directive has to move.** The `tsc` output starts with `"use strict";`. Inside the
    wrapper, after the seed `var`s, it is no longer a directive. `make-variant.mjs` moves it to the first statement
-   of the wrapper function. §8.2's prologue does not mention it.
+   of the wrapper function. (The revised §8.2 now states this.)
+7. **Q11/Q12 decide whether "last loaded wins" ever switches back.** Row 2 is what happens when the runtime does
+   not re-run the Host App's file on Back: 3.2.0 keeps serving the Host App's screens, as under the earlier draft.
+   Row 2b is what the policy needs. The PoC can show both, but only level 2/3 can say which one the runtime does.
 
 What §8.2 predicted and the PoC confirms:
 
 - Seed-and-publish keeps `window.OutSystems.OSUI` alive across loads.
-- Same or older revision is a no-op with the expected warning. Newer upgrades in place and keeps the store.
-- 3.0.0 instances are disposed by 3.2.0 API functions, and their `removeHandler` calls reach the adopted shared
-  manager, so listeners return to baseline.
-- After Back, the Host screen runs 3.2.0 code, styled by the Host App's CSS (here the same `dist/` CSS).
+- The revision already serving, and another major, are no-ops with the expected warning. Any other revision of
+  the major, older or newer, takes over in place, keeps the store and logs the switch.
+- Instances are disposed by the API functions of whichever copy serves, in both directions, and their
+  `removeHandler` calls reach the adopted shared manager, so listeners return to baseline.
+- When the Host bundle re-runs on Back, the Host screen runs 3.0.0 code again. When it does not, it runs 3.2.0
+  code, styled by the Host App's CSS (here the same `dist/` CSS).
 
 Not covered at level 1: provider-backed patterns (no Flatpickr or VirtualSelect loaded), the Menu,
 deprecated-submenu and OnPostMessage handlers, CSS skew, and real platform timing.
