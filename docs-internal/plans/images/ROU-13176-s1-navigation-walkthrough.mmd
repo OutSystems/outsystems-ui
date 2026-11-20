@@ -1,0 +1,35 @@
+flowchart LR
+    subgraph S1["1 · User opens Home (Bank App, built on OSUI 3.0)"]
+        direction TB
+        A["Bank App's OutSystemsUI.js 3.0<br/>is loaded"] --> B{"Any OSUI 3.x<br/>on the page?"}
+        B -- "No" --> C["3.0 runs and creates<br/>the shared store"]
+        C --> D["Home runs on 3.0, as built:<br/>Sidebar and Tabs created<br/>with 3.0 code"]
+    end
+
+    subgraph S2["2 · User taps Account details (Accounts, built on OSUI 3.2)"]
+        direction TB
+        E["Accounts' OutSystemsUI.js 3.2<br/>is loaded"] --> F{"Another 3.x revision<br/>serving the page?"}
+        F -- "Yes, 3.0" --> G["3.2 takes over,<br/>keeps the shared store"]
+        G --> H["AccountDetail runs on 3.2, as built:<br/>DatePicker and Dropdown created<br/>with 3.2 code"]
+        H --> I["Home's Sidebar and Tabs are still<br/>in the shared store, so their<br/>Dispose finds them"]
+    end
+
+    subgraph S3["3 · User presses Back (Bank App, built on OSUI 3.0)"]
+        direction TB
+        J["Bank App's OutSystemsUI.js 3.0<br/>is loaded again"] --> K{"Another 3.x revision<br/>serving the page?"}
+        K -- "Yes, 3.2" --> L["3.0 takes over again,<br/>keeps the shared store"]
+        L --> M["Home runs on 3.0, as built:<br/>Sidebar and Tabs created<br/>with 3.0 code"]
+        M --> N["AccountDetail's DatePicker and Dropdown<br/>are still in the shared store, so their<br/>Dispose finds them"]
+    end
+
+    S1 -- "serving: 3.0" --> S2
+    S2 -- "serving: 3.2" --> S3
+
+    classDef host fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
+    classDef emb fill:#dcfce7,stroke:#15803d,color:#0f172a
+    classDef check fill:#fef9c3,stroke:#a16207,color:#0f172a
+    class A,C,D,J,L,M host
+    class E,G,H emb
+    class B,F,K check
+    class I host
+    class N emb
