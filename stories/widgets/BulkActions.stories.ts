@@ -128,7 +128,7 @@ const render = (initial: boolean[]): HTMLElement => {
 	return root;
 };
 
-const meta: Meta = { title: 'Widgets/BulkActions' };
+const meta: Meta = { title: 'Widgets/Bulk Actions' };
 export default meta;
 type Story = StoryObj;
 

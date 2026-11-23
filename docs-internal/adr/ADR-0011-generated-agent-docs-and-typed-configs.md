@@ -53,7 +53,7 @@ Chosen option: "Option 2". Option 3 is recorded as future work.
 | `npm run docs:ai:types`  | Regenerates `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts` from the configuration classes and event enums of every pattern.                                                                                                     |
 | `npm run docs:ai:blocks` | Local extract only: runs the `osui-blocks-export` .NET tool over the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` and writes `scripts/docs-ai-generator/snapshot/osui.blocks.json`. See "Running the extractor locally" below.              |
 | `npm run docs`           | The TypeDoc build into `docs/`; the new `postdocs` step copies `docs-ai/` into that output so the documentation site serves `llms.txt` and the manifests at its root. See "TypeDoc output" below.                                   |
-| `npm run docs:ai:test`   | `node --test tests/*.test.mjs`: unit tests of the generators, of `ParseConfigs`, and freshness assertions on every generated file. The library itself still has no local test runner; its E2E suite lives elsewhere.                    |
+| `npm run docs:ai:test`   | `node --test tests/*.test.mjs`: unit tests of the generators, of `ParseConfigs`, and a freshness assertion on `PatternTypes.ts` (the only generated file it checks; `docs-ai/` is checked by `npm run docs:ai:check`, every generated file by `npm run docs:check` — ADR-0021). The library itself still has no local test runner; its E2E suite lives elsewhere.                    |
 
 #### Running the extractor locally
 
@@ -209,8 +209,8 @@ are checked too: the default contexts skip them, which let 39 bare `@param` tags
 
 ### Negative consequences
 
--   Contract changes carry a regeneration duty (`npm run docs:ai:types && npm run docs:ai`); with no CI
-    check the guard is `npm run docs:ai:test`.
+-   Contract changes carry a regeneration duty (`npm run docs:ai:types && npm run docs:ai`); ADR-0021 adds
+    the CI guard (`npm run docs:check` in the PR build).
 -   The jsdoc lint rules reject the previous comment style in new code.
 -   `docs:ai:blocks` depends on a machine-local .NET tool and a locally provided OML.
 -   `platform-docs.mjs` is hand-curated: its URLs are checked when added, not by a test.

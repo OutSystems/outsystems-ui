@@ -1,0 +1,451 @@
+.card-demo-composition {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.card-demo-composition__header {
+	align-items: flex-start;
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+}
+
+.card-demo-composition__title {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.card-demo-composition__subtitle {
+	color: var(--color-text-subtle);
+	font-size: 14px;
+	line-height: 1.4;
+	margin-top: 2px;
+}
+
+.card-demo-composition__icon-btn {
+	flex-shrink: 0;
+	padding-inline: var(--token-scale-200, 8px);
+}
+
+.card-demo-composition__item {
+	align-items: flex-start;
+	border-inline-start: 3px solid var(--color-primary);
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+	padding-inline-start: 12px;
+}
+
+.card-demo-composition__item-title {
+	font-size: 15px;
+	font-weight: 650;
+	line-height: 1.35;
+}
+
+.card-demo-composition__item-meta {
+	color: var(--color-text-subtle);
+	font-size: 13px;
+	line-height: 1.45;
+	margin-top: 4px;
+}
+
+.card-demo-composition__item-price {
+	flex-shrink: 0;
+	font-size: 14px;
+	line-height: 1.4;
+	white-space: nowrap;
+}
+
+.card-demo-composition__divider {
+	border-top: 1px solid var(--color-border);
+	margin-block: 4px;
+}
+
+.card-demo-composition__row {
+	display: flex;
+	font-size: 14px;
+	justify-content: space-between;
+	line-height: 1.45;
+}
+
+.card-demo-composition__label {
+	color: var(--color-text-subtle);
+}
+
+.card-demo-composition__action {
+	margin-top: 4px;
+	width: 100%;
+}
+
+.card-detail-demo-metric {
+	&__icon {
+		align-items: center;
+		border-radius: 10px;
+		display: flex;
+		flex-shrink: 0;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+
+		.icon {
+			font-size: 18px;
+			line-height: 1;
+		}
+	}
+
+	&__meta {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		text-align: end;
+	}
+
+	&__value {
+		color: var(--color-text);
+		font-size: 18px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+		line-height: 1.2;
+	}
+
+	&__time {
+		color: var(--color-text-subtlest);
+		font-size: 13px;
+		line-height: 1.35;
+	}
+}
+
+
+/* Property listing composition for Card Sectioned docs — Storybook only.
+   OSUI vertical UsePadding assumes image *below* content (pad-top, no pad-bottom,
+   flex gap). This demo puts the photo on top (Chromatic/Karra reference), so we
+   remap gap + bottom padding to the same 24px token inset — without inventing a
+   different padding scale. */
+.card-sectioned-demo-property {
+	&.flex-direction-column {
+		.card-image {
+			order: -1;
+		}
+
+		.card-sectioned-top {
+			flex: none;
+		}
+
+		/* UsePadding True + image on top → same inset as Chromatic Sectioned content. */
+		&:not(.padding-none) {
+			--card-sectioned-gap: 0px;
+
+			.card-sectioned-top {
+				/* Feature sets padding-bottom: 0 for image-below; restore the 24px scale. */
+				padding-bottom: 24px;
+			}
+		}
+	}
+
+	&.flex-direction-row {
+		align-items: stretch;
+
+		.card-image {
+			align-self: stretch;
+			flex: 0 0 42%;
+			max-width: 220px;
+			order: 0;
+
+			img {
+				aspect-ratio: 4 / 5;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.card-sectioned-top {
+			flex: 1;
+			justify-content: space-between;
+			min-width: 0;
+		}
+	}
+
+	.card-image {
+		flex: none;
+		overflow: hidden;
+		position: relative;
+
+		img {
+			aspect-ratio: 16 / 11;
+			height: auto;
+			object-fit: cover;
+		}
+	}
+
+	&__status {
+		inset-block-start: 12px;
+		inset-inline-start: 12px;
+		position: absolute;
+		z-index: 1;
+	}
+
+	.card-sectioned-top {
+		gap: 12px;
+	}
+
+	.card-title {
+		font-size: 16px;
+		line-height: 1.3;
+		margin-block-end: 2px;
+	}
+
+	.card-content {
+		display: flex;
+		flex-direction: column;
+		flex: none;
+		gap: 12px;
+	}
+
+	&__divider {
+		margin: 0;
+	}
+
+	&__header {
+		align-items: flex-start;
+		display: flex;
+		gap: 12px;
+		justify-content: space-between;
+	}
+
+	&__location {
+		color: var(--color-text-subtlest);
+		font-size: 13px;
+		line-height: 1.35;
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		text-align: end;
+	}
+
+	&__price-label {
+		color: var(--color-text-subtlest);
+		font-size: 12px;
+		line-height: 1.3;
+	}
+
+	&__price-value {
+		color: var(--color-text);
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.2;
+	}
+
+	&__stats {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
+
+	&__stat {
+		align-items: center;
+		color: var(--color-text);
+		display: inline-flex;
+		font-size: 13px;
+		font-weight: 600;
+		gap: 6px;
+		line-height: 1;
+
+		.osui-demo-icon {
+			color: var(--color-text-subtle, var(--color-text-subtlest));
+			font-size: 16px;
+		}
+	}
+}
+
+/* Profile composition (With padding) — Storybook only.
+   Image is forced on top; OSUI vertical ImagePadding uses padding-top: 0
+   (image usually sits under content), so we restore top inset for the padded
+   profile layout. Card shape stays at the OSUI default. */
+.card-sectioned-demo-profile {
+	--card-sectioned-gap: 0px;
+
+	&.flex-direction-column {
+		.card-image {
+			order: -1;
+			/* Restore top inset — OSUI vertical sets padding-block-start: 0. */
+			padding-block-start: 24px;
+			padding-block-end: 0;
+
+			img {
+				aspect-ratio: 1 / 1;
+				height: auto;
+				object-fit: cover;
+			}
+		}
+
+		.card-sectioned-top {
+			flex: none;
+			gap: 6px;
+			padding-bottom: 24px;
+			padding-top: 16px;
+		}
+	}
+
+	.card-image {
+		flex: none;
+		overflow: hidden;
+	}
+
+	.card-title {
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 1.3;
+		margin-block-end: 0;
+	}
+
+	.card-content {
+		color: var(--color-text-subtle);
+		flex: none;
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.card-bottom {
+		align-items: center;
+		flex: none;
+		height: auto;
+		justify-content: space-between;
+		margin-block-start: 14px;
+		width: 100%;
+
+		.btn {
+			flex-shrink: 0;
+			min-width: auto;
+			width: auto;
+		}
+	}
+
+	&__meta {
+		align-items: center;
+		display: flex;
+		gap: 14px;
+	}
+
+	&__stat {
+		align-items: center;
+		color: var(--color-text-subtle);
+		display: inline-flex;
+		font-size: 13px;
+		font-weight: 600;
+		gap: 6px;
+		line-height: 1;
+
+		.osui-demo-icon {
+			font-size: 15px;
+		}
+	}
+}
+
+/* Horizontal article composition — Storybook only.
+   OSUI `.card-image { order: 1 }` places the photo after content (right in a row).
+   Reference keeps the photo on the left with ImagePadding False (full-bleed). */
+.card-sectioned-demo-article {
+	--card-sectioned-gap: 0px;
+	align-items: stretch;
+
+	.card-image {
+		align-self: stretch;
+		flex: 0 0 42%;
+		max-width: 200px;
+		order: 0;
+		overflow: hidden;
+
+		img {
+			aspect-ratio: 1 / 1;
+			height: 100%;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+
+	.card-sectioned-top {
+		flex: 1;
+		gap: 0;
+		justify-content: space-between;
+		min-width: 0;
+		/* Feature horizontal content padding is 0 on the end edge — restore inset. */
+		padding-inline-end: 24px;
+	}
+
+	.card-title {
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 1.35;
+		margin-block-end: 0;
+	}
+
+	.card-content {
+		flex: none;
+		margin-block: 12px 0;
+	}
+
+	.separator {
+		margin: 0;
+	}
+
+	.card-bottom {
+		align-items: center;
+		flex: none;
+		height: auto;
+		justify-content: space-between;
+		margin-block-start: 12px;
+		width: 100%;
+	}
+
+	&__author {
+		align-items: center;
+		display: flex;
+		gap: 10px;
+		min-width: 0;
+	}
+
+	&__author-text {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		min-width: 0;
+	}
+
+	&__author-name {
+		color: var(--color-text);
+		font-size: 13px;
+		font-weight: 650;
+		line-height: 1.3;
+	}
+
+	&__author-date {
+		color: var(--color-text-subtlest);
+		font-size: 12px;
+		line-height: 1.3;
+	}
+
+	&__category {
+		color: var(--color-text-subtlest);
+		flex-shrink: 0;
+		font-size: 13px;
+		line-height: 1.3;
+	}
+
+	.avatar {
+		flex-shrink: 0;
+
+		img {
+			display: block;
+			height: 100%;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+}

@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Enum {
 	 */
 	export enum CssClass {
 		Calendar = 'osui-datepicker-calendar',
+		InvalidInput = 'osui-datepicker--invalid-input',
 		Pattern = 'osui-datepicker',
 		Redrawn = 'osui-datepicker--redrawn',
 	}
@@ -15,6 +16,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Enum {
 	export enum DatePickerEvents {
 		OnChange = 'OnChange',
 		OnInitialize = 'OnInitialize',
+		OnInvalidInput = 'OnInvalidInput',
 	}
 
 	// Datepicker Mode Types
@@ -33,6 +35,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Enum {
 		MinDate = 'MinDate',
 		ShowTodayButton = 'ShowTodayButton',
 		ShowWeekNumbers = 'ShowWeekNumbers',
+		StrictInputValidation = 'StrictInputValidation',
 		TimeFormat = 'TimeFormat',
 	}
 

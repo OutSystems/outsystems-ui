@@ -42,11 +42,11 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-section-index-item-color: var(--color-text-subtlest);
 	--osui-section-index-item-color-hover: var(--color-text);
-	--osui-section-index-item-active-color: var(--color-primary-selected);
+	--osui-section-index-item-active-color: #{variables.$token-text-select};
 	--osui-section-index-item-border-radius: #{variables.$token-border-radius-0};
 	--osui-section-index-item-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-section-index-item-press-background: #{variables.$token-bg-neutral-subtlest-press};
-	--osui-section-index-active-indicator-color: var(--color-primary-selected);
+	--osui-section-index-active-indicator-color: var(--osui-section-index-item-active-color);
 	--osui-section-index-active-indicator-width: #{variables.$token-border-size-025};
 	// Half a rail-width, so the marker only partially covers the rail (design spec).
 	// Reads the rail knob off .osui-section-index (custom properties inherit) and keeps
@@ -116,12 +116,10 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-section-index-item {
-		&:focus {
-			background-color: transparent;
-			text-decoration: none;
-		}
+.osui-section-index-item {
+	&:focus-visible {
+		background-color: transparent;
+		text-decoration: none;
 	}
 }
 
@@ -129,13 +127,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		border-inline-start: variables.$token-border-size-025 solid var(--color-focus-outer);
+		border-inline-start: variables.$token-border-size-025 solid var(--osui-color-focus);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				border-inline-start: variables.$token-border-size-075 solid var(--color-focus-outer);
+				border-inline-start: variables.$token-border-size-075 solid var(--osui-color-focus);
 			}
 		}
 	}

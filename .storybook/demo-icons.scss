@@ -1,0 +1,24 @@
+/* Show the icon glyph that matches the Storybook iconLibrary toolbar.
+   Default (no phosphor class) → FontAwesome. With html.iconLibrary-phosphor → Phosphor. */
+
+.osui-demo-icon {
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+}
+
+.osui-demo-icon.osui-demo-icon--ph {
+	display: none;
+}
+
+.osui-demo-icon.osui-demo-icon--fa {
+	display: inline-block;
+}
+
+html.iconLibrary-phosphor .osui-demo-icon.osui-demo-icon--fa {
+	display: none;
+}
+
+html.iconLibrary-phosphor .osui-demo-icon.osui-demo-icon--ph {
+	display: inline-block;
+}

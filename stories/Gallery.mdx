@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as GalleryStories from './Gallery.stories';
+import { GALLERY_RECIPES } from './_helpers/pattern-docs/gallery-recipes';
+import { GALLERY_DOC } from './_helpers/pattern-docs/gallery-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={GalleryStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={GALLERY_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults: `RowItemsDesktop` 4, `RowItemsTablet` 3, `RowItemsPhone` 1 and `ItemsGap` Base. A List in the Content placeholder supplies the items and the Gallery turns them into a responsive grid of equal-height cards."
+				implement={<StudioHowTo recipe={GALLERY_RECIPES.basicUsage} />}
+			>
+				<Canvas of={GalleryStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Items per row"
+				description="`RowItemsDesktop` at 2, 3 and 4 (with `RowItemsTablet` matching). Each device parameter writes its own CSS variable, so the same list reflows per breakpoint without extra markup."
+				implement={<StudioHowTo recipe={GALLERY_RECIPES.itemsPerRow} />}
+			>
+				<Canvas of={GalleryStories.Columns} />
+			</PdExample>
+			<PdExample
+				title="Items gap"
+				description="`ItemsGap` at Small, Base and ExtraLarge. The value is a Space entity record and resolves to the matching `--space-*` variable for both row and column gaps."
+				implement={<StudioHowTo recipe={GALLERY_RECIPES.itemsGap} />}
+			>
+				<Canvas of={GalleryStories.Gaps} />
+			</PdExample>
+		</>
+	}
+/>

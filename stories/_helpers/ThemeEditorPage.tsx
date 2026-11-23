@@ -19,7 +19,7 @@ import {
 	isChanged,
 	resolveDefault,
 } from './theme-editor-utils';
-import { CH_APP_APPEARANCE, readStoredAppearance } from './storybook-appearance.js';
+import { CH_APP_APPEARANCE, resolveAppearance, watchAppearance } from './storybook-appearance.js';
 import { ThemeEditorPreview } from './ThemeEditorPreview';
 
 const SEARCH_ICON = (
@@ -255,7 +255,7 @@ export function ThemeEditorPage(): React.ReactElement {
 	const [changeTick, setChangeTick] = useState(0);
 	const [feedback, setFeedback] = useState('');
 	const [activeGroup, setActiveGroup] = useState(THEME_ROLE_GROUPS[0]?.id ?? '');
-	const [docsDark, setDocsDark] = useState(() => readStoredAppearance() === 'dark');
+	const [docsDark, setDocsDark] = useState(() => resolveAppearance() === 'dark');
 	const [railCollapsed, setRailCollapsed] = useState(false);
 	const [viewMode, setViewMode] = useState<'editor' | 'preview'>('editor');
 
@@ -318,17 +318,23 @@ export function ThemeEditorPage(): React.ReactElement {
 		}
 	}, [bump, emitState]);
 
-	// Docs appearance sync (story canvas, not MDX)
+	// Docs appearance: the Storybook appearance switch, or the OS on `system` (story canvas, not MDX)
 	useEffect(() => {
-		const sync = () => setDocsDark(readStoredAppearance() === 'dark');
+		const sync = (scheme: string = resolveAppearance()) => setDocsDark(scheme === 'dark');
+		const onChannel = (next: { scheme?: string } | undefined) => sync(next?.scheme);
 		sync();
+		const stopWatching = watchAppearance(sync);
+		let channel: ReturnType<typeof addons.getChannel> | undefined;
 		try {
-			const ch = addons.getChannel();
-			ch.on(CH_APP_APPEARANCE, sync);
-			return () => ch.off(CH_APP_APPEARANCE, sync);
+			channel = addons.getChannel();
+			channel.on(CH_APP_APPEARANCE, onChannel);
 		} catch {
-			return undefined;
+			channel = undefined;
 		}
+		return () => {
+			stopWatching();
+			channel?.off(CH_APP_APPEARANCE, onChannel);
+		};
 	}, []);
 
 	// Cmd/Ctrl+K focuses role filter (no hint in UI).

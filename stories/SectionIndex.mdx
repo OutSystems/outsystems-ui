@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SectionIndexStories from './SectionIndex.stories';
+import { SECTION_INDEX_RECIPES } from './_helpers/pattern-docs/section-index-recipes';
+import { SECTION_INDEX_DOC } from './_helpers/pattern-docs/section-index-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={SectionIndexStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={SECTION_INDEX_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Block defaults — `SmoothScrolling` True and `IsFixed` False. One Section Index Item per section, each pointing at its container through `ScrollToWidgetId`; click an item to scroll there and watch it become active."
+				implement={<StudioHowTo recipe={SECTION_INDEX_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SectionIndexStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Fixed position"
+				description="Set `IsFixed` to True to make the index sticky: the runtime computes the offset below the header and the list stays in place while the sections scroll past it."
+				implement={<StudioHowTo recipe={SECTION_INDEX_RECIPES.fixedPosition} />}
+			>
+				<Canvas of={SectionIndexStories.FixedPosition} />
+			</PdExample>
+			<PdExample
+				title="Instant scrolling"
+				description="Set `SmoothScrolling` to False to jump to the target section without animation — the choice to make for users who prefer reduced motion."
+				implement={<StudioHowTo recipe={SECTION_INDEX_RECIPES.instantScrolling} />}
+			>
+				<Canvas of={SectionIndexStories.InstantScrolling} />
+			</PdExample>
+		</>
+	}
+/>

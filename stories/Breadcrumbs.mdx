@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BreadcrumbsStories from './Breadcrumbs.stories';
+import { BREADCRUMBS_RECIPES } from './_helpers/pattern-docs/breadcrumbs-recipes';
+import { BREADCRUMBS_DOC } from './_helpers/pattern-docs/breadcrumbs-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={BreadcrumbsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={BREADCRUMBS_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="One Breadcrumbs Item per level in the Content placeholder. Ancestor screens are Links in the Title placeholder; the current screen is plain text, rendered bold and without a separator."
+				implement={<StudioHowTo recipe={BREADCRUMBS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={BreadcrumbsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Custom separator"
+				description="The Icon placeholder of each Breadcrumbs Item draws the separator after the title. Change the Icon widget to replace the default caret — here with `arrow-right`."
+				implement={<StudioHowTo recipe={BREADCRUMBS_RECIPES.customSeparator} />}
+			>
+				<Canvas of={BreadcrumbsStories.CustomSeparator} />
+			</PdExample>
+			<PdExample
+				title="Home icon"
+				description="The Title placeholder takes any markup: an Icon widget inside the first Link gives the root crumb a house icon next to its text."
+				implement={<StudioHowTo recipe={BREADCRUMBS_RECIPES.homeIcon} />}
+			>
+				<Canvas of={BreadcrumbsStories.HomeIcon} />
+			</PdExample>
+		</>
+	}
+/>

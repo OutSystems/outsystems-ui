@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MonthPickerStories from './MonthPicker.stories';
+import { MONTH_PICKER_RECIPES } from './_helpers/pattern-docs/month-picker-recipes';
+import { MONTH_PICKER_DOC } from './_helpers/pattern-docs/month-picker-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={MonthPickerStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={MONTH_PICKER_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="The default `DateFormat` MM/YYYY with no `InitialMonth`: the input starts empty and opens a 12-month grid with year arrows on click or focus."
+				implement={<StudioHowTo recipe={MONTH_PICKER_RECIPES.basicUsage} />}
+			>
+				<Canvas of={MonthPickerStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Month name format"
+				description="Set `DateFormat` to MMM YYYY to display the abbreviated month name (Mar 2024) instead of its number. `InitialMonth` preselects March 2024 so the format is visible on render."
+				implement={<StudioHowTo recipe={MONTH_PICKER_RECIPES.monthNameFormat} />}
+			>
+				<Canvas of={MonthPickerStories.MonthNameFormat} />
+			</PdExample>
+			<PdExample
+				title="Min and max month"
+				description="`MinMonth` and `MaxMonth` bound the selectable window — the 2024 fiscal year here. Open the picker: months outside January–December 2024 are disabled and the year arrows stop at the limits."
+				implement={<StudioHowTo recipe={MONTH_PICKER_RECIPES.minMaxMonth} />}
+			>
+				<Canvas of={MonthPickerStories.MinMaxMonth} />
+			</PdExample>
+		</>
+	}
+/>

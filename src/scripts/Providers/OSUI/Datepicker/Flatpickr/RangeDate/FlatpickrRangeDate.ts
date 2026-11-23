@@ -79,9 +79,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			if (selectedDates.length === 0 || selectedDates.length === 2) {
 				// Trigger the platform update attribute value based on the flatpicker text input value!
 				// This can be done on this context since on this case the "hidden" input should be text type!
+				// With no dates selected the value is empty: after rejected typed text (StrictInputValidation) the
+				// flatpickr input keeps that text for the user to correct, and it must not reach the platform input.
 				OSFramework.OSUI.Helper.Dom.SetInputValue(
 					this.datePickerPlatformInputElem,
-					this.flatpickrInputElem.value
+					selectedDates.length === 0 ? '' : this.flatpickrInputElem.value
 				);
 				// Trigger platform's onChange callback event
 				this.triggerPlatformEventCallback(

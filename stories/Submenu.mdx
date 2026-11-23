@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SubmenuStories from './Submenu.stories';
+import { SUBMENU_RECIPES } from './_helpers/pattern-docs/submenu-recipes';
+import { SUBMENU_DOC } from './_helpers/pattern-docs/submenu-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={SubmenuStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={SUBMENU_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Default behaviour with the block's only parameter (`ExtendedClass`) left blank: the Menu placeholder is the header, the Items placeholder drops down on click and closes on an outside click or Esc."
+				implement={<StudioHowTo recipe={SUBMENU_RECIPES.basicUsage} />}
+			>
+				<Canvas of={SubmenuStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Open on hover"
+				description="The runtime `OpenOnHover` config — switched on with `SubmenuAPI.SubmenuOpenOnHover` from the Initialized event — opens the panel when the pointer enters the header. Touch devices ignore it and keep click-to-open."
+				implement={<StudioHowTo recipe={SUBMENU_RECIPES.openOnHover} />}
+			>
+				<Canvas of={SubmenuStories.OpenOnHover} />
+			</PdExample>
+			<PdExample
+				title="Current screen"
+				description="When a link inside the Items placeholder points to the current screen, the platform adds the `active` class to that link and to the Submenu root, so the header stays highlighted while the panel is closed."
+				implement={<StudioHowTo recipe={SUBMENU_RECIPES.currentScreen} />}
+			>
+				<Canvas of={SubmenuStories.CurrentScreen} />
+			</PdExample>
+		</>
+	}
+/>

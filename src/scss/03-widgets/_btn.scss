@@ -79,6 +79,15 @@
 		border: var(--osui-btn-border-width) solid transparent;
 		color: var(--color-text-inverse);
 
+		// Inverse text suits every fill that lightens or flips in dark. Primary, red,
+		// green and blue stay dark there, so their label stays white.
+		&.background-primary,
+		&.background-red,
+		&.background-green,
+		&.background-blue {
+			color: var(--color-text-light);
+		}
+
 		&:active {
 			filter: brightness(0.8);
 		}
@@ -268,10 +277,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	& .btn:focus {
-		border-color: var(--color-background-surface);
-	}
+.btn:focus-visible {
+	border-color: var(--color-background-surface);
 }
 
 // Layout Native Context ---------------------------------------------------------

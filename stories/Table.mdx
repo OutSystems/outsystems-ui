@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TableStories from './Table.stories';
+import { TABLE_RECIPES } from './_helpers/pattern-docs/table-recipes';
+import { TABLE_DOC } from './_helpers/pattern-docs/table-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={TableStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={TABLE_DOC}
+	examples={
+		<>
+			<PdExample title="Basic usage" description="Sortable headers and data rows with data-header attributes." implement={<StudioHowTo recipe={TABLE_RECIPES.basicUsage} />}>
+				<Canvas of={TableStories.BasicUsage} />
+			</PdExample>
+			<PdExample title="Selected row" description="One row uses table-row-selected to show the active state." implement={<StudioHowTo recipe={TABLE_RECIPES.selectedRow} />}>
+				<Canvas of={TableStories.SelectedRow} />
+			</PdExample>
+			<PdExample title="Stripes" description="Add table-row-stripping on rows so even rows use the stripe background." implement={<StudioHowTo recipe={TABLE_RECIPES.stripes} />}>
+				<Canvas of={TableStories.Stripes} />
+			</PdExample>
+		</>
+	}
+/>

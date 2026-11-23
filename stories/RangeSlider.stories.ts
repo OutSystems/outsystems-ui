@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
+import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * RangeSlider — noUiSlider provider. `Create(id, configs, mode, 'noUiSlider')`
@@ -16,15 +17,32 @@ interface RangeSliderArgs {
 }
 
 const meta: Meta<RangeSliderArgs> = {
-	title: 'Patterns/Interaction/RangeSlider',
+	title: 'Patterns/Interaction/Range Slider',
 	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'interval'] },
-		minValue: { control: 'number', name: 'MinValue' },
-		maxValue: { control: 'number', name: 'MaxValue' },
-		step: { control: 'number', name: 'Step' },
-		showFloatingLabel: { control: 'boolean', name: 'ShowFloatingLabel' },
-		showTickMarks: { control: 'boolean', name: 'ShowTickMarks' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'interval'],
+			description:
+				'Story-only: `single` renders the RangeSlider block, `interval` the RangeSliderInterval block.',
+		},
+		minValue: { control: 'number', name: 'MinValue', description: 'Lower bound of the range.' },
+		maxValue: { control: 'number', name: 'MaxValue', description: 'Upper bound of the range.' },
+		step: {
+			control: 'number',
+			name: 'OptionalConfigs.Step',
+			description: 'Increment between selectable values.',
+		},
+		showFloatingLabel: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowFloatingLabel',
+			description: 'Shows the current value in a floating label above the handle.',
+		},
+		showTickMarks: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowTickMarks',
+			description: 'Renders tick marks (pips) along the track.',
+		},
 	},
 	args: { mode: 'single', minValue: 0, maxValue: 100, step: 1, showFloatingLabel: true, showTickMarks: false },
 };
@@ -32,44 +50,174 @@ export default meta;
 
 type Story = StoryObj<RangeSliderArgs>;
 
+function rangeSliderMarkup(id: string, style: string): string {
+	return `
+		<div ${osuiRoot(id)} class="osui-range-slider" style="${style}">
+			<div class="osui-range-slider__provider"></div>
+		</div>`;
+}
+
+/** Create → Initialize → register Dispose; `configs` merge over the single-mode defaults. */
+function initRangeSlider(
+	id: string,
+	mode: 'single' | 'interval',
+	configs: Record<string, unknown>,
+	register: Register
+): void {
+	const P = Patterns();
+	P.RangeSliderAPI.Create(
+		id,
+		cfg({
+			MinValue: 0,
+			MaxValue: 100,
+			Step: 1,
+			IsInterval: mode === 'interval',
+			ShowFloatingLabel: false,
+			ShowTickMarks: false,
+			StartingValueFrom: 50,
+			StartingValueTo: 0,
+			Orientation: 'horizontal',
+			Size: '100%',
+			...configs,
+		}),
+		mode,
+		'noUiSlider'
+	);
+	P.RangeSliderAPI.Initialize(id);
+	register(() => P.RangeSliderAPI.Dispose?.(id));
+}
+
 function renderRangeSlider(args: RangeSliderArgs): HTMLElement {
 	const id = uid('range-slider');
 	const interval = args.mode === 'interval';
-	const template = `
-		<div ${osuiRoot(id)} class="osui-range-slider" style="max-width:360px;padding:24px 8px;">
-			<div class="osui-range-slider__provider"></div>
-		</div>`;
-	return renderPattern(template, (_root, register) => {
-		const P = Patterns();
-		P.RangeSliderAPI.Create(
+	return renderPattern(rangeSliderMarkup(id, 'max-width:360px;padding:24px 8px;'), (_root, register) =>
+		initRangeSlider(
 			id,
-			cfg({
+			args.mode,
+			{
 				MinValue: args.minValue,
 				MaxValue: args.maxValue,
 				Step: args.step,
-				IsInterval: interval,
 				ShowFloatingLabel: args.showFloatingLabel,
 				ShowTickMarks: args.showTickMarks,
 				StartingValueFrom: interval ? args.minValue + (args.maxValue - args.minValue) * 0.25 : args.minValue,
 				StartingValueTo: interval ? args.minValue + (args.maxValue - args.minValue) * 0.75 : 0,
-				Orientation: 'horizontal',
-				Size: '100%',
-			}),
-			args.mode,
-			'noUiSlider'
-		);
-		P.RangeSliderAPI.Initialize(id);
-		register(() => P.RangeSliderAPI.Dispose?.(id));
-	});
+			},
+			register
+		)
+	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: renderRangeSlider,
 };
 
+/** One single-handle slider for the docs page; `padding` leaves room for the label / pips outside the track. */
+function docsRangeSlider(configs: Record<string, unknown>, padding = '24px 8px'): HTMLElement {
+	const id = uid('range-slider');
+	return renderPattern(rangeSliderMarkup(id, `max-width:360px;padding:${padding};`), (_root, register) =>
+		initRangeSlider(id, 'single', configs, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A single handle between MinValue 0 and MaxValue 100, starting at StartingValue 40. Drag the handle or use the arrow keys; OnValueChange fires while dragging.',
+			},
+		},
+	},
+	render: () => docsRangeSlider({ StartingValueFrom: 40 }),
+};
+
 export const Interval: Story = {
+	tags: ['docs-example'],
+	name: 'Interval',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Range Slider Interval block: two handles pick a from/to pair (StartingValueFrom 25, StartingValueTo 75) and OnValueChange returns IntervalStart and IntervalEnd.',
+			},
+		},
+	},
 	args: { mode: 'interval' },
 	render: renderRangeSlider,
+};
+
+export const FloatingLabel: Story = {
+	tags: ['docs-example'],
+	name: 'Floating label',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set OptionalConfigs.ShowFloatingLabel to True to show the current value in a tooltip above the handle while it moves.',
+			},
+		},
+	},
+	render: () => docsRangeSlider({ StartingValueFrom: 65, ShowFloatingLabel: true }, '28px 8px 8px'),
+};
+
+export const TickMarks: Story = {
+	tags: ['docs-example'],
+	name: 'Steps and tick marks',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'OptionalConfigs.Step 25 snaps the handle to 0, 25, 50, 75, 100; ShowTickMarks True with TickMarksInterval 25 draws a pip at each snap point.',
+			},
+		},
+	},
+	render: () =>
+		docsRangeSlider(
+			{ StartingValueFrom: 50, Step: 25, ShowTickMarks: true, TickMarksInterval: 25 },
+			'24px 8px 48px'
+		),
+};
+
+/**
+ * Step snapping, tick marks and the floating value label, side by side:
+ * the bare track, `ShowFloatingLabel: true` (value tooltip above the handle),
+ * `ShowTickMarks: true` (pips every `TickMarksInterval` values), and a
+ * `Step: 25` track with ticks aligned to the snap points.
+ */
+export const StepsAndLabels: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 300 } },
+	render: () => {
+		const variants: Array<{ label: string; configs: Record<string, unknown> }> = [
+			{ label: 'default (no ticks, no label)', configs: {} },
+			{ label: 'ShowFloatingLabel: true', configs: { ShowFloatingLabel: true } },
+			{
+				label: 'ShowTickMarks: true (interval 25)',
+				configs: { ShowTickMarks: true, TickMarksInterval: 25 },
+			},
+			{
+				label: 'Step: 25 + tick marks',
+				configs: { Step: 25, ShowTickMarks: true, TickMarksInterval: 25 },
+			},
+		];
+		const entries = variants.map((v) => ({ ...v, id: uid('range-slider') }));
+		const board = labeledBoard(
+			entries.map(({ label, id }) => ({
+				// Top padding for the floating label, bottom padding for the pips —
+				// both render outside the track's own box.
+				label,
+				html: `<div style="width:320px;">${rangeSliderMarkup(id, 'padding:28px 8px 48px;')}</div>`,
+			})),
+			{ direction: 'row', gap: 24, wrap: true }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			for (const { id, configs } of entries) {
+				initRangeSlider(id, 'single', configs, register);
+			}
+		});
+	},
 };
 
 /* ── Spec matrix ────────────────────────────────────────────────────────────── */

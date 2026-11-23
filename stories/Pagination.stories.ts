@@ -198,10 +198,34 @@ export default meta;
 type Story = StoryObj<PaginationArgs>;
 
 /** First page of 10 — `‹ 1 2 3 4 … 10 ›`. */
-export const Default: Story = {};
+export const Playground: Story = {};
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>StartIndex</code> 0, <code>MaxRecords</code> 10 and <code>TotalCount</code> 100 — the record counter, the first page active, a window of three pages, an ellipsis and the last page.',
+			},
+		},
+	},
+	args: { startIndex: 0, maxRecords: 10, totalCount: 100 },
+};
 
 /** A page in the middle — both ellipses and the sliding window of three pages. */
 export const MiddlePage: Story = {
+	tags: ['docs-example'],
+	name: 'Middle page',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>StartIndex</code> 40 with 10 records per page selects page 5 — the three-page window slides with it and an ellipsis appears on both sides.',
+			},
+		},
+	},
 	args: { startIndex: 40 },
 };
 
@@ -211,6 +235,16 @@ export const MiddlePage: Story = {
  * `_pagination.scss`) and the "of N pages" counter, all inside `.pagination-input`.
  */
 export const ShowGoToPage: Story = {
+	tags: ['docs-example'],
+	name: 'Go to page input',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: '<code>ShowGoToPage</code> True swaps the page buttons for a number input followed by an "of N pages" label; the record counter and the arrows stay.',
+			},
+		},
+	},
 	args: { showGoToPage: true },
 };
 

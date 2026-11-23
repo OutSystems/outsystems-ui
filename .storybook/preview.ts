@@ -1,6 +1,6 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
 import { addons } from 'storybook/preview-api';
-import { GLOBALS_UPDATED } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
 // Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
 // the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
 import './docs.scss';
@@ -11,8 +11,19 @@ import './component-library.scss';
 import './css-architecture.scss';
 import './css-api-reference.scss';
 import './migration.scss';
+import './llms.scss';
 import './theme-editor.scss';
 import './foundations.scss';
+import './pattern-docs.scss';
+import './phone-frame.scss';
+import './accordion-demos.scss';
+import './blank-slate-demos.scss';
+import './carousel-demos.scss';
+import './flip-content-demos.scss';
+import './floating-content-demos.scss';
+import './card-demos.scss';
+import './card-background-demos.scss';
+import './demo-icons.scss';
 import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
@@ -22,7 +33,7 @@ import {
 	themeOverrideCount,
 } from '../stories/_helpers/theme-roles';
 import { initDocsAppearanceSync, applyAppAppearance } from '../stories/_helpers/docs-appearance';
-import { readStoredAppearance } from '../stories/_helpers/storybook-appearance.js';
+import { resolveAppearance } from '../stories/_helpers/storybook-appearance.js';
 import { waitForCanvasFonts } from '../stories/_helpers/fonts';
 import { setUidScope } from '../stories/_helpers/osui';
 
@@ -51,16 +62,44 @@ const THEME_HREF = {
 	classic: '/classic-theme/ODC.OutSystemsUI.css',
 } as const;
 
-function applyTheme(theme: string): void {
+/**
+ * Ceiling on the stylesheet wait, mirroring the font gate's reasoning: a broken
+ * or unreachable CSS request must not hang the whole canvas — better to capture
+ * with whatever is in effect than to show nothing.
+ */
+const THEME_CSS_TIMEOUT_MS = 5000;
+
+/**
+ * Resolves once the theme `<link>` has a parsed stylesheet. Needed because
+ * Chromatic captures as soon as loaders/decorators settle: a snapshot taken in a
+ * non-default mode (classic) between the href swap and the CSS arriving would
+ * photograph the wrong theme. `link.sheet` is non-null once the stylesheet is
+ * applied; before that, wait for `load`/`error` with the timeout as backstop
+ * (covers the listeners racing an already-fired event).
+ */
+function whenThemeStylesheetReady(link: HTMLLinkElement): Promise<void> {
+	if (link.sheet !== null) {
+		return Promise.resolve();
+	}
+	return new Promise<void>((resolve) => {
+		const settle = () => resolve();
+		link.addEventListener('load', settle, { once: true });
+		link.addEventListener('error', settle, { once: true });
+		setTimeout(settle, THEME_CSS_TIMEOUT_MS);
+	});
+}
+
+function applyTheme(theme: string): Promise<void> {
 	const link = document.getElementById('osui-theme') as HTMLLinkElement | null;
 	if (link === null) {
-		return;
+		return Promise.resolve();
 	}
 	const href = THEME_HREF[theme as keyof typeof THEME_HREF] ?? THEME_HREF.new;
 	// Only reassign when it actually changes to avoid a needless reflow / FOUC.
 	if (!link.href.endsWith(href)) {
 		link.setAttribute('href', href);
 	}
+	return whenThemeStylesheetReady(link);
 }
 
 function applyIconLibrary(library: string): void {
@@ -100,9 +139,8 @@ function applyDirection(rtl: boolean): void {
  * declaration applies to — so overriding `--token-*` on `<body>` comes too late:
  * `--color-background-surface` has already resolved to its light fallback on
  * `<html>` and inherits down as that literal. Put the class on `<html>` and the
- * tokens are defined on the very element the roles resolve on, so 43 of the 44
- * `--color-*` knobs (~488 reads across the bundle) flip to dark for free.
- * `--color-focus-outer` is a deliberate hardcoded yellow and stays put.
+ * tokens are defined on the very element the roles resolve on, so every
+ * `--color-*` knob flips to dark for free.
  *
  * `.os-dark-theme` is an element-agnostic class selector, so no CSS change was
  * needed for this — only the choice of element. Light is the default and has no
@@ -137,8 +175,22 @@ function applyPreviewGlobals(globals: Record<string, unknown>): void {
 }
 
 /**
+ * Back to the top whenever the selection changes. Storybook resets the `<html>` offset
+ * on every story / docs switch, but a docs page scrolls on `<body>` (`overflow: auto`
+ * in preview-head.html; `<html>` is `overflow: hidden`), so a long page handed its
+ * scroll position to the next one. `STORY_CHANGED` fires on the same condition as
+ * Storybook's own reset (story id or view mode changed), before the next page renders;
+ * anchor links still win, as the docs container scrolls to the hash afterwards.
+ */
+function resetPreviewScroll(): void {
+	document.documentElement.scrollTop = 0;
+	document.body.scrollTop = 0;
+}
+
+/**
  * MDX docs pages skip preview story decorators — sync toolbar globals (icon font,
- * theme href, RTL, pattern dark mode, a11y body class) via the preview channel.
+ * theme href, RTL, pattern dark mode, a11y body class) via the preview channel, and
+ * reset the scroll position when the selection changes.
  */
 let previewToolbarSyncReady = false;
 
@@ -156,6 +208,7 @@ function wirePreviewToolbarSync(): boolean {
 			applyPreviewGlobals(globals);
 		}
 	});
+	channel.on(STORY_CHANGED, resetPreviewScroll);
 
 	applyPreviewGlobals(PREVIEW_GLOBAL_DEFAULTS);
 	return true;
@@ -200,7 +253,7 @@ const withAppShell: Decorator = (storyFn, context) => {
 	// calls `uid()`.
 	setUidScope(context.id);
 	applyPreviewGlobals(context.globals);
-	applyAppAppearance(readStoredAppearance());
+	applyAppAppearance(resolveAppearance());
 	// Channel may not be ready at preview module load — wire docs sync from the decorator too.
 	initDocsAppearanceSync();
 	initPreviewToolbarSync();
@@ -220,7 +273,20 @@ const preview: Preview = {
 	// geometry once at build time (Tabs' active-indicator width, etc.) otherwise
 	// race the Inter `display=swap` re-flow and bake in fallback-font metrics,
 	// which surfaces as a flaky few-px Chromatic diff. See `_helpers/fonts.ts`.
-	loaders: [() => waitForCanvasFonts()],
+	//
+	// Also gate on the theme stylesheet: when the `theme` global is not the
+	// default (e.g. the Theme toolbar's classic toggle), the `#osui-theme` href
+	// swap must not race the CSS download — a capture or first paint taken in
+	// between would photograph the wrong theme. Loaders run before decorators
+	// (and Chromatic awaits them); the decorator's own `applyTheme` call is then
+	// a no-op (href already matches).
+	loaders: [
+		(context) =>
+			Promise.all([
+				waitForCanvasFonts(),
+				applyTheme((context.globals.theme as string) ?? PREVIEW_GLOBAL_DEFAULTS.theme),
+			]),
+	],
 	// UI-review tracking: every story starts as `ui-pending`. As a component's UI
 	// is signed off, its meta opts out with `!ui-pending` and adds `ui-reviewed`
 	// (see e.g. Accordion / Alert stories). Filter by either in the sidebar's tag menu.
@@ -295,6 +361,21 @@ const preview: Preview = {
 	},
 	parameters: {
 		layout: 'padded',
+		chromatic: {
+			// Snapshot every story under the new theme, light AND dark appearance.
+			// The keys inside each mode are Storybook globals — `theme` drives the
+			// `#osui-theme` <link> swap above and `colorScheme` toggles
+			// `.os-dark-theme` on `<html>` (same mechanism as the Appearance
+			// toolbar). The classic pre-migration theme is NOT snapshotted — it is
+			// a frozen baseline, so Chromatic runs against it only produced noise;
+			// it stays available locally through the Theme toolbar toggle. The
+			// remaining globals (direction, icons) keep their defaults, so this
+			// doubles the snapshot count rather than crossing a matrix.
+			modes: {
+				new: { theme: 'new' },
+				'new dark': { theme: 'new', colorScheme: 'dark' },
+			},
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
@@ -302,11 +383,17 @@ const preview: Preview = {
 			},
 		},
 		options: {
-			storySort: {
-				order: [
+			// Plain JavaScript and self-contained on purpose — Storybook evaluates this
+			// function from the preview SOURCE (no TypeScript syntax, no outer references). Same algorithm as
+			// the built-in `order` sort; within one component, the Docs page comes first, then
+			// the stories its page embeds (tagged `docs-example` — hidden from the sidebar by
+			// main.ts, so this only orders the index), then the remaining stories in file order.
+			storySort: (a, b) => {
+				const ORDER = [
 					'Welcome',
 					'Getting Started',
 					'Migration',
+					'llms.txt',
 					'Component Library',
 					'Design system',
 					[
@@ -324,7 +411,32 @@ const preview: Preview = {
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',
-				],
+				];
+				if (a.title === b.title) {
+					const rank = (e) => (e.type === 'docs' ? 0 : e.tags?.includes('docs-example') ? 1 : 2);
+					return rank(a) - rank(b);
+				}
+				let order = ORDER;
+				const pathA = a.title.trim().split(/\s*\/\s*/);
+				const pathB = b.title.trim().split(/\s*\/\s*/);
+				for (let depth = 0; pathA[depth] || pathB[depth]; depth++) {
+					if (!pathA[depth]) return -1;
+					if (!pathB[depth]) return 1;
+					const nameA = pathA[depth];
+					const nameB = pathB[depth];
+					if (nameA !== nameB) {
+						let indexA = order.indexOf(nameA);
+						let indexB = order.indexOf(nameB);
+						if (indexA === -1 && indexB === -1) return 0;
+						if (indexA === -1) indexA = order.length;
+						if (indexB === -1) indexB = order.length;
+						return indexA - indexB;
+					}
+					const index = order.indexOf(nameA);
+					const next = index !== -1 ? order[index + 1] : undefined;
+					order = Array.isArray(next) ? next : [];
+				}
+				return 0;
 			},
 		},
 	},

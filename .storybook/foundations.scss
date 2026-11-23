@@ -21,8 +21,8 @@
 }
 
 .osui-foundations {
-  --fd-primary-100: #f0f2ff;
-  --fd-primary-700: #105cef;
+  --fd-primary-100: #e6f7fa;
+  --fd-primary-700: #00a2bb;
   --fd-n-100: #f9f9f9;
   --fd-n-200: #f2f2f2;
   --fd-n-300: #e8e8e8;
@@ -30,8 +30,8 @@
   --fd-ink: #242424;
   --fd-ink-2: #454545;
   --fd-ink-3: #6b6b6b;
-  --fd-brand-a: #ff5e3e;
-  --fd-brand-b: #d8161e;
+  --fd-brand-a: #007a8f;
+  --fd-brand-b: #00a2bb;
   --fd-r-200: 8px;
   --fd-r-300: 12px;
   --fd-r-full: 999px;
@@ -69,8 +69,8 @@
   height: 460px;
   pointer-events: none;
   background:
-    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
-    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%);
+    radial-gradient(50% 46% at 18% 34%, rgba(0, 162, 187, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(0, 162, 187, 0.18), transparent 68%);
   filter: blur(6px);
 }
 
@@ -386,9 +386,9 @@
 .osui-foundations .fd-token-theme__btn[aria-pressed="true"] {
   position: relative;
   z-index: 1;
-  background: var(--fd-primary-100, #eef3ff);
-  border-color: color-mix(in srgb, var(--fd-primary-700, #105cef) 35%, var(--fd-n-400, #e0e0e0));
-  color: var(--fd-primary-700, #105cef);
+  background: var(--fd-primary-100, #e6f7fa);
+  border-color: color-mix(in srgb, var(--fd-primary-700, #00a2bb) 35%, var(--fd-n-400, #e0e0e0));
+  color: var(--fd-primary-700, #00a2bb);
 }
 
 .osui-foundations .fd-token-theme__btn[aria-pressed="true"] svg {

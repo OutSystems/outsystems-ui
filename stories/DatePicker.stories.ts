@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
+import { cfg, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * DatePicker — provider pattern backed by Flatpickr.
@@ -25,17 +26,38 @@ interface DatePickerArgs {
 }
 
 const meta: Meta<DatePickerArgs> = {
-	title: 'Patterns/Interaction/DatePicker',
+	title: 'Patterns/Interaction/Date Picker',
 	argTypes: {
-		mode: { control: 'inline-radio', options: ['single', 'range'] },
-		dateFormat: { control: 'text', name: 'DateFormat' },
-		firstWeekDay: { control: { type: 'number', min: 0, max: 6 }, name: 'FirstWeekDay' },
-		showTodayButton: { control: 'boolean', name: 'ShowTodayButton' },
-		showWeekNumbers: { control: 'boolean', name: 'ShowWeekNumbers' },
+		mode: {
+			control: 'inline-radio',
+			options: ['single', 'range'],
+			description: 'Story-only: `single` renders the DatePicker block, `range` the DatePickerRange block.',
+		},
+		dateFormat: {
+			control: 'text',
+			name: 'DateFormat',
+			description: 'Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format.',
+		},
+		firstWeekDay: {
+			control: { type: 'number', min: 0, max: 6 },
+			name: 'OptionalConfigs.FirstWeekDay',
+			description: 'First day of the week in the calendar (0 = Sunday … 6 = Saturday).',
+		},
+		showTodayButton: {
+			control: 'boolean',
+			name: 'ShowTodayButton',
+			description: 'Renders a Today button in the calendar footer.',
+		},
+		showWeekNumbers: {
+			control: 'boolean',
+			name: 'OptionalConfigs.ShowWeekNumbers',
+			description: 'Shows the week-number column in the calendar.',
+		},
 		timeFormat: {
 			control: 'inline-radio',
 			options: ['disabled', '12', '24'],
 			name: 'TimeFormat',
+			description: 'Time selection appended to the calendar: Disabled (date only), 12 or 24 hour format.',
 		},
 	},
 	args: {
@@ -51,41 +73,214 @@ export default meta;
 
 type Story = StoryObj<DatePickerArgs>;
 
-function renderDatePicker(args: DatePickerArgs): HTMLElement {
-	const id = uid('datepicker');
-	const range = args.mode === 'range';
-	const template = `
+function datePickerMarkup(id: string, range: boolean): string {
+	return `
 		<div ${osuiRoot(id)} class="osui-datepicker" data-uniqueid="${id}" style="max-width: 280px;">
 			<input id="${id}-input" class="form-control" type="text" placeholder="${range ? 'Select a date range' : 'Select a date'}" />
 		</div>
 		<!-- a11y keyboard-instructions container; the provider finds it via
 		     TagSelector(selfElement.parentElement, '.osui-datepicker-a11y') -->
 		<div class="osui-datepicker-a11y"></div>`;
+}
 
-	return renderPattern(template, (_root, register) => {
-		const P = Patterns();
-		P.DatePickerAPI.Create(
+function initDatePicker(
+	id: string,
+	mode: 'single' | 'range',
+	configs: Record<string, unknown>,
+	register: Register
+): void {
+	// The platform calls this once at app start; without it ServerDateFormat is ''
+	// and flatpickr cannot parse the Initial*Date strings (defaultDate is dropped).
+	window.OutSystems.OSUI.Dates.SetServerDateFormat('1900-10-13');
+	const P = Patterns();
+	P.DatePickerAPI.Create(
+		id,
+		cfg({
+			DateFormat: 'YYYY-MM-DD',
+			FirstWeekDay: 1,
+			ShowTodayButton: true,
+			ShowWeekNumbers: false,
+			TimeFormat: 'disabled',
+			...configs,
+		}),
+		mode,
+		'flatpickr'
+	);
+	P.DatePickerAPI.Initialize(id);
+	register(() => P.DatePickerAPI.Dispose?.(id));
+}
+
+function renderDatePicker(args: DatePickerArgs): HTMLElement {
+	const id = uid('datepicker');
+	return renderPattern(datePickerMarkup(id, args.mode === 'range'), (_root, register) =>
+		initDatePicker(
 			id,
-			cfg({
+			args.mode,
+			{
 				DateFormat: args.dateFormat,
 				FirstWeekDay: args.firstWeekDay,
 				ShowTodayButton: args.showTodayButton,
 				ShowWeekNumbers: args.showWeekNumbers,
 				TimeFormat: args.timeFormat,
-			}),
-			args.mode,
-			'flatpickr'
-		);
-		P.DatePickerAPI.Initialize(id);
-		register(() => P.DatePickerAPI.Dispose?.(id));
-	});
+			},
+			register
+		)
+	);
 }
 
-export const Default: Story = {
+export const Playground: Story = {
 	render: renderDatePicker,
 };
 
+/** One closed picker in `mode`, with `configs` merged over the block defaults. */
+function docsDatePicker(mode: 'single' | 'range', configs: Record<string, unknown>): HTMLElement {
+	const id = uid('datepicker');
+	return renderPattern(datePickerMarkup(id, mode === 'range'), (_root, register) =>
+		initDatePicker(id, mode, configs, register)
+	);
+}
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'A single-date picker with DateFormat set to DD/MM/YYYY. Click or focus the input and press the down arrow to open the calendar; the selected day is written back in that format.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: false }),
+};
+
 export const Range: Story = {
+	tags: ['docs-example'],
+	name: 'Date range',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'The Date Picker Range block: two clicks in the same calendar pick a start and an end date, and OnSelected returns SelectedStartDate and SelectedEndDate.',
+			},
+		},
+	},
 	args: { mode: 'range' },
 	render: renderDatePicker,
+};
+
+export const WithTime: Story = {
+	tags: ['docs-example'],
+	name: 'With time selection',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set TimeFormat to Time24hFormat (or Time12hFormat) to append an hour and minute spinner to the calendar. DateFormat stays date-only — the runtime adds the time part itself.',
+			},
+		},
+	},
+	render: () =>
+		docsDatePicker('single', {
+			DateFormat: 'DD/MM/YYYY',
+			ShowTodayButton: false,
+			TimeFormat: '24',
+			InitialDate: '2024-03-15 09:30:00',
+		}),
+};
+
+export const TodayButton: Story = {
+	tags: ['docs-example'],
+	name: 'Today button',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Set ShowTodayButton to True to add a Today shortcut under the calendar that selects the current day and closes the picker.',
+			},
+		},
+	},
+	render: () => docsDatePicker('single', { DateFormat: 'DD/MM/YYYY', ShowTodayButton: true }),
+};
+
+/**
+ * Calendar rendered inline in every cell (flatpickr `inline: true`, injected via
+ * the `SetProviderConfigs` extensibility API) — an open()-based approach does not
+ * work for a board because each open steals focus and closes the previous one.
+ * Dates are pinned to March 2024 through the `Initial*Date` configs so the
+ * visible month — and therefore the Chromatic snapshot — never drifts.
+ */
+export const OpenStates: Story = {
+	parameters: { controls: { disable: true }, chromatic: { delay: 300 } },
+	render: () => {
+		const variants: Array<{
+			label: string;
+			mode: 'single' | 'range';
+			configs: Record<string, unknown>;
+		}> = [
+			{ label: 'single', mode: 'single', configs: { InitialDate: '2024-03-15' } },
+			{
+				label: 'range',
+				mode: 'range',
+				configs: { InitialStartDate: '2024-03-08', InitialEndDate: '2024-03-19' },
+			},
+			{
+				label: 'week numbers',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15', ShowWeekNumbers: true },
+			},
+			{
+				// DateFormat must stay date-only: the provider appends ' - H:i' /
+				// ' - h:i K' itself per TimeFormat (AbstractFlatpickrConfig._checkAltFormat).
+				label: 'with time (24h)',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15 09:30:00', TimeFormat: '24' },
+			},
+			{
+				label: 'with time (12h)',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15 09:30:00', TimeFormat: '12' },
+			},
+			{
+				label: 'no today button',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15', ShowTodayButton: false },
+			},
+			{
+				// FirstWeekDay: 0 = Sunday (the board default is 1 = Monday)
+				label: 'week starts Sunday',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15', FirstWeekDay: 0 },
+			},
+			{
+				// DateFormat only changes the displayed value; InitialDate strings are
+				// always parsed with the server date format (YYYY-MM-DD here).
+				label: 'format DD/MM/YYYY',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15', DateFormat: 'DD/MM/YYYY' },
+			},
+			{
+				label: 'format MM/DD/YYYY',
+				mode: 'single',
+				configs: { InitialDate: '2024-03-15', DateFormat: 'MM/DD/YYYY' },
+			},
+		];
+		const entries = variants.map((v) => ({ ...v, id: uid('datepicker') }));
+		const board = labeledBoard(
+			entries.map(({ label, id, mode }) => ({
+				label,
+				html: `<div style="width:340px;">${datePickerMarkup(id, mode === 'range')}</div>`,
+			})),
+			// zoom 0.5: nine open calendars are a lot of surface — show the whole
+			// grid at half size so it fits the canvas (and Chromatic snapshot).
+			{ direction: 'row', gap: 24, wrap: true, zoom: 0.5 }
+		);
+		return renderPattern(board.outerHTML, (_root, register) => {
+			const P = Patterns();
+			for (const { id, mode, configs } of entries) {
+				initDatePicker(id, mode, configs, register);
+				P.DatePickerAPI.SetProviderConfigs(id, { inline: true });
+			}
+		});
+	},
 };

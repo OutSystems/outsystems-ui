@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ListItemContentStories from './ListItemContent.stories';
+import { LIST_ITEM_CONTENT_RECIPES } from './_helpers/pattern-docs/list-item-content-recipes';
+import { LIST_ITEM_CONTENT_DOC } from './_helpers/pattern-docs/list-item-content-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={ListItemContentStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={LIST_ITEM_CONTENT_DOC}
+	examples={
+		<>
+			<PdExample title="Basic row" description="Single list row with avatar, title, text, and trailing caret." implement={<StudioHowTo recipe={LIST_ITEM_CONTENT_RECIPES.basicRow} />}>
+				<Canvas of={ListItemContentStories.BasicRow} />
+			</PdExample>
+			<PdExample title="In a list" description="Several rows composed inside a List widget — the typical runtime structure." implement={<StudioHowTo recipe={LIST_ITEM_CONTENT_RECIPES.inList} />}>
+				<Canvas of={ListItemContentStories.InList} />
+			</PdExample>
+		</>
+	}
+/>

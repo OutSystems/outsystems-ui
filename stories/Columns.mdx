@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ColumnsStories from './Columns.stories';
+import { COLUMNS_RECIPES } from './_helpers/pattern-docs/columns-recipes';
+import { COLUMNS_DOC } from './_helpers/pattern-docs/columns-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={ColumnsStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={COLUMNS_DOC}
+	examples={
+		<>
+			<PdExample title="Two columns" description="Equal-width two-column layout with responsive stacking." implement={<StudioHowTo recipe={COLUMNS_RECIPES.twoColumns} />}>
+				<Canvas of={ColumnsStories.Columns2} />
+			</PdExample>
+			<PdExample title="Medium left" description="Asymmetric split — narrow column on the left, wide column on the right.">
+				<Canvas of={ColumnsStories.ColumnsMediumLeft} />
+			</PdExample>
+			<PdExample title="Small right" description="Asymmetric split — wide column on the left, narrow column on the right.">
+				<Canvas of={ColumnsStories.ColumnsSmallRight} />
+			</PdExample>
+		</>
+	}
+/>

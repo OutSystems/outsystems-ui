@@ -1,0 +1,49 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CardSectionedStories from './CardSectioned.stories';
+import { CARD_RECIPES } from './_helpers/pattern-docs/card-recipes';
+import { CARD_SECTIONED_DOC } from './_helpers/pattern-docs/card-sectioned-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CardSectionedStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			source: { disable: true },
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={CARD_SECTIONED_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="UsePadding True and ImagePadding False — the listing photo stays full-bleed while title and features use the pattern’s padding."
+				implement={<StudioHowTo recipe={CARD_RECIPES.sectioned} />}
+			>
+				<Canvas of={CardSectionedStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="With padding"
+				description="UsePadding and ImagePadding True — inset photo, name, bio, stats, and an OS UI Secondary button."
+				implement={<StudioHowTo recipe={CARD_RECIPES.sectionedWithPadding} />}
+			>
+				<Canvas of={CardSectionedStories.WithPadding} />
+			</PdExample>
+			<PdExample
+				title="Horizontal"
+				description="IsVertical False with UsePadding True and ImagePadding False — full-bleed image beside the article title, separator, and author row."
+				implement={<StudioHowTo recipe={CARD_RECIPES.sectionedHorizontal} />}
+			>
+				<Canvas of={CardSectionedStories.Horizontal} />
+			</PdExample>
+		</>
+	}
+/>

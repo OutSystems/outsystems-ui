@@ -55,6 +55,8 @@ npm run dev -- --target ODC    # ODC only
 
 Gulp cleans `dist/`, generates the platform SCSS entry files, transpiles TS and SCSS in dev mode (with sourcemaps), then serves `dist/` with browser-sync and watches `src/**/*.ts` and `src/**/*.scss`. The generated `dist/index.html` links the per-platform bundles (`dev.O11.OutSystemsUI.js`, `dev.ODC.OutSystemsUI.css`, etc.).
 
+Every `dev` and `build` starts with `build:tokens`, which first checks that the installed `outsystems-design-tokens` is the version pinned in `package.json` and **fails with a message** when it is not (`installed 2.5.0, package.json pins 2.6.0. Run npm i`). It never installs for you; run `npm i` after a pull or a branch switch that moved the pin. The production CSS carries a second banner line with the tokens version, commit and build date, e.g. `/*! Tokens 2.6.0 • Commit fe093aecc • Built 2026-11-05 14:11 UTC */`.
+
 Platform targets, per-platform file exclusions, and compile-time placeholder tokens are declared in `gulp/ProjectSpecs/DefaultSpecs.js`. Add new platform-specific exclusions there rather than with runtime checks. See `gulp/README.md` for build system details.
 
 ### Before opening a PR
@@ -63,26 +65,29 @@ Platform targets, per-platform file exclusions, and compile-time placeholder tok
 2. `npm run lint` reports zero errors and zero warnings.
 3. Public APIs and public config props carry TSDoc comments (`.claude/rules/typescript.md` §7); the jsdoc lint rules are part of the zero-warnings gate.
 4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
-5. `npm run docs:ai:types && npm run docs:ai` re-run and the result committed whenever a pattern's configs, API, story or SCSS changed; `npm run docs:ai:test` passes.
+5. Committed generated files are fresh: `npm run docs:regen` re-run and the result committed whenever a pattern's configs, API, story or SCSS, a skill mapping table or the tokens pin changed. The PR build runs `npm run docs:check` and fails on any stale file (ROU-13182).
 
 ## Building and Testing
 
-| Command                    | Description                                                          |
-| -------------------------- | -------------------------------------------------------------------- |
-| `npm run setup`            | Install dependencies and start the dev server                        |
-| `npm run dev`              | Dev build + browser-sync server on port 3000 with file watching       |
-| `npm run build`            | Production build for all platforms, then `lintfix` and `lint`         |
-| `npm run lint`             | ESLint over all `.ts` files                                          |
-| `npm run lintfix`          | ESLint with `--fix`                                                  |
-| `npm run prettier`         | Format all `js`, `ts`, and `css` files                               |
-| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root) |
-| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source  |
-| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                          |
-| `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`) |
-| `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`) |
-| `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`) |
-| `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
-| `npm run update-version`   | Interactive version bump across project files                         |
+| Command                    | Description                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm run setup`            | Install dependencies and start the dev server                                                                                              |
+| `npm run dev`              | Dev build + browser-sync server on port 3000 with file watching                                                                            |
+| `npm run build`            | Production build for all platforms, then `lintfix` and `lint`                                                                              |
+| `npm run lint`             | ESLint over all `.ts` files                                                                                                                |
+| `npm run lintfix`          | ESLint with `--fix`                                                                                                                        |
+| `npm run prettier`         | Format all `js`, `ts`, and `css` files                                                                                                     |
+| `npm run docs`             | Generate TypeDoc output into `docs/` (then copies `docs-ai/` to its root)                                                                  |
+| `npm run docs:ai`          | Regenerate the agent documentation under `docs-ai/` from the source                                                                        |
+| `npm run docs:ai:check`    | Fail when the committed `docs-ai/` is stale                                                                                                |
+| `npm run docs:ai:types`    | Regenerate the per-pattern `Configs` / `EventName` types (`PatternTypes.ts`)                                                               |
+| `npm run docs:ai:blocks`   | Re-export the OML block snapshot from the local `.oml` (see `scripts/docs-ai-generator/README.md`)                                         |
+| `npm run docs:ai:test`     | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`)                                                                  |
+| `npm run docs:regen`       | Production build, then every generator in dependency order (tokens data, CSS API, migration guide and page, `PatternTypes.ts`, `docs-ai/`) |
+| `npm run docs:check`       | Drift gate the PR build runs: builds, regenerates, fails when a committed generated file is stale                                          |
+| `npm run tokens:update`    | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`                                                       |
+| `npm run create-osui-scss` | Regenerate the platform SCSS entry files                                                                                                   |
+| `npm run update-version`   | Interactive version bump across project files                                                                                              |
 
 ### Automated tests
 
@@ -99,6 +104,14 @@ npm run build            # prerequisite: Storybook serves the compiled dist/ bun
 npm run storybook        # dev server on http://localhost:6006
 npm run build-storybook  # static build (what CI publishes to Chromatic)
 ```
+
+### Story convention: one `Playground` per component
+
+Every pattern story file (`stories/*.stories.ts`, and the `Layouts/` group) exports a `Playground` story first. It is the interactive one: its `args` / `argTypes` mirror the block's low-code input parameters as Storybook controls — `name` is the parameter name as shown in ODC Studio (`OptionalConfigs.X` for nested ones), `description` is the parameter's description from the library OML (`docs-ai/llms-blocks.txt`), and story-only knobs say so in their description. The Welcome-page catalogue (`stories/_helpers/PatternCatalogue.tsx`) links every entry to the component's Docs page. The other exports in a file are fixed variations (states, sizes, colours, pinned-open pickers) for Chromatic and review; they disable controls and never duplicate the playground.
+
+### Docs pages: `<Name>.mdx` + `_helpers/pattern-docs/`
+
+Every pattern also has a Docs page, `stories/<Name>.mdx`, attached to its stories file with `<Meta of={…Stories} />`. The page is `PatternDocPage` fed by two data files under `stories/_helpers/pattern-docs/`: `<name>-data.ts` (the `PatternDocMeta`: lede, overview, when (not) to use, anatomy tree, low-code properties, events and runtime API, accessibility notes, related patterns, ODC/O11 documentation links, and the `cssApiSlug` that pulls the component's `--osui-*` table from the CSS API manifest) and `<name>-recipes.ts` (ODC Studio steps rendered by `StudioHowTo` under each example as "How to implement"). Each example on the page is a `PdExample` wrapping `<Canvas of={…Stories.X} />`, so the docs stories (`BasicUsage`, `AllSeverities`, …) live in the `.stories.ts` right after `Playground`, with a human `name`, `layout: 'padded'` and `tags: ['docs-example']`; the playground itself is embedded (and tagged) the same way when it is the only example. The tag makes a story docs-only: `main.ts` excludes `docs-example` from the sidebar (the story is still built, snapshotted by Chromatic and reachable by URL), so the sidebar shows Docs, Playground and the variants, like Mobile UI. `preview.ts`'s `storySort` keeps the Docs page first within a component. When the playground is also the page's first example, embed a tagged copy of it (`{ ...Playground, tags: ['docs-example'], name: 'Basic usage' }`, see Carousel) rather than tagging `Playground` itself, or it disappears from the sidebar. A story that spreads a tagged one (`...Playground`) inherits the tag and must reset it with `tags: []` unless it is an example too. Related-pattern and catalogue links use the `<title-slug>--docs` id. Demo-only styling for these stories lives in `.storybook/<pattern>-demos.scss` (imported by `preview.ts`), and the docs chrome in `.storybook/pattern-docs.scss` with its dark-mode block in `docs-dark.scss`.
 
 ### Story group: platform Widgets
 
@@ -127,13 +140,13 @@ restate them as evergreen guidance for AI-assisted work — keep the two in sync
 
 Naming (`@typescript-eslint/naming-convention`, error level):
 
-| Selector                     | Format                          | Underscore |
-| ---------------------------- | ------------------------------- | ---------- |
-| Class                        | `StrictPascalCase`              | —          |
-| Exported function            | `StrictPascalCase`              | —          |
-| Interface                    | `StrictPascalCase`/`UPPER_CASE` with `I` prefix | — |
-| Private property / method    | `strictCamelCase`               | required   |
-| Public / protected property / method | `strictCamelCase`       | forbidden  |
+| Selector                             | Format                                          | Underscore |
+| ------------------------------------ | ----------------------------------------------- | ---------- |
+| Class                                | `StrictPascalCase`                              | —          |
+| Exported function                    | `StrictPascalCase`                              | —          |
+| Interface                            | `StrictPascalCase`/`UPPER_CASE` with `I` prefix | —          |
+| Private property / method            | `strictCamelCase`                               | required   |
+| Public / protected property / method | `strictCamelCase`                               | forbidden  |
 
 Class member ordering (`member-ordering`, warn): signature → private fields → protected fields → public fields → constructor → private methods → protected methods → public methods → abstract methods, alphabetical within each group. Explicit accessibility modifiers are required on members other than the constructor.
 
@@ -157,7 +170,7 @@ on every build — register new partials in `gulp/ProjectSpecs/ScssStructure/*.j
 ### Documentation
 
 - TSDoc on every public API and public config prop: a description, `@param name text` per argument and `@returns text` when a value is returned; types stay in the signature (no `{type}` braces, no `@export` / `@memberof`). The docs generator reads these comments (`.claude/rules/typescript.md` §7).
-- Agent documentation (`docs-ai/`) and the generated pattern types are regenerated, never edited: `npm run docs:ai:types && npm run docs:ai`, then commit the result. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/docs-ai-generator/snapshot/local/` and run `npm run docs:ai:blocks` (see `scripts/docs-ai-generator/README.md`).
+- Generated files are regenerated, never edited: `npm run docs:regen` rebuilds and runs every generator in dependency order (Storybook token data, CSS API reference, migration guide tables and page, `PatternTypes.ts`, `docs-ai/`); commit the result. `npm run docs:check` is the same check the PR build runs. To refresh the OML block snapshot, drop the module's `.oml` under `scripts/docs-ai-generator/snapshot/local/` and run `npm run docs:ai:blocks` (see `scripts/docs-ai-generator/README.md`).
 - Significant design decisions are recorded as ADRs in `docs-internal/adr/` — copy `ADR-0000-Title-of-ADR.md`, number it sequentially, and update the ADR log table in `docs-internal/adr/Readme.md`.
 
 ## Pull Request Process
@@ -175,7 +188,7 @@ Target `dev`. Three checks gate every PR:
 | `revert`, `perf`, `test`, `refactor`, `fix`, `bugfix`, `patch`, `chore` | Patch version (0.0.X+1) |
 | `ci`, `none`, `docs`, `style`, `skip`                                   | No version change       |
 
-**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
+**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. Its second job, **Check generated files are fresh**, runs `npm run docs:check`: it builds, regenerates every committed generated file and fails when one changed, naming the file and the fix (`npm run docs:regen`, then commit). It blocks merges from day one. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
 
 Fill in the template from `.github/pull_request_template.md`: sample page link, what was happening, what was done, test steps, screenshots (animated GIF preferred), and the checklist — including whether the change requires an accompanying OutSystems module or a new sample page.
 
@@ -185,13 +198,26 @@ Workflows prefixed `template-` are vendored copies of shared reusable workflows 
 
 ## Releases
 
+### Dev build (`dev-latest`)
+
+`dev-build.yaml` runs on every push to `dev` (merge commits whose message holds `[skip ci]` are skipped). It installs from the exact pins, runs `npm run build:osui`, and replaces the files of one rolling GitHub **pre-release** tagged `dev-latest`, titled "Dev build (unreleased)":
+
+| File                                                                               | Source                                        |
+| ---------------------------------------------------------------------------------- | --------------------------------------------- |
+| `O11.OutSystemsUI.css` / `.js` / `.d.ts`, `ODC.OutSystemsUI.css` / `.js` / `.d.ts` | `dist/`                                       |
+| `Classic.O11.OutSystemsUI.css`, `Classic.ODC.OutSystemsUI.css`                     | `classic-theme/` (committed snapshot, copied) |
+
+**The O11 and ODC modules are updated only from these files, never from a local build.** The URLs never change: `https://github.com/OutSystems/outsystems-ui/releases/download/dev-latest/<file>`. The second banner line of each new-theme CSS file and the release notes name the tokens version, commit and build date. A manual run from another branch builds and keeps the files as a run artifact, without touching `dev-latest`. It is not a release: the release-candidate flow below is unchanged. See ADR-0021.
+
+### Release candidates and releases
+
 Releases are manual `workflow_dispatch` GitHub Actions:
 
 - `pre-release.yaml` — creates a release candidate branch and version (inputs: new version, release date, optional next dev version).
 - `release.yaml` — promotes a release candidate to latest and optionally deletes the `rc*` branch.
-- `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site from a given branch.
+- `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site for a release tag (`vX.Y.Z`, must match `package.json`). Run them from `dev`. See ADR-0023.
 
-Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand.
+Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand. Bump the design tokens with `npm run tokens:update` (exact pin, then `docs:regen`); refresh the OML block snapshot with `npm run docs:ai:blocks`. Both stay manual.
 
 ## Getting Help
 
@@ -200,7 +226,7 @@ Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgra
 
 ## Additional Resources
 
-- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) — live demos
+- [OutSystems UI Website](https://outsystems-ui.outsystems.com/) — live demos
 - [TypeDoc API reference](https://outsystems-ui-docs.github.io/)
 - [Pattern documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns)
 - Forge: [O11](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) · [ODC](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc) · [npm package](https://www.npmjs.com/package/outsystems-ui)

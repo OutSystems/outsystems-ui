@@ -1,0 +1,39 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TouchEventsStories from './TouchEvents.stories';
+import { TOUCH_EVENTS_RECIPES } from './_helpers/pattern-docs/touch-events-recipes';
+import { TOUCH_EVENTS_DOC } from './_helpers/pattern-docs/touch-events-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={TouchEventsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={TOUCH_EVENTS_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="`WidgetId` points at a Container. `Start` reports where the finger lands, `Move` streams the position and the offset from the start point, and `End` adds the gesture duration — use a touch device or browser device emulation."
+				implement={<StudioHowTo recipe={TOUCH_EVENTS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={TouchEventsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Drag a handle"
+				description="`WidgetId` targets a small handle instead of a whole area. The `Move` offsets drive a CSS transform so it follows the finger and `End` snaps it back; `PreventDefaults` stays True so the page does not scroll while dragging."
+				implement={<StudioHowTo recipe={TOUCH_EVENTS_RECIPES.dragAHandle} />}
+			>
+				<Canvas of={TouchEventsStories.DragToReorder} />
+			</PdExample>
+		</>
+	}
+/>

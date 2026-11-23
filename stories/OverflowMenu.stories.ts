@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
+import { createAndInit, osuiRoot, Patterns, renderPattern, uid, type Register } from './_helpers/osui';
+import { labeledBoard, type BoardOptions } from './_helpers/showcase';
 
 /**
  * OverflowMenu — the low-code block exposes a `Trigger` placeholder where an Icon
@@ -14,11 +15,12 @@ interface OverflowMenuArgs {
 }
 
 /**
- * Sample menu content — the low-code `Content` placeholder takes whatever the dev
- * drops in it (here: a section title, four icon + label links, and a Separator
- * before the last one). Icon and label are wrapped in a flex span rather than
- * classed on the `<a>` itself: `.osui-overflow-menu__balloon a { display: block }`
- * (specificity 0,1,1) outweighs the `.display-flex` utility (0,1,0).
+ * Sample menu content — mirrors what the platform renders in the `Menu` placeholder
+ * (a section title, four icon + label links, and a Separator block before the last
+ * one), wrapped in a `nav.display-flex.flex-direction-column`. That wrapper is
+ * load-bearing in the classic theme: its CSS has no `.osui-overflow-menu__balloon
+ * a { display: block }`, so without the flex column the anchors flow inline. Each
+ * link holds the icon and a `.margin-left-s` span directly, as the platform emits.
  */
 const ITEMS: Array<[label: string, icon: string]> = [
 	['Item 1', 'ph-eye'],
@@ -27,23 +29,29 @@ const ITEMS: Array<[label: string, icon: string]> = [
 	['Item 4', 'ph-user'],
 ];
 
+/** Realistic row actions for the docs examples; the Separator still sits above the last (destructive) one. */
+const DOC_ITEMS: Array<[label: string, icon: string]> = [
+	['View details', 'ph-eye'],
+	['Duplicate', 'ph-copy'],
+	['Rename', 'ph-pencil-simple'],
+	['Delete', 'ph-trash'],
+];
+
 function itemMarkup(label: string, icon: string): string {
 	return `
-					<a href="#${label.toLowerCase().replace(/\s+/g, '-')}">
-						<span class="display-flex align-items-center gap-s">
-							<i class="icon ph ${icon}"></i>
-							<span>${label}</span>
-						</span>
+					<a role="menuitem" href="#${label.toLowerCase().replace(/\s+/g, '-')}">
+						<i class="icon ph ${icon}" aria-hidden="true" style="width: 16px;"></i><span class="margin-left-s">${label}</span>
 					</a>`;
 }
 
 const meta: Meta<OverflowMenuArgs> = {
-	title: 'Patterns/Navigation/OverflowMenu',
+	title: 'Patterns/Navigation/Overflow Menu',
 	argTypes: {
 		position: {
 			control: 'select',
 			options: ['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'],
-			name: 'Position',
+			name: 'BalloonPosition',
+			description: 'Preferred placement of the menu relative to its trigger; auto picks the best fit.',
 		},
 		shape: {
 			// `GlobalEnum.ShapeTypes` maps the low-code names onto CSS-ish VALUES:
@@ -53,7 +61,8 @@ const meta: Meta<OverflowMenuArgs> = {
 			// and the control look broken. `labels` keeps the low-code names on screen.
 			control: { type: 'inline-radio', labels: { soft: 'SoftRounded', rounded: 'Rounded', none: 'Sharp' } },
 			options: ['soft', 'rounded', 'none'],
-			name: 'Shape',
+			name: 'BalloonShape',
+			description: 'Corner shape of the menu: SoftRounded (default), Rounded or Sharp.',
 		},
 		icon: {
 			name: 'Trigger (Icon)',
@@ -67,28 +76,141 @@ export default meta;
 
 type Story = StoryObj<OverflowMenuArgs>;
 
-export const Default: Story = {
+function overflowMenuMarkup(id: string, icon: string, menuItems = ITEMS, title = 'Title'): string {
+	// The Separator block renders a padded container around the line; colour comes from
+	// the `background-neutral-4` utility (present in both themes), as the platform emits.
+	const items = menuItems
+		.map(([label, icon], i) =>
+			i === menuItems.length - 1
+				? `
+					<div class="padding-top-base padding-bottom-base">
+						<div class="separator separator-horizontal background-neutral-4"></div>
+					</div>${itemMarkup(label, icon)}`
+				: itemMarkup(label, icon)
+		)
+		.join('');
+	return `
+		<div ${osuiRoot(id)} class="osui-overflow-menu">
+			<button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph ${icon}"></i></button>
+			<div class="osui-overflow-menu__balloon osui-balloon" id="${id}-balloon">
+				<nav class="display-flex flex-direction-column">
+					<span class="text-uppercase text-neutral-7 font-semi-bold padding-x-base padding-top-base font-size-xs margin-bottom-s" aria-hidden="true">
+						${title}
+					</span>${items}
+				</nav>
+			</div>
+		</div>`;
+}
+
+export const Playground: Story = {
 	render: (args) => {
 		const id = uid('overflow-menu');
-		// Separator sits above the last item. It has no CSS-API var (colour is a low-code
-		// param), so an instance tweak goes straight on background-color.
-		const items = ITEMS.map(([label, icon], i) =>
-			i === ITEMS.length - 1
-				? `
-					<div class="separator separator-horizontal" style="background-color: var(--color-border-subtle);"></div>${itemMarkup(label, icon)}`
-				: itemMarkup(label, icon)
-		).join('');
-		const template = `
-			<div ${osuiRoot(id)} class="osui-overflow-menu">
-				<button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph ${args.icon}"></i></button>
-				<div class="osui-overflow-menu__balloon osui-balloon" id="${id}-balloon">
-					<div class="font-size-label font-semi-bold text-uppercase text-neutral-7 padding-x-base padding-top-base padding-bottom-xs">
-						Title
-					</div>${items}
-				</div>
-			</div>`;
-		return renderPattern(template, (_root, register) =>
+		return renderPattern(overflowMenuMarkup(id, args.icon), (_root, register) =>
 			createAndInit('OverflowMenuAPI', id, { Position: args.position, Shape: args.shape }, register)
+		);
+	},
+};
+
+/**
+ * Block defaults: BalloonPosition left as NullIdentifier() resolves to `auto` in the runtime,
+ * BalloonShape SoftRounded → `soft`. The wrapper only reserves room below the trigger.
+ */
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: {
+		layout: 'padded',
+		docs: {
+			description: {
+				story: 'Default <code>BalloonPosition</code> (Auto) and <code>BalloonShape</code> (SoftRounded) — click the trigger, or press ArrowDown on it, to open the menu.',
+			},
+		},
+	},
+	render: () => {
+		const id = uid('overflow-menu');
+		return renderPattern(
+			`<div style="min-height:240px;">${overflowMenuMarkup(id, 'ph-dots-three-vertical', DOC_ITEMS, 'Actions')}</div>`,
+			(_root, register) => createAndInit('OverflowMenuAPI', id, { Position: 'auto', Shape: 'soft' }, register)
+		);
+	},
+};
+
+/** One labeled cell per variant, each menu pinned open via `OverflowMenuAPI.Open`. */
+function openMenusBoard(
+	variants: Array<{ label: string; configs: { Position: string; Shape: string }; cellStyle?: string }>,
+	boardOptions?: BoardOptions
+) {
+	const entries = variants.map((v) => ({ ...v, id: uid('overflow-menu') }));
+	const board = labeledBoard(
+		entries.map(({ label, id, cellStyle }) => ({
+			label,
+			html: `<div style="${
+				cellStyle ?? 'width:260px;height:300px;display:flex;align-items:flex-start;justify-content:flex-start;'
+			}">${overflowMenuMarkup(id, 'ph-dots-three-vertical')}</div>`,
+		})),
+		boardOptions ?? { direction: 'row', wrap: true }
+	);
+	const init = (_root: HTMLElement, register: Register) => {
+		for (const { id, configs } of entries) {
+			createAndInit('OverflowMenuAPI', id, configs, register);
+			Patterns().OverflowMenuAPI.Open(id);
+		}
+	};
+	return renderPattern(board.outerHTML, init);
+}
+
+/** The three Shape values (SoftRounded / Rounded / Sharp) with the balloon open. */
+export const Shapes: Story = {
+	tags: ['docs-example'],
+	name: 'Balloon shape',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		chromatic: { delay: 300 },
+		docs: {
+			description: {
+				story: 'The three <code>BalloonShape</code> values — SoftRounded (<code>soft</code>), Rounded (<code>rounded</code>) and Sharp (<code>none</code>) — each pinned open via <code>OverflowMenuAPI.Open</code>.',
+			},
+		},
+	},
+	render: () =>
+		openMenusBoard(
+			['soft', 'rounded', 'none'].map((shape) => ({
+				label: shape,
+				configs: { Position: 'bottom-start', Shape: shape },
+			}))
+		),
+};
+
+/**
+ * Every Position value with the balloon open. Cells are sized for the balloon
+ * (~170x200) so neighbours never bleed into each other: wide enough for the
+ * bottom-end leftward shift, tall enough for the full balloon below (or above —
+ * the `top` cell bottom-aligns its trigger so the balloon opens upward in place).
+ */
+export const Positions: Story = {
+	tags: ['docs-example'],
+	name: 'Balloon position',
+	parameters: {
+		layout: 'padded',
+		controls: { disable: true },
+		chromatic: { delay: 300 },
+		docs: {
+			description: {
+				story: 'Every <code>BalloonPosition</code> the control exposes, pinned open — <code>auto</code> picks the side with the most room; the others anchor the balloon as named.',
+			},
+		},
+	},
+	render: () => {
+		const cell = (align: 'flex-start' | 'flex-end') =>
+			`width:330px;height:250px;display:flex;align-items:${align};justify-content:center;`;
+		return openMenusBoard(
+			['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'].map((position) => ({
+				label: position,
+				configs: { Position: position, Shape: 'soft' },
+				cellStyle: cell(position === 'top' ? 'flex-end' : 'flex-start'),
+			})),
+			{ direction: 'row', gap: 24, wrap: true }
 		);
 	},
 };
