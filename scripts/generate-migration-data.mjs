@@ -73,7 +73,8 @@ const IN = {
 };
 const OUT = path.join(repoRoot, 'stories', '_helpers', 'migration-data.ts');
 
-const rel = (f) => path.relative(repoRoot, f);
+// Forward slashes on every OS: the path lands in the committed migration-data.ts, and CI (Linux) regenerates it.
+const rel = (f) => path.relative(repoRoot, f).split(path.sep).join('/');
 
 function die(msg) {
 	console.error(`\n✖ ${msg}\n`);

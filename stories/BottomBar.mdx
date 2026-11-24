@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BottomBarStories from './BottomBar.stories';
+import { BOTTOM_BAR_RECIPES } from './_helpers/pattern-docs/bottom-bar-recipes';
+import { BOTTOM_BAR_DOC } from './_helpers/pattern-docs/bottom-bar-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={BottomBarStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={BOTTOM_BAR_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Four Bottom Bar Items dropped into the layout's Bottom placeholder. Each one fills its Icon and Text placeholders and takes an equal share of the bar width."
+				implement={<StudioHowTo recipe={BOTTOM_BAR_RECIPES.basicUsage} />}
+			>
+				<Canvas of={BottomBarStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Active item"
+				description="Set `ExtendedClass` to `active` on the item of the current screen. Icon and label switch to the primary colour so users always know where they are."
+				implement={<StudioHowTo recipe={BOTTOM_BAR_RECIPES.activeItem} />}
+			>
+				<Canvas of={BottomBarStories.ActiveItem} />
+			</PdExample>
+			<PdExample
+				title="Long labels"
+				description="Labels never wrap: the Text placeholder is ellipsized at the item width. Keep each label to one or two short words."
+				implement={<StudioHowTo recipe={BOTTOM_BAR_RECIPES.longLabels} />}
+			>
+				<Canvas of={BottomBarStories.LongLabels} />
+			</PdExample>
+		</>
+	}
+/>

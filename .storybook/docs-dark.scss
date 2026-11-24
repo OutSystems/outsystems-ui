@@ -22,9 +22,9 @@ html.sb-app-dark {
   --docs-ink: #ededed;
   --docs-ink-2: #c8c8c8;
   --docs-ink-3: #9a9a9a;
-  --docs-primary-100: rgba(105, 134, 242, 0.16);
-  --docs-primary-200: rgba(105, 134, 242, 0.24);
-  --docs-primary-700: #7cb3ff;
+  --docs-primary-100: rgba(0, 162, 187, 0.16);
+  --docs-primary-200: rgba(0, 162, 187, 0.24);
+  --docs-primary-700: #6ecfe0;
   --docs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.18);
   --docs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.32);
   --docs-shadow-lg: 0 18px 40px -12px rgba(0, 0, 0, 0.45);
@@ -42,15 +42,16 @@ html.sb-app-dark .sbdocs-wrapper .sbdocs-content {
   color: var(--docs-ink);
 }
 
-html.sb-app-dark .sbdocs-wrapper :is(h1, h2, h3, h4, h5, h6, p, li, td, th, label, span) {
+/* `:not(…)` keeps the embedded story canvases (app viewports) on the pattern colours. */
+html.sb-app-dark .sbdocs-wrapper :is(h1, h2, h3, h4, h5, h6, p, li, td, th, label, span):not(.pd-example__canvas *, .pd-preview *) {
   color: var(--docs-ink);
 }
 
-html.sb-app-dark .sbdocs-wrapper a {
+html.sb-app-dark .sbdocs-wrapper a:not(.pd-example__canvas *, .pd-preview *) {
   color: var(--docs-primary-700);
 }
 
-html.sb-app-dark .sbdocs-wrapper code:not(pre code):not(.ca-hop-form) {
+html.sb-app-dark .sbdocs-wrapper code:not(pre code):not(.ca-hop-form):not(.pd-example__canvas *, .pd-preview *) {
   background: var(--docs-surface-2);
   color: var(--docs-ink-2);
   border: 1px solid var(--docs-border-subtle);
@@ -123,6 +124,10 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   background: var(--docs-bg) !important;
 }
 
+@include dark-docs-has(".osui-pattern-doc") {
+  background: var(--docs-bg) !important;
+}
+
 .sbdocs-wrapper:has(.docs-dark) {
   background: var(--docs-bg) !important;
 }
@@ -131,8 +136,8 @@ html.sb-app-dark .sbdocs-wrapper .divider {
 @include dark-page(".osui-welcome") {
   --w-primary-100: var(--docs-primary-100);
   --w-primary-200: var(--docs-primary-200);
-  --w-primary-400: #5a7ae8;
-  --w-primary-600: #6986f2;
+  --w-primary-400: #007a8f;
+  --w-primary-600: #0095ab;
   --w-primary-700: var(--docs-primary-700);
   --w-n-0: var(--docs-surface);
   --w-n-100: var(--docs-surface);
@@ -148,9 +153,9 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --w-shadow-sm: var(--docs-shadow-sm);
   --w-shadow-md: var(--docs-shadow-md);
   --w-shadow-lg: var(--docs-shadow-lg);
-  --w-brand-a: #f6856b;
-  --w-brand-b: #d9504a;
-  --w-brand-c: #aa3d55;
+  --w-brand-a: #6ecfe0;
+  --w-brand-b: #00a2bb;
+  --w-brand-c: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 }
@@ -158,8 +163,8 @@ html.sb-app-dark .sbdocs-wrapper .divider {
 @include dark-page(".osui-component-library") {
   --w-primary-100: var(--docs-primary-100);
   --w-primary-200: var(--docs-primary-200);
-  --w-primary-400: #5a7ae8;
-  --w-primary-600: #6986f2;
+  --w-primary-400: #007a8f;
+  --w-primary-600: #0095ab;
   --w-primary-700: var(--docs-primary-700);
   --w-n-0: var(--docs-surface);
   --w-n-100: var(--docs-surface);
@@ -175,9 +180,9 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --w-shadow-sm: var(--docs-shadow-sm);
   --w-shadow-md: var(--docs-shadow-md);
   --w-shadow-lg: var(--docs-shadow-lg);
-  --w-brand-a: #f6856b;
-  --w-brand-b: #d9504a;
-  --w-brand-c: #aa3d55;
+  --w-brand-a: #6ecfe0;
+  --w-brand-b: #00a2bb;
+  --w-brand-c: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 }
@@ -197,11 +202,11 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --gs-ink: var(--docs-ink);
   --gs-ink-2: var(--docs-ink-2);
   --gs-ink-3: var(--docs-ink-3);
-  --gs-navy: #9eb4e8;
+  --gs-navy: #6ecfe0;
   --gs-shadow-sm: var(--docs-shadow-sm);
   --gs-shadow-md: var(--docs-shadow-md);
-  --gs-brand-a: #f6856b;
-  --gs-brand-b: #d9504a;
+  --gs-brand-a: #6ecfe0;
+  --gs-brand-b: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 }
@@ -217,12 +222,12 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --ca-ink: var(--docs-ink);
   --ca-ink-2: var(--docs-ink-2);
   --ca-ink-3: var(--docs-ink-3);
-  --ca-hop-api: #7cb3ff;
+  --ca-hop-api: #6ecfe0;
   --ca-hop-theme: #2dd4bf;
   --ca-hop-scss: #67e8f9;
   --ca-hop-token: #86efac;
-  --ca-brand-a: #f6856b;
-  --ca-brand-b: #d9504a;
+  --ca-brand-a: #6ecfe0;
+  --ca-brand-b: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 }
@@ -240,8 +245,8 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --api-code-bg: var(--docs-surface-2);
   --api-code-border: var(--docs-border);
   --api-code-ink: var(--docs-ink-2);
-  --api-brand-a: #f6856b;
-  --api-brand-b: #d9504a;
+  --api-brand-a: #6ecfe0;
+  --api-brand-b: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 
@@ -293,7 +298,7 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   .api-rail-handle:hover {
     background: var(--docs-surface-2);
     color: var(--docs-primary-700);
-    border-color: rgba(16, 92, 239, 0.35);
+    border-color: rgba(0, 162, 187, 0.35);
   }
 
   .api-rail-head__title {
@@ -314,9 +319,9 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   }
 
   .api-chip--color.is-active {
-    background: rgba(16, 92, 239, 0.15);
-    border-color: rgba(16, 92, 239, 0.35);
-    color: #7eb0ff;
+    background: rgba(0, 162, 187, 0.15);
+    border-color: rgba(0, 162, 187, 0.35);
+    color: #8adce8;
   }
 
   .api-chip--spacing.is-active {
@@ -368,8 +373,8 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   }
 
   .api-kind--color {
-    background: rgba(16, 92, 239, 0.15);
-    color: #7eb0ff;
+    background: rgba(0, 162, 187, 0.15);
+    color: #8adce8;
   }
 
   .api-kind--spacing {
@@ -419,8 +424,8 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   --te-code-bg: var(--docs-surface-2);
   --te-code-border: var(--docs-border);
   --te-code-ink: var(--docs-ink-2);
-  --te-brand-a: #f6856b;
-  --te-brand-b: #d9504a;
+  --te-brand-a: #6ecfe0;
+  --te-brand-b: #00a2bb;
   background: var(--docs-bg);
   color: var(--docs-ink);
 
@@ -477,11 +482,11 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   }
 
   .te-role.is-changed {
-    background: rgba(16, 92, 239, 0.08);
+    background: rgba(0, 162, 187, 0.08);
   }
 
   .te-role.is-changed:hover {
-    background: rgba(16, 92, 239, 0.12);
+    background: rgba(0, 162, 187, 0.12);
   }
 
   .te-lede code,
@@ -524,7 +529,7 @@ html.sb-app-dark .sbdocs-wrapper .divider {
   .te-rail-handle:hover,
   .te-rail-peek__label:hover {
     color: var(--docs-primary-700);
-    border-color: rgba(16, 92, 239, 0.35);
+    border-color: rgba(0, 162, 187, 0.35);
   }
 
   .te-rail-head__title {
@@ -614,7 +619,7 @@ html.sb-app-dark .sbdocs-wrapper .divider {
 @include dark-page(".osui-welcome") {
   @include dark-pattern-browser;
 
-  :is(.w-card, .preview, .tabs-demo, .card-demo, .piece, .pat, .tpl, .tpl .shot .blk) {
+  :is(.w-card, .preview, .tabs-demo, .card-demo, .piece, .pat) {
     background: var(--w-n-0);
   }
 
@@ -645,10 +650,6 @@ html.sb-app-dark .sbdocs-wrapper .divider {
     background: var(--w-n-0);
     border-color: var(--w-n-300);
     color: var(--w-ink);
-  }
-
-  .piece:hover {
-    background: var(--w-n-200);
   }
 
   .tabs-demo button[aria-selected="true"] {
@@ -727,7 +728,7 @@ html.sb-app-dark .sbdocs-wrapper .osui-welcome .cta h2,
   --gs-pic-canvas: var(--gs-n-200);
   --gs-pic-surface: #2e2e2e;
   --gs-pic-stroke: #525252;
-  --gs-pic-accent: rgba(105, 134, 242, 0.22);
+  --gs-pic-accent: rgba(0, 162, 187, 0.22);
   --gs-pic-muted: #404040;
   --gs-pic-muted2: #363636;
   --gs-pic-primary: var(--docs-primary-700);
@@ -897,6 +898,8 @@ html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-ap
   --fd-ink: var(--docs-ink);
   --fd-ink-2: var(--docs-ink-2);
   --fd-ink-3: var(--docs-ink-3);
+  --fd-brand-a: #6ecfe0;
+  --fd-brand-b: #00a2bb;
   --api-primary-700: var(--docs-primary-700);
   --api-ink: var(--docs-ink);
   --api-ink-3: var(--docs-ink-3);
@@ -938,7 +941,7 @@ html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-ap
   }
 
   .fd-space-preview {
-    background: rgba(16, 92, 239, 0.12);
+    background: rgba(0, 162, 187, 0.12);
   }
 
   .fd-border-token-preview {
@@ -991,5 +994,169 @@ html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-ap
   .sbdocs-wrapper .osui-foundations .fd-color-card__body code:not(pre code) {
     background: var(--docs-surface-2) !important;
     color: var(--docs-ink-2) !important;
+  }
+}
+
+@include dark-page(".osui-pattern-doc") {
+  --pd-primary-100: var(--docs-primary-100);
+  --pd-primary-700: #6eb8c8;
+  --pd-n-100: var(--docs-surface);
+  --pd-n-200: var(--docs-surface-2);
+  --pd-n-300: var(--docs-border-subtle);
+  --pd-ink: var(--docs-ink);
+  --pd-ink-2: var(--docs-ink-2);
+  --pd-ink-3: var(--docs-ink-3);
+  --pd-tag-accent-fg: #8adce8;
+
+  .pd-head::before {
+    opacity: 0.45;
+  }
+
+  .pd-btn--ghost,
+  .pd-demo-link,
+  .pd-related__card {
+    background: var(--docs-surface);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .pd-code {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .pd-table th {
+    background: var(--docs-surface-2);
+  }
+
+  .pd-table td,
+  .pd-table th {
+    border-bottom-color: var(--docs-border-subtle);
+  }
+
+  /* Canvas background/colour stay the OUI body roles (pattern-docs.scss). */
+  .pd-preview .innerZoomElementWrapper,
+  .pd-example__canvas .innerZoomElementWrapper {
+    border-color: var(--docs-border-subtle);
+  }
+
+  .pd-example__frame {
+    border-color: var(--docs-border-subtle);
+  }
+
+  .pd-example__foot {
+    background: var(--docs-surface-2);
+    border-top-color: var(--docs-border-subtle);
+  }
+
+  .pd-howto__summary {
+    color: var(--docs-ink-2);
+  }
+
+  .pd-howto__summary:hover {
+    color: var(--docs-primary-700);
+  }
+
+  .pd-howto__body {
+    border-top-color: var(--docs-border-subtle);
+  }
+
+  .pd-howto__step,
+  .pd-howto__bullets {
+    color: var(--docs-ink-2);
+  }
+
+  .pd-howto__n {
+    color: var(--docs-ink-3);
+  }
+
+  .pd-howto__props code,
+  .pd-howto__bullets code {
+    background: var(--docs-bg);
+    border-color: var(--docs-border-subtle);
+    color: var(--docs-ink);
+  }
+
+  .pd-key {
+    border-color: var(--docs-border-subtle);
+    background: linear-gradient(180deg, var(--docs-surface) 0%, var(--docs-surface-2) 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 1px 2px rgba(0, 0, 0, 0.28);
+    color: var(--docs-ink);
+  }
+
+  .pd-tag {
+    background: var(--docs-surface-2);
+    color: var(--docs-text-secondary);
+  }
+
+  .pd-tag--accent {
+    background: rgba(0, 162, 187, 0.14);
+    color: var(--pd-tag-accent-fg);
+  }
+
+  .pd-table code {
+    background: var(--docs-surface-2);
+    border: none;
+    color: var(--docs-text-primary);
+  }
+
+  .pd-guidance__card--do {
+    background: linear-gradient(180deg, rgba(22, 163, 74, 0.1) 0%, var(--docs-surface) 100%);
+    border-color: rgba(22, 163, 74, 0.28);
+  }
+
+  .pd-guidance__card--dont {
+    background: linear-gradient(180deg, rgba(220, 38, 38, 0.1) 0%, var(--docs-surface) 100%);
+    border-color: rgba(220, 38, 38, 0.28);
+  }
+
+  .pd-guidance__card--do h3 {
+    color: #86efac !important;
+  }
+
+  .pd-guidance__card--dont h3 {
+    color: #fca5a5 !important;
+  }
+
+  .pd-guidance__card--do h3::before {
+    background-color: rgba(22, 163, 74, 0.18);
+  }
+
+  .pd-guidance__card--dont h3::before {
+    background-color: rgba(220, 38, 38, 0.18);
+  }
+
+  .pd-anatomy-text {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .pd-code-tok--tag {
+    color: #79c0ff;
+  }
+
+  .pd-code-tok--attr {
+    color: #ffa657;
+  }
+
+  .pd-code-tok--string {
+    color: #a5d6ff;
+  }
+
+  .pd-code-tok--comment {
+    color: #8b949e;
+  }
+
+  .sbdocs-wrapper .docblock-source pre {
+    background: var(--docs-surface-2) !important;
+    border-color: var(--docs-border-subtle);
+    color: var(--docs-ink, #ededed) !important;
+  }
+
+  .sbdocs-wrapper .docblock-source code,
+  .sbdocs-wrapper .docblock-source pre :is(span, code),
+  .sbdocs-wrapper .docblock-source pre .token {
+    color: inherit !important;
   }
 }

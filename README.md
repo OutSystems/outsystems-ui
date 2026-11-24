@@ -22,7 +22,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code s
 - Actions to deal with different device types
 - Built for Reactive Web and Mobile apps
 
-Find out more in [OutSystems UI website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/).
+Find out more in [OutSystems UI website](https://outsystems-ui.outsystems.com/).
 
 ### Where can you find the component?
 
@@ -30,7 +30,7 @@ The OutSystems UI component, like all components, can be found in [OutSystems Fo
 
 ### Where can you find documentation?
 
-The documentation can be found in the [OutSystems UI website](https://outsystemsui.outsystems.com/outsystemsuiwebsite/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
+The documentation can be found in the [OutSystems UI website](https://outsystems-ui.outsystems.com/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
 
 We also use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
 
@@ -122,7 +122,7 @@ To be accepted, a Pull Request needs to:
 
 - Download latest O11 version in [OutSystems forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11)
 - Download latest ODC version in [OutSystems Forge Component Page (ODC)](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc)
-- Check the [online documentation](https://outsystemsui.outsystems.com/outsystemsuiwebsite/)
+- Check the [online documentation](https://outsystems-ui.outsystems.com/)
 - [NPM Package](https://www.npmjs.com/package/outsystems-ui)
 
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?

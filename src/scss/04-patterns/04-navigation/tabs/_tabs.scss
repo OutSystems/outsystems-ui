@@ -18,11 +18,11 @@
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-tabs-header-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-tabs-header-item-color-active: #{variables.$token-text-select};
-	--osui-tabs-header-item-color-active-hover: var(--color-primary-selected);
+	--osui-tabs-header-item-color-active-hover: var(--osui-tabs-header-item-color-active);
 	--osui-tabs-header-item-color-hover: var(--color-text-subtlest);
 	--osui-tabs-header-item-color-disabled: var(--color-text-disabled);
 	--osui-tabs-header-item-hover-background: #{variables.$token-bg-neutral-subtle-default};
-	--osui-tabs-indicator-color: var(--color-primary);
+	--osui-tabs-indicator-color: var(--osui-tabs-header-item-color-active);
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -348,19 +348,18 @@
 	}
 }
 
+// Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.osui-tabs {
-		&__header-item {
-			&:focus-visible:focus-within {
-				@include a11y-focus-shadow($isInner: true);
-			}
+.osui-tabs {
+	&__header-item {
+		&:focus-visible:focus-within {
+			@include a11y-focus-shadow($isInner: true);
 		}
+	}
 
-		&__content-item {
-			&:focus-visible {
-				@include a11y-focus-shadow($isInner: true);
-			}
+	&__content-item {
+		&:focus-visible {
+			@include a11y-focus-shadow($isInner: true);
 		}
 	}
 }

@@ -1,0 +1,131 @@
+@use '../src/scss/00-abstract/mixins' as *;
+@use '../src/scss/tokens/variables';
+
+/* Docs Canvas frame + accordion corner/divider styling = double border. */
+.osui-pattern-doc .pd-preview .innerZoomElementWrapper:has(.osui-accordion),
+.osui-pattern-doc .pd-example__canvas .innerZoomElementWrapper:has(.osui-accordion) {
+	border: none;
+	border-radius: 0;
+	background: transparent;
+}
+
+/* Expanded body copy — space between title row and content. */
+.osui-story-root .osui-accordion-item__content > div {
+	padding-block-start: variables.$token-scale-400;
+}
+
+/* Storybook-only layout helpers for Accordion demos (employee directory row). */
+.osui-accordion:has(.sb-accordion-row) {
+	.osui-accordion-item__title,
+	.osui-accordion-item__content {
+		@include apply-typography(variables.$token-body-md-regular);
+	}
+
+	.osui-accordion-item--is-open > .osui-accordion-item__title {
+		font-weight: variables.$token-font-weight-regular;
+	}
+
+	.osui-accordion-item__content {
+		p {
+			margin: 0 0 variables.$token-scale-300;
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
+
+		ul {
+			margin: 0;
+			padding-inline-start: variables.$token-scale-500;
+		}
+
+		li + li {
+			margin-block-start: variables.$token-scale-100;
+		}
+	}
+}
+
+.sb-accordion-row {
+	align-items: center;
+	display: grid;
+	gap: var(--token-space-400, 16px);
+	grid-template-columns: auto minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.9fr) auto;
+	min-width: 0;
+	width: 100%;
+
+	@include apply-typography(variables.$token-body-md-regular);
+
+	&__name {
+		color: var(--color-text);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__meta {
+		color: var(--color-text-subtle);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tag {
+		justify-self: end;
+		margin-inline-end: variables.$token-scale-400;
+	}
+}
+
+@media (max-width: 640px) {
+	.sb-accordion-row {
+		gap: var(--token-space-200, 8px);
+		grid-template-columns: auto 1fr auto;
+
+		&__meta {
+			display: none;
+		}
+
+		.tag {
+			grid-column: 3;
+			grid-row: 1;
+		}
+	}
+}
+
+/* Accordion story “Show code” — readable studio steps + code-like property lines. */
+.sbdocs-wrapper .docblock-source pre {
+	margin: 0;
+	padding: 16px 18px !important;
+	border-radius: 8px;
+	border: 1px solid #e8e8e8;
+	background: #f6f8fa !important;
+	overflow-x: auto;
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+	font-size: 12px !important;
+	line-height: 1.65 !important;
+	font-variant-ligatures: none;
+	font-style: normal !important;
+	font-weight: 400 !important;
+	color: #454545 !important;
+	tab-size: 2;
+	white-space: pre;
+}
+
+.sbdocs-wrapper .docblock-source code {
+	font-family: inherit !important;
+	font-size: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	background: transparent !important;
+}
+
+/* Flatten Prism tokens — same face and colour as the pre (no mixed Inter / faded comment). */
+.sbdocs-wrapper .docblock-source pre :is(span, code),
+.sbdocs-wrapper .docblock-source pre .token {
+	font-family: inherit !important;
+	font-size: inherit !important;
+	line-height: inherit !important;
+	font-style: normal !important;
+	font-weight: inherit !important;
+	color: inherit !important;
+	background: none !important;
+}

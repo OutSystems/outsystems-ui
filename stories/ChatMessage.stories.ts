@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
 import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { labeledBoard } from './_helpers/showcase';
 
 /**
  * Chat Message family. Controls mirror the low-code input parameters of the
@@ -16,7 +17,7 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *     Hidden   → `.chat-message-status.hidden` (display:none)
  *     (none)   → plain timestamp text node
  */
-const meta: Meta = { title: 'Patterns/Content/ChatMessage' };
+const meta: Meta = { title: 'Patterns/Content/Chat Message' };
 export default meta;
 
 // ─── Shared status markup ─────────────────────────────────────────────────────
@@ -41,6 +42,34 @@ function statusMarkup(time: string, status: MessageStatus): string {
 	}
 }
 
+// ─── Docs-page demos (ported from the docs stories) ─────────────────────────
+// Positional variant with a centred wrapper; reuses the shared statusMarkup above.
+
+function chatMessageMarkupDoc(
+	displayOnRight: boolean,
+	message: string,
+	initials: string,
+	time: string,
+	status: MessageStatus,
+	extendedClass = ''
+): string {
+	return `<div style="display:flex;justify-content:center;width:100%;"><div style="max-width:460px;width:100%;">
+		<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
+			<div class="chat-photo OSInline">
+				<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${initials}">
+					<span class="OSFillParent">${initials}</span>
+				</div>
+			</div>
+			<div class="chat-message-wrapper OSInline">
+				<div class="chat-message padding OSInline" role="button" tabindex="0"><span>${message}</span></div>
+				${statusMarkup(time, status)}
+			</div>
+		</div>
+	</div></div>`;
+}
+
+type Story = StoryObj;
+
 // ─── ChatMessage ──────────────────────────────────────────────────────────────
 
 type ChatMessageArgs = {
@@ -50,13 +79,34 @@ type ChatMessageArgs = {
 	extendedClass: string;
 };
 
-export const Default: StoryObj<ChatMessageArgs> = {
-	args: {
-		displayOnRight: false,
-		time: '10:24',
-		messageStatus: 'none',
-		extendedClass: '',
-	},
+function chatMessageMarkup({ displayOnRight, time, messageStatus, extendedClass }: ChatMessageArgs): string {
+	return `
+		<div style="max-width:460px;">
+			<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
+				<div class="chat-photo OSInline">
+					<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${displayOnRight ? 'HS' : 'SR'}">
+						<span class="OSFillParent">${displayOnRight ? 'HS' : 'SR'}</span>
+					</div>
+				</div>
+				<div class="chat-message-wrapper OSInline">
+					<div class="chat-message padding OSInline" role="button" tabindex="0">
+						<span>${displayOnRight ? 'Yes — see you then 👍' : 'Hi! Are we still on for the review at 3pm?'}</span>
+					</div>
+					${statusMarkup(time, messageStatus)}
+				</div>
+			</div>
+		</div>`;
+}
+
+const baseArgs: ChatMessageArgs = {
+	displayOnRight: false,
+	time: '10:24',
+	messageStatus: 'none',
+	extendedClass: '',
+};
+
+export const Playground: StoryObj<ChatMessageArgs> = {
+	args: { ...baseArgs },
 	argTypes: {
 		displayOnRight: {
 			name: 'DisplayOnRight',
@@ -79,21 +129,53 @@ export const Default: StoryObj<ChatMessageArgs> = {
 		},
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ displayOnRight, time, messageStatus, extendedClass }) =>
-		renderStatic(`
-			<div style="max-width:460px;">
-				<div class="${cls('chat', displayOnRight ? 'right' : 'left', 'OSInline', extendedClass)}" style="margin-bottom:12px;">
-					<div class="chat-photo OSInline">
-						<div class="avatar border-radius-rounded ${displayOnRight ? 'background-indigo' : 'background-primary'}" role="img" aria-label="user initials, ${displayOnRight ? 'HS' : 'SR'}">
-							<span class="OSFillParent">${displayOnRight ? 'HS' : 'SR'}</span>
-						</div>
-					</div>
-					<div class="chat-message-wrapper OSInline">
-						<div class="chat-message padding OSInline" role="button" tabindex="0">
-							<span>${displayOnRight ? 'Yes — see you then 👍' : 'Hi! Are we still on for the review at 3pm?'}</span>
-						</div>
-						${statusMarkup(time, messageStatus)}
-					</div>
-				</div>
-			</div>`),
+	render: (args) => renderStatic(chatMessageMarkup(args)),
+};
+
+export const Received: Story = {
+	tags: ['docs-example'],
+	name: 'Received',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(chatMessageMarkupDoc(false, 'Hi! Are we still on for the review at 3pm?', 'SR', '10:24', 'none')),
+};
+
+export const Sent: Story = {
+	tags: ['docs-example'],
+	name: 'Sent',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkupDoc(true, 'Yes — see you then 👍', 'HS', '10:24', 'Sent')),
+};
+
+export const ReadStatus: Story = {
+	tags: ['docs-example'],
+	name: 'Read status',
+	parameters: { layout: 'padded' },
+	render: () => renderStatic(chatMessageMarkupDoc(true, 'Yes — see you then 👍', 'HS', '10:24', 'Read')),
+};
+
+/** Received (left) next to sent (right) alignment. */
+export const Direction: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard([
+				{ label: 'left (received)', html: chatMessageMarkup({ ...baseArgs, displayOnRight: false }) },
+				{ label: 'right (sent)', html: chatMessageMarkup({ ...baseArgs, displayOnRight: true }) },
+			]).outerHTML
+		),
+};
+
+/** Every MessageStatus value, from the plain timestamp to the hidden status area. */
+export const Statuses: StoryObj = {
+	parameters: { controls: { disable: true } },
+	render: () =>
+		renderStatic(
+			labeledBoard(
+				MESSAGE_STATUS_OPTIONS.map((messageStatus) => ({
+					label: messageStatus,
+					html: chatMessageMarkup({ ...baseArgs, messageStatus }),
+				}))
+			).outerHTML
+		),
 };

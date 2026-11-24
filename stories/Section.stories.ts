@@ -15,7 +15,7 @@ export default meta;
 
 type SectionArgs = { usePadding: boolean; extendedClass: string };
 
-export const Default: StoryObj<SectionArgs> = {
+export const Playground: StoryObj<SectionArgs> = {
 	args: { usePadding: true, extendedClass: '' },
 	argTypes: {
 		usePadding: usePaddingArgType,
@@ -29,6 +29,43 @@ export const Default: StoryObj<SectionArgs> = {
 					<div class="${cls('section-content', !usePadding && 'padding-none')}">Grouped content sits under a section heading with a divider.</div>
 				</div>
 			</div>`),
+};
+
+// ─── Docs-page stories ────────────────────────────────────────────────────────
+
+type Story = StoryObj;
+
+const DEMO_WRAP = 'display:flex;justify-content:center;width:100%;';
+
+export const BasicUsage: Story = {
+	tags: ['docs-example'],
+	name: 'Basic usage',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(
+			`<div style="${DEMO_WRAP}"><div class="section-group" style="max-width:480px;width:100%;">
+				<div class="section" role="region">
+					<div class="section-title dividers">Account settings</div>
+					<div class="section-content">Grouped content sits under a section heading with a divider.</div>
+				</div>
+			</div></div>`
+		),
+};
+
+export const StickyGroup: Story = {
+	tags: ['docs-example'],
+	name: 'Sticky group',
+	parameters: { layout: 'padded' },
+	render: () =>
+		renderStatic(
+			`<div style="${DEMO_WRAP}"><div style="max-width:480px;width:100%;height:280px;--section-top-position:0px;padding:0 16px;">
+				<div class="section-group is--sticky">
+					${groupSection('Profile', 6)}
+					${groupSection('Notifications', 6)}
+					${groupSection('Privacy', 6)}
+				</div>
+			</div></div>`
+		),
 };
 
 // ─── Section Group ────────────────────────────────────────────────────────────

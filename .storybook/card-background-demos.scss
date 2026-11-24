@@ -1,0 +1,51 @@
+.card-background-demo-metrics {
+	.card-background-content {
+		align-items: flex-start;
+		justify-content: flex-start;
+	}
+
+	&__stack {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		width: 100%;
+	}
+
+	&__title {
+		font-size: 16px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+		line-height: 1.25;
+	}
+
+	&__subtitle {
+		font-size: 13px;
+		line-height: 1.4;
+		margin: 0;
+		max-width: 22em;
+		opacity: 0.82;
+	}
+
+	&__value {
+		font-weight: 650;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		margin-top: 8px;
+	}
+
+	&__trend {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		font-size: 13px;
+		font-weight: 500;
+		gap: 8px;
+		line-height: 1;
+		margin-top: 4px;
+		opacity: 0.92;
+
+		.icon {
+			font-size: 14px;
+		}
+	}
+}

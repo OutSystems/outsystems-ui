@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownTagsStories from './DropdownTags.stories';
+import { DROPDOWN_TAGS_RECIPES } from './_helpers/pattern-docs/dropdown-tags-recipes';
+import { DROPDOWN_TAGS_DOC } from './_helpers/pattern-docs/dropdown-tags-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={DropdownTagsStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={DROPDOWN_TAGS_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Always multi-select over an `OptionsList`. Tick options in the dropbox and each one becomes a chip inside the control, removable from its own clear button; `OnChanged` reports the whole selection on every change."
+				implement={<StudioHowTo recipe={DROPDOWN_TAGS_RECIPES.basicUsage} />}
+			>
+				<Canvas of={DropdownTagsStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Starting selection"
+				description="Fill `StartingSelection` with the options to pre-select. The control is built with those chips instead of the `Prompt`; `OnChanged` is not fired for them."
+				implement={<StudioHowTo recipe={DROPDOWN_TAGS_RECIPES.startingSelection} />}
+			>
+				<Canvas of={DropdownTagsStories.StartingSelection} />
+			</PdExample>
+			<PdExample
+				title="Disabled state"
+				description="Set `OptionalConfigs.IsDisabled` to True. The control renders greyed out and cannot be opened — shown next to the enabled default."
+				implement={<StudioHowTo recipe={DROPDOWN_TAGS_RECIPES.disabled} />}
+			>
+				<Canvas of={DropdownTagsStories.States} />
+			</PdExample>
+		</>
+	}
+/>

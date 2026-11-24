@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './Pagination.stories';
+import { PAGINATION_RECIPES } from './_helpers/pattern-docs/pagination-recipes';
+import { PAGINATION_DOC } from './_helpers/pattern-docs/pagination-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={PaginationStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={PAGINATION_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="`StartIndex` 0, `MaxRecords` 10 and `TotalCount` 100: the record counter, the first page active, a window of three pages, an ellipsis and the last page. Each click raises `OnNavigate` with the new start index."
+				implement={<StudioHowTo recipe={PAGINATION_RECIPES.basicUsage} />}
+			>
+				<Canvas of={PaginationStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Middle page"
+				description="`StartIndex` 40 with 10 records per page lands on page 5. The three-page window slides with the selection and an ellipsis collapses the gap on both sides."
+				implement={<StudioHowTo recipe={PAGINATION_RECIPES.middlePage} />}
+			>
+				<Canvas of={PaginationStories.MiddlePage} />
+			</PdExample>
+			<PdExample
+				title="Go to page input"
+				description="Set `ShowGoToPage` to True to replace the page buttons with a number input and an “of N pages” label. The record counter and the previous/next arrows are unchanged."
+				implement={<StudioHowTo recipe={PAGINATION_RECIPES.goToPageInput} />}
+			>
+				<Canvas of={PaginationStories.ShowGoToPage} />
+			</PdExample>
+		</>
+	}
+/>

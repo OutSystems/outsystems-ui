@@ -11,7 +11,7 @@ Scope: a single token-based theme (light, plus generated dark mode: class os-dar
 - BottomSheet: 2 props, 1 events, 9 API functions
 - ButtonLoading: 2 props, 0 events, 8 API functions
 - Carousel: 11 props, 0 events, 18 API functions
-- DatePicker: 12 props, 0 events, 22 API functions
+- DatePicker: 13 props, 0 events, 22 API functions
 - Dropdown: 11 props, 5 events, 19 API functions
 - DropdownServerSideItem: 2 props, 1 events, 7 API functions
 - FlipContent: 2 props, 1 events, 10 API functions

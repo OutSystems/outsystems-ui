@@ -1,0 +1,48 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BlankSlateStories from './BlankSlate.stories';
+import { BLANK_SLATE_RECIPES } from './_helpers/pattern-docs/blank-slate-recipes';
+import { BLANK_SLATE_DOC } from './_helpers/pattern-docs/blank-slate-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={BlankSlateStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={BLANK_SLATE_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="First-use empty state — illustration in Icon, title and supporting line in Description, primary button in Actions. Set FullHeight to False when the blank slate sits inside a list or card."
+				implement={<StudioHowTo recipe={BLANK_SLATE_RECIPES.basicUsage} />}
+			>
+				<Canvas of={BlankSlateStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Full height"
+				description="Set FullHeight to True so the pattern fills the content area — ideal for empty list or page layouts. Adds `.large` on the root for a bigger illustration."
+				implement={<StudioHowTo recipe={BLANK_SLATE_RECIPES.fullHeight} />}
+			>
+				<Canvas of={BlankSlateStories.FullHeight} />
+			</PdExample>
+			<PdExample
+				title="Without actions"
+				description="Search with no results — leave the Actions placeholder empty when no call to action is needed."
+				implement={<StudioHowTo recipe={BLANK_SLATE_RECIPES.withoutActions} />}
+			>
+				<Canvas of={BlankSlateStories.WithoutActions} />
+			</PdExample>
+		</>
+	}
+/>

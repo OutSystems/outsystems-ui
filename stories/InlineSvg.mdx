@@ -1,0 +1,39 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InlineSvgStories from './InlineSvg.stories';
+import { INLINE_SVG_RECIPES } from './_helpers/pattern-docs/inline-svg-recipes';
+import { INLINE_SVG_DOC } from './_helpers/pattern-docs/inline-svg-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={InlineSvgStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={INLINE_SVG_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="The `SVGCode` markup is injected inline inside the root. With the path fill set to currentColor the drawing inherits the text colour of its container."
+				implement={<StudioHowTo recipe={INLINE_SVG_RECIPES.basicUsage} />}
+			>
+				<Canvas of={InlineSvgStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Themed with utility classes"
+				description="The same stroke icon four times, recoloured only through `ExtendedClass` (`text-primary`, `text-success`, `text-error`, `text-neutral-6`) — the reason to inline an SVG instead of using an image."
+				implement={<StudioHowTo recipe={INLINE_SVG_RECIPES.themedColors} />}
+			>
+				<Canvas of={InlineSvgStories.ThemedColors} />
+			</PdExample>
+		</>
+	}
+/>

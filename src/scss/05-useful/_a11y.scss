@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Usefull - a11y (Accessibility) */
 ////
@@ -27,7 +27,7 @@
 ///
 .wcag-hide-text.focus-trap-top,
 .wcag-hide-text.focus-trap-bottom {
-    position: fixed;
+	position: fixed;
 }
 
 /* Skip-nav link used on Accessibility*/
@@ -53,12 +53,10 @@
 }
 
 ///
-.has-accessible-features {
-	.skip-nav {
-		&:focus,
-		&:active {
-			opacity: 1;
-			pointer-events: auto;
-		}
+.skip-nav {
+	&:focus-visible,
+	&:active {
+		opacity: 1;
+		pointer-events: auto;
 	}
 }

@@ -1,0 +1,48 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AlertStories from './Alert.stories';
+import { ALERT_RECIPES } from './_helpers/pattern-docs/alert-recipes';
+import { ALERT_DOC } from './_helpers/pattern-docs/alert-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={AlertStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={ALERT_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Default success alert — set AlertType to match the message tone."
+				implement={<StudioHowTo recipe={ALERT_RECIPES.basicUsage} />}
+			>
+				<Canvas of={AlertStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="All severities"
+				description="Success, Info, Warning, and Error each map to a modifier class on the root (`.alert-success`, `.alert-info`, and so on)."
+				implement={<StudioHowTo recipe={ALERT_RECIPES.allSeverities} />}
+			>
+				<Canvas of={AlertStories.AllSeverities} />
+			</PdExample>
+			<PdExample
+				title="Vivid style"
+				description="Add `vivid` via ExtendedClass for a solid-fill look. Warning keeps dark text on the yellow background for contrast."
+				implement={<StudioHowTo recipe={ALERT_RECIPES.vivid} />}
+			>
+				<Canvas of={AlertStories.Vivid} />
+			</PdExample>
+		</>
+	}
+/>

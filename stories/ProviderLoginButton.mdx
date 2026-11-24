@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProviderLoginButtonStories from './ProviderLoginButton.stories';
+import { PROVIDER_LOGIN_BUTTON_RECIPES } from './_helpers/pattern-docs/provider-login-button-recipes';
+import { PROVIDER_LOGIN_BUTTON_DOC } from './_helpers/pattern-docs/provider-login-button-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={ProviderLoginButtonStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: { source: { disable: true }, canvas: { sourceState: 'none' } },
+	}}
+/>
+
+<PatternDocPage
+	meta={PROVIDER_LOGIN_BUTTON_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="`IdentityProvider` Google with the default `Shape` (SoftRounded): the brand mark on the left and the 'Continue with Google' label, styled to the provider guidelines."
+				implement={<StudioHowTo recipe={PROVIDER_LOGIN_BUTTON_RECIPES.basicUsage} />}
+			>
+				<Canvas of={ProviderLoginButtonStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="All providers"
+				description="One button per `IdentityProvider` value — Google, Facebook and Apple — stacked as on a login screen. Only the mark and the provider name change; the layout is shared."
+				implement={<StudioHowTo recipe={PROVIDER_LOGIN_BUTTON_RECIPES.allProviders} />}
+			>
+				<Canvas of={ProviderLoginButtonStories.AllProviders} />
+			</PdExample>
+			<PdExample
+				title="Icon only"
+				description="Set `IconOnly` to True to hide the label and leave a square button with just the brand mark — for a compact row of providers under the main form. Add an aria-label so it keeps an accessible name."
+				implement={<StudioHowTo recipe={PROVIDER_LOGIN_BUTTON_RECIPES.iconOnly} />}
+			>
+				<Canvas of={ProviderLoginButtonStories.IconOnly} />
+			</PdExample>
+			<PdExample
+				title="Shapes"
+				description="The three `Shape` values on the same provider: SoftRounded (default) uses the token radius, Rounded the pill radius, and Sharp squares the corners."
+				implement={<StudioHowTo recipe={PROVIDER_LOGIN_BUTTON_RECIPES.shapes} />}
+			>
+				<Canvas of={ProviderLoginButtonStories.Shapes} />
+			</PdExample>
+		</>
+	}
+/>

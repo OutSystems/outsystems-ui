@@ -5,7 +5,8 @@
 .osui-css-architecture,
 .osui-css-api-reference,
 .osui-component-library,
-.osui-foundations {
+.osui-foundations,
+.osui-pattern-doc {
   --docs-shell-max: 1060px;
   --docs-shell-pad-x: 36px;
   --docs-head-max: 988px;
@@ -17,10 +18,15 @@
 .osui-getting-started .docs-inner,
 .osui-css-architecture .ca-inner,
 .osui-css-api-reference .api-inner,
-.osui-foundations .fd-inner {
+.osui-foundations .fd-inner,
+.osui-pattern-doc .pd-inner {
   max-width: var(--docs-shell-max);
   margin: 0 auto;
   padding: 0 var(--docs-shell-pad-x) 120px;
+}
+
+.osui-pattern-doc .pd-inner {
+  padding-bottom: 120px;
 }
 
 /* API Reference browser — full iframe width (like Theme Editor workspace). */
@@ -67,7 +73,8 @@
 .osui-css-architecture .ca-head-in,
 .osui-css-api-reference .api-head-in,
 .osui-component-library .cl-head-in,
-.osui-foundations .fd-head-in {
+.osui-foundations .fd-head-in,
+.osui-pattern-doc .pd-head-in {
   max-width: var(--docs-head-max);
   margin: 0 auto;
 }
@@ -108,9 +115,59 @@
 .osui-getting-started article .sec :is(table, .code, .standout, .tech),
 .osui-css-architecture .ca-body > :is(table, .code, .ca-hops, .note),
 .osui-css-api-reference .api-body > :is(.api-toolbar, .api-table-wrap, .note, .code, .api-guide),
-.osui-foundations .fd-body > :is(.fd-table, .note, .fd-color-line, .fd-color-cards, .fd-shape-container, .fd-elevation-container) {
+.osui-foundations .fd-body > :is(.fd-table, .note, .fd-color-line, .fd-color-cards, .fd-shape-container, .fd-elevation-container),
+.osui-pattern-doc .pd-body > :is(.pd-table-wrap, .pd-code, .pd-related),
+.osui-pattern-doc .pd-preview {
   max-width: none;
   width: 100%;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-guidance__list {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-guidance__list li {
+  list-style: none !important;
+}
+
+/* Beat generic .sbdocs-content ul rules inside StudioHowTo. */
+.sbdocs-content .osui-pattern-doc .pd-howto__lead,
+.sbdocs-content .osui-pattern-doc .pd-howto__hint {
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-howto__bullets {
+  padding-left: 1.15em !important;
+  margin-bottom: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-howto__step-body > .pd-howto__bullets,
+.sbdocs-content .osui-pattern-doc .pd-howto__step-body > .pd-howto__hint {
+  margin-top: 2px !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-howto__placeholder .pd-howto__bullets {
+  margin-top: 4px !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-howto__bullets li {
+  display: list-item !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  margin-bottom: 0 !important;
+}
+
+.sbdocs-content .osui-pattern-doc .pd-key {
+  font-family: inherit !important;
+  font-size: 0.88em !important;
+  color: var(--pd-ink) !important;
+  background: linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%) !important;
+  border: 1px solid #d8d8d8 !important;
 }
 
 /* Info callouts — shared with Getting Started */
@@ -129,8 +186,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #f0f2ff;
-  color: #105cef;
+  background: #e6f7fa;
+  color: #00a2bb;
   display: grid;
   place-items: center;
 }

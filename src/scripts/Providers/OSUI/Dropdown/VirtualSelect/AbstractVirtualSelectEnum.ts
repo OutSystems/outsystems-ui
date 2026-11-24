@@ -13,6 +13,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum CssClass {
 		ErrorMessage = 'osui-dropdown-error-message',
+		FocusVisible = 'osui-dropdown--focus-visible',
 		NotValid = 'osui-dropdown--not-valid',
 		OptionItemIcon = 'osui-dropdown-option-icon',
 		OptionItemImage = 'osui-dropdown-option-image',

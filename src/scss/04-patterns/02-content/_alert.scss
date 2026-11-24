@@ -116,12 +116,8 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.alert {
-		&:focus-visible {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+.alert:focus-visible {
+	--osui-focus-gap: #{variables.$token-scale-050};
 
-			@include a11y-focus-shadow;
-		}
-	}
+	@include a11y-focus-shadow;
 }

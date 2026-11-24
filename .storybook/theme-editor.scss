@@ -26,8 +26,8 @@
 }
 
 .osui-theme-editor {
-  --te-primary-100: #f0f2ff;
-  --te-primary-700: #105cef;
+  --te-primary-100: #e6f7fa;
+  --te-primary-700: #00a2bb;
   --te-n-0: #fff;
   --te-n-100: #f9f9f9;
   --te-n-200: #f2f2f2;
@@ -62,8 +62,8 @@
   --te-code-bg: rgb(247, 250, 252);
   --te-code-border: rgb(236, 244, 249);
   --te-code-ink: rgba(46, 52, 56, 0.9);
-  --te-brand-a: #ff5e3e;
-  --te-brand-b: #d8161e;
+  --te-brand-a: #007a8f;
+  --te-brand-b: #00a2bb;
 
   box-sizing: border-box;
   color: var(--te-ink);
@@ -77,7 +77,7 @@
   *, *::before, *::after { box-sizing: border-box; }
 }
 
-/* Beat Storybook .sbdocs-content code { color: #105cef } — lede + hint inline pills only */
+/* Beat Storybook .sbdocs-content code { color: #00a2bb } — lede + hint inline pills only */
 .sbdocs-wrapper .sbdocs-content .osui-theme-editor .te-lede code,
 .sbdocs-wrapper .sbdocs-content .osui-theme-editor .te-rail__hint code,
 .sbdocs-wrapper .osui-theme-editor .te-lede code,
@@ -110,8 +110,8 @@
   height: 460px;
   pointer-events: none;
   background:
-    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
-    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%);
+    radial-gradient(50% 46% at 18% 34%, rgba(0, 162, 187, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(0, 162, 187, 0.18), transparent 68%);
   filter: blur(6px);
 }
 
@@ -456,7 +456,7 @@
 .osui-theme-editor .te-rail-handle:hover {
   color: var(--te-primary-700);
   border-color: #c8d8f8;
-  box-shadow: 2px 0 14px rgba(16, 92, 239, 0.12);
+  box-shadow: 2px 0 14px rgba(0, 162, 187, 0.12);
 }
 
 .osui-theme-editor .te-rail-handle__icon {
@@ -898,7 +898,7 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
 }
 
 .osui-theme-editor .te-role__val input:focus {
-  outline: 2px solid rgba(16, 92, 239, 0.25);
+  outline: 2px solid rgba(0, 162, 187, 0.25);
   border-color: var(--te-primary-700);
 }
 

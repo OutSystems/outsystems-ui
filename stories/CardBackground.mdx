@@ -1,0 +1,42 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CardBackgroundStories from './CardBackground.stories';
+import { CARD_RECIPES } from './_helpers/pattern-docs/card-recipes';
+import { CARD_BACKGROUND_DOC } from './_helpers/pattern-docs/card-background-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CardBackgroundStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			source: { disable: true },
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={CARD_BACKGROUND_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="Compose content over a palette colour on the image layer and a primary overlay. The card height follows the content unless you set MinHeight on the block."
+				implement={<StudioHowTo recipe={CARD_RECIPES.background} />}
+			>
+				<Canvas of={CardBackgroundStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Background image"
+				description="Use a full-bleed event photo in the Image placeholder with a red colour overlay on top."
+				implement={<StudioHowTo recipe={CARD_RECIPES.backgroundImage} />}
+			>
+				<Canvas of={CardBackgroundStories.BackgroundImage} />
+			</PdExample>
+		</>
+	}
+/>

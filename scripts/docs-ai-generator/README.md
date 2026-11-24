@@ -20,7 +20,9 @@ not define and the documentation's pattern catalogue mapped to runtime names; it
 and the `Docs:` slug on every card (check a URL resolves before adding it). `registry.json`
 classifies every component the inventory discovers (kind, utility title, host-styled partials, story aliases,
 and the OML block each pattern or stylesheet drives, with its parameter and event maps). The tests live in
-`tests/` (`npm run docs:ai:test`) and fail when a generated file is stale.
+`tests/` (`npm run docs:ai:test`); among the generated files they assert only that `PatternTypes.ts` is fresh.
+The freshness guard for `docs-ai/` is `npm run docs:ai:check`, and `npm run docs:check` (run by the PR build)
+covers every generated file.
 
 ## When to regenerate
 
@@ -28,8 +30,8 @@ Any change to a pattern's configuration class, public API, enum, story markup, S
 knobs changes the generated output. Run and commit:
 
 ```bash
-npm run docs:ai:types && npm run docs:ai
-npm run docs:ai:test
+npm run docs:regen     # build, then every generator in dependency order (docs:ai:types and docs:ai included)
+npm run docs:check     # what the PR build runs
 ```
 
 ## The OML block snapshot
@@ -49,7 +51,7 @@ describes the file and a test validates it. The block docs (`llms-blocks.txt`, `
    file under `snapshot/local/` (git-ignored; any depth; the name is free).
 2. `npm run docs:ai:blocks` (`-- --platform O11` for the O11 module). The command refuses to run when the
    folder is missing, empty or holds more than one `.oml`, and accepts no other arguments.
-3. `npm run docs:ai && npm run docs:ai:test` — the block docs follow the snapshot; commit the snapshot and `docs-ai/`.
+3. `npm run docs:ai && npm run docs:ai:check` — the block docs follow the snapshot; commit the snapshot and `docs-ai/`.
 
 The exporter is the `osui-blocks-export` .NET console tool, kept outside this repository: its project folder
 is read from `OSUI_BLOCKS_EXPORT`, else `../osui-blocks-export` next to the checkout (or next to its worktrees

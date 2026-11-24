@@ -6,7 +6,7 @@ const WELCOME_HERO = `<!-- HERO -->
   <div class="hero-grid">
     <div>
       <span class="eyebrow">The design system behind OutSystems apps</span>
-      <h1>Build interfaces that<br /><em>already look right.</em></h1>
+      <h1>Build interfaces that<br /><em>look great from the ground up.</em></h1>
       <p class="lede">70+ UI patterns, a tokenised theme and ready-made screens. Drag them from the ODC Studio toolbox, set the properties, bind your data. One system for Reactive Web and Native Mobile.</p>
       <div class="hero-cta">
         <a class="w-btn w-btn-primary" href="https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc" target="_blank" rel="noopener">Get started in ODC Studio</a>
@@ -62,10 +62,10 @@ const WELCOME_SECTIONS = `
       <p>From an empty workspace to a themed, data-bound app. Each step hands off to the next.</p>
     </div>
     <div class="pieces">
-      <a class="piece" href="#"><span class="k">Step 1</span><b>App templates</b><span>Two starting points, optimised per device and adaptive from the first screen.</span></a>
-      <a class="piece" href="#"><span class="k">Step 2</span><b>Screen templates</b><span>Whole screens with layout, logic and sample data. Swap in your entities.</span></a>
-      <a class="piece" href="?path=/docs/component-library--docs"><span class="k">Step 3</span><b>Patterns</b><span>The building blocks. Configure properties, bind data and actions.</span></a>
-      <a class="piece" href="?path=/docs/design-system-css-architecture--docs"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></a>
+      <div class="piece"><span class="k">Step 1</span><b>App templates</b><span>Two starting points, optimised per device and adaptive from the first screen.</span></div>
+      <div class="piece"><span class="k">Step 2</span><b>Screen templates</b><span>Whole screens with layout, logic and sample data. Swap in your entities.</span></div>
+      <div class="piece"><span class="k">Step 3</span><b>Patterns</b><span>The building blocks. Configure properties, bind data and actions.</span></div>
+      <div class="piece"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></div>
     </div>
   </div>
 `;
@@ -83,11 +83,11 @@ const WELCOME_TAIL = `
         <h3>Colour</h3>
         <p>Primitive ramps resolve into semantic roles: primary, success, warning, danger, info.</p>
         <div class="swatches">
-          <div class="sw" style="background:#f0f2ff"></div><div class="sw" style="background:#e4e8ff"></div>
-          <div class="sw" style="background:#d0d7fa"></div><div class="sw" style="background:#b5c0f7"></div>
-          <div class="sw" style="background:#94a5f4"></div><div class="sw" style="background:#6986f2"></div>
-          <div class="sw" style="background:#105cef"></div><div class="sw" style="background:#0d4ec9"></div>
-          <div class="sw" style="background:#04053d"></div>
+          <div class="sw" style="background:#e6f7fa"></div><div class="sw" style="background:#cceef3"></div>
+          <div class="sw" style="background:#d0d7fa"></div><div class="sw" style="background:#8dd4e0"></div>
+          <div class="sw" style="background:#94a5f4"></div><div class="sw" style="background:#0095ab"></div>
+          <div class="sw" style="background:#00a2bb"></div><div class="sw" style="background:#0d4ec9"></div>
+          <div class="sw" style="background:#007a8f"></div>
         </div>
       </div>
       <div class="w-card">
@@ -104,51 +104,12 @@ const WELCOME_TAIL = `
         <h3>Tokens</h3>
         <p>Change one in the theme editor and every pattern that uses it follows.</p>
         <div style="margin-top:8px" class="mono">
-          <div class="tok"><span>--token-semantics-primary-700</span><span>#105cef</span></div>
+          <div class="tok"><span>--token-semantics-primary-700</span><span>#00a2bb</span></div>
           <div class="tok"><span>--token-border-radius-300</span><span>12px</span></div>
           <div class="tok"><span>--token-scale-400</span><span>16px</span></div>
           <div class="tok"><span>--osui-card-padding</span><span>inherits</span></div>
         </div>
         <div class="arrow">CSS architecture →</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- TEMPLATES -->
-  <div class="sec" id="templates">
-    <div class="sec-head">
-      <div class="sec-kicker">Screen templates</div>
-      <h2>Start from a screen, not a blank canvas</h2>
-      <p>Dashboards, lists, detail views, forms, galleries and onboardings, with structure and sample data already in place.</p>
-    </div>
-    <div class="grid-4">
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="height:28px"><div class="blk accent"></div><div class="blk accent"></div><div class="blk accent"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Admin dashboard</b><span>Dashboards</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="flex:1"><div class="blk tall" style="max-width:38%"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Employees list &amp; detail</b><span>Lists · Details</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="height:22px"><div class="blk"></div></div>
-          <div class="s-row" style="height:22px"><div class="blk"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall accent" style="max-width:40%"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Request form</b><span>Forms</span></div>
-      </a>
-      <a class="tpl" href="https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Screen_Templates" target="_blank" rel="noopener">
-        <div class="shot">
-          <div class="s-row" style="flex:1"><div class="blk tall accent"></div><div class="blk tall"></div><div class="blk tall"></div></div>
-          <div class="s-row" style="flex:1"><div class="blk tall"></div><div class="blk tall accent"></div><div class="blk tall"></div></div>
-        </div>
-        <div class="cap"><b>Product catalog</b><span>Galleries</span></div>
       </a>
     </div>
   </div>
@@ -161,11 +122,11 @@ const WELCOME_TAIL = `
       <p>Design files, plugins and a reference sheet, so design and delivery stay on the same system.</p>
     </div>
     <div class="grid-3">
-      <a class="w-card" href="https://outsystemsui.outsystems.com/OutsystemsUiWebsite/" target="_blank" rel="noopener">
+      <a class="w-card" href="https://www.figma.com/community/file/1700209434010403595/outsystems-ui-v3-0-0" target="_blank" rel="noopener">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0-4-4m4 4 4-4M4 19h16"/></svg></div>
-        <h3>Design kits</h3>
-        <p>Styles, patterns, widgets and layouts for Figma, Sketch and Adobe XD, mirroring the token layer.</p>
-        <div class="arrow">Open kits →</div>
+        <h3>Figma kit</h3>
+        <p>The OutSystems UI v3.0.0 kit: styles, patterns, widgets and layouts, mirroring the token layer.</p>
+        <div class="arrow">Open in Figma →</div>
       </a>
       <a class="w-card" href="?path=/docs/design-system-css-architecture--docs">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>

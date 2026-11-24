@@ -1,0 +1,26 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TagStories from './Tag.stories';
+import { TAG_RECIPES } from './_helpers/pattern-docs/tag-recipes';
+import { TAG_DOC } from './_helpers/pattern-docs/tag-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={TagStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={TAG_DOC}
+	examples={
+		<>
+			<PdExample title="Default style" description="Primary colour, medium size, rounded shape." implement={<StudioHowTo recipe={TAG_RECIPES.defaultStyle} />}>
+				<Canvas of={TagStories.DefaultStyle} />
+			</PdExample>
+			<PdExample title="Light style" description="IsLight uses the subtle background with darker text." implement={<StudioHowTo recipe={TAG_RECIPES.lightStyle} />}>
+				<Canvas of={TagStories.LightStyle} />
+			</PdExample>
+			<PdExample title="Colour variants" description="Common semantic colours for status and categories." implement={<StudioHowTo recipe={TAG_RECIPES.allColors} />}>
+				<Canvas of={TagStories.ColourVariants} />
+			</PdExample>
+		</>
+	}
+/>

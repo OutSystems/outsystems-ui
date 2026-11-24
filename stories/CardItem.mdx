@@ -1,0 +1,42 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CardItemStories from './CardItem.stories';
+import { CARD_RECIPES } from './_helpers/pattern-docs/card-recipes';
+import { CARD_ITEM_DOC } from './_helpers/pattern-docs/card-item-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta
+	of={CardItemStories}
+	tags={['!ui-pending']}
+	parameters={{
+		layout: 'fullscreen',
+		options: { showPanel: true },
+		docs: {
+			source: { disable: true },
+			canvas: { sourceState: 'none' },
+		},
+	}}
+/>
+
+<PatternDocPage
+	meta={CARD_ITEM_DOC}
+	examples={
+		<>
+			<PdExample
+				title="Basic usage"
+				description="List row with a circular avatar, title and subtitle in the center, and a status Tag on the right."
+				implement={<StudioHowTo recipe={CARD_RECIPES.detailItem} />}
+			>
+				<Canvas of={CardItemStories.BasicUsage} />
+			</PdExample>
+			<PdExample
+				title="Metric row"
+				description="Compose an icon tile on the left and a metric value on the right — for example tickets sold for an event."
+				implement={<StudioHowTo recipe={CARD_RECIPES.metricItem} />}
+			>
+				<Canvas of={CardItemStories.MetricRow} />
+			</PdExample>
+		</>
+	}
+/>

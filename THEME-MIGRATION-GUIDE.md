@@ -321,6 +321,8 @@ Two one-off names with no family of their own. The framework read each through a
 | ---------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--header-color`       | `--color-background-header` | Classic read `var(--background-color-header, var(--header-color))`; the header now reads `var(--background-color-header, var(--color-background-header))`. The outer hook still works |
 | `--overlay-background` | `--token-backdrop`          | Same `rgba(0, 0, 0, 0.25)`. Write it as `var(--token-backdrop, rgba(0, 0, 0, 0.25))` — the token is not declared at `:root`                                                              |
+| `--color-focus-outer` | `--osui-color-focus` | Classic yellow `#ffd337` wash. The focus ring now reads `--osui-color-focus` (primary-tinted); set it at `:root` to recolor every focus ring and outline |
+| `--color-focus-inner` | `--token-border-boldest` | Classic `var(--color-neutral-10)` line under a focused link. Write it as `var(--token-border-boldest, #242528)` — the token is not declared at `:root` |
 
 <!-- /generated:misc -->
 
@@ -351,7 +353,7 @@ These variables still exist — your overrides still apply — but without an ov
 
 The `.text-neutral-0` and `.background-neutral-0` utility classes read that same variable, so they moved with it. Everything that named neutral-0 shifted together.
 
-If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — switch to `--color-text-inverse` or `--token-primitives-base-white`.
+If you used `var(--color-neutral-0)` or either utility class to get pure white — text on a coloured background is the usual case — pick by what the background does in dark mode. Most fills lighten or flip in dark — the status colors (`--color-error`, `--color-success`, `--color-info`), secondary, and the palette's orange, lime, teal, cyan, indigo, violet, grape and pink — so use `--color-text-inverse`, which turns near-black there. Only primary and the palette's red, green and blue stay dark; on those use `--color-text-light` (white in both themes).
 
 **The grey shades** are the eleven greys the whole UI is built from — `--color-neutral-0` (lightest) through `--color-neutral-10` (darkest). Page backgrounds, card surfaces, borders, body text and muted labels each take one of them. **Flipping** them means redefining shade 0 as the darkest and shade 10 as the lightest, which before `.os-dark-theme` existed was the cheapest way to build a dark mode: one block of eleven declarations and every grey in the app inverts at once.
 
@@ -818,10 +820,17 @@ a[data-link]:focus {
 }
 ```
 
+### Neutral palette colors flip in dark; saturated ones keep their hue
+
+In `.os-dark-theme` the neutral steps flip: `background-neutral-0` is still "the surface" and `background-neutral-10` is still "furthest from the surface", so a Neutral 7 Tag or Badge turns into a light chip on a dark page. The saturated palette and the status colors keep their hue, and most get lighter in dark; only primary, red, green and blue stay dark. This is by design: "Neutral N" means "N steps away from the surface", which is the meaning that survives a theme change.
+
+The framework pairs each fill with matching text. Tag, Badge, User Avatar and Counter put inverse text on Neutral 6–10 and on the saturated fills that lighten, so it turns near-black in dark along with them, and white text (`--color-text-light`) on primary, red, green and blue, which stay dark. Do the same in your own CSS. If you need a grey that stays dark in both themes, don't use a neutral step: use a color of your own.
+
 ### General dark-mode hygiene
 
 - Replace hardcoded colour literals with `--color-*` roles or `--token-*` values where a match exists.
 - Prefer `--color-text` over `--color-neutral-9` for body text — the role flips in dark mode, the grey shade does not.
+- Text over an image or a colored scrim uses `--color-text-light`, never `.text-neutral-0` or `--color-neutral-0`. The neutral steps flip in dark mode, so "neutral-0" becomes near-black on a picture that stayed the same.
 - Blank-slate icons changed from primary to grey (`--color-text-disabled`). Override with `.blank-slate-icon { color: var(--color-primary); }` if needed.
 - Your own `.icon` elements don't read `--token-icon-subtlest`, so setting that token moves the framework's icons and leaves yours behind. Set `.icon { color: … }` as well, and `color: inherit` for icons inside buttons or coloured blocks that set their own text colour.
 
@@ -855,6 +864,7 @@ Still works, but add the interaction tiers:
 	--color-primary-hover: #651ac5;
 	--color-primary-active: #5817ab;
 	--color-border-primary: #7c20f2;
+	--token-text-select: #7c20f2; /* active side-menu link */
 }
 ```
 
@@ -865,6 +875,7 @@ Or go one level deeper for a full re-brand (focus halos recolour automatically):
 	--token-semantics-primary-base: #7c20f2;
 	--token-semantics-primary-800: #651ac5;
 	--token-semantics-primary-900: #5817ab;
+	--token-text-select: #7c20f2; /* active side-menu link */
 }
 ```
 

@@ -82,7 +82,10 @@
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: var(--border-radius-rounded);
+				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
+				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				height: variables.$token-scale-300;
+				margin: variables.$token-scale-150;
 				width: variables.$token-scale-300;
 				transition: background-color variables.$token-transition-time-200
 					variables.$token-transition-curve-linear;
@@ -185,30 +188,16 @@
 
 // Accessibility -----------------------------------------------------------------
 ///
-.has-accessible-features {
-	.splide__slide {
-		box-shadow: none;
-	}
+.osui-carousel {
+	.splide {
+		--osui-focus-gap: #{variables.$token-scale-050};
 
-	.osui-carousel {
-		.splide {
-			--osui-focus-shadow-gap: #{variables.$token-scale-050};
+		&__pagination__page:focus-visible {
+			@include a11y-focus-shadow;
+		}
 
-			&__pagination__page {
-				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
-				// (12px dot + 6px margin × 2 = 24px total territory per axis)
-				height: variables.$token-scale-300;
-				margin: variables.$token-scale-150;
-				width: variables.$token-scale-300;
-
-				&:focus-visible {
-					@include a11y-focus-shadow;
-				}
-			}
-
-			&__arrow:focus-visible {
-				@include a11y-focus-outline;
-			}
+		&__arrow:focus-visible {
+			@include a11y-focus-outline;
 		}
 	}
 }
@@ -218,7 +207,7 @@
 .os-high-contrast {
 	.splide__pagination {
 		&__page {
-			outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+			outline: variables.$token-border-size-075 solid var(--osui-color-focus);
 		}
 
 		li {

@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Page Layout - Menu - App Menu Link */
 ////
@@ -118,6 +118,14 @@ body {
 
 .layout-side .app-menu-links,
 .menu-visible .app-menu-links {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// text-select is primary in light and a lighter primary in dark, where
+	// --color-primary on bg-primary-subtle is 2.63:1. It reads the primary
+	// tokens, not --color-primary: an app rebranded through --color-primary
+	// sets this knob (or --token-text-select) as well.
+	--osui-app-menu-link-active-color: #{variables.$token-text-select};
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	flex-direction: column;
 
@@ -129,6 +137,7 @@ body {
 	> a.active {
 		background-color: variables.$token-bg-primary-subtle-default;
 		border-inline-start: 0;
+		color: var(--osui-app-menu-link-active-color);
 		border-radius: variables.$token-border-radius-200;
 	}
 }
@@ -174,17 +183,5 @@ body {
 
 	.layout:not(.layout-side) .app-menu-links a.active {
 		border-block-end: 0;
-	}
-}
-
-// Accessibility -----------------------------------------------------------------
-.has-accessible-features {
-	.header a.active:focus {
-		color: var(--color-primary);
-	}
-
-	.app-menu-links a:focus {
-		background-color: transparent;
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }

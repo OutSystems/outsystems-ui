@@ -1,0 +1,25 @@
+/* llms.txt docs page — rides on the CSS Architecture shell (`.osui-css-architecture`) and the
+   Migration page's stats and pills (`.osui-migration`); only page-specific bits live here. */
+
+/* The full index is long and has long lines: wrap them, and cap the panel's height. */
+.osui-llms .ll-full .code pre {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	max-height: 480px;
+}
+
+/* URLs and prompts are prose, not code: wrap rather than scroll. */
+.osui-llms .ca-body > div > .code pre {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	padding-inline-end: 84px;
+}
+
+.osui-llms .ca-body > :is(.ll-full, div[data-chromatic]) {
+	max-width: none;
+	width: 100%;
+}
+
+.osui-llms .ca-body ol .mg-pill {
+	vertical-align: 1px;
+}

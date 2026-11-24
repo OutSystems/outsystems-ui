@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SectionStories from './Section.stories';
+import { SECTION_RECIPES } from './_helpers/pattern-docs/section-recipes';
+import { SECTION_DOC } from './_helpers/pattern-docs/section-data';
+import { PatternDocPage } from './_helpers/pattern-docs/PatternDocPage';
+import { PdExample } from './_helpers/pattern-docs/PatternDocShell';
+import { StudioHowTo } from './_helpers/pattern-docs/StudioHowTo';
+
+<Meta of={SectionStories} tags={['!ui-pending']} parameters={{ layout: 'fullscreen', options: { showPanel: true }, docs: { source: { disable: true }, canvas: { sourceState: 'none' } } }} />
+
+<PatternDocPage
+	meta={SECTION_DOC}
+	examples={
+		<>
+			<PdExample title="Basic usage" description="Single section with title divider and content area." implement={<StudioHowTo recipe={SECTION_RECIPES.basicUsage} />}>
+				<Canvas of={SectionStories.BasicUsage} />
+			</PdExample>
+			<PdExample title="Sticky group" description="Section Group with IsSticky — titles stay visible while scrolling inside the group." implement={<StudioHowTo recipe={SECTION_RECIPES.stickyGroup} />}>
+				<Canvas of={SectionStories.StickyGroup} />
+			</PdExample>
+		</>
+	}
+/>

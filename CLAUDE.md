@@ -14,23 +14,26 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 
 ## Command Quick Reference
 
-| Command                                               | Purpose                                                                                                                                                                         |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run setup`                                       | `npm i` + start dev server on `http://localhost:3000`                                                                                                                           |
-| `npm run dev -- --target O11`                         | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                       |
-| `npm run build`                                       | Production build for all targets, then `lintfix` + `lint`                                                                                                                       |
-| `npm run lint` / `lintfix` / `prettier`               | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                    |
-| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`)                                                                     |
-| `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                    |
-| `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                       |
-| `npm run update-version`                              | Interactive version bump across project files                                                                                                                                   |
-| `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                    |
-| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                              |
+| Command                                               | Purpose                                                                                                                                                                                       |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run setup`                                       | `npm i` + start dev server on `http://localhost:3000`                                                                                                                                         |
+| `npm run dev -- --target O11`                         | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                                     |
+| `npm run build`                                       | Production build for all targets, then `lintfix` + `lint`                                                                                                                                     |
+| `npm run lint` / `lintfix` / `prettier`               | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                                  |
+| `npm run build:tokens`                                | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`); fails first if the installed version differs from the `package.json` pin         |
+| `npm run create-osui-scss`                            | Regenerate the per-platform SCSS entry files                                                                                                                                                  |
+| `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                                     |
+| `npm run update-version`                              | Interactive version bump across project files                                                                                                                                                 |
+| `npm run docs` / `docs:css-api` / `docs:tokens`       | TypeDoc output into `docs/` (with `docs-ai/` copied to its root); regenerate the Storybook CSS-API and token reference pages                                                                  |
+| `npm run docs:serve`                                  | Build the TypeDoc site, then serve `docs/` with live reload (browser-sync; next free port if 3000 is taken)                                                                                   |
+| `npm run docs:migration`                              | Sync `THEME-MIGRATION-GUIDE.md`'s lookup tables from the `osui-theme-migration` skill; `-- --check` fails on drift                                                                            |
 | `npm run docs:migration-page`                         | Regenerate the Storybook "Migration" page data (`stories/_helpers/migration-data.ts`) from the same skill plus a `classic-theme/` vs `dist/` diff; needs a build; `-- --check` fails on drift |
-| `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale |
-| `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                        |
-| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed)       |
-| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); fails when a generated file is stale                                                                 |
+| `npm run docs:ai` / `docs:ai:check`                   | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component / utility / block manifests, config schemas); the check fails when the committed copy is stale               |
+| `npm run docs:ai:types`                               | Regenerate the `Configs` and `EventName` types of every pattern (`src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`)                                                                      |
+| `npm run docs:ai:blocks`                              | Re-export the OML block snapshot (`scripts/docs-ai-generator/snapshot/osui.blocks.json`) from the one `.oml` under `scripts/docs-ai-generator/snapshot/local/` (git-ignored, never committed) |
+| `npm run docs:ai:test`                                | Unit tests of the docs generators and `ParseConfigs` (`tests/*.test.mjs`); of the generated files it checks only `PatternTypes.ts`                                                            |
+| `npm run docs:regen` / `docs:check`                   | Build, then every generator in dependency order / the PR drift gate: fails when a committed generated file is stale                                                                           |
+| `npm run tokens:update`                               | Bump `outsystems-design-tokens` to the latest release (exact pin), then `docs:regen`; the only way the pin moves                                                                              |
 
 There is no test runner for the library itself: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm run docs:ai:test` exercises only the repository's own tooling (the docs generators and the `ParseConfigs` helper).
 
@@ -46,7 +49,7 @@ module OML), `osui.blocks.json`, `osui.enums.json` and `osui.icons.json`; lines 
 browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc (see
 `.claude/rules/typescript.md` §7): the generator reads them, so a new function or prop needs its comment before
 `docs-ai/` regenerates. A change to a pattern's configs, API, story or SCSS is followed by
-`npm run docs:ai:types && npm run docs:ai`; `npm run docs:ai:test` fails while the generated files are stale. See
+`npm run docs:regen` (or `npm run docs:ai:types && npm run docs:ai` for `docs-ai/` alone); `npm run docs:check`, which the PR build runs, fails while any generated file is stale. See
 `scripts/docs-ai-generator/README.md` for the generators and the snapshot refresh procedure.
 
 ## Domain Terminology
@@ -64,6 +67,8 @@ browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments ar
 - **Platform differences belong in `gulp/ProjectSpecs/DefaultSpecs.js`** (per-target file exclusions and placeholder tokens), not in runtime `if (platform === …)` branches.
 - **E2E coverage is path-derived.** `pipelines/pr-pipeline.yaml` builds Cucumber tags from changed folders under `src/scripts/OSFramework/OSUI/Pattern`, `src/scripts/OutSystems/OSUI/Patterns`, `src/scripts/Providers/OSUI`, and `src/scss/04-patterns`. Changes elsewhere trigger **no** tests — say so explicitly and describe manual verification.
 - **`.npmrc` carries the supply-chain policy `min-release-age=7`** plus a `min-release-age-exclude[]=outsystems-design-tokens` exemption. The exemption is load-bearing: this repo tracks the tokens package within days of publication, and without it `npm i` fails with `ETARGET` for a week after every tokens release. **Needs npm >= 11.17** — older npm warns `Unknown project config` and silently ignores the exclude, so the install fails; `volta` pins a supported npm.
+- **The build refuses a stale tokens install.** `build:tokens` (so every `dev` / `build`) first runs `scripts/check-tokens-version.mjs` and exits 1 when `node_modules/outsystems-design-tokens` is not the exact version pinned in `package.json` — run `npm i`. The pin must stay exact (no `^`). The production CSS has a second banner line `/*! Tokens x.y.z • Commit <sha> • Built <date> UTC */`.
+- **The O11 / ODC modules are updated only from the `dev-latest` pre-release** (`.github/workflows/dev-build.yaml`, rebuilt on every push to `dev`), never from a local `dist/`. See ADR-0021.
 - **`src/scss/tokens/` is generated and gitignored.** A fresh clone has no tokens until `npm run build:tokens` (or any `dev`/`build`) has run — SCSS referencing `$token-*` will not compile before that.
 - **`src/scripts/osui.ts` is a deprecated shim.** Never add entries; new surface goes in `OutSystems.OSUI.*`.
 - Public API functions must return the serialized envelope from `OutSystems/OSUI/Utils/CreateApiResponse.ts` with a code from `OutSystems/OSUI/ErrorCodes.ts` — do not let exceptions escape (only `Create` throws).
@@ -122,7 +127,7 @@ The `path` is resolved relative to `src/scss/` and the `_` / `.scss` extension a
 > - **`.os-dark-theme`** — applies the actual dark token overrides. Add it to **`<html>`** (`document.documentElement`) to switch to dark; remove it for the default light palette. Toggled via the `SetDarkTheme` client action.
 > - **`.os-dark-mode`** — a **signal-only** class that reflects the user's system preference (`prefers-color-scheme: dark`). It has no CSS effect — the framework attaches no rules to it. Automatically added to `<html>` when the OS is in dark mode, removed when it switches to light. Available as a customer styling hook.
 >
-> **`<html>`, not `<body>`, and that matters.** The `--color-*` roles are declared at `:root` as `var(--token-…, <light fallback>)`, and a `var()` is substituted against the element the declaration applies to. Override `--token-*` on `<body>` and you are too late — the role already resolved to its light fallback on `<html>` and inherits down as that literal. On `<html>` the tokens sit on the element the roles resolve on, so 43 of 44 `--color-*` knobs flip to dark for free (`--color-focus-outer` is a deliberate hardcoded yellow). `.os-dark-theme` is an element-agnostic class selector, so this needed no CSS change — only the right element.
+> **`<html>`, not `<body>`, and that matters.** The `--color-*` roles are declared at `:root` as `var(--token-…, <light fallback>)`, and a `var()` is substituted against the element the declaration applies to. Override `--token-*` on `<body>` and you are too late — the role already resolved to its light fallback on `<html>` and inherits down as that literal. On `<html>` the tokens sit on the element the roles resolve on, so every `--color-*` knob flips to dark for free. `.os-dark-theme` is an element-agnostic class selector, so this needed no CSS change — only the right element.
 >
 > The hand-written `src/scss/01-foundations/_theme-dark.scss` is **gone**, along with its `--color-*` role bridge and its "KNOWN CSS-API LEAKS" block. The bridge existed only to work around the class being on `<body>`; scoping to `<html>` replaces it structurally. What still will not follow the theme is the residual set of hardcoded literals at `:root` — 17 of the 21 `--osui-*` defaults there, each already marked `// future: --token-*`. The theme invariant below is now satisfied by construction: the theme is pure token overrides and touches no component rule.
 
@@ -130,7 +135,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 
 ## Additional Resources
 
-- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) — live demos and documentation
+- [OutSystems UI Website](https://outsystems-ui.outsystems.com//) — live demos and documentation
 - [TypeDoc Generated Docs](https://outsystems-ui-docs.github.io/) — auto-generated API reference with UML diagrams
 - Forge: [O11](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) · [ODC](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc)
 - [Product Documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns) — OutSystems official docs
