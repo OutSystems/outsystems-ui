@@ -72,6 +72,15 @@
 			font-size: variables.$token-font-size-600;
 			height: auto;
 			justify-content: center;
+
+			// The item is a fixed 56px column (icon + label, overflow hidden). The Icon widget's
+			// size modifiers (`fa-2x`, `fa-3x`, …) scale by `em` off this container, and since
+			// the container moved from 18px to the 24px token a 2x icon alone is 48px, pushing
+			// the label out of the bar (ROU-13244). The container owns the icon size here, as it
+			// already does for `.icon-badge .icon` in the bottom bar.
+			.icon {
+				font-size: inherit;
+			}
 		}
 
 		&-text {
