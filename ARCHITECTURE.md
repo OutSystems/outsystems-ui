@@ -51,7 +51,7 @@ Provider libraries are **not bundled**. They are declared as browser globals in 
 | Splide `4.1.3`                  | Sync (JS API on `window`)   | Carousel / Gallery slider provider                                                 |
 | Flatpickr `4.6.13`              | Sync (JS API on `window`)   | DatePicker, MonthPicker and TimePicker provider (incl. full calendar position set) |
 | noUiSlider `15.8.1`             | Sync (JS API on `window`)   | RangeSlider provider (single and interval modes)                                   |
-| VirtualSelect `1.4.0`           | Sync (JS API on `window`)   | Dropdown provider (search and tags variants)                                       |
+| VirtualSelect `1.4.1`           | Sync (JS API on `window`)   | Dropdown provider (search and tags variants)                                       |
 | Floating UI DOM `1.8.0`         | Sync (JS API on `window`)   | Positioning engine behind the Balloon feature (Dropdown, Tooltip, OverflowMenu, …) |
 | OutSystems Service Studio       | Sync (design-time import)   | Developers consume patterns from the imported component                            |
 | NPM Registry / OutSystems Forge | Async (release publication) | Distribution of versioned bundles (`gulp/Tasks/PrepareToDeployNpm.js`)             |
