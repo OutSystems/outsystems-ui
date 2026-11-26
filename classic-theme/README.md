@@ -114,6 +114,14 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   Mapping: none (a literal keyword, no tokens involved). Approximations: none.
   Not ported: the `.alert` half of #1325 (`overflow-wrap:anywhere` on `.alert`) — out of scope for this entry.
   Not visually compared against a running build.
+- **2026-11-26 — ROU-13245 / port of ROU-13128 `24e0a0e56` "improve preview rule strength" (#1331) (working tree)** —
+  changed one declaration in the existing rule `.tablet .layout-side .header .app-menu-content, .tablet .layout-side .aside-navigation,
+  .phone .layout-side .header .app-menu-content, .phone .layout-side .aside-navigation` from `-servicestudio-display:none` to
+  `-servicestudio-display:none !important`, in both bundles (`02-layout/_menu.scss` in the new theme). Design-time only: the
+  side-layout `aside` stayed visible in the Service Studio phone/tablet preview with the classic theme because a `display:block`
+  from outside this bundle outranked the unweighted rule; the same `!important` fixed it in the new theme (ROU-13128, v3.0.0).
+  Pre-existing since at least 2.27.0 (not a 3.0 regression). Mapping: none (no token values).
+  Approximations: none. Not visually compared against a running build; verify in Service Studio phone view.
 
 ### Refresh log
 
