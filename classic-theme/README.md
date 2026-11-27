@@ -145,5 +145,8 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   added a `100dvh` declaration after the existing `100vh` one on `html{height}`,
   `.layout{min-height}` and `.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .main{max-height}`
   (the classic snapshot still gates the grid on `.ios-bounce`; the new theme applies it to every
-  native layout), in both bundles. Mapping: none needed — viewport units, no token values.
+  native layout), and a `calc(var(--viewport-height, 100dvh) - 5vh - var(--header-size))` line
+  after the `100vh` one on
+  `.phone .osui-dropdown-serverside__balloon--has-not-search .osui-dropdown-serverside__balloon-container{max-height}`,
+  in both bundles. Mapping: none needed — viewport units, no token values.
   Approximations: none.

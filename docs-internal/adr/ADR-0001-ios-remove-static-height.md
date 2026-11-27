@@ -179,9 +179,10 @@ which tracks the visible area, so the problem did not exist. ROU-11511 (PR 1300)
 `max-height: var(--viewport-height, 100vh)` grid to every native layout, not only `.ios-bounce`,
 which widened the exposure.
 
-Decision: keep `100vh` as the fallback and add `100dvh` as a second declaration on the three
-viewport-sized rules (`html`, `.layout { min-height }`, and the native-layout `.main` grid
-`max-height`). `100dvh` follows the visible area in browsers and equals `100vh` where there is no
+Decision: keep `100vh` as the fallback and add `100dvh` as a second declaration on the four
+viewport-sized rules (`html`, `.layout { min-height }`, the native-layout `.main` grid
+`max-height`, and the second `--viewport-height` consumer above, the phone Dropdown Server Side
+balloon without search, whose `max-height` let the balloon run under the toolbar). `100dvh` follows the visible area in browsers and equals `100vh` where there is no
 toolbar, so native shells keep the behaviour this ADR introduced. Browsers without dynamic
 viewport units (Safari < 15.4, Chrome < 108) keep the `100vh` line. The "dynamic viewport unit"
 option above was rejected on the browser-free assumption; that assumption is withdrawn.
