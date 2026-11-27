@@ -141,3 +141,9 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   replaced by `.ph:empty` / `.placeholder-empty:empty` (#1214/#1219); new
   `html[data-uieditorversion^="1"] .chat-message-status` SS-preview rules (#1219); ODC-only
   `.form .dropdown-container:has(> select.dropdown-display):after` (#1219).
+- **2026-11-27 — ROU-13244 (`ROU-13244_v2`) "Bottom Bar hidden behind the iOS browser toolbar"** —
+  added a `100dvh` declaration after the existing `100vh` one on `html{height}`,
+  `.layout{min-height}` and `.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .main{max-height}`
+  (the classic snapshot still gates the grid on `.ios-bounce`; the new theme applies it to every
+  native layout), in both bundles. Mapping: none needed — viewport units, no token values.
+  Approximations: none.
