@@ -13574,6 +13574,7 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
 .phone .osui-dropdown-serverside__balloon--has-not-search .osui-dropdown-serverside__balloon-container{
   margin-top:5vh;
   max-height:calc(var(--viewport-height, 100vh) - 5vh - var(--header-size));
+  max-height:calc(var(--viewport-height, 100dvh) - 5vh - var(--header-size));
 }
 .phone .osui-dropdown-serverside--is-opened.osui-dropdown-serverside__balloon{
   min-height:100vh;
