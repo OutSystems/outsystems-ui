@@ -1693,7 +1693,7 @@ body,
 .tablet .layout-side .aside-navigation,
 .phone .layout-side .header .app-menu-content,
 .phone .layout-side .aside-navigation{
-  -servicestudio-display:none;
+  -servicestudio-display:none !important;
 }
 .tablet.landscape .layout-native.aside-expandable .app-menu-overlay{
   display:none;
