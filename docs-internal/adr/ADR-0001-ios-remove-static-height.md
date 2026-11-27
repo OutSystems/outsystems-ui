@@ -166,6 +166,28 @@ Negative consequences:
 - No automated test coverage exists locally for this code path; verification relies on manual
   iOS device/simulator testing and the separate `outsystems-ui-tests` E2E repo.
 
+## Amendment (2026-11-27, ROU-13244)
+
+The "`100vh` already reflects the full visual viewport" premise above holds inside a native
+shell, where there is no browser toolbar. It does not hold when the same app runs in Safari or
+Chrome on iOS (browser or PWA opened from the browser): there `100vh` is the viewport with the
+toolbar collapsed, so `html` is taller than the area the browser shows. Because `html` is
+`overflow: hidden` (01-foundations/_resets.scss) the document never scrolls, the toolbar never
+collapses, and the bottom of the layout — the Bottom Bar in the native layout — stays hidden
+behind it. Before this ADR, `html { height: 100% }` resolved against the initial containing block,
+which tracks the visible area, so the problem did not exist. ROU-11511 (PR 1300) later applied the
+`max-height: var(--viewport-height, 100vh)` grid to every native layout, not only `.ios-bounce`,
+which widened the exposure.
+
+Decision: keep `100vh` as the fallback and add `100dvh` as a second declaration on the three
+viewport-sized rules (`html`, `.layout { min-height }`, and the native-layout `.main` grid
+`max-height`). `100dvh` follows the visible area in browsers and equals `100vh` where there is no
+toolbar, so native shells keep the behaviour this ADR introduced. Browsers without dynamic
+viewport units (Safari < 15.4, Chrome < 108) keep the `100vh` line. The "dynamic viewport unit"
+option above was rejected on the browser-free assumption; that assumption is withdrawn.
+
+The `--viewport-height` override hook is unchanged.
+
 ## Links
 
 - JIRA: [ROU-12349](https://outsystemsrd.atlassian.net/browse/ROU-12349) (Bug, High, In Progress)

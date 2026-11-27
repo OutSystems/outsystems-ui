@@ -4,10 +4,18 @@
 /// @group Layout
 /// Layout
 
-// OutSystems UI only supports viewport-fit=cover, so 100vh already reflects the full visual
-// viewport here; dynamic viewport units (dvh/svh/lvh) are intentionally not used.
+// OutSystems UI only supports `viewport-fit=cover`, which decides whether the page extends under
+// the notch and the home indicator (the safe areas). It says nothing about the browser toolbar:
+// `100vh` is the viewport with the toolbar collapsed on every viewport-fit value. Inside a native
+// shell there is no toolbar, so `100vh` is the whole screen, but in Safari and Chrome on iOS it is
+// taller than what the browser shows, and because `html` is `overflow: hidden` the document never
+// scrolls and the toolbar never collapses: the bottom of the layout stays hidden behind it
+// (ROU-13244). `100dvh` tracks the visible area and equals `100vh` where there is no toolbar;
+// `100vh` stays as the fallback for browsers without dynamic viewport units. See ADR-0001 and
+// its amendment.
 html {
 	height: 100vh;
+	height: 100dvh;
 }
 
 body,
@@ -27,6 +35,7 @@ body,
 .layout {
 	display: flex;
 	min-height: 100vh;
+	min-height: 100dvh;
 
 	&.layout {
 		&-top,

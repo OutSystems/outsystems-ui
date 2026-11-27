@@ -928,6 +928,7 @@ h6,
 /*! 3.1. Layout */
 html{
   height:100vh;
+  height:100dvh;
 }
 body,
 #reactContainer,
@@ -944,6 +945,7 @@ body,
   display:-ms-flexbox;
   display:flex;
   min-height:100vh;
+  min-height:100dvh;
 }
 .layout.layout-top, .layout.layout-side:not(.layout-native){
   -webkit-box-orient:vertical;
@@ -2063,6 +2065,7 @@ body .app-menu-content .app-menu-links{
   grid-template:auto 1fr auto/1fr;
   grid-template-areas:"header" "content" "footer";
   max-height:var(--viewport-height, 100vh);
+  max-height:var(--viewport-height, 100dvh);
   width:100%;
 }
 .ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .main{
